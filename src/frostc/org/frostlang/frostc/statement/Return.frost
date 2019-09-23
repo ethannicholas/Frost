@@ -12,7 +12,7 @@ uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.MethodDecl
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
 uses org.frostlang.frostc.lvalue.FieldLValue
@@ -20,22 +20,23 @@ uses org.frostlang.frostc.lvalue.VariableLValue
 
 class Return {
     @class
-    method compile(compiler:Compiler, position:Position, value:ASTNode?) {
+    method compile(compiler:Compiler, position:MethodPosition, value:ASTNode?) {
         compile(compiler, position, value, true)
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, value:ASTNode?, refResult:Bit) {
+    method compile(compiler:Compiler, position:MethodPosition, value:ASTNode?, refResult:Bit) {
         def ir := compiler.ir
         def currentClass := compiler.currentClass[0]
         def currentMethod := compiler.currentMethod[0]
+        def basePos := position.asPosition
         if currentMethod.name = "cleanup" & currentMethod.parameters.count = 0 &
                 currentMethod.owner.name != Compiler.WEAK_NAME {
             -- call super cleanup
             if currentClass.rawSuper !== null & !compiler.isValue(currentClass) {
                 def supertype := compiler.remapType(currentClass.type, currentClass.rawSuper)
-                compiler.compileStatement(ASTNode.CALL(position, ASTNode.DOT(position,
-                        ASTNode.SUPER(position), "cleanup"), FixedArray<ASTNode>()))
+                compiler.compileStatement(ASTNode.CALL(basePos, ASTNode.DOT(basePos,
+                        ASTNode.SUPER(basePos), "cleanup"), FixedArray<ASTNode>()))
             }
             -- unref fields
             assert !compiler.inFieldCleanup
@@ -44,7 +45,7 @@ class Return {
                 if compiler.resolve(f) & !f.annotations.isClass &
                         f.fieldKind != FieldDecl.Kind.PROPERTY & compiler.isRefCounted(f.type) {
                     def load := FieldLValue(compiler, position,
-                            compiler.compileExpression(ASTNode.IDENTIFIER(position,
+                            compiler.compileExpression(ASTNode.IDENTIFIER(basePos,
                                     Compiler.FORCE_SELF_NAME), TypeContext.UNSPECIFIED),
                             f).compileLoad()
                     if load == null {
@@ -134,7 +135,7 @@ class Return {
         else {
             if currentMethod.returnType != compiler.VOID_TYPE {
                 if currentMethod.methodKind = MethodDecl.Kind.INIT {
-                    compile(compiler, position, ASTNode.SELF(position))
+                    compile(compiler, position, ASTNode.SELF(basePos))
                     return
                 }
                 compiler.error(position, "expected a return value of type " +

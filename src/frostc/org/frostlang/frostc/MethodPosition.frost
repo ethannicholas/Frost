@@ -1,0 +1,54 @@
+package org.frostlang.frostc
+
+@final
+class MethodPosition : Value, HashKey<MethodPosition> {
+    -- index into the Compiler.file array
+    def file:Int
+
+    -- index into the Compiler.methodDecls array. will be -1 if not yet determined or not in a
+    -- method
+    def methodIndex:Int
+
+    def line:Int
+
+    def column:Int
+
+    init() {
+        init(Position(), -1)
+    }
+
+    init(base:Position, methodIndex:Int) {
+        self.file := base.file
+        self.methodIndex := methodIndex
+        self.line := base.line
+        self.column := base.column
+    }
+
+    @override
+    function =(other:MethodPosition):Bit {
+        return file = other.file & methodIndex = other.methodIndex & line = other.line &
+                column = other.column
+    }
+
+    @override
+    function get_hash():Int {
+        return file << 24 + methodIndex << 20 + line << 16 + column
+    }
+
+    property asPosition:Position
+    function get_asPosition():Position {
+        return Position(file, line, column)
+    }
+
+    @override
+    function get_asString():String {
+        return "\{line}:\{column}"
+    }
+
+    function asString(compiler:Compiler):String {
+        if file = -1 {
+            return "<internal>:\{line}:\{column}"
+        }
+        return "\{compiler.files[file].name}:\{line}:\{column}"
+    }
+}

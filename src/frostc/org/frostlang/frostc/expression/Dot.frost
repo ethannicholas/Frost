@@ -4,12 +4,12 @@ uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Symbol
 
 class Dot {
     @class
-    method compile(compiler:Compiler, position:Position, target:IR.Value,
+    method compile(compiler:Compiler, position:MethodPosition, target:IR.Value,
             name:String):IR.Value? {
         def cl := compiler.getClass(target.type())
         if cl == null {
@@ -25,7 +25,8 @@ class Dot {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, base:ASTNode, name:String):IR.Value? {
+    method compile(compiler:Compiler, position:MethodPosition, base:ASTNode,
+            name:String):IR.Value? {
         match base {
             when ASTNode.GENERIC_TYPE {
                 def resolved := compiler.resolve(compiler.scanner.convertType(base))

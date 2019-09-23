@@ -5,8 +5,8 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Methods
-uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.expression.Binary
@@ -16,7 +16,7 @@ uses org.frostlang.frostc.parser.Token
 class IndexLValue : LValue {
     def compiler:Compiler
 
-    def position:Position
+    def position:MethodPosition
 
     def target:IR.Value
 
@@ -26,7 +26,7 @@ class IndexLValue : LValue {
     -- gets compiled and re-use that for the other call
     def index:IR.Value?
 
-    init(compiler:Compiler, position:Position, target:IR.Value, rawIndex:ASTNode) {
+    init(compiler:Compiler, position:MethodPosition, target:IR.Value, rawIndex:ASTNode) {
         self.compiler := compiler
         self.position := position
         self.target := target
@@ -35,8 +35,8 @@ class IndexLValue : LValue {
 
     @override
     function type():Type {
-        def types := compiler.possibleTypes(ASTNode.BINARY(position,
-                ASTNode.IR_WRAPPER(position, target), Binary.Operator.INDEX, rawIndex))
+        def types := compiler.possibleTypes(ASTNode.BINARY(position.asPosition,
+                ASTNode.IR_WRAPPER(position.asPosition, target), Binary.Operator.INDEX, rawIndex))
         if types == null {
             return compiler.ANY_TYPE
         }
@@ -59,8 +59,8 @@ class IndexLValue : LValue {
             index := IR.Value.REF(IR.Statement.ID(-1), type())
             return null
         }
-        return Binary.compile(compiler, position, ASTNode.IR_WRAPPER(position, target),
-                Binary.Operator.INDEX, ASTNode.IR_WRAPPER(position, index),
+        return Binary.compile(compiler, position, ASTNode.IR_WRAPPER(position.asPosition, target),
+                Binary.Operator.INDEX, ASTNode.IR_WRAPPER(position.asPosition, index),
                 TypeContext.NON_VOID)
     }
 
@@ -92,7 +92,7 @@ class IndexLValue : LValue {
             }
             def args := Array<ASTNode>()
             args.add(rawIndex)
-            args.add(ASTNode.IR_WRAPPER(position, value))
+            args.add(ASTNode.IR_WRAPPER(position.asPosition, value))
             def m := Call.findBestMethod(compiler, position, target, methods, args,
                     TypeContext.UNSPECIFIED)
             if m !== null {
@@ -106,8 +106,8 @@ class IndexLValue : LValue {
             }
         }
         def args := Array<ASTNode>()
-        args.add(ASTNode.IR_WRAPPER(position, index))
-        args.add(ASTNode.IR_WRAPPER(position, value))
+        args.add(ASTNode.IR_WRAPPER(position.asPosition, index))
+        args.add(ASTNode.IR_WRAPPER(position.asPosition, value))
         Call.compile(compiler, position, target, "[]:=", args, TypeContext.UNSPECIFIED)
     }
 }

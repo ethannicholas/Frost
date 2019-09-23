@@ -5,12 +5,12 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.AutoUnrefs
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 
 class Or {
     @class
-    method compile(compiler:Compiler, position:Position, left:ASTNode, right:ASTNode,
+    method compile(compiler:Compiler, position:MethodPosition, left:ASTNode, right:ASTNode,
             type:TypeContext):IR.Value? {
         def ir := compiler.ir
         -- FIXME should add phis so we can avoid using a local        
@@ -47,8 +47,8 @@ class Or {
     }
 
     @class
-    method compileConditionalBranch(compiler:Compiler, position:Position, left:ASTNode,
-            right:ASTNode, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
+    method compileConditionalBranch(compiler:Compiler, left:ASTNode, right:ASTNode,
+            ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
         def leftFalse := compiler.ir.newBlock("or left false")
         compiler.compileConditionalBranch(left, ifTrue, leftFalse)
         compiler.ir.setCurrentBlock(leftFalse)

@@ -7,14 +7,14 @@ uses org.frostlang.frostc.Compiler.AutoScope
 uses org.frostlang.frostc.Compiler.EnclosingContext
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
 
 class Try {
     @class
-    method compile(compiler:Compiler, position:Position, block:FixedArray<ASTNode>, error:ASTNode?,
-            failBlock:FixedArray<ASTNode>) {
+    method compile(compiler:Compiler, position:MethodPosition, block:FixedArray<ASTNode>,
+            error:ASTNode?, failBlock:FixedArray<ASTNode>) {
         def scope := AutoScope(compiler)
         def ir := compiler.ir
         def failTarget := ir.newBlock("try fail")
@@ -23,8 +23,8 @@ class Try {
         if error !== null {
             match error {
                 when ASTNode.IDENTIFIER(_, name) {
-                    errorVar := Variable(position, Variable.Kind.DEF, name, compiler.ERROR_TYPE,
-                            Variable.Storage.LOCAL(ir.locals.count))
+                    errorVar := Variable(position.asPosition, Variable.Kind.DEF, name,
+                            compiler.ERROR_TYPE, Variable.Storage.LOCAL(ir.locals.count))
                     errorVar.owner := compiler.currentMethod[0]
                     if compiler.isRefCounted(errorVar.type) {
                         ir.add(IR.Statement.STORE(position, IR.Value.NULL(errorVar.type.nullable()),

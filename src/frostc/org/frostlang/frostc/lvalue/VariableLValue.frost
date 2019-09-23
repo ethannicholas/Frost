@@ -2,18 +2,18 @@ package org.frostlang.frostc.lvalue
 
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
 
 class VariableLValue : LValue {
     def compiler:Compiler
 
-    def position:Position
+    def position:MethodPosition
 
     def slot:Int
 
-    init(compiler:Compiler, position:Position, variable:Variable) {
+    init(compiler:Compiler, position:MethodPosition, variable:Variable) {
         self.compiler := compiler
         match variable.storage {
             when Variable.Storage.LOCAL(slot) {

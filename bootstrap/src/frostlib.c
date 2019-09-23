@@ -1,17 +1,18 @@
 #include <dirent.h>
+#include <errno.h>
 #include <inttypes.h>
 #include <limits.h>
 #include <math.h>
 #include <pthread.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <unistd.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <errno.h>
+#include <unistd.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -438,6 +439,7 @@ int main(int argc, char** argv) {
     for (i = 0; i < argc; ++i) {
         args->data[i] = (Object*) frostNewString(argv[i], strlen(argv[i]));
     }
+    signal(SIGPIPE, SIG_IGN);
     frostMain(args);
     // ensure all threads have exited
     pthread_mutex_lock(&preventsExitThreadsMutex);
@@ -744,6 +746,19 @@ void frost$core$Real64$get_tan$R$frost$core$Real64(Real64* out, Real64 x) {
 // Frost
 
 #define NO_REFCNT -999
+
+void* frost$core$Frost$alloc$builtin_int$R$builtin_int(int size) {
+    return frostAlloc(size);
+}
+
+void frost$core$Frost$destroy$builtin_int(void* ptr) {
+    frostFree(ptr);
+}
+
+void* frost$core$Frost$realloc$builtin_int$builtin_int$R$builtin_int(void* ptr,
+        int newSize) {
+    return realloc(ptr, newSize);
+}
 
 void frost$core$Frost$debugPrint$builtin_int64(int64_t x) {
     printf("Debug: %" PRId64 "\n", x);

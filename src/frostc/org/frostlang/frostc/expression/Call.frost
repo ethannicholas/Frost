@@ -11,9 +11,9 @@ uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.MethodRef
 uses org.frostlang.frostc.Pair
-uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
@@ -162,7 +162,7 @@ class Call {
     }
 
     @class
-    method compilePointerIntrinsic(compiler:Compiler, position:Position, target:IR.Value?,
+    method compilePointerIntrinsic(compiler:Compiler, position:MethodPosition, target:IR.Value?,
             m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         def ir := compiler.ir
         def pointerType:Type?
@@ -240,7 +240,7 @@ class Call {
             }
             when "get" {
                 assert target !== null
-                def get := ir.add(IR.Statement.POINTER_GET(position, target))
+                def get := ir.add(IR.Statement.POINTER_GET(position, target, pointerType))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
             }
             when "set" {
@@ -250,10 +250,10 @@ class Call {
                 if value !== null {
                     if compiler.isRefCounted(pointerType) {
                         compiler.compileRef(value)
-                        def load := ir.add(IR.Statement.POINTER_GET(position, target))
+                        def load := ir.add(IR.Statement.POINTER_GET(position, target, pointerType))
                         compiler.compileUnref(IR.Value.REF(load, pointerType))
                     }
-                    ir.add(IR.Statement.POINTER_SET(position, value, target))
+                    ir.add(IR.Statement.POINTER_SET(position, value, target, pointerType))
                 }
                 return Pair<Bit, IR.Value?>(true, null)
             }
@@ -278,7 +278,7 @@ class Call {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
                 def get := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
-                        compiler.extractBuiltinInt(position, index)))
+                        compiler.extractBuiltinInt(position, index), pointerType))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
             }
             when "[]:=" {
@@ -292,10 +292,11 @@ class Call {
                     if compiler.isRefCounted(pointerType) {
                         compiler.compileRef(value)
                         def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
-                                indexValue))
+                                indexValue, pointerType))
                         compiler.compileUnref(IR.Value.REF(load, pointerType))
                     }
-                    ir.add(IR.Statement.POINTER_SET_INDEX(position, value, target, indexValue))
+                    ir.add(IR.Statement.POINTER_SET_INDEX(position, value, target, indexValue,
+                            pointerType))
                 }
                 return Pair<Bit, IR.Value?>(true, null)
             }
@@ -305,10 +306,11 @@ class Call {
                         TypeContext.TYPE(compiler.INT64_TYPE, false))
                 if compiler.isRefCounted(nullableType) {
                     def indexValue := compiler.extractBuiltinInt(position, index)
-                    def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue))
+                    def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue,
+                            pointerType))
                     compiler.compileUnref(IR.Value.REF(load, nullableType))
                     ir.add(IR.Statement.POINTER_SET_INDEX(position,
-                            IR.Value.NULL(nullableType), target, indexValue))
+                            IR.Value.NULL(nullableType), target, indexValue, pointerType))
                 }
                 return Pair<Bit, IR.Value?>(true, null)
             }
@@ -319,7 +321,104 @@ class Call {
     }
 
     @class
-    method compileNumberIntrinsic(compiler:Compiler, position:Position, target:IR.Value,
+    method compileNewPointerIntrinsic(compiler:Compiler, position:MethodPosition,
+            rawTarget:IR.Value?, m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+        def ir := compiler.ir
+        def pointerType:Type?
+        assert m.target.isNewPointer
+        if m.target.hasSubtypes {
+            pointerType := compiler.resolve(m.target.subtypes[1])
+        }
+        else {
+            pointerType := compiler.ANY_TYPE
+        }
+        if pointerType == null {
+            return Pair<Bit, IR.Value?>(false, null)
+        }
+        match m.value.name {
+            when "convertTo" {
+                def target := compiler.extractBuiltinInt(position, rawTarget)
+                assert target !== null
+                def result := ir.add(IR.Statement.CAST(position, target, m.returnType,
+                        false))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.returnType))
+            }
+            when "get" {
+                def target := compiler.extractBuiltinInt(position, rawTarget)
+                assert target !== null
+                def get := ir.add(IR.Statement.POINTER_GET(position, target, pointerType))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
+            }
+            when "set" {
+                def target := compiler.extractBuiltinInt(position, rawTarget)
+                assert target !== null
+                def value := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(pointerType, false))
+                if value !== null {
+                    if compiler.isRefCounted(pointerType) {
+                        compiler.compileRef(value)
+                        def load := ir.add(IR.Statement.POINTER_GET(position, target, pointerType))
+                        compiler.compileUnref(IR.Value.REF(load, pointerType))
+                    }
+                    ir.add(IR.Statement.POINTER_SET(position, value, target, pointerType))
+                }
+                return Pair<Bit, IR.Value?>(true, null)
+            }
+            when "[]" {
+                def target := compiler.extractBuiltinInt(position, rawTarget)
+                assert target !== null
+                def index := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
+                if index == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def get := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
+                        compiler.extractBuiltinInt(position, index), pointerType))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
+            }
+            when "[]:=" {
+                def target := compiler.extractBuiltinInt(position, rawTarget)
+                assert target !== null
+                def index := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
+                def value := compiler.compileExpression(args[1],
+                        TypeContext.TYPE(pointerType, false))
+                if index !== null & value !== null {
+                    def indexValue := compiler.extractBuiltinInt(position, index)
+                    if compiler.isRefCounted(pointerType) {
+                        compiler.compileRef(value)
+                        def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
+                                indexValue, pointerType))
+                        compiler.compileUnref(IR.Value.REF(load, pointerType))
+                    }
+                    ir.add(IR.Statement.POINTER_SET_INDEX(position, value, target, indexValue,
+                            pointerType))
+                }
+                return Pair<Bit, IR.Value?>(true, null)
+            }
+            when "clear" {
+                def target := compiler.extractBuiltinInt(position, rawTarget)
+                def nullableType := pointerType.nullable()
+                def index := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
+                if compiler.isRefCounted(nullableType) {
+                    def indexValue := compiler.extractBuiltinInt(position, index)
+                    def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue,
+                            pointerType))
+                    compiler.compileUnref(IR.Value.REF(load, nullableType))
+                    ir.add(IR.Statement.POINTER_SET_INDEX(position,
+                            IR.Value.NULL(nullableType), target, indexValue, pointerType))
+                }
+                return Pair<Bit, IR.Value?>(true, null)
+            }
+            otherwise {
+                return Pair<Bit, IR.Value?>(false, null)
+            }
+        }
+    }
+
+    @class
+    method compileNumberIntrinsic(compiler:Compiler, position:MethodPosition, target:IR.Value,
             op:Binary.Operator, args:ListView<ASTNode>, operandType:Type,
             resultType:Type):Pair<Bit, IR.Value?> {
         if args.count != 1 {
@@ -345,7 +444,8 @@ class Call {
         builtin := compiler.ir.add(IR.Statement.BINARY(position, builtinLeft, op,
                 compiler.extractBuiltinInt(position, right), builtinResultType))
         def constructArgs := Array<ASTNode>()
-        constructArgs.add(ASTNode.IR_WRAPPER(position, IR.Value.REF(builtin, builtinResultType)))
+        constructArgs.add(ASTNode.IR_WRAPPER(position.asPosition, IR.Value.REF(builtin,
+                builtinResultType)))
         def construct := compile(compiler, position, compiler.literalType(resultType),
                 constructArgs, TypeContext.TYPE(resultType, false))
         assert construct !== null
@@ -353,7 +453,7 @@ class Call {
     }
 
     @class
-    method compileNumberIntrinsic(compiler:Compiler, position:Position, target:IR.Value?,
+    method compileNumberIntrinsic(compiler:Compiler, position:MethodPosition, target:IR.Value?,
             m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         match m.value.name {
             when "init" {
@@ -427,8 +527,8 @@ class Call {
     }
 
     @class
-    method compileBitIntrinsic(compiler:Compiler, position:Position, target:IR.Value?, m:MethodRef,
-            args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+    method compileBitIntrinsic(compiler:Compiler, position:MethodPosition, target:IR.Value?,
+            m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         match m.value.name {
             when "init" {
                 assert m.value.parameters.count = 1
@@ -449,10 +549,13 @@ class Call {
     }
 
     @class
-    method compileIntrinsic(compiler:Compiler, position:Position, target:IR.Value?, m:MethodRef,
-            args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+    method compileIntrinsic(compiler:Compiler, position:MethodPosition, target:IR.Value?,
+            m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         if m.target.isPointer | m.target.isClassLiteral & m.target.subtypes[1].isPointer {
             return compilePointerIntrinsic(compiler, position, target, m, args)
+        }
+        if m.target.isNewPointer {
+            return compileNewPointerIntrinsic(compiler, position, target, m, args)
         }
         if m.target.isNumber {
             return compileNumberIntrinsic(compiler, position, target, m, args)
@@ -718,7 +821,7 @@ class Call {
     }
 
     @class
-    method findBestMethod(compiler:Compiler, position:Position, target:IR.Value?,
+    method findBestMethod(compiler:Compiler, position:MethodPosition, target:IR.Value?,
             methods:ListView<MethodDecl>, args:ListView<ASTNode>,
             type:TypeContext):Pair<ListView<MethodRef>, Int>? {
         return findBestMethod(compiler, position, target, methods, null, args, type)
@@ -726,7 +829,7 @@ class Call {
 
     @class
     @post(@return == null | @return.first.count > 0)
-    method findBestMethod(compiler:Compiler, position:Position, target:IR.Value?,
+    method findBestMethod(compiler:Compiler, position:MethodPosition, target:IR.Value?,
             methods:ListView<MethodDecl>, genericArguments:ListView<Type>?, args:ListView<ASTNode>,
             type:TypeContext):Pair<ListView<MethodRef>, Int>? {
         if methods.count = 0 {
@@ -802,7 +905,7 @@ class Call {
     }
 
     @class
-    method callMethodObject(compiler:Compiler, position:Position, m:IR.Value,
+    method callMethodObject(compiler:Compiler, position:MethodPosition, m:IR.Value,
             args:ListView<ASTNode>, type:TypeContext):IR.Value? {
         def ir := compiler.ir
         def t := m.type().nonnullable()
@@ -883,8 +986,8 @@ class Call {
         for i in 0 .. t.parameterCount {
             targetParams.add(t.parameterType(i))
         }
-        def haveTargetType := Type.methodType(compiler, position, t.typeKind, targetParams,
-                t.returnType, 0)
+        def haveTargetType := Type.methodType(compiler, position.asPosition, t.typeKind,
+                targetParams, t.returnType, 0)
         def haveTargetCast := compiler.cast(position, IR.Value.REF(methodPtr,
                 Type.pointerTo(compiler, compiler.INT8_TYPE)),
                 Type.pointerTo(compiler, haveTargetType))
@@ -909,7 +1012,7 @@ class Call {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, m:IR.Value, args:ListView<ASTNode>,
+    method compile(compiler:Compiler, position:MethodPosition, m:IR.Value, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
         def currentClass := compiler.currentClass[0]
         def ir := compiler.ir
@@ -958,7 +1061,7 @@ class Call {
                 def best := findBestMethod(compiler, position, target, methods, args, type)
                 if best !== null {
                     if best.first.count > 1 {
-                        compiler.reportAmbiguousMatch(position, best.first, args, type)
+                        compiler.reportAmbiguousMatch(position.asPosition, best.first, args, type)
                         return null
                     }
                     return compile(compiler, position, target, best.first[0], args, type)
@@ -987,7 +1090,7 @@ class Call {
                 def best := findBestMethod(compiler, position, target, methods, types, args, type)
                 if best !== null {
                     if best.first.count > 1 {
-                        compiler.reportAmbiguousMatch(position, best.first, args, type)
+                        compiler.reportAmbiguousMatch(position.asPosition, best.first, args, type)
                         return null
                     }
                     return compile(compiler, position, target, best.first[0], args, type)
@@ -1027,7 +1130,8 @@ class Call {
                 if cl == null {
                     return null
                 }
-                if !cl.isSpecialization() & !compiler.checkGenericArguments(position, cl, t) {
+                if !cl.isSpecialization() & !compiler.checkGenericArguments(position.asPosition, cl,
+                        t) {
                     return null
                 }
                 match cl.classKind {
@@ -1048,9 +1152,12 @@ class Call {
                 def inits := compiler.getSymbolTable(cl)["init"]
                 assert inits !== null, "no init for \{cl.name}"
                 if compiler.isValue(cl) {
-                    return compiler.coerce(position, compiler.cast(position,
-                            compile(compiler, position, compiler.symbolRef(position, null, inits),
-                            args, type), finalType), type)
+                    def call := compile(compiler, position, compiler.symbolRef(position, null,
+                            inits), args, type)
+                    if call == null {
+                        return null
+                    }
+                    return compiler.coerce(position, compiler.cast(position, call, finalType), type)
                 }
                 def construct := ir.add(IR.Statement.CONSTRUCT(position, cl))
                 def constructRef := IR.Value.REF(construct, finalType)
@@ -1066,7 +1173,7 @@ class Call {
     }
 
     @class
-    method handleErrors(compiler:Compiler, position:Position, v:IR.Value):IR.Value? {
+    method handleErrors(compiler:Compiler, position:MethodPosition, v:IR.Value):IR.Value? {
         def tryScope := compiler.getTryScope()
         if tryScope == null {
             return v
@@ -1101,8 +1208,8 @@ class Call {
         else if type.typeKind = Type.Kind.GENERIC & type.subtypes[0].name = "frost.core.Maybe" {
             def cl := compiler.getClass(type)
             assert cl !== null
-            def rawValue := Dot.compile(compiler, position, ASTNode.IR_WRAPPER(position, v),
-                    ClassDecl.RAW_VALUE_NAME)
+            def rawValue := Dot.compile(compiler, position, ASTNode.IR_WRAPPER(position.asPosition,
+                    v), ClassDecl.RAW_VALUE_NAME)
             assert rawValue !== null
             def test := ir.add(IR.Statement.BINARY(position, compiler.extractBuiltinInt(position,
                     rawValue), Binary.Operator.EQ, IR.Value.INT(0, compiler.INT64_TYPE),
@@ -1197,7 +1304,7 @@ class Call {
     }
 
     @class
-    method inlineCall(compiler:Compiler, position:Position, m:MethodDecl,
+    method inlineCall(compiler:Compiler, position:MethodPosition, m:MethodDecl,
             args:ListView<IR.Value>):IR.Value? {
         compiler.ir.add(IR.Statement.COMMENT(position, "begin inline call to \{m.declaration} from \{position.asString(compiler)}"))
         def scope:Compiler.EnclosingContext
@@ -1214,7 +1321,7 @@ class Call {
             else {
                 compiler.tempCount += 1
                 inlineReturnSlot := compiler.ir.locals.count
-                def returnVar := Variable(position, Variable.Kind.DEF,
+                def returnVar := Variable(position.asPosition, Variable.Kind.DEF,
                         "inlineReturn\{compiler.tempCount}", m.returnType,
                         Variable.Storage.LOCAL(inlineReturnSlot))
                 compiler.symbolTable.add(returnVar)
@@ -1278,8 +1385,10 @@ class Call {
     @class
     @post((rawM.returnType = compiler.VOID_TYPE & @return == null) | @return !== null |
             compiler.errorCount > 0 | !compiler.reportErrors)
-    method compile(compiler:Compiler, position:Position, target:IR.Value?, rawM:MethodRef,
+    method compile(compiler:Compiler, position:MethodPosition, target:IR.Value?, rawM:MethodRef,
             args:ListView<ASTNode>, type:TypeContext):IR.Value? {
+        assert position.methodIndex >= 0, "call to \{rawM.value.declaration} with invalid " +
+                "position: \{position}, \{position.methodIndex}"
         def ir := compiler.ir
         -- FIXME var param
         var m := rawM
@@ -1343,6 +1452,11 @@ class Call {
                 }
             }
         }
+        def inferred := performTypeInference(compiler, m, args, type)
+        if inferred == null {
+            return null
+        }
+        m := inferred
         var intrinsic := compileIntrinsic(compiler, position, target, m, args)
         if intrinsic.first {
             if intrinsic.second !== null {
@@ -1350,11 +1464,6 @@ class Call {
             }
             return null
         }
-        def inferred := performTypeInference(compiler, m, args, type)
-        if inferred == null {
-            return null
-        }
-        m := inferred
         def isSuper:Bit
         if target !== null {
             match target {
@@ -1372,24 +1481,33 @@ class Call {
         -- actualType always has a "self", even for a @class method. This will probably be tightened
         -- up in the future, but it simplifies the logic a bit here.
         def actualType:Type
+        var selfType := m.value.owner.type
+        if selfType.isNewPointer & !m.value.annotations.isClass {
+            if target !== null {
+                selfType := target.type()
+            }
+            else {
+                selfType := m.value.owner.typeWithParameters()
+            }
+        }
         if m.value.isVirtual {
-            actualType := compiler.inheritedTypeWithSelf(m.value)
+            actualType := compiler.inheritedTypeWithSelf(m.value, selfType)
         }
         else {
-            actualType := compiler.declaredTypeWithSelf(m.value, m.value.owner.type, false)
+            actualType := compiler.declaredTypeWithSelf(m.value, selfType, false)
         }
         assert actualType.isMethod
         def effectiveType := m.effectiveType
         assert effectiveType.isMethod
         def finalArgs := Array<IR.Value>(args.count)
-        def finalTarget:IR.Value?
+        var finalTarget:IR.Value?
         if target !== null {
             match target {
                 when IR.Value.TYPE {
                     -- do nothing
                 }
                 otherwise {
-                    if m.value.owner.name = Compiler.POINTER_NAME {
+                    if m.value.owner.name = Compiler.POINTER_NAME | m.value.owner.name = "frost.unsafe.NewPointer" {
                         finalTarget := compiler.coerce(position, target,
                                 actualType.parameterType(0))
                     }
@@ -1414,8 +1532,10 @@ class Call {
                         "cannot call instance \{m.value.declaration} from a @class context")
                 return null
             }
-            finalTarget := compiler.coerce(position, compiler.compileSelf(position, false),
-                    m.value.owner.type)
+            finalTarget := compiler.compileSelf(position, false)
+            if !m.value.owner.type.isNewPointer {
+                finalTarget := compiler.coerce(position, finalTarget, m.value.owner.type)
+            }
             if finalTarget == null {
                 return null
             }
@@ -1444,6 +1564,32 @@ class Call {
                 return null
             }
             finalArgs.add(a)
+        }
+        if m.value.annotations.isPointerSize {
+            def targetType := target.type()
+            if target !== null & targetType.isClassLiteral &
+                    targetType.subtypes[1].name.startsWith("frost.unsafe.NewPointer<") &
+                    target.type().subtypes[1].subtypes[1].typeKind !=
+                            Type.Kind.GENERIC_METHOD_PARAMETER {
+                finalArgs.add(IR.Value.INT(
+                        compiler.memoryLayout.sizeOf(target.type().subtypes[1].subtypes[1]).asUInt64,
+                        compiler.BUILTIN_INT_TYPE))
+            }
+            else if target !== null & targetType.isNewPointer {
+                finalArgs.add(IR.Value.INT(
+                        compiler.memoryLayout.sizeOf(target.type().subtypes[1]).asUInt64,
+                        compiler.BUILTIN_INT_TYPE))
+            }
+            else if compiler.currentMethod[0].annotations.isPointerSize {
+                def pointerSize := Identifier.compile(compiler, position, "pointerSize")
+                assert pointerSize !== null
+                finalArgs.add(pointerSize)
+            }
+            else {
+                compiler.error(position, "internal error: unable to determine pointer size when " +
+                        "calling a @pointerSize method")
+                return null
+            }
         }
         var result:IR.Value?
         if !isSuper & m.value.isVirtual {
@@ -1480,7 +1626,7 @@ class Call {
             }
         }
         if m.value.annotations.isNoReturn {
-            Assert.compileFail(compiler, position, ASTNode.STRING(position,
+            Assert.compileFail(compiler, position, ASTNode.STRING(position.asPosition,
                         "returned from @noReturn method"))
         }
         if m.value.returnType != compiler.VOID_TYPE {
@@ -1508,7 +1654,7 @@ class Call {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, target:IR.Value, m:String,
+    method compile(compiler:Compiler, position:MethodPosition, target:IR.Value, m:String,
             args:ListView<ASTNode>, type:TypeContext):IR.Value? {
         def cl := compiler.getClass(target.type())
         if cl == null {
@@ -1527,7 +1673,7 @@ class Call {
     -- return value. If isStatement, the call is top-level and therefore the return value is being
     -- discarded.
     @class
-    method compile(compiler:Compiler, position:Position, m:ASTNode, args:FixedArray<ASTNode>,
+    method compile(compiler:Compiler, position:MethodPosition, m:ASTNode, args:FixedArray<ASTNode>,
             isStatement:Bit, type:TypeContext):IR.Value? {
         match m {
             when ASTNode.GENERIC_TYPE(_, name, types) {
@@ -1546,14 +1692,14 @@ class Call {
                 def components := name.split(".")
                 var target:ASTNode
                 if components.count = 1 {
-                    target := ASTNode.IDENTIFIER_GENERICS(position, name, types)
+                    target := ASTNode.IDENTIFIER_GENERICS(position.asPosition, name, types)
                 }
                 else {
-                    target := ASTNode.IDENTIFIER(position, components[0])
+                    target := ASTNode.IDENTIFIER(position.asPosition, components[0])
                     for i in 1 .. components.count - 1 {
-                        target := ASTNode.DOT(position, target, components[i])
+                        target := ASTNode.DOT(position.asPosition, target, components[i])
                     }
-                    target := ASTNode.DOT_GENERICS(position, target,
+                    target := ASTNode.DOT_GENERICS(position.asPosition, target,
                             components[components.count - 1], types)
                 }
                 return compile(compiler, position, target, args, isStatement, type)
@@ -1564,9 +1710,10 @@ class Call {
             return compiler.compileChoiceCaseReference(position, cc.first, cc.second, args, type)
         }
         match m {
-            when ASTNode.DOT(position, base, name) {
+            when ASTNode.DOT(basePos, base, name) {
                 match base {
                     when ASTNode.SUPER {
+                        def position := MethodPosition(basePos, compiler.currentMethodIndex)
                         var s := compiler.symbolTable[Compiler.CAPTURED_SELF_NAME]
                         if s == null {
                             s := compiler.symbolTable[Compiler.SELF_NAME]

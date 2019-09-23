@@ -6,8 +6,8 @@ uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Methods
-uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
 
@@ -41,7 +41,7 @@ class IntLiteral {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, value:UInt64,
+    method compile(compiler:Compiler, position:MethodPosition, value:UInt64,
             type:TypeContext):IR.Value? {
         match type {
             when TypeContext.TYPE(t, _) {
@@ -59,7 +59,7 @@ class IntLiteral {
                 }
                 if t.isNumber {
                     return Call.compile(compiler, position, compiler.literalType(t),
-                            [ASTNode.INT(position, value)], type)
+                            [ASTNode.INT(position.asPosition, value)], type)
                 }
             }
         }
@@ -68,7 +68,7 @@ class IntLiteral {
     }
 
     @class
-    method compileNegated(compiler:Compiler, position:Position, value:UInt64,
+    method compileNegated(compiler:Compiler, position:MethodPosition, value:UInt64,
             type:TypeContext):IR.Value? {
         if value > Int64.MAX.asUInt64 + 1 {
             compiler.error(position, "integer literal is out of range")

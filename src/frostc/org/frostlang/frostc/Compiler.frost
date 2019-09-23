@@ -445,6 +445,8 @@ class Compiler {
 
     def scanner:Scanner
 
+    def memoryLayout := MemoryLayout(self)
+
     def root:SymbolTable
 
     var compiling:ClassDecl? := null
@@ -452,6 +454,8 @@ class Compiler {
     var compilationQueue := Array<ClassDecl>()
 
     def files := Array<File>()
+
+    def methods := Array<MethodDecl>()
 
     @private
     def scans := HashMap<File, ListView<ClassDecl>>()
@@ -665,6 +669,11 @@ class Compiler {
             return false
         }
         return !isValue(type)
+    }
+
+    property currentMethodIndex:Int
+    function get_currentMethodIndex():Int {
+        return currentMethod[0].index
     }
 
     ================================================================================================
@@ -973,10 +982,11 @@ class Compiler {
         def body := Array<ASTNode>()
         body.add(ASTNode.MATCH(p, ASTNode.SELF(p), FixedArray<ASTNode>.from(whens),
                 FixedArray<ASTNode>.from([ASTNode.UNREACHABLE(p, null)])))
-        def eq := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE ||
-                    Annotations.Flag.SYNTHETIC),
+        def eq := MethodDecl(cl, p, methods.count, null,
+                Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                 MethodDecl.Kind.FUNCTION, "=", null, parameters, BIT_TYPE,
                 FixedArray<ASTNode>.from(body))
+        methods.add(eq)
         cl.methods.add(eq)
     }
 
@@ -1024,10 +1034,11 @@ class Compiler {
         def body := Array<ASTNode>()
         body.add(ASTNode.MATCH(p, ASTNode.SELF(p), FixedArray<ASTNode>.from(whens),
                 FixedArray<ASTNode>.from([ASTNode.UNREACHABLE(p, null)])))
-        def hash := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE ||
-                    Annotations.Flag.SYNTHETIC),
+        def hash := MethodDecl(cl, p, methods.count, null,
+                Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                 MethodDecl.Kind.FUNCTION, "get_hash", null, [], INT_TYPE,
                 FixedArray<ASTNode>.from(body))
+        methods.add(hash)
         cl.methods.add(hash)
     }
 
@@ -1073,10 +1084,11 @@ class Compiler {
         def body := Array<ASTNode>()
         body.add(ASTNode.MATCH(p, ASTNode.SELF(p), FixedArray<ASTNode>.from(whens),
                 FixedArray<ASTNode>.from([ASTNode.UNREACHABLE(p, null)])))
-        def asString := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE ||
-                    Annotations.Flag.SYNTHETIC),
+        def asString := MethodDecl(cl, p, methods.count, null,
+                Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                 MethodDecl.Kind.FUNCTION, "get_asString", null, [], STRING_TYPE,
                 FixedArray<ASTNode>.from(body))
+        methods.add(asString)
         cl.methods.add(asString)
     }
 
@@ -1258,7 +1270,7 @@ class Compiler {
         }
         if m.methodKind = MethodDecl.Kind.INIT {
             if isValue(m.owner) {
-                m.returnType := m.owner.type
+                m.returnType := m.owner.typeWithParameters()
             }
         }
         else {
@@ -1665,9 +1677,10 @@ class Compiler {
                 }
                 def parameters := m.parameters.map(p => MethodDecl.Parameter(p.name,
                         self.remapType(type, p.type)))
-                def clone := MethodDecl(result, m.position, m.doccomment, m.annotations,
-                        m.methodKind, m.name, generics, parameters, remapType(type, m.returnType),
-                        m.body)
+                def clone := MethodDecl(result, m.position, methods.count, m.doccomment,
+                        m.annotations, m.methodKind, m.name, generics, parameters,
+                        remapType(type, m.returnType), m.body)
+                methods.add(clone)
                 result.methods.add(clone)
                 result.symbolTable.add(clone)
             }
@@ -3327,6 +3340,9 @@ class Compiler {
         if type.isPointer & (target.isPointer | target.nonnullable().isMethod) {
             return true
         }
+        if type.isNewPointer & target.nonnullable().isMethod {
+            return true
+        }
         if coercionCost(type, target) !== null {
             return true
         }
@@ -3395,9 +3411,10 @@ class Compiler {
                     Binary.Operator.ASSIGNMENT,
                     ASTNode.IDENTIFIER(cl.position, "f\{i}")))
         }
-        def synthetic := MethodDecl(cl, cl.position, null, Annotations(Annotations.Flag.SYNTHETIC),
-                MethodDecl.Kind.INIT, "init", null, parameters, VOID_TYPE,
-                FixedArray<ASTNode>.from(statements))
+        def synthetic := MethodDecl(cl, cl.position, methods.count, null,
+                Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init", null,
+                parameters, VOID_TYPE, FixedArray<ASTNode>.from(statements))
+        methods.add(synthetic)
         entry.initMethod := synthetic
         cl.methods.add(synthetic)
         cl.symbolTable.add(synthetic)
@@ -3609,7 +3626,7 @@ class Compiler {
         unreachable, "can't find field \{f} in \{f.owner.name} : \{fields}"
     }
 
-    method capture(position:Position, v:Variable) {
+    method capture(position:MethodPosition, v:Variable) {
         if v.name = SELF_NAME {
             for c in captures {
                 c.second[SELF_NAME] := Capture.SELF
@@ -3630,7 +3647,7 @@ class Compiler {
         }
     }
 
-    method capture(position:Position, f:FieldDecl) {
+    method capture(position:MethodPosition, f:FieldDecl) {
         for c in captures {
             c.second[f.name] := Capture.FIELD(f)
             if f.owner == c.first.owner {
@@ -3640,7 +3657,7 @@ class Compiler {
     }
 
     @post(@return !== null | errorCount > 0 | !reportErrors)
-    method symbolRef(position:Position, target:IR.Value?, s:Symbol):IR.Value? {
+    method symbolRef(position:MethodPosition, target:IR.Value?, s:Symbol):IR.Value? {
         match s.kind {
             when Symbol.Kind.ALIAS {
                 def type := resolve(s->Alias.type)
@@ -3721,7 +3738,7 @@ class Compiler {
                 resolve(cc)
                 def inits := getSymbolTable(cc.owner)["init"]
                 assert inits !== null
-                def args := [ASTNode.INT(position, cc.rawValue.asUInt64)]
+                def args := [ASTNode.INT(position.asPosition, cc.rawValue.asUInt64)]
                 if isValue(cc.owner) {
                     return Call.compile(self, position, symbolRef(position, null, inits), args,
                             TypeContext.UNSPECIFIED)
@@ -3750,11 +3767,11 @@ class Compiler {
         return m.methodKind = MethodDecl.Kind.INIT & isValue(m.owner)
     }
 
-    method implicitInit(position:Position, value:IR.Value, m:MethodDecl):IR.Value {
+    method implicitInit(position:MethodPosition, value:IR.Value, m:MethodDecl):IR.Value {
         def coerced := coerce(position, value, m.parameters[0].type)
         assert coerced !== null
         def intrinsic := Call.compileIntrinsic(self, position, null, MethodRef(self, m.owner.type,
-                m), [ASTNode.IR_WRAPPER(position, coerced)])
+                m), [ASTNode.IR_WRAPPER(position.asPosition, coerced)])
         if intrinsic.first {
             return intrinsic.second
         }
@@ -3770,7 +3787,7 @@ class Compiler {
     Creates an object which represents a method reference, such as `Int.+` (which has a `null`
     `target`) or 1.+ (which has a `target` of `1`).
     ================================================================================================
-    method createMethodObject(position:Position, target:IR.Value?, m:MethodDecl):IR.Value? {
+    method createMethodObject(position:MethodPosition, target:IR.Value?, m:MethodDecl):IR.Value? {
         if !resolve(m) {
             return null
         }
@@ -3788,29 +3805,30 @@ class Compiler {
             enclosingContexts := old
             tempCount += 1
             def dummyName := "$dummy\{tempCount}"
-            compileDeclaration(position, ASTNode.IDENTIFIER(position, dummyName),
-                    ASTNode.IR_WRAPPER(position, target), Variable.Kind.DEF)
+            compileDeclaration(position, ASTNode.IDENTIFIER(position.asPosition, dummyName),
+                    ASTNode.IR_WRAPPER(position.asPosition, target), Variable.Kind.DEF)
             def parameters := Array<ASTNode>()
             def arguments := Array<ASTNode>()
             for i in 0 .. m.parameters.count {
                 def name := "param\{i}"
-                parameters.add(ASTNode.PARAMETER(position, name,
-                    ASTNode.IR_WRAPPER(m.position, literalType(effectiveType.parameterType(i)))))
-                arguments.add(ASTNode.IDENTIFIER(position, name))
+                parameters.add(ASTNode.PARAMETER(position.asPosition, name,
+                        ASTNode.IR_WRAPPER(m.position,
+                            literalType(effectiveType.parameterType(i)))))
+                arguments.add(ASTNode.IDENTIFIER(position.asPosition, name))
             }
-            def call := ASTNode.CALL(position,
-                    ASTNode.DOT(position, ASTNode.IDENTIFIER(position, dummyName), m.name),
-                    FixedArray<ASTNode>.from(arguments))
+            def call := ASTNode.CALL(position.asPosition,
+                    ASTNode.DOT(position.asPosition, ASTNode.IDENTIFIER(position.asPosition,
+                    dummyName), m.name), FixedArray<ASTNode>.from(arguments))
             def statement:ASTNode
             if effectiveType.returnType != VOID_TYPE {
-                statement := ASTNode.RETURN(position, call)
+                statement := ASTNode.RETURN(position.asPosition, call)
             }
             else {
                 statement := call
             }
             return Closure.compile(self, position, m.methodKind,
                     FixedArray<ASTNode>.from(parameters),
-                    ASTNode.IR_WRAPPER(position, literalType(effectiveType.returnType)),
+                    ASTNode.IR_WRAPPER(position.asPosition, literalType(effectiveType.returnType)),
                     FixedArray<ASTNode>.from([statement]), TypeContext.UNSPECIFIED)
         }
         else {
@@ -3824,9 +3842,9 @@ class Compiler {
             }
         }
         def args := Array<ASTNode>()
-        args.add(ASTNode.IR_WRAPPER(position, cast(position, IR.Value.METHOD_POINTER(m, irType),
-                Type.pointerTo(self, INT8_TYPE))))
-        args.add(ASTNode.NULL(position))
+        args.add(ASTNode.IR_WRAPPER(position.asPosition, cast(position, IR.Value.METHOD_POINTER(m,
+                irType), Type.pointerTo(self, INT8_TYPE))))
+        args.add(ASTNode.NULL(position.asPosition))
         return cast(position, Call.compile(self, position, literalType(METHOD_TYPE), args,
                 TypeContext.UNSPECIFIED), effectiveType)
     }
@@ -3852,7 +3870,8 @@ class Compiler {
     }
 
     @pre(value.type().isMethod & target.isMethod)
-    method methodCast(position:Position, value:IR.Value, target:Type, explicit:Bit):IR.Value? {
+    method methodCast(position:MethodPosition, value:IR.Value, target:Type,
+            explicit:Bit):IR.Value? {
         def src := value.type()
         if src = target {
             return value
@@ -3880,35 +3899,36 @@ class Compiler {
         }
         def rawParams := Array<ASTNode>()
         def callParams := Array<ASTNode>()
+        def basePos := position.asPosition
         for i in 0 .. src.parameterCount {
             def name := "param\{i}"
-            rawParams.add(ASTNode.PARAMETER(position, name, ASTNode.IR_WRAPPER(position,
+            rawParams.add(ASTNode.PARAMETER(basePos, name, ASTNode.IR_WRAPPER(basePos,
                     literalType(target.subtypes[i]))))
-            callParams.add(ASTNode.BINARY(position, ASTNode.IDENTIFIER(position, name),
-                    Binary.Operator.IMPLICIT_CAST, ASTNode.IR_WRAPPER(position,
+            callParams.add(ASTNode.BINARY(basePos, ASTNode.IDENTIFIER(basePos, name),
+                    Binary.Operator.IMPLICIT_CAST, ASTNode.IR_WRAPPER(basePos,
                         literalType(src.subtypes[i]))))
         }
         tempCount += 1
-        def methodCapture := ASTNode.IDENTIFIER(position, "$method\{tempCount}")
-        compileDeclaration(position, methodCapture, ASTNode.IR_WRAPPER(position, value),
+        def methodCapture := ASTNode.IDENTIFIER(basePos, "$method\{tempCount}")
+        compileDeclaration(position, methodCapture, ASTNode.IR_WRAPPER(basePos, value),
                 Variable.Kind.DEF)
-        def c := ASTNode.CALL(position, methodCapture, FixedArray<ASTNode>.from(callParams))
+        def c := ASTNode.CALL(basePos, methodCapture, FixedArray<ASTNode>.from(callParams))
         def body:Array<ASTNode>
         if target.returnType != VOID_TYPE {
-            body := [ASTNode.RETURN(position, ASTNode.BINARY(position, c,
+            body := [ASTNode.RETURN(basePos, ASTNode.BINARY(basePos, c,
                     Binary.Operator.IMPLICIT_CAST,
-                    ASTNode.IR_WRAPPER(position, literalType(target.returnType))))]
+                    ASTNode.IR_WRAPPER(basePos, literalType(target.returnType))))]
         }
         else {
             body := [c]
         }
         return Closure.compile(self, position, kind, FixedArray<ASTNode>.from(rawParams),
-                ASTNode.IR_WRAPPER(position, literalType(target.returnType)),
+                ASTNode.IR_WRAPPER(basePos, literalType(target.returnType)),
                 FixedArray<ASTNode>.from(body), TypeContext.TYPE(target, false))
     }
 
     @pre(target != VOID_TYPE)
-    method coerce(position:Position, value:IR.Value?, target:Type):IR.Value? {
+    method coerce(position:MethodPosition, value:IR.Value?, target:Type):IR.Value? {
         return coerce(position, value, target, false)
     }
 
@@ -3924,7 +3944,7 @@ class Compiler {
     coerce will be handled as coercion with an 'explicit' parameter of true).
     ================================================================================================
     @pre(target != VOID_TYPE)
-    method coerce(position:Position, value:IR.Value?, target:Type, explicit:Bit):IR.Value? {
+    method coerce(position:MethodPosition, value:IR.Value?, target:Type, explicit:Bit):IR.Value? {
         if value == null {
             return null
         }
@@ -4016,7 +4036,7 @@ class Compiler {
                     def methods := inits->Methods.methods.filter(m => m.annotations.isImplicit)
                     if methods.count > 0 {
                         def args := Array<ASTNode>()
-                        args.add(ASTNode.IR_WRAPPER(position, value))
+                        args.add(ASTNode.IR_WRAPPER(position.asPosition, value))
                         def best := Call.findBestMethod(self, position, null, methods, args,
                                 TypeContext.UNSPECIFIED)
                         if best !== null {
@@ -4035,10 +4055,14 @@ class Compiler {
             if -*explicit & *-value.type().isNullable & !target.isNullable &
                     target.typeKind != Type.Kind.GENERIC_CLASS_PARAMETER &
                     target.typeKind != Type.Kind.GENERIC_METHOD_PARAMETER {
-                Assert.compile(self, position, ASTNode.BINARY(position,
-                        ASTNode.IR_WRAPPER(position, value), Binary.Operator.NIDENTITY,
-                        ASTNode.NULL(position)), ASTNode.STRING(position,
+                def basePos := position.asPosition
+                Assert.compile(self, position, ASTNode.BINARY(basePos,
+                        ASTNode.IR_WRAPPER(basePos, value), Binary.Operator.NIDENTITY,
+                        ASTNode.NULL(basePos)), ASTNode.STRING(basePos,
                                 "unexpected null reference casting \{value.type()} to \{target}"))
+            }
+            if canRewriteType(value, target) {
+                return rewriteType(value, target)
             }
             def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target, explicit)),
                     target)
@@ -4051,7 +4075,7 @@ class Compiler {
         return null
     }
 
-    method coerce(position:Position, value:IR.Value?, type:TypeContext):IR.Value? {
+    method coerce(position:MethodPosition, value:IR.Value?, type:TypeContext):IR.Value? {
         if value == null {
             return value
         }
@@ -4075,8 +4099,22 @@ class Compiler {
         }
     }
 
-    method cast(position:Position, value:IR.Value?, target:Type):IR.Value? {
+    method cast(position:MethodPosition, value:IR.Value?, target:Type):IR.Value? {
         return cast(position, value, target, false)
+    }
+
+    function canRewriteType(v:IR.Value, target:Type):Bit {
+        if v.type().isPointer | target.isPointer {
+            return false
+        }
+        def srcType := v.type()
+        if srcType.typeKind = Type.Kind.GENERIC {
+            return (target.typeKind = Type.Kind.CLASS & srcType.subtypes[0] = target) |
+                    (target.typeKind = Type.Kind.GENERIC &
+                    srcType.subtypes[0] = target.subtypes[0])
+        }
+        return srcType.typeKind = Type.Kind.CLASS & target.typeKind = Type.Kind.GENERIC &
+                target.subtypes[0] = srcType
     }
 
     ================================================================================================
@@ -4086,7 +4124,7 @@ class Compiler {
     expression `object->String`.
     ================================================================================================
     @pre(target != VOID_TYPE & target.resolved)
-    method cast(position:Position, value:IR.Value?, target:Type, explicit:Bit):IR.Value? {
+    method cast(position:MethodPosition, value:IR.Value?, target:Type, explicit:Bit):IR.Value? {
         if value == null {
             return null
         }
@@ -4110,11 +4148,34 @@ class Compiler {
             error(position, "value of type '\{value.type()}' cannot possibly be an instance of " +
                     "'\{target}'")
         }
+        if canRewriteType(value, target) {
+            return rewriteType(value, target)
+        }
         def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target, true)), target)
         if !isRefCounted(value.type()) & isRefCounted(target) {
             enclosingContexts.push(EnclosingContext.VALUE_SCOPE(result))
         }
         return result
+    }
+
+    ================================================================================================
+    Rewrites the type of a value. This is distinct from a typecast, in that it never actually causes
+    any code to be generated. This is used for situations where the "real" underlying type of the
+    object is the same, but we need a different Frost type to reflect it (e.g. List<T> vs.
+    List<Object>).
+    ================================================================================================
+    method rewriteType(v:IR.Value, t:Type):IR.Value {
+        match v {
+            when IR.Value.PARAMETER(idx, _) {
+                return IR.Value.PARAMETER(idx, t)
+            }
+            when IR.Value.REF(s, _) {
+                return IR.Value.REF(s, t)
+            }
+            otherwise {
+                unreachable, "cannot rewrite \{v}->\{t}"
+            }
+        }
     }
 
     ================================================================================================
@@ -4129,8 +4190,8 @@ class Compiler {
             return value
         }
         def simpleName := target.name[target.name.next(target.name.lastIndexOf("."))..]
-        return Call.compile(self, Position(), value, "get_as\{simpleName}", [],
-                TypeContext.TYPE(target, false))
+        return Call.compile(self, MethodPosition(currentMethod[0].position, currentMethodIndex),
+                value, "get_as\{simpleName}", [], TypeContext.TYPE(target, false))
     }
 
     method getVTableIndex(m:MethodDecl):Int {
@@ -4145,17 +4206,17 @@ class Compiler {
 
     method compileRef(v:IR.Value) {
         def args := Array<ASTNode>()
-        args.add(ASTNode.IR_WRAPPER(Position(), v))
-        Call.compile(self, Position(), literalType(FROST_TYPE), "ref", args,
-                TypeContext.UNSPECIFIED)
+        args.add(ASTNode.IR_WRAPPER(currentMethod[0].position, v))
+        Call.compile(self, MethodPosition(currentMethod[0].position, currentMethodIndex),
+                literalType(FROST_TYPE), "ref", args, TypeContext.UNSPECIFIED)
     }
 
     @pre(isRefCounted(v.type()))
     method compileUnref(v:IR.Value) {
         def args := Array<ASTNode>()
-        args.add(ASTNode.IR_WRAPPER(Position(), v))
-        Call.compile(self, Position(), literalType(FROST_TYPE), "unref", args,
-                TypeContext.UNSPECIFIED)
+        args.add(ASTNode.IR_WRAPPER(currentMethod[0].position, v))
+        Call.compile(self, MethodPosition(currentMethod[0].position, currentMethodIndex),
+                literalType(FROST_TYPE), "unref", args, TypeContext.UNSPECIFIED)
     }
 
     @pre(type.isNumber)
@@ -4336,7 +4397,7 @@ class Compiler {
         }
     }
 
-    method compileChoiceCaseReference(position:Position, owner:Type, cc:ChoiceCase,
+    method compileChoiceCaseReference(position:MethodPosition, owner:Type, cc:ChoiceCase,
             args:FixedArray<ASTNode>, type:TypeContext):IR.Value? {
         resolve(cc)
         def initMethod := cc.initMethod
@@ -4350,7 +4411,7 @@ class Compiler {
             return null
         }
         def finalArgs := Array<ASTNode>()
-        finalArgs.add(ASTNode.INT(position, cc.rawValue.asUInt64))
+        finalArgs.add(ASTNode.INT(position.asPosition, cc.rawValue.asUInt64))
         finalArgs.addAll(args)
         if isValue(cc.owner) {
             return coerce(position, Call.compile(self, position,
@@ -4397,7 +4458,8 @@ class Compiler {
         return null
     }
 
-    method compileCast(position:Position, value:ASTNode, rawTarget:Type, explicit:Bit):IR.Value? {
+    method compileCast(position:MethodPosition, value:ASTNode, rawTarget:Type,
+            explicit:Bit):IR.Value? {
         def index := rawTarget.name.lastIndexOf(".")
         if rawTarget.typeKind = Type.Kind.CLASS & index !== null {
             -- we have a dotted name which might not be entirely a type - for example we might have
@@ -4410,7 +4472,8 @@ class Compiler {
             reportErrors := old
             if type == null {
                 def base := compileCast(position, value,
-                        Type(rawTarget.name[..index], Type.Kind.CLASS, position), explicit)
+                        Type(rawTarget.name[..index], Type.Kind.CLASS, position.asPosition),
+                        explicit)
                 if base == null {
                     return null
                 }
@@ -4438,7 +4501,7 @@ class Compiler {
     }
 
     @pre(op = Binary.Operator.IDENTITY | op = Binary.Operator.NIDENTITY)
-    method compileIdentityComparison(position:Position, left:ASTNode, op:Binary.Operator,
+    method compileIdentityComparison(position:MethodPosition, left:ASTNode, op:Binary.Operator,
             right:ASTNode, type:TypeContext):IR.Value? {
         def compiledLeft := compileExpression(left, TypeContext.NON_VOID)
         if compiledLeft == null {
@@ -4482,7 +4545,7 @@ class Compiler {
         return coerce(position, bit, type)
     }
 
-    method compileNull(position:Position, type:TypeContext):IR.Value? {
+    method compileNull(position:MethodPosition, type:TypeContext):IR.Value? {
         match type {
             when TypeContext.TYPE(t, _) {
                 if t.typeKind != Type.Kind.NULLABLE {
@@ -4496,7 +4559,7 @@ class Compiler {
         }
     }
 
-    method compileRange(position:Position, start:ASTNode?, inclusive:Bit, end:ASTNode?,
+    method compileRange(position:MethodPosition, start:ASTNode?, inclusive:Bit, end:ASTNode?,
             step:ASTNode?, type:TypeContext):IR.Value? {
         var endpointContext := TypeContext.NON_VOID
         var endpointType:Type? := null
@@ -4615,6 +4678,7 @@ class Compiler {
             }
             compiledEnd := IR.Value.NULL(endpointType)
         }
+        def basePos := position.asPosition
         if step !== null {
             if stepContext = TypeContext.NON_VOID & endpointType.isNumber {
                 def p := possibleTypes(step)
@@ -4632,24 +4696,24 @@ class Compiler {
                 return null
             }
             def args := Array<ASTNode>()
-            args.add(ASTNode.IR_WRAPPER(position, compiledStart))
-            args.add(ASTNode.IR_WRAPPER(position, compiledEnd))
+            args.add(ASTNode.IR_WRAPPER(basePos, compiledStart))
+            args.add(ASTNode.IR_WRAPPER(basePos, compiledEnd))
             args.add(ASTNode.IR_WRAPPER(step.position(), compiledStep))
-            args.add(ASTNode.BIT(position, inclusive))
+            args.add(ASTNode.BIT(basePos, inclusive))
             return Call.compile(self, position, literalType(Type.SteppedRangeOf(self,
                     endpointType, compiledStep.type())), args, type)
         }
         else {
             def args := Array<ASTNode>()
-            args.add(ASTNode.IR_WRAPPER(position, compiledStart))
-            args.add(ASTNode.IR_WRAPPER(position, compiledEnd))
-            args.add(ASTNode.BIT(position, inclusive))
+            args.add(ASTNode.IR_WRAPPER(basePos, compiledStart))
+            args.add(ASTNode.IR_WRAPPER(basePos, compiledEnd))
+            args.add(ASTNode.BIT(basePos, inclusive))
             return Call.compile(self, position, literalType(Type.RangeOf(self, endpointType)),
                     args, type)
         }
     }
 
-    method compileReal(position:Position, value:Real64, type:TypeContext):IR.Value? {
+    method compileReal(position:MethodPosition, value:Real64, type:TypeContext):IR.Value? {
         match type {
             when TypeContext.TYPE(t, _) {
                 if t.typeKind = Type.Kind.BUILTIN_FLOAT {
@@ -4657,7 +4721,7 @@ class Compiler {
                 }
                 if t.isReal {
                     def args := Array<ASTNode>()
-                    args.add(ASTNode.REAL(position, value))
+                    args.add(ASTNode.REAL(position.asPosition, value))
                     return Call.compile(self, position, literalType(t), args, type)
                 }
             }
@@ -4666,13 +4730,13 @@ class Compiler {
                 TypeContext.TYPE(REAL64_TYPE, false)), type)
     }
 
-    method compileRegex(position:Position, text:String):IR.Value? {
+    method compileRegex(position:MethodPosition, text:String):IR.Value? {
         return Call.compile(self, position, literalType(REGULAR_EXPRESSION_TYPE),
-                [ASTNode.STRING(position, text)],
+                [ASTNode.STRING(position.asPosition, text)],
                 TypeContext.UNSPECIFIED)
     }
 
-    method compileSelf(position:Position, explicit:Bit):IR.Value? {
+    method compileSelf(position:MethodPosition, explicit:Bit):IR.Value? {
         if captures.count > 0 {
             for c in captures {
                 c.second[SELF_NAME] := Capture.SELF
@@ -4749,17 +4813,18 @@ class Compiler {
     ================================================================================================
     @post(typeMatch(@return, type) & (@return !== null | errorCount > 0 | !reportErrors))
     method compileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
+        def position := MethodPosition(expr.position(), currentMethodIndex)
         match expr {
-            when ASTNode.ARRAY(position, elements) {
+            when ASTNode.ARRAY(_, elements) {
                 return ArrayLiteral.compile(self, position, elements, type)
             }
-            when ASTNode.AT_PRE(position, expr) {
+            when ASTNode.AT_PRE(_, expr) {
                 return AtPre.compile(self, position, expr, type)
             }
-            when ASTNode.AT_RETURN(position) {
+            when ASTNode.AT_RETURN {
                 return AtReturn.compile(self, position, type)
             }
-            when ASTNode.BINARY(position, left, op, right) {
+            when ASTNode.BINARY(_, left, op, right) {
                 return Binary.compile(self, position, left, op, right, type)
             }
             when ASTNode.BIT(_, value) {
@@ -4770,94 +4835,95 @@ class Compiler {
                         }
                     }
                 }
-                return coerce(expr.position(),
-                        coerce(expr.position(), IR.Value.BIT(value, BUILTIN_BIT_TYPE), BIT_TYPE),
+                return coerce(position,
+                        coerce(position, IR.Value.BIT(value, BUILTIN_BIT_TYPE), BIT_TYPE),
                         type)
             }
-            when ASTNode.CALL(position, m, args) {
+            when ASTNode.CALL(_, m, args) {
                 return Call.compile(self, position, m, args, false, type)
             }
-            when ASTNode.DOT(position, base, name) {
+            when ASTNode.DOT(_, base, name) {
                 def t := tryResolveType(expr)
                 if t !== null {
-                    return coerce(expr.position(), literalType(t), type)
+                    return coerce(position, literalType(t), type)
                 }
-                return coerce(expr.position(), Dot.compile(self, position, base, name), type)
+                return coerce(position, Dot.compile(self, position, base, name), type)
             }
-            when ASTNode.DOT_GENERICS(position, base, name, types) {
+            when ASTNode.DOT_GENERICS(_, base, name, types) {
                 def t := tryResolveType(expr)
                 if t !== null {
-                    return coerce(expr.position(), literalType(t), type)
+                    return coerce(position, literalType(t), type)
                 }
                 def dot := Dot.compile(self, position, base, name)
                 if dot == null {
                     return null
                 }
-                return coerce(expr.position(), genericMethodRef(dot, types), type)
+                return coerce(position, genericMethodRef(dot, types), type)
             }
-            when ASTNode.IDENTIFIER(position, name) {
-                return coerce(expr.position(), Identifier.compile(self, position, name), type)
+            when ASTNode.IDENTIFIER(_, name) {
+                return coerce(position, Identifier.compile(self, position, name), type)
             }
-            when ASTNode.IDENTIFIER_GENERICS(position, name, types) {
+            when ASTNode.IDENTIFIER_GENERICS(_, name, types) {
                 def identifier := Identifier.compile(self, position, name)
                 if identifier == null {
                     return null
                 }
-                return coerce(expr.position(), genericMethodRef(identifier, types), type)
+                return coerce(position, genericMethodRef(identifier, types), type)
             }
-            when ASTNode.INT(position, value) {
+            when ASTNode.INT(_, value) {
                 return IntLiteral.compile(self, position, value, type)
             }
             when ASTNode.IR_WRAPPER(_, value) {
-                return coerce(expr.position(), value, type)
+                return coerce(position, value, type)
             }
-            when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, body) {
+            when ASTNode.METHOD(_, _, _, kind, _, _, parameters, returnType, body) {
                 return Closure.compile(self, position, kind, parameters, returnType, body, type)
             }
-            when ASTNode.NULL(position) {
+            when ASTNode.NULL(_) {
                 return compileNull(position, type)
             }
-            when ASTNode.UNARY(position, op, operand) {
+            when ASTNode.UNARY(_, op, operand) {
                 return Unary.compile(self, position, op, operand, type)
             }
-            when ASTNode.RANGE(position, start, inclusive, end, step) {
+            when ASTNode.RANGE(_, start, inclusive, end, step) {
                 return compileRange(position, start, inclusive, end, step, type)
             }
-            when ASTNode.REAL(position, value) {
+            when ASTNode.REAL(_, value) {
                 return compileReal(position, value, type)
             }
-            when ASTNode.REGEX(position, text) {
+            when ASTNode.REGEX(_, text) {
                 return compileRegex(position, text)
             }
-            when ASTNode.SELF(position) {
+            when ASTNode.SELF(_) {
                 return coerce(position, compileSelf(position, true), type)
             }
-            when ASTNode.SUPER(position) {
+            when ASTNode.SUPER(_) {
                 error(position, "'super' may not appear in this context")
                 return null
             }
-            when ASTNode.STRING(position, text) {
+            when ASTNode.STRING(_, text) {
                 match type {
                     when TypeContext.TYPE(t, _) {
+                        def basePos := position.asPosition
                         if text.length = 1 {
                             if t.isChar {
-                                return compileExpression(ASTNode.CALL(position,
-                                        ASTNode.IR_WRAPPER(position, literalType(t)),
-                                        FixedArray<ASTNode>.from([ASTNode.INT(position,
+                                return compileExpression(ASTNode.CALL(basePos,
+                                        ASTNode.IR_WRAPPER(basePos, literalType(t)),
+                                        FixedArray<ASTNode>.from([ASTNode.INT(basePos,
                                             text[0].asUInt64)])))
                             }
                             if t = VALUE_TYPE {
-                                return coerce(position, compileExpression(ASTNode.CALL(position,
-                                        ASTNode.IR_WRAPPER(position, literalType(CHAR32_TYPE)),
-                                        FixedArray<ASTNode>.from([ASTNode.INT(position,
+                                return coerce(position, compileExpression(ASTNode.CALL(basePos,
+                                        ASTNode.IR_WRAPPER(basePos, literalType(CHAR32_TYPE)),
+                                        FixedArray<ASTNode>.from([ASTNode.INT(basePos,
                                             text[0].asUInt64)]))), t)
                             }
                         }
                     }
                 }
-                return coerce(expr.position(), IR.Value.STRING(text, STRING_TYPE), type)
+                return coerce(position, IR.Value.STRING(text, STRING_TYPE), type)
             }
-            when ASTNode.TUPLE(position, args) {
+            when ASTNode.TUPLE(_, args) {
                 return Tuple.compile(self, position, args, type)
             }
             when ASTNode.TYPE, ASTNode.GENERIC_TYPE {
@@ -4867,10 +4933,10 @@ class Compiler {
                 }
                 return literalType(type)
             }
-            when ASTNode.TYPED_LAMBDA(position, parameters, body) {
+            when ASTNode.TYPED_LAMBDA(_, parameters, body) {
                 return Closure.compileTypedLambda(self, position, parameters, body, type)
             }
-            when ASTNode.UNTYPED_LAMBDA(position, parameters, body) {
+            when ASTNode.UNTYPED_LAMBDA(_, parameters, body) {
                 return Closure.compileUntypedLambda(self, position, parameters, body, type)
             }
             otherwise {
@@ -4885,15 +4951,16 @@ class Compiler {
         if unresolved == null {
             return null
         }
+        def position := MethodPosition(expr.position(), currentMethodIndex)
         match unresolved {
             when IR.Value.METHOD(target, m, _) {
-                return coerce(expr.position(), createMethodObject(expr.position(), target, m), type)
+                return coerce(position, createMethodObject(position, target, m), type)
             }
             when IR.Value.METHODS(target, methods, _) {
                 match type {
                     when TypeContext.TYPE(t, _) {
                         if !t.nonnullable().isMethod {
-                            error(expr.position(), "unresolved method reference cannot possibly " +
+                            error(position, "unresolved method reference cannot possibly " +
                                     "be an instance of '\{t}'")
                         }
                         def best := Array<MethodDecl>()
@@ -4913,11 +4980,11 @@ class Compiler {
                             }
                         }
                         if best.count = 1 {
-                            return compileExpression(ASTNode.IR_WRAPPER(expr.position(),
+                            return compileExpression(ASTNode.IR_WRAPPER(position.asPosition,
                                     IR.Value.METHOD(target, best[0], best[0].type(self))), type)
                         }
                         if best.count = 0 {
-                            error(expr.position(), "no method '\{methods[0].name}' matching " +
+                            error(position, "no method '\{methods[0].name}' matching " +
                                     "expected type '\{t}'")
                             return null
                         }
@@ -4928,7 +4995,7 @@ class Compiler {
                 for m in methods.sort((a, b) => a.position > b.position) {
                     msg.append("\n    \{m.declaration} (\{m.owner.source.name}:\{m.position})")
                 }
-                error(expr.position(), msg.finish())
+                error(position, msg.finish())
                 return null
             }
             otherwise {
@@ -4951,19 +5018,18 @@ class Compiler {
                 if coercionCost(left, BIT_TYPE) !== null {
                     match op {
                         when Binary.Operator.AND {
-                            And.compileConditionalBranch(self, position, left, right, ifTrue,
-                                    ifFalse)
+                            And.compileConditionalBranch(self, left, right, ifTrue, ifFalse)
                             return
                         }
                         when Binary.Operator.OR {
-                            Or.compileConditionalBranch(self, position, left, right, ifTrue,
-                                    ifFalse)
+                            Or.compileConditionalBranch(self, left, right, ifTrue, ifFalse)
                             return
                         }
                     }
                 }
             }
         }
+        def position := MethodPosition(test.position(), currentMethodIndex)
         def testBit:IR.Value
         {
             def unrefs := AutoUnrefs(self)
@@ -4971,9 +5037,9 @@ class Compiler {
             if compiledTest == null {
                 return
             }
-            testBit := extractBuiltinBit(test.position(), compiledTest)
+            testBit := extractBuiltinBit(position, compiledTest)
         }
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(test.position(), testBit, ifTrue, ifFalse))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, testBit, ifTrue, ifFalse))
     }
 
     @pre(owner.name = context.name & owner.parameters.count = context.parameters.count)
@@ -5034,13 +5100,13 @@ class Compiler {
     }
 
     @pre(bit.type() = BIT_TYPE)
-    method extractBuiltinBit(position:Position, bit:IR.Value):IR.Value {
+    method extractBuiltinBit(position:MethodPosition, bit:IR.Value):IR.Value {
         def result := ir.add(IR.Statement.EXTRACT_FIELD(position, bit,
                 getSymbolTable(getClass(BIT_TYPE))["value"]->FieldDecl))
         return IR.Value.REF(result, BUILTIN_BIT_TYPE)
     }
 
-    method extractBuiltinInt(position:Position, int:IR.Value):IR.Value {
+    method extractBuiltinInt(position:MethodPosition, int:IR.Value):IR.Value {
         def field := getSymbolTable(getClass(int.type()))["value"]->FieldDecl
         assert field !== null
         resolve(field)
@@ -5051,8 +5117,9 @@ class Compiler {
     method compileTarget(t:ASTNode, kind:Variable.Kind,
             rawValue:ASTNode?, valueType:Type?):Target? {
         match t {
-            when ASTNode.IDENTIFIER(position, name) {
+            when ASTNode.IDENTIFIER(basePos, name) {
                 -- no type, infer from value
+                def position := MethodPosition(basePos, currentMethodIndex)
                 def value:IR.Value?
                 def type:Type
                 if rawValue !== null {
@@ -5079,7 +5146,7 @@ class Compiler {
                     error(position, "declaration has neither a type nor a value")
                     return null
                 }
-                def v := Variable(position, kind, name, type,
+                def v := Variable(basePos, kind, name, type,
                         Variable.Storage.LOCAL(ir.locals.count))
                 v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
@@ -5111,8 +5178,9 @@ class Compiler {
                     for i in 0 .. targets.count {
                         def target:Target?
                         if compiledTuple !== null {
-                            def position := rawValue.position()
-                            def field := ASTNode.IR_WRAPPER(position, cast(position, 
+                            def basePos := rawValue.position()
+                            def position := MethodPosition(basePos, currentMethodIndex)
+                            def field := ASTNode.IR_WRAPPER(basePos, cast(position, 
                                     Dot.compile(self, position, compiledTuple, "f\{i}"),
                                     compiledTuple.type().subtypes[i]))
                             assert field !== null
@@ -5131,7 +5199,8 @@ class Compiler {
                 error(t.position(), "cannot use a tuple target without a tuple value")
                 return null
             }
-            when ASTNode.TYPED_IDENTIFIER(position, name, rawType) {
+            when ASTNode.TYPED_IDENTIFIER(basePos, name, rawType) {
+                def position := MethodPosition(basePos, currentMethodIndex)
                 def type := resolve(scanner.convertType(rawType))
                 if type == null {
                     return null
@@ -5146,7 +5215,7 @@ class Compiler {
                 else {
                     value := null
                 }
-                def v := Variable(position, kind, name, type,
+                def v := Variable(basePos, kind, name, type,
                         Variable.Storage.LOCAL(ir.locals.count))
                 v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
@@ -5183,7 +5252,8 @@ class Compiler {
         match target {
             when Target.VARIABLE(v, value) {
                 if value !== null {
-                    VariableLValue(self, v.position, v).compileStore(value)
+                    VariableLValue(self, MethodPosition(v.position, currentMethodIndex),
+                            v).compileStore(value)
                 }
             }
             when Target.TUPLE(targets) {
@@ -5195,10 +5265,10 @@ class Compiler {
         }
     }
 
-    method compileStore(position:Position, target:Target, value:IR.Value) {
+    method compileStore(position:MethodPosition, target:Target, value:IR.Value) {
         match target {
             when Target.VARIABLE(v, _) {
-                VariableLValue(self, v.position, v).compileStore(value)
+                VariableLValue(self, position, v).compileStore(value)
             }
             when Target.TUPLE(targets) {
                 def type := value.type().nonnullable()
@@ -5219,7 +5289,7 @@ class Compiler {
         }
     }
 
-    method compileDeclaration(position:Position, target:ASTNode, value:ASTNode?,
+    method compileDeclaration(position:MethodPosition, target:ASTNode, value:ASTNode?,
             varKind:Variable.Kind) {
         def compiledTarget:Target?
         {
@@ -5240,12 +5310,12 @@ class Compiler {
         }
         match c {
             when EnclosingContext.VARIABLE_SCOPE(v) {
-                def ref := symbolRef(v.position, null, v)
+                def ref := symbolRef(MethodPosition(v.position, currentMethodIndex), null, v)
                 assert ref !== null
                 compileUnref(ref)
                 match v.storage {
                     when Variable.Storage.LOCAL(slot) {
-                        ir.add(IR.Statement.STORE(v.position,
+                        ir.add(IR.Statement.STORE(MethodPosition(v.position, currentMethodIndex),
                                 IR.Value.NULL(v.type.nullable()),
                                 IR.Value.LOCAL(slot, v.type.nullable())))
                     }
@@ -5284,22 +5354,22 @@ class Compiler {
                 ir.currentBlock.containsExplicitCode := true
             }
         }
-        def position := s.position()
+        def position := MethodPosition(s.position(), currentMethodIndex)
         if position.file >= 0 {
-            ir.add(IR.Statement.COMMENT(s.position(), "\{files[position.file]}:\{position.line}"))
+            ir.add(IR.Statement.COMMENT(position, "\{files[position.file]}:\{position.line}"))
         }
         else {
-            ir.add(IR.Statement.COMMENT(s.position(), "<no location>"))
+            ir.add(IR.Statement.COMMENT(position, "<no location>"))
         }
         def unrefs := AutoUnrefs(self)
         match s {
-            when ASTNode.ASSERT(position, test, msg) {
+            when ASTNode.ASSERT(_, test, msg) {
                 Assert.compile(self, position, test, msg)
             }
-            when ASTNode.BINARY(position, left, op, right) {
+            when ASTNode.BINARY(_, left, op, right) {
                 Assignment.compile(self, position, left, op, right)
             }
-            when ASTNode.BLOCK(position, statements) {
+            when ASTNode.BLOCK(_, statements) {
                 def symbols := AutoScope(self)
                 for stmt in statements {
                     def finished := ir.currentBlockFinished
@@ -5310,49 +5380,49 @@ class Compiler {
                     }
                 }
             }
-            when ASTNode.BREAK(position, label) {
+            when ASTNode.BREAK(_, label) {
                 Break.compile(self, position, label)
             }
-            when ASTNode.CALL(position, m, args) {
+            when ASTNode.CALL(_, m, args) {
                 Call.compile(self, position, m, args, true, TypeContext.UNSPECIFIED)
             }
-            when ASTNode.CONTINUE(position, label) {
+            when ASTNode.CONTINUE(_, label) {
                 Continue.compile(self, position, label)
             }
-            when ASTNode.DO(position, label, statements, test) {
+            when ASTNode.DO(_, label, statements, test) {
                 Do.compile(self, position, label, statements, test)
             }
-            when ASTNode.FOR(position, label, target, list, statements) {
+            when ASTNode.FOR(_, label, target, list, statements) {
                 For.compile(self, position, label, target, list, statements)
             }
-            when ASTNode.IDENTIFIER(position, _) {
+            when ASTNode.IDENTIFIER(_, _) {
                 error(position, "expected a statement")
             }
-            when ASTNode.IF(position, test, ifTrue, ifFalse) {
+            when ASTNode.IF(_, test, ifTrue, ifFalse) {
                 If.compile(self, position, test, ifTrue, ifFalse)
             }
-            when ASTNode.LOOP(position, label, statements) {
+            when ASTNode.LOOP(_, label, statements) {
                 Loop.compile(self, position, label, statements)
             }
-            when ASTNode.MATCH(position, value, whens, other) {
+            when ASTNode.MATCH(_, value, whens, other) {
                 Match.compile(self, position, value, whens, other)
             }
-            when ASTNode.METHOD(position, _, _, kind, name, _, parameters, returnType, body) {
+            when ASTNode.METHOD(_, _, _, kind, name, _, parameters, returnType, body) {
                 InnerMethod.compile(self, position, kind, name, parameters, returnType, body)
             }
-            when ASTNode.RETURN(position, value) {
+            when ASTNode.RETURN(_, value) {
                 Return.compile(self, position, value)
             }
-            when ASTNode.UNREACHABLE(position, message) {
+            when ASTNode.UNREACHABLE(_, message) {
                 Assert.compileFail(self, position, message)
             }
-            when ASTNode.TRY(position, block, error, failBlock) {
+            when ASTNode.TRY(_, block, error, failBlock) {
                 Try.compile(self, position, block, error, failBlock)
             }
-            when ASTNode.VAR(position, kind, decls) {
+            when ASTNode.VAR(_, kind, decls) {
                 Var.compile(self, position, kind, decls)
             }
-            when ASTNode.WHILE(position, label, test, statements) {
+            when ASTNode.WHILE(_, label, test, statements) {
                 While.compile(self, position, label, test, statements)
             }
             otherwise {
@@ -5509,8 +5579,8 @@ class Compiler {
             current := current.overridden
         }
         if failBlock !== null {
-            Assert.compileFail(self, m.position, ASTNode.STRING(m.position,
-                    "precondition failure for \{m.declaration}"))
+            Assert.compileFail(self, MethodPosition(m.position, m.index),
+                    ASTNode.STRING(m.position, "precondition failure for \{m.declaration}"))
             assert start !== null
             ir.setCurrentBlock(start)
         }
@@ -5538,12 +5608,14 @@ class Compiler {
             successFail[1] := ir.newBlock("postcondition fail")
             def old := ir.currentBlock.id
             ir.setCurrentBlock(successFail[1])
-            Assert.compileFail(self, compiling.position, ASTNode.STRING(compiling.position,
-                    "postcondition failure for \{compiling.declaration}"))
+            Assert.compileFail(self, MethodPosition(compiling.position, currentMethodIndex),
+                    ASTNode.STRING(compiling.position,
+                        "postcondition failure for \{compiling.declaration}"))
             ir.setCurrentBlock(old)
         }
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(compiling.position,
-                extractBuiltinBit(compiling.position, value), successFail[0], successFail[1]))
+        def position := MethodPosition(compiling.position, currentMethodIndex)
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position, value),
+                successFail[0], successFail[1]))
         ir.setCurrentBlock(successFail[0])
         postconditionCurrentBlock := ir.currentBlock.id
     }
@@ -5596,6 +5668,7 @@ class Compiler {
             current := current.overridden
         }
         if havePost {
+            def position := MethodPosition(m.position, m.index)
             def returnValue:IR.Value? := null
             if returnVar !== null {
                 def returnSlot:Int
@@ -5604,7 +5677,7 @@ class Compiler {
                         returnSlot := slot
                     }
                 }
-                returnValue := IR.Value.REF(ir.add(IR.Statement.LOAD(m.position,
+                returnValue := IR.Value.REF(ir.add(IR.Statement.LOAD(position,
                         IR.Value.LOCAL(returnSlot, returnVar.type))),
                         returnVar.type)
             }
@@ -5613,10 +5686,10 @@ class Compiler {
             def oldPostconditionEntryBlock := postconditionEntryBlock
             postconditionEntryBlock := null
             if returnValue !== null {
-                Return.compile(self, m.position, ASTNode.IR_WRAPPER(m.position, returnValue), false)
+                Return.compile(self, position, ASTNode.IR_WRAPPER(m.position, returnValue), false)
             }
             else {
-                Return.compile(self, m.position, null)
+                Return.compile(self, position, null)
             }
             returnVar := oldReturnVar
             postconditionEntryBlock := oldPostconditionEntryBlock
@@ -5776,18 +5849,26 @@ class Compiler {
                     symbolTable.add(v)
                     index += 1
                 }
+                if m.annotations.isPointerSize {
+                    def v := Variable(m.position, Variable.Kind.DEF, "pointerSize",
+                            BUILTIN_INT_TYPE, Variable.Storage.PARAMETER(index))
+                    v.owner := m
+                    symbolTable.add(v)
+                    index += 1
+                }
                 compilePreconditions()
                 compilePostconditions()
                 for s in m.body {
                     compileStatement(s)
                 }
                 if !ir.currentBlockFinished {
+                    def position := MethodPosition(m.position, m.index)
                     if m.returnType = VOID_TYPE | m.methodKind = MethodDecl.Kind.INIT {
-                        Return.compile(self, m.position, null)
+                        Return.compile(self, position, null)
                     }
                     else if getInlineContext() == null {
                         def endBlock := ir.newBlock("end")
-                        ir.add(IR.Statement.BRANCH(m.position, endBlock))
+                        ir.add(IR.Statement.BRANCH(position, endBlock))
                         ir.setCurrentBlock(endBlock)
                         ir.add(IR.Statement.END)
                     }
@@ -6030,6 +6111,10 @@ class Compiler {
             }
             errorQueue.post(Message.ERROR(path, pos.line, pos.column, msg))
         }
+    }
+
+    method error(pos:MethodPosition, msg:String) {
+        error(pos.asPosition, msg)
     }
 
     method warn(pos:Position, msg:String) {

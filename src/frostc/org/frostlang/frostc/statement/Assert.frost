@@ -7,20 +7,20 @@ uses org.frostlang.frostc.Compiler.EnclosingContext
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.MethodRef
 uses org.frostlang.frostc.Methods
-uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.expression.Call
 
 class Assert {
     @class
-    method compileFail(compiler:Compiler, position:Position, msg:ASTNode?) {
+    method compileFail(compiler:Compiler, position:MethodPosition, msg:ASTNode?) {
         {
             def unrefs := AutoUnrefs(compiler)
             def args := Array<ASTNode>()
-            args.add(ASTNode.STRING(position, compiler.currentClass[0].source.name))
-            args.add(ASTNode.INT(position, position.line.asUInt64))
+            args.add(ASTNode.STRING(position.asPosition, compiler.currentClass[0].source.name))
+            args.add(ASTNode.INT(position.asPosition, position.line.asUInt64))
             def frost := compiler.getClass(compiler.FROST_TYPE)
             def m:MethodDecl
             if msg !== null {
@@ -40,7 +40,7 @@ class Assert {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, test:ASTNode, msg:ASTNode?) {
+    method compile(compiler:Compiler, position:MethodPosition, test:ASTNode, msg:ASTNode?) {
         def ir := compiler.ir
         def compiledTest := compiler.compileExpression(test, TypeContext.TYPE(compiler.BIT_TYPE,
                 false))

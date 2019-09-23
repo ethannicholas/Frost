@@ -10,12 +10,12 @@ class IR {
         builtin float types. Class types support the IDENTITY and NIDENTITY operations. The left and
         right types must match on all comparisons other than IDENTITY and NIDENTITY.
         ============================================================================================
-        BINARY(Position, Value, Binary.Operator, Value, Type)
+        BINARY(MethodPosition, Value, Binary.Operator, Value, Type)
 
         ============================================================================================
         Unconditionally branch to the given block.
         ============================================================================================
-        BRANCH(Position, Block.ID)
+        BRANCH(MethodPosition, Block.ID)
 
         ============================================================================================
         Casts a value of one type to another type. This handles bitcasting, truncating / extending,
@@ -24,16 +24,16 @@ class IR {
         inserted automatically. The code behaves identically either way, but the distinction is
         necessary because implicit nullable->non-nullable casts are an error.
         ============================================================================================
-        CAST(Position, Value, Type, Bit -* explicit *-)
+        CAST(MethodPosition, Value, Type, Bit -* explicit *-)
 
-        COMMENT(Position, String)
+        COMMENT(MethodPosition, String)
 
-        GET_CHOICE_FIELD_POINTER(Position, Value, ChoiceCase, Int)
+        GET_CHOICE_FIELD_POINTER(MethodPosition, Value, ChoiceCase, Int)
 
         ============================================================================================
         Conditionally branch to the first block if true, the second block if false.
         ============================================================================================
-        CONDITIONAL_BRANCH(Position, Value, Block.ID, Block.ID)
+        CONDITIONAL_BRANCH(MethodPosition, Value, Block.ID, Block.ID)
 
         ============================================================================================
         Constructs a new object instance. The object will have an initialized class pointer and a
@@ -42,18 +42,18 @@ class IR {
         directly returned by their `init` methods (non-`Value` `init` methods instead return void)
         or via CREATE_STRUCT.
         ============================================================================================
-        CONSTRUCT(Position, ClassDecl)
+        CONSTRUCT(MethodPosition, ClassDecl)
 
         ============================================================================================
         Creates an instance of a Value class with all fields specified.
         ============================================================================================
-        CREATE_STRUCT(Position, ClassDecl, FixedArray<Value> -* args *-)
+        CREATE_STRUCT(MethodPosition, ClassDecl, FixedArray<Value> -* args *-)
 
         ============================================================================================
         Dynamically calls a method reference. `args` is the actual, IR-level arguments, meaning that
         `self` (if any) appears explicitly as `args[0]`.
         ============================================================================================
-        DYNAMIC_CALL(Position, Value -* method *-, FixedArray<Value> -* args *-)
+        DYNAMIC_CALL(MethodPosition, Value -* method *-, FixedArray<Value> -* args *-)
 
         ============================================================================================
         Represents falling off the end of a method.
@@ -63,96 +63,97 @@ class IR {
         ============================================================================================
         Given a value, returns the value of a field within the value.
         ============================================================================================
-        EXTRACT_FIELD(Position, Value, FieldDecl)
+        EXTRACT_FIELD(MethodPosition, Value, FieldDecl)
 
         ============================================================================================
         Given a pointer to an object, returns a pointer to a field within the object.
         ============================================================================================
-        GET_FIELD_POINTER(Position, Value, FieldDecl)
+        GET_FIELD_POINTER(MethodPosition, Value, FieldDecl)
 
         ============================================================================================
         Gets a reference to a virtual method from an object, by its vtable index.
         ============================================================================================
-        GET_VIRTUAL_METHOD(Position, Value, Int, Type)
+        GET_VIRTUAL_METHOD(MethodPosition, Value, Int, Type)
 
         ============================================================================================
         Gets a reference to an interface method from an object, by its class and itable index.
         ============================================================================================
-        GET_INTERFACE_METHOD(Position, Value, ClassDecl, Int, Type)
+        GET_INTERFACE_METHOD(MethodPosition, Value, ClassDecl, Int, Type)
 
         ============================================================================================
         Loads the value of the given pointer.
         ============================================================================================
-        LOAD(Position, Value)
+        LOAD(MethodPosition, Value)
 
         ============================================================================================
         Negates a number.
         ============================================================================================
-        NEGATE(Position, Value)
+        NEGATE(MethodPosition, Value)
 
         ============================================================================================
         Bitwise inverts a number or bit.
         ============================================================================================
-        NOT(Position, Value)
+        NOT(MethodPosition, Value)
 
         ============================================================================================
         Allocates memory and returns a raw pointer to it. Only POINTER_ operations are legal on a
         raw pointer.
         ============================================================================================
-        POINTER_ALLOC(Position, Value -* count *-, Type)
+        POINTER_ALLOC(MethodPosition, Value -* count *-, Type)
 
         ============================================================================================
         Deallocates a pointer
         ============================================================================================
-        POINTER_DESTROY(Position, Value -* pointer *-)
+        POINTER_DESTROY(MethodPosition, Value -* pointer *-)
 
         ============================================================================================
         Dereferences a raw pointer.
         ============================================================================================
-        POINTER_GET(Position, Value)
+        POINTER_GET(MethodPosition, Value, Type)
 
         ============================================================================================
         Reads from `pointer + index * sizeof(type)`.
         ============================================================================================
-        POINTER_GET_INDEX(Position, Value -* pointer *-, Value -* index *-)
+        POINTER_GET_INDEX(MethodPosition, Value -* pointer *-, Value -* index *-, Type)
 
         ============================================================================================
         Returns `pointer + index * sizeof(type)`.
         ============================================================================================
-        POINTER_OFFSET(Position, Value -* pointer *-, Value -* index *-)
+        POINTER_OFFSET(MethodPosition, Value -* pointer *-, Value -* index *-)
 
         ============================================================================================
         Equivalent to the C realloc function (other than additionally requiring the old size).
         ============================================================================================
-        POINTER_REALLOC(Position, Value -* pointer *-, Value -* oldSize *-, Value -* newSize *-)
+        POINTER_REALLOC(MethodPosition, Value -* pointer *-, Value -* oldSize *-, Value -* newSize *-)
 
         ============================================================================================
         Writes to a raw pointer.
         ============================================================================================
-        POINTER_SET(Position, Value -* value *-, Value -* pointer *-)
+        POINTER_SET(MethodPosition, Value -* value *-, Value -* pointer *-, Type)
 
         ============================================================================================
         Writes to `pointer + index * sizeof(type)`.
         ============================================================================================
-        POINTER_SET_INDEX(Position, Value -* value *-, Value -* pointer *-, Value -* index *-)
+        POINTER_SET_INDEX(MethodPosition, Value -* value *-, Value -* pointer *-, Value -* index *-,
+                Type)
 
         ============================================================================================
         A `return` statement.
         ============================================================================================
-        RETURN(Position, IR.Value?)
+        RETURN(MethodPosition, IR.Value?)
 
         ============================================================================================
         A static (non-virtual, non-dynamic) call to a method. `args` is the actual, IR-level
         arguments, meaning that `self` (if any) appears explicitly as `args[0]`.
         ============================================================================================
-        STATIC_CALL(Position, MethodDecl, FixedArray<Value> -* args *-)
+        STATIC_CALL(MethodPosition, MethodDecl, FixedArray<Value> -* args *-)
 
         ============================================================================================
         Writes a value to the target of the given pointer.
         ============================================================================================
-        STORE(Position, Value -* value *-, Value -* dest pointer *-)
+        STORE(MethodPosition, Value -* value *-, Value -* dest pointer *-)
 
-        UNREACHABLE(Position)
+        UNREACHABLE(MethodPosition)
 
         class ID : frost.core.Value, HashKey<ID> {
             def value:Int
@@ -177,8 +178,8 @@ class IR {
             }
         }
 
-        property position:Position
-        function get_position():Position {
+        property position:MethodPosition
+        function get_position():MethodPosition {
             match self {
                 when BINARY(position, _, _, _, _) {
                     return position
@@ -205,7 +206,7 @@ class IR {
                     return position
                 }
                 when END {
-                    return Position()
+                    return MethodPosition()
                 }
                 when EXTRACT_FIELD(position, _, _) {
                     return position
@@ -237,10 +238,10 @@ class IR {
                 when POINTER_DESTROY(position, _) {
                     return position
                 }
-                when POINTER_GET(position, _) {
+                when POINTER_GET(position, _, _) {
                     return position
                 }
-                when POINTER_GET_INDEX(position, _, _) {
+                when POINTER_GET_INDEX(position, _, _, _) {
                     return position
                 }
                 when POINTER_OFFSET(position, _, _) {
@@ -249,10 +250,10 @@ class IR {
                 when POINTER_REALLOC(position, _, _, _) {
                     return position
                 }
-                when POINTER_SET(position, _, _) {
+                when POINTER_SET(position, _, _, _) {
                     return position
                 }
-                when POINTER_SET_INDEX(position, _, _, _) {
+                when POINTER_SET_INDEX(position, _, _, _, _) {
                     return position
                 }
                 when RETURN(position, _) {
@@ -331,11 +332,11 @@ class IR {
                 when POINTER_DESTROY(position, ptr) {
                     return "pointer_destroy \{ptr}"
                 }
-                when POINTER_GET(position, ptr) {
-                    return "pointer_get \{ptr}"
+                when POINTER_GET(position, ptr, type) {
+                    return "pointer_get \{ptr}, \{type}"
                 }
-                when POINTER_GET_INDEX(position, ptr, index) {
-                    return "pointer_get_index \{ptr}, \{index}"
+                when POINTER_GET_INDEX(position, ptr, index, type) {
+                    return "pointer_get_index \{ptr}, \{index}, \{type}"
                 }
                 when POINTER_OFFSET(position, ptr, index) {
                     return "pointer_offset \{ptr}, \{index}"
@@ -343,11 +344,11 @@ class IR {
                 when POINTER_REALLOC(position, ptr, oldSize, newSize) {
                     return "pointer_realloc \{ptr}, \{oldSize}, \{newSize}"
                 }
-                when POINTER_SET(position, value, ptr) {
-                    return "pointer_set \{value}, \{ptr}"
+                when POINTER_SET(position, value, ptr, type) {
+                    return "pointer_set \{value}, \{ptr}, \{type}"
                 }
-                when POINTER_SET_INDEX(position, value, ptr, index) {
-                    return "pointer_set_index \{value}, \{ptr}, \{index}"
+                when POINTER_SET_INDEX(position, value, ptr, index, type) {
+                    return "pointer_set_index \{value}, \{ptr}, \{index}, \{type}"
                 }
                 when RETURN(position, value) {
                     if value !== null {
@@ -584,7 +585,6 @@ class IR {
     @pre(!currentBlockFinished)
     method add(s:Statement):Statement.ID {
         currentStatementId += 1
-        assert s.asString != "cast REF($6:frost.unsafe.Pointer<frost.core.Int>)->frost.unsafe.Pointer (implicit)"
         def result := Statement.ID(currentStatementId)
         currentBlock.ids.add(result)
         currentBlock.statements.add(s)

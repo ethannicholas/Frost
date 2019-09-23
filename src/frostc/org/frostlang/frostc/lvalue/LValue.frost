@@ -6,7 +6,7 @@ uses org.frostlang.frostc.Compiler.EnclosingContext
 uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
@@ -30,8 +30,9 @@ interface LValue {
 
     @class
     method compile(compiler:Compiler, expr:ASTNode):LValue? {
+        def position := MethodPosition(expr.position(), compiler.currentMethodIndex)
         match expr {
-            when ASTNode.BINARY(position, left, op, right) {
+            when ASTNode.BINARY(_, left, op, right) {
                 if op = Binary.Operator.INDEX {
                     def target := compiler.compileExpression(left)
                     if target == null {
@@ -40,7 +41,7 @@ interface LValue {
                     return IndexLValue(compiler, position, target, right)
                 }
             }
-            when ASTNode.CHOICE_FIELD_REFERENCE(position, base, cc, index) {
+            when ASTNode.CHOICE_FIELD_REFERENCE(_, base, cc, index) {
                 match base {
                     when ASTNode.SELF {
                         var target:IR.Value?
@@ -129,7 +130,7 @@ interface LValue {
                             if compiler.resolve(symbol->FieldDecl) {
                                 def f := symbol->FieldDecl
                                 if compiler.resolve(f) {
-                                    return FieldLValue(compiler, expr.position(), compiledBase, f)
+                                    return FieldLValue(compiler, position, compiledBase, f)
                                 }
                             }
                             return null
@@ -144,7 +145,7 @@ interface LValue {
                         "'\{name}'")
                 return null
             }
-            when ASTNode.IDENTIFIER(position, id) {
+            when ASTNode.IDENTIFIER(_, id) {
                 def symbol := compiler.symbolTable[id]
                 if symbol !== null {
                     match symbol.kind {
@@ -163,7 +164,9 @@ interface LValue {
                             def f := symbol->FieldDecl
                             if !f.annotations.isClass {
                                 return compile(compiler, 
-                                        ASTNode.DOT(position, ASTNode.SELF(position), f.name))
+                                        ASTNode.DOT(position.asPosition,
+                                            ASTNode.SELF(position.asPosition),
+                                            f.name))
                             }
                             if compiler.resolve(f) {
                                 return FieldLValue(compiler, position, null, f)

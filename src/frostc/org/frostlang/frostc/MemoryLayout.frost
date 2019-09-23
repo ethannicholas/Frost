@@ -1,0 +1,244 @@
+package org.frostlang.frostc
+
+====================================================================================================
+Computes the layout of Frost classes. This is, naturally, quite dangerous - if we compute something
+different than what the native backend works out, we are in for a bad time.
+
+We almost don't need to do this. C provides everything we need to let the compiler make the
+calculations, so we don't use `MemoryLayout` at all with the C backend. LLVM can *almost* do what we
+need, but unfortunately doesn't (to my knowledge) provide a way to create a union without knowing
+ahead of time which union type is the biggest. And the interpreter also needs to be able to work all
+of this out without assistance from a backend, but at least there we're not in danger from a
+mismatch.
+====================================================================================================
+class MemoryLayout {
+    @private
+    @weak
+    def compiler:Compiler
+
+    @private
+    def sizes := IdentityMap<ClassDecl, Int>()
+
+    @private
+    def alignments := IdentityMap<ClassDecl, Int>()
+
+    @private
+    def choiceDataSizes := IdentityMap<ClassDecl, Int>()    
+
+    property intSize:Int
+
+    property pointerSize:Int
+
+    init(compiler:Compiler) {
+        self.compiler := compiler
+    }
+
+    function get_intSize():Int {
+        return 8
+    }
+
+    function get_pointerSize():Int {
+        return 8
+    }
+
+    method fieldSize(t:Type):Int {
+        assert t.resolved, "type \{t} was unresolved"
+        if t = compiler.VOID_TYPE {
+             -- void as the result of an error which should have been reported elsewhere
+            return 1
+        }
+        if t.isBuiltinNumber {
+            if t.name.endsWith("8") {
+                return 1
+            }
+            if t.name.endsWith("16") {
+                return 2
+            }
+            if t.name.endsWith("32") {
+                return 4
+            }
+            if t.name.endsWith("64") {
+                return 8
+            }
+            return compiler.settings.intSize
+        }
+        if t = compiler.BUILTIN_BIT_TYPE {
+            return 1
+        }
+        def cl := compiler.getClass(t)
+        if cl == null {
+            return 0
+        }
+        if !compiler.isValue(cl) | cl.name = "frost.unsafe.Pointer" {
+            return pointerSize
+        }
+        var result := 0
+        for f in compiler.instanceFields(cl) {
+            if f.annotations.isClass {
+                continue
+            }
+            compiler.resolve(f)
+            if f.type = compiler.CHOICE_DATA_TYPE {
+                -- FIXME need to respect alignment!
+                result += getChoiceDataSize(cl)
+            }
+            else {
+                def size := fieldSize(f.type)
+                def align := result % size
+                if align != 0 {
+                    result += size - align
+                }
+                assert result % size = 0
+                result += size
+            }
+        }
+        if t.typeKind = Type.Kind.NULLABLE {
+            result += 1
+        }
+        def align := alignment(t)
+        if result % align != 0 {
+            result += align - result % align
+        }
+        return result
+    }
+
+    function alignment(t:Type):Int {
+        if !t.isClass {
+            return fieldSize(t)
+        }
+        def cl := compiler.getClass(t)
+        assert cl !== null
+        if !compiler.resolve(cl) {
+            return pointerSize
+        }
+        if cl.name = "frost.unsafe.Pointer" | !compiler.isValue(cl) {
+            return pointerSize
+        }
+        var cached := alignments[cl]
+        if cached !== null {
+            return cached
+        }
+        var result := 0
+        for f in compiler.instanceFields(cl) {
+            if !compiler.resolve(f) {
+                continue
+            }
+            if f.type = compiler.CHOICE_DATA_TYPE {
+                -- FIXME need to respect alignment!
+                result := result.max(8)
+            }
+            else {
+                result := result.max(alignment(f.type))
+            }
+        }
+        alignments[cl] := result
+        return result
+    }
+
+    method computeLayout(cl:ClassDecl) {
+        sizeOf(cl.type)
+    }
+
+    method sizeOf(t:Type):Int {
+        if !t.isClass {
+            return fieldSize(t)
+        }
+        def cl := compiler.getClass(t)
+        assert cl !== null
+        assert cl.resolved = Compiler.Resolution.RESOLVED,
+                "determining size of unresolved class \{cl.name}"
+        if cl.name = "frost.unsafe.Pointer" {
+            return pointerSize
+        }
+        var cached := sizes[cl]
+        if cached !== null {
+            return cached
+        }
+        var result := 0
+        for f in compiler.instanceFields(cl) {
+            if !compiler.resolve(f) {
+                continue
+            }
+            if f.type = compiler.CHOICE_DATA_TYPE {
+                -- FIXME need to respect alignment!
+                result += getChoiceDataSize(cl)
+            }
+            else {
+                def align := alignment(f.type)
+                if result % align != 0 {
+                    result += align - result % align
+                }
+                assert result % alignment(f.type) = 0,
+                        "field \{f} has alignment \{f.type} but is at offset \{result}"
+                f.offset := result
+                result += fieldSize(f.type)
+            }
+        }
+        if compiler.isValue(cl) & t.typeKind = Type.Kind.NULLABLE {
+            result += 1
+        }
+        def align := alignment(t)
+        if result % align != 0 {
+            result += align - result % align
+        }
+        sizes[cl] := result
+        return result
+    }
+
+    function stride(t:Type):Int {
+        return fieldSize(t)
+    }
+
+    function sizeOfWrapper(t:Type):Int {
+        def cl := compiler.getClass(t)
+        assert cl !== null & compiler.isValue(cl)
+        var result := sizeOf(compiler.OBJECT_TYPE)
+        for f in compiler.instanceFields(cl) {
+            compiler.resolve(f)
+            if f.type = compiler.CHOICE_DATA_TYPE {
+                 -- FIXME need to respect alignment!
+                result += getChoiceDataSize(cl)
+            }
+            else {
+                def size := fieldSize(f.type)
+                def align := result % size
+                if align != 0 {
+                    result += size - align
+                }
+                assert result % size = 0
+                result += size
+            }
+        }
+        if t.typeKind = Type.Kind.NULLABLE {
+            result += 1
+        }
+        return result
+    }
+
+    method getChoiceDataSize(cl:ClassDecl):Int {
+        var result := choiceDataSizes[cl]
+        if result == null {
+            result := 0
+            for entry in cl.choiceCases {
+                compiler.resolve(entry)
+                var current := 0
+                for f in entry.fields {
+                    -- FIXME need to respect alignment!
+                    current += fieldSize(f)
+                }
+                result := result.max(current)
+            }
+            choiceDataSizes[cl] := result
+        }
+        return result
+    }
+
+    method getChoiceFieldOffset(e:ChoiceCase, index:Int):Int {
+        var result := 0
+        for i in 0 .. index {
+            -- FIXME need to respect alignment!
+            result += fieldSize(e.fields[i])
+        }
+        return result
+    }
+}

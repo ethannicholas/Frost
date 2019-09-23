@@ -177,6 +177,9 @@ class Scanner {
                         when "@noReturn" {
                             flags := add(p, flags, Annotations.Flag.NO_RETURN)
                         }
+                        when "@pointerSize" {
+                            flags := add(p, flags, Annotations.Flag.POINTER_SIZE)
+                        }
                         when "@pre" {
                             if expressions == null {
                                 expressions := Array<Annotations.Expression>()
@@ -614,8 +617,10 @@ class Scanner {
             }
             annotations.flags ||= Annotations.Flag.ABSTRACT
         }
-        return MethodDecl(owner, position, doccomment, annotations, kind, name, generics,
-                parameters, returnType, statements)
+        def result := MethodDecl(owner, position, compiler.methods.count, doccomment, annotations,
+                kind, name, generics, parameters, returnType, statements)
+        compiler.methods.add(result)
+        return result
     }
 
     method scanClassChild(cl:ClassDecl, node:ASTNode) {
@@ -789,18 +794,20 @@ class Scanner {
             }
         }
         if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "frost.unsafe.Pointer" {
-            def defaultInit := MethodDecl(result, position, null,
-                    Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
+            def defaultInit := MethodDecl(result, position, compiler.methods.count,
+                    null, Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
                     null, [], compiler.VOID_TYPE, FixedArray<ASTNode>())
+            compiler.methods.add(defaultInit)
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
         }
         if !foundCleanup & (kind = ClassDecl.Kind.CLASS | kind = ClassDecl.Kind.CHOICE) &
                 result.name != "frost.unsafe.Pointer" {
-            def defaultCleanup := MethodDecl(result, position, null,
-                    Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
+            def defaultCleanup := MethodDecl(result, position, compiler.methods.count,
+                    null, Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                     MethodDecl.Kind.METHOD, "cleanup", null, [], compiler.VOID_TYPE,
                     FixedArray<ASTNode>())
+            compiler.methods.add(defaultCleanup)
             result.methods.add(defaultCleanup)
             result.symbolTable.add(defaultCleanup)
         }
@@ -833,8 +840,8 @@ class Scanner {
         }
     }
 
-    method createBareCodeClass(source:File, aliases:MapView<String, String>, contextName:String,
-            classes:List<ClassDecl>) {
+    method createBareCodeClass(position:Position, source:File, aliases:MapView<String, String>,
+            contextName:String, classes:List<ClassDecl>) {
         if bareCodeClass == null {
             def fullName:String
             if contextName != "" {
@@ -843,19 +850,21 @@ class Scanner {
             else {
                 fullName := "anonymous.BareCode"
             }
-            bareCodeClass := ClassDecl(source, Position(), aliases, null, Annotations(),
+            bareCodeClass := ClassDecl(source, position, aliases, null, Annotations(),
                     ClassDecl.Kind.CLASS, fullName, Array<Type>(), -- FIXME literal
                     Array<ClassDecl.GenericParameter>(), compiler.root) -- FIXME literal
             classes.add(bareCodeClass)
-            def defaultInit := MethodDecl(bareCodeClass, Position(), null,
-                    Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
+            def defaultInit := MethodDecl(bareCodeClass, position, compiler.methods.count,
+                    null, Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
                     null, [], compiler.VOID_TYPE, FixedArray<ASTNode>())
+            compiler.methods.add(defaultInit)
             bareCodeClass.methods.add(defaultInit)
             bareCodeClass.symbolTable.add(defaultInit)
-            def defaultCleanup := MethodDecl(bareCodeClass, Position(), null,
+            def defaultCleanup := MethodDecl(bareCodeClass, position, compiler.methods.count, null,
                     Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                     MethodDecl.Kind.METHOD, "cleanup", null, [], compiler.VOID_TYPE,
                     FixedArray<ASTNode>())
+            compiler.methods.add(defaultCleanup)
             bareCodeClass.methods.add(defaultCleanup)
             bareCodeClass.symbolTable.add(defaultCleanup)
         }
@@ -903,7 +912,7 @@ class Scanner {
                                 error(position, "'init' methods must be inside a class")
                                 continue
                             }
-                            createBareCodeClass(source, aliases, currentPackage, result)
+                            createBareCodeClass(position, source, aliases, currentPackage, result)
                             def name:String
                             if rawName = "main" {
                                 name := "$bareMain"
@@ -935,10 +944,12 @@ class Scanner {
                                 else {
                                     returnType := compiler.VOID_TYPE
                                 }
-                                def bareMain := MethodDecl(bareCodeClass, Position(), null,
+                                def bareMain := MethodDecl(bareCodeClass, position,
+                                        compiler.methods.count, null,
                                         Annotations(Annotations.Flag.CLASS), MethodDecl.Kind.METHOD,
                                         "main", null, mainParameters, returnType,
                                         FixedArray<ASTNode>.from(mainStatements))
+                                compiler.methods.add(bareMain)
                                 bareCodeClass.methods.add(bareMain)
                             }
                             else {
@@ -958,7 +969,7 @@ class Scanner {
                             bareCodeClass.symbolTable.add(m)
                         }
                         when ASTNode.FIELD(position, dc, annotations, varDecl) {
-                            createBareCodeClass(source, aliases, currentPackage, result)
+                            createBareCodeClass(position, source, aliases, currentPackage, result)
                             def old := bareCodeClass.fields.count
                             scanFields(bareCodeClass, position, dc, annotations, varDecl)
                             for i in old .. bareCodeClass.fields.count {

@@ -14,6 +14,7 @@ uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Pair
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
@@ -147,18 +148,20 @@ class Closure {
                 }
             }
         }
-        def initMethod := MethodDecl(result, p, null,
+        def initMethod := MethodDecl(result, p, compiler.methods.count, null,
                 Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
                 null, parameters,
                 compiler.VOID_TYPE, FixedArray<ASTNode>.from(statements))
+        compiler.methods.add(initMethod)
         result.methods.add(initMethod)
         result.symbolTable.add(initMethod)
 
         -- default cleanup
-        def defaultCleanup := MethodDecl(result, p, null,
+        def defaultCleanup := MethodDecl(result, p, compiler.methods.count, null,
                 Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                 MethodDecl.Kind.METHOD, "cleanup", null,
                 Array<MethodDecl.Parameter>(), compiler.VOID_TYPE, FixedArray<ASTNode>())
+        compiler.methods.add(defaultCleanup)
         result.methods.add(defaultCleanup)
         result.symbolTable.add(defaultCleanup)
 
@@ -256,7 +259,7 @@ class Closure {
 
     @class
     @post(@return !== null | compiler.errorCount > 0 | !compiler.reportErrors)
-    method compileTypedLambda(compiler:Compiler, position:Position,
+    method compileTypedLambda(compiler:Compiler, position:MethodPosition,
             rawParameters:FixedArray<ASTNode>, expr:ASTNode, type:TypeContext):IR.Value? {
         var returnType:Type
         def lambdaType := typedLambdaType(compiler, rawParameters, expr, type)
@@ -276,13 +279,13 @@ class Closure {
             }
         }
         return compile(compiler, position, MethodDecl.Kind.FUNCTION, rawParameters,
-                ASTNode.IR_WRAPPER(position, compiler.literalType(returnType)),
-                FixedArray<ASTNode>.from([ASTNode.RETURN(position, expr)]), type)
+                ASTNode.IR_WRAPPER(position.asPosition, compiler.literalType(returnType)),
+                FixedArray<ASTNode>.from([ASTNode.RETURN(position.asPosition, expr)]), type)
     }
 
     @class
     @post(@return !== null | compiler.errorCount > 0 | !compiler.reportErrors)
-    method compileUntypedLambda(compiler:Compiler, position:Position,
+    method compileUntypedLambda(compiler:Compiler, position:MethodPosition,
             rawParameters:FixedArray<ASTNode>, expr:ASTNode, type:TypeContext):IR.Value? {
         match type {
             when TypeContext.TYPE(t, _) {
@@ -306,11 +309,12 @@ class Closure {
                             }
                         }
                     }
+                    def basePos := position.asPosition
                     def returnType := t.nonnullable().returnType
                     return compile(compiler, position, MethodDecl.Kind.FUNCTION,
                             FixedArray<ASTNode>.from(parameters),
-                            ASTNode.IR_WRAPPER(position, compiler.literalType(returnType)),
-                            FixedArray<ASTNode>.from([ASTNode.RETURN(position, expr)]), type)
+                            ASTNode.IR_WRAPPER(basePos, compiler.literalType(returnType)),
+                            FixedArray<ASTNode>.from([ASTNode.RETURN(basePos, expr)]), type)
 
                 }
             }
@@ -452,7 +456,7 @@ class Closure {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, kind:MethodDecl.Kind,
+    method compile(compiler:Compiler, position:MethodPosition, kind:MethodDecl.Kind,
             rawParameters:FixedArray<ASTNode>, rawReturnType:ASTNode?,
             body:FixedArray<ASTNode>, type:TypeContext):IR.Value? {
         compiler.closureCount += 1
@@ -490,8 +494,10 @@ class Closure {
                 HashMap<String, Capture>())
         compiler.captures.push(currentCaptures)
         def annotations := Annotations(Annotations.Flag.CLASS)
-        def methodDecl := MethodDecl(compiler.currentClass[0], position, null, annotations, kind,
+        def methodDecl := MethodDecl(compiler.currentClass[0],
+                position.asPosition, compiler.methods.count, null, annotations, kind,
                 name, null, parameters, returnType, body)
+        compiler.methods.add(methodDecl)
         -- need to scan through the method to determine captures, but we don't actually want to
         -- output it yet - if it has captures, we need to put it into a closure class
         def oldWriteCode := compiler.writeCode
@@ -514,14 +520,14 @@ class Closure {
             for capture in currentCaptures.second.values {
                 match capture {
                     when Capture.VARIABLE(v) {
-                        args.add(ASTNode.IDENTIFIER(position, v.name))
+                        args.add(ASTNode.IDENTIFIER(position.asPosition, v.name))
                     }
                     when Capture.SELF {
-                        args.add(ASTNode.SELF(position))
+                        args.add(ASTNode.SELF(position.asPosition))
                     }
                     when Capture.FIELD(f) {
-                        args.add(ASTNode.DOT(position,
-                                ASTNode.IDENTIFIER(position, Compiler.FORCE_SELF_NAME),
+                        args.add(ASTNode.DOT(position.asPosition,
+                                ASTNode.IDENTIFIER(position.asPosition, Compiler.FORCE_SELF_NAME),
                                 f.name))
                     }
                 }
@@ -533,7 +539,7 @@ class Closure {
             if rawTarget == null {
                 return null
             }
-            target := ASTNode.IR_WRAPPER(position, rawTarget)
+            target := ASTNode.IR_WRAPPER(position.asPosition, rawTarget)
             immutable := compiler.isImmutable(cl.type)
         }
         else {
@@ -542,7 +548,7 @@ class Closure {
             compiler.enclosingContexts := Stack<EnclosingContext>()
             compiler.compile(methodDecl, compiler.symbolTable)
             compiler.enclosingContexts := oldContexts
-            target := ASTNode.NULL(position)
+            target := ASTNode.NULL(position.asPosition)
             immutable := true
         }
         def args := Array<ASTNode>()
@@ -554,7 +560,7 @@ class Closure {
             frostType := compiler.declaredTypeWithSelf(methodDecl, methodDecl.owner.type, false)
         }
         def irType := Type.pointerTo(compiler, frostType)
-        args.add(ASTNode.IR_WRAPPER(position, compiler.cast(position,
+        args.add(ASTNode.IR_WRAPPER(position.asPosition, compiler.cast(position,
                 IR.Value.METHOD_POINTER(methodDecl, irType), Type.pointerTo(compiler,
                     compiler.INT8_TYPE))))
         args.add(target)
@@ -577,7 +583,7 @@ class Closure {
                 when MethodDecl.Kind.FUNCTION { typeKind := Type.Kind.FUNCTION }
                 otherwise { unreachable }
             }
-            finalType := Type.methodType(compiler, position, typeKind, parameterTypes,
+            finalType := Type.methodType(compiler, position.asPosition, typeKind, parameterTypes,
                     rawType.returnType, rawType.priority)
         }
         def construct := compiler.cast(position, Call.compile(compiler, position,

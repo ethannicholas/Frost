@@ -36,18 +36,17 @@ bool _6;
 frost$core$Bit _7;
 bool _8;
 frost$core$Int _10;
-frost$collections$ListWriter* _14;
-frost$collections$CollectionWriter* _15;
-$fn3 _16;
+frost$collections$CollectionWriter* _14;
+$fn3 _15;
+frost$core$Int _16;
 frost$core$Int _17;
-frost$core$Int _18;
+int64_t _18;
 int64_t _19;
 int64_t _20;
-int64_t _21;
-frost$core$Int _22;
-$fn4 _23;
+frost$core$Int _21;
+$fn4 _22;
+frost$core$Object* _23;
 frost$core$Object* _24;
-frost$core$Object* _25;
 _0 = ((frost$collections$CollectionWriter*) param0);
 ITable* $tmp5 = _0->$class->itable;
 while ($tmp5->$class != (frost$core$Class*) &frost$collections$CollectionWriter$class) {
@@ -68,27 +67,26 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListWriter.frost:43
-_14 = param0;
-_15 = ((frost$collections$CollectionWriter*) param0);
-ITable* $tmp8 = _15->$class->itable;
+_14 = ((frost$collections$CollectionWriter*) param0);
+ITable* $tmp8 = _14->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$CollectionWriter$class) {
     $tmp8 = $tmp8->next;
 }
-_16 = $tmp8->methods[0];
-_17 = _16(_15);
-_18 = (frost$core$Int) {1u};
+_15 = $tmp8->methods[0];
+_16 = _15(_14);
+_17 = (frost$core$Int) {1u};
+_18 = _16.value;
 _19 = _17.value;
-_20 = _18.value;
-_21 = _19 - _20;
-_22 = (frost$core$Int) {_21};
-ITable* $tmp9 = _14->$class->itable;
+_20 = _18 - _19;
+_21 = (frost$core$Int) {_20};
+ITable* $tmp9 = param0->$class->itable;
 while ($tmp9->$class != (frost$core$Class*) &frost$collections$ListWriter$class) {
     $tmp9 = $tmp9->next;
 }
-_23 = $tmp9->methods[2];
-_24 = _23(_14, _22);
-_25 = _24;
-frost$core$Frost$unref$frost$core$Object$Q(_25);
+_22 = $tmp9->methods[2];
+_23 = _22(param0, _21);
+_24 = _23;
+frost$core$Frost$unref$frost$core$Object$Q(_24);
 return;
 
 }

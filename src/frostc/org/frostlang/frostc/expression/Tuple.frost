@@ -5,6 +5,7 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Pair
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
@@ -60,7 +61,7 @@ class Tuple {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, args:FixedArray<ASTNode>,
+    method compile(compiler:Compiler, position:MethodPosition, args:FixedArray<ASTNode>,
             type:TypeContext):IR.Value? {
         match type {
             when TypeContext.TYPE(t, explicit) {
@@ -71,7 +72,7 @@ class Tuple {
                 }
             }
         }
-        var pref := compiler.preferredType(ASTNode.TUPLE(position, args))
+        var pref := compiler.preferredType(ASTNode.TUPLE(position.asPosition, args))
         if pref == null {
             pref := Type.tuple(args.map(a => compiler.ANY_TYPE))
         }

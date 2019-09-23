@@ -37,6 +37,18 @@ class Frost {
 
     @class
     @external
+    method alloc(size:builtin_int):builtin_int
+
+    @class
+    @external
+    method destroy(ptr:builtin_int)
+
+    @class
+    @external
+    method realloc(ptr:builtin_int, oldSize:builtin_int, newSize:builtin_int):builtin_int
+
+    @class
+    @external
     method addWeakReference<T>(w:Weak<T>)
 
     @class

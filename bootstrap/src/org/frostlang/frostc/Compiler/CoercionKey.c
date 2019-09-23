@@ -91,16 +91,15 @@ bool _22;
 org$frostlang$frostc$Type$Kind* _24;
 org$frostlang$frostc$Type$Kind _25;
 frost$core$Equatable* _26;
-frost$core$Equatable* _27;
-org$frostlang$frostc$Type$Kind* _28;
-org$frostlang$frostc$Type$Kind _29;
-frost$core$Equatable* _30;
-$fn2 _31;
-frost$core$Bit _32;
-frost$core$Object* _33;
-frost$core$Object* _35;
-frost$core$Bit _41;
-frost$core$Bit _47;
+org$frostlang$frostc$Type$Kind* _27;
+org$frostlang$frostc$Type$Kind _28;
+frost$core$Equatable* _29;
+$fn2 _30;
+frost$core$Bit _31;
+frost$core$Object* _32;
+frost$core$Object* _34;
+frost$core$Bit _40;
+frost$core$Bit _46;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:275
 _1 = &param0->expr;
 _2 = *_1;
@@ -116,7 +115,7 @@ _10 = *_9;
 _11 = &param1->target;
 _12 = *_11;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Compiler.frost:275:48
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:256
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:258
 _15 = ((org$frostlang$frostc$Symbol*) _10);
 _16 = &_15->name;
 _17 = *_16;
@@ -133,38 +132,37 @@ org$frostlang$frostc$Type$Kind$wrapper* $tmp3;
 $tmp3 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp3->value = _25;
 _26 = ((frost$core$Equatable*) $tmp3);
-_27 = _26;
-_28 = &_12->typeKind;
-_29 = *_28;
+_27 = &_12->typeKind;
+_28 = *_27;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp4;
 $tmp4 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
-$tmp4->value = _29;
-_30 = ((frost$core$Equatable*) $tmp4);
-ITable* $tmp5 = _27->$class->itable;
+$tmp4->value = _28;
+_29 = ((frost$core$Equatable*) $tmp4);
+ITable* $tmp5 = _26->$class->itable;
 while ($tmp5->$class != (frost$core$Class*) &frost$core$Equatable$class) {
     $tmp5 = $tmp5->next;
 }
-_31 = $tmp5->methods[0];
-_32 = _31(_27, _30);
-_33 = ((frost$core$Object*) _30);
-frost$core$Frost$unref$frost$core$Object$Q(_33);
-_35 = ((frost$core$Object*) _26);
-frost$core$Frost$unref$frost$core$Object$Q(_35);
-*(&local1) = _32;
+_30 = $tmp5->methods[0];
+_31 = _30(_26, _29);
+_32 = ((frost$core$Object*) _29);
+frost$core$Frost$unref$frost$core$Object$Q(_32);
+_34 = ((frost$core$Object*) _26);
+frost$core$Frost$unref$frost$core$Object$Q(_34);
+*(&local1) = _31;
 goto block7;
 block6:;
 *(&local1) = _21;
 goto block7;
 block7:;
-_41 = *(&local1);
-*(&local0) = _41;
+_40 = *(&local1);
+*(&local0) = _40;
 goto block3;
 block2:;
 *(&local0) = _6;
 goto block3;
 block3:;
-_47 = *(&local0);
-return _47;
+_46 = *(&local0);
+return _46;
 
 }
 frost$core$Int org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int(void* rawSelf) {

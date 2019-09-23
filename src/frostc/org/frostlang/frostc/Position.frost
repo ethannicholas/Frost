@@ -2,6 +2,7 @@ package org.frostlang.frostc
 
 @final
 class Position : Value, HashKey<Position>, Comparable<Position> {
+    -- index into the Compiler.file array
     def file:Int
 
     def line:Int
@@ -9,7 +10,7 @@ class Position : Value, HashKey<Position>, Comparable<Position> {
     def column:Int
 
     init() {
-        self.file := 0-1 -- FIXME negative literals failing
+        self.file := -1
         self.line := 1
         self.column := 1
     }
@@ -39,7 +40,7 @@ class Position : Value, HashKey<Position>, Comparable<Position> {
 
     @override
     function get_hash():Int {
-        return line << 16 + column
+        return file << 24 + line << 16 + column
     }
 
     @override

@@ -73,6 +73,8 @@ class Type : Symbol, HashKey<Type> {
 
     property isPointer:Bit
 
+    property isNewPointer:Bit
+
     property isRange:Bit
 
     property isSteppedRange:Bit
@@ -396,6 +398,10 @@ class Type : Symbol, HashKey<Type> {
 
     function get_isPointer():Bit {
         return name.startsWith("frost.unsafe.Pointer")
+    }
+
+    function get_isNewPointer():Bit {
+        return name.startsWith("frost.unsafe.NewPointer")
     }
 
     function get_isRange():Bit {

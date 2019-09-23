@@ -21,7 +21,7 @@ org$frostlang$frostc$Compiler** _3;
 org$frostlang$frostc$Compiler* _4;
 frost$core$Object* _5;
 org$frostlang$frostc$Compiler** _7;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:25
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
 _3 = &param0->compiler;
@@ -40,7 +40,7 @@ frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
 org$frostlang$frostc$Compiler* _4;
 frost$core$Object* _5;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:25
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = &param0->compiler;
@@ -58,7 +58,7 @@ org$frostlang$frostc$Compiler* _2;
 org$frostlang$frostc$Type* _3;
 frost$core$Object* _4;
 frost$core$Object* _6;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:25
 _1 = &param0->compiler;
 _2 = *_1;
 _3 = org$frostlang$frostc$Type$union$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(param1, _2, param2);

@@ -91,6 +91,7 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/ASTNode/_Closure4.c
     bootstrap/src/org/frostlang/frostc/MethodRef.c
     bootstrap/src/org/frostlang/frostc/Symbol/Kind.c
+    bootstrap/src/org/frostlang/frostc/MethodPosition.c
     bootstrap/src/org/frostlang/frostc/Position.c
     bootstrap/src/org/frostlang/frostc/parser/Token/Kind.c
     bootstrap/src/org/frostlang/frostc/parser/SyntaxHighlighter/Kind.c
@@ -109,6 +110,8 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/Type/Kind.c
     bootstrap/src/org/frostlang/frostc/FixedArray/FixedArrayIterator.c
     bootstrap/src/org/frostlang/frostc/Main.c
+    bootstrap/src/org/frostlang/frostc/Main/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/Main/_Closure4.c
     bootstrap/src/org/frostlang/frostc/Type.c
     bootstrap/src/org/frostlang/frostc/Symbol.c
     bootstrap/src/org/frostlang/frostc/Config.c
@@ -184,7 +187,13 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/Interpreter.c
     bootstrap/src/org/frostlang/frostc/Interpreter/Code.c
     bootstrap/src/org/frostlang/frostc/Interpreter/Context.c
-    bootstrap/src/org/frostlang/frostc/Interpreter/_Closure4.c
+    bootstrap/src/org/frostlang/frostc/Interpreter/_Closure11.c
+    bootstrap/src/org/frostlang/frostc/Interpreter/_Closure13.c
+    bootstrap/src/org/frostlang/frostc/Interpreter/_Closure15.c
+    bootstrap/src/org/frostlang/frostc/Interpreter/_Closure17.c
+    bootstrap/src/org/frostlang/frostc/Interpreter/_Closure19.c
+    bootstrap/src/org/frostlang/frostc/Interpreter/_Closure21.c
+    bootstrap/src/org/frostlang/frostc/MemoryLayout.c
     bootstrap/src/org/frostlang/frostc/SymbolTable.c
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure12.c
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure8.c
@@ -587,6 +596,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/statement/InnerMethod.c
     bootstrap/src/org/frostlang/frostc/statement/Loop.c
     bootstrap/src/org/frostlang/frostc/statement/Match.c
+    bootstrap/src/org/frostlang/frostc/statement/Match/_Closure2.c
     bootstrap/src/org/frostlang/frostc/statement/Return.c
     bootstrap/src/org/frostlang/frostc/statement/Try.c
     bootstrap/src/org/frostlang/frostc/statement/Var.c
@@ -870,6 +880,7 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/ScopedLock.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/Thread.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/time/Timer.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/unsafe/NewPointer.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/unsafe/UnsafeMessageQueue.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Lexer.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Position.frost
@@ -1232,7 +1243,9 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/IndexLValue.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/LValue.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/VariableLValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MemoryLayout.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodDecl.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodPosition.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodRef.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Methods.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Pair.frost

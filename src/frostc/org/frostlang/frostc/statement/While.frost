@@ -9,12 +9,12 @@ uses org.frostlang.frostc.Compiler.EnclosingContext
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 
 class While {
     @class
-    method compile(compiler:Compiler, position:Position, label:String?, test:ASTNode,
+    method compile(compiler:Compiler, position:MethodPosition, label:String?, test:ASTNode,
             statements:FixedArray<ASTNode>) {
         def ir := compiler.ir
         def testBlock := ir.newBlock("while test")

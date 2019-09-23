@@ -14,9 +14,8 @@ in:
     @param c the character to append
     ===================================================
     method append(c:Char) {
-        .....
+        ...
     }
-)
 
 While only three equals signs are necessary, it is conventional to extend the row of equals signs to
 the end of the line.

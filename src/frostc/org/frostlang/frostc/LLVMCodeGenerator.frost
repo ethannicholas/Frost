@@ -30,8 +30,6 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    constant POINTER_SIZE        := 8
-    constant INT_SIZE            := 8
     constant OBJECT_FIELD_COUNT  := 3
     constant CLASS_POINTER_INDEX := 0
     constant ITABLE_INDEX        := 5
@@ -47,6 +45,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @weak
     def compiler:Compiler?
+
+    def memoryLayout:MemoryLayout?
 
     def declarations := MemoryOutputStream()
 
@@ -70,25 +70,23 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def classConstants := HashMap<String, ClassConstant>()
 
+    def debugTypes := IdentityMap<Type, String>()
+
     var varCount := 0
 
     var labelCount := 0
 
     var metadataCount := 0
 
-    var currentFileMetadata := "!error"
+    var fileMetadata := Array<String?>()
 
-    var currentMethodMetadata:String?
+    var methodMetadata := Array<String?>()
 
-    var lastDebugPosition := Position()
+    var lexicalBlockMetadata := Array<String?>()
 
     var currentBlock := ""
 
-    def sizes := IdentityMap<ClassDecl, Int>()
-
-    def alignments := IdentityMap<ClassDecl, Int>()
-
-    def choiceDataSizes := IdentityMap<ClassDecl, Int>()
+    def debugPositions := HashMap<MethodPosition, String>()
 
     def methodShims := IdentityMap<MethodDecl, MethodShim>()
 
@@ -120,6 +118,7 @@ class LLVMCodeGenerator : CodeGenerator {
     @override
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
+        self.memoryLayout := compiler.memoryLayout
     }
 
     @override
@@ -140,7 +139,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method name(id:IR.Statement.ID):String {
+    function name(id:IR.Statement.ID):String {
         return "%s\{id}"
     }
 
@@ -167,194 +166,6 @@ class LLVMCodeGenerator : CodeGenerator {
         fail(error) {
             unreachable, error.asString
         }
-    }
-
-    method fieldSize(t:Type):Int {
-        assert t.resolved, "type \{t} was unresolved"
-        if t = compiler!.VOID_TYPE {
-             -- void as the result of an error which should have been reported elsewhere
-            return 1
-        }
-        if t.isBuiltinNumber {
-            if t.name.endsWith("8") {
-                return 1
-            }
-            if t.name.endsWith("16") {
-                return 2
-            }
-            if t.name.endsWith("32") {
-                return 4
-            }
-            if t.name.endsWith("64") {
-                return 8
-            }
-            return compiler!.settings.intSize
-        }
-        if t = compiler!.BUILTIN_BIT_TYPE {
-            return 1
-        }
-        def cl := compiler!.getClass(t)
-        if cl == null {
-            return 0
-        }
-        if !compiler!.isValue(cl) | cl.name = "frost.unsafe.Pointer" {
-            return POINTER_SIZE
-        }
-        var result := 0
-        for f in compiler!.instanceFields(cl) {
-            if f.annotations.isClass {
-                continue
-            }
-            compiler!.resolve(f)
-            if f.type = compiler!.CHOICE_DATA_TYPE {
-                -- FIXME need to respect alignment!
-                result += getChoiceDataSize(cl)
-            }
-            else {
-                def size := fieldSize(f.type)
-                def align := result % size
-                if align != 0 {
-                    result += size - align
-                }
-                assert result % size = 0
-                result += size
-            }
-        }
-        if t.typeKind = Type.Kind.NULLABLE {
-            result += 1
-        }
-        def align := alignment(t)
-        if result % align != 0 {
-            result += align - result % align
-        }
-        return result
-    }
-
-    function alignment(t:Type):Int {
-        if !t.isClass {
-            return fieldSize(t)
-        }
-        def cl := compiler!.getClass(t)
-        assert cl !== null
-        if !compiler!.resolve(cl) {
-            return POINTER_SIZE
-        }
-        if cl.name = "frost.unsafe.Pointer" | !compiler!.isValue(cl) {
-            return POINTER_SIZE
-        }
-        var cached := alignments[cl]
-        if cached !== null {
-            return cached
-        }
-        var result := 0
-        for f in compiler!.instanceFields(cl) {
-            if !compiler!.resolve(f) {
-                continue
-            }
-            if f.type = compiler!.CHOICE_DATA_TYPE {
-                -- FIXME need to respect alignment!
-                result := result.max(8)
-            }
-            else {
-                result := result.max(alignment(f.type))
-            }
-        }
-        alignments[cl] := result
-        return result
-    }
-
-    method sizeOf(t:Type):Int {
-        if !t.isClass {
-            return fieldSize(t)
-        }
-        def cl := compiler!.getClass(t)
-        assert cl !== null
-        assert cl.resolved = Compiler.Resolution.RESOLVED,
-                "determining size of unresolved class \{cl.name}"
-        if cl.name = "frost.unsafe.Pointer" {
-            return POINTER_SIZE
-        }
-        var cached := sizes[cl]
-        if cached !== null {
-            return cached
-        }
-        var result := 0
-        for f in compiler!.instanceFields(cl) {
-            if !compiler!.resolve(f) {
-                continue
-            }
-            if f.type = compiler!.CHOICE_DATA_TYPE {
-                -- FIXME need to respect alignment!
-                result += getChoiceDataSize(cl)
-            }
-            else {
-                def align := alignment(f.type)
-                if result % align != 0 {
-                    result += align - result % align
-                }
-                assert result % alignment(f.type) = 0,
-                        "field \{f} has alignment \{f.type} but is at offset \{result}"
-                f.offset := result
-                result += fieldSize(f.type)
-            }
-        }
-        if compiler!.isValue(cl) & t.typeKind = Type.Kind.NULLABLE {
-            result += 1
-        }
-        def align := alignment(t)
-        if result % align != 0 {
-            result += align - result % align
-        }
-        sizes[cl] := result
-        return result
-    }
-
-    function stride(t:Type):Int {
-        return fieldSize(t)
-    }
-
-    function sizeOfWrapper(t:Type):Int {
-        def cl := compiler!.getClass(t)
-        assert cl !== null & compiler!.isValue(cl)
-        var result := sizeOf(compiler!.OBJECT_TYPE)
-        for f in compiler!.instanceFields(cl) {
-            compiler!.resolve(f)
-            if f.type = compiler!.CHOICE_DATA_TYPE {
-                 -- FIXME need to respect alignment!
-                result += getChoiceDataSize(cl)
-            }
-            else {
-                def size := fieldSize(f.type)
-                def align := result % size
-                if align != 0 {
-                    result += size - align
-                }
-                assert result % size = 0
-                result += size
-            }
-        }
-        if t.typeKind = Type.Kind.NULLABLE {
-            result += 1
-        }
-        return result
-    }
-
-    method getChoiceDataSize(cl:ClassDecl):Int {
-        var result := choiceDataSizes[cl]
-        if result == null {
-            result := 0
-            for entry in cl.choiceCases {
-                compiler!.resolve(entry)
-                var current := 0
-                for f in entry.fields {
-                    -- FIXME need to respect alignment!
-                    current += fieldSize(f)
-                }
-                result := result.max(current)
-            }
-            choiceDataSizes[cl] := result
-        }
-        return result
     }
 
     @post(compiler!.currentClass.count = @pre(compiler!.currentClass.count))
@@ -403,7 +214,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     }
                 }
                 if f.type = compiler!.CHOICE_DATA_TYPE {
-                    code.append("\{separator}[\{getChoiceDataSize(cl)} x i8]")
+                    code.append("\{separator}[\{memoryLayout!.getChoiceDataSize(cl)} x i8]")
                     separator := ", "
                     continue
                 }
@@ -466,13 +277,13 @@ class LLVMCodeGenerator : CodeGenerator {
                     result := "void"
                 }
                 when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT {
-                    result := "i\{sizeOf(t) * 8}"
+                    result := "i\{memoryLayout!.sizeOf(t) * 8}"
                 }
                 when Type.Kind.BUILTIN_BIT {
                     result := "i1"
                 }
                 when Type.Kind.BUILTIN_FLOAT {
-                    match sizeOf(t) {
+                    match memoryLayout!.sizeOf(t) {
                         when 4    { result := "float" }
                         when 8    { result := "double" }
                         otherwise { unreachable }
@@ -561,7 +372,7 @@ class LLVMCodeGenerator : CodeGenerator {
     @pre(t.typeKind = Type.Kind.FUNCTION | t.typeKind = Type.Kind.METHOD |
             t.typeKind = Type.Kind.IMMUTABLE_FUNCTION | t.typeKind = Type.Kind.IMMUTABLE_METHOD |
             t.typeKind = Type.Kind.NULLABLE)
-    method llvmMethodType(t:Type, selfType:Type?):String {
+    method llvmMethodType(t:Type, selfType:Type?, pointerSize:Bit):String {
         def result := MutableString(llvmType(t.subtypes[t.subtypes.count - 1]))
         result.append(" (")
         var separator := ""
@@ -574,8 +385,15 @@ class LLVMCodeGenerator : CodeGenerator {
             result.append(llvmType(t.subtypes[i]))
             separator := ", "
         }
+        if pointerSize {
+            result.append("\{separator}\{llvmType(compiler.BUILTIN_INT_TYPE)}")
+        }
         result.append(")*")
         return result.finish()
+    }
+
+    method llvmMethodType(t:Type, selfType:Type?):String {
+        return llvmMethodType(t, selfType, false)
     }
 
     method wrapperTypeName(t:Type):String {
@@ -700,6 +518,9 @@ class LLVMCodeGenerator : CodeGenerator {
                 out.print("\{separator}\{pType} %p\{i}")
                 separator := ", "
             }
+            if raw.annotations.isPointerSize {
+                out.print("\{separator}\{llvmType(compiler.BUILTIN_INT_TYPE)} %$pointerSize")
+            }
             resultType.append(")*")
             out.printLine(") {")
             currentBlock := "0"
@@ -714,7 +535,8 @@ class LLVMCodeGenerator : CodeGenerator {
                     rawType := raw.parameters[i - 1].type
                 }
                 if rawType != effective.subtypes[i] {
-                    def cast := getCastReference(raw.position, p, effective.subtypes[i], rawType)
+                    def cast := getCastReference(raw.methodPosition, p, effective.subtypes[i],
+                            rawType)
                     casts.add(cast)
                     if compiler!.isValue(effective.subtypes[i]) & !compiler!.isValue(rawType) {
                         labelCount += 1
@@ -762,10 +584,13 @@ class LLVMCodeGenerator : CodeGenerator {
                 out.print("\{separator}\{llvmType(rawType)} \{casts[i]}")
                 separator := ", "
             }
+            if raw.annotations.isPointerSize {
+                out.print("\{separator}\{llvmType(compiler.BUILTIN_INT_TYPE)} %$pointerSize")
+            }
             out.printLine(")")
             if effectiveReturnType != compiler!.VOID_TYPE {
                 returnValue := llvmType(effectiveReturnType) + " " +
-                        getCastReference(raw.position, returnValue, raw.returnType,
+                        getCastReference(raw.methodPosition, returnValue, raw.returnType,
                             effectiveReturnType)
             }
             out.printLine(unrefs)
@@ -874,7 +699,7 @@ class LLVMCodeGenerator : CodeGenerator {
         else {
             effectiveSelf := m.owner.type
         }
-        def inherited := compiler!.inheritedTypeWithSelf(m, effectiveSelf)
+        var inherited := compiler!.inheritedTypeWithSelf(m, effectiveSelf)
         if declared != inherited {
             def shim := createMethodShim(m, inherited)
             resultName := shim.name
@@ -890,10 +715,14 @@ class LLVMCodeGenerator : CodeGenerator {
                 resultType.append(", ")
                 resultType.append(llvmType(inherited.subtypes[i]))
             }
+            if m.annotations.isPointerSize {
+                resultType.append(", \{llvmType(compiler.BUILTIN_INT_TYPE)}")
+            }
             resultType.append(")*")
             return Pair<String, String>(resultName, resultType.finish())
         }
-        return Pair<String, String>(resultName, llvmMethodType(inherited, null))
+        return Pair<String, String>(resultName, llvmMethodType(inherited, null,
+                m.annotations.isPointerSize))
     }
 
     method getClassConstant(cl:ClassDecl):ClassConstant {
@@ -1126,8 +955,8 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method wrapValue(position:Position, result:String, value:String, srcType:Type, dstType:Type,
-            out:OutputStream) {
+    method wrapValue(position:MethodPosition, result:String, value:String, srcType:Type,
+            dstType:Type, out:OutputStream) {
         try {
             def src := compiler!.getClass(srcType)
             assert src !== null
@@ -1162,8 +991,8 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             def mallocRef := nextVar()
             out.printLine("\{mallocRef} = call i8* @frostObjectAlloc(" +
-                    "i64 \{sizeOfWrapper(src.type)}, %frost$core$Class* \{ccCast})" +
-                    debugInfo(position))
+                    "i64 \{memoryLayout!.sizeOfWrapper(src.type)}, %frost$core$Class* " +
+                    "\{ccCast})\{debugInfo(position)}")
             def wrapperTypeName := wrapperTypeName(src.type)
             def wrapperType := wrapperType(src.type)
             def wrapperCast:String
@@ -1191,8 +1020,8 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method unwrapValue(position:Position, result:String, value:String, srcType:Type, dstType:Type,
-            out:OutputStream) {
+    method unwrapValue(position:MethodPosition, result:String, value:String, srcType:Type,
+            dstType:Type, out:OutputStream) {
         try {
             def target := compiler!.getClass(dstType)
             assert target !== null
@@ -1235,7 +1064,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method toNullableValue(position:Position, result:String, value:String, srcType:Type,
+    method toNullableValue(position:MethodPosition, result:String, value:String, srcType:Type,
             dstType:Type, out:OutputStream) {
         try {
             def nullableType := nullableType(dstType)
@@ -1248,7 +1077,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method toNonNullableValue(position:Position, result:String, value:String, srcType:Type,
+    method toNonNullableValue(position:MethodPosition, result:String, value:String, srcType:Type,
             dstType:Type, out:OutputStream) {
         try {
             out.printLine("\{result} = extractvalue \{llvmType(srcType)} \{value}, 0" +
@@ -1259,7 +1088,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getCastReference(position:Position, value:String, src:Type, target:Type):String {
+    method getCastReference(position:MethodPosition, value:String, src:Type, target:Type):String {
         if src = target {
             return value
         }
@@ -1268,13 +1097,13 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method writeCast(position:Position, result:String, value:String, src:Type, target:Type) {
+    method writeCast(position:MethodPosition, result:String, value:String, src:Type, target:Type) {
         try {
             def op:String
             if target.isBuiltinNumber {
                 assert src.isBuiltinNumber | src.isPointer
-                def size1 := sizeOf(src)
-                def size2 := sizeOf(target)
+                def size1 := memoryLayout!.sizeOf(src)
+                def size2 := memoryLayout!.sizeOf(target)
                 if src.typeKind = Type.Kind.BUILTIN_FLOAT {
                     if target.typeKind = Type.Kind.BUILTIN_FLOAT {
                         if size1 > size2 {
@@ -1465,15 +1294,6 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getChoiceFieldOffset(e:ChoiceCase, index:Int):Int {
-        var result := 0
-        for i in 0 .. index {
-            -- FIXME need to respect alignment!
-            result += fieldSize(e.fields[i])
-        }
-        return result
-    }
-
     method selfType(m:MethodDecl):String {
         def result := llvmType(m.owner.type)
         if m.methodKind = MethodDecl.Kind.INIT & !result.endsWith("*") {
@@ -1510,6 +1330,11 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             for p in m.parameters {
                 declarations.print("\{separator}\{llvmType(p.type)} %\{escapeName(p.name)}")
+                separator := ", "
+            }
+            if m.annotations.isPointerSize {
+                declarations.print("\{separator}\{llvmType(compiler.BUILTIN_INT_TYPE)} " +
+                        "%$pointerSize")
                 separator := ", "
             }
             declarations.printLine(")")
@@ -1561,26 +1386,120 @@ class LLVMCodeGenerator : CodeGenerator {
         return "\{llvmType(v.type())} \{getReference(v)}"
     }
 
-    method debugInfo(position:Position):String {
+    method getFileMetadata(index:Int):String {
         try {
-            if compiler!.settings.debug & position != lastDebugPosition &
-                    currentMethodMetadata !== null {
-                def result := nextMetadata()
-                metadata.print("\{result} = !DILocation(line: \{position.line}, column: " +
-                        "\{position.column}, scope: \{currentMethodMetadata})")
-                lastDebugPosition := position
-                return ", !dbg \{result}"
+            while fileMetadata.count <= index {
+                fileMetadata.add(null)
             }
-            else {
-                return ""
+            var meta := fileMetadata[index]
+            if meta == null {
+                meta := nextMetadata()
+                fileMetadata[index] := meta
+                metadata.printLine("\{meta} = distinct !DIFile(" +
+                        "filename: \"\{compiler.files[index]}\", directory: " +
+                        "\"\{System.workingDirectory()}\")")
+                if meta = "!1" {
+                    metadata.printLine("!0 = distinct !DICompileUnit(language:DW_LANG_C89, " +
+                            "producer:\"frostc\", file: \{meta}, isOptimized: " +
+                            "false, runtimeVersion: 0, emissionKind: FullDebug)")
+                    metadata.printLine("!llvm.dbg.cu = !{!0}")
+                    def dwarfVersion := nextMetadata()
+                    metadata.printLine("\{dwarfVersion} = !{i32 2, !\"Dwarf Version\", i32 4}")
+                    def debugVersion := nextMetadata()
+                    metadata.printLine("\{debugVersion} = !{i32 2, !\"Debug Info Version\", i32 3}")
+                    metadata.printLine("!llvm.module.flags = !{\{dwarfVersion}, \{debugVersion}}")
+                }
             }
+            return meta
         }
         fail(error) {
             unreachable
         }
     }
 
-    method writeIsNull(position:Position, id:IR.Statement.ID, value:IR.Value) {
+    method getMethodMetadata(index:Int):String {
+        try {
+            while methodMetadata.count <= index {
+                methodMetadata.add(null)
+            }
+            var meta := methodMetadata[index]
+            if meta == null {
+                def m := compiler.methods[index]
+                def file := getFileMetadata(m.position.file)
+                meta := nextMetadata()
+                methodMetadata[index] := meta
+                def t:Type
+                if compiler!.hasSelfParam(m) {
+                    t := compiler!.inheritedTypeWithSelf(m)
+                }
+                else {
+                    t := compiler!.inheritedType(m)
+                }
+                def type := getDebugType(t)
+                metadata.printLine("\{meta} = distinct !DISubprogram(name: " +
+                        "\"\{m.owner.name}.\{m.name}\", file: \{file}, " +
+                        "type: \{getDebugType(t)}, unit: !0, scopeLine: \{m.position.line})")
+            }
+            return meta
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method getLexicalBlockMetadata(index:Int):String {
+        try {
+            while lexicalBlockMetadata.count <= index {
+                lexicalBlockMetadata.add(null)
+            }
+            var meta := lexicalBlockMetadata[index]
+            if meta == null {
+                def m := compiler.currentMethod[0]
+                def file := getFileMetadata(compiler.methods[index].position.file)
+                def methodData := getMethodMetadata(compiler.currentMethodIndex)
+                meta := nextMetadata()
+                metadata.printLine("\{meta} = !DILexicalBlock(scope: \{methodData}, file: " +
+                        "\{file}, line: \{m.position.line}, column: \{m.position.column})")
+                lexicalBlockMetadata[index] := meta
+            }
+            return meta
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method debugInfo(position:MethodPosition):String {
+        try {
+            if !compiler!.settings.debug {
+                return ""
+            }
+            if position.methodIndex != -1 & compiler.currentMethod.count > 0 {
+                var result := debugPositions[position]
+                if result == null {
+                    result := nextMetadata()
+                    def scope:String
+                    if position.methodIndex = compiler.currentMethodIndex {
+                        scope := getMethodMetadata(position.methodIndex)
+                    }
+                    else {
+                        scope := getLexicalBlockMetadata(position.methodIndex)
+                    }
+                    metadata.printLine("\{result} = !DILocation(line: \{position.line}, column: " +
+                            "\{position.column}, scope: \{scope})")
+                    result := ", !dbg \{result}"
+                    debugPositions[position] := result
+                }
+                return result
+            }
+            return ""
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeIsNull(position:MethodPosition, id:IR.Statement.ID, value:IR.Value) {
         try {
             def valueRef := getTypedReference(value)
             def cl := compiler!.getClass(value.type())
@@ -1599,7 +1518,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeIsNonNull(position:Position, id:IR.Statement.ID, value:IR.Value) {
+    method writeIsNonNull(position:MethodPosition, id:IR.Statement.ID, value:IR.Value) {
         try {
             def valueRef := getTypedReference(value)
             def cl := compiler!.getClass(value.type())
@@ -1624,8 +1543,8 @@ class LLVMCodeGenerator : CodeGenerator {
         return false
     }
 
-    method writeBinary(position:Position, id:IR.Statement.ID, left:IR.Value, op:Binary.Operator,
-            right:IR.Value, type:Type) {
+    method writeBinary(position:MethodPosition, id:IR.Statement.ID, left:IR.Value,
+            op:Binary.Operator, right:IR.Value, type:Type) {
         def llvmOp:String
         match opClass(left.type()) {
             when OpClass.SIGNED {
@@ -1737,7 +1656,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeBranch(position:Position, target:IR.Block.ID) {
+    method writeBranch(position:MethodPosition, target:IR.Block.ID) {
         try {
             out.printLine("br label %\{target}\{debugInfo(position)}")
         }
@@ -1746,11 +1665,11 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeCast(position:Position, id:IR.Statement.ID, value:IR.Value, target:Type) {
+    method writeCast(position:MethodPosition, id:IR.Statement.ID, value:IR.Value, target:Type) {
         writeCast(position, name(id), getReference(value), value.type(), target)
     }
 
-    method writeConditionalBranch(position:Position, test:IR.Value, ifTrue:IR.Block.ID,
+    method writeConditionalBranch(position:MethodPosition, test:IR.Value, ifTrue:IR.Block.ID,
                                   ifFalse:IR.Block.ID) {
         try {
             out.printLine("br \{getTypedReference(test)}, label %\{ifTrue}, " +
@@ -1762,7 +1681,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     @pre(cl.resolved = Compiler.Resolution.RESOLVED)
-    method writeConstruct(position:Position, id:IR.Statement.ID, cl:ClassDecl) {
+    method writeConstruct(position:MethodPosition, id:IR.Statement.ID, cl:ClassDecl) {
         try {
             assert !compiler!.isValue(cl)
             def cc := getClassConstant(cl)
@@ -1775,8 +1694,9 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             def callRef := nextVar()
             def target := cl.type
-            out.printLine("\{callRef} = call i8* @frostObjectAlloc(i64 \{sizeOf(target)}, " +
-                    "%frost$core$Class* \{ccCast})\{debugInfo(position)}")
+            out.printLine("\{callRef} = call i8* @frostObjectAlloc(i64 " +
+                    "\{memoryLayout!.sizeOf(target)}, %frost$core$Class* \{ccCast})" +
+                    debugInfo(position))
             out.printLine("\{name(id)} = bitcast i8* \{callRef} to \{llvmType(target)}" +
                     debugInfo(position))
         }
@@ -1785,7 +1705,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeCreateStruct(position:Position, id:IR.Statement.ID, cl:ClassDecl,
+    method writeCreateStruct(position:MethodPosition, id:IR.Statement.ID, cl:ClassDecl,
             args:FixedArray<IR.Value>) {
         try {
             assert compiler!.isValue(cl)
@@ -1810,7 +1730,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeDynamicCall(position:Position, id:IR.Statement.ID, m:IR.Value,
+    method writeDynamicCall(position:MethodPosition, id:IR.Statement.ID, m:IR.Value,
             args:ListView<IR.Value>) {
         try {
             var type := m.type()
@@ -1849,7 +1769,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeExtractField(position:Position, id:IR.Statement.ID, target:IR.Value,
+    method writeExtractField(position:MethodPosition, id:IR.Statement.ID, target:IR.Value,
             field:FieldDecl) {
         try {
             var targetRef := getTypedReference(target)
@@ -1861,7 +1781,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeGetChoiceFieldPointer(position:Position, id:IR.Statement.ID, target:IR.Value,
+    method writeGetChoiceFieldPointer(position:MethodPosition, id:IR.Statement.ID, target:IR.Value,
             cc:ChoiceCase, index:Int) {
         try {
             def data := cc.owner.fields[1]
@@ -1872,10 +1792,10 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("\{dataPointer} = getelementptr \{typeName(cc.owner.type)}, " +
                     "\{typeName(cc.owner.type)}* \{targetRef}, i64 0, i32 \{fieldIndex}" +
                     debugInfo(position))
-            def size := getChoiceDataSize(cc.owner)
+            def size := memoryLayout!.getChoiceDataSize(cc.owner)
             def offset := nextVar()
             out.printLine("\{offset} = getelementptr [\{size} x i8], [\{size} x i8]* " +
-                    "\{dataPointer}, i64 0, i64 \{getChoiceFieldOffset(cc, index)}" +
+                    "\{dataPointer}, i64 0, i64 \{memoryLayout!.getChoiceFieldOffset(cc, index)}" +
                     debugInfo(position))
             out.printLine("\{name(id)} = bitcast i8* \{offset} to \{llvmType(cc.fields[index])}*" +
                     debugInfo(position))
@@ -1885,7 +1805,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeGetFieldPointer(position:Position, id:IR.Statement.ID, target:IR.Value,
+    method writeGetFieldPointer(position:MethodPosition, id:IR.Statement.ID, target:IR.Value,
             field:FieldDecl) {
         try {
             def targetRef := getReference(target)
@@ -1911,7 +1831,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeGetInterfaceMethod(position:Position, id:IR.Statement.ID, value:IR.Value,
+    method writeGetInterfaceMethod(position:MethodPosition, id:IR.Statement.ID, value:IR.Value,
             cl:ClassDecl, index:Int, type:Type) {
         try {
             def methodTypeString := llvmMethodType(type, null)
@@ -1980,8 +1900,8 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeGetVirtualMethod(position:Position, id:IR.Statement.ID, value:IR.Value, index:Int,
-            type:Type) {
+    method writeGetVirtualMethod(position:MethodPosition, id:IR.Statement.ID, value:IR.Value,
+            index:Int, type:Type) {
         try {
             def classPtrPtr := nextVar()
             out.printLine("\{classPtrPtr} = getelementptr inbounds \{typeName(value.type())}, " +
@@ -2005,7 +1925,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeLoad(position:Position, id:IR.Statement.ID, ptr:IR.Value) {
+    method writeLoad(position:MethodPosition, id:IR.Statement.ID, ptr:IR.Value) {
         try {
             out.printLine("\{name(id)} = load \{llvmType(ptr.type())}, \{llvmType(ptr.type())}* " +
                     getReference(ptr) + debugInfo(position))
@@ -2015,7 +1935,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeNegate(position:Position, id:IR.Statement.ID, value:IR.Value) {
+    method writeNegate(position:MethodPosition, id:IR.Statement.ID, value:IR.Value) {
         try {
             if value.type().typeKind = Type.Kind.BUILTIN_FLOAT {
                 out.printLine("\{name(id)} = fsub \{llvmType(value.type())} 0x0, " +
@@ -2031,7 +1951,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeNot(position:Position, id:IR.Statement.ID, value:IR.Value) {
+    method writeNot(position:MethodPosition, id:IR.Statement.ID, value:IR.Value) {
         try {
             out.printLine("\{name(id)} = xor \{getTypedReference(value)}, -1\{debugInfo(position)}")
         }
@@ -2040,10 +1960,11 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerAlloc(position:Position, id:IR.Statement.ID, count:IR.Value, type:Type) {
+    method writePointerAlloc(position:MethodPosition, id:IR.Statement.ID, count:IR.Value,
+            type:Type) {
         try {
             def countRef := getTypedReference(count)
-            def elementSize := stride(type)
+            def elementSize := memoryLayout!.stride(type)
             assert elementSize > 0, "invalid size for type \{type}"
             def size := nextVar()
             out.printLine("\{size} = mul \{countRef}, \{elementSize}\{debugInfo(position)}")
@@ -2058,7 +1979,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerDestroy(position:Position, ptr:IR.Value) {
+    method writePointerDestroy(position:MethodPosition, ptr:IR.Value) {
         try {
             def ptrRef := getTypedReference(ptr)
             def cast := nextVar()
@@ -2070,23 +1991,32 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerGet(position:Position, id:IR.Statement.ID, ptr:IR.Value) {
+    method writePointerGet(position:MethodPosition, id:IR.Statement.ID, ptr:IR.Value, type:Type) {
         try {
-            def ptrRef := getTypedReference(ptr)
-            def baseType := llvmType(ptr.type().subtypes[1])
-            out.printLine("\{name(id)} = load \{baseType}, \{ptrRef}\{debugInfo(position)}")
+            var ptrRef := getTypedReference(ptr)
+            if ptr.type() = compiler.BUILTIN_INT_TYPE {
+                def cast := nextVar()
+                out.printLine("\{cast} = inttoptr \{ptrRef} to \{llvmType(type)}*")
+                ptrRef := "\{llvmType(type)}* \{cast}"
+            }
+            out.printLine("\{name(id)} = load \{llvmType(type)}, \{ptrRef}\{debugInfo(position)}")
         }
         fail(error) {
             unreachable, error.asString
         }
     }
 
-    method writePointerGetIndex(position:Position, id:IR.Statement.ID, ptr:IR.Value,
-            index:IR.Value) {
+    method writePointerGetIndex(position:MethodPosition, id:IR.Statement.ID, ptr:IR.Value,
+            index:IR.Value, type:Type) {
         try {
-            def base := getTypedReference(ptr)
+            var base := getTypedReference(ptr)
+            if ptr.type() = compiler.BUILTIN_INT_TYPE {
+                def cast := nextVar()
+                out.printLine("\{cast} = inttoptr \{base} to \{llvmType(type)}*")
+                base := "\{llvmType(type)}* \{cast}"
+            }
             def indexRef := getTypedReference(index)
-            def baseType := llvmType(ptr.type().subtypes[1])
+            def baseType := llvmType(type)
             def offset := nextVar()
             out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
                     "\{base}, \{indexRef}\{debugInfo(position)}")
@@ -2098,7 +2028,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerOffset(position:Position, id:IR.Statement.ID, ptr:IR.Value,
+    method writePointerOffset(position:MethodPosition, id:IR.Statement.ID, ptr:IR.Value,
             offset:IR.Value) {
         try {
             def base := getTypedReference(ptr)
@@ -2112,7 +2042,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerRealloc(position:Position, id:IR.Statement.ID, ptr:IR.Value,
+    method writePointerRealloc(position:MethodPosition, id:IR.Statement.ID, ptr:IR.Value,
             oldCount:IR.Value, newCount:IR.Value) {
         try {
             def ptrRef := getTypedReference(ptr)
@@ -2120,7 +2050,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
             def oldCountRef := getTypedReference(oldCount)
             def newCountRef := getTypedReference(newCount)
-            def elementSize := stride(ptr.type().subtypes[1])
+            def elementSize := memoryLayout!.stride(ptr.type().subtypes[1])
             assert elementSize > 0, "invalid size for type \{ptr.type()}"
             def oldSize := nextVar()
             out.printLine("\{oldSize} = mul \{oldCountRef}, \{elementSize}\{debugInfo(position)}")
@@ -2137,11 +2067,16 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerSet(position:Position, value:IR.Value, ptr:IR.Value) {
+    method writePointerSet(position:MethodPosition, value:IR.Value, ptr:IR.Value, type:Type) {
         try {
-            def ptrRef := getTypedReference(ptr)
+            var ptrRef := getTypedReference(ptr)
+            if ptr.type() = compiler.BUILTIN_INT_TYPE {
+                def cast := nextVar()
+                out.printLine("\{cast} = inttoptr \{ptrRef} to \{llvmType(type)}*")
+                ptrRef := "\{llvmType(type)}* \{cast}"
+            }
             def valueRef := getTypedReference(value)
-            def baseType := llvmType(ptr.type().subtypes[1])
+            def baseType := llvmType(type)
             out.printLine("store \{valueRef}, \{ptrRef}\{debugInfo(position)}")
         }
         fail(error) {
@@ -2149,12 +2084,18 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerSetIndex(position:Position, value:IR.Value, ptr:IR.Value, index:IR.Value) {
+    method writePointerSetIndex(position:MethodPosition, value:IR.Value, ptr:IR.Value,
+            index:IR.Value, type:Type) {
         try {
-            def base := getTypedReference(ptr)
+            var base := getTypedReference(ptr)
+            if ptr.type() = compiler.BUILTIN_INT_TYPE {
+                def cast := nextVar()
+                out.printLine("\{cast} = inttoptr \{base} to \{llvmType(type)}*")
+                base := "\{llvmType(type)}* \{cast}"
+            }
             def indexRef := getTypedReference(index)
             def valueRef := getTypedReference(value)
-            def baseType := llvmType(ptr.type().subtypes[1])
+            def baseType := llvmType(type)
             def offset := nextVar()
             out.printLine("\{offset} = getelementptr inbounds \{baseType}, \{base}, \{indexRef}" +
                     debugInfo(position))
@@ -2165,7 +2106,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeReturn(position:Position, value:IR.Value?) {
+    method writeReturn(position:MethodPosition, value:IR.Value?) {
         try {
             if value !== null {
                 out.printLine("ret \{getTypedReference(value)}\{debugInfo(position)}")
@@ -2179,7 +2120,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeStaticCall(position:Position, id:IR.Statement.ID, m:MethodDecl,
+    method writeStaticCall(position:MethodPosition, id:IR.Statement.ID, m:MethodDecl,
             args:ListView<IR.Value>) {
         try {
             if m.owner.external {
@@ -2217,7 +2158,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeStore(position:Position, value:IR.Value, ptr:IR.Value) {
+    method writeStore(position:MethodPosition, value:IR.Value, ptr:IR.Value) {
         try {
             out.printLine("store \{getTypedReference(value)}, \{llvmType(ptr.type())}* " +
                     getReference(ptr) + debugInfo(position))
@@ -2287,11 +2228,11 @@ class LLVMCodeGenerator : CodeGenerator {
                 when IR.Statement.POINTER_DESTROY(position, ptr) {
                     writePointerDestroy(position, ptr)
                 }
-                when IR.Statement.POINTER_GET(position, ptr) {
-                    writePointerGet(position, id, ptr)
+                when IR.Statement.POINTER_GET(position, ptr, type) {
+                    writePointerGet(position, id, ptr, type)
                 }
-                when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
-                    writePointerGetIndex(position, id, ptr, index)
+                when IR.Statement.POINTER_GET_INDEX(position, ptr, index, type) {
+                    writePointerGetIndex(position, id, ptr, index, type)
                 }
                 when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
                     writePointerOffset(position, id, ptr, offset)
@@ -2299,11 +2240,11 @@ class LLVMCodeGenerator : CodeGenerator {
                 when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
                     writePointerRealloc(position, id, ptr, oldCount, newCount)
                 }
-                when IR.Statement.POINTER_SET(position, value, ptr) {
-                    writePointerSet(position, value, ptr)
+                when IR.Statement.POINTER_SET(position, value, ptr, type) {
+                    writePointerSet(position, value, ptr, type)
                 }
-                when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
-                    writePointerSetIndex(position, value, ptr, index)
+                when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index, type) {
+                    writePointerSetIndex(position, value, ptr, index, type)
                 }
                 when IR.Statement.RETURN(position, value) {
                     writeReturn(position, value)
@@ -2358,9 +2299,81 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
+    method getDebugType(t:Type):String {
+        try {
+            var result := debugTypes[t]
+            if result == null {
+                match t.typeKind {
+                    when Type.Kind.METHOD, Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_METHOD,
+                            Type.Kind.IMMUTABLE_FUNCTION {
+                        result := nextMetadata()
+                        def types := Array<String>()
+                        types.add(getDebugType(t.returnType))
+                        for p in t.parameterTypes {
+                            types.add(getDebugType(p))
+                        }
+                        metadata.print("\{result} = !DISubroutineType(types: !{")
+                        metadata.print(types.join(", "))
+                        metadata.printLine("})")
+                    }
+                    when Type.Kind.BUILTIN_INT {
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIBasicType(name: \"\{t.name}\", size: " +
+                                "\{t.size}, align: \{memoryLayout.alignment(t)}, encoding: " +
+                                "DW_ATE_signed)")
+                    }
+                    when Type.Kind.BUILTIN_UINT {
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIBasicType(name: \"\{t.name}\", size: " +
+                                "\{t.size}, align: \{memoryLayout.alignment(t)}, encoding: " +
+                                "DW_ATE_unsigned)")
+                    }
+                    when Type.Kind.BUILTIN_FLOAT {
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIBasicType(name: \"\{t.name}\", size: " +
+                                "\{t.size}, align: \{memoryLayout.alignment(t)}, encoding: " +
+                                "DW_ATE_float)")
+                    }
+                    when Type.Kind.BUILTIN_BIT {
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIBasicType(name: \"\{t.name}\", size: " +
+                                "1, align: 1, encoding: DW_ATE_boolean)")
+                    }
+                    when Type.Kind.CLASS, Type.Kind.NULLABLE {
+                        -- FIXME fix this to actually contain struct info, handle values
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIDerivedType(tag: DW_TAG_pointer_type, " +
+                                "baseType: null, size: \{memoryLayout.pointerSize}, " +
+                                "align: \{memoryLayout.pointerSize})")
+                    }
+                    when Type.Kind.VOID {
+                        result := "null"
+                    }
+                    otherwise {
+                        -- FIXME handle everything else
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIDerivedType(tag: DW_TAG_pointer_type, " +
+                                "baseType: null, size: \{memoryLayout.pointerSize}, " +
+                                "align: \{memoryLayout.pointerSize})")
+                    }
+                }
+                debugTypes[t] := result
+            }
+            return result
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
     @override
     method write(m:MethodDecl, ir:IR) {
         try {
+            assert compiler.methods[m.index] == m, "method \{m.declaration} is" +
+                    " supposed to be at index \{m.index}, but found " +
+                    "\{compiler.methods[m.index].declaration} instead"
+            lexicalBlockMetadata.clear()
+            debugPositions.clear()
             out := methods
             methodHeader.clear()
             self.ir := ir
@@ -2381,12 +2394,14 @@ class LLVMCodeGenerator : CodeGenerator {
                 index += 1
                 separator := ", "
             }
+            if m.annotations.isPointerSize {
+                out.print("\{separator}\{llvmType(compiler.BUILTIN_INT_TYPE)} %param\{index}")
+                index += 1
+                separator := ", "
+            }
             out.print(")")
             if compiler!.settings.debug {
-                currentMethodMetadata := nextMetadata()
-                metadata.printLine("\{currentMethodMetadata} = distinct !DISubprogram(name: " +
-                        "\"\{m.name}\", file: \{currentFileMetadata}, unit: !0, scopeLine: " +
-                        "\{m.position.line})")
+                out.print(" !dbg \{getMethodMetadata(m.index)}")
             }
             out.printLine(" {")
             out := MemoryOutputStream()
@@ -2407,20 +2422,6 @@ class LLVMCodeGenerator : CodeGenerator {
                 return
             }
             if compiler!.settings.debug {
-                currentFileMetadata := nextMetadata()
-                metadata.printLine("\{currentFileMetadata} = distinct !DIFile(" +
-                        "filename: \"\{cl.source}\", directory: \"\{System.workingDirectory()}\")")
-                if currentFileMetadata = "!1" {
-                    metadata.printLine("!0 = distinct !DICompileUnit(language:DW_LANG_C89, " +
-                            "producer:\"frostc\", file: \{currentFileMetadata}, isOptimized: " +
-                            "false, runtimeVersion: 0, emissionKind: FullDebug)")
-                    metadata.printLine("!llvm.dbg.cu = !{!0}")
-                    def dwarfVersion := nextMetadata()
-                    metadata.printLine("\{dwarfVersion} = !{i32 2, !\"Dwarf Version\", i32 4}")
-                    def debugVersion := nextMetadata()
-                    metadata.printLine("\{debugVersion} = !{i32 2, !\"Debug Info Version\", i32 3}")
-                    metadata.printLine("!llvm.module.flags = !{\{dwarfVersion}, \{debugVersion}}")
-                }
             }
             writeType(cl.type)
             getClassConstant(cl)

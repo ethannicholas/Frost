@@ -545,10 +545,10 @@ _30 = *_29;
 _33 = *(&local0);
 _34 = *(&local1);
 // begin inline call to function org.frostlang.frostc.IR.Statement.ID.=(other:org.frostlang.frostc.IR.Statement.ID):frost.core.Bit from Analyzer.frost:52:40
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:171
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:172
 _37 = _33.value;
 _38 = _34.value;
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from IR.frost:171:30
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from IR.frost:172:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _41 = _37.value;
 _42 = _38.value;

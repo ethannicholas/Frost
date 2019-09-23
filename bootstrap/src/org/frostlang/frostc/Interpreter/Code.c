@@ -2,8 +2,8 @@
 #include "frost/core/Object.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
-#include "frost/core/Int.h"
 #include "frost/collections/Array.h"
+#include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 
 
@@ -13,55 +13,69 @@ org$frostlang$frostc$Interpreter$Code$class_type org$frostlang$frostc$Interprete
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x49\x6e\x74\x65\x72\x70\x72\x65\x74\x65\x72\x2e\x43\x6f\x64\x65", 37, 7690034498590087861, NULL };
 
-void org$frostlang$frostc$Interpreter$Code$init$frost$core$Int$frost$collections$Array$LTfrost$core$Int$GT$frost$collections$Array$LTfrost$collections$Array$LTorg$frostlang$frostc$IR$Statement$ID$GT$GT$frost$collections$Array$LTfrost$collections$Array$LTorg$frostlang$frostc$IR$Statement$GT$GT(void* rawSelf, frost$core$Int param1, frost$collections$Array* param2, frost$collections$Array* param3, frost$collections$Array* param4) {
+void org$frostlang$frostc$Interpreter$Code$init$frost$collections$Array$LTorg$frostlang$frostc$Type$GT$frost$collections$Array$LTfrost$core$Int$GT$frost$collections$Array$LTfrost$collections$Array$LTorg$frostlang$frostc$IR$Statement$ID$GT$GT$frost$collections$Array$LTfrost$collections$Array$LTorg$frostlang$frostc$IR$Statement$GT$GT$frost$core$Int(void* rawSelf, frost$collections$Array* param1, frost$collections$Array* param2, frost$collections$Array* param3, frost$collections$Array* param4, frost$core$Int param5) {
 org$frostlang$frostc$Interpreter$Code* param0 = (org$frostlang$frostc$Interpreter$Code*) rawSelf;
 
-frost$core$Int* _1;
-frost$core$Object* _4;
-frost$collections$Array** _6;
-frost$collections$Array* _7;
-frost$core$Object* _8;
-frost$collections$Array** _10;
-frost$core$Object* _13;
-frost$collections$Array** _15;
-frost$collections$Array* _16;
-frost$core$Object* _17;
-frost$collections$Array** _19;
-frost$core$Object* _22;
-frost$collections$Array** _24;
-frost$collections$Array* _25;
-frost$core$Object* _26;
-frost$collections$Array** _28;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:23
-_1 = &param0->locals;
-*_1 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:24
-_4 = ((frost$core$Object*) param2);
-frost$core$Frost$ref$frost$core$Object$Q(_4);
-_6 = &param0->blocks;
-_7 = *_6;
-_8 = ((frost$core$Object*) _7);
-frost$core$Frost$unref$frost$core$Object$Q(_8);
-_10 = &param0->blocks;
-*_10 = param2;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:25
-_13 = ((frost$core$Object*) param3);
-frost$core$Frost$ref$frost$core$Object$Q(_13);
-_15 = &param0->ids;
-_16 = *_15;
-_17 = ((frost$core$Object*) _16);
-frost$core$Frost$unref$frost$core$Object$Q(_17);
-_19 = &param0->ids;
-*_19 = param3;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:26
-_22 = ((frost$core$Object*) param4);
-frost$core$Frost$ref$frost$core$Object$Q(_22);
-_24 = &param0->ir;
-_25 = *_24;
-_26 = ((frost$core$Object*) _25);
-frost$core$Frost$unref$frost$core$Object$Q(_26);
-_28 = &param0->ir;
-*_28 = param4;
+frost$core$Object* _1;
+frost$collections$Array** _3;
+frost$collections$Array* _4;
+frost$core$Object* _5;
+frost$collections$Array** _7;
+frost$core$Object* _10;
+frost$collections$Array** _12;
+frost$collections$Array* _13;
+frost$core$Object* _14;
+frost$collections$Array** _16;
+frost$core$Object* _19;
+frost$collections$Array** _21;
+frost$collections$Array* _22;
+frost$core$Object* _23;
+frost$collections$Array** _25;
+frost$core$Object* _28;
+frost$collections$Array** _30;
+frost$collections$Array* _31;
+frost$core$Object* _32;
+frost$collections$Array** _34;
+frost$core$Int* _37;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:33
+_1 = ((frost$core$Object*) param1);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
+_3 = &param0->locals;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->locals;
+*_7 = param1;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:34
+_10 = ((frost$core$Object*) param2);
+frost$core$Frost$ref$frost$core$Object$Q(_10);
+_12 = &param0->blocks;
+_13 = *_12;
+_14 = ((frost$core$Object*) _13);
+frost$core$Frost$unref$frost$core$Object$Q(_14);
+_16 = &param0->blocks;
+*_16 = param2;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:35
+_19 = ((frost$core$Object*) param3);
+frost$core$Frost$ref$frost$core$Object$Q(_19);
+_21 = &param0->ids;
+_22 = *_21;
+_23 = ((frost$core$Object*) _22);
+frost$core$Frost$unref$frost$core$Object$Q(_23);
+_25 = &param0->ids;
+*_25 = param3;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:36
+_28 = ((frost$core$Object*) param4);
+frost$core$Frost$ref$frost$core$Object$Q(_28);
+_30 = &param0->ir;
+_31 = *_30;
+_32 = ((frost$core$Object*) _31);
+frost$core$Frost$unref$frost$core$Object$Q(_32);
+_34 = &param0->ir;
+*_34 = param4;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:37
+_37 = &param0->maxId;
+*_37 = param5;
 return;
 
 }
@@ -78,21 +92,28 @@ frost$core$Object* _9;
 frost$collections$Array** _11;
 frost$collections$Array* _12;
 frost$core$Object* _13;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:12
+frost$collections$Array** _15;
+frost$collections$Array* _16;
+frost$core$Object* _17;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:20
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
-_3 = &param0->blocks;
+_3 = &param0->locals;
 _4 = *_3;
 _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
-_7 = &param0->ids;
+_7 = &param0->blocks;
 _8 = *_7;
 _9 = ((frost$core$Object*) _8);
 frost$core$Frost$unref$frost$core$Object$Q(_9);
-_11 = &param0->ir;
+_11 = &param0->ids;
 _12 = *_11;
 _13 = ((frost$core$Object*) _12);
 frost$core$Frost$unref$frost$core$Object$Q(_13);
+_15 = &param0->ir;
+_16 = *_15;
+_17 = ((frost$core$Object*) _16);
+frost$core$Frost$unref$frost$core$Object$Q(_17);
 return;
 
 }

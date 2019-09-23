@@ -7,13 +7,13 @@ uses org.frostlang.frostc.Compiler.AutoUnrefs
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 
 class If {
     @class
-    method compile(compiler:Compiler, position:Position, test:ASTNode, ifTrue:FixedArray<ASTNode>,
-            ifFalse:ASTNode?) {
+    method compile(compiler:Compiler, position:MethodPosition, test:ASTNode,
+            ifTrue:FixedArray<ASTNode>, ifFalse:ASTNode?) {
         def ir := compiler.ir
         def testBit:IR.Value
         def ifTrueBlock := ir.newBlock("if true")

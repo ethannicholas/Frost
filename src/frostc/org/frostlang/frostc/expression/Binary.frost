@@ -5,6 +5,7 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.MethodRef
 uses org.frostlang.frostc.Methods
 uses org.frostlang.frostc.Pair
@@ -204,15 +205,15 @@ class Binary {
                     if !methods->MethodDecl.annotations.isClass | left.isClassLiteral {
                         def list := Array<MethodDecl>()
                         list.add(methods->MethodDecl)
-                        def result := Call.findBestMethod(compiler, Position(), target, list, args,
-                                type)
+                        def result := Call.findBestMethod(compiler, MethodPosition(), target, list,
+                                args, type)
                         if result !== null {
                             return result
                         }
                     }
                 }
                 when Symbol.Kind.METHODS {
-                    def result := Call.findBestMethod(compiler, Position(), target,
+                    def result := Call.findBestMethod(compiler, MethodPosition(), target,
                             methods->Methods.methods.filter(
                                     m => m.annotations.isClass = left.isClassLiteral), args, type)
                     if result !== null {
@@ -247,14 +248,15 @@ class Binary {
                 if methods->MethodDecl.annotations.isClass {
                     def list := Array<MethodDecl>()
                     list.add(methods->MethodDecl)
-                    def result := Call.findBestMethod(compiler, Position(), null, list, args, type)
+                    def result := Call.findBestMethod(compiler, MethodPosition(), null, list, args,
+                            type)
                     if result !== null {
                         return result
                     }
                 }
             }
             when Symbol.Kind.METHODS {
-                def result := Call.findBestMethod(compiler, Position(), null,
+                def result := Call.findBestMethod(compiler, MethodPosition(), null,
                         methods->Methods.methods.filter(m => m.annotations.isClass), args, type)
                 if result !== null {
                     return result
@@ -556,8 +558,8 @@ class Binary {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, left:ASTNode, op:Operator, right:ASTNode,
-            type:TypeContext):IR.Value? {
+    method compile(compiler:Compiler, position:MethodPosition, left:ASTNode, op:Operator,
+            right:ASTNode, type:TypeContext):IR.Value? {
         def folded := fold(compiler, left, op, right)
         if folded !== null {
             return compiler.compileExpression(folded, type)
@@ -580,7 +582,8 @@ class Binary {
                 def matches := findOverloadedOperator(compiler, left, op, right, type)
                 if matches !== null {
                     if matches.first.count > 1 {
-                        compiler.reportAmbiguousMatch(position, matches.first, [left, right], type)
+                        compiler.reportAmbiguousMatch(position.asPosition, matches.first,
+                                [left, right], type)
                         return null
                     }
                     def m := matches.first[0].value
@@ -646,8 +649,8 @@ class Binary {
                     }
                     if (compiledLeft.type() = compiler.BUILTIN_BIT_TYPE |
                             compiledLeft.type().isBuiltinNumber) {
-                        def resultType := compiler.preferredType(ASTNode.BINARY(position, left, op,
-                                 right))
+                        def resultType := compiler.preferredType(ASTNode.BINARY(position.asPosition,
+                                left, op, right))
                         if resultType !== null {
                             def result := compiler.ir.add(IR.Statement.BINARY(position, compiledLeft,
                                     op, compiledRight, resultType))

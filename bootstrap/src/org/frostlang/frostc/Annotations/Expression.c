@@ -181,11 +181,11 @@ frost$core$Object* _236;
 org$frostlang$frostc$ASTNode* _238;
 frost$core$Object* _239;
 frost$core$Int _244;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:36
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:37
 _1 = &param0->$rawValue;
 _2 = *_1;
 _3 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:37:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:38:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _6 = _2.value;
 _7 = _3.value;
@@ -205,10 +205,10 @@ _20 = *(&local0);
 _21 = ((frost$core$Object*) _20);
 frost$core$Frost$unref$frost$core$Object$Q(_21);
 *(&local0) = _16;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:37
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:38
 _25 = *(&local0);
 _26 = ((frost$core$Object*) _25);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:37:49
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:38:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _29 = ($fn7) _26->$class->vtable[0];
 _30 = _29(_26);
@@ -233,7 +233,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_47);
 return _39;
 block3:;
 _51 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:38:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:39:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _54 = _2.value;
 _55 = _51.value;
@@ -253,10 +253,10 @@ _68 = *(&local1);
 _69 = ((frost$core$Object*) _68);
 frost$core$Frost$unref$frost$core$Object$Q(_69);
 *(&local1) = _64;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:38
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:39
 _73 = *(&local1);
 _74 = ((frost$core$Object*) _73);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:38:49
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:39:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _77 = ($fn10) _74->$class->vtable[0];
 _78 = _77(_74);
@@ -281,7 +281,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_95);
 return _87;
 block7:;
 _99 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:39:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:40:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _102 = _2.value;
 _103 = _99.value;
@@ -301,10 +301,10 @@ _116 = *(&local2);
 _117 = ((frost$core$Object*) _116);
 frost$core$Frost$unref$frost$core$Object$Q(_117);
 *(&local2) = _112;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:39
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:40
 _121 = *(&local2);
 _122 = ((frost$core$Object*) _121);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:39:49
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:40:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _125 = ($fn13) _122->$class->vtable[0];
 _126 = _125(_122);
@@ -329,7 +329,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_143);
 return _135;
 block11:;
 _147 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:40:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:41:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _150 = _2.value;
 _151 = _147.value;
@@ -349,10 +349,10 @@ _164 = *(&local3);
 _165 = ((frost$core$Object*) _164);
 frost$core$Frost$unref$frost$core$Object$Q(_165);
 *(&local3) = _160;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:40
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:41
 _169 = *(&local3);
 _170 = ((frost$core$Object*) _169);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:40:49
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:41:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _173 = ($fn16) _170->$class->vtable[0];
 _174 = _173(_170);
@@ -377,7 +377,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_191);
 return _183;
 block15:;
 _195 = (frost$core$Int) {4u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:41:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:42:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _198 = _2.value;
 _199 = _195.value;
@@ -397,10 +397,10 @@ _212 = *(&local4);
 _213 = ((frost$core$Object*) _212);
 frost$core$Frost$unref$frost$core$Object$Q(_213);
 *(&local4) = _208;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:41
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:42
 _217 = *(&local4);
 _218 = ((frost$core$Object*) _217);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:41:49
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Annotations.frost:42:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _221 = ($fn19) _218->$class->vtable[0];
 _222 = _221(_218);
@@ -424,8 +424,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_239);
 *(&local4) = ((org$frostlang$frostc$ASTNode*) NULL);
 return _231;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:43
-_244 = (frost$core$Int) {43u};
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:44
+_244 = (frost$core$Int) {44u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s22, _244);
 abort(); // unreachable
 
@@ -566,11 +566,11 @@ frost$core$Object* _220;
 frost$core$String* _223;
 frost$core$Object* _224;
 frost$core$Object* _229;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:28
 _1 = &param0->$rawValue;
 _2 = *_1;
 _3 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:27:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:28:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _6 = _2.value;
 _7 = _3.value;
@@ -616,7 +616,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_44);
 goto block1;
 block3:;
 _48 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:27:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:28:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _51 = _2.value;
 _52 = _48.value;
@@ -662,7 +662,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_89);
 goto block1;
 block6:;
 _93 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:27:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:28:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _96 = _2.value;
 _97 = _93.value;
@@ -708,7 +708,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_134);
 goto block1;
 block9:;
 _138 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:27:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:28:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _141 = _2.value;
 _142 = _138.value;
@@ -754,7 +754,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_179);
 goto block1;
 block12:;
 _183 = (frost$core$Int) {4u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:27:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Annotations.frost:28:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _186 = _2.value;
 _187 = _183.value;
@@ -799,7 +799,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_224);
 *(&local8) = ((frost$core$String*) NULL);
 goto block1;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:28
 _229 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_229);
 return;
@@ -813,15 +813,15 @@ frost$core$Object* _4;
 frost$core$String** _6;
 frost$core$Object* _9;
 org$frostlang$frostc$ASTNode** _11;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:28
 _1 = &param0->$rawValue;
 *_1 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:28
 _4 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
 _6 = &param0->$data.$PRE.field0;
 *_6 = param2;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:28
 _9 = ((frost$core$Object*) param3);
 frost$core$Frost$ref$frost$core$Object$Q(_9);
 _11 = &param0->$data.$PRE.field1;

@@ -6,6 +6,7 @@ uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.MethodRef
 uses org.frostlang.frostc.Methods
 uses org.frostlang.frostc.Pair
@@ -105,7 +106,7 @@ class Unary {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, op:Operator, operand:ASTNode,
+    method compile(compiler:Compiler, position:MethodPosition, op:Operator, operand:ASTNode,
             type:TypeContext):IR.Value? {
         def ir := compiler.ir
         match op {

@@ -17,26 +17,24 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 frost$core$Bit frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit(void* rawSelf, frost$core$Equatable* param1) {
 frost$core$Equatable* param0 = (frost$core$Equatable*) rawSelf;
 
-frost$core$Equatable* _1;
-$fn2 _2;
-frost$core$Bit _3;
+$fn2 _1;
+frost$core$Bit _2;
+bool _5;
 bool _6;
-bool _7;
-frost$core$Bit _8;
+frost$core$Bit _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Equatable.frost:18
-_1 = param0;
-ITable* $tmp3 = _1->$class->itable;
+ITable* $tmp3 = param0->$class->itable;
 while ($tmp3->$class != (frost$core$Class*) &frost$core$Equatable$class) {
     $tmp3 = $tmp3->next;
 }
-_2 = $tmp3->methods[0];
-_3 = _2(_1, param1);
+_1 = $tmp3->methods[0];
+_2 = _1(param0, param1);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Equatable.frost:18:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-_6 = _3.value;
-_7 = !_6;
-_8 = (frost$core$Bit) {_7};
-return _8;
+_5 = _2.value;
+_6 = !_5;
+_7 = (frost$core$Bit) {_6};
+return _7;
 
 }
 

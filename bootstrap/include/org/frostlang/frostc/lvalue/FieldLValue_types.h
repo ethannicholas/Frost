@@ -4,7 +4,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
 typedef struct org$frostlang$frostc$Compiler org$frostlang$frostc$Compiler;
-#include "org/frostlang/frostc/Position_types.h"
+#include "org/frostlang/frostc/MethodPosition_types.h"
 typedef struct org$frostlang$frostc$IR$Value org$frostlang$frostc$IR$Value;
 typedef struct org$frostlang$frostc$FieldDecl org$frostlang$frostc$FieldDecl;
 typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
@@ -15,7 +15,7 @@ typedef struct org$frostlang$frostc$lvalue$FieldLValue {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     org$frostlang$frostc$Compiler* compiler;
-    org$frostlang$frostc$Position position;
+    org$frostlang$frostc$MethodPosition position;
     org$frostlang$frostc$IR$Value* target;
     org$frostlang$frostc$FieldDecl* field;
     org$frostlang$frostc$Type* rawType;

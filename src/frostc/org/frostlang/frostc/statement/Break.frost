@@ -3,12 +3,12 @@ package org.frostlang.frostc.statement
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.EnclosingContext
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 
 class Break {
     @class
-    method compile(compiler:Compiler, position:Position, label:String?) {
-        def l := compiler.findAndLeaveToLoopScope(position, label)
+    method compile(compiler:Compiler, position:MethodPosition, label:String?) {
+        def l := compiler.findAndLeaveToLoopScope(position.asPosition, label)
         if l !== null {
             match l {
                 when EnclosingContext.LOOP(_, breakTarget, _) {

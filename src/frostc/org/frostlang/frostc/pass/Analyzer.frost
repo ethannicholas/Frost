@@ -379,7 +379,8 @@ class Analyzer {
             when IR.Statement.LOAD(position, v) {
                 def value := getValue(v, state)
                 if reportErrors & value.type = compiler.INVALID_TYPE {
-                    compiler.warn(position, "value \{stmt}:\{v} has not been initialized")
+                    compiler.warn(position.asPosition,
+                            "value \{stmt}:\{v} has not been initialized")
                 }
                 return value
             }
@@ -397,15 +398,11 @@ class Analyzer {
             when IR.Statement.POINTER_ALLOC(_, _, t) {
                 return DataFlowValue(Type.pointerTo(compiler, t), definitionFrom(stmt))
             }
-            when IR.Statement.POINTER_GET(_, p) {
-                def value := getValue(p, state)
-                assert value.type.isPointer, "POINTER_GET_INDEX on non-pointer \{value}"
-                return DataFlowValue(value.type.subtypes[1], definitionFrom(stmt))
+            when IR.Statement.POINTER_GET(_, p, t) {
+                return DataFlowValue(t, definitionFrom(stmt))
             }
-            when IR.Statement.POINTER_GET_INDEX(_, p, _) {
-                def value := getValue(p, state)
-                assert value.type.isPointer, "POINTER_GET_INDEX on non-pointer \{value}"
-                return DataFlowValue(value.type.subtypes[1], definitionFrom(stmt))
+            when IR.Statement.POINTER_GET_INDEX(_, p, _, t) {
+                return DataFlowValue(t, definitionFrom(stmt))
             }
             when IR.Statement.POINTER_OFFSET(_, p, _) {
                 return DataFlowValue(getValue(p, state).type, Definition.UNSPECIFIED)
@@ -662,6 +659,9 @@ class Analyzer {
         }
         for p in m.parameters {
             startState.parameters.add(p.type)
+        }
+        if m.annotations.isPointerSize {
+            startState.parameters.add(compiler.BUILTIN_INT_TYPE)
         }
         entryStates[ir.blocks[0].id] := startState
         for b in ir.blocks {

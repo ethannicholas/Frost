@@ -1323,7 +1323,7 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerGet(id:IR.Statement.ID, ptr:IR.Value) {
+    method writePointerGet(id:IR.Statement.ID, ptr:IR.Value, type:Type) {
         try {
             out.printLine("\{name(id)} = *\{getReference(ptr)};")
         }
@@ -1332,7 +1332,7 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerGetIndex(id:IR.Statement.ID, ptr:IR.Value, index:IR.Value) {
+    method writePointerGetIndex(id:IR.Statement.ID, ptr:IR.Value, index:IR.Value, type:Type) {
         try {
             def base := getReference(ptr)
             def indexRef := getReference(index)
@@ -1369,7 +1369,7 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerSet(value:IR.Value, ptr:IR.Value) {
+    method writePointerSet(value:IR.Value, ptr:IR.Value, type:Type) {
         try {
             def ptrRef := getReference(ptr)
             def valueRef := getReference(value)
@@ -1380,7 +1380,7 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerSetIndex(value:IR.Value, ptr:IR.Value, index:IR.Value) {
+    method writePointerSetIndex(value:IR.Value, ptr:IR.Value, index:IR.Value, type:Type) {
         try {
             def base := getReference(ptr)
             def indexRef := getReference(index)
@@ -1506,11 +1506,11 @@ class CCodeGenerator : CodeGenerator {
                 when IR.Statement.POINTER_DESTROY(position, ptr) {
                     writePointerDestroy(ptr)
                 }
-                when IR.Statement.POINTER_GET(position, ptr) {
-                    writePointerGet(id, ptr)
+                when IR.Statement.POINTER_GET(position, ptr, type) {
+                    writePointerGet(id, ptr, type)
                 }
-                when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
-                    writePointerGetIndex(id, ptr, index)
+                when IR.Statement.POINTER_GET_INDEX(position, ptr, index, type) {
+                    writePointerGetIndex(id, ptr, index, type)
                 }
                 when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
                     writePointerOffset(id, ptr, offset)
@@ -1518,11 +1518,11 @@ class CCodeGenerator : CodeGenerator {
                 when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
                     writePointerRealloc(id, ptr, oldCount, newCount)
                 }
-                when IR.Statement.POINTER_SET(position, value, ptr) {
-                    writePointerSet(value, ptr)
+                when IR.Statement.POINTER_SET(position, value, ptr, type) {
+                    writePointerSet(value, ptr, type)
                 }
-                when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
-                    writePointerSetIndex(value, ptr, index)
+                when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index, type) {
+                    writePointerSetIndex(value, ptr, index, type)
                 }
                 when IR.Statement.RETURN(position, value) {
                     writeReturn(value)
@@ -1605,11 +1605,11 @@ class CCodeGenerator : CodeGenerator {
                 when IR.Statement.POINTER_ALLOC(_, _, type) {
                     write("\{cType(type)}*")
                 }
-                when IR.Statement.POINTER_GET_INDEX(_, ptr, _) {
-                    write("\{cType(ptr.type().subtypes[1])}")
+                when IR.Statement.POINTER_GET_INDEX(_, ptr, _, type) {
+                    write("\{cType(type)}")
                 }
-                when IR.Statement.POINTER_GET(_, ptr) {
-                    write("\{cType(ptr.type().subtypes[1])}")
+                when IR.Statement.POINTER_GET(_, ptr, type) {
+                    write("\{cType(type)}")
                 }
                 when IR.Statement.POINTER_OFFSET(_, ptr, _) {
                     write("\{cType(ptr.type())}")

@@ -44,11 +44,11 @@ frost$collections$ListView** _7;
 frost$collections$ListView* _8;
 frost$core$Object* _9;
 frost$collections$ListView** _11;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:34
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:33
 _1 = (frost$core$Int) {1u};
 _2 = &param0->index;
 *_2 = _1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:39
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:38
 _5 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_5);
 _7 = &param0->args;
@@ -74,7 +74,7 @@ int64_t _10;
 int64_t _11;
 bool _12;
 frost$core$Bit _13;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:42
 _1 = &param0->index;
 _2 = *_1;
 _3 = &param0->args;
@@ -86,7 +86,7 @@ while ($tmp3->$class != (frost$core$Class*) &frost$collections$CollectionView$cl
 }
 _6 = $tmp3->methods[0];
 _7 = _6(_5);
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Main.frost:43:26
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Main.frost:42:26
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _10 = _2.value;
 _11 = _7.value;
@@ -115,23 +115,22 @@ frost$core$Int _21;
 frost$core$Int* _22;
 frost$collections$ListView** _25;
 frost$collections$ListView* _26;
-frost$collections$ListView* _27;
-frost$core$Int* _28;
+frost$core$Int* _27;
+frost$core$Int _28;
 frost$core$Int _29;
-frost$core$Int _30;
+int64_t _30;
 int64_t _31;
 int64_t _32;
-int64_t _33;
-frost$core$Int _34;
-$fn5 _35;
-frost$core$Object* _36;
-frost$core$String* _37;
-frost$core$Object* _38;
-frost$core$Object* _40;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:47
+frost$core$Int _33;
+$fn5 _34;
+frost$core$Object* _35;
+frost$core$String* _36;
+frost$core$Object* _37;
+frost$core$Object* _39;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:46
 _1 = ($fn6) param0->$class->vtable[2];
 _2 = _1(param0);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Main.frost:47:20
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Main.frost:46:20
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _5 = _2.value;
 _6 = !_5;
@@ -139,11 +138,11 @@ _7 = (frost$core$Bit) {_6};
 _9 = _7.value;
 if (_9) goto block2; else goto block3;
 block3:;
-_11 = (frost$core$Int) {47u};
+_11 = (frost$core$Int) {46u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s7, _11);
 abort(); // unreachable
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:48
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:47
 _15 = &param0->index;
 _16 = *_15;
 _17 = (frost$core$Int) {1u};
@@ -153,29 +152,28 @@ _20 = _18 + _19;
 _21 = (frost$core$Int) {_20};
 _22 = &param0->index;
 *_22 = _21;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:49
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:48
 _25 = &param0->args;
 _26 = *_25;
-_27 = _26;
-_28 = &param0->index;
-_29 = *_28;
-_30 = (frost$core$Int) {1u};
+_27 = &param0->index;
+_28 = *_27;
+_29 = (frost$core$Int) {1u};
+_30 = _28.value;
 _31 = _29.value;
-_32 = _30.value;
-_33 = _31 - _32;
-_34 = (frost$core$Int) {_33};
-ITable* $tmp8 = _27->$class->itable;
+_32 = _30 - _31;
+_33 = (frost$core$Int) {_32};
+ITable* $tmp8 = _26->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp8 = $tmp8->next;
 }
-_35 = $tmp8->methods[0];
-_36 = _35(_27, _34);
-_37 = ((frost$core$String*) _36);
-_38 = ((frost$core$Object*) _37);
-frost$core$Frost$ref$frost$core$Object$Q(_38);
-_40 = _36;
-frost$core$Frost$unref$frost$core$Object$Q(_40);
-return _37;
+_34 = $tmp8->methods[0];
+_35 = _34(_26, _33);
+_36 = ((frost$core$String*) _35);
+_37 = ((frost$core$Object*) _36);
+frost$core$Frost$ref$frost$core$Object$Q(_37);
+_39 = _35;
+frost$core$Frost$unref$frost$core$Object$Q(_39);
+return _36;
 
 }
 frost$core$String* org$frostlang$frostc$Main$Arguments$next$frost$core$String$R$frost$core$String(void* rawSelf, frost$core$String* param1) {
@@ -188,100 +186,98 @@ frost$core$String* _6;
 frost$core$String* _7;
 frost$collections$ListView** _8;
 frost$collections$ListView* _9;
-frost$collections$ListView* _10;
-frost$collections$ListView** _11;
-frost$collections$ListView* _12;
-frost$collections$CollectionView* _13;
-$fn10 _14;
+frost$collections$ListView** _10;
+frost$collections$ListView* _11;
+frost$collections$CollectionView* _12;
+$fn10 _13;
+frost$core$Int _14;
 frost$core$Int _15;
-frost$core$Int _16;
+int64_t _16;
 int64_t _17;
 int64_t _18;
-int64_t _19;
-frost$core$Int _20;
-$fn11 _21;
-frost$core$Object* _22;
+frost$core$Int _19;
+$fn11 _20;
+frost$core$Object* _21;
+frost$core$String* _22;
 frost$core$String* _23;
 frost$core$String* _24;
-frost$core$String* _25;
-frost$core$Object* _35;
-frost$core$Object* _37;
-frost$core$Object* _39;
-frost$core$Object* _41;
-frost$core$Object* _43;
-frost$core$Int _46;
-frost$core$Int _48;
-$fn12 _52;
-frost$core$String* _53;
-frost$core$Object* _54;
-frost$core$Object* _56;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:53
+frost$core$Object* _34;
+frost$core$Object* _36;
+frost$core$Object* _38;
+frost$core$Object* _40;
+frost$core$Object* _42;
+frost$core$Int _45;
+frost$core$Int _47;
+$fn12 _51;
+frost$core$String* _52;
+frost$core$Object* _53;
+frost$core$Object* _55;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:52
 _1 = ($fn13) param0->$class->vtable[2];
 _2 = _1(param0);
 _3 = _2.value;
 if (_3) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:54
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:53
 _6 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s14, param1);
 _7 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_6, &$s15);
 _8 = &param0->args;
 _9 = *_8;
-_10 = _9;
-_11 = &param0->args;
-_12 = *_11;
-_13 = ((frost$collections$CollectionView*) _12);
-ITable* $tmp16 = _13->$class->itable;
+_10 = &param0->args;
+_11 = *_10;
+_12 = ((frost$collections$CollectionView*) _11);
+ITable* $tmp16 = _12->$class->itable;
 while ($tmp16->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp16 = $tmp16->next;
 }
-_14 = $tmp16->methods[0];
-_15 = _14(_13);
-_16 = (frost$core$Int) {1u};
+_13 = $tmp16->methods[0];
+_14 = _13(_12);
+_15 = (frost$core$Int) {1u};
+_16 = _14.value;
 _17 = _15.value;
-_18 = _16.value;
-_19 = _17 - _18;
-_20 = (frost$core$Int) {_19};
-ITable* $tmp17 = _10->$class->itable;
+_18 = _16 - _17;
+_19 = (frost$core$Int) {_18};
+ITable* $tmp17 = _9->$class->itable;
 while ($tmp17->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp17 = $tmp17->next;
 }
-_21 = $tmp17->methods[0];
-_22 = _21(_10, _20);
-_23 = ((frost$core$String*) _22);
-_24 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_7, _23);
-_25 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_24, &$s18);
-// begin inline call to method frost.io.Console.printErrorLine(s:frost.core.String) from Main.frost:54:39
+_20 = $tmp17->methods[0];
+_21 = _20(_9, _19);
+_22 = ((frost$core$String*) _21);
+_23 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_7, _22);
+_24 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_23, &$s18);
+// begin inline call to method frost.io.Console.printErrorLine(s:frost.core.String) from Main.frost:53:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:85
-frost$io$Console$printError$frost$core$String(_25);
+frost$io$Console$printError$frost$core$String(_24);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:86
 // begin inline call to method frost.io.Console.printErrorLine() from Console.frost:86:23
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:110
 frost$io$Console$printError$frost$core$String(&$s19);
-_35 = ((frost$core$Object*) _25);
-frost$core$Frost$unref$frost$core$Object$Q(_35);
-_37 = ((frost$core$Object*) _24);
-frost$core$Frost$unref$frost$core$Object$Q(_37);
-_39 = _22;
-frost$core$Frost$unref$frost$core$Object$Q(_39);
-_41 = ((frost$core$Object*) _7);
-frost$core$Frost$unref$frost$core$Object$Q(_41);
-_43 = ((frost$core$Object*) _6);
-frost$core$Frost$unref$frost$core$Object$Q(_43);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:55
-_46 = (frost$core$Int) {1u};
-frost$core$System$exit$frost$core$Int(_46);
-_48 = (frost$core$Int) {55u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s20, _48, &$s21);
+_34 = ((frost$core$Object*) _24);
+frost$core$Frost$unref$frost$core$Object$Q(_34);
+_36 = ((frost$core$Object*) _23);
+frost$core$Frost$unref$frost$core$Object$Q(_36);
+_38 = _21;
+frost$core$Frost$unref$frost$core$Object$Q(_38);
+_40 = ((frost$core$Object*) _7);
+frost$core$Frost$unref$frost$core$Object$Q(_40);
+_42 = ((frost$core$Object*) _6);
+frost$core$Frost$unref$frost$core$Object$Q(_42);
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:54
+_45 = (frost$core$Int) {1u};
+frost$core$System$exit$frost$core$Int(_45);
+_47 = (frost$core$Int) {54u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s20, _47, &$s21);
 abort(); // unreachable
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:57
-_52 = ($fn22) param0->$class->vtable[3];
-_53 = _52(param0);
-_54 = ((frost$core$Object*) _53);
-frost$core$Frost$ref$frost$core$Object$Q(_54);
-_56 = ((frost$core$Object*) _53);
-frost$core$Frost$unref$frost$core$Object$Q(_56);
-return _53;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:56
+_51 = ($fn22) param0->$class->vtable[3];
+_52 = _51(param0);
+_53 = ((frost$core$Object*) _52);
+frost$core$Frost$ref$frost$core$Object$Q(_53);
+_55 = ((frost$core$Object*) _52);
+frost$core$Frost$unref$frost$core$Object$Q(_55);
+return _52;
 
 }
 void org$frostlang$frostc$Main$Arguments$cleanup(void* rawSelf) {
@@ -291,7 +287,7 @@ frost$core$Object* _1;
 frost$collections$ListView** _3;
 frost$collections$ListView* _4;
 frost$core$Object* _5;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:28
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = &param0->args;
@@ -301,9 +297,4 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
-
-
-
-
-
 

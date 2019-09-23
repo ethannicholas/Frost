@@ -8,7 +8,7 @@ Example:
 
     class Example {
         method sayHello() {
-            Console.writeLine("Hello from \{self}!")
+            Console.printLine("Hello from \{self}!")
         }
 
         @override
@@ -21,6 +21,5 @@ Example:
             Example().sayHello()
         }
     }
-)
 
 Result: `Hello from an instance of Example!`

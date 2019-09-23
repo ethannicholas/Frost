@@ -3,13 +3,13 @@ package org.frostlang.frostc.lvalue
 uses org.frostlang.frostc.ChoiceCase
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 
 class ChoiceFieldLValue : LValue {
     def compiler:Compiler
 
-    def position:Position
+    def position:MethodPosition
 
     def target:IR.Value
 
@@ -18,7 +18,7 @@ class ChoiceFieldLValue : LValue {
     def index:Int
 
     @pre(target.type() = choiceCase.owner.type)
-    init(compiler:Compiler, position:Position, target:IR.Value, choiceCase:ChoiceCase,
+    init(compiler:Compiler, position:MethodPosition, target:IR.Value, choiceCase:ChoiceCase,
             index:Int) {
         self.compiler := compiler
         self.target := target

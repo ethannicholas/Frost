@@ -7,6 +7,7 @@ typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 typedef struct org$frostlang$frostc$Compiler$Settings org$frostlang$frostc$Compiler$Settings;
 typedef struct org$frostlang$frostc$parser$Parser org$frostlang$frostc$parser$Parser;
 typedef struct org$frostlang$frostc$Scanner org$frostlang$frostc$Scanner;
+typedef struct org$frostlang$frostc$MemoryLayout org$frostlang$frostc$MemoryLayout;
 typedef struct org$frostlang$frostc$SymbolTable org$frostlang$frostc$SymbolTable;
 typedef struct org$frostlang$frostc$ClassDecl org$frostlang$frostc$ClassDecl;
 typedef struct frost$collections$Array frost$collections$Array;
@@ -82,10 +83,12 @@ typedef struct org$frostlang$frostc$Compiler {
     org$frostlang$frostc$Compiler$Settings* settings;
     org$frostlang$frostc$parser$Parser* parser;
     org$frostlang$frostc$Scanner* scanner;
+    org$frostlang$frostc$MemoryLayout* memoryLayout;
     org$frostlang$frostc$SymbolTable* root;
     org$frostlang$frostc$ClassDecl* compiling;
     frost$collections$Array* compilationQueue;
     frost$collections$Array* files;
+    frost$collections$Array* methods;
     frost$collections$HashMap* scans;
     frost$collections$HashMap* classes;
     frost$collections$Stack* currentClass;
@@ -116,6 +119,6 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$collections$IdentityMap* lambdaTypes;
 } org$frostlang$frostc$Compiler;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[159]; } org$frostlang$frostc$Compiler$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[163]; } org$frostlang$frostc$Compiler$class_type;
 extern org$frostlang$frostc$Compiler$class_type org$frostlang$frostc$Compiler$class;
 

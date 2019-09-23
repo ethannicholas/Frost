@@ -3,25 +3,26 @@ package org.frostlang.frostc
 @final
 class Annotations {
     class Flag {
-        constant PRIVATE         :Int := 1 << 1
-        constant PROTECTED       :Int := 1 << 2
-        constant PACKAGE         :Int := 1 << 3
-        constant CLASS           :Int := 1 << 4
-        constant OVERRIDE        :Int := 1 << 5
-        constant EXTERNAL        :Int := 1 << 6
-        constant IMPLICIT        :Int := 1 << 7
-        constant FINAL           :Int := 1 << 8
-        constant ABSTRACT        :Int := 1 << 9
-        constant INLINE          :Int := 1 << 10
-        constant SPECIALIZE      :Int := 1 << 11
-        constant WEAK            :Int := 1 << 12
-        constant SYNTHETIC       :Int := 1 << 13
-        constant UNSAFE_IMMUTABLE:Int := 1 << 14
-        constant DEFAULT         :Int := 1 << 15
+        constant PRIVATE          := 1 << 1
+        constant PROTECTED        := 1 << 2
+        constant PACKAGE          := 1 << 3
+        constant CLASS            := 1 << 4
+        constant OVERRIDE         := 1 << 5
+        constant EXTERNAL         := 1 << 6
+        constant IMPLICIT         := 1 << 7
+        constant FINAL            := 1 << 8
+        constant ABSTRACT         := 1 << 9
+        constant INLINE           := 1 << 10
+        constant SPECIALIZE       := 1 << 11
+        constant WEAK             := 1 << 12
+        constant SYNTHETIC        := 1 << 13
+        constant UNSAFE_IMMUTABLE := 1 << 14
+        constant DEFAULT          := 1 << 15
         -- tags a field in a closure class which is used to represent a captured value
-        constant CAPTURE         :Int := 1 << 16
-        constant STUB            :Int := 1 << 17
-        constant NO_RETURN       :Int := 1 << 18
+        constant CAPTURE          := 1 << 16
+        constant STUB             := 1 << 17
+        constant NO_RETURN        := 1 << 18
+        constant POINTER_SIZE     := 1 << 19
     }
 
     choice Expression {
@@ -83,6 +84,8 @@ class Annotations {
     property isStub:Bit
 
     property isNoReturn:Bit
+
+    property isPointerSize:Bit
 
     init() {
         init(0)
@@ -176,6 +179,10 @@ class Annotations {
 
     function get_isNoReturn():Bit {
         return flags && Flag.NO_RETURN != 0
+    }
+
+    function get_isPointerSize():Bit {
+        return flags && Flag.POINTER_SIZE != 0
     }
 
     @override

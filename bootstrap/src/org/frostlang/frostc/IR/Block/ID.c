@@ -58,7 +58,7 @@ org$frostlang$frostc$IR$Block$ID org$frostlang$frostc$IR$Block$ID$init$frost$cor
 org$frostlang$frostc$IR$Block$ID local0;
 frost$core$Int* _1;
 org$frostlang$frostc$IR$Block$ID _3;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:377
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:378
 _1 = &(&local0)->value;
 *_1 = param0;
 _3 = *(&local0);
@@ -73,10 +73,10 @@ int64_t _5;
 int64_t _6;
 bool _7;
 frost$core$Bit _8;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:382
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:383
 _1 = param0.value;
 _2 = param1.value;
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from IR.frost:382:30
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from IR.frost:383:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
@@ -88,7 +88,7 @@ return _8;
 frost$core$Int org$frostlang$frostc$IR$Block$ID$get_hash$R$frost$core$Int(org$frostlang$frostc$IR$Block$ID param0) {
 
 frost$core$Int _1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:387
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:388
 _1 = param0.value;
 return _1;
 
@@ -108,13 +108,13 @@ frost$core$Object* _16;
 frost$core$Object* _18;
 frost$core$Object* _20;
 frost$core$Object* _22;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:392
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:393
 _1 = param0.value;
 frost$core$Int$wrapper* $tmp4;
 $tmp4 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp4->value = _1;
 _2 = ((frost$core$Object*) $tmp4);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from IR.frost:392:24
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from IR.frost:393:24
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _5 = ($fn5) _2->$class->vtable[0];
 _6 = _5(_2);

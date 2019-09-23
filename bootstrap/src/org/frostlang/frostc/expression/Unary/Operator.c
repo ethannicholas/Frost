@@ -92,10 +92,10 @@ frost$core$Bit _50;
 bool _52;
 frost$core$Object* _55;
 frost$core$Int _59;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:27
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:27:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:28:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
@@ -104,13 +104,13 @@ _8 = (frost$core$Bit) {_7};
 _10 = _8.value;
 if (_10) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:28
 _13 = ((frost$core$Object*) &$s3);
 frost$core$Frost$ref$frost$core$Object$Q(_13);
 return &$s4;
 block3:;
 _16 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:28:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:29:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _19 = _1.value;
 _20 = _16.value;
@@ -119,13 +119,13 @@ _22 = (frost$core$Bit) {_21};
 _24 = _22.value;
 if (_24) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:28
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:29
 _27 = ((frost$core$Object*) &$s5);
 frost$core$Frost$ref$frost$core$Object$Q(_27);
 return &$s6;
 block6:;
 _30 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:29:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:30:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _33 = _1.value;
 _34 = _30.value;
@@ -134,13 +134,13 @@ _36 = (frost$core$Bit) {_35};
 _38 = _36.value;
 if (_38) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:30
 _41 = ((frost$core$Object*) &$s7);
 frost$core$Frost$ref$frost$core$Object$Q(_41);
 return &$s8;
 block9:;
 _44 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:30:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:31:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _47 = _1.value;
 _48 = _44.value;
@@ -149,13 +149,13 @@ _50 = (frost$core$Bit) {_49};
 _52 = _50.value;
 if (_52) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:30
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:31
 _55 = ((frost$core$Object*) &$s9);
 frost$core$Frost$ref$frost$core$Object$Q(_55);
 return &$s10;
 block12:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:31
-_59 = (frost$core$Int) {31u};
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:32
+_59 = (frost$core$Int) {32u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s11, _59);
 abort(); // unreachable
 block1:;
@@ -173,7 +173,7 @@ org$frostlang$frostc$expression$Unary$Operator org$frostlang$frostc$expression$U
 org$frostlang$frostc$expression$Unary$Operator local0;
 frost$core$Int* _1;
 org$frostlang$frostc$expression$Unary$Operator _3;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _1 = &(&local0)->$rawValue;
 *_1 = param0;
 _3 = *(&local0);
@@ -244,10 +244,10 @@ bool _109;
 frost$core$Bit _112;
 frost$core$Bit _115;
 frost$core$Int _119;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
@@ -256,10 +256,10 @@ _8 = (frost$core$Bit) {_7};
 _10 = _8.value;
 if (_10) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _13 = param1.$rawValue;
 _14 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _17 = _13.value;
 _18 = _14.value;
@@ -268,18 +268,18 @@ _20 = (frost$core$Bit) {_19};
 _22 = _20.value;
 if (_22) goto block6; else goto block7;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _25 = (frost$core$Bit) {true};
 return _25;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _28 = (frost$core$Bit) {false};
 return _28;
 block5:;
 goto block1;
 block3:;
 _31 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _34 = _1.value;
 _35 = _31.value;
@@ -288,10 +288,10 @@ _37 = (frost$core$Bit) {_36};
 _39 = _37.value;
 if (_39) goto block9; else goto block10;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _42 = param1.$rawValue;
 _43 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _46 = _42.value;
 _47 = _43.value;
@@ -300,18 +300,18 @@ _49 = (frost$core$Bit) {_48};
 _51 = _49.value;
 if (_51) goto block13; else goto block14;
 block13:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _54 = (frost$core$Bit) {true};
 return _54;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _57 = (frost$core$Bit) {false};
 return _57;
 block12:;
 goto block1;
 block10:;
 _60 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _63 = _1.value;
 _64 = _60.value;
@@ -320,10 +320,10 @@ _66 = (frost$core$Bit) {_65};
 _68 = _66.value;
 if (_68) goto block16; else goto block17;
 block16:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _71 = param1.$rawValue;
 _72 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _75 = _71.value;
 _76 = _72.value;
@@ -332,18 +332,18 @@ _78 = (frost$core$Bit) {_77};
 _80 = _78.value;
 if (_80) goto block20; else goto block21;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _83 = (frost$core$Bit) {true};
 return _83;
 block21:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _86 = (frost$core$Bit) {false};
 return _86;
 block19:;
 goto block1;
 block17:;
 _89 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _92 = _1.value;
 _93 = _89.value;
@@ -352,10 +352,10 @@ _95 = (frost$core$Bit) {_94};
 _97 = _95.value;
 if (_97) goto block23; else goto block24;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _100 = param1.$rawValue;
 _101 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _104 = _100.value;
 _105 = _101.value;
@@ -364,18 +364,18 @@ _107 = (frost$core$Bit) {_106};
 _109 = _107.value;
 if (_109) goto block27; else goto block28;
 block27:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _112 = (frost$core$Bit) {true};
 return _112;
 block28:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _115 = (frost$core$Bit) {false};
 return _115;
 block26:;
 goto block1;
 block24:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
-_119 = (frost$core$Int) {18u};
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
+_119 = (frost$core$Int) {19u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s12, _119);
 abort(); // unreachable
 block1:;
@@ -415,10 +415,10 @@ frost$core$Bit _47;
 bool _49;
 frost$core$Int _52;
 frost$core$Int _55;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
@@ -427,12 +427,12 @@ _8 = (frost$core$Bit) {_7};
 _10 = _8.value;
 if (_10) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _13 = (frost$core$Int) {1008608909626454407u};
 return _13;
 block3:;
 _15 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _18 = _1.value;
 _19 = _15.value;
@@ -441,12 +441,12 @@ _21 = (frost$core$Bit) {_20};
 _23 = _21.value;
 if (_23) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _26 = (frost$core$Int) {2017217819252908814u};
 return _26;
 block6:;
 _28 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _31 = _1.value;
 _32 = _28.value;
@@ -455,12 +455,12 @@ _34 = (frost$core$Bit) {_33};
 _36 = _34.value;
 if (_36) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _39 = (frost$core$Int) {3025826728879363221u};
 return _39;
 block9:;
 _41 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:19:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _44 = _1.value;
 _45 = _41.value;
@@ -469,12 +469,12 @@ _47 = (frost$core$Bit) {_46};
 _49 = _47.value;
 if (_49) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
 _52 = (frost$core$Int) {4034435638505817628u};
 return _52;
 block12:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
-_55 = (frost$core$Int) {18u};
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:19
+_55 = (frost$core$Int) {19u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s13, _55);
 abort(); // unreachable
 block1:;

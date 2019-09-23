@@ -20,7 +20,6 @@ class Main {
 
     var clang:File
     def frostHome:File
-    var debug:Bit := false
 
     init() {
         frostHome := File(Config.frostSourceDir())
@@ -58,22 +57,43 @@ class Main {
         }
     }
 
-    method toObject(llvm:File, dest:File, preserveTemporaries:Bit):File {
+    method toObject(llvm:File, dest:File, preserveTemporaries:Bit,
+            settings:Compiler.Settings):File {
         def args := Array<String>() -- FIXME literal
         args.add(llvm.path)
         args.add("-m64")
         args.add("-fPIC")
         args.add("-c")
-        if debug {
+        if settings.debug {
             args.add("-g")
         }
+        args.add("-O\{settings.optimizationLevel}")
         args.add("-o")
         args.add(dest.path)
         def p:System.Process
         try {
             p := System.exec(clang.path, args)
-            Console.printError(p.standardOutput().readFully())
-            Console.printError(p.standardError().readFully())
+            -- FIXME shouldn't have to use unsafeStart here
+            def t1 := Thread.unsafeStart(method() {
+                try {
+                    p.standardOutput().sendTo(Console.outputStream())
+                }
+                fail(error) {
+                    Console.printLine(error)
+                    System.exit(1)
+                }
+            })
+            def t2 := Thread.unsafeStart(method() {
+                try {
+                    p.standardError().sendTo(Console.errorStream())
+                }
+                fail(error) {
+                    Console.printLine(error)
+                    System.exit(1)
+                }
+            })
+            t1.waitFor()
+            t2.waitFor()
         }
         fail(error) {
             Console.printErrorLine(error)
@@ -96,7 +116,7 @@ class Main {
     }
 
     method toExecutable(libraryPaths:Array<File>, libraries:Array<String>, llvm:File, dest:File,
-            preserveTemporaries:Bit):File {
+            preserveTemporaries:Bit, settings:Compiler.Settings):File {
         def args := Array<String>() -- FIXME literal
         args.add(llvm.path)
         args.add("-L\{Config.frostLibDir()}")
@@ -116,9 +136,11 @@ class Main {
         }
         args.add("-m64")
         args.add("-fPIC")
-        if debug {
+        if settings.debug {
             args.add("-g")
         }
+        args.add("-O\{settings.optimizationLevel}")
+        args.add("-Wno-override-module")
         args.add("-o")
         args.add(dest.path)
         def p:System.Process
@@ -173,6 +195,7 @@ class Main {
         var format:Format? := null
         var root:String? := null
         var preserveTemporaries := true
+        var debug := true
         while !args.done {
             def a := args.next()
             match a {
@@ -306,6 +329,8 @@ class Main {
         }
         var errorCount := 0
         var warningCount := 0
+        def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
+                debug)
         {
             def cg:CodeGenerator? := null
             match format {
@@ -338,8 +363,6 @@ class Main {
                     cg := Interpreter()
                 }
             }
-            def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
-                    debug)
             def errorQueue := MessageQueue<Compiler.Message>()
             def compiler := Compiler(errorQueue, cg, settings)
             if format = Format.HTML {
@@ -393,10 +416,10 @@ class Main {
             match format {
                 when Format.EXECUTABLE {
                     toExecutable(libraryPaths, libraries, outFile.withExtension(".ll"), outFile,
-                            preserveTemporaries)
+                            preserveTemporaries, settings)
                 }
                 when Format.OBJECT {
-                    toObject(outFile.withExtension(".ll"), outFile, preserveTemporaries)
+                    toObject(outFile.withExtension(".ll"), outFile, preserveTemporaries, settings)
                 }
             }
         }

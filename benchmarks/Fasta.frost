@@ -1,0 +1,162 @@
+-- Currently a more-or-less straight port of Benchmark Game's Java #2, just to have a simple
+-- baseline
+
+constant IM := 139968
+constant IA := 3877
+constant IC := 29573
+constant LINE_LENGTH := 60
+
+var last := 42
+
+class Frequency {
+    def c:Char8
+    def p:Real64
+
+    init(c:Char8, p:Real64) {
+        self.c := c
+        self.p := p
+    }
+}
+
+method random(max:Real64):Real64 {
+    last := (last * IA + IC) % IM
+    return max * last / IM
+}
+
+constant ALU := "GGCCGGGCGCGGTGGCTCACGCCTGTAATCCCAGCACTTTGGGAGGCCGAGGCGGGCGGATCACCTGAGGTCAGGA" +
+        "GTTCGAGACCAGCCTGGCCAACATGGTGAAACCCCGTCTCTACTAAAAATACAAAAATTAGCCGGGCGTGGTGGCGCGCGCCTG" +
+        "TAATCCCAGCTACTCGGGAGGCTGAGGCAGGAGAATCGCTTGAACCCGGGAGGCGGAGGTTGCAGTGAGCCGAGATCGCGCCAC" +
+        "TGCACTCCAGCCTGGGCGACAGAGCGAGACTCCGTCTCAAAAA"
+
+method makeCumulative(a:Array<Frequency>) {
+    var cp:Real64 := 0
+    for i in 0 .. a.count {
+        cp += a[i].p
+        a[i].p := cp
+    }
+}
+
+method selectRandom(a:Array<Frequency>):Char8 {
+    def r := random(1.0)
+    for i in 0 .. a.count {
+        if r < a[i].p {
+            return a[i].c
+        }
+    }
+    return a.last.c
+}
+
+constant BUFFER_SIZE := 1024
+def buffer := frost.unsafe.NewPointer<Char8>.alloc(BUFFER_SIZE)
+
+method makeRandomFasta(id:String, desc:String, a:Array<Frequency>, rawN:Int, out:OutputStream) {
+    try {
+        var index := 0
+        var m := 0
+        var n := rawN -- FIXME var param
+        out.print(">" + id + " " + desc + "\n")
+        while n > 0 {
+            if n < LINE_LENGTH {
+                m := n
+            }
+            else {
+                m := LINE_LENGTH
+            }
+            if BUFFER_SIZE - index < m {
+                out.write(buffer, index)
+                index := 0
+            }
+            for i in 0 .. m {
+                buffer[index] := selectRandom(a)
+                index += 1
+            }
+            buffer[index] := "\n"
+            index += 1
+            n -= LINE_LENGTH
+        }
+        if index != 0 {
+            out.write(buffer, index)
+        }
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}
+
+method makeRepeatFasta(id:String, desc:String, alu:String, rawN:Int, out:OutputStream) {
+    try {
+        var index := 0
+        var m := 0
+        var n := rawN -- FIXME var param
+        var k := 0
+        var kn := alu.byteLength
+        out.print(">" + id + " " + desc + "\n")
+        while n > 0 {
+            if n < LINE_LENGTH {
+                m := n
+            }
+            else {
+                m := LINE_LENGTH
+            }
+            if BUFFER_SIZE - index < m {
+                out.write(buffer, index)
+                index := 0
+            }
+            for i in 0 .. m {
+                if k = kn {
+                    k := 0
+                }
+                buffer[index] := alu.data[k]
+                index += 1
+                k += 1
+            }
+            buffer[index] := "\n"
+            index += 1
+            n -= LINE_LENGTH
+        }
+        if index != 0 {
+            out.write(buffer, index)
+        }
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}
+
+method main(args:ListView<String>) {
+    def iub := [
+        Frequency("a", 0.27), 
+        Frequency("c", 0.12),
+        Frequency("g", 0.12), 
+        Frequency("t", 0.27),
+        Frequency("B", 0.02), 
+        Frequency("D", 0.02),
+        Frequency("H", 0.02), 
+        Frequency("K", 0.02),
+        Frequency("M", 0.02), 
+        Frequency("N", 0.02),
+        Frequency("R", 0.02), 
+        Frequency("S", 0.02),
+        Frequency("V", 0.02), 
+        Frequency("W", 0.02),
+        Frequency("Y", 0.02)
+    ]
+    def homoSapiens := [
+        Frequency("a", 0.3029549426680),
+        Frequency("c", 0.1979883004921),
+        Frequency("g", 0.1975473066391),
+        Frequency("t", 0.3015094502008)
+    ]
+    makeCumulative(homoSapiens)
+    makeCumulative(iub)
+    var n := 2500000
+    if args.count > 1 {
+        n := args[1].asInt!
+    }
+    def out := Console.outputStream()
+    makeRepeatFasta("ONE", "Homo sapiens alu", ALU, n * 2, out)
+    makeRandomFasta("TWO", "IUB ambiguity codes", iub, n * 3, out)
+    makeRandomFasta("THREE", "Homo sapiens frequency", homoSapiens, n * 5, out)
+}

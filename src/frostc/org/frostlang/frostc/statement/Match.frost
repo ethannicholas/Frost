@@ -13,6 +13,7 @@ uses org.frostlang.frostc.Compiler.VariableLValue
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.Pair
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
@@ -24,7 +25,7 @@ uses org.frostlang.frostc.parser.Token
 class Match {
     @private
     @class
-    method checkChoiceMatch(compiler:Compiler, position:Position, cc:ChoiceCase?,
+    method checkChoiceMatch(compiler:Compiler, position:MethodPosition, cc:ChoiceCase?,
             choiceClass:ClassDecl?, value:IR.Value):Bit {
         if cc == null {
             return false
@@ -44,9 +45,12 @@ class Match {
     @private
     @class
     @pre(whens.count > 0 | other !== null)
-    method compileChainedIfMatch(compiler:Compiler, position:Position, value:IR.Value,
+    method compileChainedIfMatch(compiler:Compiler, position:MethodPosition, value:IR.Value,
             choiceClass:ClassDecl?, choiceRawValue:IR.Value?, whens:FixedArray<ASTNode>,
             other:FixedArray<ASTNode>?) {
+        function getPosition(node:ASTNode):MethodPosition {
+            return MethodPosition(node.position(), compiler.currentMethodIndex)
+        }
         def ir := compiler.ir
         def end := ir.newBlock("match end")
         var nextBlock := ir.currentBlock.id
@@ -69,10 +73,11 @@ class Match {
                             }
                             def t := tests[j]
                             match t {
-                                when ASTNode.CALL(position, base, args) {
+                                when ASTNode.CALL(callPos, base, args) {
+                                    def position := getPosition(t)
                                     def cc := compiler.getChoiceCase(base)
                                     if cc !== null {
-                                        if checkChoiceMatch(compiler, base.position(), cc.second,
+                                        if checkChoiceMatch(compiler, getPosition(base), cc.second,
                                                 choiceClass, value) {
                                             if tests.count != 1 {
                                                 compiler.error(position, "destructuring choice " +
@@ -98,8 +103,9 @@ class Match {
                                                 def unrefs := AutoUnrefs(compiler)
                                                 def eqArgs := [ASTNode.INT(base.position(),
                                                         cc.second.rawValue.asUInt64)]
-                                                def test := Call.compile(compiler, base.position(),
-                                                        choiceRawValue, "=", eqArgs,
+                                                def test := Call.compile(compiler,
+                                                        getPosition(base), choiceRawValue, "=",
+                                                        eqArgs,
                                                         TypeContext.TYPE(compiler.BIT_TYPE, false))
                                                 assert test !== null
                                                 testBit := compiler.extractBuiltinBit(position,
@@ -123,14 +129,14 @@ class Match {
                                                     def unrefs := AutoUnrefs(compiler)
                                                     target := compiler.compileTarget(args[i],
                                                             Variable.Kind.DEF,
-                                                            ASTNode.IR_WRAPPER(position,
+                                                            ASTNode.IR_WRAPPER(callPos,
                                                                     IR.Value.REF(load,
                                                                         cc.second.fields[i])),
                                                                     null)
                                                     if target == null {
                                                         return
                                                     }
-                                                    compiler.compileStore(args[i].position(),
+                                                    compiler.compileStore(getPosition(args[i]),
                                                             target,
                                                             IR.Value.REF(load, cc.second.fields[i]))
                                                 }
@@ -154,22 +160,22 @@ class Match {
                                     }
                                     def args := [ASTNode.INT(t.position(),
                                             cc.second.rawValue.asUInt64)]
-                                    test := Call.compile(compiler, t.position(), choiceRawValue,
+                                    test := Call.compile(compiler, getPosition(t), choiceRawValue,
                                             "=", args, TypeContext.TYPE(compiler.BIT_TYPE, false))
                                     if test == null {
                                         return
                                     }
                                 }
                                 else {
-                                    test := Call.compile(compiler, t.position(), value, "=", [t],
+                                    test := Call.compile(compiler, getPosition(t), value, "=", [t],
                                             TypeContext.TYPE(compiler.BIT_TYPE, false))
                                     if test == null {
                                         return
                                     }
                                 }
-                                testBit := compiler.extractBuiltinBit(position, test)
+                                testBit := compiler.extractBuiltinBit(getPosition(t), test)
                             }
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(position,
+                            ir.add(IR.Statement.CONDITIONAL_BRANCH(getPosition(t),
                                     testBit, testSuccess, nextBlock))
                         }
                         ir.setCurrentBlock(testSuccess)
@@ -178,7 +184,7 @@ class Match {
                         }
                     }
                     if !ir.currentBlockFinished {
-                        ir.add(IR.Statement.BRANCH(position, end))
+                        ir.add(IR.Statement.BRANCH(getPosition(w), end))
                     }
                 }
                 otherwise {
@@ -202,8 +208,8 @@ class Match {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, value:ASTNode, whens:FixedArray<ASTNode>,
-            other:FixedArray<ASTNode>?) {
+    method compile(compiler:Compiler, position:MethodPosition, value:ASTNode,
+            whens:FixedArray<ASTNode>, other:FixedArray<ASTNode>?) {
         def compiledValue := compiler.compileExpression(value, TypeContext.NON_VOID)
         if compiledValue == null | (whens.count = 0 & other == null) {
             return

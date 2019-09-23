@@ -4,14 +4,14 @@ uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.expression.Binary
 uses org.frostlang.frostc.expression.Call
 uses org.frostlang.frostc.lvalue.LValue
 
 class Assignment {
     @class
-    method compile(compiler:Compiler, position:Position, rawLeft:ASTNode, op:Binary.Operator,
+    method compile(compiler:Compiler, position:MethodPosition, rawLeft:ASTNode, op:Binary.Operator,
             rawRight:ASTNode) {
         if !op.isAssignment {
             compiler.error(position, "not a statement")
@@ -28,7 +28,8 @@ class Assignment {
                         }
                         args.add(index)
                         args.add(rawRight)
-                        Call.compile(compiler, position, compiledBase, "[]:=", args,
+                        Call.compile(compiler, MethodPosition(position,
+                                compiler.currentMethodIndex), compiledBase, "[]:=", args,
                                 TypeContext.UNSPECIFIED)
                         return
                     }
@@ -48,8 +49,9 @@ class Assignment {
             if load == null {
                 return
             }
-            right := Binary.compile(compiler, position, ASTNode.IR_WRAPPER(position, load),
-                    op.removeAssignment(), rawRight, TypeContext.TYPE(left.type(), false))
+            right := Binary.compile(compiler, position,
+                    ASTNode.IR_WRAPPER(position.asPosition, load), op.removeAssignment(), rawRight,
+                    TypeContext.TYPE(left.type(), false))
         }
         if right == null {
             return

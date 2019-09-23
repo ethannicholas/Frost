@@ -34,62 +34,54 @@ static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, 
 void frost$collections$Iterator$MapIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$MapIterator$T$GT$$LPfrost$collections$Iterator$MapIterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$MapIterator$U$RP(void* rawSelf, frost$collections$Iterator* param1, frost$core$MutableMethod* param2) {
 frost$collections$Iterator$MapIterator* param0 = (frost$collections$Iterator$MapIterator*) rawSelf;
 
-frost$collections$Iterator$MapIterator* _1;
-frost$core$Object* _2;
-frost$collections$Iterator** _4;
-frost$collections$Iterator* _5;
-frost$core$Object* _6;
-frost$collections$Iterator** _8;
-frost$collections$Iterator$MapIterator* _11;
-frost$core$Object* _12;
-frost$core$MutableMethod** _14;
-frost$core$MutableMethod* _15;
-frost$core$Object* _16;
-frost$core$MutableMethod** _18;
+frost$core$Object* _1;
+frost$collections$Iterator** _3;
+frost$collections$Iterator* _4;
+frost$core$Object* _5;
+frost$collections$Iterator** _7;
+frost$core$Object* _10;
+frost$core$MutableMethod** _12;
+frost$core$MutableMethod* _13;
+frost$core$Object* _14;
+frost$core$MutableMethod** _16;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:120
-_1 = param0;
-_2 = ((frost$core$Object*) param1);
-frost$core$Frost$ref$frost$core$Object$Q(_2);
-_4 = &_1->base;
-_5 = *_4;
-_6 = ((frost$core$Object*) _5);
-frost$core$Frost$unref$frost$core$Object$Q(_6);
-_8 = &_1->base;
-*_8 = param1;
+_1 = ((frost$core$Object*) param1);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
+_3 = &param0->base;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->base;
+*_7 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:121
-_11 = param0;
-_12 = ((frost$core$Object*) param2);
-frost$core$Frost$ref$frost$core$Object$Q(_12);
-_14 = &_11->map;
-_15 = *_14;
-_16 = ((frost$core$Object*) _15);
-frost$core$Frost$unref$frost$core$Object$Q(_16);
-_18 = &_11->map;
-*_18 = param2;
+_10 = ((frost$core$Object*) param2);
+frost$core$Frost$ref$frost$core$Object$Q(_10);
+_12 = &param0->map;
+_13 = *_12;
+_14 = ((frost$core$Object*) _13);
+frost$core$Frost$unref$frost$core$Object$Q(_14);
+_16 = &param0->map;
+*_16 = param2;
 return;
 
 }
 frost$core$Bit frost$collections$Iterator$MapIterator$get_done$R$frost$core$Bit(void* rawSelf) {
 frost$collections$Iterator$MapIterator* param0 = (frost$collections$Iterator$MapIterator*) rawSelf;
 
-frost$collections$Iterator$MapIterator* _1;
-frost$collections$Iterator** _2;
-frost$collections$Iterator* _3;
-frost$collections$Iterator* _4;
-$fn2 _5;
-frost$core$Bit _6;
+frost$collections$Iterator** _1;
+frost$collections$Iterator* _2;
+$fn2 _3;
+frost$core$Bit _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:126
-_1 = param0;
-_2 = &_1->base;
-_3 = *_2;
-_4 = _3;
-ITable* $tmp3 = _4->$class->itable;
+_1 = &param0->base;
+_2 = *_1;
+ITable* $tmp3 = _2->$class->itable;
 while ($tmp3->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp3 = $tmp3->next;
 }
-_5 = $tmp3->methods[0];
-_6 = _5(_4);
-return _6;
+_3 = $tmp3->methods[0];
+_4 = _3(_2);
+return _4;
 
 }
 frost$core$Object* frost$collections$Iterator$MapIterator$next$R$frost$collections$Iterator$MapIterator$U(void* rawSelf) {
@@ -104,30 +96,27 @@ bool _6;
 frost$core$Bit _7;
 bool _9;
 frost$core$Int _11;
-frost$collections$Iterator$MapIterator* _15;
-frost$core$MutableMethod** _16;
-frost$core$MutableMethod* _17;
-frost$collections$Iterator$MapIterator* _18;
-frost$collections$Iterator** _19;
-frost$collections$Iterator* _20;
-frost$collections$Iterator* _21;
-$fn5 _22;
-frost$core$Object* _23;
-frost$core$Object* _24;
-frost$core$MutableMethod* _25;
-frost$core$Int8** _26;
-frost$core$Int8* _27;
-frost$core$Object** _28;
-frost$core$Object* _29;
-bool _30;
-$fn6 _32;
-frost$core$Object* _33;
-$fn7 _36;
+frost$core$MutableMethod** _15;
+frost$core$MutableMethod* _16;
+frost$collections$Iterator** _17;
+frost$collections$Iterator* _18;
+$fn5 _19;
+frost$core$Object* _20;
+frost$core$Object* _21;
+frost$core$MutableMethod* _22;
+frost$core$Int8** _23;
+frost$core$Int8* _24;
+frost$core$Object** _25;
+frost$core$Object* _26;
+bool _27;
+$fn6 _29;
+frost$core$Object* _30;
+$fn7 _33;
+frost$core$Object* _34;
 frost$core$Object* _37;
+frost$core$Object* _38;
 frost$core$Object* _40;
-frost$core$Object* _41;
-frost$core$Object* _43;
-frost$core$Object* _45;
+frost$core$Object* _42;
 _0 = ((frost$collections$Iterator*) param0);
 ITable* $tmp8 = _0->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
@@ -148,73 +137,66 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:131
-_15 = param0;
-_16 = &_15->map;
-_17 = *_16;
-_18 = param0;
-_19 = &_18->base;
-_20 = *_19;
-_21 = _20;
-ITable* $tmp11 = _21->$class->itable;
+_15 = &param0->map;
+_16 = *_15;
+_17 = &param0->base;
+_18 = *_17;
+ITable* $tmp11 = _18->$class->itable;
 while ($tmp11->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp11 = $tmp11->next;
 }
-_22 = $tmp11->methods[1];
-_23 = _22(_21);
-_24 = _23;
-_25 = _17;
-_26 = &_25->pointer;
-_27 = *_26;
-_28 = &_25->target;
-_29 = *_28;
-_30 = _29 != ((frost$core$Object*) NULL);
-if (_30) goto block4; else goto block5;
+_19 = $tmp11->methods[1];
+_20 = _19(_18);
+_21 = _20;
+_22 = _16;
+_23 = &_22->pointer;
+_24 = *_23;
+_25 = &_22->target;
+_26 = *_25;
+_27 = _26 != ((frost$core$Object*) NULL);
+if (_27) goto block4; else goto block5;
 block5:;
-_32 = (($fn12) _27);
-_33 = _32(_24);
-*(&local0) = _33;
+_29 = (($fn12) _24);
+_30 = _29(_21);
+*(&local0) = _30;
 goto block6;
 block4:;
-_36 = (($fn13) _27);
-_37 = _36(_29, _24);
-*(&local0) = _37;
+_33 = (($fn13) _24);
+_34 = _33(_26, _21);
+*(&local0) = _34;
 goto block6;
 block6:;
-_40 = *(&local0);
-_41 = _40;
-frost$core$Frost$ref$frost$core$Object$Q(_41);
-_43 = _40;
-frost$core$Frost$unref$frost$core$Object$Q(_43);
-_45 = _23;
-frost$core$Frost$unref$frost$core$Object$Q(_45);
-return _40;
+_37 = *(&local0);
+_38 = _37;
+frost$core$Frost$ref$frost$core$Object$Q(_38);
+_40 = _37;
+frost$core$Frost$unref$frost$core$Object$Q(_40);
+_42 = _20;
+frost$core$Frost$unref$frost$core$Object$Q(_42);
+return _37;
 
 }
 void frost$collections$Iterator$MapIterator$cleanup(void* rawSelf) {
 frost$collections$Iterator$MapIterator* param0 = (frost$collections$Iterator$MapIterator*) rawSelf;
 
 frost$core$Object* _1;
-frost$collections$Iterator$MapIterator* _3;
-frost$collections$Iterator** _4;
-frost$collections$Iterator* _5;
-frost$core$Object* _6;
-frost$collections$Iterator$MapIterator* _8;
-frost$core$MutableMethod** _9;
-frost$core$MutableMethod* _10;
-frost$core$Object* _11;
+frost$collections$Iterator** _3;
+frost$collections$Iterator* _4;
+frost$core$Object* _5;
+frost$core$MutableMethod** _7;
+frost$core$MutableMethod* _8;
+frost$core$Object* _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:114
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
-_3 = param0;
-_4 = &_3->base;
-_5 = *_4;
-_6 = ((frost$core$Object*) _5);
-frost$core$Frost$unref$frost$core$Object$Q(_6);
-_8 = param0;
-_9 = &_8->map;
-_10 = *_9;
-_11 = ((frost$core$Object*) _10);
-frost$core$Frost$unref$frost$core$Object$Q(_11);
+_3 = &param0->base;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->map;
+_8 = *_7;
+_9 = ((frost$core$Object*) _8);
+frost$core$Frost$unref$frost$core$Object$Q(_9);
 return;
 
 }

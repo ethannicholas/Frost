@@ -7,7 +7,7 @@ uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.expression.Call
 
@@ -15,7 +15,7 @@ uses org.frostlang.frostc.expression.Call
 class FieldLValue : LValue {
     def compiler:Compiler
 
-    def position:Position
+    def position:MethodPosition
 
     def target:IR.Value?
 
@@ -25,7 +25,7 @@ class FieldLValue : LValue {
 
     def effectiveType:Type
 
-    init(compiler:Compiler, position:Position, target:IR.Value?, field:FieldDecl) {
+    init(compiler:Compiler, position:MethodPosition, target:IR.Value?, field:FieldDecl) {
         self.compiler := compiler
         self.position := position
         assert field.resolved = Resolution.RESOLVED
@@ -135,9 +135,10 @@ class FieldLValue : LValue {
         def value:IR.Value
         if !compiler.inFieldCleanup & field.annotations.isWeak {
             def args := Array<ASTNode>() -- FIXME literal
-            args.add(ASTNode.IR_WRAPPER(position, rawValue))
-            value := compiler.compileExpression(ASTNode.CALL(position,
-                    ASTNode.IR_WRAPPER(position, compiler.literalType(Type.WeakOf(compiler,
+            def basePos := position.asPosition
+            args.add(ASTNode.IR_WRAPPER(basePos, rawValue))
+            value := compiler.compileExpression(ASTNode.CALL(basePos,
+                    ASTNode.IR_WRAPPER(basePos, compiler.literalType(Type.WeakOf(compiler,
                         effectiveType))),
                     FixedArray<ASTNode>.from(args)))
         }
@@ -155,7 +156,7 @@ class FieldLValue : LValue {
         }
         if field.fieldKind = FieldDecl.Kind.PROPERTY {
             def args := Array<ASTNode>()
-            args.add(ASTNode.IR_WRAPPER(position, value))
+            args.add(ASTNode.IR_WRAPPER(position.asPosition, value))
             Call.compile(compiler, position, target, "set_\{field.name}", args,
                     TypeContext.TYPE(rawType, false))
         }

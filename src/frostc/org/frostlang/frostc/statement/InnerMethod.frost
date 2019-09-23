@@ -5,13 +5,13 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.MethodDecl
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Variable
 uses org.frostlang.frostc.expression.Closure
 
 class InnerMethod {
     @class
-    method compile(compiler:Compiler, position:Position, kind:MethodDecl.Kind, name:String,
+    method compile(compiler:Compiler, position:MethodPosition, kind:MethodDecl.Kind, name:String,
             rawParameters:FixedArray<ASTNode>, rawReturnType:ASTNode?,
             body:FixedArray<ASTNode>) {
         def methodRef := Closure.compile(compiler, position, kind, rawParameters, rawReturnType,
@@ -19,9 +19,10 @@ class InnerMethod {
         if methodRef == null {
             return
         }
-        def decl := ASTNode.DECLARATION(position, ASTNode.IDENTIFIER(position, name),
-                ASTNode.IR_WRAPPER(position, methodRef))
-        compiler.compileStatement(ASTNode.VAR(position, Variable.Kind.DEF,
+        def basePos := position.asPosition
+        def decl := ASTNode.DECLARATION(basePos, ASTNode.IDENTIFIER(basePos, name),
+                ASTNode.IR_WRAPPER(basePos, methodRef))
+        compiler.compileStatement(ASTNode.VAR(basePos, Variable.Kind.DEF,
                 FixedArray<ASTNode>.from([decl])))
     }
 }

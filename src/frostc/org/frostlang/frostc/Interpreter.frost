@@ -99,8 +99,9 @@ class Interpreter : CodeGenerator {
                     var result := interpreter.strings[s]
                     if result == null {
                         def compiler := interpreter.compiler
-                        assert LLVMCodeGenerator.POINTER_SIZE = LLVMCodeGenerator.INT_SIZE
-                        def base := Pointer<UInt8>.alloc(interpreter.llvmCodeGen.sizeOf(
+                        def memoryLayout := compiler.memoryLayout
+                        assert memoryLayout.pointerSize = memoryLayout.intSize
+                        def base := Pointer<UInt8>.alloc(interpreter.memoryLayout.sizeOf(
                                 compiler.STRING_TYPE))
                         def string := compiler.getClass(compiler.STRING_TYPE)
                         var current := base
@@ -110,7 +111,7 @@ class Interpreter : CodeGenerator {
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[0].offset
                         current->Pointer<ClassDecl>.set(string)
-                        current := current.offset(LLVMCodeGenerator.POINTER_SIZE)
+                        current := current.offset(memoryLayout.pointerSize)
 
                         -- refCount
                         assert compiler.instanceFields(string)[1].name = "refCount"
@@ -135,30 +136,30 @@ class Interpreter : CodeGenerator {
                             data[i] := s.data[i]
                         }
                         current->Pointer<Int>.set(data.asInt)
-                        current := current.offset(LLVMCodeGenerator.POINTER_SIZE)
+                        current := current.offset(memoryLayout.pointerSize)
 
                         -- _length
                         assert compiler.instanceFields(string)[4].name = "_length"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[4].offset
                         current->Pointer<Int>.set(s._length)
-                        current := current.offset(LLVMCodeGenerator.INT_SIZE)
+                        current := current.offset(memoryLayout.intSize)
 
                         -- dummy
                         assert compiler.instanceFields(string)[5].name = "dummy"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[5].offset
-                        current := current.offset(LLVMCodeGenerator.INT_SIZE)
+                        current := current.offset(memoryLayout.intSize)
 
                         -- owner
                         assert compiler.instanceFields(string)[6].name = "owner"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[6].offset
                         current->Pointer<Int>.set(0)
-                        current := current.offset(LLVMCodeGenerator.INT_SIZE)
+                        current := current.offset(memoryLayout.intSize)
 
                         assert current.asInt - base.asInt =
-                                interpreter.llvmCodeGen.sizeOf(string.type)
+                                interpreter.memoryLayout.sizeOf(string.type)
                         result := base.asInt.asInt64
                         interpreter.strings[s] := result
                     }
@@ -174,7 +175,7 @@ class Interpreter : CodeGenerator {
     @weak
     def compiler:Compiler?
 
-    def llvmCodeGen := LLVMCodeGenerator("", MemoryOutputStream())
+    def memoryLayout:MemoryLayout
 
     def methodCode := IdentityMap<MethodDecl, Code>()
 
@@ -187,7 +188,7 @@ class Interpreter : CodeGenerator {
     @override
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
-        llvmCodeGen.setCompiler(compiler)
+        self.memoryLayout := compiler.memoryLayout
     }
 
     @override
@@ -234,11 +235,11 @@ class Interpreter : CodeGenerator {
     }
 
     -- we reserve 8 bytes of working stack space
-    @pre(stack.asInt - stackBase.asInt + llvmCodeGen.sizeOf(t) < stackSize - 8)
+    @pre(stack.asInt - stackBase.asInt + memoryLayout.sizeOf(t) < stackSize - 8)
     method alloca(t:Type):Pointer<UInt8> {
-        stack := align(stack, llvmCodeGen.alignment(t))
+        stack := align(stack, memoryLayout.alignment(t))
         def result := stack
-        stack := Pointer<UInt8>.from(stack.asInt + llvmCodeGen.sizeOf(t))
+        stack := Pointer<UInt8>.from(stack.asInt + memoryLayout.sizeOf(t))
         return result
     }
 
@@ -248,7 +249,7 @@ class Interpreter : CodeGenerator {
     pointers.)
     ================================================================================================
     function needsStructPointer(t:Type):Bit {
-        return compiler.isValue(t) & llvmCodeGen.sizeOf(t) > 8
+        return compiler.isValue(t) & memoryLayout.sizeOf(t) > 8
     }
 
     method destroyObject(o:Pointer<UInt8>) {
@@ -265,7 +266,7 @@ class Interpreter : CodeGenerator {
         if o.asInt = 0 {
             return
         }
-        def refCntPtr := o.offset(LLVMCodeGenerator.POINTER_SIZE)->Pointer<Int32>
+        def refCntPtr := o.offset(memoryLayout.pointerSize)->Pointer<Int32>
         def refCnt := refCntPtr.get()
         if refCnt = LLVMCodeGenerator.NO_REFCNT.asInt32 {
             return
@@ -277,7 +278,7 @@ class Interpreter : CodeGenerator {
         if o.asInt = 0 {
             return
         }
-        def refCntPtr := o.offset(LLVMCodeGenerator.POINTER_SIZE)->Pointer<Int32>
+        def refCntPtr := o.offset(memoryLayout.pointerSize)->Pointer<Int32>
         def refCnt := refCntPtr.get()
         if refCnt = LLVMCodeGenerator.NO_REFCNT.asInt32 {
             return
@@ -324,7 +325,7 @@ class Interpreter : CodeGenerator {
             builtins[m] := builtin
         }
         return builtin
-    }    
+    }
 
     method callBuiltin(context:Context, m:MethodDecl, args:FixedArray<IR.Value>):Int64 {
         return getBuiltin(m)(context, args)
@@ -334,10 +335,10 @@ class Interpreter : CodeGenerator {
         def srcType := v.type()
         def value := context.value(v)
         if compiler.isValue(srcType) & !compiler.isValue(t) {
-            def raw := Pointer<UInt8>.alloc(llvmCodeGen.sizeOfWrapper(srcType))
+            def raw := Pointer<UInt8>.alloc(memoryLayout.sizeOfWrapper(srcType))
             def cl := compiler.getClass(srcType)!
             raw->Pointer<ClassDecl>.set(cl)
-            var dest := raw.offset(LLVMCodeGenerator.POINTER_SIZE)
+            var dest := raw.offset(memoryLayout.pointerSize)
             dest->Pointer<Int32>.set(1)
             dest := dest.offset(5)
             var src:Pointer<UInt8>
@@ -349,7 +350,7 @@ class Interpreter : CodeGenerator {
                 src := stack
             }
             -- FIXME need memcpy
-            for i in 0 .. llvmCodeGen.sizeOf(cl.type) {
+            for i in 0 .. memoryLayout.sizeOf(cl.type) {
                 dest[i] := src[i]
             }
             context.statements[id.value] := raw.asInt.asInt64
@@ -371,11 +372,11 @@ class Interpreter : CodeGenerator {
 
     method createStruct(context:Context, id:IR.Statement.ID, cl:ClassDecl,
             args:FixedArray<IR.Value>) {
-        def size := llvmCodeGen.sizeOf(cl.type)
+        def size := memoryLayout.sizeOf(cl.type)
         var current := stack
         for a in args {
             def v := context.value(a)
-            match llvmCodeGen.sizeOf(a.type()) {
+            match memoryLayout.sizeOf(a.type()) {
                 -- FIXME ALIGNMENT
                 when 1 {
                     current.set(v.asUInt8)
@@ -413,7 +414,7 @@ class Interpreter : CodeGenerator {
     method extractField(context:Context, id:IR.Statement.ID, value:IR.Value, field:FieldDecl) {
         if needsStructPointer(field.owner.type) {
             def p := Pointer<UInt8>.from(getFieldPointer(context, value, field))
-            match llvmCodeGen.sizeOf(field.type) {
+            match memoryLayout.sizeOf(field.type) {
                 when 1 {
                     context.statements[id.value] := p.get().asInt64
                 }
@@ -441,8 +442,7 @@ class Interpreter : CodeGenerator {
     method getFieldPointer(context:Context, value:IR.Value, field:FieldDecl):Int {
         -- force offset to be calculated
         if field.offset < 0 {
-            -- FIXME: create MemoryModel
-            llvmCodeGen.sizeOf(field.owner.type)
+            memoryLayout.computeLayout(field.owner)
             assert field.offset >= 0
         }
         return context.value(value).asInt + field.offset
@@ -549,9 +549,9 @@ class Interpreter : CodeGenerator {
                     continue
                 }
                 when IR.Statement.CONSTRUCT(_, cl) {
-                    def raw := Pointer<UInt8>.alloc(llvmCodeGen.sizeOf(cl.type))
+                    def raw := Pointer<UInt8>.alloc(memoryLayout.sizeOf(cl.type))
                     raw->Pointer<ClassDecl>.set(cl)
-                    raw.offset(LLVMCodeGenerator.POINTER_SIZE)->Pointer<Int32>.set(1)
+                    raw.offset(memoryLayout.pointerSize)->Pointer<Int32>.set(1)
                     context.statements[id.value] := raw.asInt.asInt64
                 }
                 when IR.Statement.CREATE_STRUCT(_, cl, args) {
@@ -584,24 +584,24 @@ class Interpreter : CodeGenerator {
                 }
                 when IR.Statement.POINTER_ALLOC(_, s, t) {
                      context.statements[id.value] := Pointer<UInt8>.alloc(context.value(s).asInt *
-                            llvmCodeGen.sizeOf(t)).asInt
+                            memoryLayout.sizeOf(t)).asInt
                 }
-                when IR.Statement.POINTER_GET_INDEX(_, p, index) {
+                when IR.Statement.POINTER_GET_INDEX(_, p, index, _) {
                     def type := p.type().subtypes[1]
                     def src := Pointer<UInt8>.from((context.value(p) + context.value(index) *
-                            llvmCodeGen.sizeOf(type)).asInt)
+                            memoryLayout.sizeOf(type)).asInt)
                     stack->Pointer<Int64>.set(0)
-                    for i in 0 .. llvmCodeGen.sizeOf(type).min(8) {
+                    for i in 0 .. memoryLayout.sizeOf(type).min(8) {
                         stack[i] := src[i]
                     }
                     context.statements[id.value] := stack->Pointer<Int64>.get()
                 }
-                when IR.Statement.POINTER_SET_INDEX(_, value, p, index) {
+                when IR.Statement.POINTER_SET_INDEX(_, value, p, index, type) {
                     def dest := Pointer<UInt8>.from((context.value(p) + context.value(index) *
-                            llvmCodeGen.sizeOf(value.type())).asInt)
+                            memoryLayout.sizeOf(value.type())).asInt)
                     def v := context.value(value)
                     stack->Pointer<Int64>.set(v)
-                    for i in 0 .. llvmCodeGen.sizeOf(value.type()).min(8) {
+                    for i in 0 .. memoryLayout.sizeOf(value.type()).min(8) {
                         dest[i] := stack[i]
                     }
                 }
@@ -645,7 +645,5 @@ class Interpreter : CodeGenerator {
         contexts.pop()
         builtins.clear()
         assert contexts.count = 0
-        llvmCodeGen.sizes.clear()
-        llvmCodeGen.alignments.clear()
     }
 }

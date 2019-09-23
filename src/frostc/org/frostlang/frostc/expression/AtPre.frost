@@ -5,11 +5,12 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.AutoAtPreFlag
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 
 class AtPre {
     @class
-    method compile(compiler:Compiler, position:Position, expr:ASTNode, type:TypeContext):IR.Value? {
+    method compile(compiler:Compiler, position:MethodPosition, expr:ASTNode,
+            type:TypeContext):IR.Value? {
         def ir := compiler.ir
         if compiler.atPreBlock == null {
             compiler.error(position, "@pre may only be used within a postcondition")

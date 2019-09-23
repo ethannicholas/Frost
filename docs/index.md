@@ -14,29 +14,35 @@ Frost is a high-level, general-purpose multiparadigm programming language with s
 
 And many other features. This is what a simple Frost program looks like:
 
-    =======================================================
+    ========================================================
     Simple version of the Unix `head` utility. Reads a file
     and outputs the first `count` lines from it to the
     standard output stream.
 
     @param path the file to read
     @param count the number of lines to display
-    =======================================================
+    ========================================================
     method head(path:File, count:Int) {
-        path.lines()[..count].apply(Console.printLine)
+        try {
+            path.lines()[..count].apply(Console.printLine)
+        }
+        fail(error) {
+            abort(error.message)
+        }
+    }
+
+    method abort(msg:String) {
+        Console.printLine(msg)
+        System.exit(1)
     }
 
     method main(args:ListView<String>) {
-        method error(msg:String) {
-            Console.errorStream().printLine(msg)
-            System.exit(1)
-        }
         if args.count != 3 {
-            error("usage: head <path> <count>")
+            abort("usage: head <path> <count>")
         }
-        def count := args[2].convert()->Int?
-        if count = null {
-            error("error: '\{args[2]}' is not an integer")
+        def count := args[2].asInt
+        if count == null {
+            abort("error: '\{args[2]}' is not an integer")
         }
         head(File(args[1]), count)
     }

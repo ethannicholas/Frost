@@ -32,17 +32,15 @@ frost$io$File* _8;
 frost$core$Object* _9;
 frost$io$File** _11;
 frost$collections$ImmutableArray* _14;
-frost$collections$ImmutableArray* _15;
-frost$collections$ListView* _16;
-frost$core$Object* _18;
-frost$collections$ImmutableArray** _20;
-frost$collections$ImmutableArray* _21;
-frost$core$Object* _22;
-frost$collections$ImmutableArray** _24;
-frost$core$Object* _26;
-frost$core$Int* _29;
-frost$core$Int* _32;
-frost$core$Bit* _35;
+frost$core$Object* _16;
+frost$collections$ImmutableArray** _18;
+frost$collections$ImmutableArray* _19;
+frost$core$Object* _20;
+frost$collections$ImmutableArray** _22;
+frost$core$Object* _24;
+frost$core$Int* _27;
+frost$core$Int* _30;
+frost$core$Bit* _33;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:245
 _1 = (frost$core$Int) {8u};
 _2 = &param0->intSize;
@@ -58,28 +56,26 @@ _11 = &param0->frostHome;
 *_11 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:250
 _14 = (frost$collections$ImmutableArray*) frostObjectAlloc(sizeof(frost$collections$ImmutableArray), (frost$core$Class*) &frost$collections$ImmutableArray$class);
-_15 = _14;
-_16 = param2;
-frost$collections$ImmutableArray$init$frost$collections$ListView$LTfrost$collections$ImmutableArray$T$GT(_15, _16);
-_18 = ((frost$core$Object*) _14);
-frost$core$Frost$ref$frost$core$Object$Q(_18);
-_20 = &param0->importDirs;
-_21 = *_20;
-_22 = ((frost$core$Object*) _21);
-frost$core$Frost$unref$frost$core$Object$Q(_22);
-_24 = &param0->importDirs;
-*_24 = _14;
-_26 = ((frost$core$Object*) _14);
-frost$core$Frost$unref$frost$core$Object$Q(_26);
+frost$collections$ImmutableArray$init$frost$collections$ListView$LTfrost$collections$ImmutableArray$T$GT(_14, param2);
+_16 = ((frost$core$Object*) _14);
+frost$core$Frost$ref$frost$core$Object$Q(_16);
+_18 = &param0->importDirs;
+_19 = *_18;
+_20 = ((frost$core$Object*) _19);
+frost$core$Frost$unref$frost$core$Object$Q(_20);
+_22 = &param0->importDirs;
+*_22 = _14;
+_24 = ((frost$core$Object*) _14);
+frost$core$Frost$unref$frost$core$Object$Q(_24);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:251
-_29 = &param0->optimizationLevel;
-*_29 = param3;
+_27 = &param0->optimizationLevel;
+*_27 = param3;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:252
-_32 = &param0->safetyLevel;
-*_32 = param4;
+_30 = &param0->safetyLevel;
+*_30 = param4;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:253
-_35 = &param0->debug;
-*_35 = param5;
+_33 = &param0->debug;
+*_33 = param5;
 return;
 
 }

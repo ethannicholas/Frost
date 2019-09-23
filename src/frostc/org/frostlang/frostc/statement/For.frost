@@ -11,6 +11,7 @@ uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.Compiler.VariableLValue
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Pair
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
@@ -21,7 +22,7 @@ uses org.frostlang.frostc.lvalue.VariableLValue
 class For {
     @private
     @class
-    method checkSteppedRangeTypes(compiler:Compiler, position:Position, type:Type):Bit {
+    method checkSteppedRangeTypes(compiler:Compiler, position:MethodPosition, type:Type):Bit {
         if type.typeKind = Type.Kind.NULLABLE {
             return checkSteppedRangeTypes(compiler, position, type.subtypes[0])
         }
@@ -94,7 +95,7 @@ class For {
 
     @private
     @class
-    method convertIndex(compiler:Compiler, position:Position, index:IR.Value,
+    method convertIndex(compiler:Compiler, position:MethodPosition, index:IR.Value,
             rawIndexType:Type):IR.Value {
         if index.type() = rawIndexType {
             return index
@@ -108,7 +109,7 @@ class For {
 
     @private
     @class
-    method compileSimpleRangeFor(compiler:Compiler, position:Position, label:String?,
+    method compileSimpleRangeFor(compiler:Compiler, position:MethodPosition, label:String?,
             index:Variable, range:IR.Value, statements:ListView<ASTNode>) {
         def ir := compiler.ir
         assert range.type().typeKind = Type.Kind.GENERIC
@@ -156,7 +157,7 @@ class For {
         def inclusive := compiler.extractBuiltinBit(position, IR.Value.REF(ir.add(
                 IR.Statement.EXTRACT_FIELD(position, range, rangeFields[2])), compiler.BIT_TYPE))
 
-        def step := compiler.compileExpression(ASTNode.INT(position, 1),
+        def step := compiler.compileExpression(ASTNode.INT(position.asPosition, 1),
                 TypeContext.TYPE(indexType, false))
         if step == null {
             return
@@ -254,7 +255,7 @@ class For {
 
     @private
     @class
-    method compileSteppedRangeFor(compiler:Compiler, position:Position, label:String?,
+    method compileSteppedRangeFor(compiler:Compiler, position:MethodPosition, label:String?,
             index:Variable, range:IR.Value, statements:ListView<ASTNode>) {
         -- I am acutely aware of how horrific this looks.
         --
@@ -358,7 +359,8 @@ class For {
             if stepType.name.startsWith("frost.core.Int") |
                     stepType.name.startsWith("frost.core.Real") {
                 def comparison := Call.compile(compiler, position, step, ">=",
-                        [ASTNode.INT(position, 0)], TypeContext.TYPE(compiler.BIT_TYPE, false))
+                        [ASTNode.INT(position.asPosition, 0)],
+                        TypeContext.TYPE(compiler.BIT_TYPE, false))
                 assert comparison !== null
                 direction := compiler.extractBuiltinBit(position, comparison)
             }
@@ -499,8 +501,8 @@ class For {
 
     @private
     @class
-    method compileRangeFor(compiler:Compiler, position:Position, label:String?, astTarget:ASTNode,
-            list:IR.Value, statements:ListView<ASTNode>) {
+    method compileRangeFor(compiler:Compiler, position:MethodPosition, label:String?,
+            astTarget:ASTNode, list:IR.Value, statements:ListView<ASTNode>) {
         def ir := compiler.ir
         def listType := list.type()
         assert listType.isRange | listType.isSteppedRange
@@ -549,8 +551,8 @@ class For {
 
     @private
     @class
-    method compileRangeFor(compiler:Compiler, position:Position, label:String?, astTarget:ASTNode,
-            rawList:ASTNode, statements:ListView<ASTNode>) {
+    method compileRangeFor(compiler:Compiler, position:MethodPosition, label:String?,
+            astTarget:ASTNode, rawList:ASTNode, statements:ListView<ASTNode>) {
         def ir := compiler.ir
         def list:IR.Value?
         match astTarget {
@@ -606,8 +608,8 @@ class For {
 
     @private
     @class
-    method compileIteratorFor(compiler:Compiler, position:Position, label:String?, target:ASTNode,
-            iterator:IR.Value, statements:ListView<ASTNode>) {
+    method compileIteratorFor(compiler:Compiler, position:MethodPosition, label:String?,
+            target:ASTNode, iterator:IR.Value, statements:ListView<ASTNode>) {
         def ir := compiler.ir
         def testBlock := ir.newBlock("testBlock")
         def bodyBlock := ir.newBlock("bodyBlock")
@@ -655,7 +657,7 @@ class For {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, label:String?, rawTarget:ASTNode,
+    method compile(compiler:Compiler, position:MethodPosition, label:String?, rawTarget:ASTNode,
             rawList:ASTNode, statements:ListView<ASTNode>) {
         match rawList {
             when ASTNode.RANGE {
@@ -674,9 +676,10 @@ class For {
             compileRangeFor(compiler, position, label, rawTarget, list, statements)
         }
         else {
+            def listPosition := MethodPosition(rawList.position(), position.methodIndex)
             for intf in compiler.allInterfaces(list.type()) {
                 if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = compiler.ITERATOR_TYPE {
-                    def iterator := compiler.coerce(rawList.position(), list, intf)
+                    def iterator := compiler.coerce(listPosition, list, intf)
                     if iterator == null {
                         return
                     }
@@ -684,7 +687,7 @@ class For {
                     return
                 }
                 if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = compiler.ITERABLE_TYPE {
-                    def iterable := compiler.coerce(rawList.position(), list, intf)
+                    def iterable := compiler.coerce(listPosition, list, intf)
                     if iterable == null {
                         return
                     }

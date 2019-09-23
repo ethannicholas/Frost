@@ -4,12 +4,12 @@ uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 
 class Identifier {
     @class
-    method compile(compiler:Compiler, position:Position, name:String):IR.Value? {
+    method compile(compiler:Compiler, position:MethodPosition, name:String):IR.Value? {
         if name = Compiler.FORCE_SELF_NAME {
             def s := compiler.symbolTable[Compiler.SELF_NAME]
             assert s !== null, "no 'self' in symboltable"
@@ -19,7 +19,7 @@ class Identifier {
         if s == null {
             def cl := compiler.tryResolveClass(name)
             if cl !== null {
-                compiler.checkGenericArguments(position, cl, cl.type)
+                compiler.checkGenericArguments(position.asPosition, cl, cl.type)
                 return compiler.literalType(cl.type)
             }
         }

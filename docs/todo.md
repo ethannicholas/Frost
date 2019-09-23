@@ -26,6 +26,11 @@ Property error reporting
 automatically calculate dependency information during build
 DWARF info
 Move wrappers / structs / casting / etc. out of CG and into Compiler. Create IR.Type. ...Maybe?
+Automatically turn code snippets in documentation into testcases
+    Comment at the beginning to identity testcase name
+    Testcase name matches up to a frost file which receives the code snippet as input, produces
+    finished testcase program
+    Have normal .in / .expected files to go along with it (should introduce .args or something too)
 
 Bugs
 ====

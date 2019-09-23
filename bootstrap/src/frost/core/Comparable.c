@@ -24,70 +24,64 @@ frost$core$Comparable* param0 = (frost$core$Comparable*) rawSelf;
 
 frost$core$Comparable* _1;
 frost$core$Comparable* _2;
-frost$core$Comparable* _3;
-$fn2 _4;
-frost$core$Bit _5;
+$fn2 _3;
+frost$core$Bit _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Comparable.frost:13
 _1 = param1;
-_2 = _1;
-_3 = param0;
-ITable* $tmp3 = _2->$class->itable;
+_2 = param0;
+ITable* $tmp3 = _1->$class->itable;
 while ($tmp3->$class != (frost$core$Class*) &frost$core$Comparable$class) {
     $tmp3 = $tmp3->next;
 }
-_4 = $tmp3->methods[0];
-_5 = _4(_2, _3);
-return _5;
+_3 = $tmp3->methods[0];
+_4 = _3(_1, _2);
+return _4;
 
 }
 frost$core$Bit frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit(void* rawSelf, frost$core$Comparable* param1) {
 frost$core$Comparable* param0 = (frost$core$Comparable*) rawSelf;
 
-frost$core$Comparable* _1;
-$fn4 _2;
-frost$core$Bit _3;
+$fn4 _1;
+frost$core$Bit _2;
+bool _5;
 bool _6;
-bool _7;
-frost$core$Bit _8;
+frost$core$Bit _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Comparable.frost:18
-_1 = param0;
-ITable* $tmp5 = _1->$class->itable;
+ITable* $tmp5 = param0->$class->itable;
 while ($tmp5->$class != (frost$core$Class*) &frost$core$Comparable$class) {
     $tmp5 = $tmp5->next;
 }
-_2 = $tmp5->methods[1];
-_3 = _2(_1, param1);
+_1 = $tmp5->methods[1];
+_2 = _1(param0, param1);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Comparable.frost:18:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-_6 = _3.value;
-_7 = !_6;
-_8 = (frost$core$Bit) {_7};
-return _8;
+_5 = _2.value;
+_6 = !_5;
+_7 = (frost$core$Bit) {_6};
+return _7;
 
 }
 frost$core$Bit frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit(void* rawSelf, frost$core$Comparable* param1) {
 frost$core$Comparable* param0 = (frost$core$Comparable*) rawSelf;
 
-frost$core$Comparable* _1;
-$fn6 _2;
-frost$core$Bit _3;
+$fn6 _1;
+frost$core$Bit _2;
+bool _5;
 bool _6;
-bool _7;
-frost$core$Bit _8;
+frost$core$Bit _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Comparable.frost:23
-_1 = param0;
-ITable* $tmp7 = _1->$class->itable;
+ITable* $tmp7 = param0->$class->itable;
 while ($tmp7->$class != (frost$core$Class*) &frost$core$Comparable$class) {
     $tmp7 = $tmp7->next;
 }
-_2 = $tmp7->methods[0];
-_3 = _2(_1, param1);
+_1 = $tmp7->methods[0];
+_2 = _1(param0, param1);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Comparable.frost:23:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-_6 = _3.value;
-_7 = !_6;
-_8 = (frost$core$Bit) {_7};
-return _8;
+_5 = _2.value;
+_6 = !_5;
+_7 = (frost$core$Bit) {_6};
+return _7;
 
 }
 

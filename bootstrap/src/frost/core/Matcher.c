@@ -91,35 +91,34 @@ frost$core$String$Index _66;
 frost$core$String$Index _67;
 frost$core$String$Index _70;
 frost$core$Comparable* _71;
-frost$core$Comparable* _72;
-frost$core$String** _73;
-frost$core$String* _74;
-frost$core$Int* _77;
-frost$core$Int _78;
-frost$core$Int* _81;
-frost$core$String$Index _83;
-frost$core$String$Index _86;
-frost$core$Comparable* _88;
-$fn2 _89;
-frost$core$Bit _90;
-bool _91;
-frost$core$Object* _92;
-frost$core$Object* _94;
-frost$core$Bit _98;
-frost$core$Bit* _99;
-frost$core$Bit* _102;
-frost$core$Bit _103;
-frost$core$String** _109;
-frost$core$String* _110;
-frost$core$Int _113;
-frost$core$Int* _116;
-frost$core$String$Index _118;
-frost$core$String$Index _121;
-frost$core$String$Index _126;
-frost$core$Bit _127;
-frost$core$Bit* _128;
-frost$core$Bit* _131;
-frost$core$Bit _132;
+frost$core$String** _72;
+frost$core$String* _73;
+frost$core$Int* _76;
+frost$core$Int _77;
+frost$core$Int* _80;
+frost$core$String$Index _82;
+frost$core$String$Index _85;
+frost$core$Comparable* _87;
+$fn2 _88;
+frost$core$Bit _89;
+bool _90;
+frost$core$Object* _91;
+frost$core$Object* _93;
+frost$core$Bit _97;
+frost$core$Bit* _98;
+frost$core$Bit* _101;
+frost$core$Bit _102;
+frost$core$String** _108;
+frost$core$String* _109;
+frost$core$Int _112;
+frost$core$Int* _115;
+frost$core$String$Index _117;
+frost$core$String$Index _120;
+frost$core$String$Index _125;
+frost$core$Bit _126;
+frost$core$Bit* _127;
+frost$core$Bit* _130;
+frost$core$Bit _131;
 _0 = &param0->matched;
 _1 = *_0;
 _2 = _1.value;
@@ -194,45 +193,44 @@ frost$core$String$Index$wrapper* $tmp5;
 $tmp5 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp5->value = _70;
 _71 = ((frost$core$Comparable*) $tmp5);
-_72 = _71;
-_73 = &param0->searchText;
-_74 = *_73;
+_72 = &param0->searchText;
+_73 = *_72;
 // begin inline call to function frost.core.String.get_end():frost.core.String.Index from Matcher.frost:61:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1212
-_77 = &_74->_length;
-_78 = *_77;
+_76 = &_73->_length;
+_77 = *_76;
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:1212:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
-_81 = &(&local4)->value;
-*_81 = _78;
-_83 = *(&local4);
-*(&local3) = _83;
-_86 = *(&local3);
+_80 = &(&local4)->value;
+*_80 = _77;
+_82 = *(&local4);
+*(&local3) = _82;
+_85 = *(&local3);
 frost$core$String$Index$wrapper* $tmp6;
 $tmp6 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
-$tmp6->value = _86;
-_88 = ((frost$core$Comparable*) $tmp6);
-ITable* $tmp7 = _72->$class->itable;
+$tmp6->value = _85;
+_87 = ((frost$core$Comparable*) $tmp6);
+ITable* $tmp7 = _71->$class->itable;
 while ($tmp7->$class != (frost$core$Class*) &frost$core$Comparable$class) {
     $tmp7 = $tmp7->next;
 }
-_89 = $tmp7->methods[2];
-_90 = _89(_72, _88);
-_91 = _90.value;
-_92 = ((frost$core$Object*) _88);
-frost$core$Frost$unref$frost$core$Object$Q(_92);
-_94 = ((frost$core$Object*) _71);
-frost$core$Frost$unref$frost$core$Object$Q(_94);
-if (_91) goto block15; else goto block16;
+_88 = $tmp7->methods[2];
+_89 = _88(_71, _87);
+_90 = _89.value;
+_91 = ((frost$core$Object*) _87);
+frost$core$Frost$unref$frost$core$Object$Q(_91);
+_93 = ((frost$core$Object*) _71);
+frost$core$Frost$unref$frost$core$Object$Q(_93);
+if (_90) goto block15; else goto block16;
 block15:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:62
-_98 = (frost$core$Bit) {false};
-_99 = &param0->matched;
-*_99 = _98;
+_97 = (frost$core$Bit) {false};
+_98 = &param0->matched;
+*_98 = _97;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:63
-_102 = &param0->matched;
-_103 = *_102;
-return _103;
+_101 = &param0->matched;
+_102 = *_101;
+return _102;
 block16:;
 goto block12;
 block12:;
@@ -240,30 +238,30 @@ goto block9;
 block10:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:68
-_109 = &param0->searchText;
-_110 = *_109;
+_108 = &param0->searchText;
+_109 = *_108;
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:68:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
-_113 = (frost$core$Int) {0u};
+_112 = (frost$core$Int) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
-_116 = &(&local6)->value;
-*_116 = _113;
-_118 = *(&local6);
-*(&local5) = _118;
-_121 = *(&local5);
-*(&local2) = _121;
+_115 = &(&local6)->value;
+*_115 = _112;
+_117 = *(&local6);
+*(&local5) = _117;
+_120 = *(&local5);
+*(&local2) = _120;
 goto block9;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:70
-_126 = *(&local2);
-frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit(&_127, param0, _126);
-_128 = &param0->matched;
-*_128 = _127;
+_125 = *(&local2);
+frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit(&_126, param0, _125);
+_127 = &param0->matched;
+*_127 = _126;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:71
-_131 = &param0->matched;
-_132 = *_131;
-return _132;
+_130 = &param0->matched;
+_131 = *_130;
+return _131;
 
 }
 frost$core$Bit frost$core$Matcher$find$frost$core$String$Index$R$frost$core$Bit(void* rawSelf, frost$core$String$Index param1) {

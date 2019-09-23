@@ -5,7 +5,7 @@ typedef struct org$frostlang$frostc$Compiler$_Closure13 org$frostlang$frostc$Com
 typedef struct org$frostlang$frostc$SymbolTable org$frostlang$frostc$SymbolTable;
 typedef struct org$frostlang$frostc$Symbol org$frostlang$frostc$Symbol;
 
-void org$frostlang$frostc$Compiler$_Closure13$init$org$frostlang$frostc$SymbolTable(void* rawSelf, org$frostlang$frostc$SymbolTable* p_$dummy445);
+void org$frostlang$frostc$Compiler$_Closure13$init$org$frostlang$frostc$SymbolTable(void* rawSelf, org$frostlang$frostc$SymbolTable* p_$dummy453);
 void org$frostlang$frostc$Compiler$_Closure13$cleanup(void* rawSelf);
 void org$frostlang$frostc$Compiler$_Closure13$$anonymous12$org$frostlang$frostc$Symbol(void* rawSelf, org$frostlang$frostc$Symbol* p_param0);
 

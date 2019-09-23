@@ -7,12 +7,12 @@ uses org.frostlang.frostc.Compiler.AutoScope
 uses org.frostlang.frostc.Compiler.EnclosingContext
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
-uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 
 class Loop {
     @class
-    method compile(compiler:Compiler, position:Position, label:String?,
+    method compile(compiler:Compiler, position:MethodPosition, label:String?,
             statements:FixedArray<ASTNode>) {
         def ir := compiler.ir
         def bodyBlock := ir.newBlock("loop body")

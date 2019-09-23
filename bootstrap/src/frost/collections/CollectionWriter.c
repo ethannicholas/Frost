@@ -26,84 +26,74 @@ frost$collections$CollectionWriter* param0 = (frost$collections$CollectionWriter
 
 frost$core$Object* local0 = NULL;
 frost$collections$Iterable* _1;
-frost$collections$Iterable* _2;
-$fn2 _3;
-frost$collections$Iterator* _4;
-frost$collections$Iterator* _5;
-frost$collections$Iterator* _7;
-$fn3 _8;
-frost$core$Bit _9;
-bool _10;
-frost$collections$Iterator* _13;
-$fn4 _14;
+$fn2 _2;
+frost$collections$Iterator* _3;
+$fn3 _5;
+frost$core$Bit _6;
+bool _7;
+$fn4 _10;
+frost$core$Object* _11;
+frost$core$Object* _12;
+frost$core$Object* _13;
 frost$core$Object* _15;
 frost$core$Object* _16;
-frost$core$Object* _17;
-frost$core$Object* _19;
 frost$core$Object* _20;
-frost$collections$CollectionWriter* _24;
+$fn5 _21;
+frost$core$Object* _23;
 frost$core$Object* _25;
-$fn5 _26;
-frost$core$Object* _28;
+frost$core$Object* _26;
 frost$core$Object* _30;
-frost$core$Object* _31;
-frost$core$Object* _35;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionWriter.frost:29
 _1 = ((frost$collections$Iterable*) param1);
-_2 = _1;
-ITable* $tmp6 = _2->$class->itable;
+ITable* $tmp6 = _1->$class->itable;
 while ($tmp6->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
     $tmp6 = $tmp6->next;
 }
-_3 = $tmp6->methods[0];
-_4 = _3(_2);
-_5 = _4;
+_2 = $tmp6->methods[0];
+_3 = _2(_1);
 goto block1;
 block1:;
-_7 = _5;
-ITable* $tmp7 = _7->$class->itable;
+ITable* $tmp7 = _3->$class->itable;
 while ($tmp7->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp7 = $tmp7->next;
 }
-_8 = $tmp7->methods[0];
-_9 = _8(_7);
-_10 = _9.value;
-if (_10) goto block3; else goto block2;
+_5 = $tmp7->methods[0];
+_6 = _5(_3);
+_7 = _6.value;
+if (_7) goto block3; else goto block2;
 block2:;
 *(&local0) = ((frost$core$Object*) NULL);
-_13 = _5;
-ITable* $tmp8 = _13->$class->itable;
+ITable* $tmp8 = _3->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp8 = $tmp8->next;
 }
-_14 = $tmp8->methods[1];
-_15 = _14(_13);
+_10 = $tmp8->methods[1];
+_11 = _10(_3);
+_12 = _11;
+_13 = _12;
+frost$core$Frost$ref$frost$core$Object$Q(_13);
+_15 = *(&local0);
 _16 = _15;
-_17 = _16;
-frost$core$Frost$ref$frost$core$Object$Q(_17);
-_19 = *(&local0);
-_20 = _19;
-frost$core$Frost$unref$frost$core$Object$Q(_20);
-*(&local0) = _16;
+frost$core$Frost$unref$frost$core$Object$Q(_16);
+*(&local0) = _12;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionWriter.frost:30
-_24 = param0;
-_25 = *(&local0);
-ITable* $tmp9 = _24->$class->itable;
+_20 = *(&local0);
+ITable* $tmp9 = param0->$class->itable;
 while ($tmp9->$class != (frost$core$Class*) &frost$collections$CollectionWriter$class) {
     $tmp9 = $tmp9->next;
 }
-_26 = $tmp9->methods[1];
-_26(_24, _25);
-_28 = _15;
-frost$core$Frost$unref$frost$core$Object$Q(_28);
-_30 = *(&local0);
-_31 = _30;
-frost$core$Frost$unref$frost$core$Object$Q(_31);
+_21 = $tmp9->methods[1];
+_21(param0, _20);
+_23 = _11;
+frost$core$Frost$unref$frost$core$Object$Q(_23);
+_25 = *(&local0);
+_26 = _25;
+frost$core$Frost$unref$frost$core$Object$Q(_26);
 *(&local0) = ((frost$core$Object*) NULL);
 goto block1;
 block3:;
-_35 = ((frost$core$Object*) _4);
-frost$core$Frost$unref$frost$core$Object$Q(_35);
+_30 = ((frost$core$Object*) _3);
+frost$core$Frost$unref$frost$core$Object$Q(_30);
 return;
 
 }

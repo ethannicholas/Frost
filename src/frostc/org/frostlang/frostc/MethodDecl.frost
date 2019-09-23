@@ -51,6 +51,9 @@ class MethodDecl : Symbol {
 
     def doccomment:String?
 
+    -- index within the Compiler.methods array
+    def index:Int
+
     var annotations:Annotations
 
     def methodKind:Kind
@@ -80,13 +83,14 @@ class MethodDecl : Symbol {
 
     property declaration:String
 
-    @pre(genericParameters == null | genericParameters.count > 0)
-    init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
+    @pre((genericParameters == null | genericParameters.count > 0) & index >= 0)
+    init(owner:ClassDecl, position:Position, index:Int, doccomment:String?, annotations:Annotations,
             methodKind:Kind, name:String, genericParameters:Array<GenericParameter>?,
             parameters:Array<Parameter>, returnType:Type,
             body:FixedArray<ASTNode>?) {
         super.init(Symbol.Kind.METHOD, position, name)
         self.owner := owner
+        self.index := index
         self.doccomment := doccomment
         self.annotations := annotations
         self.methodKind := methodKind
@@ -97,6 +101,11 @@ class MethodDecl : Symbol {
         self.parameters := parameters
         self.returnType := returnType
         self.body := body
+    }
+
+    property methodPosition:MethodPosition
+    function get_methodPosition():MethodPosition {
+        return MethodPosition(position, index)
     }
 
     @override

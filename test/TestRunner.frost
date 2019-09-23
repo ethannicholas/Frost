@@ -1,5 +1,5 @@
 class TestRunner : Immutable {
-    constant THREADS := 1
+    constant THREADS := 16
 
     choice Result {
         SUCCESS(String)
@@ -39,8 +39,15 @@ class TestRunner : Immutable {
     }
 
     method runTest(frostc:File, cLibs:ListView<String>, workingDir:File, test:String) {
+        def expected:String
         try {
-            def expected := workingDir.resolve(test + ".expected").readFully()
+            expected := workingDir.resolve(test + ".expected").readFully()
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
+        try {
             def exe := System.temporaryDirectory().resolve(test + ".out")
             if exe.exists() {
                 exe.delete()
@@ -61,7 +68,7 @@ class TestRunner : Immutable {
             if compileResult != "" {
                 if compileResult != expected {
                     resultQueue.post(Result.ERROR(test,
-                            "expected:\n\{expected}\nbut received:\n\{compileResult}"))
+                            "expected:\n\{expected}\nbut received1:\n\{compileResult}"))
                     return
                 }
                 resultQueue.post(Result.SUCCESS(test))
@@ -79,15 +86,15 @@ class TestRunner : Immutable {
             def childResult := childResult1 + childResult2
             if childResult != expected {
                 resultQueue.post(Result.ERROR(test,
-                        "expected:\n\{expected}\nbut received:\n\{childResult}"))
+                        "expected:\n\{expected}\nbut received2:\n\{childResult}"))
             }
             else {
                 resultQueue.post(Result.SUCCESS(test))
             }
         }
         fail(error) {
-            Console.printLine(error)
-            System.exit(1)
+            resultQueue.post(Result.ERROR(test,
+                    "expected:\n\{expected}\nbut received3:\n\{error}"))
         }
     }
 
