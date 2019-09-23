@@ -1,6 +1,6 @@
 package org.frostlang.plex
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 uses org.frostlang.plex.AcceptState
 uses org.frostlang.plex.NFA
 uses org.frostlang.plex.RemappedState
@@ -105,9 +105,9 @@ class NFAtoDFA {
         for i in 0 .. transitions.count {
             stateCount := stateCount.max(transitions[i].count)
         }
-        def outTransitions := Pointer<Pointer<Int>>.alloc(transitions.count)
+        def outTransitions := NewPointer<NewPointer<Int>>.alloc(transitions.count)
         for i in 0 ... DFA.END_CHAR.asInt {
-            outTransitions[i] := Pointer<Int>.alloc(stateCount)
+            outTransitions[i] := NewPointer<Int>.alloc(stateCount)
             for j in 0 .. stateCount {
                 if i < transitions.count & j < transitions[i].count {
                     outTransitions[i][j] := transitions[i][j]
@@ -117,7 +117,7 @@ class NFAtoDFA {
                 }
             }
         }
-        def outAccepts := Pointer<Int>.alloc(accepts.count)
+        def outAccepts := NewPointer<Int>.alloc(accepts.count)
         for i in 0 .. stateCount {
             if i >= accepts.count {
                 outAccepts[i] := -1

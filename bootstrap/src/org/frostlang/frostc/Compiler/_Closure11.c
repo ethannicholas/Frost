@@ -21,14 +21,14 @@ org$frostlang$frostc$Compiler** _3;
 org$frostlang$frostc$Compiler* _4;
 frost$core$Object* _5;
 org$frostlang$frostc$Compiler** _7;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5260
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5262
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
-_3 = &param0->$dummy445;
+_3 = &param0->$dummy446;
 _4 = *_3;
 _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
-_7 = &param0->$dummy445;
+_7 = &param0->$dummy446;
 *_7 = param1;
 return;
 
@@ -40,10 +40,10 @@ frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
 org$frostlang$frostc$Compiler* _4;
 frost$core$Object* _5;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5260
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5262
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
-_3 = &param0->$dummy445;
+_3 = &param0->$dummy446;
 _4 = *_3;
 _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
@@ -55,8 +55,8 @@ org$frostlang$frostc$Compiler$_Closure11* param0 = (org$frostlang$frostc$Compile
 
 org$frostlang$frostc$Compiler** _1;
 org$frostlang$frostc$Compiler* _2;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5260
-_1 = &param0->$dummy445;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5262
+_1 = &param0->$dummy446;
 _2 = *_1;
 org$frostlang$frostc$Compiler$initializeTarget$org$frostlang$frostc$Compiler$Target(_2, param1);
 return;

@@ -9,15 +9,16 @@
 #include "org/frostlang/frostc/FixedArray.h"
 #include "frost/core/Int.h"
 #include "org/frostlang/frostc/IR/Value.h"
+#include "frost/unsafe/NewPointer.h"
 
 
 static frost$core$String $s1;
 org$frostlang$frostc$Interpreter$_Closure19$class_type org$frostlang$frostc$Interpreter$_Closure19$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Interpreter$_Closure19$cleanup, org$frostlang$frostc$Interpreter$_Closure19$$anonymous18$org$frostlang$frostc$Interpreter$Context$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$IR$Value$GT$R$frost$core$Int64} };
 
 typedef frost$core$Int64 (*$fn2)(org$frostlang$frostc$Interpreter$Context*, org$frostlang$frostc$IR$Value*);
-typedef void (*$fn3)(org$frostlang$frostc$Interpreter*, frost$core$UInt8*);
+typedef void (*$fn3)(org$frostlang$frostc$Interpreter*, frost$unsafe$NewPointer);
 typedef frost$core$Int64 (*$fn4)(org$frostlang$frostc$Interpreter$Context*, org$frostlang$frostc$IR$Value*);
-typedef void (*$fn5)(org$frostlang$frostc$Interpreter*, frost$core$UInt8*);
+typedef void (*$fn5)(org$frostlang$frostc$Interpreter*, frost$unsafe$NewPointer);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x49\x6e\x74\x65\x72\x70\x72\x65\x74\x65\x72\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x31\x39", 43, 7906577236993416088, NULL };
 
@@ -71,11 +72,10 @@ frost$core$Int64 _7;
 int64_t _10;
 int64_t _11;
 frost$core$Int _12;
-int64_t _14;
-frost$core$UInt8* _15;
-$fn3 _16;
-frost$core$Object* _18;
-frost$core$Int64 _21;
+frost$unsafe$NewPointer _14;
+$fn3 _15;
+frost$core$Object* _17;
+frost$core$Int64 _20;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:301
 _1 = &param0->$self;
 _2 = *_1;
@@ -84,20 +84,19 @@ _4 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$
 _5 = ((org$frostlang$frostc$IR$Value*) _4);
 _6 = ($fn4) param1->$class->vtable[2];
 _7 = _6(param1, _5);
-// begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Interpreter.frost:301:76
+// begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Interpreter.frost:301:74
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:580
 _10 = _7.value;
 _11 = ((int64_t) _10);
 _12 = (frost$core$Int) {_11};
-_14 = _12.value;
-_15 = ((frost$core$UInt8*) _14);
-_16 = ($fn5) _2->$class->vtable[12];
-_16(_2, _15);
-_18 = _4;
-frost$core$Frost$unref$frost$core$Object$Q(_18);
+_14 = frost$unsafe$NewPointer$init$frost$core$Int(_12);
+_15 = ($fn5) _2->$class->vtable[12];
+_15(_2, _14);
+_17 = _4;
+frost$core$Frost$unref$frost$core$Object$Q(_17);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:302
-_21 = (frost$core$Int64) {18446744073709551615u};
-return _21;
+_20 = (frost$core$Int64) {18446744073709551615u};
+return _20;
 
 }
 

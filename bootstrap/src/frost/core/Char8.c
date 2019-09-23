@@ -21,6 +21,7 @@
 #include "frost/core/MutableString.h"
 #include "frost/core/Range.LTfrost/core/Int.GT.h"
 #include "frost/core/Frost.h"
+#include "frost/unsafe/NewPointer.h"
 
 __attribute__((weak)) frost$core$Int frost$core$Char8$get_hash$R$frost$core$Int$shim(frost$core$Object* p0) {
     frost$core$Int result = frost$core$Char8$get_hash$R$frost$core$Int(((frost$core$Char8$wrapper*) p0)->value);
@@ -785,51 +786,66 @@ return _3;
 }
 frost$core$String* frost$core$Char8$get_asString$R$frost$core$String(frost$core$Char8 param0) {
 
-frost$core$Char8* local0;
-frost$core$Char8* local1;
+frost$unsafe$NewPointer local0;
+frost$unsafe$NewPointer local1;
+frost$unsafe$NewPointer local2;
+frost$unsafe$NewPointer local3;
+frost$unsafe$NewPointer local4;
+frost$unsafe$NewPointer local5;
 uint8_t _1;
 bool _2;
 frost$core$Bit _3;
 bool _4;
-frost$core$Int64 _7;
-int64_t _8;
-frost$core$Char8* _9;
-frost$core$Char8* _12;
-frost$core$Int64 _13;
-int64_t _14;
-frost$core$String* _17;
-frost$core$Char8* _18;
-frost$core$Int _19;
-frost$core$Object* _21;
-frost$core$Object* _23;
-frost$core$Int64 _27;
-int64_t _28;
-frost$core$Char8* _29;
-frost$core$Char8* _32;
-frost$core$Int64 _33;
-uint8_t _34;
-uint16_t _35;
-uint16_t _36;
-uint16_t _37;
-uint8_t _38;
-frost$core$UInt8 _39;
-frost$core$Char8 _40;
-int64_t _41;
-frost$core$Char8* _44;
-frost$core$Int64 _45;
-uint8_t _46;
-uint16_t _47;
-uint16_t _48;
-uint16_t _49;
-uint8_t _50;
-frost$core$UInt8 _51;
-frost$core$Char8 _52;
-int64_t _53;
-frost$core$String* _56;
-frost$core$Char8* _57;
-frost$core$Int _58;
-frost$core$Object* _60;
-frost$core$Object* _62;
+frost$core$Int _7;
+int64_t _10;
+int64_t _11;
+int64_t _12;
+int64_t* _15;
+frost$unsafe$NewPointer _17;
+frost$unsafe$NewPointer _20;
+frost$unsafe$NewPointer _24;
+int64_t _25;
+frost$core$Int64 _26;
+int64_t _27;
+frost$core$String* _30;
+frost$unsafe$NewPointer _31;
+frost$core$Int _32;
+frost$core$Object* _34;
+frost$core$Object* _36;
+frost$core$Int _40;
+int64_t _43;
+int64_t _44;
+int64_t _45;
+int64_t* _48;
+frost$unsafe$NewPointer _50;
+frost$unsafe$NewPointer _53;
+frost$unsafe$NewPointer _57;
+int64_t _58;
+frost$core$Int64 _59;
+uint8_t _60;
+uint16_t _61;
+uint16_t _62;
+uint16_t _63;
+uint8_t _64;
+frost$core$UInt8 _65;
+frost$core$Char8 _66;
+int64_t _67;
+frost$unsafe$NewPointer _70;
+int64_t _71;
+frost$core$Int64 _72;
+uint8_t _73;
+uint16_t _74;
+uint16_t _75;
+uint16_t _76;
+uint8_t _77;
+frost$core$UInt8 _78;
+frost$core$Char8 _79;
+int64_t _80;
+frost$core$String* _83;
+frost$unsafe$NewPointer _84;
+frost$core$Int _85;
+frost$core$Object* _87;
+frost$core$Object* _89;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:152
 _1 = param0.value;
 _2 = _1 < 128u;
@@ -838,65 +854,88 @@ _4 = _3.value;
 if (_4) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:153
-_7 = (frost$core$Int64) {1u};
-_8 = _7.value;
-_9 = ((frost$core$Char8*) frostAlloc(_8 * sizeof(frost$core$Char8)));
-*(&local0) = _9;
+_7 = (frost$core$Int) {1u};
+// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Char8.frost:153:48
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+_10 = _7.value;
+_11 = _10 * 1u;
+_12 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_11);
+// begin inline call to frost.unsafe.NewPointer.init(value:builtin_int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from NewPointer.frost:49:29
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:31
+_15 = &(&local1)->value;
+*_15 = _12;
+_17 = *(&local1);
+*(&local0) = _17;
+_20 = *(&local0);
+*(&local2) = _20;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:154
-_12 = *(&local0);
-_13 = (frost$core$Int64) {0u};
-_14 = _13.value;
-_12[_14] = param0;
+_24 = *(&local2);
+_25 = _24.value;
+_26 = (frost$core$Int64) {0u};
+_27 = _26.value;
+((frost$core$Char8*)_25)[_27] = param0;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:155
-_17 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
-_18 = *(&local0);
-_19 = (frost$core$Int) {1u};
-frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_17, _18, _19);
-_21 = ((frost$core$Object*) _17);
-frost$core$Frost$ref$frost$core$Object$Q(_21);
-_23 = ((frost$core$Object*) _17);
-frost$core$Frost$unref$frost$core$Object$Q(_23);
-return _17;
+_30 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
+_31 = *(&local2);
+_32 = (frost$core$Int) {1u};
+frost$core$String$init$frost$unsafe$NewPointer$LTfrost$core$Char8$GT$frost$core$Int(_30, _31, _32);
+_34 = ((frost$core$Object*) _30);
+frost$core$Frost$ref$frost$core$Object$Q(_34);
+_36 = ((frost$core$Object*) _30);
+frost$core$Frost$unref$frost$core$Object$Q(_36);
+return _30;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:157
-_27 = (frost$core$Int64) {2u};
-_28 = _27.value;
-_29 = ((frost$core$Char8*) frostAlloc(_28 * sizeof(frost$core$Char8)));
-*(&local1) = _29;
+_40 = (frost$core$Int) {2u};
+// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Char8.frost:157:44
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+_43 = _40.value;
+_44 = _43 * 1u;
+_45 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_44);
+// begin inline call to frost.unsafe.NewPointer.init(value:builtin_int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from NewPointer.frost:49:29
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:31
+_48 = &(&local4)->value;
+*_48 = _45;
+_50 = *(&local4);
+*(&local3) = _50;
+_53 = *(&local3);
+*(&local5) = _53;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:158
-_32 = *(&local1);
-_33 = (frost$core$Int64) {0u};
-_34 = param0.value;
-_35 = ((uint16_t) _34);
-_36 = _35 >> 6u;
-_37 = _36 | 192u;
-_38 = ((uint8_t) _37);
-_39 = (frost$core$UInt8) {_38};
-_40 = frost$core$Char8$init$frost$core$UInt8(_39);
-_41 = _33.value;
-_32[_41] = _40;
+_57 = *(&local5);
+_58 = _57.value;
+_59 = (frost$core$Int64) {0u};
+_60 = param0.value;
+_61 = ((uint16_t) _60);
+_62 = _61 >> 6u;
+_63 = _62 | 192u;
+_64 = ((uint8_t) _63);
+_65 = (frost$core$UInt8) {_64};
+_66 = frost$core$Char8$init$frost$core$UInt8(_65);
+_67 = _59.value;
+((frost$core$Char8*)_58)[_67] = _66;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:159
-_44 = *(&local1);
-_45 = (frost$core$Int64) {1u};
-_46 = param0.value;
-_47 = ((uint16_t) _46);
-_48 = _47 & 63u;
-_49 = _48 | 128u;
-_50 = ((uint8_t) _49);
-_51 = (frost$core$UInt8) {_50};
-_52 = frost$core$Char8$init$frost$core$UInt8(_51);
-_53 = _45.value;
-_44[_53] = _52;
+_70 = *(&local5);
+_71 = _70.value;
+_72 = (frost$core$Int64) {1u};
+_73 = param0.value;
+_74 = ((uint16_t) _73);
+_75 = _74 & 63u;
+_76 = _75 | 128u;
+_77 = ((uint8_t) _76);
+_78 = (frost$core$UInt8) {_77};
+_79 = frost$core$Char8$init$frost$core$UInt8(_78);
+_80 = _72.value;
+((frost$core$Char8*)_71)[_80] = _79;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:160
-_56 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
-_57 = *(&local1);
-_58 = (frost$core$Int) {2u};
-frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_56, _57, _58);
-_60 = ((frost$core$Object*) _56);
-frost$core$Frost$ref$frost$core$Object$Q(_60);
-_62 = ((frost$core$Object*) _56);
-frost$core$Frost$unref$frost$core$Object$Q(_62);
-return _56;
+_83 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
+_84 = *(&local5);
+_85 = (frost$core$Int) {2u};
+frost$core$String$init$frost$unsafe$NewPointer$LTfrost$core$Char8$GT$frost$core$Int(_83, _84, _85);
+_87 = ((frost$core$Object*) _83);
+frost$core$Frost$ref$frost$core$Object$Q(_87);
+_89 = ((frost$core$Object*) _83);
+frost$core$Frost$unref$frost$core$Object$Q(_89);
+return _83;
 
 }
 void frost$core$Char8$cleanup(frost$core$Char8 param0) {

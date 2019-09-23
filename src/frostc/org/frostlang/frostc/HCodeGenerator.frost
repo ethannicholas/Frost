@@ -332,6 +332,9 @@ class HCodeGenerator : CodeGenerator {
                 body.print("\{separator}\{declaration(p.type, name)}")
                 separator := ", "
             }
+            if m.annotations.isPointerSize {
+                body.print("\{separator}int64_t pointerSize")
+            }            
             body.printLine(");")
         }
         fail(error) {

@@ -1,6 +1,6 @@
 package org.frostlang.plex.runtime
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 
 @final
 class DFA {
@@ -9,11 +9,11 @@ class DFA {
 
     def stateCount:Int
 
-    def transitions:Pointer<Pointer<Int>>
+    def transitions:NewPointer<NewPointer<Int>>
 
-    def accepts:Pointer<Int>
+    def accepts:NewPointer<Int>
 
-    var source:Pointer<Char8>
+    var source:NewPointer<Char8>
 
     var offset:Int
 
@@ -23,12 +23,12 @@ class DFA {
 
     var column := 1
 
-    init(stateCount:Int, transitions:Pointer<Pointer<Int>>, accepts:Pointer<Int>) {
+    init(stateCount:Int, transitions:NewPointer<NewPointer<Int>>, accepts:NewPointer<Int>) {
         init("", stateCount, transitions, accepts)
     }
 
-    init(source:String, stateCount:Int, transitions:Pointer<Pointer<Int>>,
-            accepts:Pointer<Int>) {
+    init(source:String, stateCount:Int, transitions:NewPointer<NewPointer<Int>>,
+            accepts:NewPointer<Int>) {
         self.source := source.data
         self.offset := 0
         self.sourceEnd := source.byteLength

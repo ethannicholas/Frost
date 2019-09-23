@@ -28,16 +28,16 @@ frost$core$String$Index* _4;
 frost$core$String$Index* _7;
 org$frostlang$frostc$Position* _10;
 org$frostlang$frostc$parser$Token _12;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:134
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:133
 _1 = &(&local0)->kind;
 *_1 = param0;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:135
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:134
 _4 = &(&local0)->start;
 *_4 = param1;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:136
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:135
 _7 = &(&local0)->end;
 *_7 = param2;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:137
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:136
 _10 = &(&local0)->position;
 *_10 = param3;
 _12 = *(&local0);

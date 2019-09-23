@@ -8,6 +8,7 @@
 #include "frost/core/Int.h"
 #include "frost/collections/IdentityMap/Entry.h"
 #include "frost/core/Bit.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Int64.h"
 #include "frost/core/Frost.h"
 
@@ -60,9 +61,9 @@ int64_t _29;
 bool _30;
 frost$core$Bit _31;
 bool _32;
-frost$collections$IdentityMap$Entry*** _34;
-frost$collections$IdentityMap$Entry** _35;
-frost$collections$IdentityMap$Entry** _36;
+frost$unsafe$NewPointer* _34;
+frost$unsafe$NewPointer _35;
+int64_t _36;
 frost$core$Int* _37;
 frost$core$Int _38;
 frost$core$Int64 _39;
@@ -88,9 +89,9 @@ int64_t _63;
 bool _64;
 frost$core$Bit _65;
 bool _66;
-frost$collections$IdentityMap$Entry*** _69;
-frost$collections$IdentityMap$Entry** _70;
-frost$collections$IdentityMap$Entry** _71;
+frost$unsafe$NewPointer* _69;
+frost$unsafe$NewPointer _70;
+int64_t _71;
 frost$core$Int* _72;
 frost$core$Int _73;
 frost$core$Int64 _74;
@@ -139,12 +140,12 @@ if (_32) goto block4; else goto block3;
 block4:;
 _34 = &param1->contents;
 _35 = *_34;
-_36 = ((frost$collections$IdentityMap$Entry**) _35);
+_36 = _35.value;
 _37 = &param0->bucket;
 _38 = *_37;
 _39 = frost$core$Int64$init$frost$core$Int(_38);
 _40 = _39.value;
-_41 = _36[_40];
+_41 = ((frost$collections$IdentityMap$Entry**)_36)[_40];
 _42 = _41 == NULL;
 _43 = (frost$core$Bit) {_42};
 _44 = _43.value;
@@ -177,12 +178,12 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:46
 _69 = &param1->contents;
 _70 = *_69;
-_71 = ((frost$collections$IdentityMap$Entry**) _70);
+_71 = _70.value;
 _72 = &param0->bucket;
 _73 = *_72;
 _74 = frost$core$Int64$init$frost$core$Int(_73);
 _75 = _74.value;
-_76 = _71[_75];
+_76 = ((frost$collections$IdentityMap$Entry**)_71)[_75];
 _77 = ((frost$core$Object*) _76);
 frost$core$Frost$ref$frost$core$Object$Q(_77);
 _79 = &param0->entry;
@@ -322,9 +323,9 @@ frost$core$Bit _102;
 bool _104;
 frost$collections$IdentityMap** _109;
 frost$collections$IdentityMap* _110;
-frost$collections$IdentityMap$Entry*** _111;
-frost$collections$IdentityMap$Entry** _112;
-frost$collections$IdentityMap$Entry** _113;
+frost$unsafe$NewPointer* _111;
+frost$unsafe$NewPointer _112;
+int64_t _113;
 frost$core$Int* _114;
 frost$core$Int _115;
 frost$core$Int64 _116;
@@ -488,12 +489,12 @@ _109 = &param0->map;
 _110 = *_109;
 _111 = &_110->contents;
 _112 = *_111;
-_113 = ((frost$collections$IdentityMap$Entry**) _112);
+_113 = _112.value;
 _114 = &param0->bucket;
 _115 = *_114;
 _116 = frost$core$Int64$init$frost$core$Int(_115);
 _117 = _116.value;
-_118 = _113[_117];
+_118 = ((frost$collections$IdentityMap$Entry**)_113)[_117];
 _119 = ((frost$core$Object*) _118);
 frost$core$Frost$ref$frost$core$Object$Q(_119);
 _121 = &param0->entry;

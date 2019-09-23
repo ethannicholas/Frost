@@ -41,7 +41,7 @@ frost$collections$HashMap** _12;
 frost$collections$HashMap* _13;
 frost$core$Object* _14;
 frost$collections$HashMap** _16;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:818
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:816
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
 _3 = &param0->m;
@@ -50,7 +50,7 @@ _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
 _7 = &param0->m;
 *_7 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:818
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:816
 _10 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_10);
 _12 = &param0->remaps;
@@ -72,7 +72,7 @@ frost$core$Object* _5;
 frost$collections$HashMap** _7;
 frost$collections$HashMap* _8;
 frost$core$Object* _9;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:818
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:816
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = &param0->m;
@@ -137,7 +137,7 @@ frost$core$Object* _62;
 frost$core$Object* _64;
 frost$core$Object* _66;
 frost$core$Object* _68;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:818
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:816
 _1 = &param0->remaps;
 _2 = *_1;
 _3 = &param0->m;
@@ -146,7 +146,7 @@ _5 = &_4->value;
 _6 = *_5;
 _7 = &_6->owner;
 _8 = *_7;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Call.frost:818:72
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Call.frost:816:72
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 // begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
@@ -190,7 +190,7 @@ _49 = (frost$core$Bit) {_48};
 _50 = _49.value;
 if (_50) goto block5; else goto block6;
 block6:;
-_52 = (frost$core$Int) {819u};
+_52 = (frost$core$Int) {817u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s6, _52, &$s7);
 abort(); // unreachable
 block5:;

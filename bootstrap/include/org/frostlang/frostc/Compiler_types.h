@@ -76,6 +76,7 @@ typedef struct org$frostlang$frostc$Compiler {
     org$frostlang$frostc$Type* STEPPED_RANGE_TYPE;
     org$frostlang$frostc$Type* WEAK_TYPE;
     org$frostlang$frostc$Type* POINTER_TYPE;
+    org$frostlang$frostc$Type* NEW_POINTER_TYPE;
     org$frostlang$frostc$Type* ARRAY_TYPE;
     org$frostlang$frostc$Type* IMMUTABLE_ARRAY_TYPE;
     org$frostlang$frostc$Type* CHOICE_DATA_TYPE;

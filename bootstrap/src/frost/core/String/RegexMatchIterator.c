@@ -208,14 +208,14 @@ _51 = &param0->matcher;
 _52 = *_51;
 _53 = *(&local1);
 // begin inline call to method frost.core.Matcher.find(start:frost.core.String.Index):frost.core.Bit from String.frost:316:34
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:86
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:84
 _56 = &_52->replacementIndex;
 *_56 = _53;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:87
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:85
 frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit(&_59, _52, _53);
 _60 = &_52->matched;
 *_60 = _59;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:88
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:86
 _63 = &_52->matched;
 _64 = *_63;
 _66 = &param0->found;

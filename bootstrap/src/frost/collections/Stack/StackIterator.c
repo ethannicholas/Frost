@@ -9,6 +9,7 @@
 #include "frost/core/Bit.h"
 #include "frost/collections/Array.h"
 #include "frost/collections/CollectionView.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Int64.h"
 
 __attribute__((weak)) frost$core$Object* frost$collections$Stack$StackIterator$next$R$frost$collections$Stack$StackIterator$T$shim(frost$collections$Stack$StackIterator* p0) {
@@ -178,32 +179,33 @@ bool _89;
 frost$core$Bit _90;
 bool _91;
 frost$core$Int _93;
-frost$core$Object*** _97;
-frost$core$Object** _98;
-frost$core$Int64 _99;
-int64_t _100;
-frost$core$Object* _101;
+frost$unsafe$NewPointer* _97;
+frost$unsafe$NewPointer _98;
+int64_t _99;
+frost$core$Int64 _100;
+int64_t _101;
 frost$core$Object* _102;
-frost$core$Object* _105;
+frost$core$Object* _103;
 frost$core$Object* _106;
-frost$core$Object* _108;
-frost$core$Object* _111;
-frost$core$Object* _113;
-frost$core$Object* _115;
+frost$core$Object* _107;
+frost$core$Object* _109;
+frost$core$Object* _112;
+frost$core$Object* _114;
 frost$core$Object* _116;
-frost$core$Object* _119;
-frost$core$Int* _122;
-frost$core$Int _123;
+frost$core$Object* _117;
+frost$core$Object* _120;
+frost$core$Int* _123;
 frost$core$Int _124;
-int64_t _125;
+frost$core$Int _125;
 int64_t _126;
 int64_t _127;
-frost$core$Int _128;
-frost$core$Int* _129;
-frost$core$Object* _132;
+int64_t _128;
+frost$core$Int _129;
+frost$core$Int* _130;
 frost$core$Object* _133;
-frost$core$Object* _135;
+frost$core$Object* _134;
 frost$core$Object* _136;
+frost$core$Object* _137;
 _0 = ((frost$collections$Iterator*) param0);
 ITable* $tmp9 = _0->$class->itable;
 while ($tmp9->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
@@ -331,45 +333,46 @@ block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _97 = &_61->data;
 _98 = *_97;
-_99 = frost$core$Int64$init$frost$core$Int(_75);
-_100 = _99.value;
-_101 = _98[_100];
-_102 = _101;
-frost$core$Frost$ref$frost$core$Object$Q(_102);
-_105 = _101;
-_106 = _105;
-frost$core$Frost$ref$frost$core$Object$Q(_106);
-_108 = _101;
-frost$core$Frost$unref$frost$core$Object$Q(_108);
-_111 = _105;
+_99 = _98.value;
+_100 = frost$core$Int64$init$frost$core$Int(_75);
+_101 = _100.value;
+_102 = ((frost$core$Object**)_99)[_101];
+_103 = _102;
+frost$core$Frost$ref$frost$core$Object$Q(_103);
+_106 = _102;
+_107 = _106;
+frost$core$Frost$ref$frost$core$Object$Q(_107);
+_109 = _102;
+frost$core$Frost$unref$frost$core$Object$Q(_109);
+_112 = _106;
 *(&local0) = ((frost$core$Object*) NULL);
-_113 = _111;
-frost$core$Frost$ref$frost$core$Object$Q(_113);
-_115 = *(&local0);
-_116 = _115;
-frost$core$Frost$unref$frost$core$Object$Q(_116);
-*(&local0) = _111;
-_119 = _105;
-frost$core$Frost$unref$frost$core$Object$Q(_119);
+_114 = _112;
+frost$core$Frost$ref$frost$core$Object$Q(_114);
+_116 = *(&local0);
+_117 = _116;
+frost$core$Frost$unref$frost$core$Object$Q(_117);
+*(&local0) = _112;
+_120 = _106;
+frost$core$Frost$unref$frost$core$Object$Q(_120);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:28
-_122 = &param0->index;
-_123 = *_122;
-_124 = (frost$core$Int) {1u};
-_125 = _123.value;
+_123 = &param0->index;
+_124 = *_123;
+_125 = (frost$core$Int) {1u};
 _126 = _124.value;
-_127 = _125 + _126;
-_128 = (frost$core$Int) {_127};
-_129 = &param0->index;
-*_129 = _128;
+_127 = _125.value;
+_128 = _126 + _127;
+_129 = (frost$core$Int) {_128};
+_130 = &param0->index;
+*_130 = _129;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:29
-_132 = *(&local0);
-_133 = _132;
-frost$core$Frost$ref$frost$core$Object$Q(_133);
-_135 = *(&local0);
-_136 = _135;
-frost$core$Frost$unref$frost$core$Object$Q(_136);
+_133 = *(&local0);
+_134 = _133;
+frost$core$Frost$ref$frost$core$Object$Q(_134);
+_136 = *(&local0);
+_137 = _136;
+frost$core$Frost$unref$frost$core$Object$Q(_137);
 *(&local0) = ((frost$core$Object*) NULL);
-return _132;
+return _133;
 
 }
 void frost$collections$Stack$StackIterator$cleanup(void* rawSelf) {

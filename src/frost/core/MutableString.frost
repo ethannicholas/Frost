@@ -1,6 +1,6 @@
 package frost.core
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 
 ---------------
 -- IMPORTANT --
@@ -51,7 +51,7 @@ class MutableString {
     constant DEFAULT_SIZE := 32
 
     @private
-    var data:Pointer<Char8>
+    var data:NewPointer<Char8>
 
     @private
     var _length:Int
@@ -70,7 +70,7 @@ class MutableString {
     init(s:String) {
         _length := s._length
         maxLength := _length + DEFAULT_SIZE
-        data := Pointer<Char8>.alloc(maxLength)
+        data := NewPointer<Char8>.alloc(maxLength)
         for i in 0 .. s._length {
             data[i] := s.data[i]
         }
@@ -79,7 +79,7 @@ class MutableString {
     init(capacity:Int) {
         _length := 0
         maxLength := capacity
-        data := Pointer<Char8>.alloc(maxLength)
+        data := NewPointer<Char8>.alloc(maxLength)
     }
 
     @override
@@ -137,7 +137,7 @@ class MutableString {
     }
 
     -- FIXME @self
-    method append(chars:Pointer<Char8>, count:Int) {
+    method append(chars:NewPointer<Char8>, count:Int) {
         ensureCapacity(_length + count)
         for i in 0 .. count {
             data[_length + i] := chars[i]
@@ -619,7 +619,7 @@ class MutableString {
     ================================================================================================
     @override
     function get_asString():String {
-        def result := Pointer<Char8>.alloc(_length)
+        def result := NewPointer<Char8>.alloc(_length)
         for i in 0 .. _length {
             result[i] := data[i]
         }

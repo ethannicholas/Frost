@@ -7,6 +7,7 @@
 #include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Int64.h"
 
 __attribute__((weak)) frost$core$Object* frost$core$String$UTF8Iterator$next$R$frost$core$Char8$shim(frost$core$String$UTF8Iterator* p0) {
@@ -103,18 +104,19 @@ frost$core$Int _21;
 frost$core$Int* _22;
 frost$core$String** _25;
 frost$core$String* _26;
-frost$core$Char8** _27;
-frost$core$Char8* _28;
-frost$core$Int* _29;
-frost$core$Int _30;
-frost$core$Int64 _31;
+frost$unsafe$NewPointer* _27;
+frost$unsafe$NewPointer _28;
+int64_t _29;
+frost$core$Int* _30;
+frost$core$Int _31;
 frost$core$Int64 _32;
-int64_t _33;
+frost$core$Int64 _33;
 int64_t _34;
 int64_t _35;
-frost$core$Int64 _36;
-int64_t _37;
-frost$core$Char8 _38;
+int64_t _36;
+frost$core$Int64 _37;
+int64_t _38;
+frost$core$Char8 _39;
 _0 = ((frost$collections$Iterator*) param0);
 ITable* $tmp4 = _0->$class->itable;
 while ($tmp4->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
@@ -149,17 +151,18 @@ _25 = &param0->str;
 _26 = *_25;
 _27 = &_26->data;
 _28 = *_27;
-_29 = &param0->index;
-_30 = *_29;
-_31 = frost$core$Int64$init$frost$core$Int(_30);
-_32 = (frost$core$Int64) {1u};
-_33 = _31.value;
+_29 = _28.value;
+_30 = &param0->index;
+_31 = *_30;
+_32 = frost$core$Int64$init$frost$core$Int(_31);
+_33 = (frost$core$Int64) {1u};
 _34 = _32.value;
-_35 = _33 - _34;
-_36 = (frost$core$Int64) {_35};
-_37 = _36.value;
-_38 = _28[_37];
-return _38;
+_35 = _33.value;
+_36 = _34 - _35;
+_37 = (frost$core$Int64) {_36};
+_38 = _37.value;
+_39 = ((frost$core$Char8*)_29)[_38];
+return _39;
 
 }
 void frost$core$String$UTF8Iterator$cleanup(void* rawSelf) {

@@ -28,16 +28,16 @@ frost$core$String$Index* _4;
 frost$core$String$Index* _7;
 org$frostlang$frostc$Position* _10;
 org$frostlang$regex$RegexToken _12;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:41
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:40
 _1 = &(&local0)->kind;
 *_1 = param0;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:42
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:41
 _4 = &(&local0)->start;
 *_4 = param1;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:43
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:42
 _7 = &(&local0)->end;
 *_7 = param2;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:44
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:43
 _10 = &(&local0)->position;
 *_10 = param3;
 _12 = *(&local0);

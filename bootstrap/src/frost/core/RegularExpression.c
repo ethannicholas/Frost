@@ -20,7 +20,7 @@ void frost$core$RegularExpression$init$frost$core$String(void* rawSelf, frost$co
 frost$core$RegularExpression* param0 = (frost$core$RegularExpression*) rawSelf;
 
 frost$core$Int _1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:15
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:13
 _1 = (frost$core$Int) {0u};
 frost$core$RegularExpression$init$frost$core$String$frost$core$Int(param0, param1, _1);
 return;
@@ -29,7 +29,7 @@ return;
 void frost$core$RegularExpression$init$frost$core$String$frost$core$Int(void* rawSelf, frost$core$String* param1, frost$core$Int param2) {
 frost$core$RegularExpression* param0 = (frost$core$RegularExpression*) rawSelf;
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:19
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:17
 frost$core$RegularExpression$compile$frost$core$String$frost$core$Int(param0, param1, param2);
 return;
 
@@ -38,9 +38,9 @@ void frost$core$RegularExpression$cleanup(void* rawSelf) {
 frost$core$RegularExpression* param0 = (frost$core$RegularExpression*) rawSelf;
 
 frost$core$Immutable* _3;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:25
 frost$core$RegularExpression$destroy(param0);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:24
 _3 = ((frost$core$Immutable*) param0);
 frost$core$Immutable$cleanup(_3);
 return;

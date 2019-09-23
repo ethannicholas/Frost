@@ -25,7 +25,6 @@ class PLex {
 
     method printWarning(out:OutputStream):Error? {
         try {
-            out.printLine("-------- UPDATED --------")
             out.printLine("-*********************************************************************-")
             out.printLine("-******************** GENERATED CODE, DO NOT EDIT ********************-")
             out.printLine("-*********************************************************************-")
@@ -141,7 +140,7 @@ class PLex {
             printWarning(out)
             out.printLine("package \{lexerName[..lastIndexOf(lexerName, ".")]}")
             out.printLine()
-            out.printLine("uses frost.unsafe.Pointer")
+            out.printLine("uses frost.unsafe.NewPointer")
             out.printLine("uses org.frostlang.plex.runtime.DFA")
             out.printLine("uses \{positionName}")
             out.printLine()
@@ -184,8 +183,8 @@ class PLex {
     method writeStateTable(dfa:DFA, out:IndentedOutputStream):Error? {
         try {
             out.printLine("@class")
-            out.printLine("function alloc(count:Int, fill:Int):Pointer<Int> {")
-            out.printLine("    def result := Pointer<Int>.alloc(count)")
+            out.printLine("function alloc(count:Int, fill:Int):NewPointer<Int> {")
+            out.printLine("    def result := NewPointer<Int>.alloc(count)")
             out.printLine("    for i in 0 .. count {")
             out.printLine("        result[i] := fill")
             out.printLine("    }")
@@ -193,9 +192,9 @@ class PLex {
             out.printLine("}")
             out.printLine()
             out.printLine("@class")
-            out.printLine("function getTransitions():Pointer<Pointer<Int>> {")
+            out.printLine("function getTransitions():NewPointer<NewPointer<Int>> {")
             out.level += 1
-            out.printLine("def result := Pointer<Pointer<Int>>.alloc(\{DFA.END_CHAR} + 1)")
+            out.printLine("def result := NewPointer<NewPointer<Int>>.alloc(\{DFA.END_CHAR} + 1)")
             def destroys := MutableString()
             outer: for i in 0 ... DFA.END_CHAR.asInt {
                 for j in 0 .. i {
@@ -237,9 +236,9 @@ class PLex {
             out.printLine("}")
             out.printLine()
             out.printLine("@class")
-            out.printLine("function getAccepts():Pointer<Int> {")
+            out.printLine("function getAccepts():NewPointer<Int> {")
             out.level += 1
-            out.printLine("def result := Pointer<Int>.alloc(\{dfa.stateCount})")
+            out.printLine("def result := NewPointer<Int>.alloc(\{dfa.stateCount})")
             for i in 0 .. dfa.stateCount {
                 out.printLine("result[\{i}] := \{dfa.accepts[i]}")
             }

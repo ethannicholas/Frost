@@ -104,7 +104,7 @@ org$frostlang$regex$RegexToken$Kind org$frostlang$regex$RegexToken$Kind$init$fro
 org$frostlang$regex$RegexToken$Kind local0;
 frost$core$Int* _1;
 org$frostlang$regex$RegexToken$Kind _3;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _1 = &(&local0)->$rawValue;
 *_1 = param0;
 _3 = *(&local0);
@@ -430,10 +430,10 @@ bool _602;
 frost$core$Bit _605;
 frost$core$Bit _608;
 frost$core$Int _612;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
@@ -442,10 +442,10 @@ _8 = (frost$core$Bit) {_7};
 _10 = _8.value;
 if (_10) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _13 = param1.$rawValue;
 _14 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _17 = _13.value;
 _18 = _14.value;
@@ -454,18 +454,18 @@ _20 = (frost$core$Bit) {_19};
 _22 = _20.value;
 if (_22) goto block6; else goto block7;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _25 = (frost$core$Bit) {true};
 return _25;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _28 = (frost$core$Bit) {false};
 return _28;
 block5:;
 goto block1;
 block3:;
 _31 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _34 = _1.value;
 _35 = _31.value;
@@ -474,10 +474,10 @@ _37 = (frost$core$Bit) {_36};
 _39 = _37.value;
 if (_39) goto block9; else goto block10;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _42 = param1.$rawValue;
 _43 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _46 = _42.value;
 _47 = _43.value;
@@ -486,18 +486,18 @@ _49 = (frost$core$Bit) {_48};
 _51 = _49.value;
 if (_51) goto block13; else goto block14;
 block13:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _54 = (frost$core$Bit) {true};
 return _54;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _57 = (frost$core$Bit) {false};
 return _57;
 block12:;
 goto block1;
 block10:;
 _60 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _63 = _1.value;
 _64 = _60.value;
@@ -506,10 +506,10 @@ _66 = (frost$core$Bit) {_65};
 _68 = _66.value;
 if (_68) goto block16; else goto block17;
 block16:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _71 = param1.$rawValue;
 _72 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _75 = _71.value;
 _76 = _72.value;
@@ -518,18 +518,18 @@ _78 = (frost$core$Bit) {_77};
 _80 = _78.value;
 if (_80) goto block20; else goto block21;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _83 = (frost$core$Bit) {true};
 return _83;
 block21:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _86 = (frost$core$Bit) {false};
 return _86;
 block19:;
 goto block1;
 block17:;
 _89 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _92 = _1.value;
 _93 = _89.value;
@@ -538,10 +538,10 @@ _95 = (frost$core$Bit) {_94};
 _97 = _95.value;
 if (_97) goto block23; else goto block24;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _100 = param1.$rawValue;
 _101 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _104 = _100.value;
 _105 = _101.value;
@@ -550,18 +550,18 @@ _107 = (frost$core$Bit) {_106};
 _109 = _107.value;
 if (_109) goto block27; else goto block28;
 block27:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _112 = (frost$core$Bit) {true};
 return _112;
 block28:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _115 = (frost$core$Bit) {false};
 return _115;
 block26:;
 goto block1;
 block24:;
 _118 = (frost$core$Int) {4u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _121 = _1.value;
 _122 = _118.value;
@@ -570,10 +570,10 @@ _124 = (frost$core$Bit) {_123};
 _126 = _124.value;
 if (_126) goto block30; else goto block31;
 block30:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _129 = param1.$rawValue;
 _130 = (frost$core$Int) {4u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _133 = _129.value;
 _134 = _130.value;
@@ -582,18 +582,18 @@ _136 = (frost$core$Bit) {_135};
 _138 = _136.value;
 if (_138) goto block34; else goto block35;
 block34:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _141 = (frost$core$Bit) {true};
 return _141;
 block35:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _144 = (frost$core$Bit) {false};
 return _144;
 block33:;
 goto block1;
 block31:;
 _147 = (frost$core$Int) {5u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _150 = _1.value;
 _151 = _147.value;
@@ -602,10 +602,10 @@ _153 = (frost$core$Bit) {_152};
 _155 = _153.value;
 if (_155) goto block37; else goto block38;
 block37:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _158 = param1.$rawValue;
 _159 = (frost$core$Int) {5u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _162 = _158.value;
 _163 = _159.value;
@@ -614,18 +614,18 @@ _165 = (frost$core$Bit) {_164};
 _167 = _165.value;
 if (_167) goto block41; else goto block42;
 block41:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _170 = (frost$core$Bit) {true};
 return _170;
 block42:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _173 = (frost$core$Bit) {false};
 return _173;
 block40:;
 goto block1;
 block38:;
 _176 = (frost$core$Int) {6u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _179 = _1.value;
 _180 = _176.value;
@@ -634,10 +634,10 @@ _182 = (frost$core$Bit) {_181};
 _184 = _182.value;
 if (_184) goto block44; else goto block45;
 block44:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _187 = param1.$rawValue;
 _188 = (frost$core$Int) {6u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _191 = _187.value;
 _192 = _188.value;
@@ -646,18 +646,18 @@ _194 = (frost$core$Bit) {_193};
 _196 = _194.value;
 if (_196) goto block48; else goto block49;
 block48:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _199 = (frost$core$Bit) {true};
 return _199;
 block49:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _202 = (frost$core$Bit) {false};
 return _202;
 block47:;
 goto block1;
 block45:;
 _205 = (frost$core$Int) {7u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _208 = _1.value;
 _209 = _205.value;
@@ -666,10 +666,10 @@ _211 = (frost$core$Bit) {_210};
 _213 = _211.value;
 if (_213) goto block51; else goto block52;
 block51:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _216 = param1.$rawValue;
 _217 = (frost$core$Int) {7u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _220 = _216.value;
 _221 = _217.value;
@@ -678,18 +678,18 @@ _223 = (frost$core$Bit) {_222};
 _225 = _223.value;
 if (_225) goto block55; else goto block56;
 block55:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _228 = (frost$core$Bit) {true};
 return _228;
 block56:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _231 = (frost$core$Bit) {false};
 return _231;
 block54:;
 goto block1;
 block52:;
 _234 = (frost$core$Int) {8u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _237 = _1.value;
 _238 = _234.value;
@@ -698,10 +698,10 @@ _240 = (frost$core$Bit) {_239};
 _242 = _240.value;
 if (_242) goto block58; else goto block59;
 block58:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _245 = param1.$rawValue;
 _246 = (frost$core$Int) {8u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _249 = _245.value;
 _250 = _246.value;
@@ -710,18 +710,18 @@ _252 = (frost$core$Bit) {_251};
 _254 = _252.value;
 if (_254) goto block62; else goto block63;
 block62:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _257 = (frost$core$Bit) {true};
 return _257;
 block63:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _260 = (frost$core$Bit) {false};
 return _260;
 block61:;
 goto block1;
 block59:;
 _263 = (frost$core$Int) {9u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _266 = _1.value;
 _267 = _263.value;
@@ -730,10 +730,10 @@ _269 = (frost$core$Bit) {_268};
 _271 = _269.value;
 if (_271) goto block65; else goto block66;
 block65:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _274 = param1.$rawValue;
 _275 = (frost$core$Int) {9u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _278 = _274.value;
 _279 = _275.value;
@@ -742,18 +742,18 @@ _281 = (frost$core$Bit) {_280};
 _283 = _281.value;
 if (_283) goto block69; else goto block70;
 block69:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _286 = (frost$core$Bit) {true};
 return _286;
 block70:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _289 = (frost$core$Bit) {false};
 return _289;
 block68:;
 goto block1;
 block66:;
 _292 = (frost$core$Int) {10u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _295 = _1.value;
 _296 = _292.value;
@@ -762,10 +762,10 @@ _298 = (frost$core$Bit) {_297};
 _300 = _298.value;
 if (_300) goto block72; else goto block73;
 block72:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _303 = param1.$rawValue;
 _304 = (frost$core$Int) {10u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _307 = _303.value;
 _308 = _304.value;
@@ -774,18 +774,18 @@ _310 = (frost$core$Bit) {_309};
 _312 = _310.value;
 if (_312) goto block76; else goto block77;
 block76:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _315 = (frost$core$Bit) {true};
 return _315;
 block77:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _318 = (frost$core$Bit) {false};
 return _318;
 block75:;
 goto block1;
 block73:;
 _321 = (frost$core$Int) {11u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _324 = _1.value;
 _325 = _321.value;
@@ -794,10 +794,10 @@ _327 = (frost$core$Bit) {_326};
 _329 = _327.value;
 if (_329) goto block79; else goto block80;
 block79:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _332 = param1.$rawValue;
 _333 = (frost$core$Int) {11u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _336 = _332.value;
 _337 = _333.value;
@@ -806,18 +806,18 @@ _339 = (frost$core$Bit) {_338};
 _341 = _339.value;
 if (_341) goto block83; else goto block84;
 block83:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _344 = (frost$core$Bit) {true};
 return _344;
 block84:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _347 = (frost$core$Bit) {false};
 return _347;
 block82:;
 goto block1;
 block80:;
 _350 = (frost$core$Int) {12u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _353 = _1.value;
 _354 = _350.value;
@@ -826,10 +826,10 @@ _356 = (frost$core$Bit) {_355};
 _358 = _356.value;
 if (_358) goto block86; else goto block87;
 block86:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _361 = param1.$rawValue;
 _362 = (frost$core$Int) {12u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _365 = _361.value;
 _366 = _362.value;
@@ -838,18 +838,18 @@ _368 = (frost$core$Bit) {_367};
 _370 = _368.value;
 if (_370) goto block90; else goto block91;
 block90:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _373 = (frost$core$Bit) {true};
 return _373;
 block91:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _376 = (frost$core$Bit) {false};
 return _376;
 block89:;
 goto block1;
 block87:;
 _379 = (frost$core$Int) {13u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _382 = _1.value;
 _383 = _379.value;
@@ -858,10 +858,10 @@ _385 = (frost$core$Bit) {_384};
 _387 = _385.value;
 if (_387) goto block93; else goto block94;
 block93:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _390 = param1.$rawValue;
 _391 = (frost$core$Int) {13u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _394 = _390.value;
 _395 = _391.value;
@@ -870,18 +870,18 @@ _397 = (frost$core$Bit) {_396};
 _399 = _397.value;
 if (_399) goto block97; else goto block98;
 block97:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _402 = (frost$core$Bit) {true};
 return _402;
 block98:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _405 = (frost$core$Bit) {false};
 return _405;
 block96:;
 goto block1;
 block94:;
 _408 = (frost$core$Int) {14u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _411 = _1.value;
 _412 = _408.value;
@@ -890,10 +890,10 @@ _414 = (frost$core$Bit) {_413};
 _416 = _414.value;
 if (_416) goto block100; else goto block101;
 block100:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _419 = param1.$rawValue;
 _420 = (frost$core$Int) {14u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _423 = _419.value;
 _424 = _420.value;
@@ -902,18 +902,18 @@ _426 = (frost$core$Bit) {_425};
 _428 = _426.value;
 if (_428) goto block104; else goto block105;
 block104:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _431 = (frost$core$Bit) {true};
 return _431;
 block105:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _434 = (frost$core$Bit) {false};
 return _434;
 block103:;
 goto block1;
 block101:;
 _437 = (frost$core$Int) {15u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _440 = _1.value;
 _441 = _437.value;
@@ -922,10 +922,10 @@ _443 = (frost$core$Bit) {_442};
 _445 = _443.value;
 if (_445) goto block107; else goto block108;
 block107:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _448 = param1.$rawValue;
 _449 = (frost$core$Int) {15u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _452 = _448.value;
 _453 = _449.value;
@@ -934,18 +934,18 @@ _455 = (frost$core$Bit) {_454};
 _457 = _455.value;
 if (_457) goto block111; else goto block112;
 block111:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _460 = (frost$core$Bit) {true};
 return _460;
 block112:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _463 = (frost$core$Bit) {false};
 return _463;
 block110:;
 goto block1;
 block108:;
 _466 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _469 = _1.value;
 _470 = _466.value;
@@ -954,10 +954,10 @@ _472 = (frost$core$Bit) {_471};
 _474 = _472.value;
 if (_474) goto block114; else goto block115;
 block114:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _477 = param1.$rawValue;
 _478 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _481 = _477.value;
 _482 = _478.value;
@@ -966,18 +966,18 @@ _484 = (frost$core$Bit) {_483};
 _486 = _484.value;
 if (_486) goto block118; else goto block119;
 block118:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _489 = (frost$core$Bit) {true};
 return _489;
 block119:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _492 = (frost$core$Bit) {false};
 return _492;
 block117:;
 goto block1;
 block115:;
 _495 = (frost$core$Int) {17u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _498 = _1.value;
 _499 = _495.value;
@@ -986,10 +986,10 @@ _501 = (frost$core$Bit) {_500};
 _503 = _501.value;
 if (_503) goto block121; else goto block122;
 block121:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _506 = param1.$rawValue;
 _507 = (frost$core$Int) {17u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _510 = _506.value;
 _511 = _507.value;
@@ -998,18 +998,18 @@ _513 = (frost$core$Bit) {_512};
 _515 = _513.value;
 if (_515) goto block125; else goto block126;
 block125:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _518 = (frost$core$Bit) {true};
 return _518;
 block126:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _521 = (frost$core$Bit) {false};
 return _521;
 block124:;
 goto block1;
 block122:;
 _524 = (frost$core$Int) {18u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _527 = _1.value;
 _528 = _524.value;
@@ -1018,10 +1018,10 @@ _530 = (frost$core$Bit) {_529};
 _532 = _530.value;
 if (_532) goto block128; else goto block129;
 block128:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _535 = param1.$rawValue;
 _536 = (frost$core$Int) {18u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _539 = _535.value;
 _540 = _536.value;
@@ -1030,18 +1030,18 @@ _542 = (frost$core$Bit) {_541};
 _544 = _542.value;
 if (_544) goto block132; else goto block133;
 block132:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _547 = (frost$core$Bit) {true};
 return _547;
 block133:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _550 = (frost$core$Bit) {false};
 return _550;
 block131:;
 goto block1;
 block129:;
 _553 = (frost$core$Int) {19u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _556 = _1.value;
 _557 = _553.value;
@@ -1050,10 +1050,10 @@ _559 = (frost$core$Bit) {_558};
 _561 = _559.value;
 if (_561) goto block135; else goto block136;
 block135:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _564 = param1.$rawValue;
 _565 = (frost$core$Int) {19u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _568 = _564.value;
 _569 = _565.value;
@@ -1062,18 +1062,18 @@ _571 = (frost$core$Bit) {_570};
 _573 = _571.value;
 if (_573) goto block139; else goto block140;
 block139:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _576 = (frost$core$Bit) {true};
 return _576;
 block140:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _579 = (frost$core$Bit) {false};
 return _579;
 block138:;
 goto block1;
 block136:;
 _582 = (frost$core$Int) {20u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _585 = _1.value;
 _586 = _582.value;
@@ -1082,10 +1082,10 @@ _588 = (frost$core$Bit) {_587};
 _590 = _588.value;
 if (_590) goto block142; else goto block143;
 block142:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _593 = param1.$rawValue;
 _594 = (frost$core$Int) {20u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _597 = _593.value;
 _598 = _594.value;
@@ -1094,18 +1094,18 @@ _600 = (frost$core$Bit) {_599};
 _602 = _600.value;
 if (_602) goto block146; else goto block147;
 block146:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _605 = (frost$core$Bit) {true};
 return _605;
 block147:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _608 = (frost$core$Bit) {false};
 return _608;
 block145:;
 goto block1;
 block143:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-_612 = (frost$core$Int) {11u};
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
+_612 = (frost$core$Int) {10u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s3, _612);
 abort(); // unreachable
 block1:;
@@ -1264,10 +1264,10 @@ frost$core$Bit _268;
 bool _270;
 frost$core$Int _273;
 frost$core$Int _276;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
@@ -1276,12 +1276,12 @@ _8 = (frost$core$Bit) {_7};
 _10 = _8.value;
 if (_10) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _13 = (frost$core$Int) {6868033597648981514u};
 return _13;
 block3:;
 _15 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _18 = _1.value;
 _19 = _15.value;
@@ -1290,12 +1290,12 @@ _21 = (frost$core$Bit) {_20};
 _23 = _21.value;
 if (_23) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _26 = (frost$core$Int) {13736067195297963028u};
 return _26;
 block6:;
 _28 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _31 = _1.value;
 _32 = _28.value;
@@ -1304,12 +1304,12 @@ _34 = (frost$core$Bit) {_33};
 _36 = _34.value;
 if (_36) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _39 = (frost$core$Int) {2157356719237392926u};
 return _39;
 block9:;
 _41 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _44 = _1.value;
 _45 = _41.value;
@@ -1318,12 +1318,12 @@ _47 = (frost$core$Bit) {_46};
 _49 = _47.value;
 if (_49) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _52 = (frost$core$Int) {9025390316886374440u};
 return _52;
 block12:;
 _54 = (frost$core$Int) {4u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _57 = _1.value;
 _58 = _54.value;
@@ -1332,12 +1332,12 @@ _60 = (frost$core$Bit) {_59};
 _62 = _60.value;
 if (_62) goto block14; else goto block15;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _65 = (frost$core$Int) {15893423914535355954u};
 return _65;
 block15:;
 _67 = (frost$core$Int) {5u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _70 = _1.value;
 _71 = _67.value;
@@ -1346,12 +1346,12 @@ _73 = (frost$core$Bit) {_72};
 _75 = _73.value;
 if (_75) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _78 = (frost$core$Int) {4314713438474785852u};
 return _78;
 block18:;
 _80 = (frost$core$Int) {6u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _83 = _1.value;
 _84 = _80.value;
@@ -1360,12 +1360,12 @@ _86 = (frost$core$Bit) {_85};
 _88 = _86.value;
 if (_88) goto block20; else goto block21;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _91 = (frost$core$Int) {11182747036123767366u};
 return _91;
 block21:;
 _93 = (frost$core$Int) {7u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _96 = _1.value;
 _97 = _93.value;
@@ -1374,12 +1374,12 @@ _99 = (frost$core$Bit) {_98};
 _101 = _99.value;
 if (_101) goto block23; else goto block24;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _104 = (frost$core$Int) {18050780633772748880u};
 return _104;
 block24:;
 _106 = (frost$core$Int) {8u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _109 = _1.value;
 _110 = _106.value;
@@ -1388,12 +1388,12 @@ _112 = (frost$core$Bit) {_111};
 _114 = _112.value;
 if (_114) goto block26; else goto block27;
 block26:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _117 = (frost$core$Int) {6472070157712178778u};
 return _117;
 block27:;
 _119 = (frost$core$Int) {9u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _122 = _1.value;
 _123 = _119.value;
@@ -1402,12 +1402,12 @@ _125 = (frost$core$Bit) {_124};
 _127 = _125.value;
 if (_127) goto block29; else goto block30;
 block29:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _130 = (frost$core$Int) {13340103755361160292u};
 return _130;
 block30:;
 _132 = (frost$core$Int) {10u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _135 = _1.value;
 _136 = _132.value;
@@ -1416,12 +1416,12 @@ _138 = (frost$core$Bit) {_137};
 _140 = _138.value;
 if (_140) goto block32; else goto block33;
 block32:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _143 = (frost$core$Int) {1761393279300590190u};
 return _143;
 block33:;
 _145 = (frost$core$Int) {11u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _148 = _1.value;
 _149 = _145.value;
@@ -1430,12 +1430,12 @@ _151 = (frost$core$Bit) {_150};
 _153 = _151.value;
 if (_153) goto block35; else goto block36;
 block35:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _156 = (frost$core$Int) {8629426876949571704u};
 return _156;
 block36:;
 _158 = (frost$core$Int) {12u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _161 = _1.value;
 _162 = _158.value;
@@ -1444,12 +1444,12 @@ _164 = (frost$core$Bit) {_163};
 _166 = _164.value;
 if (_166) goto block38; else goto block39;
 block38:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _169 = (frost$core$Int) {15497460474598553218u};
 return _169;
 block39:;
 _171 = (frost$core$Int) {13u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _174 = _1.value;
 _175 = _171.value;
@@ -1458,12 +1458,12 @@ _177 = (frost$core$Bit) {_176};
 _179 = _177.value;
 if (_179) goto block41; else goto block42;
 block41:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _182 = (frost$core$Int) {3918749998537983116u};
 return _182;
 block42:;
 _184 = (frost$core$Int) {14u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _187 = _1.value;
 _188 = _184.value;
@@ -1472,12 +1472,12 @@ _190 = (frost$core$Bit) {_189};
 _192 = _190.value;
 if (_192) goto block44; else goto block45;
 block44:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _195 = (frost$core$Int) {10786783596186964630u};
 return _195;
 block45:;
 _197 = (frost$core$Int) {15u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _200 = _1.value;
 _201 = _197.value;
@@ -1486,12 +1486,12 @@ _203 = (frost$core$Bit) {_202};
 _205 = _203.value;
 if (_205) goto block47; else goto block48;
 block47:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _208 = (frost$core$Int) {17654817193835946144u};
 return _208;
 block48:;
 _210 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _213 = _1.value;
 _214 = _210.value;
@@ -1500,12 +1500,12 @@ _216 = (frost$core$Bit) {_215};
 _218 = _216.value;
 if (_218) goto block50; else goto block51;
 block50:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _221 = (frost$core$Int) {6076106717775376042u};
 return _221;
 block51:;
 _223 = (frost$core$Int) {17u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _226 = _1.value;
 _227 = _223.value;
@@ -1514,12 +1514,12 @@ _229 = (frost$core$Bit) {_228};
 _231 = _229.value;
 if (_231) goto block53; else goto block54;
 block53:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _234 = (frost$core$Int) {12944140315424357556u};
 return _234;
 block54:;
 _236 = (frost$core$Int) {18u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _239 = _1.value;
 _240 = _236.value;
@@ -1528,12 +1528,12 @@ _242 = (frost$core$Bit) {_241};
 _244 = _242.value;
 if (_244) goto block56; else goto block57;
 block56:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _247 = (frost$core$Int) {1365429839363787454u};
 return _247;
 block57:;
 _249 = (frost$core$Int) {19u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _252 = _1.value;
 _253 = _249.value;
@@ -1542,12 +1542,12 @@ _255 = (frost$core$Bit) {_254};
 _257 = _255.value;
 if (_257) goto block59; else goto block60;
 block59:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _260 = (frost$core$Int) {8233463437012768968u};
 return _260;
 block60:;
 _262 = (frost$core$Int) {20u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _265 = _1.value;
 _266 = _262.value;
@@ -1556,12 +1556,12 @@ _268 = (frost$core$Bit) {_267};
 _270 = _268.value;
 if (_270) goto block62; else goto block63;
 block62:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _273 = (frost$core$Int) {15101497034661750482u};
 return _273;
 block63:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-_276 = (frost$core$Int) {11u};
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
+_276 = (frost$core$Int) {10u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s4, _276);
 abort(); // unreachable
 block1:;
@@ -1720,10 +1720,10 @@ frost$core$Bit _288;
 bool _290;
 frost$core$Object* _293;
 frost$core$Int _297;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
@@ -1732,13 +1732,13 @@ _8 = (frost$core$Bit) {_7};
 _10 = _8.value;
 if (_10) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _13 = ((frost$core$Object*) &$s5);
 frost$core$Frost$ref$frost$core$Object$Q(_13);
 return &$s6;
 block3:;
 _16 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _19 = _1.value;
 _20 = _16.value;
@@ -1747,13 +1747,13 @@ _22 = (frost$core$Bit) {_21};
 _24 = _22.value;
 if (_24) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _27 = ((frost$core$Object*) &$s7);
 frost$core$Frost$ref$frost$core$Object$Q(_27);
 return &$s8;
 block6:;
 _30 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _33 = _1.value;
 _34 = _30.value;
@@ -1762,13 +1762,13 @@ _36 = (frost$core$Bit) {_35};
 _38 = _36.value;
 if (_38) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _41 = ((frost$core$Object*) &$s9);
 frost$core$Frost$ref$frost$core$Object$Q(_41);
 return &$s10;
 block9:;
 _44 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _47 = _1.value;
 _48 = _44.value;
@@ -1777,13 +1777,13 @@ _50 = (frost$core$Bit) {_49};
 _52 = _50.value;
 if (_52) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _55 = ((frost$core$Object*) &$s11);
 frost$core$Frost$ref$frost$core$Object$Q(_55);
 return &$s12;
 block12:;
 _58 = (frost$core$Int) {4u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _61 = _1.value;
 _62 = _58.value;
@@ -1792,13 +1792,13 @@ _64 = (frost$core$Bit) {_63};
 _66 = _64.value;
 if (_66) goto block14; else goto block15;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _69 = ((frost$core$Object*) &$s13);
 frost$core$Frost$ref$frost$core$Object$Q(_69);
 return &$s14;
 block15:;
 _72 = (frost$core$Int) {5u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _75 = _1.value;
 _76 = _72.value;
@@ -1807,13 +1807,13 @@ _78 = (frost$core$Bit) {_77};
 _80 = _78.value;
 if (_80) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _83 = ((frost$core$Object*) &$s15);
 frost$core$Frost$ref$frost$core$Object$Q(_83);
 return &$s16;
 block18:;
 _86 = (frost$core$Int) {6u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _89 = _1.value;
 _90 = _86.value;
@@ -1822,13 +1822,13 @@ _92 = (frost$core$Bit) {_91};
 _94 = _92.value;
 if (_94) goto block20; else goto block21;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _97 = ((frost$core$Object*) &$s17);
 frost$core$Frost$ref$frost$core$Object$Q(_97);
 return &$s18;
 block21:;
 _100 = (frost$core$Int) {7u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _103 = _1.value;
 _104 = _100.value;
@@ -1837,13 +1837,13 @@ _106 = (frost$core$Bit) {_105};
 _108 = _106.value;
 if (_108) goto block23; else goto block24;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _111 = ((frost$core$Object*) &$s19);
 frost$core$Frost$ref$frost$core$Object$Q(_111);
 return &$s20;
 block24:;
 _114 = (frost$core$Int) {8u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _117 = _1.value;
 _118 = _114.value;
@@ -1852,13 +1852,13 @@ _120 = (frost$core$Bit) {_119};
 _122 = _120.value;
 if (_122) goto block26; else goto block27;
 block26:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _125 = ((frost$core$Object*) &$s21);
 frost$core$Frost$ref$frost$core$Object$Q(_125);
 return &$s22;
 block27:;
 _128 = (frost$core$Int) {9u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _131 = _1.value;
 _132 = _128.value;
@@ -1867,13 +1867,13 @@ _134 = (frost$core$Bit) {_133};
 _136 = _134.value;
 if (_136) goto block29; else goto block30;
 block29:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _139 = ((frost$core$Object*) &$s23);
 frost$core$Frost$ref$frost$core$Object$Q(_139);
 return &$s24;
 block30:;
 _142 = (frost$core$Int) {10u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _145 = _1.value;
 _146 = _142.value;
@@ -1882,13 +1882,13 @@ _148 = (frost$core$Bit) {_147};
 _150 = _148.value;
 if (_150) goto block32; else goto block33;
 block32:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _153 = ((frost$core$Object*) &$s25);
 frost$core$Frost$ref$frost$core$Object$Q(_153);
 return &$s26;
 block33:;
 _156 = (frost$core$Int) {11u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _159 = _1.value;
 _160 = _156.value;
@@ -1897,13 +1897,13 @@ _162 = (frost$core$Bit) {_161};
 _164 = _162.value;
 if (_164) goto block35; else goto block36;
 block35:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _167 = ((frost$core$Object*) &$s27);
 frost$core$Frost$ref$frost$core$Object$Q(_167);
 return &$s28;
 block36:;
 _170 = (frost$core$Int) {12u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _173 = _1.value;
 _174 = _170.value;
@@ -1912,13 +1912,13 @@ _176 = (frost$core$Bit) {_175};
 _178 = _176.value;
 if (_178) goto block38; else goto block39;
 block38:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _181 = ((frost$core$Object*) &$s29);
 frost$core$Frost$ref$frost$core$Object$Q(_181);
 return &$s30;
 block39:;
 _184 = (frost$core$Int) {13u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _187 = _1.value;
 _188 = _184.value;
@@ -1927,13 +1927,13 @@ _190 = (frost$core$Bit) {_189};
 _192 = _190.value;
 if (_192) goto block41; else goto block42;
 block41:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _195 = ((frost$core$Object*) &$s31);
 frost$core$Frost$ref$frost$core$Object$Q(_195);
 return &$s32;
 block42:;
 _198 = (frost$core$Int) {14u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _201 = _1.value;
 _202 = _198.value;
@@ -1942,13 +1942,13 @@ _204 = (frost$core$Bit) {_203};
 _206 = _204.value;
 if (_206) goto block44; else goto block45;
 block44:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _209 = ((frost$core$Object*) &$s33);
 frost$core$Frost$ref$frost$core$Object$Q(_209);
 return &$s34;
 block45:;
 _212 = (frost$core$Int) {15u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _215 = _1.value;
 _216 = _212.value;
@@ -1957,13 +1957,13 @@ _218 = (frost$core$Bit) {_217};
 _220 = _218.value;
 if (_220) goto block47; else goto block48;
 block47:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _223 = ((frost$core$Object*) &$s35);
 frost$core$Frost$ref$frost$core$Object$Q(_223);
 return &$s36;
 block48:;
 _226 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _229 = _1.value;
 _230 = _226.value;
@@ -1972,13 +1972,13 @@ _232 = (frost$core$Bit) {_231};
 _234 = _232.value;
 if (_234) goto block50; else goto block51;
 block50:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _237 = ((frost$core$Object*) &$s37);
 frost$core$Frost$ref$frost$core$Object$Q(_237);
 return &$s38;
 block51:;
 _240 = (frost$core$Int) {17u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _243 = _1.value;
 _244 = _240.value;
@@ -1987,13 +1987,13 @@ _246 = (frost$core$Bit) {_245};
 _248 = _246.value;
 if (_248) goto block53; else goto block54;
 block53:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _251 = ((frost$core$Object*) &$s39);
 frost$core$Frost$ref$frost$core$Object$Q(_251);
 return &$s40;
 block54:;
 _254 = (frost$core$Int) {18u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _257 = _1.value;
 _258 = _254.value;
@@ -2002,13 +2002,13 @@ _260 = (frost$core$Bit) {_259};
 _262 = _260.value;
 if (_262) goto block56; else goto block57;
 block56:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _265 = ((frost$core$Object*) &$s41);
 frost$core$Frost$ref$frost$core$Object$Q(_265);
 return &$s42;
 block57:;
 _268 = (frost$core$Int) {19u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _271 = _1.value;
 _272 = _268.value;
@@ -2017,13 +2017,13 @@ _274 = (frost$core$Bit) {_273};
 _276 = _274.value;
 if (_276) goto block59; else goto block60;
 block59:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _279 = ((frost$core$Object*) &$s43);
 frost$core$Frost$ref$frost$core$Object$Q(_279);
 return &$s44;
 block60:;
 _282 = (frost$core$Int) {20u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:11:5
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexToken.frost:10:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _285 = _1.value;
 _286 = _282.value;
@@ -2032,13 +2032,13 @@ _288 = (frost$core$Bit) {_287};
 _290 = _288.value;
 if (_290) goto block62; else goto block63;
 block62:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
 _293 = ((frost$core$Object*) &$s45);
 frost$core$Frost$ref$frost$core$Object$Q(_293);
 return &$s46;
 block63:;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-_297 = (frost$core$Int) {11u};
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:10
+_297 = (frost$core$Int) {10u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s47, _297);
 abort(); // unreachable
 block1:;

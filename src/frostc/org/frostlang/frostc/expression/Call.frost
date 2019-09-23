@@ -336,13 +336,6 @@ class Call {
             return Pair<Bit, IR.Value?>(false, null)
         }
         match m.value.name {
-            when "convertTo" {
-                def target := compiler.extractBuiltinInt(position, rawTarget)
-                assert target !== null
-                def result := ir.add(IR.Statement.CAST(position, target, m.returnType,
-                        false))
-                return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.returnType))
-            }
             when "get" {
                 def target := compiler.extractBuiltinInt(position, rawTarget)
                 assert target !== null
@@ -395,6 +388,11 @@ class Call {
                             pointerType))
                 }
                 return Pair<Bit, IR.Value?>(true, null)
+            }
+            when "convertTo" {
+                def result := ir.add(IR.Statement.CAST(position, rawTarget, m.returnType,
+                        false))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.returnType))
             }
             when "clear" {
                 def target := compiler.extractBuiltinInt(position, rawTarget)
@@ -1153,7 +1151,7 @@ class Call {
                 assert inits !== null, "no init for \{cl.name}"
                 if compiler.isValue(cl) {
                     def call := compile(compiler, position, compiler.symbolRef(position, null,
-                            inits), args, type)
+                            inits), args, Compiler.TypeContext.UNSPECIFIED)
                     if call == null {
                         return null
                     }

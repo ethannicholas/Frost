@@ -384,6 +384,7 @@ add_library(c_frost
     bootstrap/src/frost/threads/Notifier.c
     bootstrap/src/frost/threads/MessageQueue/Message.c
     bootstrap/src/frost/threads/Lock.c
+    bootstrap/src/frost/unsafe/NewPointer.c
     bootstrap/src/frost/unsafe/UnsafeMessageQueue.c
     bootstrap/src/frost/unsafe/UnsafeMessageQueue/Message.c
     bootstrap/src/frost/collections/ImmutableArray/ImmutableArrayIterator.c
@@ -921,9 +922,9 @@ add_library(frost
 
 add_custom_command(
     OUTPUT writeNumbers
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeNumbers
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -o writeNumbers
             ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteNumbers.frost
-    DEPENDS bootstrap src/tools/WriteNumbers.frost
+    DEPENDS frostc src/tools/WriteNumbers.frost
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -943,9 +944,9 @@ add_custom_command(
 
 add_custom_command(
     OUTPUT writeTuples
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeTuples
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -o writeTuples
             ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteTuples.frost
-    DEPENDS bootstrap src/tools/WriteTuples.frost
+    DEPENDS frostc src/tools/WriteTuples.frost
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -1002,7 +1003,7 @@ add_custom_command(
 
 add_custom_command(
     OUTPUT writeOperators
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeOperators
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -o writeOperators
             ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.frost
     DEPENDS src/tools/WriteOperators.frost frostc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}

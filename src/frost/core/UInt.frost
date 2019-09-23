@@ -4,7 +4,7 @@
 
 package frost.core
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 
 ===
 A 32-bit unsigned integer.
@@ -994,7 +994,7 @@ class UInt : Value, HashKey<UInt>, Comparable<UInt>, Formattable, ListView<Bit> 
     @override
     function get_asString():String {
         constant max := 20
-        def chars := Pointer<Char8>.alloc(max)
+        def chars := NewPointer<Char8>.alloc(max)
         var index := max - 1
         var value := self
         if value >= 0 {

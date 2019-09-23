@@ -1,6 +1,6 @@
 package frost.collections
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 
 ====================================================================================================
 A random-access `CollectionView` with numbered elements. Each entry has an index, ranging from `0`
@@ -224,7 +224,7 @@ interface ListView<T> : CollectionView<T> {
             max += 1
         }
         def count := max - r.min
-        def result := Pointer<T>.alloc(count)
+        def result := NewPointer<T>.alloc(count)
         for i in 0 .. count {
             result[i] := self[r.min + i]
         }

@@ -37,7 +37,7 @@ org$frostlang$frostc$CCodeGenerator* _4;
 frost$core$Object* _5;
 org$frostlang$frostc$CCodeGenerator** _7;
 org$frostlang$frostc$IR$Statement$ID* _10;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1550
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1576
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
 _3 = &param0->$self;
@@ -46,7 +46,7 @@ _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
 _7 = &param0->$self;
 *_7 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1550
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1576
 _10 = &param0->id;
 *_10 = param2;
 return;
@@ -59,7 +59,7 @@ frost$core$Object* _1;
 org$frostlang$frostc$CCodeGenerator** _3;
 org$frostlang$frostc$CCodeGenerator* _4;
 frost$core$Object* _5;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1550
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1576
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = &param0->$self;
@@ -121,15 +121,15 @@ frost$core$Object* _79;
 frost$core$Object* _81;
 frost$core$Error* _88;
 frost$core$Object* _89;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1551
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1577
 *(&local0) = ((frost$core$Error*) NULL);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1552
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1578
 _3 = &param0->$self;
 _4 = *_3;
 _5 = &_4->out;
 _6 = *_5;
 _7 = ((frost$io$OutputStream*) _6);
-// begin inline call to function frost.core.String.get_asString():frost.core.String from CCodeGenerator.frost:1552:39
+// begin inline call to function frost.core.String.get_asString():frost.core.String from CCodeGenerator.frost:1578:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 _10 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_10);
@@ -138,14 +138,14 @@ _14 = &param0->$self;
 _15 = *_14;
 _16 = &param0->id;
 _17 = *_16;
-// begin inline call to function org.frostlang.frostc.CCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from CCodeGenerator.frost:1552:56
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:920
+// begin inline call to function org.frostlang.frostc.CCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from CCodeGenerator.frost:1578:56
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:926
 _20 = _17.value;
 frost$core$Int$wrapper* $tmp5;
 $tmp5 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp5->value = _20;
 _21 = ((frost$core$Object*) $tmp5);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from CCodeGenerator.frost:920:20
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from CCodeGenerator.frost:926:20
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _24 = ($fn6) _21->$class->vtable[0];
 _25 = _24(_21);
@@ -176,7 +176,7 @@ _50 = (frost$core$Bit) {_49};
 _51 = _50.value;
 if (_51) goto block8; else goto block9;
 block9:;
-_53 = (frost$core$Int) {1552u};
+_53 = (frost$core$Int) {1578u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s10, _53, &$s11);
 abort(); // unreachable
 block8:;
@@ -194,8 +194,8 @@ _66 = ((frost$core$Object*) _13);
 frost$core$Frost$unref$frost$core$Object$Q(_66);
 _68 = ((frost$core$Object*) param1);
 frost$core$Frost$unref$frost$core$Object$Q(_68);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1555
-_85 = (frost$core$Int) {1555u};
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:1581
+_85 = (frost$core$Int) {1581u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s12, _85);
 abort(); // unreachable
 block6:;

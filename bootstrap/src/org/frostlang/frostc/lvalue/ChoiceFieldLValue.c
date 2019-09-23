@@ -18,6 +18,7 @@
 #include "frost/core/Frost.h"
 #include "frost/collections/Array.h"
 #include "frost/collections/CollectionView.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Int64.h"
 #include "org/frostlang/frostc/IR/Statement/ID.h"
 #include "org/frostlang/frostc/IR.h"
@@ -245,15 +246,16 @@ bool _20;
 frost$core$Bit _21;
 bool _22;
 frost$core$Int _24;
-frost$core$Object*** _28;
-frost$core$Object** _29;
-frost$core$Int64 _30;
-int64_t _31;
-frost$core$Object* _32;
+frost$unsafe$NewPointer* _28;
+frost$unsafe$NewPointer _29;
+int64_t _30;
+frost$core$Int64 _31;
+int64_t _32;
 frost$core$Object* _33;
-org$frostlang$frostc$Type* _36;
-frost$core$Object* _37;
-frost$core$Object* _39;
+frost$core$Object* _34;
+org$frostlang$frostc$Type* _37;
+frost$core$Object* _38;
+frost$core$Object* _40;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:31
 _1 = &param0->choiceCase;
 _2 = *_1;
@@ -291,17 +293,18 @@ block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _28 = &_4->data;
 _29 = *_28;
-_30 = frost$core$Int64$init$frost$core$Int(_6);
-_31 = _30.value;
-_32 = _29[_31];
-_33 = _32;
-frost$core$Frost$ref$frost$core$Object$Q(_33);
-_36 = ((org$frostlang$frostc$Type*) _32);
-_37 = ((frost$core$Object*) _36);
-frost$core$Frost$ref$frost$core$Object$Q(_37);
-_39 = _32;
-frost$core$Frost$unref$frost$core$Object$Q(_39);
-return _36;
+_30 = _29.value;
+_31 = frost$core$Int64$init$frost$core$Int(_6);
+_32 = _31.value;
+_33 = ((frost$core$Object**)_30)[_32];
+_34 = _33;
+frost$core$Frost$ref$frost$core$Object$Q(_34);
+_37 = ((org$frostlang$frostc$Type*) _33);
+_38 = ((frost$core$Object*) _37);
+frost$core$Frost$ref$frost$core$Object$Q(_38);
+_40 = _33;
+frost$core$Frost$unref$frost$core$Object$Q(_40);
+return _37;
 
 }
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileLoad$R$org$frostlang$frostc$IR$Value$Q(void* rawSelf) {
@@ -387,27 +390,28 @@ bool _92;
 frost$core$Bit _93;
 bool _94;
 frost$core$Int _96;
-frost$core$Object*** _100;
-frost$core$Object** _101;
-frost$core$Int64 _102;
-int64_t _103;
-frost$core$Object* _104;
+frost$unsafe$NewPointer* _100;
+frost$unsafe$NewPointer _101;
+int64_t _102;
+frost$core$Int64 _103;
+int64_t _104;
 frost$core$Object* _105;
-org$frostlang$frostc$Type* _108;
-$fn20 _111;
-org$frostlang$frostc$IR$Statement$ID _112;
-frost$core$Object* _113;
-frost$core$Object* _115;
-frost$core$Object* _117;
+frost$core$Object* _106;
+org$frostlang$frostc$Type* _109;
+$fn20 _112;
+org$frostlang$frostc$IR$Statement$ID _113;
+frost$core$Object* _114;
+frost$core$Object* _116;
+frost$core$Object* _118;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:41
 _1 = &param0->compiler;
 _2 = *_1;
 _3 = ($fn21) param0->$class->vtable[2];
 _4 = _3(param0);
 // begin inline call to method org.frostlang.frostc.Compiler.isRefCounted(type:org.frostlang.frostc.Type):frost.core.Bit from ChoiceFieldLValue.frost:41:33
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:668
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:670
 _7 = org$frostlang$frostc$Type$get_isClass$R$frost$core$Bit(_4);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:668:12
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:670:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _10 = _7.value;
 _11 = !_10;
@@ -415,14 +419,14 @@ _12 = (frost$core$Bit) {_11};
 _14 = _12.value;
 if (_14) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:669
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:671
 _17 = (frost$core$Bit) {false};
 *(&local0) = _17;
 goto block3;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:671
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:673
 _21 = org$frostlang$frostc$Compiler$isValue$org$frostlang$frostc$Type$R$frost$core$Bit(_2, _4);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:671:16
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:673:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _24 = _21.value;
 _25 = !_24;
@@ -511,22 +515,23 @@ block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _100 = &_76->data;
 _101 = *_100;
-_102 = frost$core$Int64$init$frost$core$Int(_78);
-_103 = _102.value;
-_104 = _101[_103];
-_105 = _104;
-frost$core$Frost$ref$frost$core$Object$Q(_105);
-_108 = ((org$frostlang$frostc$Type*) _104);
-org$frostlang$frostc$IR$Value$init$frost$core$Int$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$Type(_70, _71, _72, _108);
+_102 = _101.value;
+_103 = frost$core$Int64$init$frost$core$Int(_78);
+_104 = _103.value;
+_105 = ((frost$core$Object**)_102)[_104];
+_106 = _105;
+frost$core$Frost$ref$frost$core$Object$Q(_106);
+_109 = ((org$frostlang$frostc$Type*) _105);
+org$frostlang$frostc$IR$Value$init$frost$core$Int$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$Type(_70, _71, _72, _109);
 org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$MethodPosition$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(_66, _67, _69, param1, _70);
-_111 = ($fn26) _65->$class->vtable[2];
-_112 = _111(_65, _66);
-_113 = _104;
-frost$core$Frost$unref$frost$core$Object$Q(_113);
-_115 = ((frost$core$Object*) _70);
-frost$core$Frost$unref$frost$core$Object$Q(_115);
-_117 = ((frost$core$Object*) _66);
-frost$core$Frost$unref$frost$core$Object$Q(_117);
+_112 = ($fn26) _65->$class->vtable[2];
+_113 = _112(_65, _66);
+_114 = _105;
+frost$core$Frost$unref$frost$core$Object$Q(_114);
+_116 = ((frost$core$Object*) _70);
+frost$core$Frost$unref$frost$core$Object$Q(_116);
+_118 = ((frost$core$Object*) _66);
+frost$core$Frost$unref$frost$core$Object$Q(_118);
 return;
 
 }

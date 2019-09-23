@@ -13,6 +13,7 @@
 #include "frost/core/Int64.h"
 #include "frost/collections/Array.h"
 #include "frost/collections/CollectionView.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Equatable.h"
 
 
@@ -482,16 +483,17 @@ bool _30;
 frost$core$Bit _31;
 bool _32;
 frost$core$Int _34;
-frost$core$Object*** _38;
-frost$core$Object** _39;
-frost$core$Int64 _40;
-int64_t _41;
-frost$core$Object* _42;
+frost$unsafe$NewPointer* _38;
+frost$unsafe$NewPointer _39;
+int64_t _40;
+frost$core$Int64 _41;
+int64_t _42;
 frost$core$Object* _43;
-frost$core$String* _46;
-frost$core$Object* _47;
-frost$core$Object* _49;
-frost$core$Object* _51;
+frost$core$Object* _44;
+frost$core$String* _47;
+frost$core$Object* _48;
+frost$core$Object* _50;
+frost$core$Object* _52;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:470
 // begin inline call to function frost.core.String.split(delimiter:frost.core.String):frost.collections.Array<frost.core.String> from Markdown.frost:470:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1378
@@ -537,19 +539,20 @@ block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _38 = &_10->data;
 _39 = *_38;
-_40 = frost$core$Int64$init$frost$core$Int(_16);
-_41 = _40.value;
-_42 = _39[_41];
-_43 = _42;
-frost$core$Frost$ref$frost$core$Object$Q(_43);
-_46 = ((frost$core$String*) _42);
-_47 = ((frost$core$Object*) _46);
-frost$core$Frost$ref$frost$core$Object$Q(_47);
-_49 = _42;
-frost$core$Frost$unref$frost$core$Object$Q(_49);
-_51 = ((frost$core$Object*) _10);
-frost$core$Frost$unref$frost$core$Object$Q(_51);
-return _46;
+_40 = _39.value;
+_41 = frost$core$Int64$init$frost$core$Int(_16);
+_42 = _41.value;
+_43 = ((frost$core$Object**)_40)[_42];
+_44 = _43;
+frost$core$Frost$ref$frost$core$Object$Q(_44);
+_47 = ((frost$core$String*) _43);
+_48 = ((frost$core$Object*) _47);
+frost$core$Frost$ref$frost$core$Object$Q(_48);
+_50 = _43;
+frost$core$Frost$unref$frost$core$Object$Q(_50);
+_52 = ((frost$core$Object*) _10);
+frost$core$Frost$unref$frost$core$Object$Q(_52);
+return _47;
 
 }
 frost$core$Bit org$frostlang$frostc$frostdoc$Markdown$CodeReplacer$isLanguageIdentifier$frost$core$String$R$frost$core$Bit(void* rawSelf, frost$core$String* param1) {

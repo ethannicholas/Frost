@@ -1,6 +1,6 @@
 package frost.io
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 
 ====================================================================================================
 A stream of binary or character data which can be written to. The various `write` methods output
@@ -142,10 +142,10 @@ class OutputStream {
     ================================================================================================
     Writes a block of data to this stream.
 
-    @param ptr pointer to the data to write
+    @param ptr NewPointer to the data to write
     @param count number of bytes to write
     ================================================================================================
-    method write(ptr:Pointer<UInt8>, count:Int):Error? {
+    method write(ptr:NewPointer<UInt8>, count:Int):Error? {
         try {
             for i in 0 .. count {
                 write(ptr[i])
@@ -160,23 +160,23 @@ class OutputStream {
     ================================================================================================
     Writes a block of data to this stream.
 
-    @param ptr pointer to the data to write
+    @param ptr NewPointer to the data to write
     @param count number of bytes to write
     ================================================================================================
     @final
-    method write(ptr:Pointer<Int8>, count:Int):Error? {
-        return write(ptr->Pointer<UInt8>, count)
+    method write(ptr:NewPointer<Int8>, count:Int):Error? {
+        return write(ptr->NewPointer<UInt8>, count)
     }
 
     ================================================================================================
     Writes a block of data to this stream.
 
-    @param ptr pointer to the data to write
+    @param ptr NewPointer to the data to write
     @param count number of bytes to write
     ================================================================================================
     @final
-    method write(ptr:Pointer<Char8>, count:Int):Error? {
-        return write(ptr->Pointer<UInt8>, count)
+    method write(ptr:NewPointer<Char8>, count:Int):Error? {
+        return write(ptr->NewPointer<UInt8>, count)
     }
 
     ================================================================================================
@@ -254,7 +254,11 @@ class OutputStream {
     @param s the string to write
     ================================================================================================
     method print(s:String):Error? {
-        return write(s.data, s._length)
+        for c in s {
+            def e := write(c.asChar8)
+        }
+        return null
+        --return write(s.data, s._length)
     }
 
     ================================================================================================

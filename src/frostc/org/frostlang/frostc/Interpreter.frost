@@ -1,6 +1,6 @@
 package org.frostlang.frostc
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 uses org.frostlang.frostc.expression.Binary
 
 ====================================================================================================
@@ -11,7 +11,7 @@ class Interpreter : CodeGenerator {
 
     def stackSize := 10240
 
-    def stackBase := Pointer<UInt8>.alloc(stackSize)
+    def stackBase := NewPointer<UInt8>.alloc(stackSize)
 
     def stack := stackBase
 
@@ -46,11 +46,11 @@ class Interpreter : CodeGenerator {
 
         def locals:Array<Int>
 
-        -- if the value fits into an Int64, contains the value. Otherwise, contains a pointer to
+        -- if the value fits into an Int64, contains the value. Otherwise, contains a NewPointer to
         -- the value.
         def arguments:Array<Int64>
 
-        -- if the value fits into an Int64, contains the value. Otherwise, contains a pointer to
+        -- if the value fits into an Int64, contains the value. Otherwise, contains a NewPointer to
         -- the value.
         def statements:Array<Int64?>
 
@@ -101,7 +101,7 @@ class Interpreter : CodeGenerator {
                         def compiler := interpreter.compiler
                         def memoryLayout := compiler.memoryLayout
                         assert memoryLayout.pointerSize = memoryLayout.intSize
-                        def base := Pointer<UInt8>.alloc(interpreter.memoryLayout.sizeOf(
+                        def base := NewPointer<UInt8>.alloc(interpreter.memoryLayout.sizeOf(
                                 compiler.STRING_TYPE))
                         def string := compiler.getClass(compiler.STRING_TYPE)
                         var current := base
@@ -110,53 +110,53 @@ class Interpreter : CodeGenerator {
                         assert compiler.instanceFields(string)[0].name = "$class"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[0].offset
-                        current->Pointer<ClassDecl>.set(string)
-                        current := current.offset(memoryLayout.pointerSize)
+                        current->NewPointer<ClassDecl>.set(string)
+                        current += memoryLayout.pointerSize
 
                         -- refCount
                         assert compiler.instanceFields(string)[1].name = "refCount"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[1].offset
-                        current->Pointer<Int32>.set(LLVMCodeGenerator.NO_REFCNT.asInt32)
-                        current := current.offset(4)
+                        current->NewPointer<Int32>.set(LLVMCodeGenerator.NO_REFCNT.asInt32)
+                        current += 4
 
                         -- flags
                         assert compiler.instanceFields(string)[2].name = "$flags"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[2].offset
-                        current->Pointer<Int8>.set(0)
-                        current := current.offset(4)
+                        current->NewPointer<Int8>.set(0)
+                        current += 4
 
                         -- data
                         assert compiler.instanceFields(string)[3].name = "data"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[3].offset, "expected \{compiler.instanceFields(string)[3].offset}, have \{current.asInt - base.asInt}"
-                        def data := Pointer<Char8>.alloc(s._length)
+                        def data := NewPointer<Char8>.alloc(s._length)
                         for i in 0 .. s._length {
                             data[i] := s.data[i]
                         }
-                        current->Pointer<Int>.set(data.asInt)
-                        current := current.offset(memoryLayout.pointerSize)
+                        current->NewPointer<Int>.set(data.asInt)
+                        current += memoryLayout.pointerSize
 
                         -- _length
                         assert compiler.instanceFields(string)[4].name = "_length"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[4].offset
-                        current->Pointer<Int>.set(s._length)
-                        current := current.offset(memoryLayout.intSize)
+                        current->NewPointer<Int>.set(s._length)
+                        current += memoryLayout.intSize
 
                         -- dummy
                         assert compiler.instanceFields(string)[5].name = "dummy"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[5].offset
-                        current := current.offset(memoryLayout.intSize)
+                        current += memoryLayout.intSize
 
                         -- owner
                         assert compiler.instanceFields(string)[6].name = "owner"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[6].offset
-                        current->Pointer<Int>.set(0)
-                        current := current.offset(memoryLayout.intSize)
+                        current->NewPointer<Int>.set(0)
+                        current += memoryLayout.intSize
 
                         assert current.asInt - base.asInt =
                                 interpreter.memoryLayout.sizeOf(string.type)
@@ -226,47 +226,47 @@ class Interpreter : CodeGenerator {
     method finish() {
     }
 
-    function align(p:Pointer<UInt8>, alignment:Int):Pointer<UInt8> {
+    function align(p:NewPointer<UInt8>, alignment:Int):NewPointer<UInt8> {
         def rem := p.asInt % alignment
         if rem != 0 {
-            return Pointer<UInt8>.from(p.asInt + alignment - rem)
+            return NewPointer<UInt8>(p.asInt + alignment - rem)
         } 
         return p
     }
 
     -- we reserve 8 bytes of working stack space
     @pre(stack.asInt - stackBase.asInt + memoryLayout.sizeOf(t) < stackSize - 8)
-    method alloca(t:Type):Pointer<UInt8> {
+    method alloca(t:Type):NewPointer<UInt8> {
         stack := align(stack, memoryLayout.alignment(t))
         def result := stack
-        stack := Pointer<UInt8>.from(stack.asInt + memoryLayout.sizeOf(t))
+        stack := NewPointer<UInt8>(stack.asInt + memoryLayout.sizeOf(t))
         return result
     }
 
     ================================================================================================
     Returns true if the type in question can be passed around inside an `Int64`. This is true only
     for [Value]s which are greater than 8 bytes in size (non-`Value` objects are handled as
-    pointers.)
+    NewPointers.)
     ================================================================================================
-    function needsStructPointer(t:Type):Bit {
+    function needsStructNewPointer(t:Type):Bit {
         return compiler.isValue(t) & memoryLayout.sizeOf(t) > 8
     }
 
-    method destroyObject(o:Pointer<UInt8>) {
+    method destroyObject(o:NewPointer<UInt8>) {
         -- call cleanup
-        def cl := Pointer<Int>.from(o->Pointer<Int>.get()).convertTo<ClassDecl>()
+        def cl := NewPointer<Int>(o->NewPointer<Int>.get()).convertTo<ClassDecl>()
         def cleanup := compiler.getVTable(cl)[1]
-        call(cleanup, FixedArray<IR.Value>.from([IR.Value.INT(o.asInt.asUInt64,
+        call(cleanup, FixedArray<IR.Value>([IR.Value.INT(o.asInt.asUInt64,
                 compiler.INVALID_TYPE)]))
 
         o.destroy()
     }
 
-    method ref(o:Pointer<UInt8>) {
+    method ref(o:NewPointer<UInt8>) {
         if o.asInt = 0 {
             return
         }
-        def refCntPtr := o.offset(memoryLayout.pointerSize)->Pointer<Int32>
+        def refCntPtr := (o + memoryLayout.pointerSize)->NewPointer<Int32>
         def refCnt := refCntPtr.get()
         if refCnt = LLVMCodeGenerator.NO_REFCNT.asInt32 {
             return
@@ -274,11 +274,11 @@ class Interpreter : CodeGenerator {
         refCntPtr.set(refCnt + 1)
     }
 
-    method unref(o:Pointer<UInt8>) {
+    method unref(o:NewPointer<UInt8>) {
         if o.asInt = 0 {
             return
         }
-        def refCntPtr := o.offset(memoryLayout.pointerSize)->Pointer<Int32>
+        def refCntPtr := (o + memoryLayout.pointerSize)->NewPointer<Int32>
         def refCnt := refCntPtr.get()
         if refCnt = LLVMCodeGenerator.NO_REFCNT.asInt32 {
             return
@@ -298,20 +298,20 @@ class Interpreter : CodeGenerator {
             match signature {
                 when "frost.core.Frost method frost.core.Frost.ref(o:frost.core.Object?)" {
                     builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        self.ref(Pointer<UInt8>.from(context.value(args[0]).asInt))
+                        self.ref(NewPointer<UInt8>(context.value(args[0]).asInt))
                         return -1
                     }
                 }
                 when "frost.core.Frost method frost.core.Frost.unref(o:frost.core.Object?)" {
                     builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        self.unref(Pointer<UInt8>.from(context.value(args[0]).asInt))
+                        self.unref(NewPointer<UInt8>(context.value(args[0]).asInt))
                         return -1
                     }
                 }
                 when "frost.io.Console method frost.io.Console.print(s:frost.core.String)" {
                     builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
                         def p := context.value(args[0]).asInt
-                        def s := Pointer<UInt8>.from(p).convertTo<String>()
+                        def s := NewPointer<UInt8>(p).convertTo<String>()
                         Console.print(s)
                         return -1
                     }
@@ -335,18 +335,18 @@ class Interpreter : CodeGenerator {
         def srcType := v.type()
         def value := context.value(v)
         if compiler.isValue(srcType) & !compiler.isValue(t) {
-            def raw := Pointer<UInt8>.alloc(memoryLayout.sizeOfWrapper(srcType))
+            def raw := NewPointer<UInt8>.alloc(memoryLayout.sizeOfWrapper(srcType))
             def cl := compiler.getClass(srcType)!
-            raw->Pointer<ClassDecl>.set(cl)
-            var dest := raw.offset(memoryLayout.pointerSize)
-            dest->Pointer<Int32>.set(1)
-            dest := dest.offset(5)
-            var src:Pointer<UInt8>
-            if needsStructPointer(v.type()) {
-                src := Pointer<UInt8>.from(value.asInt)
+            raw->NewPointer<ClassDecl>.set(cl)
+            var dest := raw + memoryLayout.pointerSize
+            dest->NewPointer<Int32>.set(1)
+            dest += 5
+            var src:NewPointer<UInt8>
+            if needsStructNewPointer(v.type()) {
+                src := NewPointer<UInt8>(value.asInt)
             }
             else {
-                stack->Pointer<Int64>.set(value)
+                stack->NewPointer<Int64>.set(value)
                 src := stack
             }
             -- FIXME need memcpy
@@ -380,52 +380,52 @@ class Interpreter : CodeGenerator {
                 -- FIXME ALIGNMENT
                 when 1 {
                     current.set(v.asUInt8)
-                    current := current.offset(1)
+                    current += 1
                 }
                 when 2 {
-                    current->Pointer<Int16>.set(v.asInt16)
-                    current := current.offset(2)
+                    current->NewPointer<Int16>.set(v.asInt16)
+                    current += 2
                 }
                 when 4 {
-                    current->Pointer<Int32>.set(v.asInt32)
-                    current := current.offset(4)
+                    current->NewPointer<Int32>.set(v.asInt32)
+                    current += 4
                 }
                 when 8 {
-                    current->Pointer<Int64>.set(v)
-                    current := current.offset(8)
+                    current->NewPointer<Int64>.set(v)
+                    current += 8
                 }
                 otherwise {
                     unreachable, "unsupported value \{a}"
                 }
             }
         }
-        if needsStructPointer(cl.type) {
+        if needsStructNewPointer(cl.type) {
             context.statements[id.value] := stack.asInt
             stack := current
         }
         else {
             for i in current.asInt .. stack.asInt + 8 {
-                Pointer<UInt8>.from(i).set(0)
+                NewPointer<UInt8>(i).set(0)
             }
-            context.statements[id.value] := stack->Pointer<Int64>.get()
+            context.statements[id.value] := stack->NewPointer<Int64>.get()
         }
     }
 
     method extractField(context:Context, id:IR.Statement.ID, value:IR.Value, field:FieldDecl) {
-        if needsStructPointer(field.owner.type) {
-            def p := Pointer<UInt8>.from(getFieldPointer(context, value, field))
+        if needsStructNewPointer(field.owner.type) {
+            def p := NewPointer<UInt8>(getFieldNewPointer(context, value, field))
             match memoryLayout.sizeOf(field.type) {
                 when 1 {
                     context.statements[id.value] := p.get().asInt64
                 }
                 when 2 {
-                    context.statements[id.value] := p->Pointer<UInt16>.get().asInt64
+                    context.statements[id.value] := p->NewPointer<UInt16>.get().asInt64
                 }
                 when 4 {
-                    context.statements[id.value] := p->Pointer<UInt32>.get().asInt64
+                    context.statements[id.value] := p->NewPointer<UInt32>.get().asInt64
                 }
                 when 8 {
-                    context.statements[id.value] := p->Pointer<UInt64>.get().asInt64
+                    context.statements[id.value] := p->NewPointer<UInt64>.get().asInt64
                 }
                 otherwise {
                     unreachable, "unsupported field size"
@@ -439,7 +439,7 @@ class Interpreter : CodeGenerator {
         }
     }
 
-    method getFieldPointer(context:Context, value:IR.Value, field:FieldDecl):Int {
+    method getFieldNewPointer(context:Context, value:IR.Value, field:FieldDecl):Int {
         -- force offset to be calculated
         if field.offset < 0 {
             memoryLayout.computeLayout(field.owner)
@@ -448,8 +448,8 @@ class Interpreter : CodeGenerator {
         return context.value(value).asInt + field.offset
     }
 
-    method getFieldPointer(context:Context, id:IR.Statement.ID, value:IR.Value, field:FieldDecl) {
-        context.statements[id.value] := getFieldPointer(context, value, field)
+    method getFieldNewPointer(context:Context, id:IR.Statement.ID, value:IR.Value, field:FieldDecl) {
+        context.statements[id.value] := getFieldNewPointer(context, value, field)
     }
 
     function bit(b:Bit):Int64 {
@@ -549,33 +549,33 @@ class Interpreter : CodeGenerator {
                     continue
                 }
                 when IR.Statement.CONSTRUCT(_, cl) {
-                    def raw := Pointer<UInt8>.alloc(memoryLayout.sizeOf(cl.type))
-                    raw->Pointer<ClassDecl>.set(cl)
-                    raw.offset(memoryLayout.pointerSize)->Pointer<Int32>.set(1)
+                    def raw := NewPointer<UInt8>.alloc(memoryLayout.sizeOf(cl.type))
+                    raw->NewPointer<ClassDecl>.set(cl)
+                    NewPointer<Int32>((raw + memoryLayout.pointerSize).asInt).set(1)
                     context.statements[id.value] := raw.asInt.asInt64
                 }
                 when IR.Statement.CREATE_STRUCT(_, cl, args) {
                     createStruct(context, id, cl, args)
                 }
                 when IR.Statement.DYNAMIC_CALL(_, value, args) {
-                    def target := Pointer<UInt8>.from(context.value(value).asInt).convertTo<MethodDecl>()
+                    def target := NewPointer<UInt8>(context.value(value).asInt).convertTo<MethodDecl>()
                     context.statements[id.value] := call(target, args)
                 }
                 when IR.Statement.EXTRACT_FIELD(_, value, field) {
                     extractField(context, id, value, field)
                 }
                 when IR.Statement.GET_FIELD_POINTER(_, value, field) {
-                    getFieldPointer(context, id, value, field)
+                    getFieldNewPointer(context, id, value, field)
                 }
                 when IR.Statement.GET_VIRTUAL_METHOD(_, target, index, _) {
-                    def p := Pointer<Int>.from(context.value(target).asInt)
-                    def cl := Pointer<UInt8>.from(p.get()).convertTo<ClassDecl>()
+                    def p := NewPointer<Int>(context.value(target).asInt)
+                    def cl := NewPointer<UInt8>(p.get()).convertTo<ClassDecl>()
                     def m := compiler.getVTable(cl)[index]
                     context.statements[id.value] := Frost.addressOf(m)
                 }
                 when IR.Statement.LOAD(_, source) {
-                    def p := Pointer<Int>.from(context.value(source).asInt)
-                    if needsStructPointer(source.type()) {
+                    def p := NewPointer<Int>(context.value(source).asInt)
+                    if needsStructNewPointer(source.type()) {
                         context.statements[id.value] := p.asInt
                     }
                     else {
@@ -583,30 +583,30 @@ class Interpreter : CodeGenerator {
                     }
                 }
                 when IR.Statement.POINTER_ALLOC(_, s, t) {
-                     context.statements[id.value] := Pointer<UInt8>.alloc(context.value(s).asInt *
+                     context.statements[id.value] := NewPointer<UInt8>.alloc(context.value(s).asInt *
                             memoryLayout.sizeOf(t)).asInt
                 }
                 when IR.Statement.POINTER_GET_INDEX(_, p, index, _) {
                     def type := p.type().subtypes[1]
-                    def src := Pointer<UInt8>.from((context.value(p) + context.value(index) *
+                    def src := NewPointer<UInt8>((context.value(p) + context.value(index) *
                             memoryLayout.sizeOf(type)).asInt)
-                    stack->Pointer<Int64>.set(0)
+                    stack->NewPointer<Int64>.set(0)
                     for i in 0 .. memoryLayout.sizeOf(type).min(8) {
                         stack[i] := src[i]
                     }
-                    context.statements[id.value] := stack->Pointer<Int64>.get()
+                    context.statements[id.value] := stack->NewPointer<Int64>.get()
                 }
                 when IR.Statement.POINTER_SET_INDEX(_, value, p, index, type) {
-                    def dest := Pointer<UInt8>.from((context.value(p) + context.value(index) *
+                    def dest := NewPointer<UInt8>((context.value(p) + context.value(index) *
                             memoryLayout.sizeOf(value.type())).asInt)
                     def v := context.value(value)
-                    stack->Pointer<Int64>.set(v)
+                    stack->NewPointer<Int64>.set(v)
                     for i in 0 .. memoryLayout.sizeOf(value.type()).min(8) {
                         dest[i] := stack[i]
                     }
                 }
                 when IR.Statement.POINTER_DESTROY(_, p) {
-                    Pointer<Int>.from(context.value(p).asInt).destroy()
+                    NewPointer<Int>(context.value(p).asInt).destroy()
                 }
                 when IR.Statement.RETURN(_, value) {
                     contexts.pop()
@@ -621,7 +621,7 @@ class Interpreter : CodeGenerator {
                 when IR.Statement.STORE(_, source, dest) {
                     def v := context.value(source)
                     def p := context.value(dest)
-                    Pointer<Int64>.from(p.asInt).set(v)
+                    NewPointer<Int64>(p.asInt).set(v)
                 }
                 otherwise {
                     unreachable, "unsupported statement: \{stmt}"
@@ -639,7 +639,7 @@ class Interpreter : CodeGenerator {
         call(main, FixedArray<IR.Value>())
         contexts.push(Context(self, Code([], [], [], [], 0)))
         for v in strings.values {
-            destroyObject(Pointer<UInt8>.from(v.asInt))
+            destroyObject(NewPointer<UInt8>(v.asInt))
         }
         strings.clear()
         contexts.pop()

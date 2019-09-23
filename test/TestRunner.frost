@@ -68,7 +68,7 @@ class TestRunner : Immutable {
             if compileResult != "" {
                 if compileResult != expected {
                     resultQueue.post(Result.ERROR(test,
-                            "expected:\n\{expected}\nbut received1:\n\{compileResult}"))
+                            "expected:\n\{expected}\nbut received:\n\{compileResult}"))
                     return
                 }
                 resultQueue.post(Result.SUCCESS(test))
@@ -86,7 +86,7 @@ class TestRunner : Immutable {
             def childResult := childResult1 + childResult2
             if childResult != expected {
                 resultQueue.post(Result.ERROR(test,
-                        "expected:\n\{expected}\nbut received2:\n\{childResult}"))
+                        "expected:\n\{expected}\nbut received:\n\{childResult}"))
             }
             else {
                 resultQueue.post(Result.SUCCESS(test))
@@ -94,7 +94,7 @@ class TestRunner : Immutable {
         }
         fail(error) {
             resultQueue.post(Result.ERROR(test,
-                    "expected:\n\{expected}\nbut received3:\n\{error}"))
+                    "expected:\n\{expected}\nbut received:\n\{error}"))
         }
     }
 

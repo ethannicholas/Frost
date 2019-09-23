@@ -27,6 +27,7 @@
 #include "frost/collections/Stack.h"
 #include "frost/collections/Iterable.h"
 #include "frost/collections/Iterator.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Int64.h"
 #include "frost/core/Frost.h"
 #include "frost/core/String/Index.h"
@@ -406,41 +407,42 @@ bool _487;
 frost$core$Bit _488;
 bool _489;
 frost$core$Int _491;
-frost$core$Object*** _495;
-frost$core$Object** _496;
-frost$core$Int64 _497;
-int64_t _498;
-frost$core$Object* _499;
+frost$unsafe$NewPointer* _495;
+frost$unsafe$NewPointer _496;
+int64_t _497;
+frost$core$Int64 _498;
+int64_t _499;
 frost$core$Object* _500;
-frost$core$Object* _503;
+frost$core$Object* _501;
 frost$core$Object* _504;
-frost$core$Object* _506;
-org$frostlang$frostc$ClassDecl* _509;
-bool _510;
-frost$core$Bit _511;
-bool _512;
-frost$core$Int _514;
-frost$core$Object* _517;
-frost$core$Object* _519;
-org$frostlang$frostc$SymbolTable** _522;
-org$frostlang$frostc$SymbolTable* _523;
-frost$core$Weak** _524;
-frost$core$Weak* _525;
-frost$core$Bit* _530;
-frost$core$Bit _531;
-bool _533;
-frost$core$Int _535;
-frost$core$Object** _539;
-frost$core$Object* _540;
+frost$core$Object* _505;
+frost$core$Object* _507;
+org$frostlang$frostc$ClassDecl* _510;
+bool _511;
+frost$core$Bit _512;
+bool _513;
+frost$core$Int _515;
+frost$core$Object* _518;
+frost$core$Object* _520;
+org$frostlang$frostc$SymbolTable** _523;
+org$frostlang$frostc$SymbolTable* _524;
+frost$core$Weak** _525;
+frost$core$Weak* _526;
+frost$core$Bit* _531;
+frost$core$Bit _532;
+bool _534;
+frost$core$Int _536;
+frost$core$Object** _540;
 frost$core$Object* _541;
 frost$core$Object* _542;
-org$frostlang$frostc$Compiler* _545;
-frost$collections$Stack** _546;
-frost$collections$Stack* _547;
-frost$core$Object* _548;
-org$frostlang$frostc$ClassDecl* _549;
-frost$core$Object* _550;
-frost$core$Object* _552;
+frost$core$Object* _543;
+org$frostlang$frostc$Compiler* _546;
+frost$collections$Stack** _547;
+frost$collections$Stack* _548;
+frost$core$Object* _549;
+org$frostlang$frostc$ClassDecl* _550;
+frost$core$Object* _551;
+frost$core$Object* _553;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:52
 _1 = (frost$core$Int) {72623859790382856u};
 _2 = &param0->TEST1;
@@ -572,7 +574,7 @@ _126 = &param0->classResolutionCache;
 _128 = ((frost$core$Object*) _118);
 frost$core$Frost$unref$frost$core$Object$Q(_128);
 // begin inline call to function org.frostlang.frostc.Type.get_isClassLiteral():frost.core.Bit from ClassDecl.frost:118:15
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:381
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:388
 _132 = &param7->typeKind;
 _133 = *_132;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp10;
@@ -580,7 +582,7 @@ $tmp10 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$f
 $tmp10->value = _133;
 _134 = ((frost$core$Equatable*) $tmp10);
 _135 = (frost$core$Int) {11u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:381:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:388:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _138 = &(&local2)->$rawValue;
 *_138 = _135;
@@ -600,7 +602,7 @@ _146 = _145(_134, _144);
 _147 = _146.value;
 if (_147) goto block5; else goto block6;
 block5:;
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:381:42
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:388:42
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:248
 _151 = &param7->_subtypes;
 _152 = *_151;
@@ -986,63 +988,64 @@ block34:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _495 = &_459->data;
 _496 = *_495;
-_497 = frost$core$Int64$init$frost$core$Int(_473);
-_498 = _497.value;
-_499 = _496[_498];
-_500 = _499;
-frost$core$Frost$ref$frost$core$Object$Q(_500);
-_503 = _499;
-_504 = _503;
-frost$core$Frost$ref$frost$core$Object$Q(_504);
-_506 = _499;
-frost$core$Frost$unref$frost$core$Object$Q(_506);
-_509 = ((org$frostlang$frostc$ClassDecl*) _503);
-_510 = _509 == param0;
-_511 = (frost$core$Bit) {_510};
-_512 = _511.value;
-if (_512) goto block37; else goto block38;
+_497 = _496.value;
+_498 = frost$core$Int64$init$frost$core$Int(_473);
+_499 = _498.value;
+_500 = ((frost$core$Object**)_497)[_499];
+_501 = _500;
+frost$core$Frost$ref$frost$core$Object$Q(_501);
+_504 = _500;
+_505 = _504;
+frost$core$Frost$ref$frost$core$Object$Q(_505);
+_507 = _500;
+frost$core$Frost$unref$frost$core$Object$Q(_507);
+_510 = ((org$frostlang$frostc$ClassDecl*) _504);
+_511 = _510 == param0;
+_512 = (frost$core$Bit) {_511};
+_513 = _512.value;
+if (_513) goto block37; else goto block38;
 block38:;
-_514 = (frost$core$Int) {138u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s34, _514);
+_515 = (frost$core$Int) {138u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s34, _515);
 abort(); // unreachable
 block37:;
-_517 = _503;
-frost$core$Frost$unref$frost$core$Object$Q(_517);
-_519 = _409;
-frost$core$Frost$unref$frost$core$Object$Q(_519);
+_518 = _504;
+frost$core$Frost$unref$frost$core$Object$Q(_518);
+_520 = _409;
+frost$core$Frost$unref$frost$core$Object$Q(_520);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:139
-_522 = &param0->symbolTable;
-_523 = *_522;
-_524 = &_523->compiler;
-_525 = *_524;
+_523 = &param0->symbolTable;
+_524 = *_523;
+_525 = &_524->compiler;
+_526 = *_525;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from ClassDecl.frost:139:20
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 // begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
-_530 = &_525->_valid;
-_531 = *_530;
-_533 = _531.value;
-if (_533) goto block41; else goto block42;
+_531 = &_526->_valid;
+_532 = *_531;
+_534 = _532.value;
+if (_534) goto block41; else goto block42;
 block42:;
-_535 = (frost$core$Int) {40u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s35, _535, &$s36);
+_536 = (frost$core$Int) {40u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s35, _536, &$s36);
 abort(); // unreachable
 block41:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
-_539 = &_525->value;
-_540 = *_539;
-_541 = _540;
+_540 = &_526->value;
+_541 = *_540;
 _542 = _541;
-frost$core$Frost$ref$frost$core$Object$Q(_542);
-_545 = ((org$frostlang$frostc$Compiler*) _541);
-_546 = &_545->currentClass;
-_547 = *_546;
-_548 = frost$collections$Stack$pop$R$frost$collections$Stack$T(_547);
-_549 = ((org$frostlang$frostc$ClassDecl*) _548);
-_550 = _548;
-frost$core$Frost$unref$frost$core$Object$Q(_550);
-_552 = _541;
-frost$core$Frost$unref$frost$core$Object$Q(_552);
+_543 = _542;
+frost$core$Frost$ref$frost$core$Object$Q(_543);
+_546 = ((org$frostlang$frostc$Compiler*) _542);
+_547 = &_546->currentClass;
+_548 = *_547;
+_549 = frost$collections$Stack$pop$R$frost$collections$Stack$T(_548);
+_550 = ((org$frostlang$frostc$ClassDecl*) _549);
+_551 = _549;
+frost$core$Frost$unref$frost$core$Object$Q(_551);
+_553 = _542;
+frost$core$Frost$unref$frost$core$Object$Q(_553);
 return;
 
 }

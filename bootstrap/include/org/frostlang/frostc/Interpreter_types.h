@@ -5,6 +5,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/UInt8_types.h"
 typedef struct frost$collections$HashMap frost$collections$HashMap;
 #include "frost/core/Int_types.h"
+#include "frost/unsafe/NewPointer_types.h"
 typedef struct frost$core$Weak frost$core$Weak;
 typedef struct org$frostlang$frostc$MemoryLayout org$frostlang$frostc$MemoryLayout;
 typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
@@ -18,8 +19,8 @@ typedef struct org$frostlang$frostc$Interpreter {
     frost$core$UInt8 $flags;
     frost$collections$HashMap* strings;
     frost$core$Int stackSize;
-    frost$core$UInt8* stackBase;
-    frost$core$UInt8* stack;
+    frost$unsafe$NewPointer stackBase;
+    frost$unsafe$NewPointer stack;
     frost$core$Int maxId;
     frost$core$Weak* compiler;
     org$frostlang$frostc$MemoryLayout* memoryLayout;

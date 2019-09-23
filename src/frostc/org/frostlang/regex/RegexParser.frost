@@ -1,6 +1,6 @@
 package org.frostlang.regex
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Position
@@ -224,7 +224,7 @@ class RegexParser {
         lexer.dfa.offset -= 1
         def end := lexer.dfa.offset
         def length := end - start
-        def result := Pointer<Char8>.alloc(length)
+        def result := NewPointer<Char8>.alloc(length)
         for i in start .. end {
             result[i - start] := lexer.dfa.source[i]
         }

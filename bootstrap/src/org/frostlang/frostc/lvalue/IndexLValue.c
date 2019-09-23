@@ -1255,8 +1255,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_104);
 _107 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_99, &$s49);
 _108 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_91, _107);
 // begin inline call to method org.frostlang.frostc.Compiler.error(pos:org.frostlang.frostc.MethodPosition, msg:frost.core.String) from IndexLValue.frost:76:31
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6117
-// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6117:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6119
+// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6119:18
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodPosition.frost:40
 _113 = _73.file;
 _114 = _73.line;

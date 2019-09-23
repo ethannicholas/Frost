@@ -1,6 +1,6 @@
 package frost.collections
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 
 @final
 class HashSet<T:HashKey<T>> : Collection<T> {

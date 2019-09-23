@@ -1,6 +1,6 @@
 package frost.core
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 
 ====================================================================================================
 Represents a single 2-byte word of a UTF-16 encoded string.
@@ -141,17 +141,17 @@ class Char16 : Value, HashKey<Char16>, Comparable<Char16> {
     @override
     function get_asString():String {
         if value < 0x80 {
-            def data := Pointer<Char8>.alloc(1)
+            def data := NewPointer<Char8>.alloc(1)
             data[0] := Char8(asUInt8)
             return String(data, 1)
         }
         if value < 0x800 {
-            def data := Pointer<Char8>.alloc(2)
+            def data := NewPointer<Char8>.alloc(2)
             data[0] := Char8(UInt8((value >> 6 || 0b11000000)->builtin_uint8))
             data[1] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
             return String(data, 2)
         }
-        def data := Pointer<Char8>.alloc(3)
+        def data := NewPointer<Char8>.alloc(3)
         data[0] := Char8(UInt8((value >> 12 || 0b11100000)->builtin_uint8))
         data[1] := Char8(UInt8((value >> 6 && 0b111111 || 0b10000000)->builtin_uint8))
         data[2] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))

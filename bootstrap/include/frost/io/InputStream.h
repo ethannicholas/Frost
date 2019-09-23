@@ -12,6 +12,7 @@ typedef struct frost$io$InputStream frost$io$InputStream;
 #include "frost/core/Int64_types.h"
 #include "frost/core/Char8_types.h"
 #include "frost/core/Int_types.h"
+#include "frost/unsafe/NewPointer_types.h"
 typedef struct frost$core$String frost$core$String;
 typedef struct frost$collections$Array frost$collections$Array;
 typedef struct frost$core$Maybe frost$core$Maybe;
@@ -28,9 +29,9 @@ frost$core$Int16$nullable frost$io$InputStream$read$R$frost$core$Int16$Q(void* r
 frost$core$Int32$nullable frost$io$InputStream$read$R$frost$core$Int32$Q(void* rawSelf);
 frost$core$Int64$nullable frost$io$InputStream$read$R$frost$core$Int64$Q(void* rawSelf);
 frost$core$Char8$nullable frost$io$InputStream$read$R$frost$core$Char8$Q(void* rawSelf);
-frost$core$Int frost$io$InputStream$read$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(void* rawSelf, frost$core$UInt8* p_buffer, frost$core$Int p_max);
-frost$core$Int frost$io$InputStream$read$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Int(void* rawSelf, frost$core$Int8* p_buffer, frost$core$Int p_max);
-frost$core$Int frost$io$InputStream$read$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Int(void* rawSelf, frost$core$Char8* p_buffer, frost$core$Int p_max);
+frost$core$Int frost$io$InputStream$read$frost$unsafe$NewPointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(void* rawSelf, frost$unsafe$NewPointer p_buffer, frost$core$Int p_max);
+frost$core$Int frost$io$InputStream$read$frost$unsafe$NewPointer$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Int(void* rawSelf, frost$unsafe$NewPointer p_buffer, frost$core$Int p_max);
+frost$core$Int frost$io$InputStream$read$frost$unsafe$NewPointer$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Int(void* rawSelf, frost$unsafe$NewPointer p_buffer, frost$core$Int p_max);
 frost$core$String* frost$io$InputStream$readFully$R$frost$core$String(void* rawSelf);
 frost$collections$Array* frost$io$InputStream$readFully$R$frost$collections$Array$LTfrost$core$UInt8$GT(void* rawSelf);
 frost$core$String* frost$io$InputStream$readLine$R$frost$core$String$Q(void* rawSelf);

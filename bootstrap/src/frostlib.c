@@ -755,9 +755,14 @@ void frost$core$Frost$destroy$builtin_int(void* ptr) {
     frostFree(ptr);
 }
 
-void* frost$core$Frost$realloc$builtin_int$builtin_int$R$builtin_int(void* ptr,
+void* frost$core$Frost$realloc$builtin_int$builtin_int$builtin_int$R$builtin_int(void* ptr, int oldSize,
         int newSize) {
-    return realloc(ptr, newSize);
+    void* result = realloc(ptr, newSize);
+    frostAssert(result != NULL || newSize == 0);
+    if (newSize > oldSize) {
+        memset(result + oldSize, 0, newSize - oldSize);
+    }
+    return result;
 }
 
 void frost$core$Frost$debugPrint$builtin_int64(int64_t x) {
@@ -1478,7 +1483,7 @@ void frost$io$FileInputStream$readImpl$R$frost$core$UInt8$Q(NullableUInt8* resul
     }
 }
 
-void frost$io$FileInputStream$readImpl$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(
+void frost$io$FileInputStream$readImpl$frost$unsafe$NewPointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(
         int64_t* result, FileInputStream* self, void* buffer, Int max) {
     *result = fread(buffer, 1, max.value, self->file);
 }
@@ -1501,7 +1506,7 @@ Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(Fil
     return NULL;
 }
 
-Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(
+Error* frost$io$FileOutputStream$write$frost$unsafe$NewPointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(
         FileOutputStream* self, void* src, int64_t count) {
     if (fwrite(src, 1, count, self->file) != count) {
         const char* msg = "Error writing to stream";

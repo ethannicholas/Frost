@@ -12,6 +12,7 @@ typedef struct frost$collections$HashSet frost$collections$HashSet;
 typedef struct frost$collections$HashMap frost$collections$HashMap;
 typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
 #include "frost/core/Int_types.h"
+#include "frost/core/Bit_types.h"
 typedef struct frost$collections$Array frost$collections$Array;
 typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 
@@ -39,6 +40,7 @@ typedef struct org$frostlang$frostc$LLVMCodeGenerator {
     frost$core$Int varCount;
     frost$core$Int labelCount;
     frost$core$Int metadataCount;
+    frost$core$Bit wroteCompileUnit;
     frost$collections$Array* fileMetadata;
     frost$collections$Array* methodMetadata;
     frost$collections$Array* lexicalBlockMetadata;

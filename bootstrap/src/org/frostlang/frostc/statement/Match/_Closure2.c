@@ -130,11 +130,11 @@ _2 = _1(param1);
 _3 = &param0->compiler;
 _4 = *_3;
 // begin inline call to function org.frostlang.frostc.Compiler.get_currentMethodIndex():frost.core.Int from Match.frost:52:60
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:676
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:678
 _7 = &_4->currentMethod;
 _8 = *_7;
 _9 = (frost$core$Int) {0u};
-// begin inline call to function frost.collections.Stack.[](depth:frost.core.Int):frost.collections.Stack.T from Compiler.frost:676:29
+// begin inline call to function frost.collections.Stack.[](depth:frost.core.Int):frost.collections.Stack.T from Compiler.frost:678:29
 _11 = (frost$core$Int) {0u};
 _12 = _9.value;
 _13 = _11.value;

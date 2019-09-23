@@ -10,6 +10,7 @@
 #include "frost/collections/CollectionView.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Int64.h"
 #include "frost/core/String/UTF8Iterator.h"
 
@@ -92,11 +93,12 @@ bool _14;
 frost$core$Int _16;
 frost$core$String** _20;
 frost$core$String* _21;
-frost$core$Char8** _22;
-frost$core$Char8* _23;
-frost$core$Int64 _24;
-int64_t _25;
-frost$core$Char8 _26;
+frost$unsafe$NewPointer* _22;
+frost$unsafe$NewPointer _23;
+int64_t _24;
+frost$core$Int64 _25;
+int64_t _26;
+frost$core$Char8 _27;
 _0 = (frost$core$Int) {0u};
 _1 = param1.value;
 _2 = _0.value;
@@ -128,10 +130,11 @@ _20 = &param0->str;
 _21 = *_20;
 _22 = &_21->data;
 _23 = *_22;
-_24 = frost$core$Int64$init$frost$core$Int(param1);
-_25 = _24.value;
-_26 = _23[_25];
-return _26;
+_24 = _23.value;
+_25 = frost$core$Int64$init$frost$core$Int(param1);
+_26 = _25.value;
+_27 = ((frost$core$Char8*)_24)[_26];
+return _27;
 
 }
 frost$core$Int frost$core$String$UTF8List$get_count$R$frost$core$Int(void* rawSelf) {

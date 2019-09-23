@@ -1,6 +1,6 @@
 package frost.collections
 
-uses frost.unsafe.Pointer
+uses frost.unsafe.NewPointer
 
 @final
 class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
@@ -33,24 +33,24 @@ class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
     def dummy:Int -- for binary compatibility with Array
 
     @private
-    def data:Pointer<T?>
+    def data:NewPointer<T?>
 
     init() {
         self._count := 0
-        data := Pointer<T?>.alloc(0)
+        data := NewPointer<T?>.alloc(0)
     }
 
     init(data:ListView<T>) {
         self._count := data.count
-        self.data := Pointer<T?>.alloc(_count)
+        self.data := NewPointer<T?>.alloc(_count)
         for i in 0 .. count {
             self.data[i] := data[i]
         }
     }
 
     @private
-    init(data:Pointer<T>, count:Int) {
-        self.data := data->Pointer<T?>
+    init(data:NewPointer<T>, count:Int) {
+        self.data := data->NewPointer<T?>
         self._count := count
     }
 
@@ -65,7 +65,7 @@ class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
     method from(a:Array<T>):ImmutableArray<T> {
         -- FIXME this transformation is only safe at -S0
         a.data := a.data.realloc(a.capacity, a._count)
-        a.$class := ImmutableArray<T>().$class -- FIXME need a better way to get a class pointer
+        a.$class := ImmutableArray<T>().$class -- FIXME need a better way to get a class NewPointer
         a.capacity := -1
         return a->Object->ImmutableArray<T>
     }

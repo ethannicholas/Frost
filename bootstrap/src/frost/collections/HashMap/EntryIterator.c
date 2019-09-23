@@ -8,6 +8,7 @@
 #include "frost/core/Int.h"
 #include "frost/collections/HashMap/Entry.h"
 #include "frost/core/Bit.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Int64.h"
 #include "frost/core/Frost.h"
 #include "frost/collections/HashKey.h"
@@ -59,9 +60,9 @@ int64_t _29;
 bool _30;
 frost$core$Bit _31;
 bool _32;
-frost$collections$HashMap$Entry*** _34;
-frost$collections$HashMap$Entry** _35;
-frost$collections$HashMap$Entry** _36;
+frost$unsafe$NewPointer* _34;
+frost$unsafe$NewPointer _35;
+int64_t _36;
 frost$core$Int* _37;
 frost$core$Int _38;
 frost$core$Int64 _39;
@@ -87,9 +88,9 @@ int64_t _63;
 bool _64;
 frost$core$Bit _65;
 bool _66;
-frost$collections$HashMap$Entry*** _69;
-frost$collections$HashMap$Entry** _70;
-frost$collections$HashMap$Entry** _71;
+frost$unsafe$NewPointer* _69;
+frost$unsafe$NewPointer _70;
+int64_t _71;
 frost$core$Int* _72;
 frost$core$Int _73;
 frost$core$Int64 _74;
@@ -138,12 +139,12 @@ if (_32) goto block4; else goto block3;
 block4:;
 _34 = &param1->contents;
 _35 = *_34;
-_36 = ((frost$collections$HashMap$Entry**) _35);
+_36 = _35.value;
 _37 = &param0->bucket;
 _38 = *_37;
 _39 = frost$core$Int64$init$frost$core$Int(_38);
 _40 = _39.value;
-_41 = _36[_40];
+_41 = ((frost$collections$HashMap$Entry**)_36)[_40];
 _42 = _41 == NULL;
 _43 = (frost$core$Bit) {_42};
 _44 = _43.value;
@@ -176,12 +177,12 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:52
 _69 = &param1->contents;
 _70 = *_69;
-_71 = ((frost$collections$HashMap$Entry**) _70);
+_71 = _70.value;
 _72 = &param0->bucket;
 _73 = *_72;
 _74 = frost$core$Int64$init$frost$core$Int(_73);
 _75 = _74.value;
-_76 = _71[_75];
+_76 = ((frost$collections$HashMap$Entry**)_71)[_75];
 _77 = ((frost$core$Object*) _76);
 frost$core$Frost$ref$frost$core$Object$Q(_77);
 _79 = &param0->entry;
@@ -326,9 +327,9 @@ frost$core$Bit _110;
 bool _112;
 frost$collections$HashMap** _117;
 frost$collections$HashMap* _118;
-frost$collections$HashMap$Entry*** _119;
-frost$collections$HashMap$Entry** _120;
-frost$collections$HashMap$Entry** _121;
+frost$unsafe$NewPointer* _119;
+frost$unsafe$NewPointer _120;
+int64_t _121;
 frost$core$Int* _122;
 frost$core$Int _123;
 frost$core$Int64 _124;
@@ -492,12 +493,12 @@ _117 = &param0->map;
 _118 = *_117;
 _119 = &_118->contents;
 _120 = *_119;
-_121 = ((frost$collections$HashMap$Entry**) _120);
+_121 = _120.value;
 _122 = &param0->bucket;
 _123 = *_122;
 _124 = frost$core$Int64$init$frost$core$Int(_123);
 _125 = _124.value;
-_126 = _121[_125];
+_126 = ((frost$collections$HashMap$Entry**)_121)[_125];
 _127 = ((frost$core$Object*) _126);
 frost$core$Frost$ref$frost$core$Object$Q(_127);
 _129 = &param0->entry;

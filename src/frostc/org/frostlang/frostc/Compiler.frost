@@ -418,6 +418,8 @@ class Compiler {
 
     def POINTER_TYPE := Type("frost.unsafe.Pointer", Type.Kind.CLASS, Position(), true)
 
+    def NEW_POINTER_TYPE := Type("frost.unsafe.NewPointer", Type.Kind.CLASS, Position(), true)
+
     def ARRAY_TYPE := Type("frost.collections.Array", Type.Kind.CLASS, Position(), true)
 
     def IMMUTABLE_ARRAY_TYPE := Type("frost.collections.ImmutableArray", Type.Kind.CLASS,
@@ -3340,7 +3342,7 @@ class Compiler {
         if type.isPointer & (target.isPointer | target.nonnullable().isMethod) {
             return true
         }
-        if type.isNewPointer & target.nonnullable().isMethod {
+        if type.isNewPointer & (target.isNewPointer | target.nonnullable().isMethod) {
             return true
         }
         if coercionCost(type, target) !== null {

@@ -6,6 +6,7 @@
 #include "org/frostlang/json/Lexer.h"
 #include "org/frostlang/plex/runtime/DFA.h"
 #include "frost/core/Int.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Frost.h"
 #include "org/frostlang/json/Token.h"
 #include "org/frostlang/plex/runtime/RawToken.h"
@@ -77,10 +78,10 @@ org$frostlang$json$Lexer** _10;
 org$frostlang$json$Lexer* _11;
 org$frostlang$plex$runtime$DFA* _14;
 frost$core$Int _15;
-frost$core$Int*** _16;
-frost$core$Int** _17;
-frost$core$Int** _18;
-frost$core$Int* _19;
+frost$unsafe$NewPointer* _16;
+frost$unsafe$NewPointer _17;
+frost$unsafe$NewPointer* _18;
+frost$unsafe$NewPointer _19;
 frost$core$Object* _21;
 org$frostlang$plex$runtime$DFA** _23;
 org$frostlang$plex$runtime$DFA* _24;
@@ -111,7 +112,7 @@ _16 = &_11->transitions;
 _17 = *_16;
 _18 = &_11->accepts;
 _19 = *_18;
-org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(_14, param1, _15, _17, _19);
+org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$NewPointer$LTfrost$unsafe$NewPointer$LTfrost$core$Int$GT$GT$frost$unsafe$NewPointer$LTfrost$core$Int$GT(_14, param1, _15, _17, _19);
 _21 = ((frost$core$Object*) _14);
 frost$core$Frost$ref$frost$core$Object$Q(_21);
 _23 = &_11->dfa;

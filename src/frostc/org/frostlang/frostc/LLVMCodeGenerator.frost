@@ -78,6 +78,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     var metadataCount := 0
 
+    var wroteCompileUnit := false
+
     var fileMetadata := Array<String?>()
 
     var methodMetadata := Array<String?>()
@@ -1165,7 +1167,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             else {
                 def srcClass := compiler!.getClass(src)
-                assert srcClass !== null, "class \{src} not found"
+                assert srcClass !== null, "class \{src} not found in cast at \{position}"
                 def targetClass := compiler!.getClass(target)
                 assert targetClass !== null, "class \{target} not found"
                 if compiler!.isValue(srcClass) & !compiler!.isValue(targetClass) {
@@ -1231,9 +1233,10 @@ class LLVMCodeGenerator : CodeGenerator {
                     "i8*), %frost$core$Int32 insertvalue(%frost$core$Int32 " +
                     "{ i32 undef }, i32 \{NO_REFCNT}, 0), %frost$core$UInt8 insertvalue(" +
                     "%frost$core$UInt8 { i8 undef }, i8 0, 0), " +
-                    "%frost$core$Char8* bitcast(\{charsType}* \{chars} " +
-                    "to %frost$core$Char8*), \{INT_CLASS} { \{INT_TYPE} \{s.utf8.count} }, " +
-                    "\{INT_CLASS} { \{INT_TYPE} \{s.hash.asInt64} }, i8* null }")
+                    "%frost$unsafe$NewPointer insertvalue(%frost$unsafe$NewPointer { i64 undef }," +
+                    " i64 ptrtoint(\{charsType}* \{chars} to i64), 0), \{INT_CLASS} { \{INT_TYPE}" +
+                    " \{s.utf8.count} }, \{INT_CLASS} { \{INT_TYPE} \{s.hash.asInt64} }, " +
+                    "i8* null }")
             return result
         }
         fail(error) {
@@ -1398,7 +1401,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 metadata.printLine("\{meta} = distinct !DIFile(" +
                         "filename: \"\{compiler.files[index]}\", directory: " +
                         "\"\{System.workingDirectory()}\")")
-                if meta = "!1" {
+                if !wroteCompileUnit {
                     metadata.printLine("!0 = distinct !DICompileUnit(language:DW_LANG_C89, " +
                             "producer:\"frostc\", file: \{meta}, isOptimized: " +
                             "false, runtimeVersion: 0, emissionKind: FullDebug)")
@@ -1408,6 +1411,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     def debugVersion := nextMetadata()
                     metadata.printLine("\{debugVersion} = !{i32 2, !\"Debug Info Version\", i32 3}")
                     metadata.printLine("!llvm.module.flags = !{\{dwarfVersion}, \{debugVersion}}")
+                    wroteCompileUnit := true
                 }
             }
             return meta

@@ -23,7 +23,7 @@ void frost$core$Frost$ref$frost$core$Object$Q(frost$core$Object* p_o);
 void frost$core$Frost$unref$frost$core$Object$Q(frost$core$Object* p_o);
 int64_t frost$core$Frost$alloc$builtin_int$R$builtin_int(int64_t p_size);
 void frost$core$Frost$destroy$builtin_int(int64_t p_ptr);
-int64_t frost$core$Frost$realloc$builtin_int$builtin_int$R$builtin_int(int64_t p_ptr, int64_t p_newSize);
+int64_t frost$core$Frost$realloc$builtin_int$builtin_int$builtin_int$R$builtin_int(int64_t p_ptr, int64_t p_oldSize, int64_t p_newSize);
 void frost$core$Frost$addWeakReference$frost$core$Weak$LTfrost$core$Frost$addWeakReference$T$GT(frost$core$Weak* p_w);
 void frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(frost$core$Weak* p_w, frost$collections$HashMap* p_map);
 void frost$core$Frost$weakReferentDestroyed$frost$core$Int$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(frost$core$Int p_address, frost$collections$HashMap* p_map);

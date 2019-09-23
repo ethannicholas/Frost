@@ -1,7 +1,5 @@
 package frost.core
 
-uses frost.unsafe.Pointer
-
 @final
 class RegularExpression : Immutable {
     constant MULTILINE := 1
@@ -9,7 +7,7 @@ class RegularExpression : Immutable {
     constant DOTALL := 4
 
     @private
-    def nativeHandle:Pointer<Int8>
+    def nativeHandle:builtin_int
 
     init(regex:String) {
         init(regex, 0)

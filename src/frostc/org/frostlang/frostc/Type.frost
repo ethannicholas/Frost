@@ -286,7 +286,14 @@ class Type : Symbol, HashKey<Type> {
 
     @class
     method pointerTo(compiler:Compiler, t:Type):Type {
-        return generic(compiler.POINTER_TYPE, [t])
+        def f := compiler.getClass("frost.core.Method").fields[0]
+        compiler.resolve(f)
+        if f.type.isPointer {
+            return generic(compiler.POINTER_TYPE, [t])
+        }
+        else {
+            return generic(compiler.NEW_POINTER_TYPE, [t])
+        }
     }
 
     @class

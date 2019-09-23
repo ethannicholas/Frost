@@ -9,6 +9,7 @@
 #include "frost/collections/CollectionView.h"
 #include "frost/core/Int.h"
 #include "frost/core/Bit.h"
+#include "frost/unsafe/NewPointer.h"
 #include "frost/core/Int64.h"
 #include "frost/core/Int8.h"
 #include "frost/collections/ListView.h"
@@ -18,7 +19,7 @@
 
 
 static frost$core$String $s1;
-frost$io$PushbackInputStream$class_type frost$io$PushbackInputStream$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$io$InputStream$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$io$PushbackInputStream$cleanup, frost$io$PushbackInputStream$read$R$frost$core$UInt8$Q, frost$io$InputStream$read$R$frost$core$UInt16$Q, frost$io$InputStream$read$R$frost$core$UInt32$Q, frost$io$InputStream$read$R$frost$core$UInt64$Q, frost$io$InputStream$read$R$frost$core$Int8$Q, frost$io$InputStream$read$R$frost$core$Int16$Q, frost$io$InputStream$read$R$frost$core$Int32$Q, frost$io$InputStream$read$R$frost$core$Int64$Q, frost$io$InputStream$read$R$frost$core$Char8$Q, frost$io$InputStream$read$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int, frost$io$InputStream$read$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Int, frost$io$InputStream$read$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Int, frost$io$InputStream$readFully$R$frost$core$String, frost$io$InputStream$readFully$R$frost$collections$Array$LTfrost$core$UInt8$GT, frost$io$InputStream$readLine$R$frost$core$String$Q, frost$io$InputStream$sendTo$frost$io$OutputStream$R$frost$core$Maybe$LTfrost$core$Int$GT, frost$io$InputStream$lines$R$frost$collections$Iterator$LTfrost$core$String$GT, frost$io$InputStream$close$R$frost$core$Error$Q, frost$io$PushbackInputStream$pushback$frost$core$UInt8, frost$io$PushbackInputStream$pushback$frost$core$Int8, frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$UInt8$GT, frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Int8$GT, frost$io$PushbackInputStream$pushback$frost$core$Char8, frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Char8$GT, frost$io$PushbackInputStream$pushback$frost$core$String} };
+frost$io$PushbackInputStream$class_type frost$io$PushbackInputStream$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$io$InputStream$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$io$PushbackInputStream$cleanup, frost$io$PushbackInputStream$read$R$frost$core$UInt8$Q, frost$io$InputStream$read$R$frost$core$UInt16$Q, frost$io$InputStream$read$R$frost$core$UInt32$Q, frost$io$InputStream$read$R$frost$core$UInt64$Q, frost$io$InputStream$read$R$frost$core$Int8$Q, frost$io$InputStream$read$R$frost$core$Int16$Q, frost$io$InputStream$read$R$frost$core$Int32$Q, frost$io$InputStream$read$R$frost$core$Int64$Q, frost$io$InputStream$read$R$frost$core$Char8$Q, frost$io$InputStream$read$frost$unsafe$NewPointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int, frost$io$InputStream$read$frost$unsafe$NewPointer$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Int, frost$io$InputStream$read$frost$unsafe$NewPointer$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Int, frost$io$InputStream$readFully$R$frost$core$String, frost$io$InputStream$readFully$R$frost$collections$Array$LTfrost$core$UInt8$GT, frost$io$InputStream$readLine$R$frost$core$String$Q, frost$io$InputStream$sendTo$frost$io$OutputStream$R$frost$core$Maybe$LTfrost$core$Int$GT, frost$io$InputStream$lines$R$frost$collections$Iterator$LTfrost$core$String$GT, frost$io$InputStream$close$R$frost$core$Error$Q, frost$io$PushbackInputStream$pushback$frost$core$UInt8, frost$io$PushbackInputStream$pushback$frost$core$Int8, frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$UInt8$GT, frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Int8$GT, frost$io$PushbackInputStream$pushback$frost$core$Char8, frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Char8$GT, frost$io$PushbackInputStream$pushback$frost$core$String} };
 
 typedef frost$core$Int (*$fn2)(frost$collections$CollectionView*);
 typedef frost$core$Int (*$fn3)(frost$collections$CollectionView*);
@@ -125,35 +126,36 @@ bool _39;
 frost$core$Bit _40;
 bool _41;
 frost$core$Int _43;
-frost$core$Object*** _47;
-frost$core$Object** _48;
-frost$core$Int64 _49;
-int64_t _50;
-frost$core$Object* _51;
+frost$unsafe$NewPointer* _47;
+frost$unsafe$NewPointer _48;
+int64_t _49;
+frost$core$Int64 _50;
+int64_t _51;
 frost$core$Object* _52;
-frost$core$UInt8 _55;
-frost$core$Object* _57;
-frost$collections$Array** _60;
-frost$collections$Array* _61;
-frost$collections$Array** _62;
-frost$collections$Array* _63;
-frost$collections$CollectionView* _64;
-$fn5 _65;
-frost$core$Int _66;
+frost$core$Object* _53;
+frost$core$UInt8 _56;
+frost$core$Object* _58;
+frost$collections$Array** _61;
+frost$collections$Array* _62;
+frost$collections$Array** _63;
+frost$collections$Array* _64;
+frost$collections$CollectionView* _65;
+$fn5 _66;
 frost$core$Int _67;
-int64_t _68;
+frost$core$Int _68;
 int64_t _69;
 int64_t _70;
-frost$core$Int _71;
-frost$core$Object* _72;
-frost$core$UInt8 _73;
-frost$core$Object* _74;
-frost$core$UInt8 _77;
-frost$core$UInt8$nullable _78;
-frost$io$InputStream** _81;
-frost$io$InputStream* _82;
-$fn6 _83;
-frost$core$UInt8$nullable _84;
+int64_t _71;
+frost$core$Int _72;
+frost$core$Object* _73;
+frost$core$UInt8 _74;
+frost$core$Object* _75;
+frost$core$UInt8 _78;
+frost$core$UInt8$nullable _79;
+frost$io$InputStream** _82;
+frost$io$InputStream* _83;
+$fn6 _84;
+frost$core$UInt8$nullable _85;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/PushbackInputStream.frost:35
 _1 = &param0->pushbackBuffer;
 _2 = *_1;
@@ -219,47 +221,48 @@ block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _47 = &_15->data;
 _48 = *_47;
-_49 = frost$core$Int64$init$frost$core$Int(_25);
-_50 = _49.value;
-_51 = _48[_50];
-_52 = _51;
-frost$core$Frost$ref$frost$core$Object$Q(_52);
-_55 = ((frost$core$UInt8$wrapper*) _51)->value;
-*(&local0) = _55;
-_57 = _51;
-frost$core$Frost$unref$frost$core$Object$Q(_57);
+_49 = _48.value;
+_50 = frost$core$Int64$init$frost$core$Int(_25);
+_51 = _50.value;
+_52 = ((frost$core$Object**)_49)[_51];
+_53 = _52;
+frost$core$Frost$ref$frost$core$Object$Q(_53);
+_56 = ((frost$core$UInt8$wrapper*) _52)->value;
+*(&local0) = _56;
+_58 = _52;
+frost$core$Frost$unref$frost$core$Object$Q(_58);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/PushbackInputStream.frost:37
-_60 = &param0->pushbackBuffer;
-_61 = *_60;
-_62 = &param0->pushbackBuffer;
-_63 = *_62;
-_64 = ((frost$collections$CollectionView*) _63);
-ITable* $tmp12 = _64->$class->itable;
+_61 = &param0->pushbackBuffer;
+_62 = *_61;
+_63 = &param0->pushbackBuffer;
+_64 = *_63;
+_65 = ((frost$collections$CollectionView*) _64);
+ITable* $tmp12 = _65->$class->itable;
 while ($tmp12->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp12 = $tmp12->next;
 }
-_65 = $tmp12->methods[0];
-_66 = _65(_64);
-_67 = (frost$core$Int) {1u};
-_68 = _66.value;
+_66 = $tmp12->methods[0];
+_67 = _66(_65);
+_68 = (frost$core$Int) {1u};
 _69 = _67.value;
-_70 = _68 - _69;
-_71 = (frost$core$Int) {_70};
-_72 = frost$collections$Array$removeIndex$frost$core$Int$R$frost$collections$Array$T(_61, _71);
-_73 = ((frost$core$UInt8$wrapper*) _72)->value;
-_74 = _72;
-frost$core$Frost$unref$frost$core$Object$Q(_74);
+_70 = _68.value;
+_71 = _69 - _70;
+_72 = (frost$core$Int) {_71};
+_73 = frost$collections$Array$removeIndex$frost$core$Int$R$frost$collections$Array$T(_62, _72);
+_74 = ((frost$core$UInt8$wrapper*) _73)->value;
+_75 = _73;
+frost$core$Frost$unref$frost$core$Object$Q(_75);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/PushbackInputStream.frost:38
-_77 = *(&local0);
-_78 = ((frost$core$UInt8$nullable) { _77, true });
-return _78;
+_78 = *(&local0);
+_79 = ((frost$core$UInt8$nullable) { _78, true });
+return _79;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/PushbackInputStream.frost:40
-_81 = &param0->source;
-_82 = *_81;
-_83 = ($fn13) _82->$class->vtable[2];
-_84 = _83(_82);
-return _84;
+_82 = &param0->source;
+_83 = *_82;
+_84 = ($fn13) _83->$class->vtable[2];
+_85 = _84(_83);
+return _85;
 
 }
 void frost$io$PushbackInputStream$pushback$frost$core$UInt8(void* rawSelf, frost$core$UInt8 param1) {

@@ -128,7 +128,7 @@ _4 = &param0->replacementIndex;
 _5 = *_4;
 _6 = &param0->searchText;
 _7 = *_6;
-// begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:54:49
+// begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:52:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
 _10 = (frost$core$Int) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:1205:21
@@ -138,7 +138,7 @@ _13 = &(&local1)->value;
 _15 = *(&local1);
 *(&local0) = _15;
 _18 = *(&local0);
-// begin inline call to function frost.core.String.Index.=(other:frost.core.String.Index):frost.core.Bit from Matcher.frost:54:37
+// begin inline call to function frost.core.String.Index.=(other:frost.core.String.Index):frost.core.Bit from Matcher.frost:52:37
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:66
 _22 = _5.value;
 _23 = _18.value;
@@ -151,24 +151,24 @@ _29 = (frost$core$Bit) {_28};
 _32 = _29.value;
 if (_32) goto block1; else goto block2;
 block2:;
-_34 = (frost$core$Int) {55u};
+_34 = (frost$core$Int) {53u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s3, _34, &$s4);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:56
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:57
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:54
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:55
 _39 = &param0->matched;
 _40 = *_39;
 _41 = _40.value;
 if (_41) goto block8; else goto block10;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:58
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:56
 frost$core$Matcher$get_end$R$frost$core$String$Index(&_44, param0);
 *(&local2) = _44;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:59
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:57
 frost$core$Matcher$get_start$R$frost$core$String$Index(&_47, param0);
 _48 = *(&local2);
-// begin inline call to function frost.core.String.Index.=(other:frost.core.String.Index):frost.core.Bit from Matcher.frost:59:27
+// begin inline call to function frost.core.String.Index.=(other:frost.core.String.Index):frost.core.Bit from Matcher.frost:57:27
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:66
 _51 = _47.value;
 _52 = _48.value;
@@ -181,13 +181,13 @@ _58 = (frost$core$Bit) {_57};
 _61 = _58.value;
 if (_61) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:60
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:58
 _64 = &param0->searchText;
 _65 = *_64;
 _66 = *(&local2);
 _67 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(_65, _66);
 *(&local2) = _67;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:61
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:59
 _70 = *(&local2);
 frost$core$String$Index$wrapper* $tmp5;
 $tmp5 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
@@ -195,7 +195,7 @@ $tmp5->value = _70;
 _71 = ((frost$core$Comparable*) $tmp5);
 _72 = &param0->searchText;
 _73 = *_72;
-// begin inline call to function frost.core.String.get_end():frost.core.String.Index from Matcher.frost:61:39
+// begin inline call to function frost.core.String.get_end():frost.core.String.Index from Matcher.frost:59:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1212
 _76 = &_73->_length;
 _77 = *_76;
@@ -223,11 +223,11 @@ _93 = ((frost$core$Object*) _71);
 frost$core$Frost$unref$frost$core$Object$Q(_93);
 if (_90) goto block15; else goto block16;
 block15:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:62
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:60
 _97 = (frost$core$Bit) {false};
 _98 = &param0->matched;
 *_98 = _97;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:63
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:61
 _101 = &param0->matched;
 _102 = *_101;
 return _102;
@@ -237,10 +237,10 @@ block12:;
 goto block9;
 block10:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:68
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:66
 _108 = &param0->searchText;
 _109 = *_108;
-// begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:68:32
+// begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:66:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
 _112 = (frost$core$Int) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:1205:21
@@ -253,12 +253,12 @@ _120 = *(&local5);
 *(&local2) = _120;
 goto block9;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:70
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:68
 _125 = *(&local2);
 frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit(&_126, param0, _125);
 _127 = &param0->matched;
 *_127 = _126;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:71
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:69
 _130 = &param0->matched;
 _131 = *_130;
 return _131;
@@ -272,14 +272,14 @@ frost$core$Bit _4;
 frost$core$Bit* _5;
 frost$core$Bit* _8;
 frost$core$Bit _9;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:86
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:84
 _1 = &param0->replacementIndex;
 *_1 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:87
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:85
 frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit(&_4, param0, param1);
 _5 = &param0->matched;
 *_5 = _4;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:88
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:86
 _8 = &param0->matched;
 _9 = *_8;
 return _9;
@@ -298,11 +298,11 @@ _1 = *_0;
 _2 = _1.value;
 if (_2) goto block1; else goto block2;
 block2:;
-_4 = (frost$core$Int) {116u};
+_4 = (frost$core$Int) {114u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s8, _4, &$s9);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:117
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:115
 _8 = (frost$core$Bit) {true};
 frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String$frost$core$Bit(param0, param1, param2, _8);
 return;
@@ -445,11 +445,11 @@ _1 = *_0;
 _2 = _1.value;
 if (_2) goto block1; else goto block2;
 block2:;
-_4 = (frost$core$Int) {133u};
+_4 = (frost$core$Int) {131u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s10, _4, &$s11);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:134
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:132
 _8 = &param0->searchText;
 _9 = *_8;
 _10 = &param0->replacementIndex;
@@ -461,11 +461,11 @@ _15 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$GT$R$fro
 frost$core$MutableString$append$frost$core$String(param1, _15);
 _17 = ((frost$core$Object*) _15);
 frost$core$Frost$unref$frost$core$Object$Q(_17);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:135
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:133
 _20 = param3.value;
 if (_20) goto block3; else goto block5;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:136
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:134
 _23 = (frost$core$RegularExpression*) frostObjectAlloc(sizeof(frost$core$RegularExpression), (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_23, &$s12);
 _25 = frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher(_23, param2);
@@ -480,10 +480,10 @@ _33 = ((frost$core$Object*) _25);
 frost$core$Frost$unref$frost$core$Object$Q(_33);
 _35 = ((frost$core$Object*) _23);
 frost$core$Frost$unref$frost$core$Object$Q(_35);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:137
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:135
 _38 = &param0->searchText;
 _39 = *_38;
-// begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:137:51
+// begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:135:51
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
 _42 = (frost$core$Int) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:1205:21
@@ -494,7 +494,7 @@ _47 = *(&local2);
 *(&local1) = _47;
 _50 = *(&local1);
 *(&local3) = _50;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:138
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:136
 goto block8;
 block8:;
 _55 = *(&local0);
@@ -502,7 +502,7 @@ _56 = frost$core$Matcher$find$R$frost$core$Bit(_55);
 _57 = _56.value;
 if (_57) goto block9; else goto block10;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:139
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:137
 _60 = *(&local0);
 _61 = (frost$core$Int) {1u};
 _62 = frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q(_60, _61);
@@ -511,12 +511,12 @@ _64 = (frost$core$Bit) {_63};
 _65 = _64.value;
 if (_65) goto block11; else goto block12;
 block12:;
-_67 = (frost$core$Int) {139u};
+_67 = (frost$core$Int) {137u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s13, _67, &$s14);
 abort(); // unreachable
 block11:;
 _70 = _62;
-// begin inline call to function frost.core.String.get_asInt():frost.core.Int? from Matcher.frost:139:45
+// begin inline call to function frost.core.String.get_asInt():frost.core.Int? from Matcher.frost:137:45
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1454
 _73 = frost$core$String$get_asInt64$R$frost$core$Int64$Q(_70);
 *(&local5) = _73;
@@ -558,7 +558,7 @@ _105 = (frost$core$Bit) {_104};
 _106 = _105.value;
 if (_106) goto block19; else goto block20;
 block20:;
-_108 = (frost$core$Int) {139u};
+_108 = (frost$core$Int) {137u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s17, _108, &$s18);
 abort(); // unreachable
 block19:;
@@ -566,14 +566,14 @@ _111 = ((frost$core$Int) _103.value);
 *(&local6) = _111;
 _113 = ((frost$core$Object*) _62);
 frost$core$Frost$unref$frost$core$Object$Q(_113);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:140
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:138
 _116 = *(&local6);
 *(&local7) = _116;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:139
 _119 = *(&local0);
 frost$core$Matcher$get_end$R$frost$core$String$Index(&_120, _119);
 *(&local8) = _120;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:142
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:140
 goto block21;
 block21:;
 _124 = *(&local7);
@@ -585,7 +585,7 @@ _129 = (frost$core$Bit) {_128};
 _130 = _129.value;
 if (_130) goto block22; else goto block23;
 block22:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:143
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:141
 _133 = *(&local7);
 _134 = (frost$core$Int) {10u};
 _135 = _133.value;
@@ -593,7 +593,7 @@ _136 = _134.value;
 _137 = _135 / _136;
 _138 = (frost$core$Int) {_137};
 *(&local7) = _138;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:144
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:142
 _141 = &param0->searchText;
 _142 = *_141;
 _143 = *(&local8);
@@ -601,7 +601,7 @@ _144 = frost$core$String$previous$frost$core$String$Index$R$frost$core$String$In
 *(&local8) = _144;
 goto block21;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:146
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:144
 _148 = *(&local3);
 _149 = *(&local0);
 frost$core$Matcher$get_start$R$frost$core$String$Index(&_150, _149);
@@ -611,10 +611,10 @@ _153 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$GT$R$fr
 frost$core$MutableString$append$frost$core$String(param1, _153);
 _155 = ((frost$core$Object*) _153);
 frost$core$Frost$unref$frost$core$Object$Q(_155);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:147
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:145
 _158 = *(&local8);
 *(&local3) = _158;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:148
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:146
 _161 = *(&local7);
 _162 = (frost$core$Int) {0u};
 _163 = _161.value;
@@ -626,7 +626,7 @@ if (_167) goto block24; else goto block27;
 block27:;
 _169 = *(&local6);
 _170 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Matcher.frost:148:44
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Matcher.frost:146:44
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _173 = _169.value;
 _174 = _170.value;
@@ -635,7 +635,7 @@ _176 = (frost$core$Bit) {_175};
 _178 = _176.value;
 if (_178) goto block24; else goto block26;
 block24:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:149
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:147
 _181 = *(&local7);
 _182 = frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q(param0, _181);
 _183 = _182 != NULL;
@@ -643,7 +643,7 @@ _184 = (frost$core$Bit) {_183};
 _185 = _184.value;
 if (_185) goto block29; else goto block30;
 block30:;
-_187 = (frost$core$Int) {149u};
+_187 = (frost$core$Int) {147u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s19, _187, &$s20);
 abort(); // unreachable
 block29:;
@@ -654,13 +654,13 @@ frost$core$Frost$unref$frost$core$Object$Q(_192);
 goto block25;
 block26:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:152
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:150
 frost$core$MutableString$append$frost$core$String(param1, &$s21);
 goto block25;
 block25:;
 goto block8;
 block10:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:153
 _201 = *(&local3);
 _202 = ((frost$core$String$Index$nullable) { _201, true });
 _203 = (frost$core$Bit) {false};
@@ -676,11 +676,11 @@ frost$core$Frost$unref$frost$core$Object$Q(_210);
 goto block4;
 block5:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:158
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:156
 frost$core$MutableString$append$frost$core$String(param1, param2);
 goto block4;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:160
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:158
 frost$core$Matcher$get_end$R$frost$core$String$Index(&_219, param0);
 _220 = &param0->replacementIndex;
 *_220 = _219;
@@ -699,7 +699,7 @@ frost$core$Bit _6;
 frost$core$Range$LTfrost$core$String$Index$Q$GT _7;
 frost$core$String* _8;
 frost$core$Object* _10;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:171
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:169
 _1 = &param0->searchText;
 _2 = *_1;
 _3 = &param0->replacementIndex;
@@ -721,9 +721,9 @@ frost$core$Object* _3;
 frost$core$String** _5;
 frost$core$String* _6;
 frost$core$Object* _7;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:192
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:190
 frost$core$Matcher$destroy(param0);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:191
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:189
 _3 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_3);
 _5 = &param0->searchText;

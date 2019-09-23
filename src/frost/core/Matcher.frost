@@ -1,14 +1,12 @@
 package frost.core
 
-uses frost.unsafe.Pointer
-
 @final
 class Matcher {
     @private
     constant REPLACEMENT_GROUPS := /\$(0|[1-9]\d*)/
 
     @private
-    def nativeHandle:Pointer<Int8>
+    def nativeHandle:Int
 
     @private
     def searchText:String
