@@ -9,6 +9,7 @@
 #include "frost/core/Immutable.h"
 #include "frost/core/MutableMethod.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 struct { frost$core$Class* cl; ITable* next; void* methods[6]; } frost$collections$MapView$_frost$collections$MapView = { (frost$core$Class*) &frost$collections$MapView$class, NULL, { NULL, NULL, NULL, NULL, frost$collections$MapView$get_keys$R$frost$collections$Iterator$LTfrost$collections$MapView$K$GT, frost$collections$MapView$get_values$R$frost$collections$Iterator$LTfrost$collections$MapView$V$GT} };
 
@@ -20,7 +21,7 @@ typedef frost$collections$Iterator* (*$fn3)(frost$collections$Iterator*, frost$c
 typedef frost$collections$Iterator* (*$fn6)(frost$collections$MapView*);
 typedef frost$collections$Iterator* (*$fn7)(frost$collections$Iterator*, frost$core$MutableMethod*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4d\x61\x70\x56\x69\x65\x77", 25, 236329803138584107, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4d\x61\x70\x56\x69\x65\x77", 25, 236329803138584107, NULL };
 
 frost$core$Object* frost$collections$MapView$$anonymous1$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$K(frost$core$Tuple2* param0) {
 
@@ -44,9 +45,9 @@ frost$collections$MapView* param0 = (frost$collections$MapView*) rawSelf;
 
 $fn2 _1;
 frost$collections$Iterator* _2;
-frost$core$Int8* _3;
+int64_t _3;
 frost$core$Method* _4;
-frost$core$Int8** _7;
+int64_t* _7;
 frost$core$Object* _10;
 frost$core$Immutable** _12;
 frost$core$Immutable* _13;
@@ -68,13 +69,13 @@ while ($tmp4->$class != (frost$core$Class*) &frost$collections$MapView$class) {
 }
 _1 = $tmp4->methods[3];
 _2 = _1(param0);
-_3 = ((frost$core$Int8*) frost$collections$MapView$$anonymous1$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$K);
+_3 = frost$unsafe$Pointer$init$builtin_int((intptr_t) &frost$collections$MapView$$anonymous1$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$K).value;
 _4 = (frost$core$Method*) frostObjectAlloc(sizeof(frost$core$Method), (frost$core$Class*) &frost$core$Method$class);
-// begin inline call to frost.core.Method.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Immutable?) from MapView.frost:51:31
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:37
+// begin inline call to frost.core.Method.init(pointer:builtin_int, target:frost.core.Immutable?) from MapView.frost:51:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:35
 _7 = &_4->pointer;
 *_7 = _3;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:36
 _10 = ((frost$core$Object*) ((frost$core$Immutable*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_10);
 _12 = &_4->target;
@@ -125,9 +126,9 @@ frost$collections$MapView* param0 = (frost$collections$MapView*) rawSelf;
 
 $fn6 _1;
 frost$collections$Iterator* _2;
-frost$core$Int8* _3;
+int64_t _3;
 frost$core$Method* _4;
-frost$core$Int8** _7;
+int64_t* _7;
 frost$core$Object* _10;
 frost$core$Immutable** _12;
 frost$core$Immutable* _13;
@@ -149,13 +150,13 @@ while ($tmp8->$class != (frost$core$Class*) &frost$collections$MapView$class) {
 }
 _1 = $tmp8->methods[3];
 _2 = _1(param0);
-_3 = ((frost$core$Int8*) frost$collections$MapView$$anonymous2$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$V);
+_3 = frost$unsafe$Pointer$init$builtin_int((intptr_t) &frost$collections$MapView$$anonymous2$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$V).value;
 _4 = (frost$core$Method*) frostObjectAlloc(sizeof(frost$core$Method), (frost$core$Class*) &frost$core$Method$class);
-// begin inline call to frost.core.Method.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Immutable?) from MapView.frost:57:31
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:37
+// begin inline call to frost.core.Method.init(pointer:builtin_int, target:frost.core.Immutable?) from MapView.frost:57:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:35
 _7 = &_4->pointer;
 *_7 = _3;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:36
 _10 = ((frost$core$Object*) ((frost$core$Immutable*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_10);
 _12 = &_4->target;
@@ -186,6 +187,7 @@ return _23;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

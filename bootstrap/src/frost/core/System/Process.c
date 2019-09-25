@@ -4,6 +4,7 @@
 #include "frost/core/String.h"
 #include "frost/core/Object.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) void frost$core$System$Process$cleanup$shim(frost$core$System$Process* p0) {
     frost$core$System$Process$cleanup(p0);
 
@@ -13,7 +14,7 @@ static frost$core$String $s1;
 frost$core$System$Process$class_type frost$core$System$Process$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$core$System$Process$cleanup$shim, frost$core$System$Process$standardInput$R$frost$io$OutputStream, frost$core$System$Process$standardOutput$R$frost$io$InputStream, frost$core$System$Process$standardError$R$frost$io$InputStream, frost$core$System$Process$exitCode$R$frost$core$Int$Q, frost$core$System$Process$waitFor$R$frost$core$Int, frost$core$System$Process$_cleanup} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x79\x73\x74\x65\x6d\x2e\x50\x72\x6f\x63\x65\x73\x73", 25, 3487741446673138742, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x79\x73\x74\x65\x6d\x2e\x50\x72\x6f\x63\x65\x73\x73", 25, 3487741446673138742, NULL };
 
 void frost$core$System$Process$cleanup(void* rawSelf) {
 frost$core$System$Process* param0 = (frost$core$System$Process*) rawSelf;
@@ -35,6 +36,7 @@ return;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

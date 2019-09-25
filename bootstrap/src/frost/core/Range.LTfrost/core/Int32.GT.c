@@ -8,6 +8,7 @@
 #include "frost/core/MutableString.h"
 #include "frost/core/Frost.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) frost$core$String* frost$core$Range$LTfrost$core$Int32$GT$get_asString$R$frost$core$String$shim(frost$core$Object* p0) {
     frost$core$String* result = frost$core$Range$LTfrost$core$Int32$GT$get_asString$R$frost$core$String(((frost$core$Range$LTfrost$core$Int32$GT$wrapper*) p0)->value);
 
@@ -27,10 +28,10 @@ typedef frost$core$String* (*$fn4)(frost$core$Object*);
 typedef frost$core$String* (*$fn6)(frost$core$Object*);
 typedef frost$core$String* (*$fn10)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x33\x32\x3e", 34, 2355662188789198852, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x33\x32\x3e", 34, 2355662188789198852, NULL };
-static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e\x2e", 3, -587370003925626343, NULL };
-static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e", 2, 565793323585912621, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x33\x32\x3e", 34, 2355662188789198852, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x33\x32\x3e", 34, 2355662188789198852, NULL };
+static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x2e\x2e\x2e", 3, -587370003925626343, NULL };
+static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x2e\x2e", 2, 565793323585912621, NULL };
 
 frost$core$Range$LTfrost$core$Int32$GT frost$core$Range$LTfrost$core$Int32$GT$init$frost$core$Int32$frost$core$Int32$frost$core$Bit(frost$core$Int32 param0, frost$core$Int32 param1, frost$core$Bit param2) {
 

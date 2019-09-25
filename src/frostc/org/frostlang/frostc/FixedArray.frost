@@ -1,6 +1,6 @@
 package org.frostlang.frostc
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 @final
 class FixedArray<T> : ListView<T> {
@@ -33,24 +33,24 @@ class FixedArray<T> : ListView<T> {
     def dummy:Int -- for binary compatibility with Array
 
     @private
-    def data:NewPointer<T?>
+    def data:Pointer<T?>
 
     init() {
         self._count := 0
-        data := NewPointer<T?>.alloc(0)
+        data := Pointer<T?>.alloc(0)
     }
 
     init(data:ListView<T>) {
         self._count := data.count
-        self.data := NewPointer<T?>.alloc(_count)
+        self.data := Pointer<T?>.alloc(_count)
         for i in 0 .. count {
             self.data[i] := data[i]
         }
     }
 
     @private
-    init(data:NewPointer<T>, count:Int) {
-        self.data := data->NewPointer<T?>
+    init(data:Pointer<T>, count:Int) {
+        self.data := data->Pointer<T?>
         self._count := count
     }
 
@@ -65,7 +65,7 @@ class FixedArray<T> : ListView<T> {
     method from(a:Array<T>):FixedArray<T> {
         -- FIXME this transformation is only safe at -S0
         a.data := a.data.realloc(a.capacity, a._count)
-        a.$class := FixedArray<T>().$class -- FIXME need a better way to get a class NewPointer
+        a.$class := FixedArray<T>().$class -- FIXME need a better way to get a class pointer
         a.capacity := -1
         return a->Object->FixedArray<T>
     }

@@ -9,6 +9,7 @@
 #include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) frost$core$Int frost$io$ByteOrder$get_hash$R$frost$core$Int$shim(frost$core$Object* p0) {
     frost$core$Int result = frost$io$ByteOrder$get_hash$R$frost$core$Int(((frost$io$ByteOrder$wrapper*) p0)->value);
 
@@ -46,15 +47,15 @@ struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } frost$io$Byte
 
 static frost$core$String $s2;
 frost$io$ByteOrder$wrapperclass_type frost$io$ByteOrder$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, (ITable*) &frost$io$ByteOrder$wrapper_frost$core$Equatable, { frost$io$ByteOrder$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim} };
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x42\x79\x74\x65\x4f\x72\x64\x65\x72", 18, -9020516456099406651, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x42\x79\x74\x65\x4f\x72\x64\x65\x72", 18, -9020516456099406651, NULL };
-static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x42\x79\x74\x65\x4f\x72\x64\x65\x72\x2e\x66\x72\x6f\x73\x74", 15, -8507021180538529515, NULL };
-static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x42\x79\x74\x65\x4f\x72\x64\x65\x72\x2e\x66\x72\x6f\x73\x74", 15, -8507021180538529515, NULL };
-static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x49\x54\x54\x4c\x45\x5f\x45\x4e\x44\x49\x41\x4e", 13, 686991733482657517, NULL };
-static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x49\x54\x54\x4c\x45\x5f\x45\x4e\x44\x49\x41\x4e", 13, 686991733482657517, NULL };
-static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x42\x49\x47\x5f\x45\x4e\x44\x49\x41\x4e", 10, -927966598188130251, NULL };
-static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x42\x49\x47\x5f\x45\x4e\x44\x49\x41\x4e", 10, -927966598188130251, NULL };
-static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x42\x79\x74\x65\x4f\x72\x64\x65\x72\x2e\x66\x72\x6f\x73\x74", 15, -8507021180538529515, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x42\x79\x74\x65\x4f\x72\x64\x65\x72", 18, -9020516456099406651, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x42\x79\x74\x65\x4f\x72\x64\x65\x72", 18, -9020516456099406651, NULL };
+static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x42\x79\x74\x65\x4f\x72\x64\x65\x72\x2e\x66\x72\x6f\x73\x74", 15, -8507021180538529515, NULL };
+static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x42\x79\x74\x65\x4f\x72\x64\x65\x72\x2e\x66\x72\x6f\x73\x74", 15, -8507021180538529515, NULL };
+static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x4c\x49\x54\x54\x4c\x45\x5f\x45\x4e\x44\x49\x41\x4e", 13, 686991733482657517, NULL };
+static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x4c\x49\x54\x54\x4c\x45\x5f\x45\x4e\x44\x49\x41\x4e", 13, 686991733482657517, NULL };
+static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x42\x49\x47\x5f\x45\x4e\x44\x49\x41\x4e", 10, -927966598188130251, NULL };
+static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x42\x49\x47\x5f\x45\x4e\x44\x49\x41\x4e", 10, -927966598188130251, NULL };
+static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x42\x79\x74\x65\x4f\x72\x64\x65\x72\x2e\x66\x72\x6f\x73\x74", 15, -8507021180538529515, NULL };
 
 void frost$io$ByteOrder$cleanup(frost$io$ByteOrder param0) {
 
@@ -300,6 +301,7 @@ block8:;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

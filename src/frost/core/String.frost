@@ -1,6 +1,6 @@
 package frost.core
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 ---------------
 -- IMPORTANT --
@@ -319,7 +319,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     }
 
     @private
-    def data:NewPointer<Char8>
+    def data:Pointer<Char8>
 
     @private
     def _length:Int
@@ -347,14 +347,14 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
 
     property trimmed:String
 
-    init(data:NewPointer<Char8>, length:Int) {
+    init(data:Pointer<Char8>, length:Int) {
         self.data := data
         _length := length
         self.owner := null
     }
 
     @private
-    init(data:NewPointer<Char8>, length:Int, owner:String) {
+    init(data:Pointer<Char8>, length:Int, owner:String) {
         self.data := data
         _length := length
         self.owner := owner
@@ -362,7 +362,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
 
     init(chars:ListView<Char8>) {
         _length := chars.count
-        data := NewPointer<Char8>.alloc(_length)
+        data := Pointer<Char8>.alloc(_length)
         for i in 0 .. _length {
             data[i] := chars[i]
         }
@@ -374,7 +374,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         for c in chars {
             result.append(c)
         }
-        self.data := NewPointer<Char8>.alloc(result._length)
+        self.data := Pointer<Char8>.alloc(result._length)
         for i in 0 .. result._length {
             self.data[i] := result.data[i]
         }
@@ -542,7 +542,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     Returns the concatenation of this string and another string.
     ================================================================================================
     function +(other:String):String {
-        def result := NewPointer<Char8>.alloc(_length + other._length)
+        def result := Pointer<Char8>.alloc(_length + other._length)
         for i in 0 .. _length {
             result[i] := data[i]
         }

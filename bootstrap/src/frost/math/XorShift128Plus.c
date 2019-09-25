@@ -6,6 +6,7 @@
 #include "frost/core/Int64.h"
 #include "frost/core/Bit.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 struct { frost$core$Class* cl; ITable* next; void* methods[6]; } frost$math$XorShift128Plus$_frost$math$Random = { (frost$core$Class*) &frost$math$Random$class, NULL, { frost$math$Random$bit$R$frost$core$Bit, frost$math$Random$int32$R$frost$core$Int32, frost$math$XorShift128Plus$int64$R$frost$core$Int64, frost$math$Random$int$frost$core$Int$R$frost$core$Int, frost$math$Random$real32$R$frost$core$Real32, frost$math$Random$real64$R$frost$core$Real64} };
 
@@ -13,7 +14,7 @@ static frost$core$String $s1;
 frost$math$XorShift128Plus$class_type frost$math$XorShift128Plus$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$math$XorShift128Plus$_frost$math$Random, { frost$core$Object$get_asString$R$frost$core$String, frost$math$XorShift128Plus$cleanup, frost$math$XorShift128Plus$int64$R$frost$core$Int64} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x58\x6f\x72\x53\x68\x69\x66\x74\x31\x32\x38\x50\x6c\x75\x73", 26, 4029058821734976825, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x58\x6f\x72\x53\x68\x69\x66\x74\x31\x32\x38\x50\x6c\x75\x73", 26, 4029058821734976825, NULL };
 
 void frost$math$XorShift128Plus$init$frost$core$Int64(void* rawSelf, frost$core$Int64 param1) {
 frost$math$XorShift128Plus* param0 = (frost$math$XorShift128Plus*) rawSelf;
@@ -237,6 +238,7 @@ return;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

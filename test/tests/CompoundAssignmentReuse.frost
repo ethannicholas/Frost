@@ -1,4 +1,4 @@
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 method noisyZero():Int {
     Console.printLine("calculating index")
@@ -6,7 +6,7 @@ method noisyZero():Int {
 }
 
 method main() {
-    def x := NewPointer<Int>.alloc(1)
+    def x := Pointer<Int>.alloc(1)
     x[0] := 16
     x[noisyZero()] += 5
     Console.printLine(x[0])

@@ -1,7 +1,5 @@
 package frost.collections
 
-uses frost.unsafe.NewPointer
-
 @final
 class IdentitySet<T> : Collection<T> {
     @private

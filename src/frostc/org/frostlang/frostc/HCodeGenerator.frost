@@ -117,9 +117,6 @@ class HCodeGenerator : CodeGenerator {
                     return type(t.subtypes[0])
                 }
                 when Type.Kind.GENERIC {
-                    if t.subtypes[0].name = "frost.unsafe.Pointer" {
-                        return type(t.subtypes[1]) + "*"
-                    }
                     def cl := compiler.getClass(t)
                     if cl.isSpecialization() {
                         def name := "\{escapeName(t.name)}"

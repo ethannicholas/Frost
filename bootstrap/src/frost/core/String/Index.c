@@ -9,6 +9,7 @@
 #include "frost/core/Bit.h"
 #include "frost/core/Comparable.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) frost$core$Int frost$core$String$Index$get_hash$R$frost$core$Int$shim(frost$core$Object* p0) {
     frost$core$Int result = frost$core$String$Index$get_hash$R$frost$core$Int(((frost$core$String$Index$wrapper*) p0)->value);
 
@@ -50,8 +51,8 @@ struct { frost$core$Class* cl; ITable* itable; void* methods[4]; } frost$core$St
 
 static frost$core$String $s2;
 frost$core$String$Index$wrapperclass_type frost$core$String$Index$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, (ITable*) &frost$core$String$Index$wrapper_frost$core$Comparable, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Value$cleanup$shim} };
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 23, -7003090133759081209, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 23, -7003090133759081209, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 23, -7003090133759081209, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 23, -7003090133759081209, NULL };
 
 frost$core$String$Index frost$core$String$Index$init$frost$core$Int(frost$core$Int param0) {
 

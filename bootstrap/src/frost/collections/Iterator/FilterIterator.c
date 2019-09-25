@@ -6,8 +6,10 @@
 #include "frost/core/MutableMethod.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
+#include "frost/unsafe/Pointer.h"
 #include "frost/core/Int.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) frost$core$Object* frost$collections$Iterator$FilterIterator$next$R$frost$collections$Iterator$FilterIterator$T$shim(frost$collections$Iterator$FilterIterator* p0) {
     frost$core$Object* result = frost$collections$Iterator$FilterIterator$next$R$frost$collections$Iterator$FilterIterator$T(p0);
 
@@ -23,17 +25,15 @@ typedef void (*$fn2)(frost$collections$Iterator$FilterIterator*);
 typedef void (*$fn3)(frost$collections$Iterator$FilterIterator*);
 typedef frost$core$Bit (*$fn4)(frost$collections$Iterator*);
 typedef frost$core$Object* (*$fn5)(frost$collections$Iterator*);
-typedef frost$core$Bit (*$fn6)(frost$core$Object*);
-typedef frost$core$Bit (*$fn7)(frost$core$Object*, frost$core$Object*);
-typedef frost$core$Bit (*$fn10)(frost$core$Object*);
-typedef frost$core$Bit (*$fn11)(frost$core$Object*, frost$core$Object*);
-typedef frost$core$Bit (*$fn12)(frost$collections$Iterator*);
-typedef void (*$fn13)(frost$collections$Iterator$FilterIterator*);
-typedef void (*$fn17)(frost$collections$Iterator$FilterIterator*);
+typedef frost$core$Bit (*$fn8)(frost$core$Object*);
+typedef frost$core$Bit (*$fn9)(frost$core$Object*, frost$core$Object*);
+typedef frost$core$Bit (*$fn10)(frost$collections$Iterator*);
+typedef void (*$fn11)(frost$collections$Iterator$FilterIterator*);
+typedef void (*$fn15)(frost$collections$Iterator$FilterIterator*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72", 41, 7745582472907368992, NULL };
-static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 14, -28151574787386209, NULL };
-static frost$core$String $s16 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 124, -4977101908855608081, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72", 41, 7745582472907368992, NULL };
+static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 14, -28151574787386209, NULL };
+static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 124, -4977101908855608081, NULL };
 
 void frost$collections$Iterator$FilterIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$FilterIterator$T$GT$$LPfrost$collections$Iterator$FilterIterator$T$RP$EQ$GT$LPfrost$core$Bit$RP(void* rawSelf, frost$collections$Iterator* param1, frost$core$MutableMethod* param2) {
 frost$collections$Iterator$FilterIterator* param0 = (frost$collections$Iterator$FilterIterator*) rawSelf;
@@ -102,14 +102,14 @@ frost$core$Object** _35;
 frost$core$Object* _36;
 frost$core$Object* _37;
 frost$core$MutableMethod* _38;
-frost$core$Int8** _39;
-frost$core$Int8* _40;
+int64_t* _39;
+int64_t _40;
 frost$core$Object** _41;
 frost$core$Object* _42;
 bool _43;
-$fn6 _45;
+frost$unsafe$Pointer _45;
 frost$core$Bit _46;
-$fn7 _49;
+frost$unsafe$Pointer _49;
 frost$core$Bit _50;
 frost$core$Bit _53;
 bool _56;
@@ -122,11 +122,11 @@ block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:25
 _3 = &param0->base;
 _4 = *_3;
-ITable* $tmp8 = _4->$class->itable;
-while ($tmp8->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp8 = $tmp8->next;
+ITable* $tmp6 = _4->$class->itable;
+while ($tmp6->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp6 = $tmp6->next;
 }
-_5 = $tmp8->methods[0];
+_5 = $tmp6->methods[0];
 _6 = _5(_4);
 _7 = _6.value;
 if (_7) goto block4; else goto block5;
@@ -141,11 +141,11 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:29
 _16 = &param0->base;
 _17 = *_16;
-ITable* $tmp9 = _17->$class->itable;
-while ($tmp9->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp9 = $tmp9->next;
+ITable* $tmp7 = _17->$class->itable;
+while ($tmp7->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp7 = $tmp7->next;
 }
-_18 = $tmp9->methods[1];
+_18 = $tmp7->methods[1];
 _19 = _18(_17);
 _20 = _19;
 _21 = _20;
@@ -172,13 +172,13 @@ _42 = *_41;
 _43 = _42 != ((frost$core$Object*) NULL);
 if (_43) goto block6; else goto block7;
 block7:;
-_45 = (($fn10) _40);
-_46 = _45(_37);
+_45 = (frost$unsafe$Pointer) {_40};
+_46 = (($fn8) _45.value)(_37);
 *(&local0) = _46;
 goto block8;
 block6:;
-_49 = (($fn11) _40);
-_50 = _49(_42, _37);
+_49 = (frost$unsafe$Pointer) {_40};
+_50 = (($fn9) _49.value)(_42, _37);
 *(&local0) = _50;
 goto block8;
 block8:;
@@ -210,7 +210,7 @@ frost$collections$Iterator$FilterIterator* param0 = (frost$collections$Iterator$
 
 frost$core$Object* local0 = NULL;
 frost$collections$Iterator* _0;
-$fn12 _1;
+$fn10 _1;
 frost$core$Bit _2;
 bool _5;
 bool _6;
@@ -223,17 +223,17 @@ frost$core$Object* _17;
 frost$core$Object* _19;
 frost$core$Object* _21;
 frost$core$Object* _22;
-$fn13 _26;
+$fn11 _26;
 frost$core$Object* _29;
 frost$core$Object* _30;
 frost$core$Object* _32;
 frost$core$Object* _33;
 _0 = ((frost$collections$Iterator*) param0);
-ITable* $tmp14 = _0->$class->itable;
-while ($tmp14->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp14 = $tmp14->next;
+ITable* $tmp12 = _0->$class->itable;
+while ($tmp12->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp12 = $tmp12->next;
 }
-_1 = $tmp14->methods[0];
+_1 = $tmp12->methods[0];
 _2 = _1(_0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
@@ -244,7 +244,7 @@ _9 = _7.value;
 if (_9) goto block1; else goto block2;
 block2:;
 _11 = (frost$core$Int) {40u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s15, _11, &$s16);
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s13, _11, &$s14);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:41
@@ -259,7 +259,7 @@ _22 = _21;
 frost$core$Frost$unref$frost$core$Object$Q(_22);
 *(&local0) = _17;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:42
-_26 = ($fn17) param0->$class->vtable[2];
+_26 = ($fn15) param0->$class->vtable[2];
 _26(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:43
 _29 = *(&local0);

@@ -4,7 +4,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
 #include "frost/io/ByteOrder_types.h"
-#include "frost/unsafe/NewPointer_types.h"
+#include "frost/unsafe/Pointer_types.h"
 #include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
 
@@ -13,7 +13,7 @@ typedef struct frost$io$MemoryInputStream {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$io$ByteOrder byteOrder;
-    frost$unsafe$NewPointer data;
+    frost$unsafe$Pointer data;
     frost$core$Int length;
     frost$core$String* string;
     frost$core$Int index;

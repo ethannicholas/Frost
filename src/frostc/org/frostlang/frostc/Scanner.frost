@@ -793,7 +793,7 @@ class Scanner {
                 }
             }
         }
-        if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "frost.unsafe.Pointer" {
+        if !foundInit & kind = ClassDecl.Kind.CLASS {
             def defaultInit := MethodDecl(result, position, compiler.methods.count,
                     null, Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
                     null, [], compiler.VOID_TYPE, FixedArray<ASTNode>())
@@ -801,8 +801,7 @@ class Scanner {
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
         }
-        if !foundCleanup & (kind = ClassDecl.Kind.CLASS | kind = ClassDecl.Kind.CHOICE) &
-                result.name != "frost.unsafe.Pointer" {
+        if !foundCleanup & (kind = ClassDecl.Kind.CLASS | kind = ClassDecl.Kind.CHOICE) {
             def defaultCleanup := MethodDecl(result, position, compiler.methods.count,
                     null, Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                     MethodDecl.Kind.METHOD, "cleanup", null, [], compiler.VOID_TYPE,

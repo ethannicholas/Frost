@@ -5,6 +5,7 @@
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } frost$core$Comparable$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { NULL, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
@@ -17,7 +18,7 @@ typedef frost$core$Bit (*$fn2)(frost$core$Comparable*, frost$core$Comparable*);
 typedef frost$core$Bit (*$fn4)(frost$core$Comparable*, frost$core$Comparable*);
 typedef frost$core$Bit (*$fn6)(frost$core$Comparable*, frost$core$Comparable*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x6f\x6d\x70\x61\x72\x61\x62\x6c\x65", 21, -9060234412520564052, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x6f\x6d\x70\x61\x72\x61\x62\x6c\x65", 21, -9060234412520564052, NULL };
 
 frost$core$Bit frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit(void* rawSelf, frost$core$Comparable* param1) {
 frost$core$Comparable* param0 = (frost$core$Comparable*) rawSelf;
@@ -86,6 +87,7 @@ return _7;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

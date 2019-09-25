@@ -9,6 +9,7 @@
 #include "frost/core/Object.h"
 #include "frost/core/Frost.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 static frost$core$String $s1;
 org$frostlang$frostc$Alias$class_type org$frostlang$frostc$Alias$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$Alias$get_asString$R$frost$core$String, org$frostlang$frostc$Alias$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
@@ -16,10 +17,10 @@ org$frostlang$frostc$Alias$class_type org$frostlang$frostc$Alias$class = { (fros
 typedef frost$core$String* (*$fn2)(frost$core$Object*);
 typedef frost$core$String* (*$fn5)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6c\x69\x61\x73", 26, 475752284557701908, NULL };
-static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x6c\x69\x61\x73\x28", 6, 1961570522600386317, NULL };
-static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2d\x3e", 2, 562958782608952338, NULL };
-static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6c\x69\x61\x73", 26, 475752284557701908, NULL };
+static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x41\x6c\x69\x61\x73\x28", 6, 1961570522600386317, NULL };
+static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x2d\x3e", 2, 562958782608952338, NULL };
+static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x29", 1, -5808618445805089436, NULL };
 
 void org$frostlang$frostc$Alias$init$frost$core$String$org$frostlang$frostc$Type(void* rawSelf, frost$core$String* param1, org$frostlang$frostc$Type* param2) {
 org$frostlang$frostc$Alias* param0 = (org$frostlang$frostc$Alias*) rawSelf;
@@ -141,6 +142,7 @@ return;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

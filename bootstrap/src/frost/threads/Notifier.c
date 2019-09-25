@@ -6,6 +6,7 @@
 #include "frost/threads/Lock.h"
 #include "frost/core/Frost.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) void frost$threads$Notifier$cleanup$shim(frost$threads$Notifier* p0) {
     frost$threads$Notifier$cleanup(p0);
 
@@ -15,7 +16,7 @@ static frost$core$String $s1;
 frost$threads$Notifier$class_type frost$threads$Notifier$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$threads$Notifier$cleanup$shim, frost$threads$Notifier$wait, frost$threads$Notifier$notify, frost$threads$Notifier$notifyAll, frost$threads$Notifier$create, frost$threads$Notifier$destroy} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4e\x6f\x74\x69\x66\x69\x65\x72", 22, 7742414921846839318, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4e\x6f\x74\x69\x66\x69\x65\x72", 22, 7742414921846839318, NULL };
 
 void frost$threads$Notifier$init$frost$threads$Lock(void* rawSelf, frost$threads$Lock* param1) {
 frost$threads$Notifier* param0 = (frost$threads$Notifier*) rawSelf;
@@ -80,6 +81,7 @@ return;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

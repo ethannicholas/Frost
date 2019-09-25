@@ -1,6 +1,6 @@
 package frost.io
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 ====================================================================================================
 A stream of binary or character data which can be read from.
@@ -175,7 +175,7 @@ class InputStream {
     stream has been reached or if an error occurs.
     ================================================================================================
     @post(@return >= 0)
-    method read(buffer:NewPointer<UInt8>, max:Int):Int {
+    method read(buffer:Pointer<UInt8>, max:Int):Int {
         var i := 0
         while i < max {
             def next:UInt8? := read()
@@ -189,19 +189,19 @@ class InputStream {
     }
 
     ================================================================================================
-    As [read(NewPointer<UInt8>, Int)], but treats the read bytes as signed.
+    As [read(Pointer<UInt8>, Int)], but treats the read bytes as signed.
     ================================================================================================
     @final
-    method read(buffer:NewPointer<Int8>, max:Int):Int {
-        return read(buffer->NewPointer<UInt8>, max)
+    method read(buffer:Pointer<Int8>, max:Int):Int {
+        return read(buffer->Pointer<UInt8>, max)
     }
 
     ================================================================================================
-    As [read(NewPointer<UInt8>, Int)], but treats the read bytes as `Char8`s.
+    As [read(Pointer<UInt8>, Int)], but treats the read bytes as `Char8`s.
     ================================================================================================
     @final
-    method read(buffer:NewPointer<Char8>, max:Int):Int {
-        return read(buffer->NewPointer<UInt8>, max)
+    method read(buffer:Pointer<Char8>, max:Int):Int {
+        return read(buffer->Pointer<UInt8>, max)
     }
 
     ================================================================================================
@@ -213,13 +213,13 @@ class InputStream {
     method readFully():String {
         constant BUFFER_SIZE := 2048
         def result := MutableString()
-        def buffer := NewPointer<UInt8>.alloc(BUFFER_SIZE)
+        def buffer := Pointer<UInt8>.alloc(BUFFER_SIZE)
         loop {
             def count := read(buffer, BUFFER_SIZE)
             if count <= 0 {
                 break
             }
-            result.append(buffer->NewPointer<Char8>, count)
+            result.append(buffer->Pointer<Char8>, count)
         }
         buffer.destroy()
         return result.finish()
@@ -234,7 +234,7 @@ class InputStream {
     method readFully():Array<UInt8> {
         constant BUFFER_SIZE := 2048
         def result := Array<UInt8>()
-        def buffer := NewPointer<UInt8>.alloc(BUFFER_SIZE)
+        def buffer := Pointer<UInt8>.alloc(BUFFER_SIZE)
         loop {
             def count := read(buffer, BUFFER_SIZE)
             if count <= 0 {
@@ -283,7 +283,7 @@ class InputStream {
     method sendTo(out:OutputStream):Maybe<Int> {
         var total := 0
         constant BUFFER_SIZE := 2048
-        def buffer := NewPointer<UInt8>.alloc(BUFFER_SIZE)
+        def buffer := Pointer<UInt8>.alloc(BUFFER_SIZE)
         loop {
             def count := read(buffer, BUFFER_SIZE)
             if count <= 0 {

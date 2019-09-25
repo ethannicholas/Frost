@@ -2,7 +2,7 @@
 #include "frost_c.h"
 #include "String_types.h"
 typedef struct frost$core$String frost$core$String;
-#include "frost/unsafe/NewPointer_types.h"
+#include "frost/unsafe/Pointer_types.h"
 #include "frost/core/Int_types.h"
 typedef struct frost$collections$ListView frost$collections$ListView;
 typedef struct frost$collections$Iterator frost$collections$Iterator;
@@ -23,8 +23,8 @@ typedef struct frost$core$MutableMethod frost$core$MutableMethod;
 #include "frost/core/UInt64_types.h"
 #include "frost/core/Real64_types.h"
 
-void frost$core$String$init$frost$unsafe$NewPointer$LTfrost$core$Char8$GT$frost$core$Int(void* rawSelf, frost$unsafe$NewPointer p_data, frost$core$Int p_length);
-void frost$core$String$init$frost$unsafe$NewPointer$LTfrost$core$Char8$GT$frost$core$Int$frost$core$String(void* rawSelf, frost$unsafe$NewPointer p_data, frost$core$Int p_length, frost$core$String* p_owner);
+void frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(void* rawSelf, frost$unsafe$Pointer p_data, frost$core$Int p_length);
+void frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int$frost$core$String(void* rawSelf, frost$unsafe$Pointer p_data, frost$core$Int p_length, frost$core$String* p_owner);
 void frost$core$String$init$frost$collections$ListView$LTfrost$core$Char8$GT(void* rawSelf, frost$collections$ListView* p_chars);
 void frost$core$String$init$frost$collections$ListView$LTfrost$core$Char32$GT(void* rawSelf, frost$collections$ListView* p_chars);
 frost$core$String* frost$core$String$get_asString$R$frost$core$String(void* rawSelf);

@@ -653,7 +653,7 @@ class WriteNumbers {
                 max += 1 -- for minus sign
             }
             out.printLine("        constant max := \{max}")
-            out.printLine("        def chars := NewPointer<Char8>.alloc(max)")
+            out.printLine("        def chars := Pointer<Char8>.alloc(max)")
             out.printLine("        var index := max - 1")
             out.printLine("        var value := self")
             out.printLine("        if value >= 0 {")
@@ -879,7 +879,7 @@ class WriteNumbers {
             out.printLine()
             out.printLine("package frost.core")
             out.printLine()
-            out.printLine("uses frost.unsafe.NewPointer")
+            out.printLine("uses frost.unsafe.Pointer")
             out.printLine()
             out.printLine("===")
             out.printLine("A\{size(type) = 8:n|} \{size(type)}-bit " +

@@ -9,9 +9,10 @@
 #include "frost/core/Bit.h"
 #include "frost/core/Char8.h"
 #include "frost/core/Int32.h"
-#include "frost/unsafe/NewPointer.h"
+#include "frost/unsafe/Pointer.h"
 #include "frost/core/Int64.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) frost$core$Object* frost$core$String$UTF32Iterator$next$R$frost$core$Char32$shim(frost$core$String$UTF32Iterator* p0) {
     frost$core$Char32 result = frost$core$String$UTF32Iterator$next$R$frost$core$Char32(p0);
 
@@ -28,10 +29,10 @@ frost$core$String$UTF32Iterator$class_type frost$core$String$UTF32Iterator$class
 
 typedef frost$core$Bit (*$fn3)(frost$collections$Iterator*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x33\x32\x49\x74\x65\x72\x61\x74\x6f\x72", 31, -2661654210963896095, NULL };
-static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, 7542466198510074048, NULL };
-static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x33\x32\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x33\x32", 88, 2168974927089519619, NULL };
-static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, 7542466198510074048, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x33\x32\x49\x74\x65\x72\x61\x74\x6f\x72", 31, -2661654210963896095, NULL };
+static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, 7542466198510074048, NULL };
+static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x33\x32\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x33\x32", 88, 2168974927089519619, NULL };
+static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, 7542466198510074048, NULL };
 
 void frost$core$String$UTF32Iterator$init$frost$core$String(void* rawSelf, frost$core$String* param1) {
 frost$core$String$UTF32Iterator* param0 = (frost$core$String$UTF32Iterator*) rawSelf;
@@ -113,8 +114,8 @@ bool _25;
 frost$core$Int _27;
 frost$core$String** _31;
 frost$core$String* _32;
-frost$unsafe$NewPointer* _33;
-frost$unsafe$NewPointer _34;
+frost$unsafe$Pointer* _33;
+frost$unsafe$Pointer _34;
 int64_t _35;
 frost$core$Int* _36;
 frost$core$Int _37;
@@ -179,8 +180,8 @@ int32_t _117;
 frost$core$Int32 _118;
 frost$core$String** _120;
 frost$core$String* _121;
-frost$unsafe$NewPointer* _122;
-frost$unsafe$NewPointer _123;
+frost$unsafe$Pointer* _122;
+frost$unsafe$Pointer _123;
 int64_t _124;
 frost$core$Int* _125;
 frost$core$Int _126;
@@ -252,8 +253,8 @@ int32_t _217;
 frost$core$Int32 _218;
 frost$core$String** _220;
 frost$core$String* _221;
-frost$unsafe$NewPointer* _222;
-frost$unsafe$NewPointer _223;
+frost$unsafe$Pointer* _222;
+frost$unsafe$Pointer _223;
 int64_t _224;
 frost$core$Int* _225;
 frost$core$Int _226;
@@ -285,8 +286,8 @@ int32_t _260;
 frost$core$Int32 _261;
 frost$core$String** _262;
 frost$core$String* _263;
-frost$unsafe$NewPointer* _264;
-frost$unsafe$NewPointer _265;
+frost$unsafe$Pointer* _264;
+frost$unsafe$Pointer _265;
 int64_t _266;
 frost$core$Int* _267;
 frost$core$Int _268;
@@ -351,8 +352,8 @@ int32_t _350;
 frost$core$Int32 _351;
 frost$core$String** _353;
 frost$core$String* _354;
-frost$unsafe$NewPointer* _355;
-frost$unsafe$NewPointer _356;
+frost$unsafe$Pointer* _355;
+frost$unsafe$Pointer _356;
 int64_t _357;
 frost$core$Int* _358;
 frost$core$Int _359;
@@ -384,8 +385,8 @@ int32_t _393;
 frost$core$Int32 _394;
 frost$core$String** _395;
 frost$core$String* _396;
-frost$unsafe$NewPointer* _397;
-frost$unsafe$NewPointer _398;
+frost$unsafe$Pointer* _397;
+frost$unsafe$Pointer _398;
 int64_t _399;
 frost$core$Int* _400;
 frost$core$Int _401;
@@ -417,8 +418,8 @@ int32_t _435;
 frost$core$Int32 _436;
 frost$core$String** _437;
 frost$core$String* _438;
-frost$unsafe$NewPointer* _439;
-frost$unsafe$NewPointer _440;
+frost$unsafe$Pointer* _439;
+frost$unsafe$Pointer _440;
 int64_t _441;
 frost$core$Int* _442;
 frost$core$Int _443;

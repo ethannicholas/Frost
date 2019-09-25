@@ -305,8 +305,8 @@ class Compiler {
         }
     }
 
-    constant POINTER_NAME := "frost.unsafe.Pointer"
-    
+    constant NEW_POINTER_NAME := "frost.unsafe.Pointer"
+
     constant WEAK_NAME := "frost.core.Weak"
     
     constant ARRAY_NAME := "frost.collections.Array"
@@ -416,9 +416,7 @@ class Compiler {
 
     def WEAK_TYPE := Type("frost.core.Weak", Type.Kind.CLASS, Position(), true)
 
-    def POINTER_TYPE := Type("frost.unsafe.Pointer", Type.Kind.CLASS, Position(), true)
-
-    def NEW_POINTER_TYPE := Type("frost.unsafe.NewPointer", Type.Kind.CLASS, Position(), true)
+    def NEW_POINTER_TYPE := Type("frost.unsafe.Pointer", Type.Kind.CLASS, Position(), true)
 
     def ARRAY_TYPE := Type("frost.collections.Array", Type.Kind.CLASS, Position(), true)
 
@@ -1355,7 +1353,7 @@ class Compiler {
         }
         else if f.resolved = Resolution.UNRESOLVED {
             f.resolved := Resolution.IN_PROGRESS
-            if f.owner.classKind != ClassDecl.Kind.INTERFACE & !f.owner.type.isPointer {
+            if f.owner.classKind != ClassDecl.Kind.INTERFACE {
                 -- we need to mark that we are in an instance context so 'self' works. Since the
                 -- class is guaranteed to have at least one init method, we just pretend we're in
                 -- one of those.
@@ -1464,9 +1462,6 @@ class Compiler {
         if !t.isClass | t.isClassLiteral {
             return true
         }
---        if t.isPointer {
---            return isImmutable(t.subtypes[1])
---        }
         def cl := getClass(t)
         if cl == null {
             return false
@@ -3342,9 +3337,6 @@ class Compiler {
         if type.isPointer & (target.isPointer | target.nonnullable().isMethod) {
             return true
         }
-        if type.isNewPointer & (target.isNewPointer | target.nonnullable().isMethod) {
-            return true
-        }
         if coercionCost(type, target) !== null {
             return true
         }
@@ -3844,8 +3836,8 @@ class Compiler {
             }
         }
         def args := Array<ASTNode>()
-        args.add(ASTNode.IR_WRAPPER(position.asPosition, cast(position, IR.Value.METHOD_POINTER(m,
-                irType), Type.pointerTo(self, INT8_TYPE))))
+        args.add(ASTNode.IR_WRAPPER(position.asPosition, extractBuiltinInt(position,
+                IR.Value.METHOD_POINTER(m, irType))))
         args.add(ASTNode.NULL(position.asPosition))
         return cast(position, Call.compile(self, position, literalType(METHOD_TYPE), args,
                 TypeContext.UNSPECIFIED), effectiveType)
@@ -4106,9 +4098,6 @@ class Compiler {
     }
 
     function canRewriteType(v:IR.Value, target:Type):Bit {
-        if v.type().isPointer | target.isPointer {
-            return false
-        }
         def srcType := v.type()
         if srcType.typeKind = Type.Kind.GENERIC {
             return (target.typeKind = Type.Kind.CLASS & srcType.subtypes[0] = target) |
@@ -5109,8 +5098,8 @@ class Compiler {
     }
 
     method extractBuiltinInt(position:MethodPosition, int:IR.Value):IR.Value {
-        def field := getSymbolTable(getClass(int.type()))["value"]->FieldDecl
-        assert field !== null
+        def field := getSymbolTable(getClass(int.type()))["value"]->FieldDecl?
+        assert field !== null, "no 'value' field in \{int}:\{int.type()}"
         resolve(field)
         def result := ir.add(IR.Statement.EXTRACT_FIELD(position, int, field))
         return IR.Value.REF(result, field.type)

@@ -1,6 +1,6 @@
 package frost.io
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 ====================================================================================================
 An output stream which indents the lines it writes. `IndentedOutputStream` sits "on top of" another
@@ -63,7 +63,7 @@ class IndentedOutputStream : OutputStream {
     }
 
     @override
-    method write(ptr:NewPointer<UInt8>, count:Int):Error? {
+    method write(ptr:Pointer<UInt8>, count:Int):Error? {
         try {
             var start := 0
             var current := start

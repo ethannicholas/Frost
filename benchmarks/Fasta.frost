@@ -47,7 +47,7 @@ method selectRandom(a:Array<Frequency>):Char8 {
 }
 
 constant BUFFER_SIZE := 1024
-def buffer := frost.unsafe.NewPointer<Char8>.alloc(BUFFER_SIZE)
+def buffer := frost.unsafe.Pointer<Char8>.alloc(BUFFER_SIZE)
 
 method makeRandomFasta(id:String, desc:String, a:Array<Frequency>, rawN:Int, out:OutputStream) {
     try {

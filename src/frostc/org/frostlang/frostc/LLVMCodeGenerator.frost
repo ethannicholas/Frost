@@ -314,30 +314,20 @@ class LLVMCodeGenerator : CodeGenerator {
                     }
                 }
                 when Type.Kind.GENERIC {
-                    if t.subtypes[0].name = "frost.unsafe.Pointer" {
-                        if t.subtypes[1].isMethod {
-                            result := llvmMethodType(t.subtypes[1], null)
+                    def cl := compiler!.getClass(t)
+                    if cl.isSpecialization() {
+                        def name := "%\{escapeName(t.name)}"
+                        def cl := compiler!.getClass(t)
+                        assert cl !== null
+                        if !compiler!.isValue(cl) {
+                            result := name + "*"
                         }
                         else {
-                            result := llvmType(t.subtypes[1]) + "*"
+                            result := name
                         }
                     }
                     else {
-                        def cl := compiler!.getClass(t)
-                        if cl.isSpecialization() {
-                            def name := "%\{escapeName(t.name)}"
-                            def cl := compiler!.getClass(t)
-                            assert cl !== null
-                            if !compiler!.isValue(cl) {
-                                result := name + "*"
-                            }
-                            else {
-                                result := name
-                            }
-                        }
-                        else {
-                            result := llvmType(t.subtypes[0])
-                        }
+                        result := llvmType(t.subtypes[0])
                     }
                 }
                 when Type.Kind.GENERIC_CLASS_PARAMETER {
@@ -788,7 +778,6 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
         try {
-            assert !cl.type.isPointer, "trying to wrap \{cl.name}"
             if !compiler!.resolve(cl) {
                 return ClassConstant("<error>", "<error>")
             }
@@ -1103,7 +1092,7 @@ class LLVMCodeGenerator : CodeGenerator {
         try {
             def op:String
             if target.isBuiltinNumber {
-                assert src.isBuiltinNumber | src.isPointer
+                assert src.isBuiltinNumber
                 def size1 := memoryLayout!.sizeOf(src)
                 def size2 := memoryLayout!.sizeOf(target)
                 if src.typeKind = Type.Kind.BUILTIN_FLOAT {
@@ -1137,9 +1126,6 @@ class LLVMCodeGenerator : CodeGenerator {
                         op := "uitofp"
                     }
                 }
-                else if src.isPointer {
-                    op := "ptrtoint"
-                }
                 else {
                     if size1 > size2 {
                         op := "trunc"
@@ -1158,12 +1144,6 @@ class LLVMCodeGenerator : CodeGenerator {
                         return
                     }
                 }
-            }
-            else if src.isPointer {
-                op := "bitcast"
-            }
-            else if target.isPointer  {
-                op := "inttoptr"
             }
             else {
                 def srcClass := compiler!.getClass(src)
@@ -1233,7 +1213,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     "i8*), %frost$core$Int32 insertvalue(%frost$core$Int32 " +
                     "{ i32 undef }, i32 \{NO_REFCNT}, 0), %frost$core$UInt8 insertvalue(" +
                     "%frost$core$UInt8 { i8 undef }, i8 0, 0), " +
-                    "%frost$unsafe$NewPointer insertvalue(%frost$unsafe$NewPointer { i64 undef }," +
+                    "%frost$unsafe$Pointer insertvalue(%frost$unsafe$Pointer { i64 undef }," +
                     " i64 ptrtoint(\{charsType}* \{chars} to i64), 0), \{INT_CLASS} { \{INT_TYPE}" +
                     " \{s.utf8.count} }, \{INT_CLASS} { \{INT_TYPE} \{s.hash.asInt64} }, " +
                     "i8* null }")
@@ -1358,11 +1338,19 @@ class LLVMCodeGenerator : CodeGenerator {
             when IR.Value.LOCAL(index, _) {
                 return "%local\{index}"
             }
-            when IR.Value.METHOD_POINTER(m, _) {
+            when IR.Value.METHOD_POINTER(m, type) {
                 if m.owner.external {
                     writeDeclaration(m)
                 }
-                return getName(m)
+                def methodType:Type
+                if compiler!.hasSelfParam(m) {
+                    methodType := compiler!.declaredTypeWithSelf(m, m.owner.type, false)
+                }
+                else {
+                    methodType := compiler!.declaredType(m)
+                }
+                return "insertvalue(\{llvmType(type)} undef, i64 ptrtoint(" +
+                        "\{llvmMethodType(methodType, null)} \{getName(m)} to i64), 0)"
             }
             when IR.Value.NULL(type) {
                 return getNullReference(type)
@@ -1738,14 +1726,24 @@ class LLVMCodeGenerator : CodeGenerator {
             args:ListView<IR.Value>) {
         try {
             var type := m.type()
+            var methodRef := getReference(m)
             if type.isPointer {
+                def extract := nextVar()
+                out.printLine("\{extract} = extractvalue \{llvmType(type)} \{methodRef}, 0")
                 type := type.subtypes[1]
+                def cast := nextVar()
+                out.printLine("\{cast} = inttoptr \{INT_TYPE} \{extract} to " +
+                        llvmMethodType(type, null))
+                methodRef := cast
+            }
+            else {
+                methodRef := getReference(m)            
             }
             def returnType := type.returnType
             if returnType != compiler!.VOID_TYPE {
                 out.print("\{name(id)} = ")
             }
-            out.print("call \{llvmType(returnType)} \{getReference(m)}(")
+            out.print("call \{llvmType(returnType)} \{methodRef}(")
             var separator := ""
             for a in args {
                 out.print(separator)
@@ -1964,37 +1962,6 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerAlloc(position:MethodPosition, id:IR.Statement.ID, count:IR.Value,
-            type:Type) {
-        try {
-            def countRef := getTypedReference(count)
-            def elementSize := memoryLayout!.stride(type)
-            assert elementSize > 0, "invalid size for type \{type}"
-            def size := nextVar()
-            out.printLine("\{size} = mul \{countRef}, \{elementSize}\{debugInfo(position)}")
-            def malloc := nextVar()
-            out.printLine("\{malloc} = call i8* @frostAlloc(\{SIZE_TYPE} \{size})" +
-                    debugInfo(position))
-            out.printLine("\{name(id)} = bitcast i8* \{malloc} to " +
-                    " \{llvmType(Type.pointerTo(compiler, type))}" + debugInfo(position))
-        }
-        fail(error) {
-            unreachable, error.asString
-        }
-    }
-
-    method writePointerDestroy(position:MethodPosition, ptr:IR.Value) {
-        try {
-            def ptrRef := getTypedReference(ptr)
-            def cast := nextVar()
-            out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
-            out.printLine("call void @frostFree(i8* \{cast})\{debugInfo(position)}")
-        }
-        fail(error) {
-            unreachable, error.asString
-        }
-    }
-
     method writePointerGet(position:MethodPosition, id:IR.Statement.ID, ptr:IR.Value, type:Type) {
         try {
             var ptrRef := getTypedReference(ptr)
@@ -2040,31 +2007,6 @@ class LLVMCodeGenerator : CodeGenerator {
             def baseType := llvmType(ptr.type().subtypes[1])
             out.printLine("\{name(id)} = getelementptr inbounds \{baseType}, " +
                     "\{base}, \{offsetRef}\{debugInfo(position)}")
-        }
-        fail(error) {
-            unreachable, error.asString
-        }
-    }
-
-    method writePointerRealloc(position:MethodPosition, id:IR.Statement.ID, ptr:IR.Value,
-            oldCount:IR.Value, newCount:IR.Value) {
-        try {
-            def ptrRef := getTypedReference(ptr)
-            def cast := nextVar()
-            out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
-            def oldCountRef := getTypedReference(oldCount)
-            def newCountRef := getTypedReference(newCount)
-            def elementSize := memoryLayout!.stride(ptr.type().subtypes[1])
-            assert elementSize > 0, "invalid size for type \{ptr.type()}"
-            def oldSize := nextVar()
-            out.printLine("\{oldSize} = mul \{oldCountRef}, \{elementSize}\{debugInfo(position)}")
-            def newSize := nextVar()
-            out.printLine("\{newSize} = mul \{newCountRef}, \{elementSize}\{debugInfo(position)}")
-            def realloc := nextVar()
-            out.printLine("\{realloc} = call i8* @frostRealloc(i8* \{cast}, " +
-                    "\{SIZE_TYPE} \{oldSize}, \{SIZE_TYPE} \{newSize})\{debugInfo(position)}")
-            out.printLine("\{name(id)} = bitcast i8* \{realloc} to \{llvmType(ptr.type())}" +
-                    debugInfo(position))
         }
         fail(error) {
             unreachable, error.asString
@@ -2226,23 +2168,11 @@ class LLVMCodeGenerator : CodeGenerator {
                 when IR.Statement.NOT(position, value) {
                     writeNot(position, id, value)
                 }
-                when IR.Statement.POINTER_ALLOC(position, count, type) {
-                    writePointerAlloc(position, id, count, type)
-                }
-                when IR.Statement.POINTER_DESTROY(position, ptr) {
-                    writePointerDestroy(position, ptr)
-                }
                 when IR.Statement.POINTER_GET(position, ptr, type) {
                     writePointerGet(position, id, ptr, type)
                 }
                 when IR.Statement.POINTER_GET_INDEX(position, ptr, index, type) {
                     writePointerGetIndex(position, id, ptr, index, type)
-                }
-                when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
-                    writePointerOffset(position, id, ptr, offset)
-                }
-                when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
-                    writePointerRealloc(position, id, ptr, oldCount, newCount)
                 }
                 when IR.Statement.POINTER_SET(position, value, ptr, type) {
                     writePointerSet(position, value, ptr, type)

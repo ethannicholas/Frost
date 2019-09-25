@@ -45,7 +45,6 @@ frost$core$String* frost$core$Frost$string$frost$core$Object$Q$R$frost$core$Stri
 frost$core$Bit frost$core$Frost$equal$frost$core$Frost$equal$T$Q$frost$core$Frost$equal$T$Q$R$frost$core$Bit(frost$core$Equatable* p_a, frost$core$Equatable* p_b);
 void frost$core$Frost$debugPrint$builtin_int64(int64_t p_i);
 void frost$core$Frost$debugPrint$frost$core$Object(frost$core$Object* p_o);
-frost$core$String* frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object$Q$GT$R$frost$core$String(frost$core$Object** p_p);
 void frost$core$Frost$disableRefErrorReporting();
 void frost$core$Frost$cleanup(void* rawSelf);
 

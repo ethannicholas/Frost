@@ -4,6 +4,7 @@
 #include "frost/core/String.h"
 #include "frost/core/Object.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) void frost$threads$Lock$cleanup$shim(frost$threads$Lock* p0) {
     frost$threads$Lock$cleanup(p0);
 
@@ -13,7 +14,7 @@ static frost$core$String $s1;
 frost$threads$Lock$class_type frost$threads$Lock$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$threads$Lock$cleanup$shim, frost$threads$Lock$lock, frost$threads$Lock$unlock, frost$threads$Lock$create, frost$threads$Lock$destroy} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4c\x6f\x63\x6b", 18, 4968142814039504275, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4c\x6f\x63\x6b", 18, 4968142814039504275, NULL };
 
 void frost$threads$Lock$init(void* rawSelf) {
 frost$threads$Lock* param0 = (frost$threads$Lock*) rawSelf;
@@ -37,6 +38,7 @@ return;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

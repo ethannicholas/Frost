@@ -1,7 +1,5 @@
 package frost.core
 
-uses frost.unsafe.Pointer
-
 ====================================================================================================
 Represents a method or function with a mutable context at runtime. The "context" of a method in this
 sense consists of any values captured by the method reference; if any of them are mutable, the
@@ -22,13 +20,13 @@ class, the reference does not capture anything and so does not itself carry any 
 @final
 class MutableMethod {
     @private
-    def pointer:Pointer<Int8>
+    def pointer:builtin_int
 
     @private
     def target:Object?
 
     @private
-    init(pointer:Pointer<Int8>, target:Object?) {
+    init(pointer:builtin_int, target:Object?) {
         self.pointer := pointer
         self.target := target
     }
@@ -36,8 +34,8 @@ class MutableMethod {
     @override
     function get_asString():String {
         if target !== null {
-            return "ImmutableMethod<\{Frost.pointerConvert(pointer->Pointer<Object?>)}, \{target!}>"
+            return "ImmutableMethod<\{Int(pointer):x}, \{target!}>"
         }
-        return "ImmutableMethod<\{Frost.pointerConvert(pointer->Pointer<Object?>)}>"
+        return "ImmutableMethod<\{Int(pointer):x}>"
     }
 }

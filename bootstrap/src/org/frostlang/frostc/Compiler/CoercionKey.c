@@ -12,6 +12,7 @@
 #include "org/frostlang/frostc/Type/Kind.h"
 #include "frost/core/Int.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit$shim(org$frostlang$frostc$Compiler$CoercionKey* p0, frost$core$Equatable* p1) {
     frost$core$Bit result = org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit(p0, ((org$frostlang$frostc$Compiler$CoercionKey*) p1));
 
@@ -28,7 +29,7 @@ org$frostlang$frostc$Compiler$CoercionKey$class_type org$frostlang$frostc$Compil
 typedef frost$core$Bit (*$fn2)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Int (*$fn6)(frost$collections$HashKey*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x43\x6f\x65\x72\x63\x69\x6f\x6e\x4b\x65\x79", 41, -6870882282179802560, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x43\x6f\x65\x72\x63\x69\x6f\x6e\x4b\x65\x79", 41, -6870882282179802560, NULL };
 
 void org$frostlang$frostc$Compiler$CoercionKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$Type* param2) {
 org$frostlang$frostc$Compiler$CoercionKey* param0 = (org$frostlang$frostc$Compiler$CoercionKey*) rawSelf;
@@ -115,7 +116,7 @@ _10 = *_9;
 _11 = &param1->target;
 _12 = *_11;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Compiler.frost:275:48
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:258
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:256
 _15 = ((org$frostlang$frostc$Symbol*) _10);
 _16 = &_15->name;
 _17 = *_16;

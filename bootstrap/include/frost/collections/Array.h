@@ -5,7 +5,7 @@ typedef struct frost$collections$Array frost$collections$Array;
 #include "frost/core/Int_types.h"
 typedef struct frost$collections$CollectionView frost$collections$CollectionView;
 typedef struct frost$core$Object frost$core$Object;
-#include "frost/unsafe/NewPointer_types.h"
+#include "frost/unsafe/Pointer_types.h"
 typedef struct frost$core$MutableMethod frost$core$MutableMethod;
 typedef struct frost$collections$ListView frost$collections$ListView;
 typedef struct frost$core$String frost$core$String;
@@ -14,7 +14,7 @@ void frost$collections$Array$init(void* rawSelf);
 void frost$collections$Array$init$frost$core$Int(void* rawSelf, frost$core$Int p_capacity);
 void frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT(void* rawSelf, frost$collections$CollectionView* p_other);
 void frost$collections$Array$init$frost$core$Int$frost$collections$Array$T(void* rawSelf, frost$core$Int p_count, frost$core$Object* p_value);
-void frost$collections$Array$init$frost$unsafe$NewPointer$LTfrost$collections$Array$T$GT$frost$core$Int(void* rawSelf, frost$unsafe$NewPointer p_data, frost$core$Int p_count);
+void frost$collections$Array$init$frost$unsafe$Pointer$LTfrost$collections$Array$T$GT$frost$core$Int(void* rawSelf, frost$unsafe$Pointer p_data, frost$core$Int p_count);
 void frost$collections$Array$cleanup(void* rawSelf);
 frost$core$Object* frost$collections$Array$$IDX$frost$core$Int$R$frost$collections$Array$T(void* rawSelf, frost$core$Int p_index);
 void frost$collections$Array$$IDXEQ$frost$core$Int$frost$collections$Array$T(void* rawSelf, frost$core$Int p_index, frost$core$Object* p_value);

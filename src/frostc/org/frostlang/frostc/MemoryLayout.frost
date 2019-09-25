@@ -69,7 +69,7 @@ class MemoryLayout {
         if cl == null {
             return 0
         }
-        if !compiler.isValue(cl) | cl.name = "frost.unsafe.Pointer" {
+        if !compiler.isValue(cl) {
             return pointerSize
         }
         var result := 0
@@ -111,7 +111,7 @@ class MemoryLayout {
         if !compiler.resolve(cl) {
             return pointerSize
         }
-        if cl.name = "frost.unsafe.Pointer" | !compiler.isValue(cl) {
+        if !compiler.isValue(cl) {
             return pointerSize
         }
         var cached := alignments[cl]
@@ -147,9 +147,6 @@ class MemoryLayout {
         assert cl !== null
         assert cl.resolved = Compiler.Resolution.RESOLVED,
                 "determining size of unresolved class \{cl.name}"
-        if cl.name = "frost.unsafe.Pointer" {
-            return pointerSize
-        }
         var cached := sizes[cl]
         if cached !== null {
             return cached

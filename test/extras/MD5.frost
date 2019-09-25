@@ -1,6 +1,6 @@
 package extras
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 class MD5 {
     @private
@@ -25,7 +25,7 @@ class MD5 {
     var count := 0
 
     @private
-    def buffer := NewPointer<UInt8>.alloc(64)
+    def buffer := Pointer<UInt8>.alloc(64)
 
     @override
     method cleanup() {
@@ -150,7 +150,7 @@ class MD5 {
         d0 += d         
     }
 
-    method update(message:NewPointer<UInt8>, length:Int) {
+    method update(message:Pointer<UInt8>, length:Int) {
         for i in 0 .. length {
             buffer[count] := message[i]
             count += 1
@@ -214,7 +214,7 @@ class MD5 {
     @class
     function md5(message:String):String {
         def result := MD5()
-        result.update(message.data->NewPointer<UInt8>, message._length)
+        result.update(message.data->Pointer<UInt8>, message._length)
         return result.finish()
     }
 }

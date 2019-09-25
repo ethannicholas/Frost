@@ -162,170 +162,11 @@ class Call {
     }
 
     @class
-    method compilePointerIntrinsic(compiler:Compiler, position:MethodPosition, target:IR.Value?,
-            m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
-        def ir := compiler.ir
-        def pointerType:Type?
-        if m.target.isPointer {
-            pointerType := compiler.resolve(m.target.subtypes[1])
-        }
-        else {
-            pointerType := compiler.resolve(m.target.subtypes[1].subtypes[1])
-        }
-        if pointerType == null {
-            return Pair<Bit, IR.Value?>(false, null)
-        }
-        assert m.target.typeKind = Type.Kind.GENERIC
-        match m.value.name {
-            when "alloc" {
-                def count := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
-                if count == null {
-                    return Pair<Bit, IR.Value?>(false, null)
-                }
-                def alloc := ir.add(IR.Statement.POINTER_ALLOC(position,
-                        compiler.extractBuiltinInt(position, count), pointerType))
-                return Pair<Bit, IR.Value?>(true,
-                        IR.Value.REF(alloc, Type.pointerTo(compiler, pointerType)))
-            }
-            when "from" {
-                def value := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT_TYPE, false))
-                if value == null {
-                    return Pair<Bit, IR.Value?>(false, null)
-                }
-                def type := Type.pointerTo(compiler, pointerType)
-                def cast := ir.add(IR.Statement.CAST(position, 
-                        compiler.extractBuiltinInt(position, value), type, false))
-                return Pair<Bit, IR.Value?>(true, IR.Value.REF(cast, type))
-            }
-            when "get_asInt" {
-                assert target !== null
-                def builtin := ir.add(IR.Statement.CAST(position, target, compiler.BUILTIN_INT_TYPE,
-                        false))
-                def result := compiler.ir.add(IR.Statement.CREATE_STRUCT(position,
-                        compiler.getClass(compiler.INT_TYPE)!,
-                        FixedArray<IR.Value>.from([IR.Value.REF(builtin,
-                                compiler.BUILTIN_INT_TYPE)])))
-                return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, compiler.INT_TYPE))
-            }
-            when "convertTo" {
-                assert target !== null
-                def result := ir.add(IR.Statement.CAST(position, target, m.returnType,
-                        false))
-                return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.returnType))
-            }
-            when "destroy" {
-                assert target !== null
-                ir.add(IR.Statement.POINTER_DESTROY(position, target))
-                return Pair<Bit, IR.Value?>(true, null)
-            }
-            when "realloc" {
-                assert target !== null
-                def oldCount := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
-                if oldCount == null {
-                    return Pair<Bit, IR.Value?>(false, null)
-                }
-                def newCount := compiler.compileExpression(args[1],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
-                if newCount == null {
-                    return Pair<Bit, IR.Value?>(false, null)
-                }
-                def realloc := ir.add(IR.Statement.POINTER_REALLOC(position, target,
-                        compiler.extractBuiltinInt(position, oldCount),
-                        compiler.extractBuiltinInt(position, newCount)))
-                return Pair<Bit, IR.Value?>(true,
-                        IR.Value.REF(realloc, Type.pointerTo(compiler, pointerType)))
-            }
-            when "get" {
-                assert target !== null
-                def get := ir.add(IR.Statement.POINTER_GET(position, target, pointerType))
-                return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
-            }
-            when "set" {
-                assert target !== null
-                def value := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(pointerType, false))
-                if value !== null {
-                    if compiler.isRefCounted(pointerType) {
-                        compiler.compileRef(value)
-                        def load := ir.add(IR.Statement.POINTER_GET(position, target, pointerType))
-                        compiler.compileUnref(IR.Value.REF(load, pointerType))
-                    }
-                    ir.add(IR.Statement.POINTER_SET(position, value, target, pointerType))
-                }
-                return Pair<Bit, IR.Value?>(true, null)
-            }
-
-            when "offset" {
-                assert target !== null
-                def value := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
-                if value == null {
-                    return Pair<Bit, IR.Value?>(false, null)
-                }
-                def offset := ir.add(IR.Statement.POINTER_OFFSET(position, target,
-                        compiler.extractBuiltinInt(position, value)))
-                return Pair<Bit, IR.Value?>(true, IR.Value.REF(offset,
-                        Type.pointerTo(compiler, pointerType)))
-            }
-            when "[]" {
-                assert target !== null
-                def index := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
-                if index == null {
-                    return Pair<Bit, IR.Value?>(false, null)
-                }
-                def get := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
-                        compiler.extractBuiltinInt(position, index), pointerType))
-                return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
-            }
-            when "[]:=" {
-                assert target !== null
-                def index := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
-                def value := compiler.compileExpression(args[1],
-                        TypeContext.TYPE(pointerType, false))
-                if index !== null & value !== null {
-                    def indexValue := compiler.extractBuiltinInt(position, index)
-                    if compiler.isRefCounted(pointerType) {
-                        compiler.compileRef(value)
-                        def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
-                                indexValue, pointerType))
-                        compiler.compileUnref(IR.Value.REF(load, pointerType))
-                    }
-                    ir.add(IR.Statement.POINTER_SET_INDEX(position, value, target, indexValue,
-                            pointerType))
-                }
-                return Pair<Bit, IR.Value?>(true, null)
-            }
-            when "clear" {
-                def nullableType := pointerType.nullable()
-                def index := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
-                if compiler.isRefCounted(nullableType) {
-                    def indexValue := compiler.extractBuiltinInt(position, index)
-                    def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue,
-                            pointerType))
-                    compiler.compileUnref(IR.Value.REF(load, nullableType))
-                    ir.add(IR.Statement.POINTER_SET_INDEX(position,
-                            IR.Value.NULL(nullableType), target, indexValue, pointerType))
-                }
-                return Pair<Bit, IR.Value?>(true, null)
-            }
-            otherwise {
-                unreachable, "unsupported pointer intrinsic: \{m.value.name}"
-            }
-        }
-    }
-
-    @class
-    method compileNewPointerIntrinsic(compiler:Compiler, position:MethodPosition,
+    method compilePointerIntrinsic(compiler:Compiler, position:MethodPosition,
             rawTarget:IR.Value?, m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         def ir := compiler.ir
         def pointerType:Type?
-        assert m.target.isNewPointer
+        assert m.target.isPointer
         if m.target.hasSubtypes {
             pointerType := compiler.resolve(m.target.subtypes[1])
         }
@@ -395,24 +236,24 @@ class Call {
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.returnType))
             }
             when "clear" {
-                def target := compiler.extractBuiltinInt(position, rawTarget)
-                def nullableType := pointerType.nullable()
-                def index := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
-                if compiler.isRefCounted(nullableType) {
-                    def indexValue := compiler.extractBuiltinInt(position, index)
-                    def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue,
-                            pointerType))
-                    compiler.compileUnref(IR.Value.REF(load, nullableType))
-                    ir.add(IR.Statement.POINTER_SET_INDEX(position,
-                            IR.Value.NULL(nullableType), target, indexValue, pointerType))
+                if args.count = 1 {
+                    def target := compiler.extractBuiltinInt(position, rawTarget)
+                    def nullableType := pointerType.nullable()
+                    def index := compiler.compileExpression(args[0],
+                            TypeContext.TYPE(compiler.INT64_TYPE, false))
+                    if compiler.isRefCounted(nullableType) {
+                        def indexValue := compiler.extractBuiltinInt(position, index)
+                        def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
+                                indexValue, pointerType))
+                        compiler.compileUnref(IR.Value.REF(load, nullableType))
+                        ir.add(IR.Statement.POINTER_SET_INDEX(position,
+                                IR.Value.NULL(nullableType), target, indexValue, pointerType))
+                    }
+                    return Pair<Bit, IR.Value?>(true, null)
                 }
-                return Pair<Bit, IR.Value?>(true, null)
-            }
-            otherwise {
-                return Pair<Bit, IR.Value?>(false, null)
             }
         }
+        return Pair<Bit, IR.Value?>(false, null)
     }
 
     @class
@@ -549,11 +390,8 @@ class Call {
     @class
     method compileIntrinsic(compiler:Compiler, position:MethodPosition, target:IR.Value?,
             m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
-        if m.target.isPointer | m.target.isClassLiteral & m.target.subtypes[1].isPointer {
+        if m.target.isPointer {
             return compilePointerIntrinsic(compiler, position, target, m, args)
-        }
-        if m.target.isNewPointer {
-            return compileNewPointerIntrinsic(compiler, position, target, m, args)
         }
         if m.target.isNumber {
             return compileNumberIntrinsic(compiler, position, target, m, args)
@@ -953,7 +791,7 @@ class Call {
         def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj,
                 pointerField))
         def methodPtr := ir.add(IR.Statement.LOAD(position, IR.Value.REF(methodPtrPtr,
-                Type.pointerTo(compiler, compiler.INT8_TYPE))))
+                compiler.BUILTIN_INT_TYPE)))
         def targetField := st["target"]->FieldDecl
         if !compiler.resolve(targetField) {
             return null
@@ -969,8 +807,10 @@ class Call {
         ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(targetNonNull,
                 compiler.BUILTIN_BIT_TYPE), haveTargetBlock, noTargetBlock))
         ir.setCurrentBlock(noTargetBlock)
-        def noTargetCast := compiler.cast(position, IR.Value.REF(methodPtr,
-                Type.pointerTo(compiler, compiler.INT8_TYPE)), Type.pointerTo(compiler, t))
+        def noTargetCastType := Type.pointerTo(compiler, t)
+        def noTargetCast := IR.Value.REF(ir.add(IR.Statement.CREATE_STRUCT(position,
+                compiler.getClass(noTargetCastType)!, FixedArray<IR.Value>.from(
+                    [IR.Value.REF(methodPtr, compiler.BUILTIN_INT_TYPE)]))), noTargetCastType)
         def noTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, noTargetCast,
                 FixedArray<IR.Value>(finalArgs)))
         if result !== null {
@@ -986,9 +826,10 @@ class Call {
         }
         def haveTargetType := Type.methodType(compiler, position.asPosition, t.typeKind,
                 targetParams, t.returnType, 0)
-        def haveTargetCast := compiler.cast(position, IR.Value.REF(methodPtr,
-                Type.pointerTo(compiler, compiler.INT8_TYPE)),
-                Type.pointerTo(compiler, haveTargetType))
+        def haveTargetCastType := Type.pointerTo(compiler, haveTargetType)
+        def haveTargetCast := IR.Value.REF(ir.add(IR.Statement.CREATE_STRUCT(position,
+                compiler.getClass(haveTargetCastType)!, FixedArray<IR.Value>.from(
+                    [IR.Value.REF(methodPtr, compiler.BUILTIN_INT_TYPE)]))), haveTargetCastType)
         finalArgs.insert(0, IR.Value.REF(target, targetType))
         def haveTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, haveTargetCast,
                 FixedArray<IR.Value>(finalArgs)))
@@ -1480,7 +1321,7 @@ class Call {
         -- up in the future, but it simplifies the logic a bit here.
         def actualType:Type
         var selfType := m.value.owner.type
-        if selfType.isNewPointer & !m.value.annotations.isClass {
+        if selfType.isPointer & !m.value.annotations.isClass {
             if target !== null {
                 selfType := target.type()
             }
@@ -1505,7 +1346,7 @@ class Call {
                     -- do nothing
                 }
                 otherwise {
-                    if m.value.owner.name = Compiler.POINTER_NAME | m.value.owner.name = "frost.unsafe.NewPointer" {
+                    if m.value.owner.name = Compiler.NEW_POINTER_NAME {
                         finalTarget := compiler.coerce(position, target,
                                 actualType.parameterType(0))
                     }
@@ -1531,7 +1372,7 @@ class Call {
                 return null
             }
             finalTarget := compiler.compileSelf(position, false)
-            if !m.value.owner.type.isNewPointer {
+            if !m.value.owner.type.isPointer {
                 finalTarget := compiler.coerce(position, finalTarget, m.value.owner.type)
             }
             if finalTarget == null {
@@ -1566,14 +1407,14 @@ class Call {
         if m.value.annotations.isPointerSize {
             def targetType := target.type()
             if target !== null & targetType.isClassLiteral &
-                    targetType.subtypes[1].name.startsWith("frost.unsafe.NewPointer<") &
+                    targetType.subtypes[1].name.startsWith("frost.unsafe.Pointer<") &
                     target.type().subtypes[1].subtypes[1].typeKind !=
                             Type.Kind.GENERIC_METHOD_PARAMETER {
                 finalArgs.add(IR.Value.INT(
                         compiler.memoryLayout.sizeOf(target.type().subtypes[1].subtypes[1]).asUInt64,
                         compiler.BUILTIN_INT_TYPE))
             }
-            else if target !== null & targetType.isNewPointer {
+            else if target !== null & targetType.isPointer {
                 finalArgs.add(IR.Value.INT(
                         compiler.memoryLayout.sizeOf(target.type().subtypes[1]).asUInt64,
                         compiler.BUILTIN_INT_TYPE))

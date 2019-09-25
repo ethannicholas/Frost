@@ -6,6 +6,7 @@
 #include "frost/collections/CollectionWriter.h"
 #include "frost/collections/CollectionView.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 struct { frost$core$Class* cl; ITable* next; void* methods[0]; } frost$collections$Collection$_frost$collections$Collection = { (frost$core$Class*) &frost$collections$Collection$class, NULL, { } };
 
@@ -19,10 +20,11 @@ static frost$core$String $s1;
 frost$collections$Collection$class_type frost$collections$Collection$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$collections$Collection$_frost$collections$CollectionView, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Object$cleanup} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e", 28, 8401683198394368736, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e", 28, 8401683198394368736, NULL };
 
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

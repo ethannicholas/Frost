@@ -4,12 +4,13 @@
 #include "frost/core/String.h"
 #include "frost/core/Real64.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 static frost$core$String $s1;
 frost$time$Timer$class_type frost$time$Timer$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$time$Timer$cleanup, frost$time$Timer$setup, frost$time$Timer$destroy, frost$time$Timer$elapsed$R$frost$core$Real64, frost$time$Timer$now$R$builtin_float64, frost$time$Timer$reset} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x69\x6d\x65\x2e\x54\x69\x6d\x65\x72", 16, -8526916439102428213, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x74\x69\x6d\x65\x2e\x54\x69\x6d\x65\x72", 16, -8526916439102428213, NULL };
 
 void frost$time$Timer$init(void* rawSelf) {
 frost$time$Timer* param0 = (frost$time$Timer*) rawSelf;
@@ -76,6 +77,7 @@ return;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

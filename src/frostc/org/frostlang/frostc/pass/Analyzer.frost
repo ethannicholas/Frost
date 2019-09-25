@@ -395,20 +395,11 @@ class Analyzer {
                 }
                 return DataFlowValue(base.type, definitionFrom(stmt))
             }
-            when IR.Statement.POINTER_ALLOC(_, _, t) {
-                return DataFlowValue(Type.pointerTo(compiler, t), definitionFrom(stmt))
-            }
             when IR.Statement.POINTER_GET(_, p, t) {
                 return DataFlowValue(t, definitionFrom(stmt))
             }
             when IR.Statement.POINTER_GET_INDEX(_, p, _, t) {
                 return DataFlowValue(t, definitionFrom(stmt))
-            }
-            when IR.Statement.POINTER_OFFSET(_, p, _) {
-                return DataFlowValue(getValue(p, state).type, Definition.UNSPECIFIED)
-            }
-            when IR.Statement.POINTER_REALLOC(_, p, _, _) {
-                return DataFlowValue(getValue(p, state).type, Definition.UNSPECIFIED)
             }
             when IR.Statement.STATIC_CALL(_, m, args) {
                 if m.returnType = compiler.BIT_TYPE {

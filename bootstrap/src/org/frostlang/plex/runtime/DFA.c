@@ -3,7 +3,7 @@
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
 #include "frost/core/Int.h"
-#include "frost/unsafe/NewPointer.h"
+#include "frost/unsafe/Pointer.h"
 #include "org/frostlang/plex/runtime/RawToken.h"
 #include "frost/core/String/Index.h"
 #include "frost/core/Char8.h"
@@ -14,6 +14,7 @@
 #include "frost/io/Console.h"
 #include "frost/core/System.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 static frost$core$String $s1;
 org$frostlang$plex$runtime$DFA$class_type org$frostlang$plex$runtime$DFA$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$plex$runtime$DFA$cleanup, org$frostlang$plex$runtime$DFA$next$R$org$frostlang$plex$runtime$RawToken} };
@@ -21,40 +22,46 @@ org$frostlang$plex$runtime$DFA$class_type org$frostlang$plex$runtime$DFA$class =
 typedef frost$core$String* (*$fn3)(frost$core$Object*);
 typedef frost$core$String* (*$fn5)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x70\x6c\x65\x78\x2e\x72\x75\x6e\x74\x69\x6d\x65\x2e\x44\x46\x41", 30, 7628876479569963457, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
-static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x74\x6f\x6b\x65\x6e\x20", 14, 7507302848059021343, NULL };
-static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
-static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
-static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x44\x46\x41\x2e\x66\x72\x6f\x73\x74", 9, -6532934594591490442, NULL };
-static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x72\x65\x74\x75\x72\x6e\x65\x64\x20\x66\x72\x6f\x6d\x20\x40\x6e\x6f\x52\x65\x74\x75\x72\x6e\x20\x6d\x65\x74\x68\x6f\x64", 30, 1170110763298107664, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x70\x6c\x65\x78\x2e\x72\x75\x6e\x74\x69\x6d\x65\x2e\x44\x46\x41", 30, 7628876479569963457, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x74\x6f\x6b\x65\x6e\x20", 14, 7507302848059021343, NULL };
+static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x0a", 1, -5808579962898102051, NULL };
+static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x44\x46\x41\x2e\x66\x72\x6f\x73\x74", 9, -6532934594591490442, NULL };
+static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x72\x65\x74\x75\x72\x6e\x65\x64\x20\x66\x72\x6f\x6d\x20\x40\x6e\x6f\x52\x65\x74\x75\x72\x6e\x20\x6d\x65\x74\x68\x6f\x64", 30, 1170110763298107664, NULL };
 
-void org$frostlang$plex$runtime$DFA$init$frost$core$Int$frost$unsafe$NewPointer$LTfrost$unsafe$NewPointer$LTfrost$core$Int$GT$GT$frost$unsafe$NewPointer$LTfrost$core$Int$GT(void* rawSelf, frost$core$Int param1, frost$unsafe$NewPointer param2, frost$unsafe$NewPointer param3) {
+void org$frostlang$plex$runtime$DFA$init$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(void* rawSelf, frost$core$Int param1, frost$unsafe$Pointer param2, frost$unsafe$Pointer param3) {
 org$frostlang$plex$runtime$DFA* param0 = (org$frostlang$plex$runtime$DFA*) rawSelf;
 
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:27
-org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$NewPointer$LTfrost$unsafe$NewPointer$LTfrost$core$Int$GT$GT$frost$unsafe$NewPointer$LTfrost$core$Int$GT(param0, &$s2, param1, param2, param3);
+org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(param0, &$s2, param1, param2, param3);
 return;
 
 }
-void org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$NewPointer$LTfrost$unsafe$NewPointer$LTfrost$core$Int$GT$GT$frost$unsafe$NewPointer$LTfrost$core$Int$GT(void* rawSelf, frost$core$String* param1, frost$core$Int param2, frost$unsafe$NewPointer param3, frost$unsafe$NewPointer param4) {
+void org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(void* rawSelf, frost$core$String* param1, frost$core$Int param2, frost$unsafe$Pointer param3, frost$unsafe$Pointer param4) {
 org$frostlang$plex$runtime$DFA* param0 = (org$frostlang$plex$runtime$DFA*) rawSelf;
 
+frost$unsafe$Pointer local0;
+frost$unsafe$Pointer local1;
 frost$core$Int _1;
 frost$core$Int* _2;
 frost$core$Int _5;
 frost$core$Int* _6;
-frost$unsafe$NewPointer* _9;
-frost$unsafe$NewPointer _10;
-frost$unsafe$NewPointer* _11;
-frost$core$Int _14;
-frost$core$Int* _15;
-frost$core$Int* _20;
-frost$core$Int _21;
-frost$core$Int* _23;
-frost$core$Int* _26;
-frost$unsafe$NewPointer* _29;
-frost$unsafe$NewPointer* _32;
+frost$unsafe$Pointer* _9;
+frost$unsafe$Pointer _10;
+int64_t _11;
+int64_t* _14;
+frost$unsafe$Pointer _16;
+frost$unsafe$Pointer _19;
+frost$unsafe$Pointer* _20;
+frost$core$Int _23;
+frost$core$Int* _24;
+frost$core$Int* _29;
+frost$core$Int _30;
+frost$core$Int* _32;
+frost$core$Int* _35;
+frost$unsafe$Pointer* _38;
+frost$unsafe$Pointer* _41;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:22
 _1 = (frost$core$Int) {1u};
 _2 = &param0->line;
@@ -66,28 +73,36 @@ _6 = &param0->column;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:32
 _9 = &param1->data;
 _10 = *_9;
-_11 = &param0->source;
-*_11 = _10;
+_11 = _10.value;
+// begin inline call to frost.unsafe.Pointer.init(value:builtin_int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from DFA.frost:32:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:31
+_14 = &(&local1)->value;
+*_14 = _11;
+_16 = *(&local1);
+*(&local0) = _16;
+_19 = *(&local0);
+_20 = &param0->source;
+*_20 = _19;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:33
-_14 = (frost$core$Int) {0u};
-_15 = &param0->offset;
-*_15 = _14;
+_23 = (frost$core$Int) {0u};
+_24 = &param0->offset;
+*_24 = _23;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:34
 // begin inline call to function frost.core.String.get_byteLength():frost.core.Int from DFA.frost:34:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:492
-_20 = &param1->_length;
-_21 = *_20;
-_23 = &param0->sourceEnd;
-*_23 = _21;
+_29 = &param1->_length;
+_30 = *_29;
+_32 = &param0->sourceEnd;
+*_32 = _30;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:35
-_26 = &param0->stateCount;
-*_26 = param2;
+_35 = &param0->stateCount;
+*_35 = param2;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:36
-_29 = &param0->transitions;
-*_29 = param3;
+_38 = &param0->transitions;
+*_38 = param3;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:37
-_32 = &param0->accepts;
-*_32 = param4;
+_41 = &param0->accepts;
+*_41 = param4;
 return;
 
 }
@@ -154,8 +169,8 @@ int64_t _71;
 bool _72;
 frost$core$Bit _73;
 bool _74;
-frost$unsafe$NewPointer* _77;
-frost$unsafe$NewPointer _78;
+frost$unsafe$Pointer* _77;
+frost$unsafe$Pointer _78;
 int64_t _79;
 frost$core$Int* _80;
 frost$core$Int _81;
@@ -187,8 +202,8 @@ frost$core$Object* _132;
 frost$core$Object* _134;
 frost$core$Int _137;
 frost$core$Int _139;
-frost$unsafe$NewPointer* _143;
-frost$unsafe$NewPointer _144;
+frost$unsafe$Pointer* _143;
+frost$unsafe$Pointer _144;
 int64_t _145;
 frost$core$Char8 _146;
 uint8_t _149;
@@ -196,7 +211,7 @@ int64_t _150;
 frost$core$Int _151;
 frost$core$Int64 _153;
 int64_t _154;
-frost$unsafe$NewPointer _155;
+frost$unsafe$Pointer _155;
 int64_t _156;
 frost$core$Int _157;
 frost$core$Int64 _158;
@@ -269,8 +284,8 @@ int64_t _253;
 int64_t _254;
 frost$core$Int _255;
 frost$core$Int* _256;
-frost$unsafe$NewPointer* _260;
-frost$unsafe$NewPointer _261;
+frost$unsafe$Pointer* _260;
+frost$unsafe$Pointer _261;
 int64_t _262;
 frost$core$Int _263;
 frost$core$Int64 _264;
@@ -455,7 +470,7 @@ _150 = ((int64_t) _149);
 _151 = (frost$core$Int) {_150};
 _153 = frost$core$Int64$init$frost$core$Int(_151);
 _154 = _153.value;
-_155 = ((frost$unsafe$NewPointer*)_145)[_154];
+_155 = ((frost$unsafe$Pointer*)_145)[_154];
 _156 = _155.value;
 _157 = *(&local0);
 _158 = frost$core$Int64$init$frost$core$Int(_157);
@@ -635,6 +650,7 @@ return;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

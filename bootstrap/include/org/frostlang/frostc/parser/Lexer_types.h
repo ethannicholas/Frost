@@ -4,7 +4,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
 typedef struct org$frostlang$plex$runtime$DFA org$frostlang$plex$runtime$DFA;
-#include "frost/unsafe/NewPointer_types.h"
+#include "frost/unsafe/Pointer_types.h"
 #include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
 
@@ -13,8 +13,8 @@ typedef struct org$frostlang$frostc$parser$Lexer {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     org$frostlang$plex$runtime$DFA* dfa;
-    frost$unsafe$NewPointer transitions;
-    frost$unsafe$NewPointer accepts;
+    frost$unsafe$Pointer transitions;
+    frost$unsafe$Pointer accepts;
     frost$core$Int file;
 } org$frostlang$frostc$parser$Lexer;
 #include "frost/core/Class.h"

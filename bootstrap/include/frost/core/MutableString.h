@@ -6,7 +6,7 @@ typedef struct frost$core$String frost$core$String;
 #include "frost/core/Int_types.h"
 #include "frost/core/Char8_types.h"
 #include "frost/core/Char32_types.h"
-#include "frost/unsafe/NewPointer_types.h"
+#include "frost/unsafe/Pointer_types.h"
 typedef struct frost$core$Object frost$core$Object;
 #include "frost/core/MutableString/Index_types.h"
 #include "frost/core/Bit_types.h"
@@ -24,7 +24,7 @@ void frost$core$MutableString$cleanup(void* rawSelf);
 void frost$core$MutableString$append$frost$core$Char8(void* rawSelf, frost$core$Char8 p_c);
 void frost$core$MutableString$append$frost$core$Char32(void* rawSelf, frost$core$Char32 p_c);
 void frost$core$MutableString$append$frost$core$String(void* rawSelf, frost$core$String* p_s);
-void frost$core$MutableString$append$frost$unsafe$NewPointer$LTfrost$core$Char8$GT$frost$core$Int(void* rawSelf, frost$unsafe$NewPointer p_chars, frost$core$Int p_count);
+void frost$core$MutableString$append$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(void* rawSelf, frost$unsafe$Pointer p_chars, frost$core$Int p_count);
 void frost$core$MutableString$append$frost$core$Object(void* rawSelf, frost$core$Object* p_o);
 frost$core$Int frost$core$MutableString$get_length$R$frost$core$Int(void* rawSelf);
 frost$core$Int frost$core$MutableString$get_byteLength$R$frost$core$Int(void* rawSelf);

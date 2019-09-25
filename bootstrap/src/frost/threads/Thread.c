@@ -9,6 +9,7 @@
 #include "frost/core/Bit.h"
 #include "frost/core/Int.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) void frost$threads$Thread$cleanup$shim(frost$threads$Thread* p0) {
     frost$threads$Thread$cleanup(p0);
 
@@ -18,7 +19,7 @@ static frost$core$String $s1;
 frost$threads$Thread$class_type frost$threads$Thread$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$threads$Thread$cleanup$shim, frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit, frost$threads$Thread$waitFor} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x54\x68\x72\x65\x61\x64", 20, 8775502690324861764, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x54\x68\x72\x65\x61\x64", 20, 8775502690324861764, NULL };
 
 void frost$threads$Thread$init(void* rawSelf) {
 frost$threads$Thread* param0 = (frost$threads$Thread*) rawSelf;
@@ -210,6 +211,7 @@ return;
 }
 
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 
 

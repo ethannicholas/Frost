@@ -1,6 +1,6 @@
 package frost.collections
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 ====================================================================================================
 Standard implementation of the [Map] interface, which associates keys with values. An arbitrary
@@ -86,7 +86,7 @@ class HashMap<K:HashKey<K>, V> : Map<K, V> {
     var bucketCount:Int
 
     @private
-    var contents:NewPointer<Entry<K, V>?>
+    var contents:Pointer<Entry<K, V>?>
 
     @private
     var threshold:Int
@@ -101,7 +101,7 @@ class HashMap<K:HashKey<K>, V> : Map<K, V> {
         changeCount += 1
         _count := 0
         bucketCount := DEFAULT_BUCKET_COUNT
-        contents := NewPointer<Entry<K, V>?>.alloc(bucketCount)
+        contents := Pointer<Entry<K, V>?>.alloc(bucketCount)
         for i in 0 .. bucketCount {
             contents[i] := null
         }
@@ -225,7 +225,7 @@ class HashMap<K:HashKey<K>, V> : Map<K, V> {
             }
             e := next
         }
-        -- we are looking at the entry before it, update its next NewPointer to skip over it
+        -- we are looking at the entry before it, update its next Pointer to skip over it
         def next := e.next
         assert next !== null
         e.next := next.next
@@ -243,7 +243,7 @@ class HashMap<K:HashKey<K>, V> : Map<K, V> {
         }
         contents.destroy()
         bucketCount := DEFAULT_BUCKET_COUNT
-        contents := NewPointer<Entry<K, V>?>.alloc(bucketCount)
+        contents := Pointer<Entry<K, V>?>.alloc(bucketCount)
         for i in 0 .. bucketCount {
             if contents[i] !== null {
                 contents[i] := null
@@ -259,7 +259,7 @@ class HashMap<K:HashKey<K>, V> : Map<K, V> {
             def oldContents := contents
             def oldBucketCount := bucketCount
             bucketCount *= 2
-            contents := NewPointer<Entry<K, V>?>.alloc(bucketCount)
+            contents := Pointer<Entry<K, V>?>.alloc(bucketCount)
             for i in 0 .. bucketCount {
                 contents[i] := null
             }

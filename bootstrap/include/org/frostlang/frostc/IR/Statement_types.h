@@ -111,15 +111,6 @@ typedef struct org$frostlang$frostc$IR$Statement {
             org$frostlang$frostc$MethodPosition field0;
             org$frostlang$frostc$IR$Value* field1;
             org$frostlang$frostc$Type* field2;
-        } $POINTER_ALLOC;
-        struct {
-            org$frostlang$frostc$MethodPosition field0;
-            org$frostlang$frostc$IR$Value* field1;
-        } $POINTER_DESTROY;
-        struct {
-            org$frostlang$frostc$MethodPosition field0;
-            org$frostlang$frostc$IR$Value* field1;
-            org$frostlang$frostc$Type* field2;
         } $POINTER_GET;
         struct {
             org$frostlang$frostc$MethodPosition field0;
@@ -127,17 +118,6 @@ typedef struct org$frostlang$frostc$IR$Statement {
             org$frostlang$frostc$IR$Value* field2;
             org$frostlang$frostc$Type* field3;
         } $POINTER_GET_INDEX;
-        struct {
-            org$frostlang$frostc$MethodPosition field0;
-            org$frostlang$frostc$IR$Value* field1;
-            org$frostlang$frostc$IR$Value* field2;
-        } $POINTER_OFFSET;
-        struct {
-            org$frostlang$frostc$MethodPosition field0;
-            org$frostlang$frostc$IR$Value* field1;
-            org$frostlang$frostc$IR$Value* field2;
-            org$frostlang$frostc$IR$Value* field3;
-        } $POINTER_REALLOC;
         struct {
             org$frostlang$frostc$MethodPosition field0;
             org$frostlang$frostc$IR$Value* field1;

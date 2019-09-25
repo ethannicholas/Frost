@@ -73,8 +73,6 @@ class Type : Symbol, HashKey<Type> {
 
     property isPointer:Bit
 
-    property isNewPointer:Bit
-
     property isRange:Bit
 
     property isSteppedRange:Bit
@@ -286,14 +284,7 @@ class Type : Symbol, HashKey<Type> {
 
     @class
     method pointerTo(compiler:Compiler, t:Type):Type {
-        def f := compiler.getClass("frost.core.Method").fields[0]
-        compiler.resolve(f)
-        if f.type.isPointer {
-            return generic(compiler.POINTER_TYPE, [t])
-        }
-        else {
-            return generic(compiler.NEW_POINTER_TYPE, [t])
-        }
+        return generic(compiler.NEW_POINTER_TYPE, [t])
     }
 
     @class
@@ -405,10 +396,6 @@ class Type : Symbol, HashKey<Type> {
 
     function get_isPointer():Bit {
         return name.startsWith("frost.unsafe.Pointer")
-    }
-
-    function get_isNewPointer():Bit {
-        return name.startsWith("frost.unsafe.NewPointer")
     }
 
     function get_isRange():Bit {

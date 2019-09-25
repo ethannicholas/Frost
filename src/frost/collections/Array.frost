@@ -1,6 +1,6 @@
 package frost.collections
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 ====================================================================================================
 Standard implementation of the `List` interface. `Array` is a resizable random-access array,
@@ -22,7 +22,7 @@ class Array<T> : List<T> {
     var capacity:Int
 
     @private
-    var data:NewPointer<T>
+    var data:Pointer<T>
 
     ================================================================================================
     Creates a new, empty `Array`.
@@ -37,7 +37,7 @@ class Array<T> : List<T> {
     ================================================================================================
     init(capacity:Int) {
         self.capacity := capacity
-        data := NewPointer<T>.alloc(capacity)
+        data := Pointer<T>.alloc(capacity)
     }
 
     ================================================================================================
@@ -58,8 +58,8 @@ class Array<T> : List<T> {
     }
 
     @private
-    init(data:NewPointer<T>, count:Int) {
-        self.data := data->NewPointer<T>
+    init(data:Pointer<T>, count:Int) {
+        self.data := data->Pointer<T>
         self._count := count
         self.capacity := count
     }

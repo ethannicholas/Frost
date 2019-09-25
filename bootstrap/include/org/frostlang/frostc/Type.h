@@ -55,7 +55,6 @@ frost$core$Bit org$frostlang$frostc$Type$get_isClassLiteral$R$frost$core$Bit(voi
 frost$core$Bit org$frostlang$frostc$Type$get_isTuple$R$frost$core$Bit(void* rawSelf);
 frost$core$Bit org$frostlang$frostc$Type$get_isMethod$R$frost$core$Bit(void* rawSelf);
 frost$core$Bit org$frostlang$frostc$Type$get_isPointer$R$frost$core$Bit(void* rawSelf);
-frost$core$Bit org$frostlang$frostc$Type$get_isNewPointer$R$frost$core$Bit(void* rawSelf);
 frost$core$Bit org$frostlang$frostc$Type$get_isRange$R$frost$core$Bit(void* rawSelf);
 frost$core$Bit org$frostlang$frostc$Type$get_isSteppedRange$R$frost$core$Bit(void* rawSelf);
 frost$core$Bit org$frostlang$frostc$Type$get_isNullable$R$frost$core$Bit(void* rawSelf);

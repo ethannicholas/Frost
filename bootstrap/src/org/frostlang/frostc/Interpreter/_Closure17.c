@@ -5,17 +5,17 @@
 #include "frost/core/MutableMethod.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Int.h"
+#include "frost/unsafe/Pointer.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 static frost$core$String $s1;
 org$frostlang$frostc$Interpreter$_Closure17$class_type org$frostlang$frostc$Interpreter$_Closure17$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Interpreter$_Closure17$cleanup, org$frostlang$frostc$Interpreter$_Closure17$$anonymous16$frost$collections$CollectionView$T$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T} };
 
 typedef frost$core$Int (*$fn2)(frost$core$Int, frost$core$Int);
 typedef frost$core$Int (*$fn3)(frost$core$Object*, frost$core$Int, frost$core$Int);
-typedef frost$core$Int (*$fn4)(frost$core$Int, frost$core$Int);
-typedef frost$core$Int (*$fn5)(frost$core$Object*, frost$core$Int, frost$core$Int);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x49\x6e\x74\x65\x72\x70\x72\x65\x74\x65\x72\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x31\x37", 43, 7906575037970159666, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x49\x6e\x74\x65\x72\x70\x72\x65\x74\x65\x72\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x31\x37", 43, 7906575037970159666, NULL };
 
 void org$frostlang$frostc$Interpreter$_Closure17$init$$LPfrost$core$Int$Cfrost$core$Int$RP$EQ$GT$LPfrost$core$Int$RP(void* rawSelf, frost$core$MutableMethod* param1) {
 org$frostlang$frostc$Interpreter$_Closure17* param0 = (org$frostlang$frostc$Interpreter$_Closure17*) rawSelf;
@@ -63,14 +63,14 @@ frost$core$MutableMethod* _2;
 frost$core$Int _3;
 frost$core$Int _4;
 frost$core$MutableMethod* _5;
-frost$core$Int8** _6;
-frost$core$Int8* _7;
+int64_t* _6;
+int64_t _7;
 frost$core$Object** _8;
 frost$core$Object* _9;
 bool _10;
-$fn2 _12;
+frost$unsafe$Pointer _12;
 frost$core$Int _13;
-$fn3 _16;
+frost$unsafe$Pointer _16;
 frost$core$Int _17;
 frost$core$Int _20;
 frost$core$Object* _21;
@@ -89,21 +89,21 @@ _9 = *_8;
 _10 = _9 != ((frost$core$Object*) NULL);
 if (_10) goto block1; else goto block2;
 block2:;
-_12 = (($fn4) _7);
-_13 = _12(_3, _4);
+_12 = (frost$unsafe$Pointer) {_7};
+_13 = (($fn2) _12.value)(_3, _4);
 *(&local0) = _13;
 goto block3;
 block1:;
-_16 = (($fn5) _7);
-_17 = _16(_9, _3, _4);
+_16 = (frost$unsafe$Pointer) {_7};
+_17 = (($fn3) _16.value)(_9, _3, _4);
 *(&local0) = _17;
 goto block3;
 block3:;
 _20 = *(&local0);
-frost$core$Int$wrapper* $tmp6;
-$tmp6 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
-$tmp6->value = _20;
-_21 = ((frost$core$Object*) $tmp6);
+frost$core$Int$wrapper* $tmp4;
+$tmp4 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp4->value = _20;
+_21 = ((frost$core$Object*) $tmp4);
 _22 = _21;
 frost$core$Frost$ref$frost$core$Object$Q(_22);
 _24 = _21;

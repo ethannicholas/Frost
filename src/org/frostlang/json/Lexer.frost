@@ -1,10 +1,9 @@
--------- UPDATED --------
 -*********************************************************************-
 -******************** GENERATED CODE, DO NOT EDIT ********************-
 -*********************************************************************-
 package org.frostlang.json
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 uses org.frostlang.plex.runtime.DFA
 uses org.frostlang.json.Position
 
@@ -21,8 +20,8 @@ class Lexer {
     }
 
     @class
-    function alloc(count:Int, fill:Int):NewPointer<Int> {
-        def result := NewPointer<Int>.alloc(count)
+    function alloc(count:Int, fill:Int):Pointer<Int> {
+        def result := Pointer<Int>.alloc(count)
         for i in 0 .. count {
             result[i] := fill
         }
@@ -30,8 +29,8 @@ class Lexer {
     }
 
     @class
-    function getTransitions():NewPointer<NewPointer<Int>> {
-        def result := NewPointer<NewPointer<Int>>.alloc(255 + 1)
+    function getTransitions():Pointer<Pointer<Int>> {
+        def result := Pointer<Pointer<Int>>.alloc(255 + 1)
         result[0] := alloc(31, 0)
         result[0][3] := 3
         result[1] := result[0]
@@ -360,8 +359,8 @@ class Lexer {
     }
 
     @class
-    function getAccepts():NewPointer<Int> {
-        def result := NewPointer<Int>.alloc(31)
+    function getAccepts():Pointer<Int> {
+        def result := Pointer<Int>.alloc(31)
         result[0] := -1
         result[1] := -1
         result[2] := 6

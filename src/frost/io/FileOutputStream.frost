@@ -1,6 +1,6 @@
 package frost.io
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 @package
 @final
@@ -33,7 +33,7 @@ class FileOutputStream : OutputStream {
 
     @override
     @external
-    method write(ptr:NewPointer<UInt8>, size:Int):Error?
+    method write(ptr:Pointer<UInt8>, size:Int):Error?
 
     @override
     @external

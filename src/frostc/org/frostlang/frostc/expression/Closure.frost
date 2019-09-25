@@ -560,9 +560,8 @@ class Closure {
             frostType := compiler.declaredTypeWithSelf(methodDecl, methodDecl.owner.type, false)
         }
         def irType := Type.pointerTo(compiler, frostType)
-        args.add(ASTNode.IR_WRAPPER(position.asPosition, compiler.cast(position,
-                IR.Value.METHOD_POINTER(methodDecl, irType), Type.pointerTo(compiler,
-                    compiler.INT8_TYPE))))
+        args.add(ASTNode.IR_WRAPPER(position.asPosition, compiler.extractBuiltinInt(position,
+                IR.Value.METHOD_POINTER(methodDecl, irType))))
         args.add(target)
         def methodType:Type
         def finalType:Type

@@ -1,7 +1,6 @@
 package frost.core
 
 uses frost.unsafe.Pointer
-uses frost.unsafe.NewPointer
 
 ====================================================================================================
 Contains utility methods used in the internal implementation of certain language features.
@@ -241,7 +240,7 @@ class Frost {
             value := rawValue
         }
         constant max := 64
-        def chars := NewPointer<Char8>.alloc(max)
+        def chars := Pointer<Char8>.alloc(max)
         var charIndex := max - 1
         do {
             chars[charIndex] := digits[(value % base).asInt]
@@ -295,10 +294,6 @@ class Frost {
     @class
     @external
     method debugPrint(o:Object)
-
-    @class
-    @external
-    method pointerConvert(p:Pointer<Object?>):String
 
     @class
     @external

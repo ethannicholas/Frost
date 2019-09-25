@@ -384,7 +384,7 @@ add_library(c_frost
     bootstrap/src/frost/threads/Notifier.c
     bootstrap/src/frost/threads/MessageQueue/Message.c
     bootstrap/src/frost/threads/Lock.c
-    bootstrap/src/frost/unsafe/NewPointer.c
+    bootstrap/src/frost/unsafe/Pointer.c
     bootstrap/src/frost/unsafe/UnsafeMessageQueue.c
     bootstrap/src/frost/unsafe/UnsafeMessageQueue/Message.c
     bootstrap/src/frost/collections/ImmutableArray/ImmutableArrayIterator.c
@@ -881,7 +881,7 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/ScopedLock.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/Thread.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/time/Timer.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/unsafe/NewPointer.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/unsafe/Pointer.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/unsafe/UnsafeMessageQueue.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Lexer.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Position.frost

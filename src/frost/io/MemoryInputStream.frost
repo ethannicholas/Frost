@@ -1,6 +1,6 @@
 package frost.io
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 ====================================================================================================
 An `InputStream` which reads from a `String`.
@@ -8,7 +8,7 @@ An `InputStream` which reads from a `String`.
 @final
 class MemoryInputStream : InputStream {
     @private
-    def data:NewPointer<UInt8>
+    def data:Pointer<UInt8>
 
     @private
     def length:Int
@@ -25,7 +25,7 @@ class MemoryInputStream : InputStream {
     @param source the string to read from
     ================================================================================================
     init(source:String) {
---        self.data := source.data->NewPointer<UInt8>
+--        self.data := source.data->Pointer<UInt8>
 assert false
         self.length := source.byteLength
         self.string := source

@@ -8,7 +8,7 @@
 #include "frost/core/Object.h"
 #include "frost/collections/Iterator.h"
 #include "frost/collections/Iterable.h"
-#include "frost/unsafe/NewPointer.h"
+#include "frost/unsafe/Pointer.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Range.LTfrost/core/Int.GT.h"
@@ -17,6 +17,7 @@
 #include "frost/collections/ImmutableArray/ImmutableArrayIterator.h"
 #include "frost/core/MutableString.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) frost$core$Int frost$collections$ImmutableArray$get_count$R$frost$core$Int$shim(frost$collections$ImmutableArray* p0) {
     frost$core$Int result = frost$collections$ImmutableArray$get_count$R$frost$core$Int(p0);
 
@@ -73,23 +74,23 @@ typedef frost$core$Object* (*$fn19)(frost$collections$Iterator*);
 typedef frost$core$String* (*$fn20)(frost$core$Object*);
 typedef frost$core$String* (*$fn29)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79", 32, 7816932152053439325, NULL };
-static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 20, -9038773420437697548, NULL };
-static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x54", 126, 1506574532104415367, NULL };
-static frost$core$String $s16 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 20, -9038773420437697548, NULL };
-static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5b", 1, -5808493101479473382, NULL };
-static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
-static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
-static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
-static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
-static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x6e\x75\x6c\x6c\x3e", 6, -6229636012469849280, NULL };
-static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79", 32, 7816932152053439325, NULL };
+static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 20, -9038773420437697548, NULL };
+static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x54", 126, 1506574532104415367, NULL };
+static frost$core$String $s16 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 20, -9038773420437697548, NULL };
+static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x5b", 1, -5808493101479473382, NULL };
+static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x2c\x20", 2, 563935148934614481, NULL };
+static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x2c\x20", 2, 563935148934614481, NULL };
+static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x3c\x6e\x75\x6c\x6c\x3e", 6, -6229636012469849280, NULL };
+static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x5d", 1, -5808499698549242648, NULL };
 
 void frost$collections$ImmutableArray$init(void* rawSelf) {
 frost$collections$ImmutableArray* param0 = (frost$collections$ImmutableArray*) rawSelf;
 
-frost$unsafe$NewPointer local0;
-frost$unsafe$NewPointer local1;
+frost$unsafe$Pointer local0;
+frost$unsafe$Pointer local1;
 frost$core$Int _1;
 frost$core$Int* _2;
 frost$core$Int _5;
@@ -97,22 +98,22 @@ int64_t _8;
 int64_t _9;
 int64_t _10;
 int64_t* _13;
-frost$unsafe$NewPointer _15;
-frost$unsafe$NewPointer _18;
-frost$unsafe$NewPointer* _20;
+frost$unsafe$Pointer _15;
+frost$unsafe$Pointer _18;
+frost$unsafe$Pointer* _20;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:39
 _1 = (frost$core$Int) {0u};
 _2 = &param0->_count;
 *_2 = _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:40
 _5 = (frost$core$Int) {0u};
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from ImmutableArray.frost:40:37
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from ImmutableArray.frost:40:34
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _8 = _5.value;
 _9 = _8 * 16u;
 _10 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_9);
-// begin inline call to frost.unsafe.NewPointer.init(value:builtin_int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from NewPointer.frost:49:29
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:31
+// begin inline call to frost.unsafe.Pointer.init(value:builtin_int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Pointer.frost:49:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:31
 _13 = &(&local1)->value;
 *_13 = _10;
 _15 = *(&local1);
@@ -126,8 +127,8 @@ return;
 void frost$collections$ImmutableArray$init$frost$collections$ListView$LTfrost$collections$ImmutableArray$T$GT(void* rawSelf, frost$collections$ListView* param1) {
 frost$collections$ImmutableArray* param0 = (frost$collections$ImmutableArray*) rawSelf;
 
-frost$unsafe$NewPointer local0;
-frost$unsafe$NewPointer local1;
+frost$unsafe$Pointer local0;
+frost$unsafe$Pointer local1;
 frost$core$Int local2;
 frost$collections$CollectionView* _1;
 $fn2 _2;
@@ -139,9 +140,9 @@ int64_t _11;
 int64_t _12;
 int64_t _13;
 int64_t* _16;
-frost$unsafe$NewPointer _18;
-frost$unsafe$NewPointer _21;
-frost$unsafe$NewPointer* _23;
+frost$unsafe$Pointer _18;
+frost$unsafe$Pointer _21;
+frost$unsafe$Pointer* _23;
 frost$core$Int _26;
 frost$collections$CollectionView* _27;
 $fn3 _28;
@@ -163,8 +164,8 @@ int64_t _46;
 bool _47;
 frost$core$Bit _48;
 bool _49;
-frost$unsafe$NewPointer* _52;
-frost$unsafe$NewPointer _53;
+frost$unsafe$Pointer* _52;
+frost$unsafe$Pointer _53;
 int64_t _54;
 frost$core$Int _55;
 frost$core$Int64 _56;
@@ -210,13 +211,13 @@ _4 = &param0->_count;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:45
 _7 = &param0->_count;
 _8 = *_7;
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from ImmutableArray.frost:45:42
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from ImmutableArray.frost:45:39
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _11 = _8.value;
 _12 = _11 * 16u;
 _13 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_12);
-// begin inline call to frost.unsafe.NewPointer.init(value:builtin_int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from NewPointer.frost:49:29
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:31
+// begin inline call to frost.unsafe.Pointer.init(value:builtin_int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Pointer.frost:49:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:31
 _16 = &(&local1)->value;
 *_16 = _13;
 _18 = *(&local1);
@@ -312,10 +313,10 @@ block4:;
 return;
 
 }
-void frost$collections$ImmutableArray$init$frost$unsafe$NewPointer$LTfrost$collections$ImmutableArray$T$GT$frost$core$Int(void* rawSelf, frost$unsafe$NewPointer param1, frost$core$Int param2) {
+void frost$collections$ImmutableArray$init$frost$unsafe$Pointer$LTfrost$collections$ImmutableArray$T$GT$frost$core$Int(void* rawSelf, frost$unsafe$Pointer param1, frost$core$Int param2) {
 frost$collections$ImmutableArray* param0 = (frost$collections$ImmutableArray*) rawSelf;
 
-frost$unsafe$NewPointer* _1;
+frost$unsafe$Pointer* _1;
 frost$core$Int* _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:53
 _1 = &param0->data;
@@ -328,10 +329,10 @@ return;
 }
 frost$collections$ImmutableArray* frost$collections$ImmutableArray$from$frost$collections$Array$LTfrost$collections$ImmutableArray$T$GT$R$frost$collections$ImmutableArray$LTfrost$collections$ImmutableArray$T$GT(frost$collections$Array* param0) {
 
-frost$unsafe$NewPointer local0;
-frost$unsafe$NewPointer local1;
-frost$unsafe$NewPointer* _1;
-frost$unsafe$NewPointer _2;
+frost$unsafe$Pointer local0;
+frost$unsafe$Pointer local1;
+frost$unsafe$Pointer* _1;
+frost$unsafe$Pointer _2;
 frost$core$Int* _3;
 frost$core$Int _4;
 frost$core$Int* _5;
@@ -343,9 +344,9 @@ int64_t _12;
 int64_t _13;
 int64_t _14;
 int64_t* _17;
-frost$unsafe$NewPointer _19;
-frost$unsafe$NewPointer _22;
-frost$unsafe$NewPointer* _24;
+frost$unsafe$Pointer _19;
+frost$unsafe$Pointer _22;
+frost$unsafe$Pointer* _24;
 frost$core$Object* _27;
 frost$collections$ImmutableArray* _28;
 frost$core$Object* _30;
@@ -369,16 +370,16 @@ _3 = &param0->capacity;
 _4 = *_3;
 _5 = &param0->_count;
 _6 = *_5;
-// begin inline call to method frost.unsafe.NewPointer.realloc(oldCount:frost.core.Int, newCount:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from ImmutableArray.frost:67:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:93
+// begin inline call to method frost.unsafe.Pointer.realloc(oldCount:frost.core.Int, newCount:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from ImmutableArray.frost:67:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:93
 _9 = _2.value;
 _10 = _4.value;
 _11 = _10 * 16u;
 _12 = _6.value;
 _13 = _12 * 16u;
 _14 = frost$core$Frost$realloc$builtin_int$builtin_int$builtin_int$R$builtin_int(_9, _11, _13);
-// begin inline call to frost.unsafe.NewPointer.init(value:builtin_int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from NewPointer.frost:93:29
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:31
+// begin inline call to frost.unsafe.Pointer.init(value:builtin_int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Pointer.frost:93:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:31
 _17 = &(&local1)->value;
 *_17 = _14;
 _19 = *(&local1);
@@ -440,8 +441,8 @@ int64_t _21;
 bool _22;
 frost$core$Bit _23;
 bool _24;
-frost$unsafe$NewPointer* _27;
-frost$unsafe$NewPointer _28;
+frost$unsafe$Pointer* _27;
+frost$unsafe$Pointer _28;
 int64_t _29;
 frost$core$Int _30;
 frost$core$Int64 _31;
@@ -468,8 +469,8 @@ int64_t _58;
 int64_t _59;
 int64_t _60;
 frost$core$Int _61;
-frost$unsafe$NewPointer* _65;
-frost$unsafe$NewPointer _66;
+frost$unsafe$Pointer* _65;
+frost$unsafe$Pointer _66;
 int64_t _69;
 frost$core$Immutable* _73;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:75
@@ -549,8 +550,8 @@ block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:78
 _65 = &param0->data;
 _66 = *_65;
-// begin inline call to method frost.unsafe.NewPointer.destroy() from ImmutableArray.frost:78:21
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+// begin inline call to method frost.unsafe.Pointer.destroy() from ImmutableArray.frost:78:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _69 = _66.value;
 frost$core$Frost$destroy$builtin_int(_69);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:74
@@ -594,8 +595,8 @@ frost$core$Bit _33;
 frost$core$Bit _38;
 bool _39;
 frost$core$Int _41;
-frost$unsafe$NewPointer* _45;
-frost$unsafe$NewPointer _46;
+frost$unsafe$Pointer* _45;
+frost$unsafe$Pointer _46;
 int64_t _47;
 frost$core$Int64 _48;
 int64_t _49;

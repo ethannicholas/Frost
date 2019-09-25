@@ -3,7 +3,6 @@
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
-#include "frost/core/Int8_types.h"
 typedef struct frost$core$Immutable frost$core$Immutable;
 typedef struct frost$core$String frost$core$String;
 
@@ -11,7 +10,7 @@ typedef struct frost$core$Method {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
-    frost$core$Int8* pointer;
+    int64_t pointer;
     frost$core$Immutable* target;
 } frost$core$Method;
 #include "frost/core/Class.h"

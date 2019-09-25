@@ -7,7 +7,9 @@
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Int.h"
+#include "frost/unsafe/Pointer.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 __attribute__((weak)) frost$core$Object* frost$collections$Iterator$MapIterator$next$R$frost$collections$Iterator$MapIterator$U$shim(frost$collections$Iterator$MapIterator* p0) {
     frost$core$Object* result = frost$collections$Iterator$MapIterator$next$R$frost$collections$Iterator$MapIterator$U(p0);
 
@@ -22,14 +24,12 @@ frost$collections$Iterator$MapIterator$class_type frost$collections$Iterator$Map
 typedef frost$core$Bit (*$fn2)(frost$collections$Iterator*);
 typedef frost$core$Bit (*$fn4)(frost$collections$Iterator*);
 typedef frost$core$Object* (*$fn5)(frost$collections$Iterator*);
-typedef frost$core$Object* (*$fn6)(frost$core$Object*);
-typedef frost$core$Object* (*$fn7)(frost$core$Object*, frost$core$Object*);
-typedef frost$core$Object* (*$fn12)(frost$core$Object*);
-typedef frost$core$Object* (*$fn13)(frost$core$Object*, frost$core$Object*);
+typedef frost$core$Object* (*$fn10)(frost$core$Object*);
+typedef frost$core$Object* (*$fn11)(frost$core$Object*, frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4d\x61\x70\x49\x74\x65\x72\x61\x74\x6f\x72", 38, 2027583847227295508, NULL };
-static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 14, -28151574787386209, NULL };
-static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4d\x61\x70\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4d\x61\x70\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x55", 118, -4698360555464701590, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4d\x61\x70\x49\x74\x65\x72\x61\x74\x6f\x72", 38, 2027583847227295508, NULL };
+static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 14, -28151574787386209, NULL };
+static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4d\x61\x70\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4d\x61\x70\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x55", 118, -4698360555464701590, NULL };
 
 void frost$collections$Iterator$MapIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$MapIterator$T$GT$$LPfrost$collections$Iterator$MapIterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$MapIterator$U$RP(void* rawSelf, frost$collections$Iterator* param1, frost$core$MutableMethod* param2) {
 frost$collections$Iterator$MapIterator* param0 = (frost$collections$Iterator$MapIterator*) rawSelf;
@@ -104,25 +104,25 @@ $fn5 _19;
 frost$core$Object* _20;
 frost$core$Object* _21;
 frost$core$MutableMethod* _22;
-frost$core$Int8** _23;
-frost$core$Int8* _24;
+int64_t* _23;
+int64_t _24;
 frost$core$Object** _25;
 frost$core$Object* _26;
 bool _27;
-$fn6 _29;
+frost$unsafe$Pointer _29;
 frost$core$Object* _30;
-$fn7 _33;
+frost$unsafe$Pointer _33;
 frost$core$Object* _34;
 frost$core$Object* _37;
 frost$core$Object* _38;
 frost$core$Object* _40;
 frost$core$Object* _42;
 _0 = ((frost$collections$Iterator*) param0);
-ITable* $tmp8 = _0->$class->itable;
-while ($tmp8->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp8 = $tmp8->next;
+ITable* $tmp6 = _0->$class->itable;
+while ($tmp6->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp6 = $tmp6->next;
 }
-_1 = $tmp8->methods[0];
+_1 = $tmp6->methods[0];
 _2 = _1(_0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
@@ -133,7 +133,7 @@ _9 = _7.value;
 if (_9) goto block1; else goto block2;
 block2:;
 _11 = (frost$core$Int) {130u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s9, _11, &$s10);
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s7, _11, &$s8);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:131
@@ -141,11 +141,11 @@ _15 = &param0->map;
 _16 = *_15;
 _17 = &param0->base;
 _18 = *_17;
-ITable* $tmp11 = _18->$class->itable;
-while ($tmp11->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp11 = $tmp11->next;
+ITable* $tmp9 = _18->$class->itable;
+while ($tmp9->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp9 = $tmp9->next;
 }
-_19 = $tmp11->methods[1];
+_19 = $tmp9->methods[1];
 _20 = _19(_18);
 _21 = _20;
 _22 = _16;
@@ -156,13 +156,13 @@ _26 = *_25;
 _27 = _26 != ((frost$core$Object*) NULL);
 if (_27) goto block4; else goto block5;
 block5:;
-_29 = (($fn12) _24);
-_30 = _29(_21);
+_29 = (frost$unsafe$Pointer) {_24};
+_30 = (($fn10) _29.value)(_21);
 *(&local0) = _30;
 goto block6;
 block4:;
-_33 = (($fn13) _24);
-_34 = _33(_26, _21);
+_33 = (frost$unsafe$Pointer) {_24};
+_34 = (($fn11) _33.value)(_26, _21);
 *(&local0) = _34;
 goto block6;
 block6:;

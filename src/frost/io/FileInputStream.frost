@@ -1,6 +1,6 @@
 package frost.io
 
-uses frost.unsafe.NewPointer
+uses frost.unsafe.Pointer
 
 @package
 @final
@@ -37,11 +37,11 @@ class FileInputStream : InputStream {
     method readImpl():UInt8?
 
     @override
-    method read(buffer:NewPointer<UInt8>, max:Int):Int {
+    method read(buffer:Pointer<UInt8>, max:Int):Int {
         return readImpl(buffer, max)
     }
 
     @private
     @external
-    method readImpl(buffer:NewPointer<UInt8>, max:Int):Int
+    method readImpl(buffer:Pointer<UInt8>, max:Int):Int
 }

@@ -4,7 +4,7 @@
 #include "frost/core/String.h"
 #include "org/frostlang/plex/runtime/DFA.h"
 #include "frost/core/Int.h"
-#include "frost/unsafe/NewPointer.h"
+#include "frost/unsafe/Pointer.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Range.LTfrost/core/Int.GT.h"
@@ -15,36 +15,37 @@
 #include "frost/core/String/Index.h"
 #include "org/frostlang/json/Position.h"
 
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 
 static frost$core$String $s1;
 org$frostlang$json$Lexer$class_type org$frostlang$json$Lexer$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$json$Lexer$cleanup, org$frostlang$json$Lexer$start$frost$core$String, org$frostlang$json$Lexer$next$R$org$frostlang$json$Token} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x4c\x65\x78\x65\x72", 24, 5960953331362814559, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x4c\x65\x78\x65\x72", 24, 5960953331362814559, NULL };
 
 void org$frostlang$json$Lexer$start$frost$core$String(void* rawSelf, frost$core$String* param1) {
 org$frostlang$json$Lexer* param0 = (org$frostlang$json$Lexer*) rawSelf;
 
 org$frostlang$plex$runtime$DFA* _1;
 frost$core$Int _2;
-frost$unsafe$NewPointer* _3;
-frost$unsafe$NewPointer _4;
-frost$unsafe$NewPointer* _5;
-frost$unsafe$NewPointer _6;
+frost$unsafe$Pointer* _3;
+frost$unsafe$Pointer _4;
+frost$unsafe$Pointer* _5;
+frost$unsafe$Pointer _6;
 frost$core$Object* _8;
 org$frostlang$plex$runtime$DFA** _10;
 org$frostlang$plex$runtime$DFA* _11;
 frost$core$Object* _12;
 org$frostlang$plex$runtime$DFA** _14;
 frost$core$Object* _16;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:20
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:19
 _1 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(sizeof(org$frostlang$plex$runtime$DFA), (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
 _2 = (frost$core$Int) {31u};
 _3 = &param0->transitions;
 _4 = *_3;
 _5 = &param0->accepts;
 _6 = *_5;
-org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$NewPointer$LTfrost$unsafe$NewPointer$LTfrost$core$Int$GT$GT$frost$unsafe$NewPointer$LTfrost$core$Int$GT(_1, param1, _2, _4, _6);
+org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(_1, param1, _2, _4, _6);
 _8 = ((frost$core$Object*) _1);
 frost$core$Frost$ref$frost$core$Object$Q(_8);
 _10 = &param0->dfa;
@@ -58,18 +59,18 @@ frost$core$Frost$unref$frost$core$Object$Q(_16);
 return;
 
 }
-frost$unsafe$NewPointer org$frostlang$json$Lexer$alloc$frost$core$Int$frost$core$Int$R$frost$unsafe$NewPointer$LTfrost$core$Int$GT(frost$core$Int param0, frost$core$Int param1) {
+frost$unsafe$Pointer org$frostlang$json$Lexer$alloc$frost$core$Int$frost$core$Int$R$frost$unsafe$Pointer$LTfrost$core$Int$GT(frost$core$Int param0, frost$core$Int param1) {
 
-frost$unsafe$NewPointer local0;
-frost$unsafe$NewPointer local1;
-frost$unsafe$NewPointer local2;
+frost$unsafe$Pointer local0;
+frost$unsafe$Pointer local1;
+frost$unsafe$Pointer local2;
 frost$core$Int local3;
 int64_t _3;
 int64_t _4;
 int64_t _5;
 int64_t* _8;
-frost$unsafe$NewPointer _10;
-frost$unsafe$NewPointer _13;
+frost$unsafe$Pointer _10;
+frost$unsafe$Pointer _13;
 frost$core$Int _17;
 frost$core$Bit _18;
 frost$core$Range$LTfrost$core$Int$GT _19;
@@ -88,7 +89,7 @@ int64_t _34;
 bool _35;
 frost$core$Bit _36;
 bool _37;
-frost$unsafe$NewPointer _40;
+frost$unsafe$Pointer _40;
 int64_t _41;
 frost$core$Int _42;
 frost$core$Int64 _43;
@@ -112,22 +113,22 @@ int64_t _65;
 int64_t _66;
 int64_t _67;
 frost$core$Int _68;
-frost$unsafe$NewPointer _72;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+frost$unsafe$Pointer _72;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _3 = param0.value;
 _4 = _3 * 8u;
 _5 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_4);
-// begin inline call to frost.unsafe.NewPointer.init(value:builtin_int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from NewPointer.frost:49:29
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:31
+// begin inline call to frost.unsafe.Pointer.init(value:builtin_int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Pointer.frost:49:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:31
 _8 = &(&local1)->value;
 *_8 = _5;
 _10 = *(&local1);
 *(&local0) = _10;
 _13 = *(&local0);
 *(&local2) = _13;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _17 = (frost$core$Int) {0u};
 _18 = (frost$core$Bit) {false};
 _19 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_17, param0, _18);
@@ -153,7 +154,7 @@ _36 = (frost$core$Bit) {_35};
 _37 = _36.value;
 if (_37) goto block3; else goto block4;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _40 = *(&local2);
 _41 = _40.value;
 _42 = *(&local3);
@@ -188,74 +189,74 @@ _68 = (frost$core$Int) {_67};
 *(&local3) = _68;
 goto block3;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _72 = *(&local2);
 return _72;
 
 }
-frost$unsafe$NewPointer org$frostlang$json$Lexer$getTransitions$R$frost$unsafe$NewPointer$LTfrost$unsafe$NewPointer$LTfrost$core$Int$GT$GT() {
+frost$unsafe$Pointer org$frostlang$json$Lexer$getTransitions$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT() {
 
-frost$unsafe$NewPointer local0;
-frost$unsafe$NewPointer local1;
-frost$unsafe$NewPointer local2;
-frost$unsafe$NewPointer local3;
+frost$unsafe$Pointer local0;
+frost$unsafe$Pointer local1;
+frost$unsafe$Pointer local2;
+frost$unsafe$Pointer local3;
 frost$core$Int local4;
-frost$unsafe$NewPointer local5;
+frost$unsafe$Pointer local5;
 frost$core$Int local6;
-frost$unsafe$NewPointer local7;
+frost$unsafe$Pointer local7;
 frost$core$Int local8;
-frost$unsafe$NewPointer local9;
+frost$unsafe$Pointer local9;
 frost$core$Int local10;
-frost$unsafe$NewPointer local11;
+frost$unsafe$Pointer local11;
 frost$core$Int local12;
-frost$unsafe$NewPointer local13;
+frost$unsafe$Pointer local13;
 frost$core$Int local14;
-frost$unsafe$NewPointer local15;
+frost$unsafe$Pointer local15;
 frost$core$Int local16;
-frost$unsafe$NewPointer local17;
+frost$unsafe$Pointer local17;
 frost$core$Int local18;
-frost$unsafe$NewPointer local19;
+frost$unsafe$Pointer local19;
 frost$core$Int local20;
-frost$unsafe$NewPointer local21;
+frost$unsafe$Pointer local21;
 frost$core$Int local22;
-frost$unsafe$NewPointer local23;
+frost$unsafe$Pointer local23;
 frost$core$Int local24;
-frost$unsafe$NewPointer local25;
+frost$unsafe$Pointer local25;
 frost$core$Int local26;
-frost$unsafe$NewPointer local27;
+frost$unsafe$Pointer local27;
 frost$core$Int local28;
-frost$unsafe$NewPointer local29;
+frost$unsafe$Pointer local29;
 frost$core$Int local30;
-frost$unsafe$NewPointer local31;
+frost$unsafe$Pointer local31;
 frost$core$Int local32;
-frost$unsafe$NewPointer local33;
+frost$unsafe$Pointer local33;
 frost$core$Int local34;
-frost$unsafe$NewPointer local35;
+frost$unsafe$Pointer local35;
 frost$core$Int local36;
-frost$unsafe$NewPointer local37;
+frost$unsafe$Pointer local37;
 frost$core$Int local38;
-frost$unsafe$NewPointer local39;
+frost$unsafe$Pointer local39;
 frost$core$Int local40;
-frost$unsafe$NewPointer local41;
+frost$unsafe$Pointer local41;
 frost$core$Int local42;
-frost$unsafe$NewPointer local43;
+frost$unsafe$Pointer local43;
 frost$core$Int local44;
-frost$unsafe$NewPointer local45;
+frost$unsafe$Pointer local45;
 frost$core$Int local46;
-frost$unsafe$NewPointer local47;
+frost$unsafe$Pointer local47;
 frost$core$Int local48;
-frost$unsafe$NewPointer local49;
+frost$unsafe$Pointer local49;
 frost$core$Int local50;
-frost$unsafe$NewPointer local51;
+frost$unsafe$Pointer local51;
 frost$core$Int local52;
 frost$core$Int _1;
 int64_t _4;
 int64_t _5;
 int64_t _6;
 int64_t* _9;
-frost$unsafe$NewPointer _11;
-frost$unsafe$NewPointer _14;
-frost$unsafe$NewPointer _18;
+frost$unsafe$Pointer _11;
+frost$unsafe$Pointer _14;
+frost$unsafe$Pointer _18;
 int64_t _19;
 frost$core$Int64 _20;
 frost$core$Int _21;
@@ -263,7 +264,7 @@ frost$core$Int _22;
 int64_t _27;
 int64_t _28;
 int64_t _29;
-frost$unsafe$NewPointer _30;
+frost$unsafe$Pointer _30;
 frost$core$Int _34;
 frost$core$Bit _35;
 frost$core$Range$LTfrost$core$Int$GT _36;
@@ -282,7 +283,7 @@ int64_t _51;
 bool _52;
 frost$core$Bit _53;
 bool _54;
-frost$unsafe$NewPointer _57;
+frost$unsafe$Pointer _57;
 int64_t _58;
 frost$core$Int _59;
 frost$core$Int64 _60;
@@ -306,90 +307,90 @@ int64_t _82;
 int64_t _83;
 int64_t _84;
 frost$core$Int _85;
-frost$unsafe$NewPointer _89;
+frost$unsafe$Pointer _89;
 int64_t _91;
-frost$unsafe$NewPointer _94;
+frost$unsafe$Pointer _94;
 int64_t _95;
 frost$core$Int64 _96;
 int64_t _97;
-frost$unsafe$NewPointer _98;
+frost$unsafe$Pointer _98;
 int64_t _99;
 frost$core$Int64 _100;
 frost$core$Int _101;
 int64_t _102;
-frost$unsafe$NewPointer _105;
+frost$unsafe$Pointer _105;
 int64_t _106;
 frost$core$Int64 _107;
-frost$unsafe$NewPointer _108;
+frost$unsafe$Pointer _108;
 int64_t _109;
 frost$core$Int64 _110;
 int64_t _111;
-frost$unsafe$NewPointer _112;
+frost$unsafe$Pointer _112;
 int64_t _113;
-frost$unsafe$NewPointer _116;
+frost$unsafe$Pointer _116;
 int64_t _117;
 frost$core$Int64 _118;
-frost$unsafe$NewPointer _119;
+frost$unsafe$Pointer _119;
 int64_t _120;
 frost$core$Int64 _121;
 int64_t _122;
-frost$unsafe$NewPointer _123;
+frost$unsafe$Pointer _123;
 int64_t _124;
-frost$unsafe$NewPointer _127;
+frost$unsafe$Pointer _127;
 int64_t _128;
 frost$core$Int64 _129;
-frost$unsafe$NewPointer _130;
+frost$unsafe$Pointer _130;
 int64_t _131;
 frost$core$Int64 _132;
 int64_t _133;
-frost$unsafe$NewPointer _134;
+frost$unsafe$Pointer _134;
 int64_t _135;
-frost$unsafe$NewPointer _138;
+frost$unsafe$Pointer _138;
 int64_t _139;
 frost$core$Int64 _140;
-frost$unsafe$NewPointer _141;
+frost$unsafe$Pointer _141;
 int64_t _142;
 frost$core$Int64 _143;
 int64_t _144;
-frost$unsafe$NewPointer _145;
+frost$unsafe$Pointer _145;
 int64_t _146;
-frost$unsafe$NewPointer _149;
+frost$unsafe$Pointer _149;
 int64_t _150;
 frost$core$Int64 _151;
-frost$unsafe$NewPointer _152;
+frost$unsafe$Pointer _152;
 int64_t _153;
 frost$core$Int64 _154;
 int64_t _155;
-frost$unsafe$NewPointer _156;
+frost$unsafe$Pointer _156;
 int64_t _157;
-frost$unsafe$NewPointer _160;
+frost$unsafe$Pointer _160;
 int64_t _161;
 frost$core$Int64 _162;
-frost$unsafe$NewPointer _163;
+frost$unsafe$Pointer _163;
 int64_t _164;
 frost$core$Int64 _165;
 int64_t _166;
-frost$unsafe$NewPointer _167;
+frost$unsafe$Pointer _167;
 int64_t _168;
-frost$unsafe$NewPointer _171;
+frost$unsafe$Pointer _171;
 int64_t _172;
 frost$core$Int64 _173;
-frost$unsafe$NewPointer _174;
+frost$unsafe$Pointer _174;
 int64_t _175;
 frost$core$Int64 _176;
 int64_t _177;
-frost$unsafe$NewPointer _178;
+frost$unsafe$Pointer _178;
 int64_t _179;
-frost$unsafe$NewPointer _182;
+frost$unsafe$Pointer _182;
 int64_t _183;
 frost$core$Int64 _184;
-frost$unsafe$NewPointer _185;
+frost$unsafe$Pointer _185;
 int64_t _186;
 frost$core$Int64 _187;
 int64_t _188;
-frost$unsafe$NewPointer _189;
+frost$unsafe$Pointer _189;
 int64_t _190;
-frost$unsafe$NewPointer _193;
+frost$unsafe$Pointer _193;
 int64_t _194;
 frost$core$Int64 _195;
 frost$core$Int _196;
@@ -397,7 +398,7 @@ frost$core$Int _197;
 int64_t _202;
 int64_t _203;
 int64_t _204;
-frost$unsafe$NewPointer _205;
+frost$unsafe$Pointer _205;
 frost$core$Int _209;
 frost$core$Bit _210;
 frost$core$Range$LTfrost$core$Int$GT _211;
@@ -416,7 +417,7 @@ int64_t _226;
 bool _227;
 frost$core$Bit _228;
 bool _229;
-frost$unsafe$NewPointer _232;
+frost$unsafe$Pointer _232;
 int64_t _233;
 frost$core$Int _234;
 frost$core$Int64 _235;
@@ -440,252 +441,252 @@ int64_t _257;
 int64_t _258;
 int64_t _259;
 frost$core$Int _260;
-frost$unsafe$NewPointer _264;
+frost$unsafe$Pointer _264;
 int64_t _266;
-frost$unsafe$NewPointer _269;
+frost$unsafe$Pointer _269;
 int64_t _270;
 frost$core$Int64 _271;
 int64_t _272;
-frost$unsafe$NewPointer _273;
+frost$unsafe$Pointer _273;
 int64_t _274;
 frost$core$Int64 _275;
 frost$core$Int _276;
 int64_t _277;
-frost$unsafe$NewPointer _280;
+frost$unsafe$Pointer _280;
 int64_t _281;
 frost$core$Int64 _282;
 int64_t _283;
-frost$unsafe$NewPointer _284;
+frost$unsafe$Pointer _284;
 int64_t _285;
 frost$core$Int64 _286;
 frost$core$Int _287;
 int64_t _288;
-frost$unsafe$NewPointer _291;
+frost$unsafe$Pointer _291;
 int64_t _292;
 frost$core$Int64 _293;
 int64_t _294;
-frost$unsafe$NewPointer _295;
+frost$unsafe$Pointer _295;
 int64_t _296;
 frost$core$Int64 _297;
 frost$core$Int _298;
 int64_t _299;
-frost$unsafe$NewPointer _302;
+frost$unsafe$Pointer _302;
 int64_t _303;
 frost$core$Int64 _304;
-frost$unsafe$NewPointer _305;
+frost$unsafe$Pointer _305;
 int64_t _306;
 frost$core$Int64 _307;
 int64_t _308;
-frost$unsafe$NewPointer _309;
+frost$unsafe$Pointer _309;
 int64_t _310;
-frost$unsafe$NewPointer _313;
+frost$unsafe$Pointer _313;
 int64_t _314;
 frost$core$Int64 _315;
-frost$unsafe$NewPointer _316;
+frost$unsafe$Pointer _316;
 int64_t _317;
 frost$core$Int64 _318;
 int64_t _319;
-frost$unsafe$NewPointer _320;
+frost$unsafe$Pointer _320;
 int64_t _321;
-frost$unsafe$NewPointer _324;
+frost$unsafe$Pointer _324;
 int64_t _325;
 frost$core$Int64 _326;
-frost$unsafe$NewPointer _327;
+frost$unsafe$Pointer _327;
 int64_t _328;
 frost$core$Int64 _329;
 int64_t _330;
-frost$unsafe$NewPointer _331;
+frost$unsafe$Pointer _331;
 int64_t _332;
-frost$unsafe$NewPointer _335;
+frost$unsafe$Pointer _335;
 int64_t _336;
 frost$core$Int64 _337;
-frost$unsafe$NewPointer _338;
+frost$unsafe$Pointer _338;
 int64_t _339;
 frost$core$Int64 _340;
 int64_t _341;
-frost$unsafe$NewPointer _342;
+frost$unsafe$Pointer _342;
 int64_t _343;
-frost$unsafe$NewPointer _346;
+frost$unsafe$Pointer _346;
 int64_t _347;
 frost$core$Int64 _348;
-frost$unsafe$NewPointer _349;
+frost$unsafe$Pointer _349;
 int64_t _350;
 frost$core$Int64 _351;
 int64_t _352;
-frost$unsafe$NewPointer _353;
+frost$unsafe$Pointer _353;
 int64_t _354;
-frost$unsafe$NewPointer _357;
+frost$unsafe$Pointer _357;
 int64_t _358;
 frost$core$Int64 _359;
-frost$unsafe$NewPointer _360;
+frost$unsafe$Pointer _360;
 int64_t _361;
 frost$core$Int64 _362;
 int64_t _363;
-frost$unsafe$NewPointer _364;
+frost$unsafe$Pointer _364;
 int64_t _365;
-frost$unsafe$NewPointer _368;
+frost$unsafe$Pointer _368;
 int64_t _369;
 frost$core$Int64 _370;
-frost$unsafe$NewPointer _371;
+frost$unsafe$Pointer _371;
 int64_t _372;
 frost$core$Int64 _373;
 int64_t _374;
-frost$unsafe$NewPointer _375;
+frost$unsafe$Pointer _375;
 int64_t _376;
-frost$unsafe$NewPointer _379;
+frost$unsafe$Pointer _379;
 int64_t _380;
 frost$core$Int64 _381;
-frost$unsafe$NewPointer _382;
+frost$unsafe$Pointer _382;
 int64_t _383;
 frost$core$Int64 _384;
 int64_t _385;
-frost$unsafe$NewPointer _386;
+frost$unsafe$Pointer _386;
 int64_t _387;
-frost$unsafe$NewPointer _390;
+frost$unsafe$Pointer _390;
 int64_t _391;
 frost$core$Int64 _392;
-frost$unsafe$NewPointer _393;
+frost$unsafe$Pointer _393;
 int64_t _394;
 frost$core$Int64 _395;
 int64_t _396;
-frost$unsafe$NewPointer _397;
+frost$unsafe$Pointer _397;
 int64_t _398;
-frost$unsafe$NewPointer _401;
+frost$unsafe$Pointer _401;
 int64_t _402;
 frost$core$Int64 _403;
-frost$unsafe$NewPointer _404;
+frost$unsafe$Pointer _404;
 int64_t _405;
 frost$core$Int64 _406;
 int64_t _407;
-frost$unsafe$NewPointer _408;
+frost$unsafe$Pointer _408;
 int64_t _409;
-frost$unsafe$NewPointer _412;
+frost$unsafe$Pointer _412;
 int64_t _413;
 frost$core$Int64 _414;
-frost$unsafe$NewPointer _415;
+frost$unsafe$Pointer _415;
 int64_t _416;
 frost$core$Int64 _417;
 int64_t _418;
-frost$unsafe$NewPointer _419;
+frost$unsafe$Pointer _419;
 int64_t _420;
-frost$unsafe$NewPointer _423;
+frost$unsafe$Pointer _423;
 int64_t _424;
 frost$core$Int64 _425;
-frost$unsafe$NewPointer _426;
+frost$unsafe$Pointer _426;
 int64_t _427;
 frost$core$Int64 _428;
 int64_t _429;
-frost$unsafe$NewPointer _430;
+frost$unsafe$Pointer _430;
 int64_t _431;
-frost$unsafe$NewPointer _434;
+frost$unsafe$Pointer _434;
 int64_t _435;
 frost$core$Int64 _436;
-frost$unsafe$NewPointer _437;
+frost$unsafe$Pointer _437;
 int64_t _438;
 frost$core$Int64 _439;
 int64_t _440;
-frost$unsafe$NewPointer _441;
+frost$unsafe$Pointer _441;
 int64_t _442;
-frost$unsafe$NewPointer _445;
+frost$unsafe$Pointer _445;
 int64_t _446;
 frost$core$Int64 _447;
-frost$unsafe$NewPointer _448;
+frost$unsafe$Pointer _448;
 int64_t _449;
 frost$core$Int64 _450;
 int64_t _451;
-frost$unsafe$NewPointer _452;
+frost$unsafe$Pointer _452;
 int64_t _453;
-frost$unsafe$NewPointer _456;
+frost$unsafe$Pointer _456;
 int64_t _457;
 frost$core$Int64 _458;
-frost$unsafe$NewPointer _459;
+frost$unsafe$Pointer _459;
 int64_t _460;
 frost$core$Int64 _461;
 int64_t _462;
-frost$unsafe$NewPointer _463;
+frost$unsafe$Pointer _463;
 int64_t _464;
-frost$unsafe$NewPointer _467;
+frost$unsafe$Pointer _467;
 int64_t _468;
 frost$core$Int64 _469;
-frost$unsafe$NewPointer _470;
+frost$unsafe$Pointer _470;
 int64_t _471;
 frost$core$Int64 _472;
 int64_t _473;
-frost$unsafe$NewPointer _474;
+frost$unsafe$Pointer _474;
 int64_t _475;
-frost$unsafe$NewPointer _478;
+frost$unsafe$Pointer _478;
 int64_t _479;
 frost$core$Int64 _480;
-frost$unsafe$NewPointer _481;
+frost$unsafe$Pointer _481;
 int64_t _482;
 frost$core$Int64 _483;
 int64_t _484;
-frost$unsafe$NewPointer _485;
+frost$unsafe$Pointer _485;
 int64_t _486;
-frost$unsafe$NewPointer _489;
+frost$unsafe$Pointer _489;
 int64_t _490;
 frost$core$Int64 _491;
-frost$unsafe$NewPointer _492;
+frost$unsafe$Pointer _492;
 int64_t _493;
 frost$core$Int64 _494;
 int64_t _495;
-frost$unsafe$NewPointer _496;
+frost$unsafe$Pointer _496;
 int64_t _497;
-frost$unsafe$NewPointer _500;
+frost$unsafe$Pointer _500;
 int64_t _501;
 frost$core$Int64 _502;
-frost$unsafe$NewPointer _503;
+frost$unsafe$Pointer _503;
 int64_t _504;
 frost$core$Int64 _505;
 int64_t _506;
-frost$unsafe$NewPointer _507;
+frost$unsafe$Pointer _507;
 int64_t _508;
-frost$unsafe$NewPointer _511;
+frost$unsafe$Pointer _511;
 int64_t _512;
 frost$core$Int64 _513;
-frost$unsafe$NewPointer _514;
+frost$unsafe$Pointer _514;
 int64_t _515;
 frost$core$Int64 _516;
 int64_t _517;
-frost$unsafe$NewPointer _518;
+frost$unsafe$Pointer _518;
 int64_t _519;
-frost$unsafe$NewPointer _522;
+frost$unsafe$Pointer _522;
 int64_t _523;
 frost$core$Int64 _524;
-frost$unsafe$NewPointer _525;
+frost$unsafe$Pointer _525;
 int64_t _526;
 frost$core$Int64 _527;
 int64_t _528;
-frost$unsafe$NewPointer _529;
+frost$unsafe$Pointer _529;
 int64_t _530;
-frost$unsafe$NewPointer _533;
+frost$unsafe$Pointer _533;
 int64_t _534;
 frost$core$Int64 _535;
-frost$unsafe$NewPointer _536;
+frost$unsafe$Pointer _536;
 int64_t _537;
 frost$core$Int64 _538;
 int64_t _539;
-frost$unsafe$NewPointer _540;
+frost$unsafe$Pointer _540;
 int64_t _541;
-frost$unsafe$NewPointer _544;
+frost$unsafe$Pointer _544;
 int64_t _545;
 frost$core$Int64 _546;
-frost$unsafe$NewPointer _547;
+frost$unsafe$Pointer _547;
 int64_t _548;
 frost$core$Int64 _549;
 int64_t _550;
-frost$unsafe$NewPointer _551;
+frost$unsafe$Pointer _551;
 int64_t _552;
-frost$unsafe$NewPointer _555;
+frost$unsafe$Pointer _555;
 int64_t _556;
 frost$core$Int64 _557;
-frost$unsafe$NewPointer _558;
+frost$unsafe$Pointer _558;
 int64_t _559;
 frost$core$Int64 _560;
 int64_t _561;
-frost$unsafe$NewPointer _562;
+frost$unsafe$Pointer _562;
 int64_t _563;
-frost$unsafe$NewPointer _566;
+frost$unsafe$Pointer _566;
 int64_t _567;
 frost$core$Int64 _568;
 frost$core$Int _569;
@@ -693,7 +694,7 @@ frost$core$Int _570;
 int64_t _575;
 int64_t _576;
 int64_t _577;
-frost$unsafe$NewPointer _578;
+frost$unsafe$Pointer _578;
 frost$core$Int _582;
 frost$core$Bit _583;
 frost$core$Range$LTfrost$core$Int$GT _584;
@@ -712,7 +713,7 @@ int64_t _599;
 bool _600;
 frost$core$Bit _601;
 bool _602;
-frost$unsafe$NewPointer _605;
+frost$unsafe$Pointer _605;
 int64_t _606;
 frost$core$Int _607;
 frost$core$Int64 _608;
@@ -736,108 +737,108 @@ int64_t _630;
 int64_t _631;
 int64_t _632;
 frost$core$Int _633;
-frost$unsafe$NewPointer _637;
+frost$unsafe$Pointer _637;
 int64_t _639;
-frost$unsafe$NewPointer _642;
+frost$unsafe$Pointer _642;
 int64_t _643;
 frost$core$Int64 _644;
 int64_t _645;
-frost$unsafe$NewPointer _646;
+frost$unsafe$Pointer _646;
 int64_t _647;
 frost$core$Int64 _648;
 frost$core$Int _649;
 int64_t _650;
-frost$unsafe$NewPointer _653;
+frost$unsafe$Pointer _653;
 int64_t _654;
 frost$core$Int64 _655;
 int64_t _656;
-frost$unsafe$NewPointer _657;
+frost$unsafe$Pointer _657;
 int64_t _658;
 frost$core$Int64 _659;
 frost$core$Int _660;
 int64_t _661;
-frost$unsafe$NewPointer _664;
+frost$unsafe$Pointer _664;
 int64_t _665;
 frost$core$Int64 _666;
 int64_t _667;
-frost$unsafe$NewPointer _668;
+frost$unsafe$Pointer _668;
 int64_t _669;
 frost$core$Int64 _670;
 frost$core$Int _671;
 int64_t _672;
-frost$unsafe$NewPointer _675;
+frost$unsafe$Pointer _675;
 int64_t _676;
 frost$core$Int64 _677;
-frost$unsafe$NewPointer _678;
+frost$unsafe$Pointer _678;
 int64_t _679;
 frost$core$Int64 _680;
 int64_t _681;
-frost$unsafe$NewPointer _682;
+frost$unsafe$Pointer _682;
 int64_t _683;
-frost$unsafe$NewPointer _686;
+frost$unsafe$Pointer _686;
 int64_t _687;
 frost$core$Int64 _688;
-frost$unsafe$NewPointer _689;
+frost$unsafe$Pointer _689;
 int64_t _690;
 frost$core$Int64 _691;
 int64_t _692;
-frost$unsafe$NewPointer _693;
+frost$unsafe$Pointer _693;
 int64_t _694;
-frost$unsafe$NewPointer _697;
+frost$unsafe$Pointer _697;
 int64_t _698;
 frost$core$Int64 _699;
-frost$unsafe$NewPointer _700;
+frost$unsafe$Pointer _700;
 int64_t _701;
 frost$core$Int64 _702;
 int64_t _703;
-frost$unsafe$NewPointer _704;
+frost$unsafe$Pointer _704;
 int64_t _705;
-frost$unsafe$NewPointer _708;
+frost$unsafe$Pointer _708;
 int64_t _709;
 frost$core$Int64 _710;
-frost$unsafe$NewPointer _711;
+frost$unsafe$Pointer _711;
 int64_t _712;
 frost$core$Int64 _713;
 int64_t _714;
-frost$unsafe$NewPointer _715;
+frost$unsafe$Pointer _715;
 int64_t _716;
-frost$unsafe$NewPointer _719;
+frost$unsafe$Pointer _719;
 int64_t _720;
 frost$core$Int64 _721;
-frost$unsafe$NewPointer _722;
+frost$unsafe$Pointer _722;
 int64_t _723;
 frost$core$Int64 _724;
 int64_t _725;
-frost$unsafe$NewPointer _726;
+frost$unsafe$Pointer _726;
 int64_t _727;
-frost$unsafe$NewPointer _730;
+frost$unsafe$Pointer _730;
 int64_t _731;
 frost$core$Int64 _732;
-frost$unsafe$NewPointer _733;
+frost$unsafe$Pointer _733;
 int64_t _734;
 frost$core$Int64 _735;
 int64_t _736;
-frost$unsafe$NewPointer _737;
+frost$unsafe$Pointer _737;
 int64_t _738;
-frost$unsafe$NewPointer _741;
+frost$unsafe$Pointer _741;
 int64_t _742;
 frost$core$Int64 _743;
-frost$unsafe$NewPointer _744;
+frost$unsafe$Pointer _744;
 int64_t _745;
 frost$core$Int64 _746;
 int64_t _747;
-frost$unsafe$NewPointer _748;
+frost$unsafe$Pointer _748;
 int64_t _749;
-frost$unsafe$NewPointer _752;
+frost$unsafe$Pointer _752;
 int64_t _753;
 frost$core$Int64 _754;
-frost$unsafe$NewPointer _755;
+frost$unsafe$Pointer _755;
 int64_t _756;
 frost$core$Int64 _757;
 int64_t _758;
-frost$unsafe$NewPointer _759;
+frost$unsafe$Pointer _759;
 int64_t _760;
-frost$unsafe$NewPointer _763;
+frost$unsafe$Pointer _763;
 int64_t _764;
 frost$core$Int64 _765;
 frost$core$Int _766;
@@ -845,7 +846,7 @@ frost$core$Int _767;
 int64_t _772;
 int64_t _773;
 int64_t _774;
-frost$unsafe$NewPointer _775;
+frost$unsafe$Pointer _775;
 frost$core$Int _779;
 frost$core$Bit _780;
 frost$core$Range$LTfrost$core$Int$GT _781;
@@ -864,7 +865,7 @@ int64_t _796;
 bool _797;
 frost$core$Bit _798;
 bool _799;
-frost$unsafe$NewPointer _802;
+frost$unsafe$Pointer _802;
 int64_t _803;
 frost$core$Int _804;
 frost$core$Int64 _805;
@@ -888,27 +889,27 @@ int64_t _827;
 int64_t _828;
 int64_t _829;
 frost$core$Int _830;
-frost$unsafe$NewPointer _834;
+frost$unsafe$Pointer _834;
 int64_t _836;
-frost$unsafe$NewPointer _839;
+frost$unsafe$Pointer _839;
 int64_t _840;
 frost$core$Int64 _841;
 int64_t _842;
-frost$unsafe$NewPointer _843;
+frost$unsafe$Pointer _843;
 int64_t _844;
 frost$core$Int64 _845;
 frost$core$Int _846;
 int64_t _847;
-frost$unsafe$NewPointer _850;
+frost$unsafe$Pointer _850;
 int64_t _851;
 frost$core$Int64 _852;
 int64_t _853;
-frost$unsafe$NewPointer _854;
+frost$unsafe$Pointer _854;
 int64_t _855;
 frost$core$Int64 _856;
 frost$core$Int _857;
 int64_t _858;
-frost$unsafe$NewPointer _861;
+frost$unsafe$Pointer _861;
 int64_t _862;
 frost$core$Int64 _863;
 frost$core$Int _864;
@@ -916,7 +917,7 @@ frost$core$Int _865;
 int64_t _870;
 int64_t _871;
 int64_t _872;
-frost$unsafe$NewPointer _873;
+frost$unsafe$Pointer _873;
 frost$core$Int _877;
 frost$core$Bit _878;
 frost$core$Range$LTfrost$core$Int$GT _879;
@@ -935,7 +936,7 @@ int64_t _894;
 bool _895;
 frost$core$Bit _896;
 bool _897;
-frost$unsafe$NewPointer _900;
+frost$unsafe$Pointer _900;
 int64_t _901;
 frost$core$Int _902;
 frost$core$Int64 _903;
@@ -959,27 +960,27 @@ int64_t _925;
 int64_t _926;
 int64_t _927;
 frost$core$Int _928;
-frost$unsafe$NewPointer _932;
+frost$unsafe$Pointer _932;
 int64_t _934;
-frost$unsafe$NewPointer _937;
+frost$unsafe$Pointer _937;
 int64_t _938;
 frost$core$Int64 _939;
 int64_t _940;
-frost$unsafe$NewPointer _941;
+frost$unsafe$Pointer _941;
 int64_t _942;
 frost$core$Int64 _943;
 frost$core$Int _944;
 int64_t _945;
-frost$unsafe$NewPointer _948;
+frost$unsafe$Pointer _948;
 int64_t _949;
 frost$core$Int64 _950;
 int64_t _951;
-frost$unsafe$NewPointer _952;
+frost$unsafe$Pointer _952;
 int64_t _953;
 frost$core$Int64 _954;
 frost$core$Int _955;
 int64_t _956;
-frost$unsafe$NewPointer _959;
+frost$unsafe$Pointer _959;
 int64_t _960;
 frost$core$Int64 _961;
 frost$core$Int _962;
@@ -987,7 +988,7 @@ frost$core$Int _963;
 int64_t _968;
 int64_t _969;
 int64_t _970;
-frost$unsafe$NewPointer _971;
+frost$unsafe$Pointer _971;
 frost$core$Int _975;
 frost$core$Bit _976;
 frost$core$Range$LTfrost$core$Int$GT _977;
@@ -1006,7 +1007,7 @@ int64_t _992;
 bool _993;
 frost$core$Bit _994;
 bool _995;
-frost$unsafe$NewPointer _998;
+frost$unsafe$Pointer _998;
 int64_t _999;
 frost$core$Int _1000;
 frost$core$Int64 _1001;
@@ -1030,36 +1031,36 @@ int64_t _1023;
 int64_t _1024;
 int64_t _1025;
 frost$core$Int _1026;
-frost$unsafe$NewPointer _1030;
+frost$unsafe$Pointer _1030;
 int64_t _1032;
-frost$unsafe$NewPointer _1035;
+frost$unsafe$Pointer _1035;
 int64_t _1036;
 frost$core$Int64 _1037;
 int64_t _1038;
-frost$unsafe$NewPointer _1039;
+frost$unsafe$Pointer _1039;
 int64_t _1040;
 frost$core$Int64 _1041;
 frost$core$Int _1042;
 int64_t _1043;
-frost$unsafe$NewPointer _1046;
+frost$unsafe$Pointer _1046;
 int64_t _1047;
 frost$core$Int64 _1048;
 int64_t _1049;
-frost$unsafe$NewPointer _1050;
+frost$unsafe$Pointer _1050;
 int64_t _1051;
 frost$core$Int64 _1052;
 frost$core$Int _1053;
 int64_t _1054;
-frost$unsafe$NewPointer _1057;
+frost$unsafe$Pointer _1057;
 int64_t _1058;
 frost$core$Int64 _1059;
 int64_t _1060;
-frost$unsafe$NewPointer _1061;
+frost$unsafe$Pointer _1061;
 int64_t _1062;
 frost$core$Int64 _1063;
 frost$core$Int _1064;
 int64_t _1065;
-frost$unsafe$NewPointer _1068;
+frost$unsafe$Pointer _1068;
 int64_t _1069;
 frost$core$Int64 _1070;
 frost$core$Int _1071;
@@ -1067,7 +1068,7 @@ frost$core$Int _1072;
 int64_t _1077;
 int64_t _1078;
 int64_t _1079;
-frost$unsafe$NewPointer _1080;
+frost$unsafe$Pointer _1080;
 frost$core$Int _1084;
 frost$core$Bit _1085;
 frost$core$Range$LTfrost$core$Int$GT _1086;
@@ -1086,7 +1087,7 @@ int64_t _1101;
 bool _1102;
 frost$core$Bit _1103;
 bool _1104;
-frost$unsafe$NewPointer _1107;
+frost$unsafe$Pointer _1107;
 int64_t _1108;
 frost$core$Int _1109;
 frost$core$Int64 _1110;
@@ -1110,45 +1111,45 @@ int64_t _1132;
 int64_t _1133;
 int64_t _1134;
 frost$core$Int _1135;
-frost$unsafe$NewPointer _1139;
+frost$unsafe$Pointer _1139;
 int64_t _1141;
-frost$unsafe$NewPointer _1144;
+frost$unsafe$Pointer _1144;
 int64_t _1145;
 frost$core$Int64 _1146;
 int64_t _1147;
-frost$unsafe$NewPointer _1148;
+frost$unsafe$Pointer _1148;
 int64_t _1149;
 frost$core$Int64 _1150;
 frost$core$Int _1151;
 int64_t _1152;
-frost$unsafe$NewPointer _1155;
+frost$unsafe$Pointer _1155;
 int64_t _1156;
 frost$core$Int64 _1157;
 int64_t _1158;
-frost$unsafe$NewPointer _1159;
+frost$unsafe$Pointer _1159;
 int64_t _1160;
 frost$core$Int64 _1161;
 frost$core$Int _1162;
 int64_t _1163;
-frost$unsafe$NewPointer _1166;
+frost$unsafe$Pointer _1166;
 int64_t _1167;
 frost$core$Int64 _1168;
 int64_t _1169;
-frost$unsafe$NewPointer _1170;
+frost$unsafe$Pointer _1170;
 int64_t _1171;
 frost$core$Int64 _1172;
 frost$core$Int _1173;
 int64_t _1174;
-frost$unsafe$NewPointer _1177;
+frost$unsafe$Pointer _1177;
 int64_t _1178;
 frost$core$Int64 _1179;
-frost$unsafe$NewPointer _1180;
+frost$unsafe$Pointer _1180;
 int64_t _1181;
 frost$core$Int64 _1182;
 int64_t _1183;
-frost$unsafe$NewPointer _1184;
+frost$unsafe$Pointer _1184;
 int64_t _1185;
-frost$unsafe$NewPointer _1188;
+frost$unsafe$Pointer _1188;
 int64_t _1189;
 frost$core$Int64 _1190;
 frost$core$Int _1191;
@@ -1156,7 +1157,7 @@ frost$core$Int _1192;
 int64_t _1197;
 int64_t _1198;
 int64_t _1199;
-frost$unsafe$NewPointer _1200;
+frost$unsafe$Pointer _1200;
 frost$core$Int _1204;
 frost$core$Bit _1205;
 frost$core$Range$LTfrost$core$Int$GT _1206;
@@ -1175,7 +1176,7 @@ int64_t _1221;
 bool _1222;
 frost$core$Bit _1223;
 bool _1224;
-frost$unsafe$NewPointer _1227;
+frost$unsafe$Pointer _1227;
 int64_t _1228;
 frost$core$Int _1229;
 frost$core$Int64 _1230;
@@ -1199,162 +1200,162 @@ int64_t _1252;
 int64_t _1253;
 int64_t _1254;
 frost$core$Int _1255;
-frost$unsafe$NewPointer _1259;
+frost$unsafe$Pointer _1259;
 int64_t _1261;
-frost$unsafe$NewPointer _1264;
+frost$unsafe$Pointer _1264;
 int64_t _1265;
 frost$core$Int64 _1266;
 int64_t _1267;
-frost$unsafe$NewPointer _1268;
+frost$unsafe$Pointer _1268;
 int64_t _1269;
 frost$core$Int64 _1270;
 frost$core$Int _1271;
 int64_t _1272;
-frost$unsafe$NewPointer _1275;
+frost$unsafe$Pointer _1275;
 int64_t _1276;
 frost$core$Int64 _1277;
 int64_t _1278;
-frost$unsafe$NewPointer _1279;
+frost$unsafe$Pointer _1279;
 int64_t _1280;
 frost$core$Int64 _1281;
 frost$core$Int _1282;
 int64_t _1283;
-frost$unsafe$NewPointer _1286;
+frost$unsafe$Pointer _1286;
 int64_t _1287;
 frost$core$Int64 _1288;
 int64_t _1289;
-frost$unsafe$NewPointer _1290;
+frost$unsafe$Pointer _1290;
 int64_t _1291;
 frost$core$Int64 _1292;
 frost$core$Int _1293;
 int64_t _1294;
-frost$unsafe$NewPointer _1297;
+frost$unsafe$Pointer _1297;
 int64_t _1298;
 frost$core$Int64 _1299;
 int64_t _1300;
-frost$unsafe$NewPointer _1301;
+frost$unsafe$Pointer _1301;
 int64_t _1302;
 frost$core$Int64 _1303;
 frost$core$Int _1304;
 int64_t _1305;
-frost$unsafe$NewPointer _1308;
+frost$unsafe$Pointer _1308;
 int64_t _1309;
 frost$core$Int64 _1310;
 int64_t _1311;
-frost$unsafe$NewPointer _1312;
+frost$unsafe$Pointer _1312;
 int64_t _1313;
 frost$core$Int64 _1314;
 frost$core$Int _1315;
 int64_t _1316;
-frost$unsafe$NewPointer _1319;
+frost$unsafe$Pointer _1319;
 int64_t _1320;
 frost$core$Int64 _1321;
 int64_t _1322;
-frost$unsafe$NewPointer _1323;
+frost$unsafe$Pointer _1323;
 int64_t _1324;
 frost$core$Int64 _1325;
 frost$core$Int _1326;
 int64_t _1327;
-frost$unsafe$NewPointer _1330;
+frost$unsafe$Pointer _1330;
 int64_t _1331;
 frost$core$Int64 _1332;
 int64_t _1333;
-frost$unsafe$NewPointer _1334;
+frost$unsafe$Pointer _1334;
 int64_t _1335;
 frost$core$Int64 _1336;
 frost$core$Int _1337;
 int64_t _1338;
-frost$unsafe$NewPointer _1341;
+frost$unsafe$Pointer _1341;
 int64_t _1342;
 frost$core$Int64 _1343;
 int64_t _1344;
-frost$unsafe$NewPointer _1345;
+frost$unsafe$Pointer _1345;
 int64_t _1346;
 frost$core$Int64 _1347;
 frost$core$Int _1348;
 int64_t _1349;
-frost$unsafe$NewPointer _1352;
+frost$unsafe$Pointer _1352;
 int64_t _1353;
 frost$core$Int64 _1354;
-frost$unsafe$NewPointer _1355;
+frost$unsafe$Pointer _1355;
 int64_t _1356;
 frost$core$Int64 _1357;
 int64_t _1358;
-frost$unsafe$NewPointer _1359;
+frost$unsafe$Pointer _1359;
 int64_t _1360;
-frost$unsafe$NewPointer _1363;
+frost$unsafe$Pointer _1363;
 int64_t _1364;
 frost$core$Int64 _1365;
-frost$unsafe$NewPointer _1366;
+frost$unsafe$Pointer _1366;
 int64_t _1367;
 frost$core$Int64 _1368;
 int64_t _1369;
-frost$unsafe$NewPointer _1370;
+frost$unsafe$Pointer _1370;
 int64_t _1371;
-frost$unsafe$NewPointer _1374;
+frost$unsafe$Pointer _1374;
 int64_t _1375;
 frost$core$Int64 _1376;
-frost$unsafe$NewPointer _1377;
+frost$unsafe$Pointer _1377;
 int64_t _1378;
 frost$core$Int64 _1379;
 int64_t _1380;
-frost$unsafe$NewPointer _1381;
+frost$unsafe$Pointer _1381;
 int64_t _1382;
-frost$unsafe$NewPointer _1385;
+frost$unsafe$Pointer _1385;
 int64_t _1386;
 frost$core$Int64 _1387;
-frost$unsafe$NewPointer _1388;
+frost$unsafe$Pointer _1388;
 int64_t _1389;
 frost$core$Int64 _1390;
 int64_t _1391;
-frost$unsafe$NewPointer _1392;
+frost$unsafe$Pointer _1392;
 int64_t _1393;
-frost$unsafe$NewPointer _1396;
+frost$unsafe$Pointer _1396;
 int64_t _1397;
 frost$core$Int64 _1398;
-frost$unsafe$NewPointer _1399;
+frost$unsafe$Pointer _1399;
 int64_t _1400;
 frost$core$Int64 _1401;
 int64_t _1402;
-frost$unsafe$NewPointer _1403;
+frost$unsafe$Pointer _1403;
 int64_t _1404;
-frost$unsafe$NewPointer _1407;
+frost$unsafe$Pointer _1407;
 int64_t _1408;
 frost$core$Int64 _1409;
-frost$unsafe$NewPointer _1410;
+frost$unsafe$Pointer _1410;
 int64_t _1411;
 frost$core$Int64 _1412;
 int64_t _1413;
-frost$unsafe$NewPointer _1414;
+frost$unsafe$Pointer _1414;
 int64_t _1415;
-frost$unsafe$NewPointer _1418;
+frost$unsafe$Pointer _1418;
 int64_t _1419;
 frost$core$Int64 _1420;
-frost$unsafe$NewPointer _1421;
+frost$unsafe$Pointer _1421;
 int64_t _1422;
 frost$core$Int64 _1423;
 int64_t _1424;
-frost$unsafe$NewPointer _1425;
+frost$unsafe$Pointer _1425;
 int64_t _1426;
-frost$unsafe$NewPointer _1429;
+frost$unsafe$Pointer _1429;
 int64_t _1430;
 frost$core$Int64 _1431;
-frost$unsafe$NewPointer _1432;
+frost$unsafe$Pointer _1432;
 int64_t _1433;
 frost$core$Int64 _1434;
 int64_t _1435;
-frost$unsafe$NewPointer _1436;
+frost$unsafe$Pointer _1436;
 int64_t _1437;
-frost$unsafe$NewPointer _1440;
+frost$unsafe$Pointer _1440;
 int64_t _1441;
 frost$core$Int64 _1442;
-frost$unsafe$NewPointer _1443;
+frost$unsafe$Pointer _1443;
 int64_t _1444;
 frost$core$Int64 _1445;
 int64_t _1446;
-frost$unsafe$NewPointer _1447;
+frost$unsafe$Pointer _1447;
 int64_t _1448;
-frost$unsafe$NewPointer _1451;
+frost$unsafe$Pointer _1451;
 int64_t _1452;
 frost$core$Int64 _1453;
 frost$core$Int _1454;
@@ -1362,7 +1363,7 @@ frost$core$Int _1455;
 int64_t _1460;
 int64_t _1461;
 int64_t _1462;
-frost$unsafe$NewPointer _1463;
+frost$unsafe$Pointer _1463;
 frost$core$Int _1467;
 frost$core$Bit _1468;
 frost$core$Range$LTfrost$core$Int$GT _1469;
@@ -1381,7 +1382,7 @@ int64_t _1484;
 bool _1485;
 frost$core$Bit _1486;
 bool _1487;
-frost$unsafe$NewPointer _1490;
+frost$unsafe$Pointer _1490;
 int64_t _1491;
 frost$core$Int _1492;
 frost$core$Int64 _1493;
@@ -1405,117 +1406,117 @@ int64_t _1515;
 int64_t _1516;
 int64_t _1517;
 frost$core$Int _1518;
-frost$unsafe$NewPointer _1522;
+frost$unsafe$Pointer _1522;
 int64_t _1524;
-frost$unsafe$NewPointer _1527;
+frost$unsafe$Pointer _1527;
 int64_t _1528;
 frost$core$Int64 _1529;
 int64_t _1530;
-frost$unsafe$NewPointer _1531;
+frost$unsafe$Pointer _1531;
 int64_t _1532;
 frost$core$Int64 _1533;
 frost$core$Int _1534;
 int64_t _1535;
-frost$unsafe$NewPointer _1538;
+frost$unsafe$Pointer _1538;
 int64_t _1539;
 frost$core$Int64 _1540;
 int64_t _1541;
-frost$unsafe$NewPointer _1542;
+frost$unsafe$Pointer _1542;
 int64_t _1543;
 frost$core$Int64 _1544;
 frost$core$Int _1545;
 int64_t _1546;
-frost$unsafe$NewPointer _1549;
+frost$unsafe$Pointer _1549;
 int64_t _1550;
 frost$core$Int64 _1551;
-frost$unsafe$NewPointer _1552;
+frost$unsafe$Pointer _1552;
 int64_t _1553;
 frost$core$Int64 _1554;
 int64_t _1555;
-frost$unsafe$NewPointer _1556;
+frost$unsafe$Pointer _1556;
 int64_t _1557;
-frost$unsafe$NewPointer _1560;
+frost$unsafe$Pointer _1560;
 int64_t _1561;
 frost$core$Int64 _1562;
-frost$unsafe$NewPointer _1563;
+frost$unsafe$Pointer _1563;
 int64_t _1564;
 frost$core$Int64 _1565;
 int64_t _1566;
-frost$unsafe$NewPointer _1567;
+frost$unsafe$Pointer _1567;
 int64_t _1568;
-frost$unsafe$NewPointer _1571;
+frost$unsafe$Pointer _1571;
 int64_t _1572;
 frost$core$Int64 _1573;
-frost$unsafe$NewPointer _1574;
+frost$unsafe$Pointer _1574;
 int64_t _1575;
 frost$core$Int64 _1576;
 int64_t _1577;
-frost$unsafe$NewPointer _1578;
+frost$unsafe$Pointer _1578;
 int64_t _1579;
-frost$unsafe$NewPointer _1582;
+frost$unsafe$Pointer _1582;
 int64_t _1583;
 frost$core$Int64 _1584;
-frost$unsafe$NewPointer _1585;
+frost$unsafe$Pointer _1585;
 int64_t _1586;
 frost$core$Int64 _1587;
 int64_t _1588;
-frost$unsafe$NewPointer _1589;
+frost$unsafe$Pointer _1589;
 int64_t _1590;
-frost$unsafe$NewPointer _1593;
+frost$unsafe$Pointer _1593;
 int64_t _1594;
 frost$core$Int64 _1595;
-frost$unsafe$NewPointer _1596;
+frost$unsafe$Pointer _1596;
 int64_t _1597;
 frost$core$Int64 _1598;
 int64_t _1599;
-frost$unsafe$NewPointer _1600;
+frost$unsafe$Pointer _1600;
 int64_t _1601;
-frost$unsafe$NewPointer _1604;
+frost$unsafe$Pointer _1604;
 int64_t _1605;
 frost$core$Int64 _1606;
-frost$unsafe$NewPointer _1607;
+frost$unsafe$Pointer _1607;
 int64_t _1608;
 frost$core$Int64 _1609;
 int64_t _1610;
-frost$unsafe$NewPointer _1611;
+frost$unsafe$Pointer _1611;
 int64_t _1612;
-frost$unsafe$NewPointer _1615;
+frost$unsafe$Pointer _1615;
 int64_t _1616;
 frost$core$Int64 _1617;
-frost$unsafe$NewPointer _1618;
+frost$unsafe$Pointer _1618;
 int64_t _1619;
 frost$core$Int64 _1620;
 int64_t _1621;
-frost$unsafe$NewPointer _1622;
+frost$unsafe$Pointer _1622;
 int64_t _1623;
-frost$unsafe$NewPointer _1626;
+frost$unsafe$Pointer _1626;
 int64_t _1627;
 frost$core$Int64 _1628;
-frost$unsafe$NewPointer _1629;
+frost$unsafe$Pointer _1629;
 int64_t _1630;
 frost$core$Int64 _1631;
 int64_t _1632;
-frost$unsafe$NewPointer _1633;
+frost$unsafe$Pointer _1633;
 int64_t _1634;
-frost$unsafe$NewPointer _1637;
+frost$unsafe$Pointer _1637;
 int64_t _1638;
 frost$core$Int64 _1639;
-frost$unsafe$NewPointer _1640;
+frost$unsafe$Pointer _1640;
 int64_t _1641;
 frost$core$Int64 _1642;
 int64_t _1643;
-frost$unsafe$NewPointer _1644;
+frost$unsafe$Pointer _1644;
 int64_t _1645;
-frost$unsafe$NewPointer _1648;
+frost$unsafe$Pointer _1648;
 int64_t _1649;
 frost$core$Int64 _1650;
-frost$unsafe$NewPointer _1651;
+frost$unsafe$Pointer _1651;
 int64_t _1652;
 frost$core$Int64 _1653;
 int64_t _1654;
-frost$unsafe$NewPointer _1655;
+frost$unsafe$Pointer _1655;
 int64_t _1656;
-frost$unsafe$NewPointer _1659;
+frost$unsafe$Pointer _1659;
 int64_t _1660;
 frost$core$Int64 _1661;
 frost$core$Int _1662;
@@ -1523,7 +1524,7 @@ frost$core$Int _1663;
 int64_t _1668;
 int64_t _1669;
 int64_t _1670;
-frost$unsafe$NewPointer _1671;
+frost$unsafe$Pointer _1671;
 frost$core$Int _1675;
 frost$core$Bit _1676;
 frost$core$Range$LTfrost$core$Int$GT _1677;
@@ -1542,7 +1543,7 @@ int64_t _1692;
 bool _1693;
 frost$core$Bit _1694;
 bool _1695;
-frost$unsafe$NewPointer _1698;
+frost$unsafe$Pointer _1698;
 int64_t _1699;
 frost$core$Int _1700;
 frost$core$Int64 _1701;
@@ -1566,216 +1567,216 @@ int64_t _1723;
 int64_t _1724;
 int64_t _1725;
 frost$core$Int _1726;
-frost$unsafe$NewPointer _1730;
+frost$unsafe$Pointer _1730;
 int64_t _1732;
-frost$unsafe$NewPointer _1735;
+frost$unsafe$Pointer _1735;
 int64_t _1736;
 frost$core$Int64 _1737;
 int64_t _1738;
-frost$unsafe$NewPointer _1739;
+frost$unsafe$Pointer _1739;
 int64_t _1740;
 frost$core$Int64 _1741;
 frost$core$Int _1742;
 int64_t _1743;
-frost$unsafe$NewPointer _1746;
+frost$unsafe$Pointer _1746;
 int64_t _1747;
 frost$core$Int64 _1748;
 int64_t _1749;
-frost$unsafe$NewPointer _1750;
+frost$unsafe$Pointer _1750;
 int64_t _1751;
 frost$core$Int64 _1752;
 frost$core$Int _1753;
 int64_t _1754;
-frost$unsafe$NewPointer _1757;
+frost$unsafe$Pointer _1757;
 int64_t _1758;
 frost$core$Int64 _1759;
-frost$unsafe$NewPointer _1760;
+frost$unsafe$Pointer _1760;
 int64_t _1761;
 frost$core$Int64 _1762;
 int64_t _1763;
-frost$unsafe$NewPointer _1764;
+frost$unsafe$Pointer _1764;
 int64_t _1765;
-frost$unsafe$NewPointer _1768;
+frost$unsafe$Pointer _1768;
 int64_t _1769;
 frost$core$Int64 _1770;
-frost$unsafe$NewPointer _1771;
+frost$unsafe$Pointer _1771;
 int64_t _1772;
 frost$core$Int64 _1773;
 int64_t _1774;
-frost$unsafe$NewPointer _1775;
+frost$unsafe$Pointer _1775;
 int64_t _1776;
-frost$unsafe$NewPointer _1779;
+frost$unsafe$Pointer _1779;
 int64_t _1780;
 frost$core$Int64 _1781;
-frost$unsafe$NewPointer _1782;
+frost$unsafe$Pointer _1782;
 int64_t _1783;
 frost$core$Int64 _1784;
 int64_t _1785;
-frost$unsafe$NewPointer _1786;
+frost$unsafe$Pointer _1786;
 int64_t _1787;
-frost$unsafe$NewPointer _1790;
+frost$unsafe$Pointer _1790;
 int64_t _1791;
 frost$core$Int64 _1792;
-frost$unsafe$NewPointer _1793;
+frost$unsafe$Pointer _1793;
 int64_t _1794;
 frost$core$Int64 _1795;
 int64_t _1796;
-frost$unsafe$NewPointer _1797;
+frost$unsafe$Pointer _1797;
 int64_t _1798;
-frost$unsafe$NewPointer _1801;
+frost$unsafe$Pointer _1801;
 int64_t _1802;
 frost$core$Int64 _1803;
-frost$unsafe$NewPointer _1804;
+frost$unsafe$Pointer _1804;
 int64_t _1805;
 frost$core$Int64 _1806;
 int64_t _1807;
-frost$unsafe$NewPointer _1808;
+frost$unsafe$Pointer _1808;
 int64_t _1809;
-frost$unsafe$NewPointer _1812;
+frost$unsafe$Pointer _1812;
 int64_t _1813;
 frost$core$Int64 _1814;
-frost$unsafe$NewPointer _1815;
+frost$unsafe$Pointer _1815;
 int64_t _1816;
 frost$core$Int64 _1817;
 int64_t _1818;
-frost$unsafe$NewPointer _1819;
+frost$unsafe$Pointer _1819;
 int64_t _1820;
-frost$unsafe$NewPointer _1823;
+frost$unsafe$Pointer _1823;
 int64_t _1824;
 frost$core$Int64 _1825;
-frost$unsafe$NewPointer _1826;
+frost$unsafe$Pointer _1826;
 int64_t _1827;
 frost$core$Int64 _1828;
 int64_t _1829;
-frost$unsafe$NewPointer _1830;
+frost$unsafe$Pointer _1830;
 int64_t _1831;
-frost$unsafe$NewPointer _1834;
+frost$unsafe$Pointer _1834;
 int64_t _1835;
 frost$core$Int64 _1836;
-frost$unsafe$NewPointer _1837;
+frost$unsafe$Pointer _1837;
 int64_t _1838;
 frost$core$Int64 _1839;
 int64_t _1840;
-frost$unsafe$NewPointer _1841;
+frost$unsafe$Pointer _1841;
 int64_t _1842;
-frost$unsafe$NewPointer _1845;
+frost$unsafe$Pointer _1845;
 int64_t _1846;
 frost$core$Int64 _1847;
-frost$unsafe$NewPointer _1848;
+frost$unsafe$Pointer _1848;
 int64_t _1849;
 frost$core$Int64 _1850;
 int64_t _1851;
-frost$unsafe$NewPointer _1852;
+frost$unsafe$Pointer _1852;
 int64_t _1853;
-frost$unsafe$NewPointer _1856;
+frost$unsafe$Pointer _1856;
 int64_t _1857;
 frost$core$Int64 _1858;
-frost$unsafe$NewPointer _1859;
+frost$unsafe$Pointer _1859;
 int64_t _1860;
 frost$core$Int64 _1861;
 int64_t _1862;
-frost$unsafe$NewPointer _1863;
+frost$unsafe$Pointer _1863;
 int64_t _1864;
-frost$unsafe$NewPointer _1867;
+frost$unsafe$Pointer _1867;
 int64_t _1868;
 frost$core$Int64 _1869;
-frost$unsafe$NewPointer _1870;
+frost$unsafe$Pointer _1870;
 int64_t _1871;
 frost$core$Int64 _1872;
 int64_t _1873;
-frost$unsafe$NewPointer _1874;
+frost$unsafe$Pointer _1874;
 int64_t _1875;
-frost$unsafe$NewPointer _1878;
+frost$unsafe$Pointer _1878;
 int64_t _1879;
 frost$core$Int64 _1880;
-frost$unsafe$NewPointer _1881;
+frost$unsafe$Pointer _1881;
 int64_t _1882;
 frost$core$Int64 _1883;
 int64_t _1884;
-frost$unsafe$NewPointer _1885;
+frost$unsafe$Pointer _1885;
 int64_t _1886;
-frost$unsafe$NewPointer _1889;
+frost$unsafe$Pointer _1889;
 int64_t _1890;
 frost$core$Int64 _1891;
-frost$unsafe$NewPointer _1892;
+frost$unsafe$Pointer _1892;
 int64_t _1893;
 frost$core$Int64 _1894;
 int64_t _1895;
-frost$unsafe$NewPointer _1896;
+frost$unsafe$Pointer _1896;
 int64_t _1897;
-frost$unsafe$NewPointer _1900;
+frost$unsafe$Pointer _1900;
 int64_t _1901;
 frost$core$Int64 _1902;
-frost$unsafe$NewPointer _1903;
+frost$unsafe$Pointer _1903;
 int64_t _1904;
 frost$core$Int64 _1905;
 int64_t _1906;
-frost$unsafe$NewPointer _1907;
+frost$unsafe$Pointer _1907;
 int64_t _1908;
-frost$unsafe$NewPointer _1911;
+frost$unsafe$Pointer _1911;
 int64_t _1912;
 frost$core$Int64 _1913;
-frost$unsafe$NewPointer _1914;
+frost$unsafe$Pointer _1914;
 int64_t _1915;
 frost$core$Int64 _1916;
 int64_t _1917;
-frost$unsafe$NewPointer _1918;
+frost$unsafe$Pointer _1918;
 int64_t _1919;
-frost$unsafe$NewPointer _1922;
+frost$unsafe$Pointer _1922;
 int64_t _1923;
 frost$core$Int64 _1924;
-frost$unsafe$NewPointer _1925;
+frost$unsafe$Pointer _1925;
 int64_t _1926;
 frost$core$Int64 _1927;
 int64_t _1928;
-frost$unsafe$NewPointer _1929;
+frost$unsafe$Pointer _1929;
 int64_t _1930;
-frost$unsafe$NewPointer _1933;
+frost$unsafe$Pointer _1933;
 int64_t _1934;
 frost$core$Int64 _1935;
-frost$unsafe$NewPointer _1936;
+frost$unsafe$Pointer _1936;
 int64_t _1937;
 frost$core$Int64 _1938;
 int64_t _1939;
-frost$unsafe$NewPointer _1940;
+frost$unsafe$Pointer _1940;
 int64_t _1941;
-frost$unsafe$NewPointer _1944;
+frost$unsafe$Pointer _1944;
 int64_t _1945;
 frost$core$Int64 _1946;
-frost$unsafe$NewPointer _1947;
+frost$unsafe$Pointer _1947;
 int64_t _1948;
 frost$core$Int64 _1949;
 int64_t _1950;
-frost$unsafe$NewPointer _1951;
+frost$unsafe$Pointer _1951;
 int64_t _1952;
-frost$unsafe$NewPointer _1955;
+frost$unsafe$Pointer _1955;
 int64_t _1956;
 frost$core$Int64 _1957;
-frost$unsafe$NewPointer _1958;
+frost$unsafe$Pointer _1958;
 int64_t _1959;
 frost$core$Int64 _1960;
 int64_t _1961;
-frost$unsafe$NewPointer _1962;
+frost$unsafe$Pointer _1962;
 int64_t _1963;
-frost$unsafe$NewPointer _1966;
+frost$unsafe$Pointer _1966;
 int64_t _1967;
 frost$core$Int64 _1968;
-frost$unsafe$NewPointer _1969;
+frost$unsafe$Pointer _1969;
 int64_t _1970;
 frost$core$Int64 _1971;
 int64_t _1972;
-frost$unsafe$NewPointer _1973;
+frost$unsafe$Pointer _1973;
 int64_t _1974;
-frost$unsafe$NewPointer _1977;
+frost$unsafe$Pointer _1977;
 int64_t _1978;
 frost$core$Int64 _1979;
-frost$unsafe$NewPointer _1980;
+frost$unsafe$Pointer _1980;
 int64_t _1981;
 frost$core$Int64 _1982;
 int64_t _1983;
-frost$unsafe$NewPointer _1984;
+frost$unsafe$Pointer _1984;
 int64_t _1985;
-frost$unsafe$NewPointer _1988;
+frost$unsafe$Pointer _1988;
 int64_t _1989;
 frost$core$Int64 _1990;
 frost$core$Int _1991;
@@ -1783,7 +1784,7 @@ frost$core$Int _1992;
 int64_t _1997;
 int64_t _1998;
 int64_t _1999;
-frost$unsafe$NewPointer _2000;
+frost$unsafe$Pointer _2000;
 frost$core$Int _2004;
 frost$core$Bit _2005;
 frost$core$Range$LTfrost$core$Int$GT _2006;
@@ -1802,7 +1803,7 @@ int64_t _2021;
 bool _2022;
 frost$core$Bit _2023;
 bool _2024;
-frost$unsafe$NewPointer _2027;
+frost$unsafe$Pointer _2027;
 int64_t _2028;
 frost$core$Int _2029;
 frost$core$Int64 _2030;
@@ -1826,27 +1827,27 @@ int64_t _2052;
 int64_t _2053;
 int64_t _2054;
 frost$core$Int _2055;
-frost$unsafe$NewPointer _2059;
+frost$unsafe$Pointer _2059;
 int64_t _2061;
-frost$unsafe$NewPointer _2064;
+frost$unsafe$Pointer _2064;
 int64_t _2065;
 frost$core$Int64 _2066;
 int64_t _2067;
-frost$unsafe$NewPointer _2068;
+frost$unsafe$Pointer _2068;
 int64_t _2069;
 frost$core$Int64 _2070;
 frost$core$Int _2071;
 int64_t _2072;
-frost$unsafe$NewPointer _2075;
+frost$unsafe$Pointer _2075;
 int64_t _2076;
 frost$core$Int64 _2077;
 int64_t _2078;
-frost$unsafe$NewPointer _2079;
+frost$unsafe$Pointer _2079;
 int64_t _2080;
 frost$core$Int64 _2081;
 frost$core$Int _2082;
 int64_t _2083;
-frost$unsafe$NewPointer _2086;
+frost$unsafe$Pointer _2086;
 int64_t _2087;
 frost$core$Int64 _2088;
 frost$core$Int _2089;
@@ -1854,7 +1855,7 @@ frost$core$Int _2090;
 int64_t _2095;
 int64_t _2096;
 int64_t _2097;
-frost$unsafe$NewPointer _2098;
+frost$unsafe$Pointer _2098;
 frost$core$Int _2102;
 frost$core$Bit _2103;
 frost$core$Range$LTfrost$core$Int$GT _2104;
@@ -1873,7 +1874,7 @@ int64_t _2119;
 bool _2120;
 frost$core$Bit _2121;
 bool _2122;
-frost$unsafe$NewPointer _2125;
+frost$unsafe$Pointer _2125;
 int64_t _2126;
 frost$core$Int _2127;
 frost$core$Int64 _2128;
@@ -1897,27 +1898,27 @@ int64_t _2150;
 int64_t _2151;
 int64_t _2152;
 frost$core$Int _2153;
-frost$unsafe$NewPointer _2157;
+frost$unsafe$Pointer _2157;
 int64_t _2159;
-frost$unsafe$NewPointer _2162;
+frost$unsafe$Pointer _2162;
 int64_t _2163;
 frost$core$Int64 _2164;
 int64_t _2165;
-frost$unsafe$NewPointer _2166;
+frost$unsafe$Pointer _2166;
 int64_t _2167;
 frost$core$Int64 _2168;
 frost$core$Int _2169;
 int64_t _2170;
-frost$unsafe$NewPointer _2173;
+frost$unsafe$Pointer _2173;
 int64_t _2174;
 frost$core$Int64 _2175;
 int64_t _2176;
-frost$unsafe$NewPointer _2177;
+frost$unsafe$Pointer _2177;
 int64_t _2178;
 frost$core$Int64 _2179;
 frost$core$Int _2180;
 int64_t _2181;
-frost$unsafe$NewPointer _2184;
+frost$unsafe$Pointer _2184;
 int64_t _2185;
 frost$core$Int64 _2186;
 frost$core$Int _2187;
@@ -1925,7 +1926,7 @@ frost$core$Int _2188;
 int64_t _2193;
 int64_t _2194;
 int64_t _2195;
-frost$unsafe$NewPointer _2196;
+frost$unsafe$Pointer _2196;
 frost$core$Int _2200;
 frost$core$Bit _2201;
 frost$core$Range$LTfrost$core$Int$GT _2202;
@@ -1944,7 +1945,7 @@ int64_t _2217;
 bool _2218;
 frost$core$Bit _2219;
 bool _2220;
-frost$unsafe$NewPointer _2223;
+frost$unsafe$Pointer _2223;
 int64_t _2224;
 frost$core$Int _2225;
 frost$core$Int64 _2226;
@@ -1968,54 +1969,54 @@ int64_t _2248;
 int64_t _2249;
 int64_t _2250;
 frost$core$Int _2251;
-frost$unsafe$NewPointer _2255;
+frost$unsafe$Pointer _2255;
 int64_t _2257;
-frost$unsafe$NewPointer _2260;
+frost$unsafe$Pointer _2260;
 int64_t _2261;
 frost$core$Int64 _2262;
 int64_t _2263;
-frost$unsafe$NewPointer _2264;
+frost$unsafe$Pointer _2264;
 int64_t _2265;
 frost$core$Int64 _2266;
 frost$core$Int _2267;
 int64_t _2268;
-frost$unsafe$NewPointer _2271;
+frost$unsafe$Pointer _2271;
 int64_t _2272;
 frost$core$Int64 _2273;
 int64_t _2274;
-frost$unsafe$NewPointer _2275;
+frost$unsafe$Pointer _2275;
 int64_t _2276;
 frost$core$Int64 _2277;
 frost$core$Int _2278;
 int64_t _2279;
-frost$unsafe$NewPointer _2282;
+frost$unsafe$Pointer _2282;
 int64_t _2283;
 frost$core$Int64 _2284;
-frost$unsafe$NewPointer _2285;
+frost$unsafe$Pointer _2285;
 int64_t _2286;
 frost$core$Int64 _2287;
 int64_t _2288;
-frost$unsafe$NewPointer _2289;
+frost$unsafe$Pointer _2289;
 int64_t _2290;
-frost$unsafe$NewPointer _2293;
+frost$unsafe$Pointer _2293;
 int64_t _2294;
 frost$core$Int64 _2295;
-frost$unsafe$NewPointer _2296;
+frost$unsafe$Pointer _2296;
 int64_t _2297;
 frost$core$Int64 _2298;
 int64_t _2299;
-frost$unsafe$NewPointer _2300;
+frost$unsafe$Pointer _2300;
 int64_t _2301;
-frost$unsafe$NewPointer _2304;
+frost$unsafe$Pointer _2304;
 int64_t _2305;
 frost$core$Int64 _2306;
-frost$unsafe$NewPointer _2307;
+frost$unsafe$Pointer _2307;
 int64_t _2308;
 frost$core$Int64 _2309;
 int64_t _2310;
-frost$unsafe$NewPointer _2311;
+frost$unsafe$Pointer _2311;
 int64_t _2312;
-frost$unsafe$NewPointer _2315;
+frost$unsafe$Pointer _2315;
 int64_t _2316;
 frost$core$Int64 _2317;
 frost$core$Int _2318;
@@ -2023,7 +2024,7 @@ frost$core$Int _2319;
 int64_t _2324;
 int64_t _2325;
 int64_t _2326;
-frost$unsafe$NewPointer _2327;
+frost$unsafe$Pointer _2327;
 frost$core$Int _2331;
 frost$core$Bit _2332;
 frost$core$Range$LTfrost$core$Int$GT _2333;
@@ -2042,7 +2043,7 @@ int64_t _2348;
 bool _2349;
 frost$core$Bit _2350;
 bool _2351;
-frost$unsafe$NewPointer _2354;
+frost$unsafe$Pointer _2354;
 int64_t _2355;
 frost$core$Int _2356;
 frost$core$Int64 _2357;
@@ -2066,27 +2067,27 @@ int64_t _2379;
 int64_t _2380;
 int64_t _2381;
 frost$core$Int _2382;
-frost$unsafe$NewPointer _2386;
+frost$unsafe$Pointer _2386;
 int64_t _2388;
-frost$unsafe$NewPointer _2391;
+frost$unsafe$Pointer _2391;
 int64_t _2392;
 frost$core$Int64 _2393;
 int64_t _2394;
-frost$unsafe$NewPointer _2395;
+frost$unsafe$Pointer _2395;
 int64_t _2396;
 frost$core$Int64 _2397;
 frost$core$Int _2398;
 int64_t _2399;
-frost$unsafe$NewPointer _2402;
+frost$unsafe$Pointer _2402;
 int64_t _2403;
 frost$core$Int64 _2404;
 int64_t _2405;
-frost$unsafe$NewPointer _2406;
+frost$unsafe$Pointer _2406;
 int64_t _2407;
 frost$core$Int64 _2408;
 frost$core$Int _2409;
 int64_t _2410;
-frost$unsafe$NewPointer _2413;
+frost$unsafe$Pointer _2413;
 int64_t _2414;
 frost$core$Int64 _2415;
 frost$core$Int _2416;
@@ -2094,7 +2095,7 @@ frost$core$Int _2417;
 int64_t _2422;
 int64_t _2423;
 int64_t _2424;
-frost$unsafe$NewPointer _2425;
+frost$unsafe$Pointer _2425;
 frost$core$Int _2429;
 frost$core$Bit _2430;
 frost$core$Range$LTfrost$core$Int$GT _2431;
@@ -2113,7 +2114,7 @@ int64_t _2446;
 bool _2447;
 frost$core$Bit _2448;
 bool _2449;
-frost$unsafe$NewPointer _2452;
+frost$unsafe$Pointer _2452;
 int64_t _2453;
 frost$core$Int _2454;
 frost$core$Int64 _2455;
@@ -2137,45 +2138,45 @@ int64_t _2477;
 int64_t _2478;
 int64_t _2479;
 frost$core$Int _2480;
-frost$unsafe$NewPointer _2484;
+frost$unsafe$Pointer _2484;
 int64_t _2486;
-frost$unsafe$NewPointer _2489;
+frost$unsafe$Pointer _2489;
 int64_t _2490;
 frost$core$Int64 _2491;
 int64_t _2492;
-frost$unsafe$NewPointer _2493;
+frost$unsafe$Pointer _2493;
 int64_t _2494;
 frost$core$Int64 _2495;
 frost$core$Int _2496;
 int64_t _2497;
-frost$unsafe$NewPointer _2500;
+frost$unsafe$Pointer _2500;
 int64_t _2501;
 frost$core$Int64 _2502;
 int64_t _2503;
-frost$unsafe$NewPointer _2504;
+frost$unsafe$Pointer _2504;
 int64_t _2505;
 frost$core$Int64 _2506;
 frost$core$Int _2507;
 int64_t _2508;
-frost$unsafe$NewPointer _2511;
+frost$unsafe$Pointer _2511;
 int64_t _2512;
 frost$core$Int64 _2513;
-frost$unsafe$NewPointer _2514;
+frost$unsafe$Pointer _2514;
 int64_t _2515;
 frost$core$Int64 _2516;
 int64_t _2517;
-frost$unsafe$NewPointer _2518;
+frost$unsafe$Pointer _2518;
 int64_t _2519;
-frost$unsafe$NewPointer _2522;
+frost$unsafe$Pointer _2522;
 int64_t _2523;
 frost$core$Int64 _2524;
-frost$unsafe$NewPointer _2525;
+frost$unsafe$Pointer _2525;
 int64_t _2526;
 frost$core$Int64 _2527;
 int64_t _2528;
-frost$unsafe$NewPointer _2529;
+frost$unsafe$Pointer _2529;
 int64_t _2530;
-frost$unsafe$NewPointer _2533;
+frost$unsafe$Pointer _2533;
 int64_t _2534;
 frost$core$Int64 _2535;
 frost$core$Int _2536;
@@ -2183,7 +2184,7 @@ frost$core$Int _2537;
 int64_t _2542;
 int64_t _2543;
 int64_t _2544;
-frost$unsafe$NewPointer _2545;
+frost$unsafe$Pointer _2545;
 frost$core$Int _2549;
 frost$core$Bit _2550;
 frost$core$Range$LTfrost$core$Int$GT _2551;
@@ -2202,7 +2203,7 @@ int64_t _2566;
 bool _2567;
 frost$core$Bit _2568;
 bool _2569;
-frost$unsafe$NewPointer _2572;
+frost$unsafe$Pointer _2572;
 int64_t _2573;
 frost$core$Int _2574;
 frost$core$Int64 _2575;
@@ -2226,45 +2227,45 @@ int64_t _2597;
 int64_t _2598;
 int64_t _2599;
 frost$core$Int _2600;
-frost$unsafe$NewPointer _2604;
+frost$unsafe$Pointer _2604;
 int64_t _2606;
-frost$unsafe$NewPointer _2609;
+frost$unsafe$Pointer _2609;
 int64_t _2610;
 frost$core$Int64 _2611;
 int64_t _2612;
-frost$unsafe$NewPointer _2613;
+frost$unsafe$Pointer _2613;
 int64_t _2614;
 frost$core$Int64 _2615;
 frost$core$Int _2616;
 int64_t _2617;
-frost$unsafe$NewPointer _2620;
+frost$unsafe$Pointer _2620;
 int64_t _2621;
 frost$core$Int64 _2622;
 int64_t _2623;
-frost$unsafe$NewPointer _2624;
+frost$unsafe$Pointer _2624;
 int64_t _2625;
 frost$core$Int64 _2626;
 frost$core$Int _2627;
 int64_t _2628;
-frost$unsafe$NewPointer _2631;
+frost$unsafe$Pointer _2631;
 int64_t _2632;
 frost$core$Int64 _2633;
 int64_t _2634;
-frost$unsafe$NewPointer _2635;
+frost$unsafe$Pointer _2635;
 int64_t _2636;
 frost$core$Int64 _2637;
 frost$core$Int _2638;
 int64_t _2639;
-frost$unsafe$NewPointer _2642;
+frost$unsafe$Pointer _2642;
 int64_t _2643;
 frost$core$Int64 _2644;
 int64_t _2645;
-frost$unsafe$NewPointer _2646;
+frost$unsafe$Pointer _2646;
 int64_t _2647;
 frost$core$Int64 _2648;
 frost$core$Int _2649;
 int64_t _2650;
-frost$unsafe$NewPointer _2653;
+frost$unsafe$Pointer _2653;
 int64_t _2654;
 frost$core$Int64 _2655;
 frost$core$Int _2656;
@@ -2272,7 +2273,7 @@ frost$core$Int _2657;
 int64_t _2662;
 int64_t _2663;
 int64_t _2664;
-frost$unsafe$NewPointer _2665;
+frost$unsafe$Pointer _2665;
 frost$core$Int _2669;
 frost$core$Bit _2670;
 frost$core$Range$LTfrost$core$Int$GT _2671;
@@ -2291,7 +2292,7 @@ int64_t _2686;
 bool _2687;
 frost$core$Bit _2688;
 bool _2689;
-frost$unsafe$NewPointer _2692;
+frost$unsafe$Pointer _2692;
 int64_t _2693;
 frost$core$Int _2694;
 frost$core$Int64 _2695;
@@ -2315,81 +2316,81 @@ int64_t _2717;
 int64_t _2718;
 int64_t _2719;
 frost$core$Int _2720;
-frost$unsafe$NewPointer _2724;
+frost$unsafe$Pointer _2724;
 int64_t _2726;
-frost$unsafe$NewPointer _2729;
+frost$unsafe$Pointer _2729;
 int64_t _2730;
 frost$core$Int64 _2731;
 int64_t _2732;
-frost$unsafe$NewPointer _2733;
+frost$unsafe$Pointer _2733;
 int64_t _2734;
 frost$core$Int64 _2735;
 frost$core$Int _2736;
 int64_t _2737;
-frost$unsafe$NewPointer _2740;
+frost$unsafe$Pointer _2740;
 int64_t _2741;
 frost$core$Int64 _2742;
 int64_t _2743;
-frost$unsafe$NewPointer _2744;
+frost$unsafe$Pointer _2744;
 int64_t _2745;
 frost$core$Int64 _2746;
 frost$core$Int _2747;
 int64_t _2748;
-frost$unsafe$NewPointer _2751;
+frost$unsafe$Pointer _2751;
 int64_t _2752;
 frost$core$Int64 _2753;
 int64_t _2754;
-frost$unsafe$NewPointer _2755;
+frost$unsafe$Pointer _2755;
 int64_t _2756;
 frost$core$Int64 _2757;
 frost$core$Int _2758;
 int64_t _2759;
-frost$unsafe$NewPointer _2762;
+frost$unsafe$Pointer _2762;
 int64_t _2763;
 frost$core$Int64 _2764;
-frost$unsafe$NewPointer _2765;
+frost$unsafe$Pointer _2765;
 int64_t _2766;
 frost$core$Int64 _2767;
 int64_t _2768;
-frost$unsafe$NewPointer _2769;
+frost$unsafe$Pointer _2769;
 int64_t _2770;
-frost$unsafe$NewPointer _2773;
+frost$unsafe$Pointer _2773;
 int64_t _2774;
 frost$core$Int64 _2775;
-frost$unsafe$NewPointer _2776;
+frost$unsafe$Pointer _2776;
 int64_t _2777;
 frost$core$Int64 _2778;
 int64_t _2779;
-frost$unsafe$NewPointer _2780;
+frost$unsafe$Pointer _2780;
 int64_t _2781;
-frost$unsafe$NewPointer _2784;
+frost$unsafe$Pointer _2784;
 int64_t _2785;
 frost$core$Int64 _2786;
-frost$unsafe$NewPointer _2787;
+frost$unsafe$Pointer _2787;
 int64_t _2788;
 frost$core$Int64 _2789;
 int64_t _2790;
-frost$unsafe$NewPointer _2791;
+frost$unsafe$Pointer _2791;
 int64_t _2792;
-frost$unsafe$NewPointer _2795;
+frost$unsafe$Pointer _2795;
 int64_t _2796;
 frost$core$Int64 _2797;
-frost$unsafe$NewPointer _2798;
+frost$unsafe$Pointer _2798;
 int64_t _2799;
 frost$core$Int64 _2800;
 int64_t _2801;
-frost$unsafe$NewPointer _2802;
+frost$unsafe$Pointer _2802;
 int64_t _2803;
-frost$unsafe$NewPointer _2806;
+frost$unsafe$Pointer _2806;
 int64_t _2807;
 frost$core$Int64 _2808;
-frost$unsafe$NewPointer _2809;
+frost$unsafe$Pointer _2809;
 int64_t _2810;
 frost$core$Int64 _2811;
 int64_t _2812;
-frost$unsafe$NewPointer _2813;
+frost$unsafe$Pointer _2813;
 int64_t _2814;
-frost$unsafe$NewPointer _2817;
+frost$unsafe$Pointer _2817;
 int64_t _2818;
 frost$core$Int64 _2819;
 frost$core$Int _2820;
@@ -2397,7 +2398,7 @@ frost$core$Int _2821;
 int64_t _2826;
 int64_t _2827;
 int64_t _2828;
-frost$unsafe$NewPointer _2829;
+frost$unsafe$Pointer _2829;
 frost$core$Int _2833;
 frost$core$Bit _2834;
 frost$core$Range$LTfrost$core$Int$GT _2835;
@@ -2416,7 +2417,7 @@ int64_t _2850;
 bool _2851;
 frost$core$Bit _2852;
 bool _2853;
-frost$unsafe$NewPointer _2856;
+frost$unsafe$Pointer _2856;
 int64_t _2857;
 frost$core$Int _2858;
 frost$core$Int64 _2859;
@@ -2440,54 +2441,54 @@ int64_t _2881;
 int64_t _2882;
 int64_t _2883;
 frost$core$Int _2884;
-frost$unsafe$NewPointer _2888;
+frost$unsafe$Pointer _2888;
 int64_t _2890;
-frost$unsafe$NewPointer _2893;
+frost$unsafe$Pointer _2893;
 int64_t _2894;
 frost$core$Int64 _2895;
 int64_t _2896;
-frost$unsafe$NewPointer _2897;
+frost$unsafe$Pointer _2897;
 int64_t _2898;
 frost$core$Int64 _2899;
 frost$core$Int _2900;
 int64_t _2901;
-frost$unsafe$NewPointer _2904;
+frost$unsafe$Pointer _2904;
 int64_t _2905;
 frost$core$Int64 _2906;
 int64_t _2907;
-frost$unsafe$NewPointer _2908;
+frost$unsafe$Pointer _2908;
 int64_t _2909;
 frost$core$Int64 _2910;
 frost$core$Int _2911;
 int64_t _2912;
-frost$unsafe$NewPointer _2915;
+frost$unsafe$Pointer _2915;
 int64_t _2916;
 frost$core$Int64 _2917;
 int64_t _2918;
-frost$unsafe$NewPointer _2919;
+frost$unsafe$Pointer _2919;
 int64_t _2920;
 frost$core$Int64 _2921;
 frost$core$Int _2922;
 int64_t _2923;
-frost$unsafe$NewPointer _2926;
+frost$unsafe$Pointer _2926;
 int64_t _2927;
 frost$core$Int64 _2928;
 int64_t _2929;
-frost$unsafe$NewPointer _2930;
+frost$unsafe$Pointer _2930;
 int64_t _2931;
 frost$core$Int64 _2932;
 frost$core$Int _2933;
 int64_t _2934;
-frost$unsafe$NewPointer _2937;
+frost$unsafe$Pointer _2937;
 int64_t _2938;
 frost$core$Int64 _2939;
-frost$unsafe$NewPointer _2940;
+frost$unsafe$Pointer _2940;
 int64_t _2941;
 frost$core$Int64 _2942;
 int64_t _2943;
-frost$unsafe$NewPointer _2944;
+frost$unsafe$Pointer _2944;
 int64_t _2945;
-frost$unsafe$NewPointer _2948;
+frost$unsafe$Pointer _2948;
 int64_t _2949;
 frost$core$Int64 _2950;
 frost$core$Int _2951;
@@ -2495,7 +2496,7 @@ frost$core$Int _2952;
 int64_t _2957;
 int64_t _2958;
 int64_t _2959;
-frost$unsafe$NewPointer _2960;
+frost$unsafe$Pointer _2960;
 frost$core$Int _2964;
 frost$core$Bit _2965;
 frost$core$Range$LTfrost$core$Int$GT _2966;
@@ -2514,7 +2515,7 @@ int64_t _2981;
 bool _2982;
 frost$core$Bit _2983;
 bool _2984;
-frost$unsafe$NewPointer _2987;
+frost$unsafe$Pointer _2987;
 int64_t _2988;
 frost$core$Int _2989;
 frost$core$Int64 _2990;
@@ -2538,63 +2539,63 @@ int64_t _3012;
 int64_t _3013;
 int64_t _3014;
 frost$core$Int _3015;
-frost$unsafe$NewPointer _3019;
+frost$unsafe$Pointer _3019;
 int64_t _3021;
-frost$unsafe$NewPointer _3024;
+frost$unsafe$Pointer _3024;
 int64_t _3025;
 frost$core$Int64 _3026;
 int64_t _3027;
-frost$unsafe$NewPointer _3028;
+frost$unsafe$Pointer _3028;
 int64_t _3029;
 frost$core$Int64 _3030;
 frost$core$Int _3031;
 int64_t _3032;
-frost$unsafe$NewPointer _3035;
+frost$unsafe$Pointer _3035;
 int64_t _3036;
 frost$core$Int64 _3037;
 int64_t _3038;
-frost$unsafe$NewPointer _3039;
+frost$unsafe$Pointer _3039;
 int64_t _3040;
 frost$core$Int64 _3041;
 frost$core$Int _3042;
 int64_t _3043;
-frost$unsafe$NewPointer _3046;
+frost$unsafe$Pointer _3046;
 int64_t _3047;
 frost$core$Int64 _3048;
 int64_t _3049;
-frost$unsafe$NewPointer _3050;
+frost$unsafe$Pointer _3050;
 int64_t _3051;
 frost$core$Int64 _3052;
 frost$core$Int _3053;
 int64_t _3054;
-frost$unsafe$NewPointer _3057;
+frost$unsafe$Pointer _3057;
 int64_t _3058;
 frost$core$Int64 _3059;
-frost$unsafe$NewPointer _3060;
+frost$unsafe$Pointer _3060;
 int64_t _3061;
 frost$core$Int64 _3062;
 int64_t _3063;
-frost$unsafe$NewPointer _3064;
+frost$unsafe$Pointer _3064;
 int64_t _3065;
-frost$unsafe$NewPointer _3068;
+frost$unsafe$Pointer _3068;
 int64_t _3069;
 frost$core$Int64 _3070;
-frost$unsafe$NewPointer _3071;
+frost$unsafe$Pointer _3071;
 int64_t _3072;
 frost$core$Int64 _3073;
 int64_t _3074;
-frost$unsafe$NewPointer _3075;
+frost$unsafe$Pointer _3075;
 int64_t _3076;
-frost$unsafe$NewPointer _3079;
+frost$unsafe$Pointer _3079;
 int64_t _3080;
 frost$core$Int64 _3081;
-frost$unsafe$NewPointer _3082;
+frost$unsafe$Pointer _3082;
 int64_t _3083;
 frost$core$Int64 _3084;
 int64_t _3085;
-frost$unsafe$NewPointer _3086;
+frost$unsafe$Pointer _3086;
 int64_t _3087;
-frost$unsafe$NewPointer _3090;
+frost$unsafe$Pointer _3090;
 int64_t _3091;
 frost$core$Int64 _3092;
 frost$core$Int _3093;
@@ -2602,7 +2603,7 @@ frost$core$Int _3094;
 int64_t _3099;
 int64_t _3100;
 int64_t _3101;
-frost$unsafe$NewPointer _3102;
+frost$unsafe$Pointer _3102;
 frost$core$Int _3106;
 frost$core$Bit _3107;
 frost$core$Range$LTfrost$core$Int$GT _3108;
@@ -2621,7 +2622,7 @@ int64_t _3123;
 bool _3124;
 frost$core$Bit _3125;
 bool _3126;
-frost$unsafe$NewPointer _3129;
+frost$unsafe$Pointer _3129;
 int64_t _3130;
 frost$core$Int _3131;
 frost$core$Int64 _3132;
@@ -2645,36 +2646,36 @@ int64_t _3154;
 int64_t _3155;
 int64_t _3156;
 frost$core$Int _3157;
-frost$unsafe$NewPointer _3161;
+frost$unsafe$Pointer _3161;
 int64_t _3163;
-frost$unsafe$NewPointer _3166;
+frost$unsafe$Pointer _3166;
 int64_t _3167;
 frost$core$Int64 _3168;
 int64_t _3169;
-frost$unsafe$NewPointer _3170;
+frost$unsafe$Pointer _3170;
 int64_t _3171;
 frost$core$Int64 _3172;
 frost$core$Int _3173;
 int64_t _3174;
-frost$unsafe$NewPointer _3177;
+frost$unsafe$Pointer _3177;
 int64_t _3178;
 frost$core$Int64 _3179;
 int64_t _3180;
-frost$unsafe$NewPointer _3181;
+frost$unsafe$Pointer _3181;
 int64_t _3182;
 frost$core$Int64 _3183;
 frost$core$Int _3184;
 int64_t _3185;
-frost$unsafe$NewPointer _3188;
+frost$unsafe$Pointer _3188;
 int64_t _3189;
 frost$core$Int64 _3190;
 int64_t _3191;
-frost$unsafe$NewPointer _3192;
+frost$unsafe$Pointer _3192;
 int64_t _3193;
 frost$core$Int64 _3194;
 frost$core$Int _3195;
 int64_t _3196;
-frost$unsafe$NewPointer _3199;
+frost$unsafe$Pointer _3199;
 int64_t _3200;
 frost$core$Int64 _3201;
 frost$core$Int _3202;
@@ -2682,7 +2683,7 @@ frost$core$Int _3203;
 int64_t _3208;
 int64_t _3209;
 int64_t _3210;
-frost$unsafe$NewPointer _3211;
+frost$unsafe$Pointer _3211;
 frost$core$Int _3215;
 frost$core$Bit _3216;
 frost$core$Range$LTfrost$core$Int$GT _3217;
@@ -2701,7 +2702,7 @@ int64_t _3232;
 bool _3233;
 frost$core$Bit _3234;
 bool _3235;
-frost$unsafe$NewPointer _3238;
+frost$unsafe$Pointer _3238;
 int64_t _3239;
 frost$core$Int _3240;
 frost$core$Int64 _3241;
@@ -2725,27 +2726,27 @@ int64_t _3263;
 int64_t _3264;
 int64_t _3265;
 frost$core$Int _3266;
-frost$unsafe$NewPointer _3270;
+frost$unsafe$Pointer _3270;
 int64_t _3272;
-frost$unsafe$NewPointer _3275;
+frost$unsafe$Pointer _3275;
 int64_t _3276;
 frost$core$Int64 _3277;
 int64_t _3278;
-frost$unsafe$NewPointer _3279;
+frost$unsafe$Pointer _3279;
 int64_t _3280;
 frost$core$Int64 _3281;
 frost$core$Int _3282;
 int64_t _3283;
-frost$unsafe$NewPointer _3286;
+frost$unsafe$Pointer _3286;
 int64_t _3287;
 frost$core$Int64 _3288;
 int64_t _3289;
-frost$unsafe$NewPointer _3290;
+frost$unsafe$Pointer _3290;
 int64_t _3291;
 frost$core$Int64 _3292;
 frost$core$Int _3293;
 int64_t _3294;
-frost$unsafe$NewPointer _3297;
+frost$unsafe$Pointer _3297;
 int64_t _3298;
 frost$core$Int64 _3299;
 frost$core$Int _3300;
@@ -2753,7 +2754,7 @@ frost$core$Int _3301;
 int64_t _3306;
 int64_t _3307;
 int64_t _3308;
-frost$unsafe$NewPointer _3309;
+frost$unsafe$Pointer _3309;
 frost$core$Int _3313;
 frost$core$Bit _3314;
 frost$core$Range$LTfrost$core$Int$GT _3315;
@@ -2772,7 +2773,7 @@ int64_t _3330;
 bool _3331;
 frost$core$Bit _3332;
 bool _3333;
-frost$unsafe$NewPointer _3336;
+frost$unsafe$Pointer _3336;
 int64_t _3337;
 frost$core$Int _3338;
 frost$core$Int64 _3339;
@@ -2796,36 +2797,36 @@ int64_t _3361;
 int64_t _3362;
 int64_t _3363;
 frost$core$Int _3364;
-frost$unsafe$NewPointer _3368;
+frost$unsafe$Pointer _3368;
 int64_t _3370;
-frost$unsafe$NewPointer _3373;
+frost$unsafe$Pointer _3373;
 int64_t _3374;
 frost$core$Int64 _3375;
 int64_t _3376;
-frost$unsafe$NewPointer _3377;
+frost$unsafe$Pointer _3377;
 int64_t _3378;
 frost$core$Int64 _3379;
 frost$core$Int _3380;
 int64_t _3381;
-frost$unsafe$NewPointer _3384;
+frost$unsafe$Pointer _3384;
 int64_t _3385;
 frost$core$Int64 _3386;
 int64_t _3387;
-frost$unsafe$NewPointer _3388;
+frost$unsafe$Pointer _3388;
 int64_t _3389;
 frost$core$Int64 _3390;
 frost$core$Int _3391;
 int64_t _3392;
-frost$unsafe$NewPointer _3395;
+frost$unsafe$Pointer _3395;
 int64_t _3396;
 frost$core$Int64 _3397;
 int64_t _3398;
-frost$unsafe$NewPointer _3399;
+frost$unsafe$Pointer _3399;
 int64_t _3400;
 frost$core$Int64 _3401;
 frost$core$Int _3402;
 int64_t _3403;
-frost$unsafe$NewPointer _3406;
+frost$unsafe$Pointer _3406;
 int64_t _3407;
 frost$core$Int64 _3408;
 frost$core$Int _3409;
@@ -2833,7 +2834,7 @@ frost$core$Int _3410;
 int64_t _3415;
 int64_t _3416;
 int64_t _3417;
-frost$unsafe$NewPointer _3418;
+frost$unsafe$Pointer _3418;
 frost$core$Int _3422;
 frost$core$Bit _3423;
 frost$core$Range$LTfrost$core$Int$GT _3424;
@@ -2852,7 +2853,7 @@ int64_t _3439;
 bool _3440;
 frost$core$Bit _3441;
 bool _3442;
-frost$unsafe$NewPointer _3445;
+frost$unsafe$Pointer _3445;
 int64_t _3446;
 frost$core$Int _3447;
 frost$core$Int64 _3448;
@@ -2876,81 +2877,81 @@ int64_t _3470;
 int64_t _3471;
 int64_t _3472;
 frost$core$Int _3473;
-frost$unsafe$NewPointer _3477;
+frost$unsafe$Pointer _3477;
 int64_t _3479;
-frost$unsafe$NewPointer _3482;
+frost$unsafe$Pointer _3482;
 int64_t _3483;
 frost$core$Int64 _3484;
 int64_t _3485;
-frost$unsafe$NewPointer _3486;
+frost$unsafe$Pointer _3486;
 int64_t _3487;
 frost$core$Int64 _3488;
 frost$core$Int _3489;
 int64_t _3490;
-frost$unsafe$NewPointer _3493;
+frost$unsafe$Pointer _3493;
 int64_t _3494;
 frost$core$Int64 _3495;
 int64_t _3496;
-frost$unsafe$NewPointer _3497;
+frost$unsafe$Pointer _3497;
 int64_t _3498;
 frost$core$Int64 _3499;
 frost$core$Int _3500;
 int64_t _3501;
-frost$unsafe$NewPointer _3504;
+frost$unsafe$Pointer _3504;
 int64_t _3505;
 frost$core$Int64 _3506;
 int64_t _3507;
-frost$unsafe$NewPointer _3508;
+frost$unsafe$Pointer _3508;
 int64_t _3509;
 frost$core$Int64 _3510;
 frost$core$Int _3511;
 int64_t _3512;
-frost$unsafe$NewPointer _3515;
+frost$unsafe$Pointer _3515;
 int64_t _3516;
 frost$core$Int64 _3517;
-frost$unsafe$NewPointer _3518;
+frost$unsafe$Pointer _3518;
 int64_t _3519;
 frost$core$Int64 _3520;
 int64_t _3521;
-frost$unsafe$NewPointer _3522;
+frost$unsafe$Pointer _3522;
 int64_t _3523;
-frost$unsafe$NewPointer _3526;
+frost$unsafe$Pointer _3526;
 int64_t _3527;
 frost$core$Int64 _3528;
-frost$unsafe$NewPointer _3529;
+frost$unsafe$Pointer _3529;
 int64_t _3530;
 frost$core$Int64 _3531;
 int64_t _3532;
-frost$unsafe$NewPointer _3533;
+frost$unsafe$Pointer _3533;
 int64_t _3534;
-frost$unsafe$NewPointer _3537;
+frost$unsafe$Pointer _3537;
 int64_t _3538;
 frost$core$Int64 _3539;
-frost$unsafe$NewPointer _3540;
+frost$unsafe$Pointer _3540;
 int64_t _3541;
 frost$core$Int64 _3542;
 int64_t _3543;
-frost$unsafe$NewPointer _3544;
+frost$unsafe$Pointer _3544;
 int64_t _3545;
-frost$unsafe$NewPointer _3548;
+frost$unsafe$Pointer _3548;
 int64_t _3549;
 frost$core$Int64 _3550;
-frost$unsafe$NewPointer _3551;
+frost$unsafe$Pointer _3551;
 int64_t _3552;
 frost$core$Int64 _3553;
 int64_t _3554;
-frost$unsafe$NewPointer _3555;
+frost$unsafe$Pointer _3555;
 int64_t _3556;
-frost$unsafe$NewPointer _3559;
+frost$unsafe$Pointer _3559;
 int64_t _3560;
 frost$core$Int64 _3561;
-frost$unsafe$NewPointer _3562;
+frost$unsafe$Pointer _3562;
 int64_t _3563;
 frost$core$Int64 _3564;
 int64_t _3565;
-frost$unsafe$NewPointer _3566;
+frost$unsafe$Pointer _3566;
 int64_t _3567;
-frost$unsafe$NewPointer _3570;
+frost$unsafe$Pointer _3570;
 int64_t _3571;
 frost$core$Int64 _3572;
 frost$core$Int _3573;
@@ -2958,7 +2959,7 @@ frost$core$Int _3574;
 int64_t _3579;
 int64_t _3580;
 int64_t _3581;
-frost$unsafe$NewPointer _3582;
+frost$unsafe$Pointer _3582;
 frost$core$Int _3586;
 frost$core$Bit _3587;
 frost$core$Range$LTfrost$core$Int$GT _3588;
@@ -2977,7 +2978,7 @@ int64_t _3603;
 bool _3604;
 frost$core$Bit _3605;
 bool _3606;
-frost$unsafe$NewPointer _3609;
+frost$unsafe$Pointer _3609;
 int64_t _3610;
 frost$core$Int _3611;
 frost$core$Int64 _3612;
@@ -3001,36 +3002,36 @@ int64_t _3634;
 int64_t _3635;
 int64_t _3636;
 frost$core$Int _3637;
-frost$unsafe$NewPointer _3641;
+frost$unsafe$Pointer _3641;
 int64_t _3643;
-frost$unsafe$NewPointer _3646;
+frost$unsafe$Pointer _3646;
 int64_t _3647;
 frost$core$Int64 _3648;
 int64_t _3649;
-frost$unsafe$NewPointer _3650;
+frost$unsafe$Pointer _3650;
 int64_t _3651;
 frost$core$Int64 _3652;
 frost$core$Int _3653;
 int64_t _3654;
-frost$unsafe$NewPointer _3657;
+frost$unsafe$Pointer _3657;
 int64_t _3658;
 frost$core$Int64 _3659;
 int64_t _3660;
-frost$unsafe$NewPointer _3661;
+frost$unsafe$Pointer _3661;
 int64_t _3662;
 frost$core$Int64 _3663;
 frost$core$Int _3664;
 int64_t _3665;
-frost$unsafe$NewPointer _3668;
+frost$unsafe$Pointer _3668;
 int64_t _3669;
 frost$core$Int64 _3670;
-frost$unsafe$NewPointer _3671;
+frost$unsafe$Pointer _3671;
 int64_t _3672;
 frost$core$Int64 _3673;
 int64_t _3674;
-frost$unsafe$NewPointer _3675;
+frost$unsafe$Pointer _3675;
 int64_t _3676;
-frost$unsafe$NewPointer _3679;
+frost$unsafe$Pointer _3679;
 int64_t _3680;
 frost$core$Int64 _3681;
 frost$core$Int _3682;
@@ -3038,7 +3039,7 @@ frost$core$Int _3683;
 int64_t _3688;
 int64_t _3689;
 int64_t _3690;
-frost$unsafe$NewPointer _3691;
+frost$unsafe$Pointer _3691;
 frost$core$Int _3695;
 frost$core$Bit _3696;
 frost$core$Range$LTfrost$core$Int$GT _3697;
@@ -3057,7 +3058,7 @@ int64_t _3712;
 bool _3713;
 frost$core$Bit _3714;
 bool _3715;
-frost$unsafe$NewPointer _3718;
+frost$unsafe$Pointer _3718;
 int64_t _3719;
 frost$core$Int _3720;
 frost$core$Int64 _3721;
@@ -3081,1228 +3082,1228 @@ int64_t _3743;
 int64_t _3744;
 int64_t _3745;
 frost$core$Int _3746;
-frost$unsafe$NewPointer _3750;
+frost$unsafe$Pointer _3750;
 int64_t _3752;
-frost$unsafe$NewPointer _3755;
+frost$unsafe$Pointer _3755;
 int64_t _3756;
 frost$core$Int64 _3757;
 int64_t _3758;
-frost$unsafe$NewPointer _3759;
+frost$unsafe$Pointer _3759;
 int64_t _3760;
 frost$core$Int64 _3761;
 frost$core$Int _3762;
 int64_t _3763;
-frost$unsafe$NewPointer _3766;
+frost$unsafe$Pointer _3766;
 int64_t _3767;
 frost$core$Int64 _3768;
 int64_t _3769;
-frost$unsafe$NewPointer _3770;
+frost$unsafe$Pointer _3770;
 int64_t _3771;
 frost$core$Int64 _3772;
 frost$core$Int _3773;
 int64_t _3774;
-frost$unsafe$NewPointer _3777;
+frost$unsafe$Pointer _3777;
 int64_t _3778;
 frost$core$Int64 _3779;
-frost$unsafe$NewPointer _3780;
+frost$unsafe$Pointer _3780;
 int64_t _3781;
 frost$core$Int64 _3782;
 int64_t _3783;
-frost$unsafe$NewPointer _3784;
+frost$unsafe$Pointer _3784;
 int64_t _3785;
-frost$unsafe$NewPointer _3788;
+frost$unsafe$Pointer _3788;
 int64_t _3789;
 frost$core$Int64 _3790;
-frost$unsafe$NewPointer _3791;
+frost$unsafe$Pointer _3791;
 int64_t _3792;
 frost$core$Int64 _3793;
 int64_t _3794;
-frost$unsafe$NewPointer _3795;
+frost$unsafe$Pointer _3795;
 int64_t _3796;
-frost$unsafe$NewPointer _3799;
+frost$unsafe$Pointer _3799;
 int64_t _3800;
 frost$core$Int64 _3801;
-frost$unsafe$NewPointer _3802;
+frost$unsafe$Pointer _3802;
 int64_t _3803;
 frost$core$Int64 _3804;
 int64_t _3805;
-frost$unsafe$NewPointer _3806;
+frost$unsafe$Pointer _3806;
 int64_t _3807;
-frost$unsafe$NewPointer _3810;
+frost$unsafe$Pointer _3810;
 int64_t _3811;
 frost$core$Int64 _3812;
-frost$unsafe$NewPointer _3813;
+frost$unsafe$Pointer _3813;
 int64_t _3814;
 frost$core$Int64 _3815;
 int64_t _3816;
-frost$unsafe$NewPointer _3817;
+frost$unsafe$Pointer _3817;
 int64_t _3818;
-frost$unsafe$NewPointer _3821;
+frost$unsafe$Pointer _3821;
 int64_t _3822;
 frost$core$Int64 _3823;
-frost$unsafe$NewPointer _3824;
+frost$unsafe$Pointer _3824;
 int64_t _3825;
 frost$core$Int64 _3826;
 int64_t _3827;
-frost$unsafe$NewPointer _3828;
+frost$unsafe$Pointer _3828;
 int64_t _3829;
-frost$unsafe$NewPointer _3832;
+frost$unsafe$Pointer _3832;
 int64_t _3833;
 frost$core$Int64 _3834;
-frost$unsafe$NewPointer _3835;
+frost$unsafe$Pointer _3835;
 int64_t _3836;
 frost$core$Int64 _3837;
 int64_t _3838;
-frost$unsafe$NewPointer _3839;
+frost$unsafe$Pointer _3839;
 int64_t _3840;
-frost$unsafe$NewPointer _3843;
+frost$unsafe$Pointer _3843;
 int64_t _3844;
 frost$core$Int64 _3845;
-frost$unsafe$NewPointer _3846;
+frost$unsafe$Pointer _3846;
 int64_t _3847;
 frost$core$Int64 _3848;
 int64_t _3849;
-frost$unsafe$NewPointer _3850;
+frost$unsafe$Pointer _3850;
 int64_t _3851;
-frost$unsafe$NewPointer _3854;
+frost$unsafe$Pointer _3854;
 int64_t _3855;
 frost$core$Int64 _3856;
-frost$unsafe$NewPointer _3857;
+frost$unsafe$Pointer _3857;
 int64_t _3858;
 frost$core$Int64 _3859;
 int64_t _3860;
-frost$unsafe$NewPointer _3861;
+frost$unsafe$Pointer _3861;
 int64_t _3862;
-frost$unsafe$NewPointer _3865;
+frost$unsafe$Pointer _3865;
 int64_t _3866;
 frost$core$Int64 _3867;
-frost$unsafe$NewPointer _3868;
+frost$unsafe$Pointer _3868;
 int64_t _3869;
 frost$core$Int64 _3870;
 int64_t _3871;
-frost$unsafe$NewPointer _3872;
+frost$unsafe$Pointer _3872;
 int64_t _3873;
-frost$unsafe$NewPointer _3876;
+frost$unsafe$Pointer _3876;
 int64_t _3877;
 frost$core$Int64 _3878;
-frost$unsafe$NewPointer _3879;
+frost$unsafe$Pointer _3879;
 int64_t _3880;
 frost$core$Int64 _3881;
 int64_t _3882;
-frost$unsafe$NewPointer _3883;
+frost$unsafe$Pointer _3883;
 int64_t _3884;
-frost$unsafe$NewPointer _3887;
+frost$unsafe$Pointer _3887;
 int64_t _3888;
 frost$core$Int64 _3889;
-frost$unsafe$NewPointer _3890;
+frost$unsafe$Pointer _3890;
 int64_t _3891;
 frost$core$Int64 _3892;
 int64_t _3893;
-frost$unsafe$NewPointer _3894;
+frost$unsafe$Pointer _3894;
 int64_t _3895;
-frost$unsafe$NewPointer _3898;
+frost$unsafe$Pointer _3898;
 int64_t _3899;
 frost$core$Int64 _3900;
-frost$unsafe$NewPointer _3901;
+frost$unsafe$Pointer _3901;
 int64_t _3902;
 frost$core$Int64 _3903;
 int64_t _3904;
-frost$unsafe$NewPointer _3905;
+frost$unsafe$Pointer _3905;
 int64_t _3906;
-frost$unsafe$NewPointer _3909;
+frost$unsafe$Pointer _3909;
 int64_t _3910;
 frost$core$Int64 _3911;
-frost$unsafe$NewPointer _3912;
+frost$unsafe$Pointer _3912;
 int64_t _3913;
 frost$core$Int64 _3914;
 int64_t _3915;
-frost$unsafe$NewPointer _3916;
+frost$unsafe$Pointer _3916;
 int64_t _3917;
-frost$unsafe$NewPointer _3920;
+frost$unsafe$Pointer _3920;
 int64_t _3921;
 frost$core$Int64 _3922;
-frost$unsafe$NewPointer _3923;
+frost$unsafe$Pointer _3923;
 int64_t _3924;
 frost$core$Int64 _3925;
 int64_t _3926;
-frost$unsafe$NewPointer _3927;
+frost$unsafe$Pointer _3927;
 int64_t _3928;
-frost$unsafe$NewPointer _3931;
+frost$unsafe$Pointer _3931;
 int64_t _3932;
 frost$core$Int64 _3933;
-frost$unsafe$NewPointer _3934;
+frost$unsafe$Pointer _3934;
 int64_t _3935;
 frost$core$Int64 _3936;
 int64_t _3937;
-frost$unsafe$NewPointer _3938;
+frost$unsafe$Pointer _3938;
 int64_t _3939;
-frost$unsafe$NewPointer _3942;
+frost$unsafe$Pointer _3942;
 int64_t _3943;
 frost$core$Int64 _3944;
-frost$unsafe$NewPointer _3945;
+frost$unsafe$Pointer _3945;
 int64_t _3946;
 frost$core$Int64 _3947;
 int64_t _3948;
-frost$unsafe$NewPointer _3949;
+frost$unsafe$Pointer _3949;
 int64_t _3950;
-frost$unsafe$NewPointer _3953;
+frost$unsafe$Pointer _3953;
 int64_t _3954;
 frost$core$Int64 _3955;
-frost$unsafe$NewPointer _3956;
+frost$unsafe$Pointer _3956;
 int64_t _3957;
 frost$core$Int64 _3958;
 int64_t _3959;
-frost$unsafe$NewPointer _3960;
+frost$unsafe$Pointer _3960;
 int64_t _3961;
-frost$unsafe$NewPointer _3964;
+frost$unsafe$Pointer _3964;
 int64_t _3965;
 frost$core$Int64 _3966;
-frost$unsafe$NewPointer _3967;
+frost$unsafe$Pointer _3967;
 int64_t _3968;
 frost$core$Int64 _3969;
 int64_t _3970;
-frost$unsafe$NewPointer _3971;
+frost$unsafe$Pointer _3971;
 int64_t _3972;
-frost$unsafe$NewPointer _3975;
+frost$unsafe$Pointer _3975;
 int64_t _3976;
 frost$core$Int64 _3977;
-frost$unsafe$NewPointer _3978;
+frost$unsafe$Pointer _3978;
 int64_t _3979;
 frost$core$Int64 _3980;
 int64_t _3981;
-frost$unsafe$NewPointer _3982;
+frost$unsafe$Pointer _3982;
 int64_t _3983;
-frost$unsafe$NewPointer _3986;
+frost$unsafe$Pointer _3986;
 int64_t _3987;
 frost$core$Int64 _3988;
-frost$unsafe$NewPointer _3989;
+frost$unsafe$Pointer _3989;
 int64_t _3990;
 frost$core$Int64 _3991;
 int64_t _3992;
-frost$unsafe$NewPointer _3993;
+frost$unsafe$Pointer _3993;
 int64_t _3994;
-frost$unsafe$NewPointer _3997;
+frost$unsafe$Pointer _3997;
 int64_t _3998;
 frost$core$Int64 _3999;
-frost$unsafe$NewPointer _4000;
+frost$unsafe$Pointer _4000;
 int64_t _4001;
 frost$core$Int64 _4002;
 int64_t _4003;
-frost$unsafe$NewPointer _4004;
+frost$unsafe$Pointer _4004;
 int64_t _4005;
-frost$unsafe$NewPointer _4008;
+frost$unsafe$Pointer _4008;
 int64_t _4009;
 frost$core$Int64 _4010;
-frost$unsafe$NewPointer _4011;
+frost$unsafe$Pointer _4011;
 int64_t _4012;
 frost$core$Int64 _4013;
 int64_t _4014;
-frost$unsafe$NewPointer _4015;
+frost$unsafe$Pointer _4015;
 int64_t _4016;
-frost$unsafe$NewPointer _4019;
+frost$unsafe$Pointer _4019;
 int64_t _4020;
 frost$core$Int64 _4021;
-frost$unsafe$NewPointer _4022;
+frost$unsafe$Pointer _4022;
 int64_t _4023;
 frost$core$Int64 _4024;
 int64_t _4025;
-frost$unsafe$NewPointer _4026;
+frost$unsafe$Pointer _4026;
 int64_t _4027;
-frost$unsafe$NewPointer _4030;
+frost$unsafe$Pointer _4030;
 int64_t _4031;
 frost$core$Int64 _4032;
-frost$unsafe$NewPointer _4033;
+frost$unsafe$Pointer _4033;
 int64_t _4034;
 frost$core$Int64 _4035;
 int64_t _4036;
-frost$unsafe$NewPointer _4037;
+frost$unsafe$Pointer _4037;
 int64_t _4038;
-frost$unsafe$NewPointer _4041;
+frost$unsafe$Pointer _4041;
 int64_t _4042;
 frost$core$Int64 _4043;
-frost$unsafe$NewPointer _4044;
+frost$unsafe$Pointer _4044;
 int64_t _4045;
 frost$core$Int64 _4046;
 int64_t _4047;
-frost$unsafe$NewPointer _4048;
+frost$unsafe$Pointer _4048;
 int64_t _4049;
-frost$unsafe$NewPointer _4052;
+frost$unsafe$Pointer _4052;
 int64_t _4053;
 frost$core$Int64 _4054;
-frost$unsafe$NewPointer _4055;
+frost$unsafe$Pointer _4055;
 int64_t _4056;
 frost$core$Int64 _4057;
 int64_t _4058;
-frost$unsafe$NewPointer _4059;
+frost$unsafe$Pointer _4059;
 int64_t _4060;
-frost$unsafe$NewPointer _4063;
+frost$unsafe$Pointer _4063;
 int64_t _4064;
 frost$core$Int64 _4065;
-frost$unsafe$NewPointer _4066;
+frost$unsafe$Pointer _4066;
 int64_t _4067;
 frost$core$Int64 _4068;
 int64_t _4069;
-frost$unsafe$NewPointer _4070;
+frost$unsafe$Pointer _4070;
 int64_t _4071;
-frost$unsafe$NewPointer _4074;
+frost$unsafe$Pointer _4074;
 int64_t _4075;
 frost$core$Int64 _4076;
-frost$unsafe$NewPointer _4077;
+frost$unsafe$Pointer _4077;
 int64_t _4078;
 frost$core$Int64 _4079;
 int64_t _4080;
-frost$unsafe$NewPointer _4081;
+frost$unsafe$Pointer _4081;
 int64_t _4082;
-frost$unsafe$NewPointer _4085;
+frost$unsafe$Pointer _4085;
 int64_t _4086;
 frost$core$Int64 _4087;
-frost$unsafe$NewPointer _4088;
+frost$unsafe$Pointer _4088;
 int64_t _4089;
 frost$core$Int64 _4090;
 int64_t _4091;
-frost$unsafe$NewPointer _4092;
+frost$unsafe$Pointer _4092;
 int64_t _4093;
-frost$unsafe$NewPointer _4096;
+frost$unsafe$Pointer _4096;
 int64_t _4097;
 frost$core$Int64 _4098;
-frost$unsafe$NewPointer _4099;
+frost$unsafe$Pointer _4099;
 int64_t _4100;
 frost$core$Int64 _4101;
 int64_t _4102;
-frost$unsafe$NewPointer _4103;
+frost$unsafe$Pointer _4103;
 int64_t _4104;
-frost$unsafe$NewPointer _4107;
+frost$unsafe$Pointer _4107;
 int64_t _4108;
 frost$core$Int64 _4109;
-frost$unsafe$NewPointer _4110;
+frost$unsafe$Pointer _4110;
 int64_t _4111;
 frost$core$Int64 _4112;
 int64_t _4113;
-frost$unsafe$NewPointer _4114;
+frost$unsafe$Pointer _4114;
 int64_t _4115;
-frost$unsafe$NewPointer _4118;
+frost$unsafe$Pointer _4118;
 int64_t _4119;
 frost$core$Int64 _4120;
-frost$unsafe$NewPointer _4121;
+frost$unsafe$Pointer _4121;
 int64_t _4122;
 frost$core$Int64 _4123;
 int64_t _4124;
-frost$unsafe$NewPointer _4125;
+frost$unsafe$Pointer _4125;
 int64_t _4126;
-frost$unsafe$NewPointer _4129;
+frost$unsafe$Pointer _4129;
 int64_t _4130;
 frost$core$Int64 _4131;
-frost$unsafe$NewPointer _4132;
+frost$unsafe$Pointer _4132;
 int64_t _4133;
 frost$core$Int64 _4134;
 int64_t _4135;
-frost$unsafe$NewPointer _4136;
+frost$unsafe$Pointer _4136;
 int64_t _4137;
-frost$unsafe$NewPointer _4140;
+frost$unsafe$Pointer _4140;
 int64_t _4141;
 frost$core$Int64 _4142;
-frost$unsafe$NewPointer _4143;
+frost$unsafe$Pointer _4143;
 int64_t _4144;
 frost$core$Int64 _4145;
 int64_t _4146;
-frost$unsafe$NewPointer _4147;
+frost$unsafe$Pointer _4147;
 int64_t _4148;
-frost$unsafe$NewPointer _4151;
+frost$unsafe$Pointer _4151;
 int64_t _4152;
 frost$core$Int64 _4153;
-frost$unsafe$NewPointer _4154;
+frost$unsafe$Pointer _4154;
 int64_t _4155;
 frost$core$Int64 _4156;
 int64_t _4157;
-frost$unsafe$NewPointer _4158;
+frost$unsafe$Pointer _4158;
 int64_t _4159;
-frost$unsafe$NewPointer _4162;
+frost$unsafe$Pointer _4162;
 int64_t _4163;
 frost$core$Int64 _4164;
-frost$unsafe$NewPointer _4165;
+frost$unsafe$Pointer _4165;
 int64_t _4166;
 frost$core$Int64 _4167;
 int64_t _4168;
-frost$unsafe$NewPointer _4169;
+frost$unsafe$Pointer _4169;
 int64_t _4170;
-frost$unsafe$NewPointer _4173;
+frost$unsafe$Pointer _4173;
 int64_t _4174;
 frost$core$Int64 _4175;
-frost$unsafe$NewPointer _4176;
+frost$unsafe$Pointer _4176;
 int64_t _4177;
 frost$core$Int64 _4178;
 int64_t _4179;
-frost$unsafe$NewPointer _4180;
+frost$unsafe$Pointer _4180;
 int64_t _4181;
-frost$unsafe$NewPointer _4184;
+frost$unsafe$Pointer _4184;
 int64_t _4185;
 frost$core$Int64 _4186;
-frost$unsafe$NewPointer _4187;
+frost$unsafe$Pointer _4187;
 int64_t _4188;
 frost$core$Int64 _4189;
 int64_t _4190;
-frost$unsafe$NewPointer _4191;
+frost$unsafe$Pointer _4191;
 int64_t _4192;
-frost$unsafe$NewPointer _4195;
+frost$unsafe$Pointer _4195;
 int64_t _4196;
 frost$core$Int64 _4197;
-frost$unsafe$NewPointer _4198;
+frost$unsafe$Pointer _4198;
 int64_t _4199;
 frost$core$Int64 _4200;
 int64_t _4201;
-frost$unsafe$NewPointer _4202;
+frost$unsafe$Pointer _4202;
 int64_t _4203;
-frost$unsafe$NewPointer _4206;
+frost$unsafe$Pointer _4206;
 int64_t _4207;
 frost$core$Int64 _4208;
-frost$unsafe$NewPointer _4209;
+frost$unsafe$Pointer _4209;
 int64_t _4210;
 frost$core$Int64 _4211;
 int64_t _4212;
-frost$unsafe$NewPointer _4213;
+frost$unsafe$Pointer _4213;
 int64_t _4214;
-frost$unsafe$NewPointer _4217;
+frost$unsafe$Pointer _4217;
 int64_t _4218;
 frost$core$Int64 _4219;
-frost$unsafe$NewPointer _4220;
+frost$unsafe$Pointer _4220;
 int64_t _4221;
 frost$core$Int64 _4222;
 int64_t _4223;
-frost$unsafe$NewPointer _4224;
+frost$unsafe$Pointer _4224;
 int64_t _4225;
-frost$unsafe$NewPointer _4228;
+frost$unsafe$Pointer _4228;
 int64_t _4229;
 frost$core$Int64 _4230;
-frost$unsafe$NewPointer _4231;
+frost$unsafe$Pointer _4231;
 int64_t _4232;
 frost$core$Int64 _4233;
 int64_t _4234;
-frost$unsafe$NewPointer _4235;
+frost$unsafe$Pointer _4235;
 int64_t _4236;
-frost$unsafe$NewPointer _4239;
+frost$unsafe$Pointer _4239;
 int64_t _4240;
 frost$core$Int64 _4241;
-frost$unsafe$NewPointer _4242;
+frost$unsafe$Pointer _4242;
 int64_t _4243;
 frost$core$Int64 _4244;
 int64_t _4245;
-frost$unsafe$NewPointer _4246;
+frost$unsafe$Pointer _4246;
 int64_t _4247;
-frost$unsafe$NewPointer _4250;
+frost$unsafe$Pointer _4250;
 int64_t _4251;
 frost$core$Int64 _4252;
-frost$unsafe$NewPointer _4253;
+frost$unsafe$Pointer _4253;
 int64_t _4254;
 frost$core$Int64 _4255;
 int64_t _4256;
-frost$unsafe$NewPointer _4257;
+frost$unsafe$Pointer _4257;
 int64_t _4258;
-frost$unsafe$NewPointer _4261;
+frost$unsafe$Pointer _4261;
 int64_t _4262;
 frost$core$Int64 _4263;
-frost$unsafe$NewPointer _4264;
+frost$unsafe$Pointer _4264;
 int64_t _4265;
 frost$core$Int64 _4266;
 int64_t _4267;
-frost$unsafe$NewPointer _4268;
+frost$unsafe$Pointer _4268;
 int64_t _4269;
-frost$unsafe$NewPointer _4272;
+frost$unsafe$Pointer _4272;
 int64_t _4273;
 frost$core$Int64 _4274;
-frost$unsafe$NewPointer _4275;
+frost$unsafe$Pointer _4275;
 int64_t _4276;
 frost$core$Int64 _4277;
 int64_t _4278;
-frost$unsafe$NewPointer _4279;
+frost$unsafe$Pointer _4279;
 int64_t _4280;
-frost$unsafe$NewPointer _4283;
+frost$unsafe$Pointer _4283;
 int64_t _4284;
 frost$core$Int64 _4285;
-frost$unsafe$NewPointer _4286;
+frost$unsafe$Pointer _4286;
 int64_t _4287;
 frost$core$Int64 _4288;
 int64_t _4289;
-frost$unsafe$NewPointer _4290;
+frost$unsafe$Pointer _4290;
 int64_t _4291;
-frost$unsafe$NewPointer _4294;
+frost$unsafe$Pointer _4294;
 int64_t _4295;
 frost$core$Int64 _4296;
-frost$unsafe$NewPointer _4297;
+frost$unsafe$Pointer _4297;
 int64_t _4298;
 frost$core$Int64 _4299;
 int64_t _4300;
-frost$unsafe$NewPointer _4301;
+frost$unsafe$Pointer _4301;
 int64_t _4302;
-frost$unsafe$NewPointer _4305;
+frost$unsafe$Pointer _4305;
 int64_t _4306;
 frost$core$Int64 _4307;
-frost$unsafe$NewPointer _4308;
+frost$unsafe$Pointer _4308;
 int64_t _4309;
 frost$core$Int64 _4310;
 int64_t _4311;
-frost$unsafe$NewPointer _4312;
+frost$unsafe$Pointer _4312;
 int64_t _4313;
-frost$unsafe$NewPointer _4316;
+frost$unsafe$Pointer _4316;
 int64_t _4317;
 frost$core$Int64 _4318;
-frost$unsafe$NewPointer _4319;
+frost$unsafe$Pointer _4319;
 int64_t _4320;
 frost$core$Int64 _4321;
 int64_t _4322;
-frost$unsafe$NewPointer _4323;
+frost$unsafe$Pointer _4323;
 int64_t _4324;
-frost$unsafe$NewPointer _4327;
+frost$unsafe$Pointer _4327;
 int64_t _4328;
 frost$core$Int64 _4329;
-frost$unsafe$NewPointer _4330;
+frost$unsafe$Pointer _4330;
 int64_t _4331;
 frost$core$Int64 _4332;
 int64_t _4333;
-frost$unsafe$NewPointer _4334;
+frost$unsafe$Pointer _4334;
 int64_t _4335;
-frost$unsafe$NewPointer _4338;
+frost$unsafe$Pointer _4338;
 int64_t _4339;
 frost$core$Int64 _4340;
-frost$unsafe$NewPointer _4341;
+frost$unsafe$Pointer _4341;
 int64_t _4342;
 frost$core$Int64 _4343;
 int64_t _4344;
-frost$unsafe$NewPointer _4345;
+frost$unsafe$Pointer _4345;
 int64_t _4346;
-frost$unsafe$NewPointer _4349;
+frost$unsafe$Pointer _4349;
 int64_t _4350;
 frost$core$Int64 _4351;
-frost$unsafe$NewPointer _4352;
+frost$unsafe$Pointer _4352;
 int64_t _4353;
 frost$core$Int64 _4354;
 int64_t _4355;
-frost$unsafe$NewPointer _4356;
+frost$unsafe$Pointer _4356;
 int64_t _4357;
-frost$unsafe$NewPointer _4360;
+frost$unsafe$Pointer _4360;
 int64_t _4361;
 frost$core$Int64 _4362;
-frost$unsafe$NewPointer _4363;
+frost$unsafe$Pointer _4363;
 int64_t _4364;
 frost$core$Int64 _4365;
 int64_t _4366;
-frost$unsafe$NewPointer _4367;
+frost$unsafe$Pointer _4367;
 int64_t _4368;
-frost$unsafe$NewPointer _4371;
+frost$unsafe$Pointer _4371;
 int64_t _4372;
 frost$core$Int64 _4373;
-frost$unsafe$NewPointer _4374;
+frost$unsafe$Pointer _4374;
 int64_t _4375;
 frost$core$Int64 _4376;
 int64_t _4377;
-frost$unsafe$NewPointer _4378;
+frost$unsafe$Pointer _4378;
 int64_t _4379;
-frost$unsafe$NewPointer _4382;
+frost$unsafe$Pointer _4382;
 int64_t _4383;
 frost$core$Int64 _4384;
-frost$unsafe$NewPointer _4385;
+frost$unsafe$Pointer _4385;
 int64_t _4386;
 frost$core$Int64 _4387;
 int64_t _4388;
-frost$unsafe$NewPointer _4389;
+frost$unsafe$Pointer _4389;
 int64_t _4390;
-frost$unsafe$NewPointer _4393;
+frost$unsafe$Pointer _4393;
 int64_t _4394;
 frost$core$Int64 _4395;
-frost$unsafe$NewPointer _4396;
+frost$unsafe$Pointer _4396;
 int64_t _4397;
 frost$core$Int64 _4398;
 int64_t _4399;
-frost$unsafe$NewPointer _4400;
+frost$unsafe$Pointer _4400;
 int64_t _4401;
-frost$unsafe$NewPointer _4404;
+frost$unsafe$Pointer _4404;
 int64_t _4405;
 frost$core$Int64 _4406;
-frost$unsafe$NewPointer _4407;
+frost$unsafe$Pointer _4407;
 int64_t _4408;
 frost$core$Int64 _4409;
 int64_t _4410;
-frost$unsafe$NewPointer _4411;
+frost$unsafe$Pointer _4411;
 int64_t _4412;
-frost$unsafe$NewPointer _4415;
+frost$unsafe$Pointer _4415;
 int64_t _4416;
 frost$core$Int64 _4417;
-frost$unsafe$NewPointer _4418;
+frost$unsafe$Pointer _4418;
 int64_t _4419;
 frost$core$Int64 _4420;
 int64_t _4421;
-frost$unsafe$NewPointer _4422;
+frost$unsafe$Pointer _4422;
 int64_t _4423;
-frost$unsafe$NewPointer _4426;
+frost$unsafe$Pointer _4426;
 int64_t _4427;
 frost$core$Int64 _4428;
-frost$unsafe$NewPointer _4429;
+frost$unsafe$Pointer _4429;
 int64_t _4430;
 frost$core$Int64 _4431;
 int64_t _4432;
-frost$unsafe$NewPointer _4433;
+frost$unsafe$Pointer _4433;
 int64_t _4434;
-frost$unsafe$NewPointer _4437;
+frost$unsafe$Pointer _4437;
 int64_t _4438;
 frost$core$Int64 _4439;
-frost$unsafe$NewPointer _4440;
+frost$unsafe$Pointer _4440;
 int64_t _4441;
 frost$core$Int64 _4442;
 int64_t _4443;
-frost$unsafe$NewPointer _4444;
+frost$unsafe$Pointer _4444;
 int64_t _4445;
-frost$unsafe$NewPointer _4448;
+frost$unsafe$Pointer _4448;
 int64_t _4449;
 frost$core$Int64 _4450;
-frost$unsafe$NewPointer _4451;
+frost$unsafe$Pointer _4451;
 int64_t _4452;
 frost$core$Int64 _4453;
 int64_t _4454;
-frost$unsafe$NewPointer _4455;
+frost$unsafe$Pointer _4455;
 int64_t _4456;
-frost$unsafe$NewPointer _4459;
+frost$unsafe$Pointer _4459;
 int64_t _4460;
 frost$core$Int64 _4461;
-frost$unsafe$NewPointer _4462;
+frost$unsafe$Pointer _4462;
 int64_t _4463;
 frost$core$Int64 _4464;
 int64_t _4465;
-frost$unsafe$NewPointer _4466;
+frost$unsafe$Pointer _4466;
 int64_t _4467;
-frost$unsafe$NewPointer _4470;
+frost$unsafe$Pointer _4470;
 int64_t _4471;
 frost$core$Int64 _4472;
-frost$unsafe$NewPointer _4473;
+frost$unsafe$Pointer _4473;
 int64_t _4474;
 frost$core$Int64 _4475;
 int64_t _4476;
-frost$unsafe$NewPointer _4477;
+frost$unsafe$Pointer _4477;
 int64_t _4478;
-frost$unsafe$NewPointer _4481;
+frost$unsafe$Pointer _4481;
 int64_t _4482;
 frost$core$Int64 _4483;
-frost$unsafe$NewPointer _4484;
+frost$unsafe$Pointer _4484;
 int64_t _4485;
 frost$core$Int64 _4486;
 int64_t _4487;
-frost$unsafe$NewPointer _4488;
+frost$unsafe$Pointer _4488;
 int64_t _4489;
-frost$unsafe$NewPointer _4492;
+frost$unsafe$Pointer _4492;
 int64_t _4493;
 frost$core$Int64 _4494;
-frost$unsafe$NewPointer _4495;
+frost$unsafe$Pointer _4495;
 int64_t _4496;
 frost$core$Int64 _4497;
 int64_t _4498;
-frost$unsafe$NewPointer _4499;
+frost$unsafe$Pointer _4499;
 int64_t _4500;
-frost$unsafe$NewPointer _4503;
+frost$unsafe$Pointer _4503;
 int64_t _4504;
 frost$core$Int64 _4505;
-frost$unsafe$NewPointer _4506;
+frost$unsafe$Pointer _4506;
 int64_t _4507;
 frost$core$Int64 _4508;
 int64_t _4509;
-frost$unsafe$NewPointer _4510;
+frost$unsafe$Pointer _4510;
 int64_t _4511;
-frost$unsafe$NewPointer _4514;
+frost$unsafe$Pointer _4514;
 int64_t _4515;
 frost$core$Int64 _4516;
-frost$unsafe$NewPointer _4517;
+frost$unsafe$Pointer _4517;
 int64_t _4518;
 frost$core$Int64 _4519;
 int64_t _4520;
-frost$unsafe$NewPointer _4521;
+frost$unsafe$Pointer _4521;
 int64_t _4522;
-frost$unsafe$NewPointer _4525;
+frost$unsafe$Pointer _4525;
 int64_t _4526;
 frost$core$Int64 _4527;
-frost$unsafe$NewPointer _4528;
+frost$unsafe$Pointer _4528;
 int64_t _4529;
 frost$core$Int64 _4530;
 int64_t _4531;
-frost$unsafe$NewPointer _4532;
+frost$unsafe$Pointer _4532;
 int64_t _4533;
-frost$unsafe$NewPointer _4536;
+frost$unsafe$Pointer _4536;
 int64_t _4537;
 frost$core$Int64 _4538;
-frost$unsafe$NewPointer _4539;
+frost$unsafe$Pointer _4539;
 int64_t _4540;
 frost$core$Int64 _4541;
 int64_t _4542;
-frost$unsafe$NewPointer _4543;
+frost$unsafe$Pointer _4543;
 int64_t _4544;
-frost$unsafe$NewPointer _4547;
+frost$unsafe$Pointer _4547;
 int64_t _4548;
 frost$core$Int64 _4549;
-frost$unsafe$NewPointer _4550;
+frost$unsafe$Pointer _4550;
 int64_t _4551;
 frost$core$Int64 _4552;
 int64_t _4553;
-frost$unsafe$NewPointer _4554;
+frost$unsafe$Pointer _4554;
 int64_t _4555;
-frost$unsafe$NewPointer _4558;
+frost$unsafe$Pointer _4558;
 int64_t _4559;
 frost$core$Int64 _4560;
-frost$unsafe$NewPointer _4561;
+frost$unsafe$Pointer _4561;
 int64_t _4562;
 frost$core$Int64 _4563;
 int64_t _4564;
-frost$unsafe$NewPointer _4565;
+frost$unsafe$Pointer _4565;
 int64_t _4566;
-frost$unsafe$NewPointer _4569;
+frost$unsafe$Pointer _4569;
 int64_t _4570;
 frost$core$Int64 _4571;
-frost$unsafe$NewPointer _4572;
+frost$unsafe$Pointer _4572;
 int64_t _4573;
 frost$core$Int64 _4574;
 int64_t _4575;
-frost$unsafe$NewPointer _4576;
+frost$unsafe$Pointer _4576;
 int64_t _4577;
-frost$unsafe$NewPointer _4580;
+frost$unsafe$Pointer _4580;
 int64_t _4581;
 frost$core$Int64 _4582;
-frost$unsafe$NewPointer _4583;
+frost$unsafe$Pointer _4583;
 int64_t _4584;
 frost$core$Int64 _4585;
 int64_t _4586;
-frost$unsafe$NewPointer _4587;
+frost$unsafe$Pointer _4587;
 int64_t _4588;
-frost$unsafe$NewPointer _4591;
+frost$unsafe$Pointer _4591;
 int64_t _4592;
 frost$core$Int64 _4593;
-frost$unsafe$NewPointer _4594;
+frost$unsafe$Pointer _4594;
 int64_t _4595;
 frost$core$Int64 _4596;
 int64_t _4597;
-frost$unsafe$NewPointer _4598;
+frost$unsafe$Pointer _4598;
 int64_t _4599;
-frost$unsafe$NewPointer _4602;
+frost$unsafe$Pointer _4602;
 int64_t _4603;
 frost$core$Int64 _4604;
-frost$unsafe$NewPointer _4605;
+frost$unsafe$Pointer _4605;
 int64_t _4606;
 frost$core$Int64 _4607;
 int64_t _4608;
-frost$unsafe$NewPointer _4609;
+frost$unsafe$Pointer _4609;
 int64_t _4610;
-frost$unsafe$NewPointer _4613;
+frost$unsafe$Pointer _4613;
 int64_t _4614;
 frost$core$Int64 _4615;
-frost$unsafe$NewPointer _4616;
+frost$unsafe$Pointer _4616;
 int64_t _4617;
 frost$core$Int64 _4618;
 int64_t _4619;
-frost$unsafe$NewPointer _4620;
+frost$unsafe$Pointer _4620;
 int64_t _4621;
-frost$unsafe$NewPointer _4624;
+frost$unsafe$Pointer _4624;
 int64_t _4625;
 frost$core$Int64 _4626;
-frost$unsafe$NewPointer _4627;
+frost$unsafe$Pointer _4627;
 int64_t _4628;
 frost$core$Int64 _4629;
 int64_t _4630;
-frost$unsafe$NewPointer _4631;
+frost$unsafe$Pointer _4631;
 int64_t _4632;
-frost$unsafe$NewPointer _4635;
+frost$unsafe$Pointer _4635;
 int64_t _4636;
 frost$core$Int64 _4637;
-frost$unsafe$NewPointer _4638;
+frost$unsafe$Pointer _4638;
 int64_t _4639;
 frost$core$Int64 _4640;
 int64_t _4641;
-frost$unsafe$NewPointer _4642;
+frost$unsafe$Pointer _4642;
 int64_t _4643;
-frost$unsafe$NewPointer _4646;
+frost$unsafe$Pointer _4646;
 int64_t _4647;
 frost$core$Int64 _4648;
-frost$unsafe$NewPointer _4649;
+frost$unsafe$Pointer _4649;
 int64_t _4650;
 frost$core$Int64 _4651;
 int64_t _4652;
-frost$unsafe$NewPointer _4653;
+frost$unsafe$Pointer _4653;
 int64_t _4654;
-frost$unsafe$NewPointer _4657;
+frost$unsafe$Pointer _4657;
 int64_t _4658;
 frost$core$Int64 _4659;
-frost$unsafe$NewPointer _4660;
+frost$unsafe$Pointer _4660;
 int64_t _4661;
 frost$core$Int64 _4662;
 int64_t _4663;
-frost$unsafe$NewPointer _4664;
+frost$unsafe$Pointer _4664;
 int64_t _4665;
-frost$unsafe$NewPointer _4668;
+frost$unsafe$Pointer _4668;
 int64_t _4669;
 frost$core$Int64 _4670;
-frost$unsafe$NewPointer _4671;
+frost$unsafe$Pointer _4671;
 int64_t _4672;
 frost$core$Int64 _4673;
 int64_t _4674;
-frost$unsafe$NewPointer _4675;
+frost$unsafe$Pointer _4675;
 int64_t _4676;
-frost$unsafe$NewPointer _4679;
+frost$unsafe$Pointer _4679;
 int64_t _4680;
 frost$core$Int64 _4681;
-frost$unsafe$NewPointer _4682;
+frost$unsafe$Pointer _4682;
 int64_t _4683;
 frost$core$Int64 _4684;
 int64_t _4685;
-frost$unsafe$NewPointer _4686;
+frost$unsafe$Pointer _4686;
 int64_t _4687;
-frost$unsafe$NewPointer _4690;
+frost$unsafe$Pointer _4690;
 int64_t _4691;
 frost$core$Int64 _4692;
-frost$unsafe$NewPointer _4693;
+frost$unsafe$Pointer _4693;
 int64_t _4694;
 frost$core$Int64 _4695;
 int64_t _4696;
-frost$unsafe$NewPointer _4697;
+frost$unsafe$Pointer _4697;
 int64_t _4698;
-frost$unsafe$NewPointer _4701;
+frost$unsafe$Pointer _4701;
 int64_t _4702;
 frost$core$Int64 _4703;
-frost$unsafe$NewPointer _4704;
+frost$unsafe$Pointer _4704;
 int64_t _4705;
 frost$core$Int64 _4706;
 int64_t _4707;
-frost$unsafe$NewPointer _4708;
+frost$unsafe$Pointer _4708;
 int64_t _4709;
-frost$unsafe$NewPointer _4712;
+frost$unsafe$Pointer _4712;
 int64_t _4713;
 frost$core$Int64 _4714;
-frost$unsafe$NewPointer _4715;
+frost$unsafe$Pointer _4715;
 int64_t _4716;
 frost$core$Int64 _4717;
 int64_t _4718;
-frost$unsafe$NewPointer _4719;
+frost$unsafe$Pointer _4719;
 int64_t _4720;
-frost$unsafe$NewPointer _4723;
+frost$unsafe$Pointer _4723;
 int64_t _4724;
 frost$core$Int64 _4725;
-frost$unsafe$NewPointer _4726;
+frost$unsafe$Pointer _4726;
 int64_t _4727;
 frost$core$Int64 _4728;
 int64_t _4729;
-frost$unsafe$NewPointer _4730;
+frost$unsafe$Pointer _4730;
 int64_t _4731;
-frost$unsafe$NewPointer _4734;
+frost$unsafe$Pointer _4734;
 int64_t _4735;
 frost$core$Int64 _4736;
-frost$unsafe$NewPointer _4737;
+frost$unsafe$Pointer _4737;
 int64_t _4738;
 frost$core$Int64 _4739;
 int64_t _4740;
-frost$unsafe$NewPointer _4741;
+frost$unsafe$Pointer _4741;
 int64_t _4742;
-frost$unsafe$NewPointer _4745;
+frost$unsafe$Pointer _4745;
 int64_t _4746;
 frost$core$Int64 _4747;
-frost$unsafe$NewPointer _4748;
+frost$unsafe$Pointer _4748;
 int64_t _4749;
 frost$core$Int64 _4750;
 int64_t _4751;
-frost$unsafe$NewPointer _4752;
+frost$unsafe$Pointer _4752;
 int64_t _4753;
-frost$unsafe$NewPointer _4756;
+frost$unsafe$Pointer _4756;
 int64_t _4757;
 frost$core$Int64 _4758;
-frost$unsafe$NewPointer _4759;
+frost$unsafe$Pointer _4759;
 int64_t _4760;
 frost$core$Int64 _4761;
 int64_t _4762;
-frost$unsafe$NewPointer _4763;
+frost$unsafe$Pointer _4763;
 int64_t _4764;
-frost$unsafe$NewPointer _4767;
+frost$unsafe$Pointer _4767;
 int64_t _4768;
 frost$core$Int64 _4769;
-frost$unsafe$NewPointer _4770;
+frost$unsafe$Pointer _4770;
 int64_t _4771;
 frost$core$Int64 _4772;
 int64_t _4773;
-frost$unsafe$NewPointer _4774;
+frost$unsafe$Pointer _4774;
 int64_t _4775;
-frost$unsafe$NewPointer _4778;
+frost$unsafe$Pointer _4778;
 int64_t _4779;
 frost$core$Int64 _4780;
-frost$unsafe$NewPointer _4781;
+frost$unsafe$Pointer _4781;
 int64_t _4782;
 frost$core$Int64 _4783;
 int64_t _4784;
-frost$unsafe$NewPointer _4785;
+frost$unsafe$Pointer _4785;
 int64_t _4786;
-frost$unsafe$NewPointer _4789;
+frost$unsafe$Pointer _4789;
 int64_t _4790;
 frost$core$Int64 _4791;
-frost$unsafe$NewPointer _4792;
+frost$unsafe$Pointer _4792;
 int64_t _4793;
 frost$core$Int64 _4794;
 int64_t _4795;
-frost$unsafe$NewPointer _4796;
+frost$unsafe$Pointer _4796;
 int64_t _4797;
-frost$unsafe$NewPointer _4800;
+frost$unsafe$Pointer _4800;
 int64_t _4801;
 frost$core$Int64 _4802;
-frost$unsafe$NewPointer _4803;
+frost$unsafe$Pointer _4803;
 int64_t _4804;
 frost$core$Int64 _4805;
 int64_t _4806;
-frost$unsafe$NewPointer _4807;
+frost$unsafe$Pointer _4807;
 int64_t _4808;
-frost$unsafe$NewPointer _4811;
+frost$unsafe$Pointer _4811;
 int64_t _4812;
 frost$core$Int64 _4813;
-frost$unsafe$NewPointer _4814;
+frost$unsafe$Pointer _4814;
 int64_t _4815;
 frost$core$Int64 _4816;
 int64_t _4817;
-frost$unsafe$NewPointer _4818;
+frost$unsafe$Pointer _4818;
 int64_t _4819;
-frost$unsafe$NewPointer _4822;
+frost$unsafe$Pointer _4822;
 int64_t _4823;
 frost$core$Int64 _4824;
-frost$unsafe$NewPointer _4825;
+frost$unsafe$Pointer _4825;
 int64_t _4826;
 frost$core$Int64 _4827;
 int64_t _4828;
-frost$unsafe$NewPointer _4829;
+frost$unsafe$Pointer _4829;
 int64_t _4830;
-frost$unsafe$NewPointer _4833;
+frost$unsafe$Pointer _4833;
 int64_t _4834;
 frost$core$Int64 _4835;
-frost$unsafe$NewPointer _4836;
+frost$unsafe$Pointer _4836;
 int64_t _4837;
 frost$core$Int64 _4838;
 int64_t _4839;
-frost$unsafe$NewPointer _4840;
+frost$unsafe$Pointer _4840;
 int64_t _4841;
-frost$unsafe$NewPointer _4844;
+frost$unsafe$Pointer _4844;
 int64_t _4845;
 frost$core$Int64 _4846;
-frost$unsafe$NewPointer _4847;
+frost$unsafe$Pointer _4847;
 int64_t _4848;
 frost$core$Int64 _4849;
 int64_t _4850;
-frost$unsafe$NewPointer _4851;
+frost$unsafe$Pointer _4851;
 int64_t _4852;
-frost$unsafe$NewPointer _4855;
+frost$unsafe$Pointer _4855;
 int64_t _4856;
 frost$core$Int64 _4857;
-frost$unsafe$NewPointer _4858;
+frost$unsafe$Pointer _4858;
 int64_t _4859;
 frost$core$Int64 _4860;
 int64_t _4861;
-frost$unsafe$NewPointer _4862;
+frost$unsafe$Pointer _4862;
 int64_t _4863;
-frost$unsafe$NewPointer _4866;
+frost$unsafe$Pointer _4866;
 int64_t _4867;
 frost$core$Int64 _4868;
-frost$unsafe$NewPointer _4869;
+frost$unsafe$Pointer _4869;
 int64_t _4870;
 frost$core$Int64 _4871;
 int64_t _4872;
-frost$unsafe$NewPointer _4873;
+frost$unsafe$Pointer _4873;
 int64_t _4874;
-frost$unsafe$NewPointer _4877;
+frost$unsafe$Pointer _4877;
 int64_t _4878;
 frost$core$Int64 _4879;
-frost$unsafe$NewPointer _4880;
+frost$unsafe$Pointer _4880;
 int64_t _4881;
 frost$core$Int64 _4882;
 int64_t _4883;
-frost$unsafe$NewPointer _4884;
+frost$unsafe$Pointer _4884;
 int64_t _4885;
-frost$unsafe$NewPointer _4888;
+frost$unsafe$Pointer _4888;
 int64_t _4889;
 frost$core$Int64 _4890;
-frost$unsafe$NewPointer _4891;
+frost$unsafe$Pointer _4891;
 int64_t _4892;
 frost$core$Int64 _4893;
 int64_t _4894;
-frost$unsafe$NewPointer _4895;
+frost$unsafe$Pointer _4895;
 int64_t _4896;
-frost$unsafe$NewPointer _4899;
+frost$unsafe$Pointer _4899;
 int64_t _4900;
 frost$core$Int64 _4901;
-frost$unsafe$NewPointer _4902;
+frost$unsafe$Pointer _4902;
 int64_t _4903;
 frost$core$Int64 _4904;
 int64_t _4905;
-frost$unsafe$NewPointer _4906;
+frost$unsafe$Pointer _4906;
 int64_t _4907;
-frost$unsafe$NewPointer _4910;
+frost$unsafe$Pointer _4910;
 int64_t _4911;
 frost$core$Int64 _4912;
-frost$unsafe$NewPointer _4913;
+frost$unsafe$Pointer _4913;
 int64_t _4914;
 frost$core$Int64 _4915;
 int64_t _4916;
-frost$unsafe$NewPointer _4917;
+frost$unsafe$Pointer _4917;
 int64_t _4918;
-frost$unsafe$NewPointer _4921;
+frost$unsafe$Pointer _4921;
 int64_t _4922;
 frost$core$Int64 _4923;
-frost$unsafe$NewPointer _4924;
+frost$unsafe$Pointer _4924;
 int64_t _4925;
 frost$core$Int64 _4926;
 int64_t _4927;
-frost$unsafe$NewPointer _4928;
+frost$unsafe$Pointer _4928;
 int64_t _4929;
-frost$unsafe$NewPointer _4932;
+frost$unsafe$Pointer _4932;
 int64_t _4933;
 frost$core$Int64 _4934;
-frost$unsafe$NewPointer _4935;
+frost$unsafe$Pointer _4935;
 int64_t _4936;
 frost$core$Int64 _4937;
 int64_t _4938;
-frost$unsafe$NewPointer _4939;
+frost$unsafe$Pointer _4939;
 int64_t _4940;
-frost$unsafe$NewPointer _4943;
+frost$unsafe$Pointer _4943;
 int64_t _4944;
 frost$core$Int64 _4945;
-frost$unsafe$NewPointer _4946;
+frost$unsafe$Pointer _4946;
 int64_t _4947;
 frost$core$Int64 _4948;
 int64_t _4949;
-frost$unsafe$NewPointer _4950;
+frost$unsafe$Pointer _4950;
 int64_t _4951;
-frost$unsafe$NewPointer _4954;
+frost$unsafe$Pointer _4954;
 int64_t _4955;
 frost$core$Int64 _4956;
-frost$unsafe$NewPointer _4957;
+frost$unsafe$Pointer _4957;
 int64_t _4958;
 frost$core$Int64 _4959;
 int64_t _4960;
-frost$unsafe$NewPointer _4961;
+frost$unsafe$Pointer _4961;
 int64_t _4962;
-frost$unsafe$NewPointer _4965;
+frost$unsafe$Pointer _4965;
 int64_t _4966;
 frost$core$Int64 _4967;
-frost$unsafe$NewPointer _4968;
+frost$unsafe$Pointer _4968;
 int64_t _4969;
 frost$core$Int64 _4970;
 int64_t _4971;
-frost$unsafe$NewPointer _4972;
+frost$unsafe$Pointer _4972;
 int64_t _4973;
-frost$unsafe$NewPointer _4976;
+frost$unsafe$Pointer _4976;
 int64_t _4977;
 frost$core$Int64 _4978;
-frost$unsafe$NewPointer _4979;
+frost$unsafe$Pointer _4979;
 int64_t _4980;
 frost$core$Int64 _4981;
 int64_t _4982;
-frost$unsafe$NewPointer _4983;
+frost$unsafe$Pointer _4983;
 int64_t _4984;
-frost$unsafe$NewPointer _4987;
+frost$unsafe$Pointer _4987;
 int64_t _4988;
 frost$core$Int64 _4989;
-frost$unsafe$NewPointer _4990;
+frost$unsafe$Pointer _4990;
 int64_t _4991;
 frost$core$Int64 _4992;
 int64_t _4993;
-frost$unsafe$NewPointer _4994;
+frost$unsafe$Pointer _4994;
 int64_t _4995;
-frost$unsafe$NewPointer _4998;
+frost$unsafe$Pointer _4998;
 int64_t _4999;
 frost$core$Int64 _5000;
-frost$unsafe$NewPointer _5001;
+frost$unsafe$Pointer _5001;
 int64_t _5002;
 frost$core$Int64 _5003;
 int64_t _5004;
-frost$unsafe$NewPointer _5005;
+frost$unsafe$Pointer _5005;
 int64_t _5006;
-frost$unsafe$NewPointer _5009;
+frost$unsafe$Pointer _5009;
 int64_t _5010;
 frost$core$Int64 _5011;
-frost$unsafe$NewPointer _5012;
+frost$unsafe$Pointer _5012;
 int64_t _5013;
 frost$core$Int64 _5014;
 int64_t _5015;
-frost$unsafe$NewPointer _5016;
+frost$unsafe$Pointer _5016;
 int64_t _5017;
-frost$unsafe$NewPointer _5020;
+frost$unsafe$Pointer _5020;
 int64_t _5021;
 frost$core$Int64 _5022;
-frost$unsafe$NewPointer _5023;
+frost$unsafe$Pointer _5023;
 int64_t _5024;
 frost$core$Int64 _5025;
 int64_t _5026;
-frost$unsafe$NewPointer _5027;
+frost$unsafe$Pointer _5027;
 int64_t _5028;
-frost$unsafe$NewPointer _5031;
+frost$unsafe$Pointer _5031;
 int64_t _5032;
 frost$core$Int64 _5033;
-frost$unsafe$NewPointer _5034;
+frost$unsafe$Pointer _5034;
 int64_t _5035;
 frost$core$Int64 _5036;
 int64_t _5037;
-frost$unsafe$NewPointer _5038;
+frost$unsafe$Pointer _5038;
 int64_t _5039;
-frost$unsafe$NewPointer _5042;
+frost$unsafe$Pointer _5042;
 int64_t _5043;
 frost$core$Int64 _5044;
-frost$unsafe$NewPointer _5045;
+frost$unsafe$Pointer _5045;
 int64_t _5046;
 frost$core$Int64 _5047;
 int64_t _5048;
-frost$unsafe$NewPointer _5049;
+frost$unsafe$Pointer _5049;
 int64_t _5050;
-frost$unsafe$NewPointer _5053;
+frost$unsafe$Pointer _5053;
 int64_t _5054;
 frost$core$Int64 _5055;
-frost$unsafe$NewPointer _5056;
+frost$unsafe$Pointer _5056;
 int64_t _5057;
 frost$core$Int64 _5058;
 int64_t _5059;
-frost$unsafe$NewPointer _5060;
+frost$unsafe$Pointer _5060;
 int64_t _5061;
-frost$unsafe$NewPointer _5064;
+frost$unsafe$Pointer _5064;
 int64_t _5065;
 frost$core$Int64 _5066;
-frost$unsafe$NewPointer _5067;
+frost$unsafe$Pointer _5067;
 int64_t _5068;
 frost$core$Int64 _5069;
 int64_t _5070;
-frost$unsafe$NewPointer _5071;
+frost$unsafe$Pointer _5071;
 int64_t _5072;
-frost$unsafe$NewPointer _5075;
+frost$unsafe$Pointer _5075;
 int64_t _5076;
 frost$core$Int64 _5077;
-frost$unsafe$NewPointer _5078;
+frost$unsafe$Pointer _5078;
 int64_t _5079;
 frost$core$Int64 _5080;
 int64_t _5081;
-frost$unsafe$NewPointer _5082;
+frost$unsafe$Pointer _5082;
 int64_t _5083;
-frost$unsafe$NewPointer _5086;
+frost$unsafe$Pointer _5086;
 int64_t _5087;
 frost$core$Int64 _5088;
-frost$unsafe$NewPointer _5089;
+frost$unsafe$Pointer _5089;
 int64_t _5090;
 frost$core$Int64 _5091;
 int64_t _5092;
-frost$unsafe$NewPointer _5093;
+frost$unsafe$Pointer _5093;
 int64_t _5094;
-frost$unsafe$NewPointer _5097;
+frost$unsafe$Pointer _5097;
 int64_t _5098;
 frost$core$Int64 _5099;
-frost$unsafe$NewPointer _5100;
+frost$unsafe$Pointer _5100;
 int64_t _5101;
 frost$core$Int64 _5102;
 int64_t _5103;
-frost$unsafe$NewPointer _5104;
+frost$unsafe$Pointer _5104;
 int64_t _5105;
-frost$unsafe$NewPointer _5108;
+frost$unsafe$Pointer _5108;
 int64_t _5109;
 frost$core$Int64 _5110;
-frost$unsafe$NewPointer _5111;
+frost$unsafe$Pointer _5111;
 int64_t _5112;
 frost$core$Int64 _5113;
 int64_t _5114;
-frost$unsafe$NewPointer _5115;
+frost$unsafe$Pointer _5115;
 int64_t _5116;
-frost$unsafe$NewPointer _5119;
+frost$unsafe$Pointer _5119;
 int64_t _5120;
 frost$core$Int64 _5121;
-frost$unsafe$NewPointer _5122;
+frost$unsafe$Pointer _5122;
 int64_t _5123;
 frost$core$Int64 _5124;
 int64_t _5125;
-frost$unsafe$NewPointer _5126;
+frost$unsafe$Pointer _5126;
 int64_t _5127;
-frost$unsafe$NewPointer _5130;
+frost$unsafe$Pointer _5130;
 int64_t _5131;
 frost$core$Int64 _5132;
-frost$unsafe$NewPointer _5133;
+frost$unsafe$Pointer _5133;
 int64_t _5134;
 frost$core$Int64 _5135;
 int64_t _5136;
-frost$unsafe$NewPointer _5137;
+frost$unsafe$Pointer _5137;
 int64_t _5138;
-frost$unsafe$NewPointer _5141;
+frost$unsafe$Pointer _5141;
 int64_t _5142;
 frost$core$Int64 _5143;
-frost$unsafe$NewPointer _5144;
+frost$unsafe$Pointer _5144;
 int64_t _5145;
 frost$core$Int64 _5146;
 int64_t _5147;
-frost$unsafe$NewPointer _5148;
+frost$unsafe$Pointer _5148;
 int64_t _5149;
-frost$unsafe$NewPointer _5152;
+frost$unsafe$Pointer _5152;
 int64_t _5153;
 frost$core$Int64 _5154;
-frost$unsafe$NewPointer _5155;
+frost$unsafe$Pointer _5155;
 int64_t _5156;
 frost$core$Int64 _5157;
 int64_t _5158;
-frost$unsafe$NewPointer _5159;
+frost$unsafe$Pointer _5159;
 int64_t _5160;
-frost$unsafe$NewPointer _5163;
+frost$unsafe$Pointer _5163;
 int64_t _5164;
 frost$core$Int64 _5165;
-frost$unsafe$NewPointer _5166;
+frost$unsafe$Pointer _5166;
 int64_t _5167;
 frost$core$Int64 _5168;
 int64_t _5169;
-frost$unsafe$NewPointer _5170;
+frost$unsafe$Pointer _5170;
 int64_t _5171;
-frost$unsafe$NewPointer _5174;
+frost$unsafe$Pointer _5174;
 int64_t _5175;
 frost$core$Int64 _5176;
-frost$unsafe$NewPointer _5177;
+frost$unsafe$Pointer _5177;
 int64_t _5178;
 frost$core$Int64 _5179;
 int64_t _5180;
-frost$unsafe$NewPointer _5181;
+frost$unsafe$Pointer _5181;
 int64_t _5182;
-frost$unsafe$NewPointer _5185;
+frost$unsafe$Pointer _5185;
 int64_t _5186;
 frost$core$Int64 _5187;
-frost$unsafe$NewPointer _5188;
+frost$unsafe$Pointer _5188;
 int64_t _5189;
 frost$core$Int64 _5190;
 int64_t _5191;
-frost$unsafe$NewPointer _5192;
+frost$unsafe$Pointer _5192;
 int64_t _5193;
-frost$unsafe$NewPointer _5196;
+frost$unsafe$Pointer _5196;
 int64_t _5197;
 frost$core$Int64 _5198;
-frost$unsafe$NewPointer _5199;
+frost$unsafe$Pointer _5199;
 int64_t _5200;
 frost$core$Int64 _5201;
 int64_t _5202;
-frost$unsafe$NewPointer _5203;
+frost$unsafe$Pointer _5203;
 int64_t _5204;
-frost$unsafe$NewPointer _5207;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:34
+frost$unsafe$Pointer _5207;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:33
 _1 = (frost$core$Int) {256u};
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:34:57
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:33:51
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _4 = _1.value;
 _5 = _4 * 8u;
 _6 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_5);
-// begin inline call to frost.unsafe.NewPointer.init(value:builtin_int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from NewPointer.frost:49:29
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:31
+// begin inline call to frost.unsafe.Pointer.init(value:builtin_int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Pointer.frost:49:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:31
 _9 = &(&local1)->value;
 *_9 = _6;
 _11 = *(&local1);
 *(&local0) = _11;
 _14 = *(&local0);
 *(&local2) = _14;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:35
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:34
 _18 = *(&local2);
 _19 = _18.value;
 _20 = (frost$core$Int64) {0u};
 _21 = (frost$core$Int) {31u};
 _22 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:35:27
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:34:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _27 = _21.value;
 _28 = _27 * 8u;
 _29 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_28);
-_30 = frost$unsafe$NewPointer$init$builtin_int(_29);
+_30 = frost$unsafe$Pointer$init$builtin_int(_29);
 *(&local3) = _30;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _34 = (frost$core$Int) {0u};
 _35 = (frost$core$Bit) {false};
 _36 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_34, _21, _35);
@@ -4328,7 +4329,7 @@ _53 = (frost$core$Bit) {_52};
 _54 = _53.value;
 if (_54) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _57 = *(&local3);
 _58 = _57.value;
 _59 = *(&local4);
@@ -4363,22 +4364,22 @@ _85 = (frost$core$Int) {_84};
 *(&local4) = _85;
 goto block5;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _89 = *(&local3);
 _91 = _20.value;
-((frost$unsafe$NewPointer*)_19)[_91] = _89;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:36
+((frost$unsafe$Pointer*)_19)[_91] = _89;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:35
 _94 = *(&local2);
 _95 = _94.value;
 _96 = (frost$core$Int64) {0u};
 _97 = _96.value;
-_98 = ((frost$unsafe$NewPointer*)_95)[_97];
+_98 = ((frost$unsafe$Pointer*)_95)[_97];
 _99 = _98.value;
 _100 = (frost$core$Int64) {3u};
 _101 = (frost$core$Int) {3u};
 _102 = _100.value;
 ((frost$core$Int*)_99)[_102] = _101;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:37
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:36
 _105 = *(&local2);
 _106 = _105.value;
 _107 = (frost$core$Int64) {1u};
@@ -4386,10 +4387,10 @@ _108 = *(&local2);
 _109 = _108.value;
 _110 = (frost$core$Int64) {0u};
 _111 = _110.value;
-_112 = ((frost$unsafe$NewPointer*)_109)[_111];
+_112 = ((frost$unsafe$Pointer*)_109)[_111];
 _113 = _107.value;
-((frost$unsafe$NewPointer*)_106)[_113] = _112;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:38
+((frost$unsafe$Pointer*)_106)[_113] = _112;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:37
 _116 = *(&local2);
 _117 = _116.value;
 _118 = (frost$core$Int64) {2u};
@@ -4397,10 +4398,10 @@ _119 = *(&local2);
 _120 = _119.value;
 _121 = (frost$core$Int64) {0u};
 _122 = _121.value;
-_123 = ((frost$unsafe$NewPointer*)_120)[_122];
+_123 = ((frost$unsafe$Pointer*)_120)[_122];
 _124 = _118.value;
-((frost$unsafe$NewPointer*)_117)[_124] = _123;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:39
+((frost$unsafe$Pointer*)_117)[_124] = _123;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:38
 _127 = *(&local2);
 _128 = _127.value;
 _129 = (frost$core$Int64) {3u};
@@ -4408,10 +4409,10 @@ _130 = *(&local2);
 _131 = _130.value;
 _132 = (frost$core$Int64) {0u};
 _133 = _132.value;
-_134 = ((frost$unsafe$NewPointer*)_131)[_133];
+_134 = ((frost$unsafe$Pointer*)_131)[_133];
 _135 = _129.value;
-((frost$unsafe$NewPointer*)_128)[_135] = _134;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:40
+((frost$unsafe$Pointer*)_128)[_135] = _134;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:39
 _138 = *(&local2);
 _139 = _138.value;
 _140 = (frost$core$Int64) {4u};
@@ -4419,10 +4420,10 @@ _141 = *(&local2);
 _142 = _141.value;
 _143 = (frost$core$Int64) {0u};
 _144 = _143.value;
-_145 = ((frost$unsafe$NewPointer*)_142)[_144];
+_145 = ((frost$unsafe$Pointer*)_142)[_144];
 _146 = _140.value;
-((frost$unsafe$NewPointer*)_139)[_146] = _145;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:41
+((frost$unsafe$Pointer*)_139)[_146] = _145;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:40
 _149 = *(&local2);
 _150 = _149.value;
 _151 = (frost$core$Int64) {5u};
@@ -4430,10 +4431,10 @@ _152 = *(&local2);
 _153 = _152.value;
 _154 = (frost$core$Int64) {0u};
 _155 = _154.value;
-_156 = ((frost$unsafe$NewPointer*)_153)[_155];
+_156 = ((frost$unsafe$Pointer*)_153)[_155];
 _157 = _151.value;
-((frost$unsafe$NewPointer*)_150)[_157] = _156;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:42
+((frost$unsafe$Pointer*)_150)[_157] = _156;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:41
 _160 = *(&local2);
 _161 = _160.value;
 _162 = (frost$core$Int64) {6u};
@@ -4441,10 +4442,10 @@ _163 = *(&local2);
 _164 = _163.value;
 _165 = (frost$core$Int64) {0u};
 _166 = _165.value;
-_167 = ((frost$unsafe$NewPointer*)_164)[_166];
+_167 = ((frost$unsafe$Pointer*)_164)[_166];
 _168 = _162.value;
-((frost$unsafe$NewPointer*)_161)[_168] = _167;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:43
+((frost$unsafe$Pointer*)_161)[_168] = _167;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:42
 _171 = *(&local2);
 _172 = _171.value;
 _173 = (frost$core$Int64) {7u};
@@ -4452,10 +4453,10 @@ _174 = *(&local2);
 _175 = _174.value;
 _176 = (frost$core$Int64) {0u};
 _177 = _176.value;
-_178 = ((frost$unsafe$NewPointer*)_175)[_177];
+_178 = ((frost$unsafe$Pointer*)_175)[_177];
 _179 = _173.value;
-((frost$unsafe$NewPointer*)_172)[_179] = _178;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:44
+((frost$unsafe$Pointer*)_172)[_179] = _178;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:43
 _182 = *(&local2);
 _183 = _182.value;
 _184 = (frost$core$Int64) {8u};
@@ -4463,25 +4464,25 @@ _185 = *(&local2);
 _186 = _185.value;
 _187 = (frost$core$Int64) {0u};
 _188 = _187.value;
-_189 = ((frost$unsafe$NewPointer*)_186)[_188];
+_189 = ((frost$unsafe$Pointer*)_186)[_188];
 _190 = _184.value;
-((frost$unsafe$NewPointer*)_183)[_190] = _189;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:45
+((frost$unsafe$Pointer*)_183)[_190] = _189;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:44
 _193 = *(&local2);
 _194 = _193.value;
 _195 = (frost$core$Int64) {9u};
 _196 = (frost$core$Int) {31u};
 _197 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:45:27
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:44:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _202 = _196.value;
 _203 = _202 * 8u;
 _204 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_203);
-_205 = frost$unsafe$NewPointer$init$builtin_int(_204);
+_205 = frost$unsafe$Pointer$init$builtin_int(_204);
 *(&local5) = _205;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _209 = (frost$core$Int) {0u};
 _210 = (frost$core$Bit) {false};
 _211 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_209, _196, _210);
@@ -4507,7 +4508,7 @@ _228 = (frost$core$Bit) {_227};
 _229 = _228.value;
 if (_229) goto block15; else goto block16;
 block15:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _232 = *(&local5);
 _233 = _232.value;
 _234 = *(&local6);
@@ -4542,44 +4543,44 @@ _260 = (frost$core$Int) {_259};
 *(&local6) = _260;
 goto block15;
 block16:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _264 = *(&local5);
 _266 = _195.value;
-((frost$unsafe$NewPointer*)_194)[_266] = _264;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:46
+((frost$unsafe$Pointer*)_194)[_266] = _264;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:45
 _269 = *(&local2);
 _270 = _269.value;
 _271 = (frost$core$Int64) {9u};
 _272 = _271.value;
-_273 = ((frost$unsafe$NewPointer*)_270)[_272];
+_273 = ((frost$unsafe$Pointer*)_270)[_272];
 _274 = _273.value;
 _275 = (frost$core$Int64) {1u};
 _276 = (frost$core$Int) {2u};
 _277 = _275.value;
 ((frost$core$Int*)_274)[_277] = _276;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:47
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:46
 _280 = *(&local2);
 _281 = _280.value;
 _282 = (frost$core$Int64) {9u};
 _283 = _282.value;
-_284 = ((frost$unsafe$NewPointer*)_281)[_283];
+_284 = ((frost$unsafe$Pointer*)_281)[_283];
 _285 = _284.value;
 _286 = (frost$core$Int64) {2u};
 _287 = (frost$core$Int) {2u};
 _288 = _286.value;
 ((frost$core$Int*)_285)[_288] = _287;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:48
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:47
 _291 = *(&local2);
 _292 = _291.value;
 _293 = (frost$core$Int64) {9u};
 _294 = _293.value;
-_295 = ((frost$unsafe$NewPointer*)_292)[_294];
+_295 = ((frost$unsafe$Pointer*)_292)[_294];
 _296 = _295.value;
 _297 = (frost$core$Int64) {3u};
 _298 = (frost$core$Int) {3u};
 _299 = _297.value;
 ((frost$core$Int*)_296)[_299] = _298;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:49
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:48
 _302 = *(&local2);
 _303 = _302.value;
 _304 = (frost$core$Int64) {10u};
@@ -4587,10 +4588,10 @@ _305 = *(&local2);
 _306 = _305.value;
 _307 = (frost$core$Int64) {9u};
 _308 = _307.value;
-_309 = ((frost$unsafe$NewPointer*)_306)[_308];
+_309 = ((frost$unsafe$Pointer*)_306)[_308];
 _310 = _304.value;
-((frost$unsafe$NewPointer*)_303)[_310] = _309;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:50
+((frost$unsafe$Pointer*)_303)[_310] = _309;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:49
 _313 = *(&local2);
 _314 = _313.value;
 _315 = (frost$core$Int64) {11u};
@@ -4598,10 +4599,10 @@ _316 = *(&local2);
 _317 = _316.value;
 _318 = (frost$core$Int64) {0u};
 _319 = _318.value;
-_320 = ((frost$unsafe$NewPointer*)_317)[_319];
+_320 = ((frost$unsafe$Pointer*)_317)[_319];
 _321 = _315.value;
-((frost$unsafe$NewPointer*)_314)[_321] = _320;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:51
+((frost$unsafe$Pointer*)_314)[_321] = _320;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:50
 _324 = *(&local2);
 _325 = _324.value;
 _326 = (frost$core$Int64) {12u};
@@ -4609,10 +4610,10 @@ _327 = *(&local2);
 _328 = _327.value;
 _329 = (frost$core$Int64) {0u};
 _330 = _329.value;
-_331 = ((frost$unsafe$NewPointer*)_328)[_330];
+_331 = ((frost$unsafe$Pointer*)_328)[_330];
 _332 = _326.value;
-((frost$unsafe$NewPointer*)_325)[_332] = _331;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:52
+((frost$unsafe$Pointer*)_325)[_332] = _331;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:51
 _335 = *(&local2);
 _336 = _335.value;
 _337 = (frost$core$Int64) {13u};
@@ -4620,10 +4621,10 @@ _338 = *(&local2);
 _339 = _338.value;
 _340 = (frost$core$Int64) {9u};
 _341 = _340.value;
-_342 = ((frost$unsafe$NewPointer*)_339)[_341];
+_342 = ((frost$unsafe$Pointer*)_339)[_341];
 _343 = _337.value;
-((frost$unsafe$NewPointer*)_336)[_343] = _342;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:53
+((frost$unsafe$Pointer*)_336)[_343] = _342;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:52
 _346 = *(&local2);
 _347 = _346.value;
 _348 = (frost$core$Int64) {14u};
@@ -4631,10 +4632,10 @@ _349 = *(&local2);
 _350 = _349.value;
 _351 = (frost$core$Int64) {0u};
 _352 = _351.value;
-_353 = ((frost$unsafe$NewPointer*)_350)[_352];
+_353 = ((frost$unsafe$Pointer*)_350)[_352];
 _354 = _348.value;
-((frost$unsafe$NewPointer*)_347)[_354] = _353;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:54
+((frost$unsafe$Pointer*)_347)[_354] = _353;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:53
 _357 = *(&local2);
 _358 = _357.value;
 _359 = (frost$core$Int64) {15u};
@@ -4642,10 +4643,10 @@ _360 = *(&local2);
 _361 = _360.value;
 _362 = (frost$core$Int64) {0u};
 _363 = _362.value;
-_364 = ((frost$unsafe$NewPointer*)_361)[_363];
+_364 = ((frost$unsafe$Pointer*)_361)[_363];
 _365 = _359.value;
-((frost$unsafe$NewPointer*)_358)[_365] = _364;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:55
+((frost$unsafe$Pointer*)_358)[_365] = _364;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:54
 _368 = *(&local2);
 _369 = _368.value;
 _370 = (frost$core$Int64) {16u};
@@ -4653,10 +4654,10 @@ _371 = *(&local2);
 _372 = _371.value;
 _373 = (frost$core$Int64) {0u};
 _374 = _373.value;
-_375 = ((frost$unsafe$NewPointer*)_372)[_374];
+_375 = ((frost$unsafe$Pointer*)_372)[_374];
 _376 = _370.value;
-((frost$unsafe$NewPointer*)_369)[_376] = _375;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:56
+((frost$unsafe$Pointer*)_369)[_376] = _375;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:55
 _379 = *(&local2);
 _380 = _379.value;
 _381 = (frost$core$Int64) {17u};
@@ -4664,10 +4665,10 @@ _382 = *(&local2);
 _383 = _382.value;
 _384 = (frost$core$Int64) {0u};
 _385 = _384.value;
-_386 = ((frost$unsafe$NewPointer*)_383)[_385];
+_386 = ((frost$unsafe$Pointer*)_383)[_385];
 _387 = _381.value;
-((frost$unsafe$NewPointer*)_380)[_387] = _386;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:57
+((frost$unsafe$Pointer*)_380)[_387] = _386;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:56
 _390 = *(&local2);
 _391 = _390.value;
 _392 = (frost$core$Int64) {18u};
@@ -4675,10 +4676,10 @@ _393 = *(&local2);
 _394 = _393.value;
 _395 = (frost$core$Int64) {0u};
 _396 = _395.value;
-_397 = ((frost$unsafe$NewPointer*)_394)[_396];
+_397 = ((frost$unsafe$Pointer*)_394)[_396];
 _398 = _392.value;
-((frost$unsafe$NewPointer*)_391)[_398] = _397;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:58
+((frost$unsafe$Pointer*)_391)[_398] = _397;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:57
 _401 = *(&local2);
 _402 = _401.value;
 _403 = (frost$core$Int64) {19u};
@@ -4686,10 +4687,10 @@ _404 = *(&local2);
 _405 = _404.value;
 _406 = (frost$core$Int64) {0u};
 _407 = _406.value;
-_408 = ((frost$unsafe$NewPointer*)_405)[_407];
+_408 = ((frost$unsafe$Pointer*)_405)[_407];
 _409 = _403.value;
-((frost$unsafe$NewPointer*)_402)[_409] = _408;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:59
+((frost$unsafe$Pointer*)_402)[_409] = _408;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:58
 _412 = *(&local2);
 _413 = _412.value;
 _414 = (frost$core$Int64) {20u};
@@ -4697,10 +4698,10 @@ _415 = *(&local2);
 _416 = _415.value;
 _417 = (frost$core$Int64) {0u};
 _418 = _417.value;
-_419 = ((frost$unsafe$NewPointer*)_416)[_418];
+_419 = ((frost$unsafe$Pointer*)_416)[_418];
 _420 = _414.value;
-((frost$unsafe$NewPointer*)_413)[_420] = _419;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:60
+((frost$unsafe$Pointer*)_413)[_420] = _419;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:59
 _423 = *(&local2);
 _424 = _423.value;
 _425 = (frost$core$Int64) {21u};
@@ -4708,10 +4709,10 @@ _426 = *(&local2);
 _427 = _426.value;
 _428 = (frost$core$Int64) {0u};
 _429 = _428.value;
-_430 = ((frost$unsafe$NewPointer*)_427)[_429];
+_430 = ((frost$unsafe$Pointer*)_427)[_429];
 _431 = _425.value;
-((frost$unsafe$NewPointer*)_424)[_431] = _430;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:61
+((frost$unsafe$Pointer*)_424)[_431] = _430;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:60
 _434 = *(&local2);
 _435 = _434.value;
 _436 = (frost$core$Int64) {22u};
@@ -4719,10 +4720,10 @@ _437 = *(&local2);
 _438 = _437.value;
 _439 = (frost$core$Int64) {0u};
 _440 = _439.value;
-_441 = ((frost$unsafe$NewPointer*)_438)[_440];
+_441 = ((frost$unsafe$Pointer*)_438)[_440];
 _442 = _436.value;
-((frost$unsafe$NewPointer*)_435)[_442] = _441;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:62
+((frost$unsafe$Pointer*)_435)[_442] = _441;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:61
 _445 = *(&local2);
 _446 = _445.value;
 _447 = (frost$core$Int64) {23u};
@@ -4730,10 +4731,10 @@ _448 = *(&local2);
 _449 = _448.value;
 _450 = (frost$core$Int64) {0u};
 _451 = _450.value;
-_452 = ((frost$unsafe$NewPointer*)_449)[_451];
+_452 = ((frost$unsafe$Pointer*)_449)[_451];
 _453 = _447.value;
-((frost$unsafe$NewPointer*)_446)[_453] = _452;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:63
+((frost$unsafe$Pointer*)_446)[_453] = _452;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:62
 _456 = *(&local2);
 _457 = _456.value;
 _458 = (frost$core$Int64) {24u};
@@ -4741,10 +4742,10 @@ _459 = *(&local2);
 _460 = _459.value;
 _461 = (frost$core$Int64) {0u};
 _462 = _461.value;
-_463 = ((frost$unsafe$NewPointer*)_460)[_462];
+_463 = ((frost$unsafe$Pointer*)_460)[_462];
 _464 = _458.value;
-((frost$unsafe$NewPointer*)_457)[_464] = _463;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:64
+((frost$unsafe$Pointer*)_457)[_464] = _463;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:63
 _467 = *(&local2);
 _468 = _467.value;
 _469 = (frost$core$Int64) {25u};
@@ -4752,10 +4753,10 @@ _470 = *(&local2);
 _471 = _470.value;
 _472 = (frost$core$Int64) {0u};
 _473 = _472.value;
-_474 = ((frost$unsafe$NewPointer*)_471)[_473];
+_474 = ((frost$unsafe$Pointer*)_471)[_473];
 _475 = _469.value;
-((frost$unsafe$NewPointer*)_468)[_475] = _474;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:65
+((frost$unsafe$Pointer*)_468)[_475] = _474;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:64
 _478 = *(&local2);
 _479 = _478.value;
 _480 = (frost$core$Int64) {26u};
@@ -4763,10 +4764,10 @@ _481 = *(&local2);
 _482 = _481.value;
 _483 = (frost$core$Int64) {0u};
 _484 = _483.value;
-_485 = ((frost$unsafe$NewPointer*)_482)[_484];
+_485 = ((frost$unsafe$Pointer*)_482)[_484];
 _486 = _480.value;
-((frost$unsafe$NewPointer*)_479)[_486] = _485;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:66
+((frost$unsafe$Pointer*)_479)[_486] = _485;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:65
 _489 = *(&local2);
 _490 = _489.value;
 _491 = (frost$core$Int64) {27u};
@@ -4774,10 +4775,10 @@ _492 = *(&local2);
 _493 = _492.value;
 _494 = (frost$core$Int64) {0u};
 _495 = _494.value;
-_496 = ((frost$unsafe$NewPointer*)_493)[_495];
+_496 = ((frost$unsafe$Pointer*)_493)[_495];
 _497 = _491.value;
-((frost$unsafe$NewPointer*)_490)[_497] = _496;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:67
+((frost$unsafe$Pointer*)_490)[_497] = _496;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:66
 _500 = *(&local2);
 _501 = _500.value;
 _502 = (frost$core$Int64) {28u};
@@ -4785,10 +4786,10 @@ _503 = *(&local2);
 _504 = _503.value;
 _505 = (frost$core$Int64) {0u};
 _506 = _505.value;
-_507 = ((frost$unsafe$NewPointer*)_504)[_506];
+_507 = ((frost$unsafe$Pointer*)_504)[_506];
 _508 = _502.value;
-((frost$unsafe$NewPointer*)_501)[_508] = _507;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:68
+((frost$unsafe$Pointer*)_501)[_508] = _507;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:67
 _511 = *(&local2);
 _512 = _511.value;
 _513 = (frost$core$Int64) {29u};
@@ -4796,10 +4797,10 @@ _514 = *(&local2);
 _515 = _514.value;
 _516 = (frost$core$Int64) {0u};
 _517 = _516.value;
-_518 = ((frost$unsafe$NewPointer*)_515)[_517];
+_518 = ((frost$unsafe$Pointer*)_515)[_517];
 _519 = _513.value;
-((frost$unsafe$NewPointer*)_512)[_519] = _518;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:69
+((frost$unsafe$Pointer*)_512)[_519] = _518;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:68
 _522 = *(&local2);
 _523 = _522.value;
 _524 = (frost$core$Int64) {30u};
@@ -4807,10 +4808,10 @@ _525 = *(&local2);
 _526 = _525.value;
 _527 = (frost$core$Int64) {0u};
 _528 = _527.value;
-_529 = ((frost$unsafe$NewPointer*)_526)[_528];
+_529 = ((frost$unsafe$Pointer*)_526)[_528];
 _530 = _524.value;
-((frost$unsafe$NewPointer*)_523)[_530] = _529;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:70
+((frost$unsafe$Pointer*)_523)[_530] = _529;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:69
 _533 = *(&local2);
 _534 = _533.value;
 _535 = (frost$core$Int64) {31u};
@@ -4818,10 +4819,10 @@ _536 = *(&local2);
 _537 = _536.value;
 _538 = (frost$core$Int64) {0u};
 _539 = _538.value;
-_540 = ((frost$unsafe$NewPointer*)_537)[_539];
+_540 = ((frost$unsafe$Pointer*)_537)[_539];
 _541 = _535.value;
-((frost$unsafe$NewPointer*)_534)[_541] = _540;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:71
+((frost$unsafe$Pointer*)_534)[_541] = _540;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:70
 _544 = *(&local2);
 _545 = _544.value;
 _546 = (frost$core$Int64) {32u};
@@ -4829,10 +4830,10 @@ _547 = *(&local2);
 _548 = _547.value;
 _549 = (frost$core$Int64) {9u};
 _550 = _549.value;
-_551 = ((frost$unsafe$NewPointer*)_548)[_550];
+_551 = ((frost$unsafe$Pointer*)_548)[_550];
 _552 = _546.value;
-((frost$unsafe$NewPointer*)_545)[_552] = _551;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:72
+((frost$unsafe$Pointer*)_545)[_552] = _551;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:71
 _555 = *(&local2);
 _556 = _555.value;
 _557 = (frost$core$Int64) {33u};
@@ -4840,25 +4841,25 @@ _558 = *(&local2);
 _559 = _558.value;
 _560 = (frost$core$Int64) {0u};
 _561 = _560.value;
-_562 = ((frost$unsafe$NewPointer*)_559)[_561];
+_562 = ((frost$unsafe$Pointer*)_559)[_561];
 _563 = _557.value;
-((frost$unsafe$NewPointer*)_556)[_563] = _562;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:73
+((frost$unsafe$Pointer*)_556)[_563] = _562;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:72
 _566 = *(&local2);
 _567 = _566.value;
 _568 = (frost$core$Int64) {34u};
 _569 = (frost$core$Int) {31u};
 _570 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:73:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:72:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _575 = _569.value;
 _576 = _575 * 8u;
 _577 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_576);
-_578 = frost$unsafe$NewPointer$init$builtin_int(_577);
+_578 = frost$unsafe$Pointer$init$builtin_int(_577);
 *(&local7) = _578;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _582 = (frost$core$Int) {0u};
 _583 = (frost$core$Bit) {false};
 _584 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_582, _569, _583);
@@ -4884,7 +4885,7 @@ _601 = (frost$core$Bit) {_600};
 _602 = _601.value;
 if (_602) goto block25; else goto block26;
 block25:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _605 = *(&local7);
 _606 = _605.value;
 _607 = *(&local8);
@@ -4919,44 +4920,44 @@ _633 = (frost$core$Int) {_632};
 *(&local8) = _633;
 goto block25;
 block26:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _637 = *(&local7);
 _639 = _568.value;
-((frost$unsafe$NewPointer*)_567)[_639] = _637;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:74
+((frost$unsafe$Pointer*)_567)[_639] = _637;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:73
 _642 = *(&local2);
 _643 = _642.value;
 _644 = (frost$core$Int64) {34u};
 _645 = _644.value;
-_646 = ((frost$unsafe$NewPointer*)_643)[_645];
+_646 = ((frost$unsafe$Pointer*)_643)[_645];
 _647 = _646.value;
 _648 = (frost$core$Int64) {1u};
 _649 = (frost$core$Int) {3u};
 _650 = _648.value;
 ((frost$core$Int*)_647)[_650] = _649;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:74
 _653 = *(&local2);
 _654 = _653.value;
 _655 = (frost$core$Int64) {34u};
 _656 = _655.value;
-_657 = ((frost$unsafe$NewPointer*)_654)[_656];
+_657 = ((frost$unsafe$Pointer*)_654)[_656];
 _658 = _657.value;
 _659 = (frost$core$Int64) {3u};
 _660 = (frost$core$Int) {4u};
 _661 = _659.value;
 ((frost$core$Int*)_658)[_661] = _660;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:76
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:75
 _664 = *(&local2);
 _665 = _664.value;
 _666 = (frost$core$Int64) {34u};
 _667 = _666.value;
-_668 = ((frost$unsafe$NewPointer*)_665)[_667];
+_668 = ((frost$unsafe$Pointer*)_665)[_667];
 _669 = _668.value;
 _670 = (frost$core$Int64) {5u};
 _671 = (frost$core$Int) {3u};
 _672 = _670.value;
 ((frost$core$Int*)_669)[_672] = _671;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:77
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:76
 _675 = *(&local2);
 _676 = _675.value;
 _677 = (frost$core$Int64) {35u};
@@ -4964,10 +4965,10 @@ _678 = *(&local2);
 _679 = _678.value;
 _680 = (frost$core$Int64) {0u};
 _681 = _680.value;
-_682 = ((frost$unsafe$NewPointer*)_679)[_681];
+_682 = ((frost$unsafe$Pointer*)_679)[_681];
 _683 = _677.value;
-((frost$unsafe$NewPointer*)_676)[_683] = _682;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:78
+((frost$unsafe$Pointer*)_676)[_683] = _682;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:77
 _686 = *(&local2);
 _687 = _686.value;
 _688 = (frost$core$Int64) {36u};
@@ -4975,10 +4976,10 @@ _689 = *(&local2);
 _690 = _689.value;
 _691 = (frost$core$Int64) {0u};
 _692 = _691.value;
-_693 = ((frost$unsafe$NewPointer*)_690)[_692];
+_693 = ((frost$unsafe$Pointer*)_690)[_692];
 _694 = _688.value;
-((frost$unsafe$NewPointer*)_687)[_694] = _693;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:79
+((frost$unsafe$Pointer*)_687)[_694] = _693;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:78
 _697 = *(&local2);
 _698 = _697.value;
 _699 = (frost$core$Int64) {37u};
@@ -4986,10 +4987,10 @@ _700 = *(&local2);
 _701 = _700.value;
 _702 = (frost$core$Int64) {0u};
 _703 = _702.value;
-_704 = ((frost$unsafe$NewPointer*)_701)[_703];
+_704 = ((frost$unsafe$Pointer*)_701)[_703];
 _705 = _699.value;
-((frost$unsafe$NewPointer*)_698)[_705] = _704;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:80
+((frost$unsafe$Pointer*)_698)[_705] = _704;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:79
 _708 = *(&local2);
 _709 = _708.value;
 _710 = (frost$core$Int64) {38u};
@@ -4997,10 +4998,10 @@ _711 = *(&local2);
 _712 = _711.value;
 _713 = (frost$core$Int64) {0u};
 _714 = _713.value;
-_715 = ((frost$unsafe$NewPointer*)_712)[_714];
+_715 = ((frost$unsafe$Pointer*)_712)[_714];
 _716 = _710.value;
-((frost$unsafe$NewPointer*)_709)[_716] = _715;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:81
+((frost$unsafe$Pointer*)_709)[_716] = _715;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:80
 _719 = *(&local2);
 _720 = _719.value;
 _721 = (frost$core$Int64) {39u};
@@ -5008,10 +5009,10 @@ _722 = *(&local2);
 _723 = _722.value;
 _724 = (frost$core$Int64) {0u};
 _725 = _724.value;
-_726 = ((frost$unsafe$NewPointer*)_723)[_725];
+_726 = ((frost$unsafe$Pointer*)_723)[_725];
 _727 = _721.value;
-((frost$unsafe$NewPointer*)_720)[_727] = _726;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:82
+((frost$unsafe$Pointer*)_720)[_727] = _726;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:81
 _730 = *(&local2);
 _731 = _730.value;
 _732 = (frost$core$Int64) {40u};
@@ -5019,10 +5020,10 @@ _733 = *(&local2);
 _734 = _733.value;
 _735 = (frost$core$Int64) {0u};
 _736 = _735.value;
-_737 = ((frost$unsafe$NewPointer*)_734)[_736];
+_737 = ((frost$unsafe$Pointer*)_734)[_736];
 _738 = _732.value;
-((frost$unsafe$NewPointer*)_731)[_738] = _737;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:83
+((frost$unsafe$Pointer*)_731)[_738] = _737;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:82
 _741 = *(&local2);
 _742 = _741.value;
 _743 = (frost$core$Int64) {41u};
@@ -5030,10 +5031,10 @@ _744 = *(&local2);
 _745 = _744.value;
 _746 = (frost$core$Int64) {0u};
 _747 = _746.value;
-_748 = ((frost$unsafe$NewPointer*)_745)[_747];
+_748 = ((frost$unsafe$Pointer*)_745)[_747];
 _749 = _743.value;
-((frost$unsafe$NewPointer*)_742)[_749] = _748;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:84
+((frost$unsafe$Pointer*)_742)[_749] = _748;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:83
 _752 = *(&local2);
 _753 = _752.value;
 _754 = (frost$core$Int64) {42u};
@@ -5041,25 +5042,25 @@ _755 = *(&local2);
 _756 = _755.value;
 _757 = (frost$core$Int64) {0u};
 _758 = _757.value;
-_759 = ((frost$unsafe$NewPointer*)_756)[_758];
+_759 = ((frost$unsafe$Pointer*)_756)[_758];
 _760 = _754.value;
-((frost$unsafe$NewPointer*)_753)[_760] = _759;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:85
+((frost$unsafe$Pointer*)_753)[_760] = _759;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:84
 _763 = *(&local2);
 _764 = _763.value;
 _765 = (frost$core$Int64) {43u};
 _766 = (frost$core$Int) {31u};
 _767 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:85:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:84:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _772 = _766.value;
 _773 = _772 * 8u;
 _774 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_773);
-_775 = frost$unsafe$NewPointer$init$builtin_int(_774);
+_775 = frost$unsafe$Pointer$init$builtin_int(_774);
 *(&local9) = _775;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _779 = (frost$core$Int) {0u};
 _780 = (frost$core$Bit) {false};
 _781 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_779, _766, _780);
@@ -5085,7 +5086,7 @@ _798 = (frost$core$Bit) {_797};
 _799 = _798.value;
 if (_799) goto block35; else goto block36;
 block35:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _802 = *(&local9);
 _803 = _802.value;
 _804 = *(&local10);
@@ -5120,48 +5121,48 @@ _830 = (frost$core$Int) {_829};
 *(&local10) = _830;
 goto block35;
 block36:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _834 = *(&local9);
 _836 = _765.value;
-((frost$unsafe$NewPointer*)_764)[_836] = _834;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:86
+((frost$unsafe$Pointer*)_764)[_836] = _834;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:85
 _839 = *(&local2);
 _840 = _839.value;
 _841 = (frost$core$Int64) {43u};
 _842 = _841.value;
-_843 = ((frost$unsafe$NewPointer*)_840)[_842];
+_843 = ((frost$unsafe$Pointer*)_840)[_842];
 _844 = _843.value;
 _845 = (frost$core$Int64) {3u};
 _846 = (frost$core$Int) {3u};
 _847 = _845.value;
 ((frost$core$Int*)_844)[_847] = _846;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:87
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:86
 _850 = *(&local2);
 _851 = _850.value;
 _852 = (frost$core$Int64) {43u};
 _853 = _852.value;
-_854 = ((frost$unsafe$NewPointer*)_851)[_853];
+_854 = ((frost$unsafe$Pointer*)_851)[_853];
 _855 = _854.value;
 _856 = (frost$core$Int64) {10u};
 _857 = (frost$core$Int) {11u};
 _858 = _856.value;
 ((frost$core$Int*)_855)[_858] = _857;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:88
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:87
 _861 = *(&local2);
 _862 = _861.value;
 _863 = (frost$core$Int64) {44u};
 _864 = (frost$core$Int) {31u};
 _865 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:88:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:87:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _870 = _864.value;
 _871 = _870 * 8u;
 _872 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_871);
-_873 = frost$unsafe$NewPointer$init$builtin_int(_872);
+_873 = frost$unsafe$Pointer$init$builtin_int(_872);
 *(&local11) = _873;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _877 = (frost$core$Int) {0u};
 _878 = (frost$core$Bit) {false};
 _879 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_877, _864, _878);
@@ -5187,7 +5188,7 @@ _896 = (frost$core$Bit) {_895};
 _897 = _896.value;
 if (_897) goto block45; else goto block46;
 block45:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _900 = *(&local11);
 _901 = _900.value;
 _902 = *(&local12);
@@ -5222,48 +5223,48 @@ _928 = (frost$core$Int) {_927};
 *(&local12) = _928;
 goto block45;
 block46:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _932 = *(&local11);
 _934 = _863.value;
-((frost$unsafe$NewPointer*)_862)[_934] = _932;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:89
+((frost$unsafe$Pointer*)_862)[_934] = _932;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:88
 _937 = *(&local2);
 _938 = _937.value;
 _939 = (frost$core$Int64) {44u};
 _940 = _939.value;
-_941 = ((frost$unsafe$NewPointer*)_938)[_940];
+_941 = ((frost$unsafe$Pointer*)_938)[_940];
 _942 = _941.value;
 _943 = (frost$core$Int64) {1u};
 _944 = (frost$core$Int) {6u};
 _945 = _943.value;
 ((frost$core$Int*)_942)[_945] = _944;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:90
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:89
 _948 = *(&local2);
 _949 = _948.value;
 _950 = (frost$core$Int64) {44u};
 _951 = _950.value;
-_952 = ((frost$unsafe$NewPointer*)_949)[_951];
+_952 = ((frost$unsafe$Pointer*)_949)[_951];
 _953 = _952.value;
 _954 = (frost$core$Int64) {3u};
 _955 = (frost$core$Int) {3u};
 _956 = _954.value;
 ((frost$core$Int*)_953)[_956] = _955;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:91
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:90
 _959 = *(&local2);
 _960 = _959.value;
 _961 = (frost$core$Int64) {45u};
 _962 = (frost$core$Int) {31u};
 _963 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:91:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:90:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _968 = _962.value;
 _969 = _968 * 8u;
 _970 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_969);
-_971 = frost$unsafe$NewPointer$init$builtin_int(_970);
+_971 = frost$unsafe$Pointer$init$builtin_int(_970);
 *(&local13) = _971;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _975 = (frost$core$Int) {0u};
 _976 = (frost$core$Bit) {false};
 _977 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_975, _962, _976);
@@ -5289,7 +5290,7 @@ _994 = (frost$core$Bit) {_993};
 _995 = _994.value;
 if (_995) goto block55; else goto block56;
 block55:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _998 = *(&local13);
 _999 = _998.value;
 _1000 = *(&local14);
@@ -5324,59 +5325,59 @@ _1026 = (frost$core$Int) {_1025};
 *(&local14) = _1026;
 goto block55;
 block56:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _1030 = *(&local13);
 _1032 = _961.value;
-((frost$unsafe$NewPointer*)_960)[_1032] = _1030;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:92
+((frost$unsafe$Pointer*)_960)[_1032] = _1030;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:91
 _1035 = *(&local2);
 _1036 = _1035.value;
 _1037 = (frost$core$Int64) {45u};
 _1038 = _1037.value;
-_1039 = ((frost$unsafe$NewPointer*)_1036)[_1038];
+_1039 = ((frost$unsafe$Pointer*)_1036)[_1038];
 _1040 = _1039.value;
 _1041 = (frost$core$Int64) {1u};
 _1042 = (frost$core$Int) {7u};
 _1043 = _1041.value;
 ((frost$core$Int*)_1040)[_1043] = _1042;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:93
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:92
 _1046 = *(&local2);
 _1047 = _1046.value;
 _1048 = (frost$core$Int64) {45u};
 _1049 = _1048.value;
-_1050 = ((frost$unsafe$NewPointer*)_1047)[_1049];
+_1050 = ((frost$unsafe$Pointer*)_1047)[_1049];
 _1051 = _1050.value;
 _1052 = (frost$core$Int64) {3u};
 _1053 = (frost$core$Int) {3u};
 _1054 = _1052.value;
 ((frost$core$Int*)_1051)[_1054] = _1053;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:94
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:93
 _1057 = *(&local2);
 _1058 = _1057.value;
 _1059 = (frost$core$Int64) {45u};
 _1060 = _1059.value;
-_1061 = ((frost$unsafe$NewPointer*)_1058)[_1060];
+_1061 = ((frost$unsafe$Pointer*)_1058)[_1060];
 _1062 = _1061.value;
 _1063 = (frost$core$Int64) {10u};
 _1064 = (frost$core$Int) {11u};
 _1065 = _1063.value;
 ((frost$core$Int*)_1062)[_1065] = _1064;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:95
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:94
 _1068 = *(&local2);
 _1069 = _1068.value;
 _1070 = (frost$core$Int64) {46u};
 _1071 = (frost$core$Int) {31u};
 _1072 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:95:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:94:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _1077 = _1071.value;
 _1078 = _1077 * 8u;
 _1079 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_1078);
-_1080 = frost$unsafe$NewPointer$init$builtin_int(_1079);
+_1080 = frost$unsafe$Pointer$init$builtin_int(_1079);
 *(&local15) = _1080;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1084 = (frost$core$Int) {0u};
 _1085 = (frost$core$Bit) {false};
 _1086 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_1084, _1071, _1085);
@@ -5402,7 +5403,7 @@ _1103 = (frost$core$Bit) {_1102};
 _1104 = _1103.value;
 if (_1104) goto block65; else goto block66;
 block65:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1107 = *(&local15);
 _1108 = _1107.value;
 _1109 = *(&local16);
@@ -5437,44 +5438,44 @@ _1135 = (frost$core$Int) {_1134};
 *(&local16) = _1135;
 goto block65;
 block66:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _1139 = *(&local15);
 _1141 = _1070.value;
-((frost$unsafe$NewPointer*)_1069)[_1141] = _1139;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:96
+((frost$unsafe$Pointer*)_1069)[_1141] = _1139;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:95
 _1144 = *(&local2);
 _1145 = _1144.value;
 _1146 = (frost$core$Int64) {46u};
 _1147 = _1146.value;
-_1148 = ((frost$unsafe$NewPointer*)_1145)[_1147];
+_1148 = ((frost$unsafe$Pointer*)_1145)[_1147];
 _1149 = _1148.value;
 _1150 = (frost$core$Int64) {1u};
 _1151 = (frost$core$Int) {9u};
 _1152 = _1150.value;
 ((frost$core$Int*)_1149)[_1152] = _1151;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:97
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:96
 _1155 = *(&local2);
 _1156 = _1155.value;
 _1157 = (frost$core$Int64) {46u};
 _1158 = _1157.value;
-_1159 = ((frost$unsafe$NewPointer*)_1156)[_1158];
+_1159 = ((frost$unsafe$Pointer*)_1156)[_1158];
 _1160 = _1159.value;
 _1161 = (frost$core$Int64) {3u};
 _1162 = (frost$core$Int) {3u};
 _1163 = _1161.value;
 ((frost$core$Int*)_1160)[_1163] = _1162;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:98
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:97
 _1166 = *(&local2);
 _1167 = _1166.value;
 _1168 = (frost$core$Int64) {46u};
 _1169 = _1168.value;
-_1170 = ((frost$unsafe$NewPointer*)_1167)[_1169];
+_1170 = ((frost$unsafe$Pointer*)_1167)[_1169];
 _1171 = _1170.value;
 _1172 = (frost$core$Int64) {8u};
 _1173 = (frost$core$Int) {9u};
 _1174 = _1172.value;
 ((frost$core$Int*)_1171)[_1174] = _1173;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:99
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:98
 _1177 = *(&local2);
 _1178 = _1177.value;
 _1179 = (frost$core$Int64) {47u};
@@ -5482,25 +5483,25 @@ _1180 = *(&local2);
 _1181 = _1180.value;
 _1182 = (frost$core$Int64) {0u};
 _1183 = _1182.value;
-_1184 = ((frost$unsafe$NewPointer*)_1181)[_1183];
+_1184 = ((frost$unsafe$Pointer*)_1181)[_1183];
 _1185 = _1179.value;
-((frost$unsafe$NewPointer*)_1178)[_1185] = _1184;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:100
+((frost$unsafe$Pointer*)_1178)[_1185] = _1184;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:99
 _1188 = *(&local2);
 _1189 = _1188.value;
 _1190 = (frost$core$Int64) {48u};
 _1191 = (frost$core$Int) {31u};
 _1192 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:100:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:99:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _1197 = _1191.value;
 _1198 = _1197 * 8u;
 _1199 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_1198);
-_1200 = frost$unsafe$NewPointer$init$builtin_int(_1199);
+_1200 = frost$unsafe$Pointer$init$builtin_int(_1199);
 *(&local17) = _1200;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1204 = (frost$core$Int) {0u};
 _1205 = (frost$core$Bit) {false};
 _1206 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_1204, _1191, _1205);
@@ -5526,7 +5527,7 @@ _1223 = (frost$core$Bit) {_1222};
 _1224 = _1223.value;
 if (_1224) goto block75; else goto block76;
 block75:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1227 = *(&local17);
 _1228 = _1227.value;
 _1229 = *(&local18);
@@ -5561,99 +5562,99 @@ _1255 = (frost$core$Int) {_1254};
 *(&local18) = _1255;
 goto block75;
 block76:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _1259 = *(&local17);
 _1261 = _1190.value;
-((frost$unsafe$NewPointer*)_1189)[_1261] = _1259;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:101
+((frost$unsafe$Pointer*)_1189)[_1261] = _1259;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:100
 _1264 = *(&local2);
 _1265 = _1264.value;
 _1266 = (frost$core$Int64) {48u};
 _1267 = _1266.value;
-_1268 = ((frost$unsafe$NewPointer*)_1265)[_1267];
+_1268 = ((frost$unsafe$Pointer*)_1265)[_1267];
 _1269 = _1268.value;
 _1270 = (frost$core$Int64) {1u};
 _1271 = (frost$core$Int) {8u};
 _1272 = _1270.value;
 ((frost$core$Int*)_1269)[_1272] = _1271;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:102
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:101
 _1275 = *(&local2);
 _1276 = _1275.value;
 _1277 = (frost$core$Int64) {48u};
 _1278 = _1277.value;
-_1279 = ((frost$unsafe$NewPointer*)_1276)[_1278];
+_1279 = ((frost$unsafe$Pointer*)_1276)[_1278];
 _1280 = _1279.value;
 _1281 = (frost$core$Int64) {3u};
 _1282 = (frost$core$Int) {3u};
 _1283 = _1281.value;
 ((frost$core$Int*)_1280)[_1283] = _1282;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:103
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:102
 _1286 = *(&local2);
 _1287 = _1286.value;
 _1288 = (frost$core$Int64) {48u};
 _1289 = _1288.value;
-_1290 = ((frost$unsafe$NewPointer*)_1287)[_1289];
+_1290 = ((frost$unsafe$Pointer*)_1287)[_1289];
 _1291 = _1290.value;
 _1292 = (frost$core$Int64) {7u};
 _1293 = (frost$core$Int) {8u};
 _1294 = _1292.value;
 ((frost$core$Int*)_1291)[_1294] = _1293;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:104
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:103
 _1297 = *(&local2);
 _1298 = _1297.value;
 _1299 = (frost$core$Int64) {48u};
 _1300 = _1299.value;
-_1301 = ((frost$unsafe$NewPointer*)_1298)[_1300];
+_1301 = ((frost$unsafe$Pointer*)_1298)[_1300];
 _1302 = _1301.value;
 _1303 = (frost$core$Int64) {8u};
 _1304 = (frost$core$Int) {8u};
 _1305 = _1303.value;
 ((frost$core$Int*)_1302)[_1305] = _1304;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:105
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:104
 _1308 = *(&local2);
 _1309 = _1308.value;
 _1310 = (frost$core$Int64) {48u};
 _1311 = _1310.value;
-_1312 = ((frost$unsafe$NewPointer*)_1309)[_1311];
+_1312 = ((frost$unsafe$Pointer*)_1309)[_1311];
 _1313 = _1312.value;
 _1314 = (frost$core$Int64) {9u};
 _1315 = (frost$core$Int) {9u};
 _1316 = _1314.value;
 ((frost$core$Int*)_1313)[_1316] = _1315;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:106
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:105
 _1319 = *(&local2);
 _1320 = _1319.value;
 _1321 = (frost$core$Int64) {48u};
 _1322 = _1321.value;
-_1323 = ((frost$unsafe$NewPointer*)_1320)[_1322];
+_1323 = ((frost$unsafe$Pointer*)_1320)[_1322];
 _1324 = _1323.value;
 _1325 = (frost$core$Int64) {10u};
 _1326 = (frost$core$Int) {12u};
 _1327 = _1325.value;
 ((frost$core$Int*)_1324)[_1327] = _1326;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:107
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:106
 _1330 = *(&local2);
 _1331 = _1330.value;
 _1332 = (frost$core$Int64) {48u};
 _1333 = _1332.value;
-_1334 = ((frost$unsafe$NewPointer*)_1331)[_1333];
+_1334 = ((frost$unsafe$Pointer*)_1331)[_1333];
 _1335 = _1334.value;
 _1336 = (frost$core$Int64) {11u};
 _1337 = (frost$core$Int) {12u};
 _1338 = _1336.value;
 ((frost$core$Int*)_1335)[_1338] = _1337;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:108
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:107
 _1341 = *(&local2);
 _1342 = _1341.value;
 _1343 = (frost$core$Int64) {48u};
 _1344 = _1343.value;
-_1345 = ((frost$unsafe$NewPointer*)_1342)[_1344];
+_1345 = ((frost$unsafe$Pointer*)_1342)[_1344];
 _1346 = _1345.value;
 _1347 = (frost$core$Int64) {12u};
 _1348 = (frost$core$Int) {12u};
 _1349 = _1347.value;
 ((frost$core$Int*)_1346)[_1349] = _1348;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:109
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:108
 _1352 = *(&local2);
 _1353 = _1352.value;
 _1354 = (frost$core$Int64) {49u};
@@ -5661,10 +5662,10 @@ _1355 = *(&local2);
 _1356 = _1355.value;
 _1357 = (frost$core$Int64) {48u};
 _1358 = _1357.value;
-_1359 = ((frost$unsafe$NewPointer*)_1356)[_1358];
+_1359 = ((frost$unsafe$Pointer*)_1356)[_1358];
 _1360 = _1354.value;
-((frost$unsafe$NewPointer*)_1353)[_1360] = _1359;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:110
+((frost$unsafe$Pointer*)_1353)[_1360] = _1359;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:109
 _1363 = *(&local2);
 _1364 = _1363.value;
 _1365 = (frost$core$Int64) {50u};
@@ -5672,10 +5673,10 @@ _1366 = *(&local2);
 _1367 = _1366.value;
 _1368 = (frost$core$Int64) {48u};
 _1369 = _1368.value;
-_1370 = ((frost$unsafe$NewPointer*)_1367)[_1369];
+_1370 = ((frost$unsafe$Pointer*)_1367)[_1369];
 _1371 = _1365.value;
-((frost$unsafe$NewPointer*)_1364)[_1371] = _1370;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:111
+((frost$unsafe$Pointer*)_1364)[_1371] = _1370;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:110
 _1374 = *(&local2);
 _1375 = _1374.value;
 _1376 = (frost$core$Int64) {51u};
@@ -5683,10 +5684,10 @@ _1377 = *(&local2);
 _1378 = _1377.value;
 _1379 = (frost$core$Int64) {48u};
 _1380 = _1379.value;
-_1381 = ((frost$unsafe$NewPointer*)_1378)[_1380];
+_1381 = ((frost$unsafe$Pointer*)_1378)[_1380];
 _1382 = _1376.value;
-((frost$unsafe$NewPointer*)_1375)[_1382] = _1381;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:112
+((frost$unsafe$Pointer*)_1375)[_1382] = _1381;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:111
 _1385 = *(&local2);
 _1386 = _1385.value;
 _1387 = (frost$core$Int64) {52u};
@@ -5694,10 +5695,10 @@ _1388 = *(&local2);
 _1389 = _1388.value;
 _1390 = (frost$core$Int64) {48u};
 _1391 = _1390.value;
-_1392 = ((frost$unsafe$NewPointer*)_1389)[_1391];
+_1392 = ((frost$unsafe$Pointer*)_1389)[_1391];
 _1393 = _1387.value;
-((frost$unsafe$NewPointer*)_1386)[_1393] = _1392;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:113
+((frost$unsafe$Pointer*)_1386)[_1393] = _1392;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:112
 _1396 = *(&local2);
 _1397 = _1396.value;
 _1398 = (frost$core$Int64) {53u};
@@ -5705,10 +5706,10 @@ _1399 = *(&local2);
 _1400 = _1399.value;
 _1401 = (frost$core$Int64) {48u};
 _1402 = _1401.value;
-_1403 = ((frost$unsafe$NewPointer*)_1400)[_1402];
+_1403 = ((frost$unsafe$Pointer*)_1400)[_1402];
 _1404 = _1398.value;
-((frost$unsafe$NewPointer*)_1397)[_1404] = _1403;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:114
+((frost$unsafe$Pointer*)_1397)[_1404] = _1403;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:113
 _1407 = *(&local2);
 _1408 = _1407.value;
 _1409 = (frost$core$Int64) {54u};
@@ -5716,10 +5717,10 @@ _1410 = *(&local2);
 _1411 = _1410.value;
 _1412 = (frost$core$Int64) {48u};
 _1413 = _1412.value;
-_1414 = ((frost$unsafe$NewPointer*)_1411)[_1413];
+_1414 = ((frost$unsafe$Pointer*)_1411)[_1413];
 _1415 = _1409.value;
-((frost$unsafe$NewPointer*)_1408)[_1415] = _1414;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:115
+((frost$unsafe$Pointer*)_1408)[_1415] = _1414;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:114
 _1418 = *(&local2);
 _1419 = _1418.value;
 _1420 = (frost$core$Int64) {55u};
@@ -5727,10 +5728,10 @@ _1421 = *(&local2);
 _1422 = _1421.value;
 _1423 = (frost$core$Int64) {48u};
 _1424 = _1423.value;
-_1425 = ((frost$unsafe$NewPointer*)_1422)[_1424];
+_1425 = ((frost$unsafe$Pointer*)_1422)[_1424];
 _1426 = _1420.value;
-((frost$unsafe$NewPointer*)_1419)[_1426] = _1425;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:116
+((frost$unsafe$Pointer*)_1419)[_1426] = _1425;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:115
 _1429 = *(&local2);
 _1430 = _1429.value;
 _1431 = (frost$core$Int64) {56u};
@@ -5738,10 +5739,10 @@ _1432 = *(&local2);
 _1433 = _1432.value;
 _1434 = (frost$core$Int64) {48u};
 _1435 = _1434.value;
-_1436 = ((frost$unsafe$NewPointer*)_1433)[_1435];
+_1436 = ((frost$unsafe$Pointer*)_1433)[_1435];
 _1437 = _1431.value;
-((frost$unsafe$NewPointer*)_1430)[_1437] = _1436;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:117
+((frost$unsafe$Pointer*)_1430)[_1437] = _1436;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:116
 _1440 = *(&local2);
 _1441 = _1440.value;
 _1442 = (frost$core$Int64) {57u};
@@ -5749,25 +5750,25 @@ _1443 = *(&local2);
 _1444 = _1443.value;
 _1445 = (frost$core$Int64) {48u};
 _1446 = _1445.value;
-_1447 = ((frost$unsafe$NewPointer*)_1444)[_1446];
+_1447 = ((frost$unsafe$Pointer*)_1444)[_1446];
 _1448 = _1442.value;
-((frost$unsafe$NewPointer*)_1441)[_1448] = _1447;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:118
+((frost$unsafe$Pointer*)_1441)[_1448] = _1447;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:117
 _1451 = *(&local2);
 _1452 = _1451.value;
 _1453 = (frost$core$Int64) {58u};
 _1454 = (frost$core$Int) {31u};
 _1455 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:118:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:117:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _1460 = _1454.value;
 _1461 = _1460 * 8u;
 _1462 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_1461);
-_1463 = frost$unsafe$NewPointer$init$builtin_int(_1462);
+_1463 = frost$unsafe$Pointer$init$builtin_int(_1462);
 *(&local19) = _1463;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1467 = (frost$core$Int) {0u};
 _1468 = (frost$core$Bit) {false};
 _1469 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_1467, _1454, _1468);
@@ -5793,7 +5794,7 @@ _1486 = (frost$core$Bit) {_1485};
 _1487 = _1486.value;
 if (_1487) goto block85; else goto block86;
 block85:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1490 = *(&local19);
 _1491 = _1490.value;
 _1492 = *(&local20);
@@ -5828,33 +5829,33 @@ _1518 = (frost$core$Int) {_1517};
 *(&local20) = _1518;
 goto block85;
 block86:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _1522 = *(&local19);
 _1524 = _1453.value;
-((frost$unsafe$NewPointer*)_1452)[_1524] = _1522;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:119
+((frost$unsafe$Pointer*)_1452)[_1524] = _1522;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:118
 _1527 = *(&local2);
 _1528 = _1527.value;
 _1529 = (frost$core$Int64) {58u};
 _1530 = _1529.value;
-_1531 = ((frost$unsafe$NewPointer*)_1528)[_1530];
+_1531 = ((frost$unsafe$Pointer*)_1528)[_1530];
 _1532 = _1531.value;
 _1533 = (frost$core$Int64) {1u};
 _1534 = (frost$core$Int) {13u};
 _1535 = _1533.value;
 ((frost$core$Int*)_1532)[_1535] = _1534;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:120
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:119
 _1538 = *(&local2);
 _1539 = _1538.value;
 _1540 = (frost$core$Int64) {58u};
 _1541 = _1540.value;
-_1542 = ((frost$unsafe$NewPointer*)_1539)[_1541];
+_1542 = ((frost$unsafe$Pointer*)_1539)[_1541];
 _1543 = _1542.value;
 _1544 = (frost$core$Int64) {3u};
 _1545 = (frost$core$Int) {3u};
 _1546 = _1544.value;
 ((frost$core$Int*)_1543)[_1546] = _1545;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:121
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:120
 _1549 = *(&local2);
 _1550 = _1549.value;
 _1551 = (frost$core$Int64) {59u};
@@ -5862,10 +5863,10 @@ _1552 = *(&local2);
 _1553 = _1552.value;
 _1554 = (frost$core$Int64) {0u};
 _1555 = _1554.value;
-_1556 = ((frost$unsafe$NewPointer*)_1553)[_1555];
+_1556 = ((frost$unsafe$Pointer*)_1553)[_1555];
 _1557 = _1551.value;
-((frost$unsafe$NewPointer*)_1550)[_1557] = _1556;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:122
+((frost$unsafe$Pointer*)_1550)[_1557] = _1556;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:121
 _1560 = *(&local2);
 _1561 = _1560.value;
 _1562 = (frost$core$Int64) {60u};
@@ -5873,10 +5874,10 @@ _1563 = *(&local2);
 _1564 = _1563.value;
 _1565 = (frost$core$Int64) {0u};
 _1566 = _1565.value;
-_1567 = ((frost$unsafe$NewPointer*)_1564)[_1566];
+_1567 = ((frost$unsafe$Pointer*)_1564)[_1566];
 _1568 = _1562.value;
-((frost$unsafe$NewPointer*)_1561)[_1568] = _1567;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:123
+((frost$unsafe$Pointer*)_1561)[_1568] = _1567;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:122
 _1571 = *(&local2);
 _1572 = _1571.value;
 _1573 = (frost$core$Int64) {61u};
@@ -5884,10 +5885,10 @@ _1574 = *(&local2);
 _1575 = _1574.value;
 _1576 = (frost$core$Int64) {0u};
 _1577 = _1576.value;
-_1578 = ((frost$unsafe$NewPointer*)_1575)[_1577];
+_1578 = ((frost$unsafe$Pointer*)_1575)[_1577];
 _1579 = _1573.value;
-((frost$unsafe$NewPointer*)_1572)[_1579] = _1578;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:124
+((frost$unsafe$Pointer*)_1572)[_1579] = _1578;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:123
 _1582 = *(&local2);
 _1583 = _1582.value;
 _1584 = (frost$core$Int64) {62u};
@@ -5895,10 +5896,10 @@ _1585 = *(&local2);
 _1586 = _1585.value;
 _1587 = (frost$core$Int64) {0u};
 _1588 = _1587.value;
-_1589 = ((frost$unsafe$NewPointer*)_1586)[_1588];
+_1589 = ((frost$unsafe$Pointer*)_1586)[_1588];
 _1590 = _1584.value;
-((frost$unsafe$NewPointer*)_1583)[_1590] = _1589;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:125
+((frost$unsafe$Pointer*)_1583)[_1590] = _1589;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:124
 _1593 = *(&local2);
 _1594 = _1593.value;
 _1595 = (frost$core$Int64) {63u};
@@ -5906,10 +5907,10 @@ _1596 = *(&local2);
 _1597 = _1596.value;
 _1598 = (frost$core$Int64) {0u};
 _1599 = _1598.value;
-_1600 = ((frost$unsafe$NewPointer*)_1597)[_1599];
+_1600 = ((frost$unsafe$Pointer*)_1597)[_1599];
 _1601 = _1595.value;
-((frost$unsafe$NewPointer*)_1594)[_1601] = _1600;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:126
+((frost$unsafe$Pointer*)_1594)[_1601] = _1600;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:125
 _1604 = *(&local2);
 _1605 = _1604.value;
 _1606 = (frost$core$Int64) {64u};
@@ -5917,10 +5918,10 @@ _1607 = *(&local2);
 _1608 = _1607.value;
 _1609 = (frost$core$Int64) {0u};
 _1610 = _1609.value;
-_1611 = ((frost$unsafe$NewPointer*)_1608)[_1610];
+_1611 = ((frost$unsafe$Pointer*)_1608)[_1610];
 _1612 = _1606.value;
-((frost$unsafe$NewPointer*)_1605)[_1612] = _1611;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:127
+((frost$unsafe$Pointer*)_1605)[_1612] = _1611;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:126
 _1615 = *(&local2);
 _1616 = _1615.value;
 _1617 = (frost$core$Int64) {65u};
@@ -5928,10 +5929,10 @@ _1618 = *(&local2);
 _1619 = _1618.value;
 _1620 = (frost$core$Int64) {0u};
 _1621 = _1620.value;
-_1622 = ((frost$unsafe$NewPointer*)_1619)[_1621];
+_1622 = ((frost$unsafe$Pointer*)_1619)[_1621];
 _1623 = _1617.value;
-((frost$unsafe$NewPointer*)_1616)[_1623] = _1622;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:128
+((frost$unsafe$Pointer*)_1616)[_1623] = _1622;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:127
 _1626 = *(&local2);
 _1627 = _1626.value;
 _1628 = (frost$core$Int64) {66u};
@@ -5939,10 +5940,10 @@ _1629 = *(&local2);
 _1630 = _1629.value;
 _1631 = (frost$core$Int64) {0u};
 _1632 = _1631.value;
-_1633 = ((frost$unsafe$NewPointer*)_1630)[_1632];
+_1633 = ((frost$unsafe$Pointer*)_1630)[_1632];
 _1634 = _1628.value;
-((frost$unsafe$NewPointer*)_1627)[_1634] = _1633;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:129
+((frost$unsafe$Pointer*)_1627)[_1634] = _1633;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:128
 _1637 = *(&local2);
 _1638 = _1637.value;
 _1639 = (frost$core$Int64) {67u};
@@ -5950,10 +5951,10 @@ _1640 = *(&local2);
 _1641 = _1640.value;
 _1642 = (frost$core$Int64) {0u};
 _1643 = _1642.value;
-_1644 = ((frost$unsafe$NewPointer*)_1641)[_1643];
+_1644 = ((frost$unsafe$Pointer*)_1641)[_1643];
 _1645 = _1639.value;
-((frost$unsafe$NewPointer*)_1638)[_1645] = _1644;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:130
+((frost$unsafe$Pointer*)_1638)[_1645] = _1644;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:129
 _1648 = *(&local2);
 _1649 = _1648.value;
 _1650 = (frost$core$Int64) {68u};
@@ -5961,25 +5962,25 @@ _1651 = *(&local2);
 _1652 = _1651.value;
 _1653 = (frost$core$Int64) {0u};
 _1654 = _1653.value;
-_1655 = ((frost$unsafe$NewPointer*)_1652)[_1654];
+_1655 = ((frost$unsafe$Pointer*)_1652)[_1654];
 _1656 = _1650.value;
-((frost$unsafe$NewPointer*)_1649)[_1656] = _1655;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:131
+((frost$unsafe$Pointer*)_1649)[_1656] = _1655;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:130
 _1659 = *(&local2);
 _1660 = _1659.value;
 _1661 = (frost$core$Int64) {69u};
 _1662 = (frost$core$Int) {31u};
 _1663 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:131:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:130:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _1668 = _1662.value;
 _1669 = _1668 * 8u;
 _1670 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_1669);
-_1671 = frost$unsafe$NewPointer$init$builtin_int(_1670);
+_1671 = frost$unsafe$Pointer$init$builtin_int(_1670);
 *(&local21) = _1671;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1675 = (frost$core$Int) {0u};
 _1676 = (frost$core$Bit) {false};
 _1677 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_1675, _1662, _1676);
@@ -6005,7 +6006,7 @@ _1694 = (frost$core$Bit) {_1693};
 _1695 = _1694.value;
 if (_1695) goto block95; else goto block96;
 block95:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1698 = *(&local21);
 _1699 = _1698.value;
 _1700 = *(&local22);
@@ -6040,33 +6041,33 @@ _1726 = (frost$core$Int) {_1725};
 *(&local22) = _1726;
 goto block95;
 block96:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _1730 = *(&local21);
 _1732 = _1661.value;
-((frost$unsafe$NewPointer*)_1660)[_1732] = _1730;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:132
+((frost$unsafe$Pointer*)_1660)[_1732] = _1730;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:131
 _1735 = *(&local2);
 _1736 = _1735.value;
 _1737 = (frost$core$Int64) {69u};
 _1738 = _1737.value;
-_1739 = ((frost$unsafe$NewPointer*)_1736)[_1738];
+_1739 = ((frost$unsafe$Pointer*)_1736)[_1738];
 _1740 = _1739.value;
 _1741 = (frost$core$Int64) {3u};
 _1742 = (frost$core$Int) {3u};
 _1743 = _1741.value;
 ((frost$core$Int*)_1740)[_1743] = _1742;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:133
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:132
 _1746 = *(&local2);
 _1747 = _1746.value;
 _1748 = (frost$core$Int64) {69u};
 _1749 = _1748.value;
-_1750 = ((frost$unsafe$NewPointer*)_1747)[_1749];
+_1750 = ((frost$unsafe$Pointer*)_1747)[_1749];
 _1751 = _1750.value;
 _1752 = (frost$core$Int64) {9u};
 _1753 = (frost$core$Int) {10u};
 _1754 = _1752.value;
 ((frost$core$Int*)_1751)[_1754] = _1753;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:134
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:133
 _1757 = *(&local2);
 _1758 = _1757.value;
 _1759 = (frost$core$Int64) {70u};
@@ -6074,10 +6075,10 @@ _1760 = *(&local2);
 _1761 = _1760.value;
 _1762 = (frost$core$Int64) {0u};
 _1763 = _1762.value;
-_1764 = ((frost$unsafe$NewPointer*)_1761)[_1763];
+_1764 = ((frost$unsafe$Pointer*)_1761)[_1763];
 _1765 = _1759.value;
-((frost$unsafe$NewPointer*)_1758)[_1765] = _1764;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:135
+((frost$unsafe$Pointer*)_1758)[_1765] = _1764;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:134
 _1768 = *(&local2);
 _1769 = _1768.value;
 _1770 = (frost$core$Int64) {71u};
@@ -6085,10 +6086,10 @@ _1771 = *(&local2);
 _1772 = _1771.value;
 _1773 = (frost$core$Int64) {0u};
 _1774 = _1773.value;
-_1775 = ((frost$unsafe$NewPointer*)_1772)[_1774];
+_1775 = ((frost$unsafe$Pointer*)_1772)[_1774];
 _1776 = _1770.value;
-((frost$unsafe$NewPointer*)_1769)[_1776] = _1775;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:136
+((frost$unsafe$Pointer*)_1769)[_1776] = _1775;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:135
 _1779 = *(&local2);
 _1780 = _1779.value;
 _1781 = (frost$core$Int64) {72u};
@@ -6096,10 +6097,10 @@ _1782 = *(&local2);
 _1783 = _1782.value;
 _1784 = (frost$core$Int64) {0u};
 _1785 = _1784.value;
-_1786 = ((frost$unsafe$NewPointer*)_1783)[_1785];
+_1786 = ((frost$unsafe$Pointer*)_1783)[_1785];
 _1787 = _1781.value;
-((frost$unsafe$NewPointer*)_1780)[_1787] = _1786;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:137
+((frost$unsafe$Pointer*)_1780)[_1787] = _1786;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:136
 _1790 = *(&local2);
 _1791 = _1790.value;
 _1792 = (frost$core$Int64) {73u};
@@ -6107,10 +6108,10 @@ _1793 = *(&local2);
 _1794 = _1793.value;
 _1795 = (frost$core$Int64) {0u};
 _1796 = _1795.value;
-_1797 = ((frost$unsafe$NewPointer*)_1794)[_1796];
+_1797 = ((frost$unsafe$Pointer*)_1794)[_1796];
 _1798 = _1792.value;
-((frost$unsafe$NewPointer*)_1791)[_1798] = _1797;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:138
+((frost$unsafe$Pointer*)_1791)[_1798] = _1797;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:137
 _1801 = *(&local2);
 _1802 = _1801.value;
 _1803 = (frost$core$Int64) {74u};
@@ -6118,10 +6119,10 @@ _1804 = *(&local2);
 _1805 = _1804.value;
 _1806 = (frost$core$Int64) {0u};
 _1807 = _1806.value;
-_1808 = ((frost$unsafe$NewPointer*)_1805)[_1807];
+_1808 = ((frost$unsafe$Pointer*)_1805)[_1807];
 _1809 = _1803.value;
-((frost$unsafe$NewPointer*)_1802)[_1809] = _1808;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:139
+((frost$unsafe$Pointer*)_1802)[_1809] = _1808;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:138
 _1812 = *(&local2);
 _1813 = _1812.value;
 _1814 = (frost$core$Int64) {75u};
@@ -6129,10 +6130,10 @@ _1815 = *(&local2);
 _1816 = _1815.value;
 _1817 = (frost$core$Int64) {0u};
 _1818 = _1817.value;
-_1819 = ((frost$unsafe$NewPointer*)_1816)[_1818];
+_1819 = ((frost$unsafe$Pointer*)_1816)[_1818];
 _1820 = _1814.value;
-((frost$unsafe$NewPointer*)_1813)[_1820] = _1819;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:140
+((frost$unsafe$Pointer*)_1813)[_1820] = _1819;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:139
 _1823 = *(&local2);
 _1824 = _1823.value;
 _1825 = (frost$core$Int64) {76u};
@@ -6140,10 +6141,10 @@ _1826 = *(&local2);
 _1827 = _1826.value;
 _1828 = (frost$core$Int64) {0u};
 _1829 = _1828.value;
-_1830 = ((frost$unsafe$NewPointer*)_1827)[_1829];
+_1830 = ((frost$unsafe$Pointer*)_1827)[_1829];
 _1831 = _1825.value;
-((frost$unsafe$NewPointer*)_1824)[_1831] = _1830;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:141
+((frost$unsafe$Pointer*)_1824)[_1831] = _1830;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:140
 _1834 = *(&local2);
 _1835 = _1834.value;
 _1836 = (frost$core$Int64) {77u};
@@ -6151,10 +6152,10 @@ _1837 = *(&local2);
 _1838 = _1837.value;
 _1839 = (frost$core$Int64) {0u};
 _1840 = _1839.value;
-_1841 = ((frost$unsafe$NewPointer*)_1838)[_1840];
+_1841 = ((frost$unsafe$Pointer*)_1838)[_1840];
 _1842 = _1836.value;
-((frost$unsafe$NewPointer*)_1835)[_1842] = _1841;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:142
+((frost$unsafe$Pointer*)_1835)[_1842] = _1841;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:141
 _1845 = *(&local2);
 _1846 = _1845.value;
 _1847 = (frost$core$Int64) {78u};
@@ -6162,10 +6163,10 @@ _1848 = *(&local2);
 _1849 = _1848.value;
 _1850 = (frost$core$Int64) {0u};
 _1851 = _1850.value;
-_1852 = ((frost$unsafe$NewPointer*)_1849)[_1851];
+_1852 = ((frost$unsafe$Pointer*)_1849)[_1851];
 _1853 = _1847.value;
-((frost$unsafe$NewPointer*)_1846)[_1853] = _1852;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:143
+((frost$unsafe$Pointer*)_1846)[_1853] = _1852;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:142
 _1856 = *(&local2);
 _1857 = _1856.value;
 _1858 = (frost$core$Int64) {79u};
@@ -6173,10 +6174,10 @@ _1859 = *(&local2);
 _1860 = _1859.value;
 _1861 = (frost$core$Int64) {0u};
 _1862 = _1861.value;
-_1863 = ((frost$unsafe$NewPointer*)_1860)[_1862];
+_1863 = ((frost$unsafe$Pointer*)_1860)[_1862];
 _1864 = _1858.value;
-((frost$unsafe$NewPointer*)_1857)[_1864] = _1863;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:144
+((frost$unsafe$Pointer*)_1857)[_1864] = _1863;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:143
 _1867 = *(&local2);
 _1868 = _1867.value;
 _1869 = (frost$core$Int64) {80u};
@@ -6184,10 +6185,10 @@ _1870 = *(&local2);
 _1871 = _1870.value;
 _1872 = (frost$core$Int64) {0u};
 _1873 = _1872.value;
-_1874 = ((frost$unsafe$NewPointer*)_1871)[_1873];
+_1874 = ((frost$unsafe$Pointer*)_1871)[_1873];
 _1875 = _1869.value;
-((frost$unsafe$NewPointer*)_1868)[_1875] = _1874;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:145
+((frost$unsafe$Pointer*)_1868)[_1875] = _1874;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:144
 _1878 = *(&local2);
 _1879 = _1878.value;
 _1880 = (frost$core$Int64) {81u};
@@ -6195,10 +6196,10 @@ _1881 = *(&local2);
 _1882 = _1881.value;
 _1883 = (frost$core$Int64) {0u};
 _1884 = _1883.value;
-_1885 = ((frost$unsafe$NewPointer*)_1882)[_1884];
+_1885 = ((frost$unsafe$Pointer*)_1882)[_1884];
 _1886 = _1880.value;
-((frost$unsafe$NewPointer*)_1879)[_1886] = _1885;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:146
+((frost$unsafe$Pointer*)_1879)[_1886] = _1885;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:145
 _1889 = *(&local2);
 _1890 = _1889.value;
 _1891 = (frost$core$Int64) {82u};
@@ -6206,10 +6207,10 @@ _1892 = *(&local2);
 _1893 = _1892.value;
 _1894 = (frost$core$Int64) {0u};
 _1895 = _1894.value;
-_1896 = ((frost$unsafe$NewPointer*)_1893)[_1895];
+_1896 = ((frost$unsafe$Pointer*)_1893)[_1895];
 _1897 = _1891.value;
-((frost$unsafe$NewPointer*)_1890)[_1897] = _1896;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:147
+((frost$unsafe$Pointer*)_1890)[_1897] = _1896;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:146
 _1900 = *(&local2);
 _1901 = _1900.value;
 _1902 = (frost$core$Int64) {83u};
@@ -6217,10 +6218,10 @@ _1903 = *(&local2);
 _1904 = _1903.value;
 _1905 = (frost$core$Int64) {0u};
 _1906 = _1905.value;
-_1907 = ((frost$unsafe$NewPointer*)_1904)[_1906];
+_1907 = ((frost$unsafe$Pointer*)_1904)[_1906];
 _1908 = _1902.value;
-((frost$unsafe$NewPointer*)_1901)[_1908] = _1907;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:148
+((frost$unsafe$Pointer*)_1901)[_1908] = _1907;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:147
 _1911 = *(&local2);
 _1912 = _1911.value;
 _1913 = (frost$core$Int64) {84u};
@@ -6228,10 +6229,10 @@ _1914 = *(&local2);
 _1915 = _1914.value;
 _1916 = (frost$core$Int64) {0u};
 _1917 = _1916.value;
-_1918 = ((frost$unsafe$NewPointer*)_1915)[_1917];
+_1918 = ((frost$unsafe$Pointer*)_1915)[_1917];
 _1919 = _1913.value;
-((frost$unsafe$NewPointer*)_1912)[_1919] = _1918;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:149
+((frost$unsafe$Pointer*)_1912)[_1919] = _1918;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:148
 _1922 = *(&local2);
 _1923 = _1922.value;
 _1924 = (frost$core$Int64) {85u};
@@ -6239,10 +6240,10 @@ _1925 = *(&local2);
 _1926 = _1925.value;
 _1927 = (frost$core$Int64) {0u};
 _1928 = _1927.value;
-_1929 = ((frost$unsafe$NewPointer*)_1926)[_1928];
+_1929 = ((frost$unsafe$Pointer*)_1926)[_1928];
 _1930 = _1924.value;
-((frost$unsafe$NewPointer*)_1923)[_1930] = _1929;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:150
+((frost$unsafe$Pointer*)_1923)[_1930] = _1929;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:149
 _1933 = *(&local2);
 _1934 = _1933.value;
 _1935 = (frost$core$Int64) {86u};
@@ -6250,10 +6251,10 @@ _1936 = *(&local2);
 _1937 = _1936.value;
 _1938 = (frost$core$Int64) {0u};
 _1939 = _1938.value;
-_1940 = ((frost$unsafe$NewPointer*)_1937)[_1939];
+_1940 = ((frost$unsafe$Pointer*)_1937)[_1939];
 _1941 = _1935.value;
-((frost$unsafe$NewPointer*)_1934)[_1941] = _1940;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:151
+((frost$unsafe$Pointer*)_1934)[_1941] = _1940;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:150
 _1944 = *(&local2);
 _1945 = _1944.value;
 _1946 = (frost$core$Int64) {87u};
@@ -6261,10 +6262,10 @@ _1947 = *(&local2);
 _1948 = _1947.value;
 _1949 = (frost$core$Int64) {0u};
 _1950 = _1949.value;
-_1951 = ((frost$unsafe$NewPointer*)_1948)[_1950];
+_1951 = ((frost$unsafe$Pointer*)_1948)[_1950];
 _1952 = _1946.value;
-((frost$unsafe$NewPointer*)_1945)[_1952] = _1951;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:152
+((frost$unsafe$Pointer*)_1945)[_1952] = _1951;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:151
 _1955 = *(&local2);
 _1956 = _1955.value;
 _1957 = (frost$core$Int64) {88u};
@@ -6272,10 +6273,10 @@ _1958 = *(&local2);
 _1959 = _1958.value;
 _1960 = (frost$core$Int64) {0u};
 _1961 = _1960.value;
-_1962 = ((frost$unsafe$NewPointer*)_1959)[_1961];
+_1962 = ((frost$unsafe$Pointer*)_1959)[_1961];
 _1963 = _1957.value;
-((frost$unsafe$NewPointer*)_1956)[_1963] = _1962;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:153
+((frost$unsafe$Pointer*)_1956)[_1963] = _1962;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:152
 _1966 = *(&local2);
 _1967 = _1966.value;
 _1968 = (frost$core$Int64) {89u};
@@ -6283,10 +6284,10 @@ _1969 = *(&local2);
 _1970 = _1969.value;
 _1971 = (frost$core$Int64) {0u};
 _1972 = _1971.value;
-_1973 = ((frost$unsafe$NewPointer*)_1970)[_1972];
+_1973 = ((frost$unsafe$Pointer*)_1970)[_1972];
 _1974 = _1968.value;
-((frost$unsafe$NewPointer*)_1967)[_1974] = _1973;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:154
+((frost$unsafe$Pointer*)_1967)[_1974] = _1973;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:153
 _1977 = *(&local2);
 _1978 = _1977.value;
 _1979 = (frost$core$Int64) {90u};
@@ -6294,25 +6295,25 @@ _1980 = *(&local2);
 _1981 = _1980.value;
 _1982 = (frost$core$Int64) {0u};
 _1983 = _1982.value;
-_1984 = ((frost$unsafe$NewPointer*)_1981)[_1983];
+_1984 = ((frost$unsafe$Pointer*)_1981)[_1983];
 _1985 = _1979.value;
-((frost$unsafe$NewPointer*)_1978)[_1985] = _1984;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:155
+((frost$unsafe$Pointer*)_1978)[_1985] = _1984;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:154
 _1988 = *(&local2);
 _1989 = _1988.value;
 _1990 = (frost$core$Int64) {91u};
 _1991 = (frost$core$Int) {31u};
 _1992 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:155:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:154:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _1997 = _1991.value;
 _1998 = _1997 * 8u;
 _1999 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_1998);
-_2000 = frost$unsafe$NewPointer$init$builtin_int(_1999);
+_2000 = frost$unsafe$Pointer$init$builtin_int(_1999);
 *(&local23) = _2000;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2004 = (frost$core$Int) {0u};
 _2005 = (frost$core$Bit) {false};
 _2006 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_2004, _1991, _2005);
@@ -6338,7 +6339,7 @@ _2023 = (frost$core$Bit) {_2022};
 _2024 = _2023.value;
 if (_2024) goto block105; else goto block106;
 block105:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2027 = *(&local23);
 _2028 = _2027.value;
 _2029 = *(&local24);
@@ -6373,48 +6374,48 @@ _2055 = (frost$core$Int) {_2054};
 *(&local24) = _2055;
 goto block105;
 block106:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _2059 = *(&local23);
 _2061 = _1990.value;
-((frost$unsafe$NewPointer*)_1989)[_2061] = _2059;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:156
+((frost$unsafe$Pointer*)_1989)[_2061] = _2059;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:155
 _2064 = *(&local2);
 _2065 = _2064.value;
 _2066 = (frost$core$Int64) {91u};
 _2067 = _2066.value;
-_2068 = ((frost$unsafe$NewPointer*)_2065)[_2067];
+_2068 = ((frost$unsafe$Pointer*)_2065)[_2067];
 _2069 = _2068.value;
 _2070 = (frost$core$Int64) {1u};
 _2071 = (frost$core$Int) {14u};
 _2072 = _2070.value;
 ((frost$core$Int*)_2069)[_2072] = _2071;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:157
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:156
 _2075 = *(&local2);
 _2076 = _2075.value;
 _2077 = (frost$core$Int64) {91u};
 _2078 = _2077.value;
-_2079 = ((frost$unsafe$NewPointer*)_2076)[_2078];
+_2079 = ((frost$unsafe$Pointer*)_2076)[_2078];
 _2080 = _2079.value;
 _2081 = (frost$core$Int64) {3u};
 _2082 = (frost$core$Int) {3u};
 _2083 = _2081.value;
 ((frost$core$Int*)_2080)[_2083] = _2082;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:158
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:157
 _2086 = *(&local2);
 _2087 = _2086.value;
 _2088 = (frost$core$Int64) {92u};
 _2089 = (frost$core$Int) {31u};
 _2090 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:158:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:157:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _2095 = _2089.value;
 _2096 = _2095 * 8u;
 _2097 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_2096);
-_2098 = frost$unsafe$NewPointer$init$builtin_int(_2097);
+_2098 = frost$unsafe$Pointer$init$builtin_int(_2097);
 *(&local25) = _2098;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2102 = (frost$core$Int) {0u};
 _2103 = (frost$core$Bit) {false};
 _2104 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_2102, _2089, _2103);
@@ -6440,7 +6441,7 @@ _2121 = (frost$core$Bit) {_2120};
 _2122 = _2121.value;
 if (_2122) goto block115; else goto block116;
 block115:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2125 = *(&local25);
 _2126 = _2125.value;
 _2127 = *(&local26);
@@ -6475,48 +6476,48 @@ _2153 = (frost$core$Int) {_2152};
 *(&local26) = _2153;
 goto block115;
 block116:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _2157 = *(&local25);
 _2159 = _2088.value;
-((frost$unsafe$NewPointer*)_2087)[_2159] = _2157;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:159
+((frost$unsafe$Pointer*)_2087)[_2159] = _2157;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:158
 _2162 = *(&local2);
 _2163 = _2162.value;
 _2164 = (frost$core$Int64) {92u};
 _2165 = _2164.value;
-_2166 = ((frost$unsafe$NewPointer*)_2163)[_2165];
+_2166 = ((frost$unsafe$Pointer*)_2163)[_2165];
 _2167 = _2166.value;
 _2168 = (frost$core$Int64) {3u};
 _2169 = (frost$core$Int) {5u};
 _2170 = _2168.value;
 ((frost$core$Int*)_2167)[_2170] = _2169;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:160
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:159
 _2173 = *(&local2);
 _2174 = _2173.value;
 _2175 = (frost$core$Int64) {92u};
 _2176 = _2175.value;
-_2177 = ((frost$unsafe$NewPointer*)_2174)[_2176];
+_2177 = ((frost$unsafe$Pointer*)_2174)[_2176];
 _2178 = _2177.value;
 _2179 = (frost$core$Int64) {5u};
 _2180 = (frost$core$Int) {3u};
 _2181 = _2179.value;
 ((frost$core$Int*)_2178)[_2181] = _2180;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:161
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:160
 _2184 = *(&local2);
 _2185 = _2184.value;
 _2186 = (frost$core$Int64) {93u};
 _2187 = (frost$core$Int) {31u};
 _2188 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:161:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:160:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _2193 = _2187.value;
 _2194 = _2193 * 8u;
 _2195 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_2194);
-_2196 = frost$unsafe$NewPointer$init$builtin_int(_2195);
+_2196 = frost$unsafe$Pointer$init$builtin_int(_2195);
 *(&local27) = _2196;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2200 = (frost$core$Int) {0u};
 _2201 = (frost$core$Bit) {false};
 _2202 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_2200, _2187, _2201);
@@ -6542,7 +6543,7 @@ _2219 = (frost$core$Bit) {_2218};
 _2220 = _2219.value;
 if (_2220) goto block125; else goto block126;
 block125:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2223 = *(&local27);
 _2224 = _2223.value;
 _2225 = *(&local28);
@@ -6577,33 +6578,33 @@ _2251 = (frost$core$Int) {_2250};
 *(&local28) = _2251;
 goto block125;
 block126:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _2255 = *(&local27);
 _2257 = _2186.value;
-((frost$unsafe$NewPointer*)_2185)[_2257] = _2255;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:162
+((frost$unsafe$Pointer*)_2185)[_2257] = _2255;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:161
 _2260 = *(&local2);
 _2261 = _2260.value;
 _2262 = (frost$core$Int64) {93u};
 _2263 = _2262.value;
-_2264 = ((frost$unsafe$NewPointer*)_2261)[_2263];
+_2264 = ((frost$unsafe$Pointer*)_2261)[_2263];
 _2265 = _2264.value;
 _2266 = (frost$core$Int64) {1u};
 _2267 = (frost$core$Int) {15u};
 _2268 = _2266.value;
 ((frost$core$Int*)_2265)[_2268] = _2267;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:163
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:162
 _2271 = *(&local2);
 _2272 = _2271.value;
 _2273 = (frost$core$Int64) {93u};
 _2274 = _2273.value;
-_2275 = ((frost$unsafe$NewPointer*)_2272)[_2274];
+_2275 = ((frost$unsafe$Pointer*)_2272)[_2274];
 _2276 = _2275.value;
 _2277 = (frost$core$Int64) {3u};
 _2278 = (frost$core$Int) {3u};
 _2279 = _2277.value;
 ((frost$core$Int*)_2276)[_2279] = _2278;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:164
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:163
 _2282 = *(&local2);
 _2283 = _2282.value;
 _2284 = (frost$core$Int64) {94u};
@@ -6611,10 +6612,10 @@ _2285 = *(&local2);
 _2286 = _2285.value;
 _2287 = (frost$core$Int64) {0u};
 _2288 = _2287.value;
-_2289 = ((frost$unsafe$NewPointer*)_2286)[_2288];
+_2289 = ((frost$unsafe$Pointer*)_2286)[_2288];
 _2290 = _2284.value;
-((frost$unsafe$NewPointer*)_2283)[_2290] = _2289;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:165
+((frost$unsafe$Pointer*)_2283)[_2290] = _2289;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:164
 _2293 = *(&local2);
 _2294 = _2293.value;
 _2295 = (frost$core$Int64) {95u};
@@ -6622,10 +6623,10 @@ _2296 = *(&local2);
 _2297 = _2296.value;
 _2298 = (frost$core$Int64) {0u};
 _2299 = _2298.value;
-_2300 = ((frost$unsafe$NewPointer*)_2297)[_2299];
+_2300 = ((frost$unsafe$Pointer*)_2297)[_2299];
 _2301 = _2295.value;
-((frost$unsafe$NewPointer*)_2294)[_2301] = _2300;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:166
+((frost$unsafe$Pointer*)_2294)[_2301] = _2300;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:165
 _2304 = *(&local2);
 _2305 = _2304.value;
 _2306 = (frost$core$Int64) {96u};
@@ -6633,25 +6634,25 @@ _2307 = *(&local2);
 _2308 = _2307.value;
 _2309 = (frost$core$Int64) {0u};
 _2310 = _2309.value;
-_2311 = ((frost$unsafe$NewPointer*)_2308)[_2310];
+_2311 = ((frost$unsafe$Pointer*)_2308)[_2310];
 _2312 = _2306.value;
-((frost$unsafe$NewPointer*)_2305)[_2312] = _2311;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:167
+((frost$unsafe$Pointer*)_2305)[_2312] = _2311;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:166
 _2315 = *(&local2);
 _2316 = _2315.value;
 _2317 = (frost$core$Int64) {97u};
 _2318 = (frost$core$Int) {31u};
 _2319 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:167:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:166:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _2324 = _2318.value;
 _2325 = _2324 * 8u;
 _2326 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_2325);
-_2327 = frost$unsafe$NewPointer$init$builtin_int(_2326);
+_2327 = frost$unsafe$Pointer$init$builtin_int(_2326);
 *(&local29) = _2327;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2331 = (frost$core$Int) {0u};
 _2332 = (frost$core$Bit) {false};
 _2333 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_2331, _2318, _2332);
@@ -6677,7 +6678,7 @@ _2350 = (frost$core$Bit) {_2349};
 _2351 = _2350.value;
 if (_2351) goto block135; else goto block136;
 block135:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2354 = *(&local29);
 _2355 = _2354.value;
 _2356 = *(&local30);
@@ -6712,48 +6713,48 @@ _2382 = (frost$core$Int) {_2381};
 *(&local30) = _2382;
 goto block135;
 block136:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _2386 = *(&local29);
 _2388 = _2317.value;
-((frost$unsafe$NewPointer*)_2316)[_2388] = _2386;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:168
+((frost$unsafe$Pointer*)_2316)[_2388] = _2386;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:167
 _2391 = *(&local2);
 _2392 = _2391.value;
 _2393 = (frost$core$Int64) {97u};
 _2394 = _2393.value;
-_2395 = ((frost$unsafe$NewPointer*)_2392)[_2394];
+_2395 = ((frost$unsafe$Pointer*)_2392)[_2394];
 _2396 = _2395.value;
 _2397 = (frost$core$Int64) {3u};
 _2398 = (frost$core$Int) {3u};
 _2399 = _2397.value;
 ((frost$core$Int*)_2396)[_2399] = _2398;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:169
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:168
 _2402 = *(&local2);
 _2403 = _2402.value;
 _2404 = (frost$core$Int64) {97u};
 _2405 = _2404.value;
-_2406 = ((frost$unsafe$NewPointer*)_2403)[_2405];
+_2406 = ((frost$unsafe$Pointer*)_2403)[_2405];
 _2407 = _2406.value;
 _2408 = (frost$core$Int64) {16u};
 _2409 = (frost$core$Int) {17u};
 _2410 = _2408.value;
 ((frost$core$Int*)_2407)[_2410] = _2409;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:170
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:169
 _2413 = *(&local2);
 _2414 = _2413.value;
 _2415 = (frost$core$Int64) {98u};
 _2416 = (frost$core$Int) {31u};
 _2417 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:170:28
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:169:28
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _2422 = _2416.value;
 _2423 = _2422 * 8u;
 _2424 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_2423);
-_2425 = frost$unsafe$NewPointer$init$builtin_int(_2424);
+_2425 = frost$unsafe$Pointer$init$builtin_int(_2424);
 *(&local31) = _2425;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2429 = (frost$core$Int) {0u};
 _2430 = (frost$core$Bit) {false};
 _2431 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_2429, _2416, _2430);
@@ -6779,7 +6780,7 @@ _2448 = (frost$core$Bit) {_2447};
 _2449 = _2448.value;
 if (_2449) goto block145; else goto block146;
 block145:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2452 = *(&local31);
 _2453 = _2452.value;
 _2454 = *(&local32);
@@ -6814,33 +6815,33 @@ _2480 = (frost$core$Int) {_2479};
 *(&local32) = _2480;
 goto block145;
 block146:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _2484 = *(&local31);
 _2486 = _2415.value;
-((frost$unsafe$NewPointer*)_2414)[_2486] = _2484;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:171
+((frost$unsafe$Pointer*)_2414)[_2486] = _2484;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:170
 _2489 = *(&local2);
 _2490 = _2489.value;
 _2491 = (frost$core$Int64) {98u};
 _2492 = _2491.value;
-_2493 = ((frost$unsafe$NewPointer*)_2490)[_2492];
+_2493 = ((frost$unsafe$Pointer*)_2490)[_2492];
 _2494 = _2493.value;
 _2495 = (frost$core$Int64) {3u};
 _2496 = (frost$core$Int) {3u};
 _2497 = _2495.value;
 ((frost$core$Int*)_2494)[_2497] = _2496;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:172
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:171
 _2500 = *(&local2);
 _2501 = _2500.value;
 _2502 = (frost$core$Int64) {98u};
 _2503 = _2502.value;
-_2504 = ((frost$unsafe$NewPointer*)_2501)[_2503];
+_2504 = ((frost$unsafe$Pointer*)_2501)[_2503];
 _2505 = _2504.value;
 _2506 = (frost$core$Int64) {5u};
 _2507 = (frost$core$Int) {3u};
 _2508 = _2506.value;
 ((frost$core$Int*)_2505)[_2508] = _2507;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:173
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:172
 _2511 = *(&local2);
 _2512 = _2511.value;
 _2513 = (frost$core$Int64) {99u};
@@ -6848,10 +6849,10 @@ _2514 = *(&local2);
 _2515 = _2514.value;
 _2516 = (frost$core$Int64) {0u};
 _2517 = _2516.value;
-_2518 = ((frost$unsafe$NewPointer*)_2515)[_2517];
+_2518 = ((frost$unsafe$Pointer*)_2515)[_2517];
 _2519 = _2513.value;
-((frost$unsafe$NewPointer*)_2512)[_2519] = _2518;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:174
+((frost$unsafe$Pointer*)_2512)[_2519] = _2518;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:173
 _2522 = *(&local2);
 _2523 = _2522.value;
 _2524 = (frost$core$Int64) {100u};
@@ -6859,25 +6860,25 @@ _2525 = *(&local2);
 _2526 = _2525.value;
 _2527 = (frost$core$Int64) {0u};
 _2528 = _2527.value;
-_2529 = ((frost$unsafe$NewPointer*)_2526)[_2528];
+_2529 = ((frost$unsafe$Pointer*)_2526)[_2528];
 _2530 = _2524.value;
-((frost$unsafe$NewPointer*)_2523)[_2530] = _2529;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:175
+((frost$unsafe$Pointer*)_2523)[_2530] = _2529;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:174
 _2533 = *(&local2);
 _2534 = _2533.value;
 _2535 = (frost$core$Int64) {101u};
 _2536 = (frost$core$Int) {31u};
 _2537 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:175:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:174:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _2542 = _2536.value;
 _2543 = _2542 * 8u;
 _2544 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_2543);
-_2545 = frost$unsafe$NewPointer$init$builtin_int(_2544);
+_2545 = frost$unsafe$Pointer$init$builtin_int(_2544);
 *(&local33) = _2545;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2549 = (frost$core$Int) {0u};
 _2550 = (frost$core$Bit) {false};
 _2551 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_2549, _2536, _2550);
@@ -6903,7 +6904,7 @@ _2568 = (frost$core$Bit) {_2567};
 _2569 = _2568.value;
 if (_2569) goto block155; else goto block156;
 block155:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2572 = *(&local33);
 _2573 = _2572.value;
 _2574 = *(&local34);
@@ -6938,70 +6939,70 @@ _2600 = (frost$core$Int) {_2599};
 *(&local34) = _2600;
 goto block155;
 block156:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _2604 = *(&local33);
 _2606 = _2535.value;
-((frost$unsafe$NewPointer*)_2534)[_2606] = _2604;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:176
+((frost$unsafe$Pointer*)_2534)[_2606] = _2604;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:175
 _2609 = *(&local2);
 _2610 = _2609.value;
 _2611 = (frost$core$Int64) {101u};
 _2612 = _2611.value;
-_2613 = ((frost$unsafe$NewPointer*)_2610)[_2612];
+_2613 = ((frost$unsafe$Pointer*)_2610)[_2612];
 _2614 = _2613.value;
 _2615 = (frost$core$Int64) {3u};
 _2616 = (frost$core$Int) {3u};
 _2617 = _2615.value;
 ((frost$core$Int*)_2614)[_2617] = _2616;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:177
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:176
 _2620 = *(&local2);
 _2621 = _2620.value;
 _2622 = (frost$core$Int64) {101u};
 _2623 = _2622.value;
-_2624 = ((frost$unsafe$NewPointer*)_2621)[_2623];
+_2624 = ((frost$unsafe$Pointer*)_2621)[_2623];
 _2625 = _2624.value;
 _2626 = (frost$core$Int64) {9u};
 _2627 = (frost$core$Int) {10u};
 _2628 = _2626.value;
 ((frost$core$Int*)_2625)[_2628] = _2627;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:178
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:177
 _2631 = *(&local2);
 _2632 = _2631.value;
 _2633 = (frost$core$Int64) {101u};
 _2634 = _2633.value;
-_2635 = ((frost$unsafe$NewPointer*)_2632)[_2634];
+_2635 = ((frost$unsafe$Pointer*)_2632)[_2634];
 _2636 = _2635.value;
 _2637 = (frost$core$Int64) {19u};
 _2638 = (frost$core$Int) {20u};
 _2639 = _2637.value;
 ((frost$core$Int*)_2636)[_2639] = _2638;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:179
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:178
 _2642 = *(&local2);
 _2643 = _2642.value;
 _2644 = (frost$core$Int64) {101u};
 _2645 = _2644.value;
-_2646 = ((frost$unsafe$NewPointer*)_2643)[_2645];
+_2646 = ((frost$unsafe$Pointer*)_2643)[_2645];
 _2647 = _2646.value;
 _2648 = (frost$core$Int64) {27u};
 _2649 = (frost$core$Int) {28u};
 _2650 = _2648.value;
 ((frost$core$Int*)_2647)[_2650] = _2649;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:180
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:179
 _2653 = *(&local2);
 _2654 = _2653.value;
 _2655 = (frost$core$Int64) {102u};
 _2656 = (frost$core$Int) {31u};
 _2657 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:180:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:179:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _2662 = _2656.value;
 _2663 = _2662 * 8u;
 _2664 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_2663);
-_2665 = frost$unsafe$NewPointer$init$builtin_int(_2664);
+_2665 = frost$unsafe$Pointer$init$builtin_int(_2664);
 *(&local35) = _2665;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2669 = (frost$core$Int) {0u};
 _2670 = (frost$core$Bit) {false};
 _2671 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_2669, _2656, _2670);
@@ -7027,7 +7028,7 @@ _2688 = (frost$core$Bit) {_2687};
 _2689 = _2688.value;
 if (_2689) goto block165; else goto block166;
 block165:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2692 = *(&local35);
 _2693 = _2692.value;
 _2694 = *(&local36);
@@ -7062,44 +7063,44 @@ _2720 = (frost$core$Int) {_2719};
 *(&local36) = _2720;
 goto block165;
 block166:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _2724 = *(&local35);
 _2726 = _2655.value;
-((frost$unsafe$NewPointer*)_2654)[_2726] = _2724;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:181
+((frost$unsafe$Pointer*)_2654)[_2726] = _2724;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:180
 _2729 = *(&local2);
 _2730 = _2729.value;
 _2731 = (frost$core$Int64) {102u};
 _2732 = _2731.value;
-_2733 = ((frost$unsafe$NewPointer*)_2730)[_2732];
+_2733 = ((frost$unsafe$Pointer*)_2730)[_2732];
 _2734 = _2733.value;
 _2735 = (frost$core$Int64) {1u};
 _2736 = (frost$core$Int) {16u};
 _2737 = _2735.value;
 ((frost$core$Int*)_2734)[_2737] = _2736;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:182
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:181
 _2740 = *(&local2);
 _2741 = _2740.value;
 _2742 = (frost$core$Int64) {102u};
 _2743 = _2742.value;
-_2744 = ((frost$unsafe$NewPointer*)_2741)[_2743];
+_2744 = ((frost$unsafe$Pointer*)_2741)[_2743];
 _2745 = _2744.value;
 _2746 = (frost$core$Int64) {3u};
 _2747 = (frost$core$Int) {3u};
 _2748 = _2746.value;
 ((frost$core$Int*)_2745)[_2748] = _2747;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:183
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:182
 _2751 = *(&local2);
 _2752 = _2751.value;
 _2753 = (frost$core$Int64) {102u};
 _2754 = _2753.value;
-_2755 = ((frost$unsafe$NewPointer*)_2752)[_2754];
+_2755 = ((frost$unsafe$Pointer*)_2752)[_2754];
 _2756 = _2755.value;
 _2757 = (frost$core$Int64) {5u};
 _2758 = (frost$core$Int) {3u};
 _2759 = _2757.value;
 ((frost$core$Int*)_2756)[_2759] = _2758;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:184
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:183
 _2762 = *(&local2);
 _2763 = _2762.value;
 _2764 = (frost$core$Int64) {103u};
@@ -7107,10 +7108,10 @@ _2765 = *(&local2);
 _2766 = _2765.value;
 _2767 = (frost$core$Int64) {0u};
 _2768 = _2767.value;
-_2769 = ((frost$unsafe$NewPointer*)_2766)[_2768];
+_2769 = ((frost$unsafe$Pointer*)_2766)[_2768];
 _2770 = _2764.value;
-((frost$unsafe$NewPointer*)_2763)[_2770] = _2769;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:185
+((frost$unsafe$Pointer*)_2763)[_2770] = _2769;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:184
 _2773 = *(&local2);
 _2774 = _2773.value;
 _2775 = (frost$core$Int64) {104u};
@@ -7118,10 +7119,10 @@ _2776 = *(&local2);
 _2777 = _2776.value;
 _2778 = (frost$core$Int64) {0u};
 _2779 = _2778.value;
-_2780 = ((frost$unsafe$NewPointer*)_2777)[_2779];
+_2780 = ((frost$unsafe$Pointer*)_2777)[_2779];
 _2781 = _2775.value;
-((frost$unsafe$NewPointer*)_2774)[_2781] = _2780;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:186
+((frost$unsafe$Pointer*)_2774)[_2781] = _2780;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:185
 _2784 = *(&local2);
 _2785 = _2784.value;
 _2786 = (frost$core$Int64) {105u};
@@ -7129,10 +7130,10 @@ _2787 = *(&local2);
 _2788 = _2787.value;
 _2789 = (frost$core$Int64) {0u};
 _2790 = _2789.value;
-_2791 = ((frost$unsafe$NewPointer*)_2788)[_2790];
+_2791 = ((frost$unsafe$Pointer*)_2788)[_2790];
 _2792 = _2786.value;
-((frost$unsafe$NewPointer*)_2785)[_2792] = _2791;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:187
+((frost$unsafe$Pointer*)_2785)[_2792] = _2791;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:186
 _2795 = *(&local2);
 _2796 = _2795.value;
 _2797 = (frost$core$Int64) {106u};
@@ -7140,10 +7141,10 @@ _2798 = *(&local2);
 _2799 = _2798.value;
 _2800 = (frost$core$Int64) {0u};
 _2801 = _2800.value;
-_2802 = ((frost$unsafe$NewPointer*)_2799)[_2801];
+_2802 = ((frost$unsafe$Pointer*)_2799)[_2801];
 _2803 = _2797.value;
-((frost$unsafe$NewPointer*)_2796)[_2803] = _2802;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:188
+((frost$unsafe$Pointer*)_2796)[_2803] = _2802;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:187
 _2806 = *(&local2);
 _2807 = _2806.value;
 _2808 = (frost$core$Int64) {107u};
@@ -7151,25 +7152,25 @@ _2809 = *(&local2);
 _2810 = _2809.value;
 _2811 = (frost$core$Int64) {0u};
 _2812 = _2811.value;
-_2813 = ((frost$unsafe$NewPointer*)_2810)[_2812];
+_2813 = ((frost$unsafe$Pointer*)_2810)[_2812];
 _2814 = _2808.value;
-((frost$unsafe$NewPointer*)_2807)[_2814] = _2813;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:189
+((frost$unsafe$Pointer*)_2807)[_2814] = _2813;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:188
 _2817 = *(&local2);
 _2818 = _2817.value;
 _2819 = (frost$core$Int64) {108u};
 _2820 = (frost$core$Int) {31u};
 _2821 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:189:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:188:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _2826 = _2820.value;
 _2827 = _2826 * 8u;
 _2828 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_2827);
-_2829 = frost$unsafe$NewPointer$init$builtin_int(_2828);
+_2829 = frost$unsafe$Pointer$init$builtin_int(_2828);
 *(&local37) = _2829;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2833 = (frost$core$Int) {0u};
 _2834 = (frost$core$Bit) {false};
 _2835 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_2833, _2820, _2834);
@@ -7195,7 +7196,7 @@ _2852 = (frost$core$Bit) {_2851};
 _2853 = _2852.value;
 if (_2853) goto block175; else goto block176;
 block175:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2856 = *(&local37);
 _2857 = _2856.value;
 _2858 = *(&local38);
@@ -7230,55 +7231,55 @@ _2884 = (frost$core$Int) {_2883};
 *(&local38) = _2884;
 goto block175;
 block176:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _2888 = *(&local37);
 _2890 = _2819.value;
-((frost$unsafe$NewPointer*)_2818)[_2890] = _2888;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:190
+((frost$unsafe$Pointer*)_2818)[_2890] = _2888;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:189
 _2893 = *(&local2);
 _2894 = _2893.value;
 _2895 = (frost$core$Int64) {108u};
 _2896 = _2895.value;
-_2897 = ((frost$unsafe$NewPointer*)_2894)[_2896];
+_2897 = ((frost$unsafe$Pointer*)_2894)[_2896];
 _2898 = _2897.value;
 _2899 = (frost$core$Int64) {3u};
 _2900 = (frost$core$Int) {3u};
 _2901 = _2899.value;
 ((frost$core$Int*)_2898)[_2901] = _2900;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:191
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:190
 _2904 = *(&local2);
 _2905 = _2904.value;
 _2906 = (frost$core$Int64) {108u};
 _2907 = _2906.value;
-_2908 = ((frost$unsafe$NewPointer*)_2905)[_2907];
+_2908 = ((frost$unsafe$Pointer*)_2905)[_2907];
 _2909 = _2908.value;
 _2910 = (frost$core$Int64) {17u};
 _2911 = (frost$core$Int) {18u};
 _2912 = _2910.value;
 ((frost$core$Int*)_2909)[_2912] = _2911;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:192
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:191
 _2915 = *(&local2);
 _2916 = _2915.value;
 _2917 = (frost$core$Int64) {108u};
 _2918 = _2917.value;
-_2919 = ((frost$unsafe$NewPointer*)_2916)[_2918];
+_2919 = ((frost$unsafe$Pointer*)_2916)[_2918];
 _2920 = _2919.value;
 _2921 = (frost$core$Int64) {22u};
 _2922 = (frost$core$Int) {23u};
 _2923 = _2921.value;
 ((frost$core$Int*)_2920)[_2923] = _2922;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:193
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:192
 _2926 = *(&local2);
 _2927 = _2926.value;
 _2928 = (frost$core$Int64) {108u};
 _2929 = _2928.value;
-_2930 = ((frost$unsafe$NewPointer*)_2927)[_2929];
+_2930 = ((frost$unsafe$Pointer*)_2927)[_2929];
 _2931 = _2930.value;
 _2932 = (frost$core$Int64) {23u};
 _2933 = (frost$core$Int) {24u};
 _2934 = _2932.value;
 ((frost$core$Int*)_2931)[_2934] = _2933;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:194
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:193
 _2937 = *(&local2);
 _2938 = _2937.value;
 _2939 = (frost$core$Int64) {109u};
@@ -7286,25 +7287,25 @@ _2940 = *(&local2);
 _2941 = _2940.value;
 _2942 = (frost$core$Int64) {0u};
 _2943 = _2942.value;
-_2944 = ((frost$unsafe$NewPointer*)_2941)[_2943];
+_2944 = ((frost$unsafe$Pointer*)_2941)[_2943];
 _2945 = _2939.value;
-((frost$unsafe$NewPointer*)_2938)[_2945] = _2944;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:195
+((frost$unsafe$Pointer*)_2938)[_2945] = _2944;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:194
 _2948 = *(&local2);
 _2949 = _2948.value;
 _2950 = (frost$core$Int64) {110u};
 _2951 = (frost$core$Int) {31u};
 _2952 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:195:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:194:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _2957 = _2951.value;
 _2958 = _2957 * 8u;
 _2959 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_2958);
-_2960 = frost$unsafe$NewPointer$init$builtin_int(_2959);
+_2960 = frost$unsafe$Pointer$init$builtin_int(_2959);
 *(&local39) = _2960;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2964 = (frost$core$Int) {0u};
 _2965 = (frost$core$Bit) {false};
 _2966 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_2964, _2951, _2965);
@@ -7330,7 +7331,7 @@ _2983 = (frost$core$Bit) {_2982};
 _2984 = _2983.value;
 if (_2984) goto block185; else goto block186;
 block185:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2987 = *(&local39);
 _2988 = _2987.value;
 _2989 = *(&local40);
@@ -7365,44 +7366,44 @@ _3015 = (frost$core$Int) {_3014};
 *(&local40) = _3015;
 goto block185;
 block186:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _3019 = *(&local39);
 _3021 = _2950.value;
-((frost$unsafe$NewPointer*)_2949)[_3021] = _3019;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:196
+((frost$unsafe$Pointer*)_2949)[_3021] = _3019;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:195
 _3024 = *(&local2);
 _3025 = _3024.value;
 _3026 = (frost$core$Int64) {110u};
 _3027 = _3026.value;
-_3028 = ((frost$unsafe$NewPointer*)_3025)[_3027];
+_3028 = ((frost$unsafe$Pointer*)_3025)[_3027];
 _3029 = _3028.value;
 _3030 = (frost$core$Int64) {1u};
 _3031 = (frost$core$Int) {21u};
 _3032 = _3030.value;
 ((frost$core$Int*)_3029)[_3032] = _3031;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:197
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:196
 _3035 = *(&local2);
 _3036 = _3035.value;
 _3037 = (frost$core$Int64) {110u};
 _3038 = _3037.value;
-_3039 = ((frost$unsafe$NewPointer*)_3036)[_3038];
+_3039 = ((frost$unsafe$Pointer*)_3036)[_3038];
 _3040 = _3039.value;
 _3041 = (frost$core$Int64) {3u};
 _3042 = (frost$core$Int) {3u};
 _3043 = _3041.value;
 ((frost$core$Int*)_3040)[_3043] = _3042;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:198
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:197
 _3046 = *(&local2);
 _3047 = _3046.value;
 _3048 = (frost$core$Int64) {110u};
 _3049 = _3048.value;
-_3050 = ((frost$unsafe$NewPointer*)_3047)[_3049];
+_3050 = ((frost$unsafe$Pointer*)_3047)[_3049];
 _3051 = _3050.value;
 _3052 = (frost$core$Int64) {5u};
 _3053 = (frost$core$Int) {3u};
 _3054 = _3052.value;
 ((frost$core$Int*)_3051)[_3054] = _3053;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:199
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:198
 _3057 = *(&local2);
 _3058 = _3057.value;
 _3059 = (frost$core$Int64) {111u};
@@ -7410,10 +7411,10 @@ _3060 = *(&local2);
 _3061 = _3060.value;
 _3062 = (frost$core$Int64) {0u};
 _3063 = _3062.value;
-_3064 = ((frost$unsafe$NewPointer*)_3061)[_3063];
+_3064 = ((frost$unsafe$Pointer*)_3061)[_3063];
 _3065 = _3059.value;
-((frost$unsafe$NewPointer*)_3058)[_3065] = _3064;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:200
+((frost$unsafe$Pointer*)_3058)[_3065] = _3064;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:199
 _3068 = *(&local2);
 _3069 = _3068.value;
 _3070 = (frost$core$Int64) {112u};
@@ -7421,10 +7422,10 @@ _3071 = *(&local2);
 _3072 = _3071.value;
 _3073 = (frost$core$Int64) {0u};
 _3074 = _3073.value;
-_3075 = ((frost$unsafe$NewPointer*)_3072)[_3074];
+_3075 = ((frost$unsafe$Pointer*)_3072)[_3074];
 _3076 = _3070.value;
-((frost$unsafe$NewPointer*)_3069)[_3076] = _3075;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:201
+((frost$unsafe$Pointer*)_3069)[_3076] = _3075;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:200
 _3079 = *(&local2);
 _3080 = _3079.value;
 _3081 = (frost$core$Int64) {113u};
@@ -7432,25 +7433,25 @@ _3082 = *(&local2);
 _3083 = _3082.value;
 _3084 = (frost$core$Int64) {0u};
 _3085 = _3084.value;
-_3086 = ((frost$unsafe$NewPointer*)_3083)[_3085];
+_3086 = ((frost$unsafe$Pointer*)_3083)[_3085];
 _3087 = _3081.value;
-((frost$unsafe$NewPointer*)_3080)[_3087] = _3086;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:202
+((frost$unsafe$Pointer*)_3080)[_3087] = _3086;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:201
 _3090 = *(&local2);
 _3091 = _3090.value;
 _3092 = (frost$core$Int64) {114u};
 _3093 = (frost$core$Int) {31u};
 _3094 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:202:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:201:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _3099 = _3093.value;
 _3100 = _3099 * 8u;
 _3101 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_3100);
-_3102 = frost$unsafe$NewPointer$init$builtin_int(_3101);
+_3102 = frost$unsafe$Pointer$init$builtin_int(_3101);
 *(&local41) = _3102;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _3106 = (frost$core$Int) {0u};
 _3107 = (frost$core$Bit) {false};
 _3108 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_3106, _3093, _3107);
@@ -7476,7 +7477,7 @@ _3125 = (frost$core$Bit) {_3124};
 _3126 = _3125.value;
 if (_3126) goto block195; else goto block196;
 block195:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _3129 = *(&local41);
 _3130 = _3129.value;
 _3131 = *(&local42);
@@ -7511,59 +7512,59 @@ _3157 = (frost$core$Int) {_3156};
 *(&local42) = _3157;
 goto block195;
 block196:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _3161 = *(&local41);
 _3163 = _3092.value;
-((frost$unsafe$NewPointer*)_3091)[_3163] = _3161;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:203
+((frost$unsafe$Pointer*)_3091)[_3163] = _3161;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:202
 _3166 = *(&local2);
 _3167 = _3166.value;
 _3168 = (frost$core$Int64) {114u};
 _3169 = _3168.value;
-_3170 = ((frost$unsafe$NewPointer*)_3167)[_3169];
+_3170 = ((frost$unsafe$Pointer*)_3167)[_3169];
 _3171 = _3170.value;
 _3172 = (frost$core$Int64) {3u};
 _3173 = (frost$core$Int) {3u};
 _3174 = _3172.value;
 ((frost$core$Int*)_3171)[_3174] = _3173;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:204
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:203
 _3177 = *(&local2);
 _3178 = _3177.value;
 _3179 = (frost$core$Int64) {114u};
 _3180 = _3179.value;
-_3181 = ((frost$unsafe$NewPointer*)_3178)[_3180];
+_3181 = ((frost$unsafe$Pointer*)_3178)[_3180];
 _3182 = _3181.value;
 _3183 = (frost$core$Int64) {5u};
 _3184 = (frost$core$Int) {3u};
 _3185 = _3183.value;
 ((frost$core$Int*)_3182)[_3185] = _3184;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:205
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:204
 _3188 = *(&local2);
 _3189 = _3188.value;
 _3190 = (frost$core$Int64) {114u};
 _3191 = _3190.value;
-_3192 = ((frost$unsafe$NewPointer*)_3189)[_3191];
+_3192 = ((frost$unsafe$Pointer*)_3189)[_3191];
 _3193 = _3192.value;
 _3194 = (frost$core$Int64) {25u};
 _3195 = (frost$core$Int) {26u};
 _3196 = _3194.value;
 ((frost$core$Int*)_3193)[_3196] = _3195;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:206
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:205
 _3199 = *(&local2);
 _3200 = _3199.value;
 _3201 = (frost$core$Int64) {115u};
 _3202 = (frost$core$Int) {31u};
 _3203 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:206:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:205:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _3208 = _3202.value;
 _3209 = _3208 * 8u;
 _3210 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_3209);
-_3211 = frost$unsafe$NewPointer$init$builtin_int(_3210);
+_3211 = frost$unsafe$Pointer$init$builtin_int(_3210);
 *(&local43) = _3211;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _3215 = (frost$core$Int) {0u};
 _3216 = (frost$core$Bit) {false};
 _3217 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_3215, _3202, _3216);
@@ -7589,7 +7590,7 @@ _3234 = (frost$core$Bit) {_3233};
 _3235 = _3234.value;
 if (_3235) goto block205; else goto block206;
 block205:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _3238 = *(&local43);
 _3239 = _3238.value;
 _3240 = *(&local44);
@@ -7624,48 +7625,48 @@ _3266 = (frost$core$Int) {_3265};
 *(&local44) = _3266;
 goto block205;
 block206:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _3270 = *(&local43);
 _3272 = _3201.value;
-((frost$unsafe$NewPointer*)_3200)[_3272] = _3270;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:207
+((frost$unsafe$Pointer*)_3200)[_3272] = _3270;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:206
 _3275 = *(&local2);
 _3276 = _3275.value;
 _3277 = (frost$core$Int64) {115u};
 _3278 = _3277.value;
-_3279 = ((frost$unsafe$NewPointer*)_3276)[_3278];
+_3279 = ((frost$unsafe$Pointer*)_3276)[_3278];
 _3280 = _3279.value;
 _3281 = (frost$core$Int64) {3u};
 _3282 = (frost$core$Int) {3u};
 _3283 = _3281.value;
 ((frost$core$Int*)_3280)[_3283] = _3282;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:208
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:207
 _3286 = *(&local2);
 _3287 = _3286.value;
 _3288 = (frost$core$Int64) {115u};
 _3289 = _3288.value;
-_3290 = ((frost$unsafe$NewPointer*)_3287)[_3289];
+_3290 = ((frost$unsafe$Pointer*)_3287)[_3289];
 _3291 = _3290.value;
 _3292 = (frost$core$Int64) {18u};
 _3293 = (frost$core$Int) {19u};
 _3294 = _3292.value;
 ((frost$core$Int*)_3291)[_3294] = _3293;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:209
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:208
 _3297 = *(&local2);
 _3298 = _3297.value;
 _3299 = (frost$core$Int64) {116u};
 _3300 = (frost$core$Int) {31u};
 _3301 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:209:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:208:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _3306 = _3300.value;
 _3307 = _3306 * 8u;
 _3308 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_3307);
-_3309 = frost$unsafe$NewPointer$init$builtin_int(_3308);
+_3309 = frost$unsafe$Pointer$init$builtin_int(_3308);
 *(&local45) = _3309;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _3313 = (frost$core$Int) {0u};
 _3314 = (frost$core$Bit) {false};
 _3315 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_3313, _3300, _3314);
@@ -7691,7 +7692,7 @@ _3332 = (frost$core$Bit) {_3331};
 _3333 = _3332.value;
 if (_3333) goto block215; else goto block216;
 block215:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _3336 = *(&local45);
 _3337 = _3336.value;
 _3338 = *(&local46);
@@ -7726,59 +7727,59 @@ _3364 = (frost$core$Int) {_3363};
 *(&local46) = _3364;
 goto block215;
 block216:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _3368 = *(&local45);
 _3370 = _3299.value;
-((frost$unsafe$NewPointer*)_3298)[_3370] = _3368;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:210
+((frost$unsafe$Pointer*)_3298)[_3370] = _3368;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:209
 _3373 = *(&local2);
 _3374 = _3373.value;
 _3375 = (frost$core$Int64) {116u};
 _3376 = _3375.value;
-_3377 = ((frost$unsafe$NewPointer*)_3374)[_3376];
+_3377 = ((frost$unsafe$Pointer*)_3374)[_3376];
 _3378 = _3377.value;
 _3379 = (frost$core$Int64) {1u};
 _3380 = (frost$core$Int) {25u};
 _3381 = _3379.value;
 ((frost$core$Int*)_3378)[_3381] = _3380;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:211
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:210
 _3384 = *(&local2);
 _3385 = _3384.value;
 _3386 = (frost$core$Int64) {116u};
 _3387 = _3386.value;
-_3388 = ((frost$unsafe$NewPointer*)_3385)[_3387];
+_3388 = ((frost$unsafe$Pointer*)_3385)[_3387];
 _3389 = _3388.value;
 _3390 = (frost$core$Int64) {3u};
 _3391 = (frost$core$Int) {3u};
 _3392 = _3390.value;
 ((frost$core$Int*)_3389)[_3392] = _3391;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:212
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:211
 _3395 = *(&local2);
 _3396 = _3395.value;
 _3397 = (frost$core$Int64) {116u};
 _3398 = _3397.value;
-_3399 = ((frost$unsafe$NewPointer*)_3396)[_3398];
+_3399 = ((frost$unsafe$Pointer*)_3396)[_3398];
 _3400 = _3399.value;
 _3401 = (frost$core$Int64) {5u};
 _3402 = (frost$core$Int) {3u};
 _3403 = _3401.value;
 ((frost$core$Int*)_3400)[_3403] = _3402;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:213
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:212
 _3406 = *(&local2);
 _3407 = _3406.value;
 _3408 = (frost$core$Int64) {117u};
 _3409 = (frost$core$Int) {31u};
 _3410 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:213:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:212:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _3415 = _3409.value;
 _3416 = _3415 * 8u;
 _3417 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_3416);
-_3418 = frost$unsafe$NewPointer$init$builtin_int(_3417);
+_3418 = frost$unsafe$Pointer$init$builtin_int(_3417);
 *(&local47) = _3418;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _3422 = (frost$core$Int) {0u};
 _3423 = (frost$core$Bit) {false};
 _3424 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_3422, _3409, _3423);
@@ -7804,7 +7805,7 @@ _3441 = (frost$core$Bit) {_3440};
 _3442 = _3441.value;
 if (_3442) goto block225; else goto block226;
 block225:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _3445 = *(&local47);
 _3446 = _3445.value;
 _3447 = *(&local48);
@@ -7839,44 +7840,44 @@ _3473 = (frost$core$Int) {_3472};
 *(&local48) = _3473;
 goto block225;
 block226:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _3477 = *(&local47);
 _3479 = _3408.value;
-((frost$unsafe$NewPointer*)_3407)[_3479] = _3477;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:214
+((frost$unsafe$Pointer*)_3407)[_3479] = _3477;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:213
 _3482 = *(&local2);
 _3483 = _3482.value;
 _3484 = (frost$core$Int64) {117u};
 _3485 = _3484.value;
-_3486 = ((frost$unsafe$NewPointer*)_3483)[_3485];
+_3486 = ((frost$unsafe$Pointer*)_3483)[_3485];
 _3487 = _3486.value;
 _3488 = (frost$core$Int64) {3u};
 _3489 = (frost$core$Int) {3u};
 _3490 = _3488.value;
 ((frost$core$Int*)_3487)[_3490] = _3489;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:215
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:214
 _3493 = *(&local2);
 _3494 = _3493.value;
 _3495 = (frost$core$Int64) {117u};
 _3496 = _3495.value;
-_3497 = ((frost$unsafe$NewPointer*)_3494)[_3496];
+_3497 = ((frost$unsafe$Pointer*)_3494)[_3496];
 _3498 = _3497.value;
 _3499 = (frost$core$Int64) {21u};
 _3500 = (frost$core$Int) {22u};
 _3501 = _3499.value;
 ((frost$core$Int*)_3498)[_3501] = _3500;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:216
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:215
 _3504 = *(&local2);
 _3505 = _3504.value;
 _3506 = (frost$core$Int64) {117u};
 _3507 = _3506.value;
-_3508 = ((frost$unsafe$NewPointer*)_3505)[_3507];
+_3508 = ((frost$unsafe$Pointer*)_3505)[_3507];
 _3509 = _3508.value;
 _3510 = (frost$core$Int64) {26u};
 _3511 = (frost$core$Int) {27u};
 _3512 = _3510.value;
 ((frost$core$Int*)_3509)[_3512] = _3511;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:217
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:216
 _3515 = *(&local2);
 _3516 = _3515.value;
 _3517 = (frost$core$Int64) {118u};
@@ -7884,10 +7885,10 @@ _3518 = *(&local2);
 _3519 = _3518.value;
 _3520 = (frost$core$Int64) {0u};
 _3521 = _3520.value;
-_3522 = ((frost$unsafe$NewPointer*)_3519)[_3521];
+_3522 = ((frost$unsafe$Pointer*)_3519)[_3521];
 _3523 = _3517.value;
-((frost$unsafe$NewPointer*)_3516)[_3523] = _3522;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:218
+((frost$unsafe$Pointer*)_3516)[_3523] = _3522;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:217
 _3526 = *(&local2);
 _3527 = _3526.value;
 _3528 = (frost$core$Int64) {119u};
@@ -7895,10 +7896,10 @@ _3529 = *(&local2);
 _3530 = _3529.value;
 _3531 = (frost$core$Int64) {0u};
 _3532 = _3531.value;
-_3533 = ((frost$unsafe$NewPointer*)_3530)[_3532];
+_3533 = ((frost$unsafe$Pointer*)_3530)[_3532];
 _3534 = _3528.value;
-((frost$unsafe$NewPointer*)_3527)[_3534] = _3533;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:219
+((frost$unsafe$Pointer*)_3527)[_3534] = _3533;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:218
 _3537 = *(&local2);
 _3538 = _3537.value;
 _3539 = (frost$core$Int64) {120u};
@@ -7906,10 +7907,10 @@ _3540 = *(&local2);
 _3541 = _3540.value;
 _3542 = (frost$core$Int64) {0u};
 _3543 = _3542.value;
-_3544 = ((frost$unsafe$NewPointer*)_3541)[_3543];
+_3544 = ((frost$unsafe$Pointer*)_3541)[_3543];
 _3545 = _3539.value;
-((frost$unsafe$NewPointer*)_3538)[_3545] = _3544;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:220
+((frost$unsafe$Pointer*)_3538)[_3545] = _3544;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:219
 _3548 = *(&local2);
 _3549 = _3548.value;
 _3550 = (frost$core$Int64) {121u};
@@ -7917,10 +7918,10 @@ _3551 = *(&local2);
 _3552 = _3551.value;
 _3553 = (frost$core$Int64) {0u};
 _3554 = _3553.value;
-_3555 = ((frost$unsafe$NewPointer*)_3552)[_3554];
+_3555 = ((frost$unsafe$Pointer*)_3552)[_3554];
 _3556 = _3550.value;
-((frost$unsafe$NewPointer*)_3549)[_3556] = _3555;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:221
+((frost$unsafe$Pointer*)_3549)[_3556] = _3555;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:220
 _3559 = *(&local2);
 _3560 = _3559.value;
 _3561 = (frost$core$Int64) {122u};
@@ -7928,25 +7929,25 @@ _3562 = *(&local2);
 _3563 = _3562.value;
 _3564 = (frost$core$Int64) {0u};
 _3565 = _3564.value;
-_3566 = ((frost$unsafe$NewPointer*)_3563)[_3565];
+_3566 = ((frost$unsafe$Pointer*)_3563)[_3565];
 _3567 = _3561.value;
-((frost$unsafe$NewPointer*)_3560)[_3567] = _3566;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:222
+((frost$unsafe$Pointer*)_3560)[_3567] = _3566;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:221
 _3570 = *(&local2);
 _3571 = _3570.value;
 _3572 = (frost$core$Int64) {123u};
 _3573 = (frost$core$Int) {31u};
 _3574 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:222:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:221:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _3579 = _3573.value;
 _3580 = _3579 * 8u;
 _3581 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_3580);
-_3582 = frost$unsafe$NewPointer$init$builtin_int(_3581);
+_3582 = frost$unsafe$Pointer$init$builtin_int(_3581);
 *(&local49) = _3582;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _3586 = (frost$core$Int) {0u};
 _3587 = (frost$core$Bit) {false};
 _3588 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_3586, _3573, _3587);
@@ -7972,7 +7973,7 @@ _3605 = (frost$core$Bit) {_3604};
 _3606 = _3605.value;
 if (_3606) goto block235; else goto block236;
 block235:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _3609 = *(&local49);
 _3610 = _3609.value;
 _3611 = *(&local50);
@@ -8007,33 +8008,33 @@ _3637 = (frost$core$Int) {_3636};
 *(&local50) = _3637;
 goto block235;
 block236:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _3641 = *(&local49);
 _3643 = _3572.value;
-((frost$unsafe$NewPointer*)_3571)[_3643] = _3641;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:223
+((frost$unsafe$Pointer*)_3571)[_3643] = _3641;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:222
 _3646 = *(&local2);
 _3647 = _3646.value;
 _3648 = (frost$core$Int64) {123u};
 _3649 = _3648.value;
-_3650 = ((frost$unsafe$NewPointer*)_3647)[_3649];
+_3650 = ((frost$unsafe$Pointer*)_3647)[_3649];
 _3651 = _3650.value;
 _3652 = (frost$core$Int64) {1u};
 _3653 = (frost$core$Int) {29u};
 _3654 = _3652.value;
 ((frost$core$Int*)_3651)[_3654] = _3653;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:224
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:223
 _3657 = *(&local2);
 _3658 = _3657.value;
 _3659 = (frost$core$Int64) {123u};
 _3660 = _3659.value;
-_3661 = ((frost$unsafe$NewPointer*)_3658)[_3660];
+_3661 = ((frost$unsafe$Pointer*)_3658)[_3660];
 _3662 = _3661.value;
 _3663 = (frost$core$Int64) {3u};
 _3664 = (frost$core$Int) {3u};
 _3665 = _3663.value;
 ((frost$core$Int*)_3662)[_3665] = _3664;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:225
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:224
 _3668 = *(&local2);
 _3669 = _3668.value;
 _3670 = (frost$core$Int64) {124u};
@@ -8041,25 +8042,25 @@ _3671 = *(&local2);
 _3672 = _3671.value;
 _3673 = (frost$core$Int64) {0u};
 _3674 = _3673.value;
-_3675 = ((frost$unsafe$NewPointer*)_3672)[_3674];
+_3675 = ((frost$unsafe$Pointer*)_3672)[_3674];
 _3676 = _3670.value;
-((frost$unsafe$NewPointer*)_3669)[_3676] = _3675;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:226
+((frost$unsafe$Pointer*)_3669)[_3676] = _3675;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:225
 _3679 = *(&local2);
 _3680 = _3679.value;
 _3681 = (frost$core$Int64) {125u};
 _3682 = (frost$core$Int) {31u};
 _3683 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.NewPointer<frost.core.Int> from Lexer.frost:226:29
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:25:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to function org.frostlang.json.Lexer.alloc(count:frost.core.Int, fill:frost.core.Int):frost.unsafe.Pointer<frost.core.Int> from Lexer.frost:225:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:24
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:24:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _3688 = _3682.value;
 _3689 = _3688 * 8u;
 _3690 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_3689);
-_3691 = frost$unsafe$NewPointer$init$builtin_int(_3690);
+_3691 = frost$unsafe$Pointer$init$builtin_int(_3690);
 *(&local51) = _3691;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _3695 = (frost$core$Int) {0u};
 _3696 = (frost$core$Bit) {false};
 _3697 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_3695, _3682, _3696);
@@ -8085,7 +8086,7 @@ _3714 = (frost$core$Bit) {_3713};
 _3715 = _3714.value;
 if (_3715) goto block245; else goto block246;
 block245:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _3718 = *(&local51);
 _3719 = _3718.value;
 _3720 = *(&local52);
@@ -8120,33 +8121,33 @@ _3746 = (frost$core$Int) {_3745};
 *(&local52) = _3746;
 goto block245;
 block246:;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:28
 _3750 = *(&local51);
 _3752 = _3681.value;
-((frost$unsafe$NewPointer*)_3680)[_3752] = _3750;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:227
+((frost$unsafe$Pointer*)_3680)[_3752] = _3750;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:226
 _3755 = *(&local2);
 _3756 = _3755.value;
 _3757 = (frost$core$Int64) {125u};
 _3758 = _3757.value;
-_3759 = ((frost$unsafe$NewPointer*)_3756)[_3758];
+_3759 = ((frost$unsafe$Pointer*)_3756)[_3758];
 _3760 = _3759.value;
 _3761 = (frost$core$Int64) {1u};
 _3762 = (frost$core$Int) {30u};
 _3763 = _3761.value;
 ((frost$core$Int*)_3760)[_3763] = _3762;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:228
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:227
 _3766 = *(&local2);
 _3767 = _3766.value;
 _3768 = (frost$core$Int64) {125u};
 _3769 = _3768.value;
-_3770 = ((frost$unsafe$NewPointer*)_3767)[_3769];
+_3770 = ((frost$unsafe$Pointer*)_3767)[_3769];
 _3771 = _3770.value;
 _3772 = (frost$core$Int64) {3u};
 _3773 = (frost$core$Int) {3u};
 _3774 = _3772.value;
 ((frost$core$Int*)_3771)[_3774] = _3773;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:229
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:228
 _3777 = *(&local2);
 _3778 = _3777.value;
 _3779 = (frost$core$Int64) {126u};
@@ -8154,10 +8155,10 @@ _3780 = *(&local2);
 _3781 = _3780.value;
 _3782 = (frost$core$Int64) {0u};
 _3783 = _3782.value;
-_3784 = ((frost$unsafe$NewPointer*)_3781)[_3783];
+_3784 = ((frost$unsafe$Pointer*)_3781)[_3783];
 _3785 = _3779.value;
-((frost$unsafe$NewPointer*)_3778)[_3785] = _3784;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:230
+((frost$unsafe$Pointer*)_3778)[_3785] = _3784;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:229
 _3788 = *(&local2);
 _3789 = _3788.value;
 _3790 = (frost$core$Int64) {127u};
@@ -8165,10 +8166,10 @@ _3791 = *(&local2);
 _3792 = _3791.value;
 _3793 = (frost$core$Int64) {0u};
 _3794 = _3793.value;
-_3795 = ((frost$unsafe$NewPointer*)_3792)[_3794];
+_3795 = ((frost$unsafe$Pointer*)_3792)[_3794];
 _3796 = _3790.value;
-((frost$unsafe$NewPointer*)_3789)[_3796] = _3795;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:231
+((frost$unsafe$Pointer*)_3789)[_3796] = _3795;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:230
 _3799 = *(&local2);
 _3800 = _3799.value;
 _3801 = (frost$core$Int64) {128u};
@@ -8176,10 +8177,10 @@ _3802 = *(&local2);
 _3803 = _3802.value;
 _3804 = (frost$core$Int64) {0u};
 _3805 = _3804.value;
-_3806 = ((frost$unsafe$NewPointer*)_3803)[_3805];
+_3806 = ((frost$unsafe$Pointer*)_3803)[_3805];
 _3807 = _3801.value;
-((frost$unsafe$NewPointer*)_3800)[_3807] = _3806;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:232
+((frost$unsafe$Pointer*)_3800)[_3807] = _3806;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:231
 _3810 = *(&local2);
 _3811 = _3810.value;
 _3812 = (frost$core$Int64) {129u};
@@ -8187,10 +8188,10 @@ _3813 = *(&local2);
 _3814 = _3813.value;
 _3815 = (frost$core$Int64) {0u};
 _3816 = _3815.value;
-_3817 = ((frost$unsafe$NewPointer*)_3814)[_3816];
+_3817 = ((frost$unsafe$Pointer*)_3814)[_3816];
 _3818 = _3812.value;
-((frost$unsafe$NewPointer*)_3811)[_3818] = _3817;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:233
+((frost$unsafe$Pointer*)_3811)[_3818] = _3817;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:232
 _3821 = *(&local2);
 _3822 = _3821.value;
 _3823 = (frost$core$Int64) {130u};
@@ -8198,10 +8199,10 @@ _3824 = *(&local2);
 _3825 = _3824.value;
 _3826 = (frost$core$Int64) {0u};
 _3827 = _3826.value;
-_3828 = ((frost$unsafe$NewPointer*)_3825)[_3827];
+_3828 = ((frost$unsafe$Pointer*)_3825)[_3827];
 _3829 = _3823.value;
-((frost$unsafe$NewPointer*)_3822)[_3829] = _3828;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:234
+((frost$unsafe$Pointer*)_3822)[_3829] = _3828;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:233
 _3832 = *(&local2);
 _3833 = _3832.value;
 _3834 = (frost$core$Int64) {131u};
@@ -8209,10 +8210,10 @@ _3835 = *(&local2);
 _3836 = _3835.value;
 _3837 = (frost$core$Int64) {0u};
 _3838 = _3837.value;
-_3839 = ((frost$unsafe$NewPointer*)_3836)[_3838];
+_3839 = ((frost$unsafe$Pointer*)_3836)[_3838];
 _3840 = _3834.value;
-((frost$unsafe$NewPointer*)_3833)[_3840] = _3839;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:235
+((frost$unsafe$Pointer*)_3833)[_3840] = _3839;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:234
 _3843 = *(&local2);
 _3844 = _3843.value;
 _3845 = (frost$core$Int64) {132u};
@@ -8220,10 +8221,10 @@ _3846 = *(&local2);
 _3847 = _3846.value;
 _3848 = (frost$core$Int64) {0u};
 _3849 = _3848.value;
-_3850 = ((frost$unsafe$NewPointer*)_3847)[_3849];
+_3850 = ((frost$unsafe$Pointer*)_3847)[_3849];
 _3851 = _3845.value;
-((frost$unsafe$NewPointer*)_3844)[_3851] = _3850;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:236
+((frost$unsafe$Pointer*)_3844)[_3851] = _3850;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:235
 _3854 = *(&local2);
 _3855 = _3854.value;
 _3856 = (frost$core$Int64) {133u};
@@ -8231,10 +8232,10 @@ _3857 = *(&local2);
 _3858 = _3857.value;
 _3859 = (frost$core$Int64) {0u};
 _3860 = _3859.value;
-_3861 = ((frost$unsafe$NewPointer*)_3858)[_3860];
+_3861 = ((frost$unsafe$Pointer*)_3858)[_3860];
 _3862 = _3856.value;
-((frost$unsafe$NewPointer*)_3855)[_3862] = _3861;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:237
+((frost$unsafe$Pointer*)_3855)[_3862] = _3861;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:236
 _3865 = *(&local2);
 _3866 = _3865.value;
 _3867 = (frost$core$Int64) {134u};
@@ -8242,10 +8243,10 @@ _3868 = *(&local2);
 _3869 = _3868.value;
 _3870 = (frost$core$Int64) {0u};
 _3871 = _3870.value;
-_3872 = ((frost$unsafe$NewPointer*)_3869)[_3871];
+_3872 = ((frost$unsafe$Pointer*)_3869)[_3871];
 _3873 = _3867.value;
-((frost$unsafe$NewPointer*)_3866)[_3873] = _3872;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:238
+((frost$unsafe$Pointer*)_3866)[_3873] = _3872;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:237
 _3876 = *(&local2);
 _3877 = _3876.value;
 _3878 = (frost$core$Int64) {135u};
@@ -8253,10 +8254,10 @@ _3879 = *(&local2);
 _3880 = _3879.value;
 _3881 = (frost$core$Int64) {0u};
 _3882 = _3881.value;
-_3883 = ((frost$unsafe$NewPointer*)_3880)[_3882];
+_3883 = ((frost$unsafe$Pointer*)_3880)[_3882];
 _3884 = _3878.value;
-((frost$unsafe$NewPointer*)_3877)[_3884] = _3883;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:239
+((frost$unsafe$Pointer*)_3877)[_3884] = _3883;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:238
 _3887 = *(&local2);
 _3888 = _3887.value;
 _3889 = (frost$core$Int64) {136u};
@@ -8264,10 +8265,10 @@ _3890 = *(&local2);
 _3891 = _3890.value;
 _3892 = (frost$core$Int64) {0u};
 _3893 = _3892.value;
-_3894 = ((frost$unsafe$NewPointer*)_3891)[_3893];
+_3894 = ((frost$unsafe$Pointer*)_3891)[_3893];
 _3895 = _3889.value;
-((frost$unsafe$NewPointer*)_3888)[_3895] = _3894;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:240
+((frost$unsafe$Pointer*)_3888)[_3895] = _3894;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:239
 _3898 = *(&local2);
 _3899 = _3898.value;
 _3900 = (frost$core$Int64) {137u};
@@ -8275,10 +8276,10 @@ _3901 = *(&local2);
 _3902 = _3901.value;
 _3903 = (frost$core$Int64) {0u};
 _3904 = _3903.value;
-_3905 = ((frost$unsafe$NewPointer*)_3902)[_3904];
+_3905 = ((frost$unsafe$Pointer*)_3902)[_3904];
 _3906 = _3900.value;
-((frost$unsafe$NewPointer*)_3899)[_3906] = _3905;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:241
+((frost$unsafe$Pointer*)_3899)[_3906] = _3905;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:240
 _3909 = *(&local2);
 _3910 = _3909.value;
 _3911 = (frost$core$Int64) {138u};
@@ -8286,10 +8287,10 @@ _3912 = *(&local2);
 _3913 = _3912.value;
 _3914 = (frost$core$Int64) {0u};
 _3915 = _3914.value;
-_3916 = ((frost$unsafe$NewPointer*)_3913)[_3915];
+_3916 = ((frost$unsafe$Pointer*)_3913)[_3915];
 _3917 = _3911.value;
-((frost$unsafe$NewPointer*)_3910)[_3917] = _3916;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:242
+((frost$unsafe$Pointer*)_3910)[_3917] = _3916;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:241
 _3920 = *(&local2);
 _3921 = _3920.value;
 _3922 = (frost$core$Int64) {139u};
@@ -8297,10 +8298,10 @@ _3923 = *(&local2);
 _3924 = _3923.value;
 _3925 = (frost$core$Int64) {0u};
 _3926 = _3925.value;
-_3927 = ((frost$unsafe$NewPointer*)_3924)[_3926];
+_3927 = ((frost$unsafe$Pointer*)_3924)[_3926];
 _3928 = _3922.value;
-((frost$unsafe$NewPointer*)_3921)[_3928] = _3927;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:243
+((frost$unsafe$Pointer*)_3921)[_3928] = _3927;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:242
 _3931 = *(&local2);
 _3932 = _3931.value;
 _3933 = (frost$core$Int64) {140u};
@@ -8308,10 +8309,10 @@ _3934 = *(&local2);
 _3935 = _3934.value;
 _3936 = (frost$core$Int64) {0u};
 _3937 = _3936.value;
-_3938 = ((frost$unsafe$NewPointer*)_3935)[_3937];
+_3938 = ((frost$unsafe$Pointer*)_3935)[_3937];
 _3939 = _3933.value;
-((frost$unsafe$NewPointer*)_3932)[_3939] = _3938;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:244
+((frost$unsafe$Pointer*)_3932)[_3939] = _3938;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:243
 _3942 = *(&local2);
 _3943 = _3942.value;
 _3944 = (frost$core$Int64) {141u};
@@ -8319,10 +8320,10 @@ _3945 = *(&local2);
 _3946 = _3945.value;
 _3947 = (frost$core$Int64) {0u};
 _3948 = _3947.value;
-_3949 = ((frost$unsafe$NewPointer*)_3946)[_3948];
+_3949 = ((frost$unsafe$Pointer*)_3946)[_3948];
 _3950 = _3944.value;
-((frost$unsafe$NewPointer*)_3943)[_3950] = _3949;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:245
+((frost$unsafe$Pointer*)_3943)[_3950] = _3949;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:244
 _3953 = *(&local2);
 _3954 = _3953.value;
 _3955 = (frost$core$Int64) {142u};
@@ -8330,10 +8331,10 @@ _3956 = *(&local2);
 _3957 = _3956.value;
 _3958 = (frost$core$Int64) {0u};
 _3959 = _3958.value;
-_3960 = ((frost$unsafe$NewPointer*)_3957)[_3959];
+_3960 = ((frost$unsafe$Pointer*)_3957)[_3959];
 _3961 = _3955.value;
-((frost$unsafe$NewPointer*)_3954)[_3961] = _3960;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:246
+((frost$unsafe$Pointer*)_3954)[_3961] = _3960;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:245
 _3964 = *(&local2);
 _3965 = _3964.value;
 _3966 = (frost$core$Int64) {143u};
@@ -8341,10 +8342,10 @@ _3967 = *(&local2);
 _3968 = _3967.value;
 _3969 = (frost$core$Int64) {0u};
 _3970 = _3969.value;
-_3971 = ((frost$unsafe$NewPointer*)_3968)[_3970];
+_3971 = ((frost$unsafe$Pointer*)_3968)[_3970];
 _3972 = _3966.value;
-((frost$unsafe$NewPointer*)_3965)[_3972] = _3971;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:247
+((frost$unsafe$Pointer*)_3965)[_3972] = _3971;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:246
 _3975 = *(&local2);
 _3976 = _3975.value;
 _3977 = (frost$core$Int64) {144u};
@@ -8352,10 +8353,10 @@ _3978 = *(&local2);
 _3979 = _3978.value;
 _3980 = (frost$core$Int64) {0u};
 _3981 = _3980.value;
-_3982 = ((frost$unsafe$NewPointer*)_3979)[_3981];
+_3982 = ((frost$unsafe$Pointer*)_3979)[_3981];
 _3983 = _3977.value;
-((frost$unsafe$NewPointer*)_3976)[_3983] = _3982;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:248
+((frost$unsafe$Pointer*)_3976)[_3983] = _3982;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:247
 _3986 = *(&local2);
 _3987 = _3986.value;
 _3988 = (frost$core$Int64) {145u};
@@ -8363,10 +8364,10 @@ _3989 = *(&local2);
 _3990 = _3989.value;
 _3991 = (frost$core$Int64) {0u};
 _3992 = _3991.value;
-_3993 = ((frost$unsafe$NewPointer*)_3990)[_3992];
+_3993 = ((frost$unsafe$Pointer*)_3990)[_3992];
 _3994 = _3988.value;
-((frost$unsafe$NewPointer*)_3987)[_3994] = _3993;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:249
+((frost$unsafe$Pointer*)_3987)[_3994] = _3993;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:248
 _3997 = *(&local2);
 _3998 = _3997.value;
 _3999 = (frost$core$Int64) {146u};
@@ -8374,10 +8375,10 @@ _4000 = *(&local2);
 _4001 = _4000.value;
 _4002 = (frost$core$Int64) {0u};
 _4003 = _4002.value;
-_4004 = ((frost$unsafe$NewPointer*)_4001)[_4003];
+_4004 = ((frost$unsafe$Pointer*)_4001)[_4003];
 _4005 = _3999.value;
-((frost$unsafe$NewPointer*)_3998)[_4005] = _4004;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:250
+((frost$unsafe$Pointer*)_3998)[_4005] = _4004;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:249
 _4008 = *(&local2);
 _4009 = _4008.value;
 _4010 = (frost$core$Int64) {147u};
@@ -8385,10 +8386,10 @@ _4011 = *(&local2);
 _4012 = _4011.value;
 _4013 = (frost$core$Int64) {0u};
 _4014 = _4013.value;
-_4015 = ((frost$unsafe$NewPointer*)_4012)[_4014];
+_4015 = ((frost$unsafe$Pointer*)_4012)[_4014];
 _4016 = _4010.value;
-((frost$unsafe$NewPointer*)_4009)[_4016] = _4015;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:251
+((frost$unsafe$Pointer*)_4009)[_4016] = _4015;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:250
 _4019 = *(&local2);
 _4020 = _4019.value;
 _4021 = (frost$core$Int64) {148u};
@@ -8396,10 +8397,10 @@ _4022 = *(&local2);
 _4023 = _4022.value;
 _4024 = (frost$core$Int64) {0u};
 _4025 = _4024.value;
-_4026 = ((frost$unsafe$NewPointer*)_4023)[_4025];
+_4026 = ((frost$unsafe$Pointer*)_4023)[_4025];
 _4027 = _4021.value;
-((frost$unsafe$NewPointer*)_4020)[_4027] = _4026;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:252
+((frost$unsafe$Pointer*)_4020)[_4027] = _4026;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:251
 _4030 = *(&local2);
 _4031 = _4030.value;
 _4032 = (frost$core$Int64) {149u};
@@ -8407,10 +8408,10 @@ _4033 = *(&local2);
 _4034 = _4033.value;
 _4035 = (frost$core$Int64) {0u};
 _4036 = _4035.value;
-_4037 = ((frost$unsafe$NewPointer*)_4034)[_4036];
+_4037 = ((frost$unsafe$Pointer*)_4034)[_4036];
 _4038 = _4032.value;
-((frost$unsafe$NewPointer*)_4031)[_4038] = _4037;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:253
+((frost$unsafe$Pointer*)_4031)[_4038] = _4037;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:252
 _4041 = *(&local2);
 _4042 = _4041.value;
 _4043 = (frost$core$Int64) {150u};
@@ -8418,10 +8419,10 @@ _4044 = *(&local2);
 _4045 = _4044.value;
 _4046 = (frost$core$Int64) {0u};
 _4047 = _4046.value;
-_4048 = ((frost$unsafe$NewPointer*)_4045)[_4047];
+_4048 = ((frost$unsafe$Pointer*)_4045)[_4047];
 _4049 = _4043.value;
-((frost$unsafe$NewPointer*)_4042)[_4049] = _4048;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:254
+((frost$unsafe$Pointer*)_4042)[_4049] = _4048;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:253
 _4052 = *(&local2);
 _4053 = _4052.value;
 _4054 = (frost$core$Int64) {151u};
@@ -8429,10 +8430,10 @@ _4055 = *(&local2);
 _4056 = _4055.value;
 _4057 = (frost$core$Int64) {0u};
 _4058 = _4057.value;
-_4059 = ((frost$unsafe$NewPointer*)_4056)[_4058];
+_4059 = ((frost$unsafe$Pointer*)_4056)[_4058];
 _4060 = _4054.value;
-((frost$unsafe$NewPointer*)_4053)[_4060] = _4059;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:255
+((frost$unsafe$Pointer*)_4053)[_4060] = _4059;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:254
 _4063 = *(&local2);
 _4064 = _4063.value;
 _4065 = (frost$core$Int64) {152u};
@@ -8440,10 +8441,10 @@ _4066 = *(&local2);
 _4067 = _4066.value;
 _4068 = (frost$core$Int64) {0u};
 _4069 = _4068.value;
-_4070 = ((frost$unsafe$NewPointer*)_4067)[_4069];
+_4070 = ((frost$unsafe$Pointer*)_4067)[_4069];
 _4071 = _4065.value;
-((frost$unsafe$NewPointer*)_4064)[_4071] = _4070;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:256
+((frost$unsafe$Pointer*)_4064)[_4071] = _4070;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:255
 _4074 = *(&local2);
 _4075 = _4074.value;
 _4076 = (frost$core$Int64) {153u};
@@ -8451,10 +8452,10 @@ _4077 = *(&local2);
 _4078 = _4077.value;
 _4079 = (frost$core$Int64) {0u};
 _4080 = _4079.value;
-_4081 = ((frost$unsafe$NewPointer*)_4078)[_4080];
+_4081 = ((frost$unsafe$Pointer*)_4078)[_4080];
 _4082 = _4076.value;
-((frost$unsafe$NewPointer*)_4075)[_4082] = _4081;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:257
+((frost$unsafe$Pointer*)_4075)[_4082] = _4081;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:256
 _4085 = *(&local2);
 _4086 = _4085.value;
 _4087 = (frost$core$Int64) {154u};
@@ -8462,10 +8463,10 @@ _4088 = *(&local2);
 _4089 = _4088.value;
 _4090 = (frost$core$Int64) {0u};
 _4091 = _4090.value;
-_4092 = ((frost$unsafe$NewPointer*)_4089)[_4091];
+_4092 = ((frost$unsafe$Pointer*)_4089)[_4091];
 _4093 = _4087.value;
-((frost$unsafe$NewPointer*)_4086)[_4093] = _4092;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:258
+((frost$unsafe$Pointer*)_4086)[_4093] = _4092;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:257
 _4096 = *(&local2);
 _4097 = _4096.value;
 _4098 = (frost$core$Int64) {155u};
@@ -8473,10 +8474,10 @@ _4099 = *(&local2);
 _4100 = _4099.value;
 _4101 = (frost$core$Int64) {0u};
 _4102 = _4101.value;
-_4103 = ((frost$unsafe$NewPointer*)_4100)[_4102];
+_4103 = ((frost$unsafe$Pointer*)_4100)[_4102];
 _4104 = _4098.value;
-((frost$unsafe$NewPointer*)_4097)[_4104] = _4103;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:259
+((frost$unsafe$Pointer*)_4097)[_4104] = _4103;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:258
 _4107 = *(&local2);
 _4108 = _4107.value;
 _4109 = (frost$core$Int64) {156u};
@@ -8484,10 +8485,10 @@ _4110 = *(&local2);
 _4111 = _4110.value;
 _4112 = (frost$core$Int64) {0u};
 _4113 = _4112.value;
-_4114 = ((frost$unsafe$NewPointer*)_4111)[_4113];
+_4114 = ((frost$unsafe$Pointer*)_4111)[_4113];
 _4115 = _4109.value;
-((frost$unsafe$NewPointer*)_4108)[_4115] = _4114;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:260
+((frost$unsafe$Pointer*)_4108)[_4115] = _4114;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:259
 _4118 = *(&local2);
 _4119 = _4118.value;
 _4120 = (frost$core$Int64) {157u};
@@ -8495,10 +8496,10 @@ _4121 = *(&local2);
 _4122 = _4121.value;
 _4123 = (frost$core$Int64) {0u};
 _4124 = _4123.value;
-_4125 = ((frost$unsafe$NewPointer*)_4122)[_4124];
+_4125 = ((frost$unsafe$Pointer*)_4122)[_4124];
 _4126 = _4120.value;
-((frost$unsafe$NewPointer*)_4119)[_4126] = _4125;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:261
+((frost$unsafe$Pointer*)_4119)[_4126] = _4125;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:260
 _4129 = *(&local2);
 _4130 = _4129.value;
 _4131 = (frost$core$Int64) {158u};
@@ -8506,10 +8507,10 @@ _4132 = *(&local2);
 _4133 = _4132.value;
 _4134 = (frost$core$Int64) {0u};
 _4135 = _4134.value;
-_4136 = ((frost$unsafe$NewPointer*)_4133)[_4135];
+_4136 = ((frost$unsafe$Pointer*)_4133)[_4135];
 _4137 = _4131.value;
-((frost$unsafe$NewPointer*)_4130)[_4137] = _4136;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:262
+((frost$unsafe$Pointer*)_4130)[_4137] = _4136;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:261
 _4140 = *(&local2);
 _4141 = _4140.value;
 _4142 = (frost$core$Int64) {159u};
@@ -8517,10 +8518,10 @@ _4143 = *(&local2);
 _4144 = _4143.value;
 _4145 = (frost$core$Int64) {0u};
 _4146 = _4145.value;
-_4147 = ((frost$unsafe$NewPointer*)_4144)[_4146];
+_4147 = ((frost$unsafe$Pointer*)_4144)[_4146];
 _4148 = _4142.value;
-((frost$unsafe$NewPointer*)_4141)[_4148] = _4147;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:263
+((frost$unsafe$Pointer*)_4141)[_4148] = _4147;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:262
 _4151 = *(&local2);
 _4152 = _4151.value;
 _4153 = (frost$core$Int64) {160u};
@@ -8528,10 +8529,10 @@ _4154 = *(&local2);
 _4155 = _4154.value;
 _4156 = (frost$core$Int64) {0u};
 _4157 = _4156.value;
-_4158 = ((frost$unsafe$NewPointer*)_4155)[_4157];
+_4158 = ((frost$unsafe$Pointer*)_4155)[_4157];
 _4159 = _4153.value;
-((frost$unsafe$NewPointer*)_4152)[_4159] = _4158;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:264
+((frost$unsafe$Pointer*)_4152)[_4159] = _4158;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:263
 _4162 = *(&local2);
 _4163 = _4162.value;
 _4164 = (frost$core$Int64) {161u};
@@ -8539,10 +8540,10 @@ _4165 = *(&local2);
 _4166 = _4165.value;
 _4167 = (frost$core$Int64) {0u};
 _4168 = _4167.value;
-_4169 = ((frost$unsafe$NewPointer*)_4166)[_4168];
+_4169 = ((frost$unsafe$Pointer*)_4166)[_4168];
 _4170 = _4164.value;
-((frost$unsafe$NewPointer*)_4163)[_4170] = _4169;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:265
+((frost$unsafe$Pointer*)_4163)[_4170] = _4169;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:264
 _4173 = *(&local2);
 _4174 = _4173.value;
 _4175 = (frost$core$Int64) {162u};
@@ -8550,10 +8551,10 @@ _4176 = *(&local2);
 _4177 = _4176.value;
 _4178 = (frost$core$Int64) {0u};
 _4179 = _4178.value;
-_4180 = ((frost$unsafe$NewPointer*)_4177)[_4179];
+_4180 = ((frost$unsafe$Pointer*)_4177)[_4179];
 _4181 = _4175.value;
-((frost$unsafe$NewPointer*)_4174)[_4181] = _4180;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:266
+((frost$unsafe$Pointer*)_4174)[_4181] = _4180;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:265
 _4184 = *(&local2);
 _4185 = _4184.value;
 _4186 = (frost$core$Int64) {163u};
@@ -8561,10 +8562,10 @@ _4187 = *(&local2);
 _4188 = _4187.value;
 _4189 = (frost$core$Int64) {0u};
 _4190 = _4189.value;
-_4191 = ((frost$unsafe$NewPointer*)_4188)[_4190];
+_4191 = ((frost$unsafe$Pointer*)_4188)[_4190];
 _4192 = _4186.value;
-((frost$unsafe$NewPointer*)_4185)[_4192] = _4191;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:267
+((frost$unsafe$Pointer*)_4185)[_4192] = _4191;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:266
 _4195 = *(&local2);
 _4196 = _4195.value;
 _4197 = (frost$core$Int64) {164u};
@@ -8572,10 +8573,10 @@ _4198 = *(&local2);
 _4199 = _4198.value;
 _4200 = (frost$core$Int64) {0u};
 _4201 = _4200.value;
-_4202 = ((frost$unsafe$NewPointer*)_4199)[_4201];
+_4202 = ((frost$unsafe$Pointer*)_4199)[_4201];
 _4203 = _4197.value;
-((frost$unsafe$NewPointer*)_4196)[_4203] = _4202;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:268
+((frost$unsafe$Pointer*)_4196)[_4203] = _4202;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:267
 _4206 = *(&local2);
 _4207 = _4206.value;
 _4208 = (frost$core$Int64) {165u};
@@ -8583,10 +8584,10 @@ _4209 = *(&local2);
 _4210 = _4209.value;
 _4211 = (frost$core$Int64) {0u};
 _4212 = _4211.value;
-_4213 = ((frost$unsafe$NewPointer*)_4210)[_4212];
+_4213 = ((frost$unsafe$Pointer*)_4210)[_4212];
 _4214 = _4208.value;
-((frost$unsafe$NewPointer*)_4207)[_4214] = _4213;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:269
+((frost$unsafe$Pointer*)_4207)[_4214] = _4213;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:268
 _4217 = *(&local2);
 _4218 = _4217.value;
 _4219 = (frost$core$Int64) {166u};
@@ -8594,10 +8595,10 @@ _4220 = *(&local2);
 _4221 = _4220.value;
 _4222 = (frost$core$Int64) {0u};
 _4223 = _4222.value;
-_4224 = ((frost$unsafe$NewPointer*)_4221)[_4223];
+_4224 = ((frost$unsafe$Pointer*)_4221)[_4223];
 _4225 = _4219.value;
-((frost$unsafe$NewPointer*)_4218)[_4225] = _4224;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:270
+((frost$unsafe$Pointer*)_4218)[_4225] = _4224;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:269
 _4228 = *(&local2);
 _4229 = _4228.value;
 _4230 = (frost$core$Int64) {167u};
@@ -8605,10 +8606,10 @@ _4231 = *(&local2);
 _4232 = _4231.value;
 _4233 = (frost$core$Int64) {0u};
 _4234 = _4233.value;
-_4235 = ((frost$unsafe$NewPointer*)_4232)[_4234];
+_4235 = ((frost$unsafe$Pointer*)_4232)[_4234];
 _4236 = _4230.value;
-((frost$unsafe$NewPointer*)_4229)[_4236] = _4235;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:271
+((frost$unsafe$Pointer*)_4229)[_4236] = _4235;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:270
 _4239 = *(&local2);
 _4240 = _4239.value;
 _4241 = (frost$core$Int64) {168u};
@@ -8616,10 +8617,10 @@ _4242 = *(&local2);
 _4243 = _4242.value;
 _4244 = (frost$core$Int64) {0u};
 _4245 = _4244.value;
-_4246 = ((frost$unsafe$NewPointer*)_4243)[_4245];
+_4246 = ((frost$unsafe$Pointer*)_4243)[_4245];
 _4247 = _4241.value;
-((frost$unsafe$NewPointer*)_4240)[_4247] = _4246;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:272
+((frost$unsafe$Pointer*)_4240)[_4247] = _4246;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:271
 _4250 = *(&local2);
 _4251 = _4250.value;
 _4252 = (frost$core$Int64) {169u};
@@ -8627,10 +8628,10 @@ _4253 = *(&local2);
 _4254 = _4253.value;
 _4255 = (frost$core$Int64) {0u};
 _4256 = _4255.value;
-_4257 = ((frost$unsafe$NewPointer*)_4254)[_4256];
+_4257 = ((frost$unsafe$Pointer*)_4254)[_4256];
 _4258 = _4252.value;
-((frost$unsafe$NewPointer*)_4251)[_4258] = _4257;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:273
+((frost$unsafe$Pointer*)_4251)[_4258] = _4257;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:272
 _4261 = *(&local2);
 _4262 = _4261.value;
 _4263 = (frost$core$Int64) {170u};
@@ -8638,10 +8639,10 @@ _4264 = *(&local2);
 _4265 = _4264.value;
 _4266 = (frost$core$Int64) {0u};
 _4267 = _4266.value;
-_4268 = ((frost$unsafe$NewPointer*)_4265)[_4267];
+_4268 = ((frost$unsafe$Pointer*)_4265)[_4267];
 _4269 = _4263.value;
-((frost$unsafe$NewPointer*)_4262)[_4269] = _4268;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:274
+((frost$unsafe$Pointer*)_4262)[_4269] = _4268;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:273
 _4272 = *(&local2);
 _4273 = _4272.value;
 _4274 = (frost$core$Int64) {171u};
@@ -8649,10 +8650,10 @@ _4275 = *(&local2);
 _4276 = _4275.value;
 _4277 = (frost$core$Int64) {0u};
 _4278 = _4277.value;
-_4279 = ((frost$unsafe$NewPointer*)_4276)[_4278];
+_4279 = ((frost$unsafe$Pointer*)_4276)[_4278];
 _4280 = _4274.value;
-((frost$unsafe$NewPointer*)_4273)[_4280] = _4279;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:275
+((frost$unsafe$Pointer*)_4273)[_4280] = _4279;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:274
 _4283 = *(&local2);
 _4284 = _4283.value;
 _4285 = (frost$core$Int64) {172u};
@@ -8660,10 +8661,10 @@ _4286 = *(&local2);
 _4287 = _4286.value;
 _4288 = (frost$core$Int64) {0u};
 _4289 = _4288.value;
-_4290 = ((frost$unsafe$NewPointer*)_4287)[_4289];
+_4290 = ((frost$unsafe$Pointer*)_4287)[_4289];
 _4291 = _4285.value;
-((frost$unsafe$NewPointer*)_4284)[_4291] = _4290;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:276
+((frost$unsafe$Pointer*)_4284)[_4291] = _4290;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:275
 _4294 = *(&local2);
 _4295 = _4294.value;
 _4296 = (frost$core$Int64) {173u};
@@ -8671,10 +8672,10 @@ _4297 = *(&local2);
 _4298 = _4297.value;
 _4299 = (frost$core$Int64) {0u};
 _4300 = _4299.value;
-_4301 = ((frost$unsafe$NewPointer*)_4298)[_4300];
+_4301 = ((frost$unsafe$Pointer*)_4298)[_4300];
 _4302 = _4296.value;
-((frost$unsafe$NewPointer*)_4295)[_4302] = _4301;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:277
+((frost$unsafe$Pointer*)_4295)[_4302] = _4301;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:276
 _4305 = *(&local2);
 _4306 = _4305.value;
 _4307 = (frost$core$Int64) {174u};
@@ -8682,10 +8683,10 @@ _4308 = *(&local2);
 _4309 = _4308.value;
 _4310 = (frost$core$Int64) {0u};
 _4311 = _4310.value;
-_4312 = ((frost$unsafe$NewPointer*)_4309)[_4311];
+_4312 = ((frost$unsafe$Pointer*)_4309)[_4311];
 _4313 = _4307.value;
-((frost$unsafe$NewPointer*)_4306)[_4313] = _4312;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:278
+((frost$unsafe$Pointer*)_4306)[_4313] = _4312;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:277
 _4316 = *(&local2);
 _4317 = _4316.value;
 _4318 = (frost$core$Int64) {175u};
@@ -8693,10 +8694,10 @@ _4319 = *(&local2);
 _4320 = _4319.value;
 _4321 = (frost$core$Int64) {0u};
 _4322 = _4321.value;
-_4323 = ((frost$unsafe$NewPointer*)_4320)[_4322];
+_4323 = ((frost$unsafe$Pointer*)_4320)[_4322];
 _4324 = _4318.value;
-((frost$unsafe$NewPointer*)_4317)[_4324] = _4323;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:279
+((frost$unsafe$Pointer*)_4317)[_4324] = _4323;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:278
 _4327 = *(&local2);
 _4328 = _4327.value;
 _4329 = (frost$core$Int64) {176u};
@@ -8704,10 +8705,10 @@ _4330 = *(&local2);
 _4331 = _4330.value;
 _4332 = (frost$core$Int64) {0u};
 _4333 = _4332.value;
-_4334 = ((frost$unsafe$NewPointer*)_4331)[_4333];
+_4334 = ((frost$unsafe$Pointer*)_4331)[_4333];
 _4335 = _4329.value;
-((frost$unsafe$NewPointer*)_4328)[_4335] = _4334;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:280
+((frost$unsafe$Pointer*)_4328)[_4335] = _4334;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:279
 _4338 = *(&local2);
 _4339 = _4338.value;
 _4340 = (frost$core$Int64) {177u};
@@ -8715,10 +8716,10 @@ _4341 = *(&local2);
 _4342 = _4341.value;
 _4343 = (frost$core$Int64) {0u};
 _4344 = _4343.value;
-_4345 = ((frost$unsafe$NewPointer*)_4342)[_4344];
+_4345 = ((frost$unsafe$Pointer*)_4342)[_4344];
 _4346 = _4340.value;
-((frost$unsafe$NewPointer*)_4339)[_4346] = _4345;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:281
+((frost$unsafe$Pointer*)_4339)[_4346] = _4345;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:280
 _4349 = *(&local2);
 _4350 = _4349.value;
 _4351 = (frost$core$Int64) {178u};
@@ -8726,10 +8727,10 @@ _4352 = *(&local2);
 _4353 = _4352.value;
 _4354 = (frost$core$Int64) {0u};
 _4355 = _4354.value;
-_4356 = ((frost$unsafe$NewPointer*)_4353)[_4355];
+_4356 = ((frost$unsafe$Pointer*)_4353)[_4355];
 _4357 = _4351.value;
-((frost$unsafe$NewPointer*)_4350)[_4357] = _4356;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:282
+((frost$unsafe$Pointer*)_4350)[_4357] = _4356;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:281
 _4360 = *(&local2);
 _4361 = _4360.value;
 _4362 = (frost$core$Int64) {179u};
@@ -8737,10 +8738,10 @@ _4363 = *(&local2);
 _4364 = _4363.value;
 _4365 = (frost$core$Int64) {0u};
 _4366 = _4365.value;
-_4367 = ((frost$unsafe$NewPointer*)_4364)[_4366];
+_4367 = ((frost$unsafe$Pointer*)_4364)[_4366];
 _4368 = _4362.value;
-((frost$unsafe$NewPointer*)_4361)[_4368] = _4367;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:283
+((frost$unsafe$Pointer*)_4361)[_4368] = _4367;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:282
 _4371 = *(&local2);
 _4372 = _4371.value;
 _4373 = (frost$core$Int64) {180u};
@@ -8748,10 +8749,10 @@ _4374 = *(&local2);
 _4375 = _4374.value;
 _4376 = (frost$core$Int64) {0u};
 _4377 = _4376.value;
-_4378 = ((frost$unsafe$NewPointer*)_4375)[_4377];
+_4378 = ((frost$unsafe$Pointer*)_4375)[_4377];
 _4379 = _4373.value;
-((frost$unsafe$NewPointer*)_4372)[_4379] = _4378;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:284
+((frost$unsafe$Pointer*)_4372)[_4379] = _4378;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:283
 _4382 = *(&local2);
 _4383 = _4382.value;
 _4384 = (frost$core$Int64) {181u};
@@ -8759,10 +8760,10 @@ _4385 = *(&local2);
 _4386 = _4385.value;
 _4387 = (frost$core$Int64) {0u};
 _4388 = _4387.value;
-_4389 = ((frost$unsafe$NewPointer*)_4386)[_4388];
+_4389 = ((frost$unsafe$Pointer*)_4386)[_4388];
 _4390 = _4384.value;
-((frost$unsafe$NewPointer*)_4383)[_4390] = _4389;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:285
+((frost$unsafe$Pointer*)_4383)[_4390] = _4389;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:284
 _4393 = *(&local2);
 _4394 = _4393.value;
 _4395 = (frost$core$Int64) {182u};
@@ -8770,10 +8771,10 @@ _4396 = *(&local2);
 _4397 = _4396.value;
 _4398 = (frost$core$Int64) {0u};
 _4399 = _4398.value;
-_4400 = ((frost$unsafe$NewPointer*)_4397)[_4399];
+_4400 = ((frost$unsafe$Pointer*)_4397)[_4399];
 _4401 = _4395.value;
-((frost$unsafe$NewPointer*)_4394)[_4401] = _4400;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:286
+((frost$unsafe$Pointer*)_4394)[_4401] = _4400;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:285
 _4404 = *(&local2);
 _4405 = _4404.value;
 _4406 = (frost$core$Int64) {183u};
@@ -8781,10 +8782,10 @@ _4407 = *(&local2);
 _4408 = _4407.value;
 _4409 = (frost$core$Int64) {0u};
 _4410 = _4409.value;
-_4411 = ((frost$unsafe$NewPointer*)_4408)[_4410];
+_4411 = ((frost$unsafe$Pointer*)_4408)[_4410];
 _4412 = _4406.value;
-((frost$unsafe$NewPointer*)_4405)[_4412] = _4411;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:287
+((frost$unsafe$Pointer*)_4405)[_4412] = _4411;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:286
 _4415 = *(&local2);
 _4416 = _4415.value;
 _4417 = (frost$core$Int64) {184u};
@@ -8792,10 +8793,10 @@ _4418 = *(&local2);
 _4419 = _4418.value;
 _4420 = (frost$core$Int64) {0u};
 _4421 = _4420.value;
-_4422 = ((frost$unsafe$NewPointer*)_4419)[_4421];
+_4422 = ((frost$unsafe$Pointer*)_4419)[_4421];
 _4423 = _4417.value;
-((frost$unsafe$NewPointer*)_4416)[_4423] = _4422;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:288
+((frost$unsafe$Pointer*)_4416)[_4423] = _4422;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:287
 _4426 = *(&local2);
 _4427 = _4426.value;
 _4428 = (frost$core$Int64) {185u};
@@ -8803,10 +8804,10 @@ _4429 = *(&local2);
 _4430 = _4429.value;
 _4431 = (frost$core$Int64) {0u};
 _4432 = _4431.value;
-_4433 = ((frost$unsafe$NewPointer*)_4430)[_4432];
+_4433 = ((frost$unsafe$Pointer*)_4430)[_4432];
 _4434 = _4428.value;
-((frost$unsafe$NewPointer*)_4427)[_4434] = _4433;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:289
+((frost$unsafe$Pointer*)_4427)[_4434] = _4433;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:288
 _4437 = *(&local2);
 _4438 = _4437.value;
 _4439 = (frost$core$Int64) {186u};
@@ -8814,10 +8815,10 @@ _4440 = *(&local2);
 _4441 = _4440.value;
 _4442 = (frost$core$Int64) {0u};
 _4443 = _4442.value;
-_4444 = ((frost$unsafe$NewPointer*)_4441)[_4443];
+_4444 = ((frost$unsafe$Pointer*)_4441)[_4443];
 _4445 = _4439.value;
-((frost$unsafe$NewPointer*)_4438)[_4445] = _4444;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:290
+((frost$unsafe$Pointer*)_4438)[_4445] = _4444;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:289
 _4448 = *(&local2);
 _4449 = _4448.value;
 _4450 = (frost$core$Int64) {187u};
@@ -8825,10 +8826,10 @@ _4451 = *(&local2);
 _4452 = _4451.value;
 _4453 = (frost$core$Int64) {0u};
 _4454 = _4453.value;
-_4455 = ((frost$unsafe$NewPointer*)_4452)[_4454];
+_4455 = ((frost$unsafe$Pointer*)_4452)[_4454];
 _4456 = _4450.value;
-((frost$unsafe$NewPointer*)_4449)[_4456] = _4455;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:291
+((frost$unsafe$Pointer*)_4449)[_4456] = _4455;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:290
 _4459 = *(&local2);
 _4460 = _4459.value;
 _4461 = (frost$core$Int64) {188u};
@@ -8836,10 +8837,10 @@ _4462 = *(&local2);
 _4463 = _4462.value;
 _4464 = (frost$core$Int64) {0u};
 _4465 = _4464.value;
-_4466 = ((frost$unsafe$NewPointer*)_4463)[_4465];
+_4466 = ((frost$unsafe$Pointer*)_4463)[_4465];
 _4467 = _4461.value;
-((frost$unsafe$NewPointer*)_4460)[_4467] = _4466;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:292
+((frost$unsafe$Pointer*)_4460)[_4467] = _4466;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:291
 _4470 = *(&local2);
 _4471 = _4470.value;
 _4472 = (frost$core$Int64) {189u};
@@ -8847,10 +8848,10 @@ _4473 = *(&local2);
 _4474 = _4473.value;
 _4475 = (frost$core$Int64) {0u};
 _4476 = _4475.value;
-_4477 = ((frost$unsafe$NewPointer*)_4474)[_4476];
+_4477 = ((frost$unsafe$Pointer*)_4474)[_4476];
 _4478 = _4472.value;
-((frost$unsafe$NewPointer*)_4471)[_4478] = _4477;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:293
+((frost$unsafe$Pointer*)_4471)[_4478] = _4477;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:292
 _4481 = *(&local2);
 _4482 = _4481.value;
 _4483 = (frost$core$Int64) {190u};
@@ -8858,10 +8859,10 @@ _4484 = *(&local2);
 _4485 = _4484.value;
 _4486 = (frost$core$Int64) {0u};
 _4487 = _4486.value;
-_4488 = ((frost$unsafe$NewPointer*)_4485)[_4487];
+_4488 = ((frost$unsafe$Pointer*)_4485)[_4487];
 _4489 = _4483.value;
-((frost$unsafe$NewPointer*)_4482)[_4489] = _4488;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:294
+((frost$unsafe$Pointer*)_4482)[_4489] = _4488;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:293
 _4492 = *(&local2);
 _4493 = _4492.value;
 _4494 = (frost$core$Int64) {191u};
@@ -8869,10 +8870,10 @@ _4495 = *(&local2);
 _4496 = _4495.value;
 _4497 = (frost$core$Int64) {0u};
 _4498 = _4497.value;
-_4499 = ((frost$unsafe$NewPointer*)_4496)[_4498];
+_4499 = ((frost$unsafe$Pointer*)_4496)[_4498];
 _4500 = _4494.value;
-((frost$unsafe$NewPointer*)_4493)[_4500] = _4499;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:295
+((frost$unsafe$Pointer*)_4493)[_4500] = _4499;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:294
 _4503 = *(&local2);
 _4504 = _4503.value;
 _4505 = (frost$core$Int64) {192u};
@@ -8880,10 +8881,10 @@ _4506 = *(&local2);
 _4507 = _4506.value;
 _4508 = (frost$core$Int64) {0u};
 _4509 = _4508.value;
-_4510 = ((frost$unsafe$NewPointer*)_4507)[_4509];
+_4510 = ((frost$unsafe$Pointer*)_4507)[_4509];
 _4511 = _4505.value;
-((frost$unsafe$NewPointer*)_4504)[_4511] = _4510;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:296
+((frost$unsafe$Pointer*)_4504)[_4511] = _4510;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:295
 _4514 = *(&local2);
 _4515 = _4514.value;
 _4516 = (frost$core$Int64) {193u};
@@ -8891,10 +8892,10 @@ _4517 = *(&local2);
 _4518 = _4517.value;
 _4519 = (frost$core$Int64) {0u};
 _4520 = _4519.value;
-_4521 = ((frost$unsafe$NewPointer*)_4518)[_4520];
+_4521 = ((frost$unsafe$Pointer*)_4518)[_4520];
 _4522 = _4516.value;
-((frost$unsafe$NewPointer*)_4515)[_4522] = _4521;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:297
+((frost$unsafe$Pointer*)_4515)[_4522] = _4521;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:296
 _4525 = *(&local2);
 _4526 = _4525.value;
 _4527 = (frost$core$Int64) {194u};
@@ -8902,10 +8903,10 @@ _4528 = *(&local2);
 _4529 = _4528.value;
 _4530 = (frost$core$Int64) {0u};
 _4531 = _4530.value;
-_4532 = ((frost$unsafe$NewPointer*)_4529)[_4531];
+_4532 = ((frost$unsafe$Pointer*)_4529)[_4531];
 _4533 = _4527.value;
-((frost$unsafe$NewPointer*)_4526)[_4533] = _4532;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:298
+((frost$unsafe$Pointer*)_4526)[_4533] = _4532;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:297
 _4536 = *(&local2);
 _4537 = _4536.value;
 _4538 = (frost$core$Int64) {195u};
@@ -8913,10 +8914,10 @@ _4539 = *(&local2);
 _4540 = _4539.value;
 _4541 = (frost$core$Int64) {0u};
 _4542 = _4541.value;
-_4543 = ((frost$unsafe$NewPointer*)_4540)[_4542];
+_4543 = ((frost$unsafe$Pointer*)_4540)[_4542];
 _4544 = _4538.value;
-((frost$unsafe$NewPointer*)_4537)[_4544] = _4543;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:299
+((frost$unsafe$Pointer*)_4537)[_4544] = _4543;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:298
 _4547 = *(&local2);
 _4548 = _4547.value;
 _4549 = (frost$core$Int64) {196u};
@@ -8924,10 +8925,10 @@ _4550 = *(&local2);
 _4551 = _4550.value;
 _4552 = (frost$core$Int64) {0u};
 _4553 = _4552.value;
-_4554 = ((frost$unsafe$NewPointer*)_4551)[_4553];
+_4554 = ((frost$unsafe$Pointer*)_4551)[_4553];
 _4555 = _4549.value;
-((frost$unsafe$NewPointer*)_4548)[_4555] = _4554;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:300
+((frost$unsafe$Pointer*)_4548)[_4555] = _4554;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:299
 _4558 = *(&local2);
 _4559 = _4558.value;
 _4560 = (frost$core$Int64) {197u};
@@ -8935,10 +8936,10 @@ _4561 = *(&local2);
 _4562 = _4561.value;
 _4563 = (frost$core$Int64) {0u};
 _4564 = _4563.value;
-_4565 = ((frost$unsafe$NewPointer*)_4562)[_4564];
+_4565 = ((frost$unsafe$Pointer*)_4562)[_4564];
 _4566 = _4560.value;
-((frost$unsafe$NewPointer*)_4559)[_4566] = _4565;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:301
+((frost$unsafe$Pointer*)_4559)[_4566] = _4565;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:300
 _4569 = *(&local2);
 _4570 = _4569.value;
 _4571 = (frost$core$Int64) {198u};
@@ -8946,10 +8947,10 @@ _4572 = *(&local2);
 _4573 = _4572.value;
 _4574 = (frost$core$Int64) {0u};
 _4575 = _4574.value;
-_4576 = ((frost$unsafe$NewPointer*)_4573)[_4575];
+_4576 = ((frost$unsafe$Pointer*)_4573)[_4575];
 _4577 = _4571.value;
-((frost$unsafe$NewPointer*)_4570)[_4577] = _4576;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:302
+((frost$unsafe$Pointer*)_4570)[_4577] = _4576;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:301
 _4580 = *(&local2);
 _4581 = _4580.value;
 _4582 = (frost$core$Int64) {199u};
@@ -8957,10 +8958,10 @@ _4583 = *(&local2);
 _4584 = _4583.value;
 _4585 = (frost$core$Int64) {0u};
 _4586 = _4585.value;
-_4587 = ((frost$unsafe$NewPointer*)_4584)[_4586];
+_4587 = ((frost$unsafe$Pointer*)_4584)[_4586];
 _4588 = _4582.value;
-((frost$unsafe$NewPointer*)_4581)[_4588] = _4587;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:303
+((frost$unsafe$Pointer*)_4581)[_4588] = _4587;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:302
 _4591 = *(&local2);
 _4592 = _4591.value;
 _4593 = (frost$core$Int64) {200u};
@@ -8968,10 +8969,10 @@ _4594 = *(&local2);
 _4595 = _4594.value;
 _4596 = (frost$core$Int64) {0u};
 _4597 = _4596.value;
-_4598 = ((frost$unsafe$NewPointer*)_4595)[_4597];
+_4598 = ((frost$unsafe$Pointer*)_4595)[_4597];
 _4599 = _4593.value;
-((frost$unsafe$NewPointer*)_4592)[_4599] = _4598;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:304
+((frost$unsafe$Pointer*)_4592)[_4599] = _4598;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:303
 _4602 = *(&local2);
 _4603 = _4602.value;
 _4604 = (frost$core$Int64) {201u};
@@ -8979,10 +8980,10 @@ _4605 = *(&local2);
 _4606 = _4605.value;
 _4607 = (frost$core$Int64) {0u};
 _4608 = _4607.value;
-_4609 = ((frost$unsafe$NewPointer*)_4606)[_4608];
+_4609 = ((frost$unsafe$Pointer*)_4606)[_4608];
 _4610 = _4604.value;
-((frost$unsafe$NewPointer*)_4603)[_4610] = _4609;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:305
+((frost$unsafe$Pointer*)_4603)[_4610] = _4609;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:304
 _4613 = *(&local2);
 _4614 = _4613.value;
 _4615 = (frost$core$Int64) {202u};
@@ -8990,10 +8991,10 @@ _4616 = *(&local2);
 _4617 = _4616.value;
 _4618 = (frost$core$Int64) {0u};
 _4619 = _4618.value;
-_4620 = ((frost$unsafe$NewPointer*)_4617)[_4619];
+_4620 = ((frost$unsafe$Pointer*)_4617)[_4619];
 _4621 = _4615.value;
-((frost$unsafe$NewPointer*)_4614)[_4621] = _4620;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:306
+((frost$unsafe$Pointer*)_4614)[_4621] = _4620;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:305
 _4624 = *(&local2);
 _4625 = _4624.value;
 _4626 = (frost$core$Int64) {203u};
@@ -9001,10 +9002,10 @@ _4627 = *(&local2);
 _4628 = _4627.value;
 _4629 = (frost$core$Int64) {0u};
 _4630 = _4629.value;
-_4631 = ((frost$unsafe$NewPointer*)_4628)[_4630];
+_4631 = ((frost$unsafe$Pointer*)_4628)[_4630];
 _4632 = _4626.value;
-((frost$unsafe$NewPointer*)_4625)[_4632] = _4631;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:307
+((frost$unsafe$Pointer*)_4625)[_4632] = _4631;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:306
 _4635 = *(&local2);
 _4636 = _4635.value;
 _4637 = (frost$core$Int64) {204u};
@@ -9012,10 +9013,10 @@ _4638 = *(&local2);
 _4639 = _4638.value;
 _4640 = (frost$core$Int64) {0u};
 _4641 = _4640.value;
-_4642 = ((frost$unsafe$NewPointer*)_4639)[_4641];
+_4642 = ((frost$unsafe$Pointer*)_4639)[_4641];
 _4643 = _4637.value;
-((frost$unsafe$NewPointer*)_4636)[_4643] = _4642;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:308
+((frost$unsafe$Pointer*)_4636)[_4643] = _4642;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:307
 _4646 = *(&local2);
 _4647 = _4646.value;
 _4648 = (frost$core$Int64) {205u};
@@ -9023,10 +9024,10 @@ _4649 = *(&local2);
 _4650 = _4649.value;
 _4651 = (frost$core$Int64) {0u};
 _4652 = _4651.value;
-_4653 = ((frost$unsafe$NewPointer*)_4650)[_4652];
+_4653 = ((frost$unsafe$Pointer*)_4650)[_4652];
 _4654 = _4648.value;
-((frost$unsafe$NewPointer*)_4647)[_4654] = _4653;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:309
+((frost$unsafe$Pointer*)_4647)[_4654] = _4653;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:308
 _4657 = *(&local2);
 _4658 = _4657.value;
 _4659 = (frost$core$Int64) {206u};
@@ -9034,10 +9035,10 @@ _4660 = *(&local2);
 _4661 = _4660.value;
 _4662 = (frost$core$Int64) {0u};
 _4663 = _4662.value;
-_4664 = ((frost$unsafe$NewPointer*)_4661)[_4663];
+_4664 = ((frost$unsafe$Pointer*)_4661)[_4663];
 _4665 = _4659.value;
-((frost$unsafe$NewPointer*)_4658)[_4665] = _4664;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:310
+((frost$unsafe$Pointer*)_4658)[_4665] = _4664;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:309
 _4668 = *(&local2);
 _4669 = _4668.value;
 _4670 = (frost$core$Int64) {207u};
@@ -9045,10 +9046,10 @@ _4671 = *(&local2);
 _4672 = _4671.value;
 _4673 = (frost$core$Int64) {0u};
 _4674 = _4673.value;
-_4675 = ((frost$unsafe$NewPointer*)_4672)[_4674];
+_4675 = ((frost$unsafe$Pointer*)_4672)[_4674];
 _4676 = _4670.value;
-((frost$unsafe$NewPointer*)_4669)[_4676] = _4675;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:311
+((frost$unsafe$Pointer*)_4669)[_4676] = _4675;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:310
 _4679 = *(&local2);
 _4680 = _4679.value;
 _4681 = (frost$core$Int64) {208u};
@@ -9056,10 +9057,10 @@ _4682 = *(&local2);
 _4683 = _4682.value;
 _4684 = (frost$core$Int64) {0u};
 _4685 = _4684.value;
-_4686 = ((frost$unsafe$NewPointer*)_4683)[_4685];
+_4686 = ((frost$unsafe$Pointer*)_4683)[_4685];
 _4687 = _4681.value;
-((frost$unsafe$NewPointer*)_4680)[_4687] = _4686;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:312
+((frost$unsafe$Pointer*)_4680)[_4687] = _4686;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:311
 _4690 = *(&local2);
 _4691 = _4690.value;
 _4692 = (frost$core$Int64) {209u};
@@ -9067,10 +9068,10 @@ _4693 = *(&local2);
 _4694 = _4693.value;
 _4695 = (frost$core$Int64) {0u};
 _4696 = _4695.value;
-_4697 = ((frost$unsafe$NewPointer*)_4694)[_4696];
+_4697 = ((frost$unsafe$Pointer*)_4694)[_4696];
 _4698 = _4692.value;
-((frost$unsafe$NewPointer*)_4691)[_4698] = _4697;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:313
+((frost$unsafe$Pointer*)_4691)[_4698] = _4697;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:312
 _4701 = *(&local2);
 _4702 = _4701.value;
 _4703 = (frost$core$Int64) {210u};
@@ -9078,10 +9079,10 @@ _4704 = *(&local2);
 _4705 = _4704.value;
 _4706 = (frost$core$Int64) {0u};
 _4707 = _4706.value;
-_4708 = ((frost$unsafe$NewPointer*)_4705)[_4707];
+_4708 = ((frost$unsafe$Pointer*)_4705)[_4707];
 _4709 = _4703.value;
-((frost$unsafe$NewPointer*)_4702)[_4709] = _4708;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:314
+((frost$unsafe$Pointer*)_4702)[_4709] = _4708;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:313
 _4712 = *(&local2);
 _4713 = _4712.value;
 _4714 = (frost$core$Int64) {211u};
@@ -9089,10 +9090,10 @@ _4715 = *(&local2);
 _4716 = _4715.value;
 _4717 = (frost$core$Int64) {0u};
 _4718 = _4717.value;
-_4719 = ((frost$unsafe$NewPointer*)_4716)[_4718];
+_4719 = ((frost$unsafe$Pointer*)_4716)[_4718];
 _4720 = _4714.value;
-((frost$unsafe$NewPointer*)_4713)[_4720] = _4719;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:315
+((frost$unsafe$Pointer*)_4713)[_4720] = _4719;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:314
 _4723 = *(&local2);
 _4724 = _4723.value;
 _4725 = (frost$core$Int64) {212u};
@@ -9100,10 +9101,10 @@ _4726 = *(&local2);
 _4727 = _4726.value;
 _4728 = (frost$core$Int64) {0u};
 _4729 = _4728.value;
-_4730 = ((frost$unsafe$NewPointer*)_4727)[_4729];
+_4730 = ((frost$unsafe$Pointer*)_4727)[_4729];
 _4731 = _4725.value;
-((frost$unsafe$NewPointer*)_4724)[_4731] = _4730;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:316
+((frost$unsafe$Pointer*)_4724)[_4731] = _4730;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:315
 _4734 = *(&local2);
 _4735 = _4734.value;
 _4736 = (frost$core$Int64) {213u};
@@ -9111,10 +9112,10 @@ _4737 = *(&local2);
 _4738 = _4737.value;
 _4739 = (frost$core$Int64) {0u};
 _4740 = _4739.value;
-_4741 = ((frost$unsafe$NewPointer*)_4738)[_4740];
+_4741 = ((frost$unsafe$Pointer*)_4738)[_4740];
 _4742 = _4736.value;
-((frost$unsafe$NewPointer*)_4735)[_4742] = _4741;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:317
+((frost$unsafe$Pointer*)_4735)[_4742] = _4741;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:316
 _4745 = *(&local2);
 _4746 = _4745.value;
 _4747 = (frost$core$Int64) {214u};
@@ -9122,10 +9123,10 @@ _4748 = *(&local2);
 _4749 = _4748.value;
 _4750 = (frost$core$Int64) {0u};
 _4751 = _4750.value;
-_4752 = ((frost$unsafe$NewPointer*)_4749)[_4751];
+_4752 = ((frost$unsafe$Pointer*)_4749)[_4751];
 _4753 = _4747.value;
-((frost$unsafe$NewPointer*)_4746)[_4753] = _4752;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:318
+((frost$unsafe$Pointer*)_4746)[_4753] = _4752;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:317
 _4756 = *(&local2);
 _4757 = _4756.value;
 _4758 = (frost$core$Int64) {215u};
@@ -9133,10 +9134,10 @@ _4759 = *(&local2);
 _4760 = _4759.value;
 _4761 = (frost$core$Int64) {0u};
 _4762 = _4761.value;
-_4763 = ((frost$unsafe$NewPointer*)_4760)[_4762];
+_4763 = ((frost$unsafe$Pointer*)_4760)[_4762];
 _4764 = _4758.value;
-((frost$unsafe$NewPointer*)_4757)[_4764] = _4763;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:319
+((frost$unsafe$Pointer*)_4757)[_4764] = _4763;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:318
 _4767 = *(&local2);
 _4768 = _4767.value;
 _4769 = (frost$core$Int64) {216u};
@@ -9144,10 +9145,10 @@ _4770 = *(&local2);
 _4771 = _4770.value;
 _4772 = (frost$core$Int64) {0u};
 _4773 = _4772.value;
-_4774 = ((frost$unsafe$NewPointer*)_4771)[_4773];
+_4774 = ((frost$unsafe$Pointer*)_4771)[_4773];
 _4775 = _4769.value;
-((frost$unsafe$NewPointer*)_4768)[_4775] = _4774;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:320
+((frost$unsafe$Pointer*)_4768)[_4775] = _4774;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:319
 _4778 = *(&local2);
 _4779 = _4778.value;
 _4780 = (frost$core$Int64) {217u};
@@ -9155,10 +9156,10 @@ _4781 = *(&local2);
 _4782 = _4781.value;
 _4783 = (frost$core$Int64) {0u};
 _4784 = _4783.value;
-_4785 = ((frost$unsafe$NewPointer*)_4782)[_4784];
+_4785 = ((frost$unsafe$Pointer*)_4782)[_4784];
 _4786 = _4780.value;
-((frost$unsafe$NewPointer*)_4779)[_4786] = _4785;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:321
+((frost$unsafe$Pointer*)_4779)[_4786] = _4785;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:320
 _4789 = *(&local2);
 _4790 = _4789.value;
 _4791 = (frost$core$Int64) {218u};
@@ -9166,10 +9167,10 @@ _4792 = *(&local2);
 _4793 = _4792.value;
 _4794 = (frost$core$Int64) {0u};
 _4795 = _4794.value;
-_4796 = ((frost$unsafe$NewPointer*)_4793)[_4795];
+_4796 = ((frost$unsafe$Pointer*)_4793)[_4795];
 _4797 = _4791.value;
-((frost$unsafe$NewPointer*)_4790)[_4797] = _4796;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:322
+((frost$unsafe$Pointer*)_4790)[_4797] = _4796;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:321
 _4800 = *(&local2);
 _4801 = _4800.value;
 _4802 = (frost$core$Int64) {219u};
@@ -9177,10 +9178,10 @@ _4803 = *(&local2);
 _4804 = _4803.value;
 _4805 = (frost$core$Int64) {0u};
 _4806 = _4805.value;
-_4807 = ((frost$unsafe$NewPointer*)_4804)[_4806];
+_4807 = ((frost$unsafe$Pointer*)_4804)[_4806];
 _4808 = _4802.value;
-((frost$unsafe$NewPointer*)_4801)[_4808] = _4807;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:323
+((frost$unsafe$Pointer*)_4801)[_4808] = _4807;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:322
 _4811 = *(&local2);
 _4812 = _4811.value;
 _4813 = (frost$core$Int64) {220u};
@@ -9188,10 +9189,10 @@ _4814 = *(&local2);
 _4815 = _4814.value;
 _4816 = (frost$core$Int64) {0u};
 _4817 = _4816.value;
-_4818 = ((frost$unsafe$NewPointer*)_4815)[_4817];
+_4818 = ((frost$unsafe$Pointer*)_4815)[_4817];
 _4819 = _4813.value;
-((frost$unsafe$NewPointer*)_4812)[_4819] = _4818;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:324
+((frost$unsafe$Pointer*)_4812)[_4819] = _4818;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:323
 _4822 = *(&local2);
 _4823 = _4822.value;
 _4824 = (frost$core$Int64) {221u};
@@ -9199,10 +9200,10 @@ _4825 = *(&local2);
 _4826 = _4825.value;
 _4827 = (frost$core$Int64) {0u};
 _4828 = _4827.value;
-_4829 = ((frost$unsafe$NewPointer*)_4826)[_4828];
+_4829 = ((frost$unsafe$Pointer*)_4826)[_4828];
 _4830 = _4824.value;
-((frost$unsafe$NewPointer*)_4823)[_4830] = _4829;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:325
+((frost$unsafe$Pointer*)_4823)[_4830] = _4829;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:324
 _4833 = *(&local2);
 _4834 = _4833.value;
 _4835 = (frost$core$Int64) {222u};
@@ -9210,10 +9211,10 @@ _4836 = *(&local2);
 _4837 = _4836.value;
 _4838 = (frost$core$Int64) {0u};
 _4839 = _4838.value;
-_4840 = ((frost$unsafe$NewPointer*)_4837)[_4839];
+_4840 = ((frost$unsafe$Pointer*)_4837)[_4839];
 _4841 = _4835.value;
-((frost$unsafe$NewPointer*)_4834)[_4841] = _4840;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:326
+((frost$unsafe$Pointer*)_4834)[_4841] = _4840;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:325
 _4844 = *(&local2);
 _4845 = _4844.value;
 _4846 = (frost$core$Int64) {223u};
@@ -9221,10 +9222,10 @@ _4847 = *(&local2);
 _4848 = _4847.value;
 _4849 = (frost$core$Int64) {0u};
 _4850 = _4849.value;
-_4851 = ((frost$unsafe$NewPointer*)_4848)[_4850];
+_4851 = ((frost$unsafe$Pointer*)_4848)[_4850];
 _4852 = _4846.value;
-((frost$unsafe$NewPointer*)_4845)[_4852] = _4851;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:327
+((frost$unsafe$Pointer*)_4845)[_4852] = _4851;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:326
 _4855 = *(&local2);
 _4856 = _4855.value;
 _4857 = (frost$core$Int64) {224u};
@@ -9232,10 +9233,10 @@ _4858 = *(&local2);
 _4859 = _4858.value;
 _4860 = (frost$core$Int64) {0u};
 _4861 = _4860.value;
-_4862 = ((frost$unsafe$NewPointer*)_4859)[_4861];
+_4862 = ((frost$unsafe$Pointer*)_4859)[_4861];
 _4863 = _4857.value;
-((frost$unsafe$NewPointer*)_4856)[_4863] = _4862;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:328
+((frost$unsafe$Pointer*)_4856)[_4863] = _4862;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:327
 _4866 = *(&local2);
 _4867 = _4866.value;
 _4868 = (frost$core$Int64) {225u};
@@ -9243,10 +9244,10 @@ _4869 = *(&local2);
 _4870 = _4869.value;
 _4871 = (frost$core$Int64) {0u};
 _4872 = _4871.value;
-_4873 = ((frost$unsafe$NewPointer*)_4870)[_4872];
+_4873 = ((frost$unsafe$Pointer*)_4870)[_4872];
 _4874 = _4868.value;
-((frost$unsafe$NewPointer*)_4867)[_4874] = _4873;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:329
+((frost$unsafe$Pointer*)_4867)[_4874] = _4873;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:328
 _4877 = *(&local2);
 _4878 = _4877.value;
 _4879 = (frost$core$Int64) {226u};
@@ -9254,10 +9255,10 @@ _4880 = *(&local2);
 _4881 = _4880.value;
 _4882 = (frost$core$Int64) {0u};
 _4883 = _4882.value;
-_4884 = ((frost$unsafe$NewPointer*)_4881)[_4883];
+_4884 = ((frost$unsafe$Pointer*)_4881)[_4883];
 _4885 = _4879.value;
-((frost$unsafe$NewPointer*)_4878)[_4885] = _4884;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:330
+((frost$unsafe$Pointer*)_4878)[_4885] = _4884;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:329
 _4888 = *(&local2);
 _4889 = _4888.value;
 _4890 = (frost$core$Int64) {227u};
@@ -9265,10 +9266,10 @@ _4891 = *(&local2);
 _4892 = _4891.value;
 _4893 = (frost$core$Int64) {0u};
 _4894 = _4893.value;
-_4895 = ((frost$unsafe$NewPointer*)_4892)[_4894];
+_4895 = ((frost$unsafe$Pointer*)_4892)[_4894];
 _4896 = _4890.value;
-((frost$unsafe$NewPointer*)_4889)[_4896] = _4895;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:331
+((frost$unsafe$Pointer*)_4889)[_4896] = _4895;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:330
 _4899 = *(&local2);
 _4900 = _4899.value;
 _4901 = (frost$core$Int64) {228u};
@@ -9276,10 +9277,10 @@ _4902 = *(&local2);
 _4903 = _4902.value;
 _4904 = (frost$core$Int64) {0u};
 _4905 = _4904.value;
-_4906 = ((frost$unsafe$NewPointer*)_4903)[_4905];
+_4906 = ((frost$unsafe$Pointer*)_4903)[_4905];
 _4907 = _4901.value;
-((frost$unsafe$NewPointer*)_4900)[_4907] = _4906;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:332
+((frost$unsafe$Pointer*)_4900)[_4907] = _4906;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:331
 _4910 = *(&local2);
 _4911 = _4910.value;
 _4912 = (frost$core$Int64) {229u};
@@ -9287,10 +9288,10 @@ _4913 = *(&local2);
 _4914 = _4913.value;
 _4915 = (frost$core$Int64) {0u};
 _4916 = _4915.value;
-_4917 = ((frost$unsafe$NewPointer*)_4914)[_4916];
+_4917 = ((frost$unsafe$Pointer*)_4914)[_4916];
 _4918 = _4912.value;
-((frost$unsafe$NewPointer*)_4911)[_4918] = _4917;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:333
+((frost$unsafe$Pointer*)_4911)[_4918] = _4917;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:332
 _4921 = *(&local2);
 _4922 = _4921.value;
 _4923 = (frost$core$Int64) {230u};
@@ -9298,10 +9299,10 @@ _4924 = *(&local2);
 _4925 = _4924.value;
 _4926 = (frost$core$Int64) {0u};
 _4927 = _4926.value;
-_4928 = ((frost$unsafe$NewPointer*)_4925)[_4927];
+_4928 = ((frost$unsafe$Pointer*)_4925)[_4927];
 _4929 = _4923.value;
-((frost$unsafe$NewPointer*)_4922)[_4929] = _4928;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:334
+((frost$unsafe$Pointer*)_4922)[_4929] = _4928;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:333
 _4932 = *(&local2);
 _4933 = _4932.value;
 _4934 = (frost$core$Int64) {231u};
@@ -9309,10 +9310,10 @@ _4935 = *(&local2);
 _4936 = _4935.value;
 _4937 = (frost$core$Int64) {0u};
 _4938 = _4937.value;
-_4939 = ((frost$unsafe$NewPointer*)_4936)[_4938];
+_4939 = ((frost$unsafe$Pointer*)_4936)[_4938];
 _4940 = _4934.value;
-((frost$unsafe$NewPointer*)_4933)[_4940] = _4939;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:335
+((frost$unsafe$Pointer*)_4933)[_4940] = _4939;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:334
 _4943 = *(&local2);
 _4944 = _4943.value;
 _4945 = (frost$core$Int64) {232u};
@@ -9320,10 +9321,10 @@ _4946 = *(&local2);
 _4947 = _4946.value;
 _4948 = (frost$core$Int64) {0u};
 _4949 = _4948.value;
-_4950 = ((frost$unsafe$NewPointer*)_4947)[_4949];
+_4950 = ((frost$unsafe$Pointer*)_4947)[_4949];
 _4951 = _4945.value;
-((frost$unsafe$NewPointer*)_4944)[_4951] = _4950;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:336
+((frost$unsafe$Pointer*)_4944)[_4951] = _4950;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:335
 _4954 = *(&local2);
 _4955 = _4954.value;
 _4956 = (frost$core$Int64) {233u};
@@ -9331,10 +9332,10 @@ _4957 = *(&local2);
 _4958 = _4957.value;
 _4959 = (frost$core$Int64) {0u};
 _4960 = _4959.value;
-_4961 = ((frost$unsafe$NewPointer*)_4958)[_4960];
+_4961 = ((frost$unsafe$Pointer*)_4958)[_4960];
 _4962 = _4956.value;
-((frost$unsafe$NewPointer*)_4955)[_4962] = _4961;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:337
+((frost$unsafe$Pointer*)_4955)[_4962] = _4961;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:336
 _4965 = *(&local2);
 _4966 = _4965.value;
 _4967 = (frost$core$Int64) {234u};
@@ -9342,10 +9343,10 @@ _4968 = *(&local2);
 _4969 = _4968.value;
 _4970 = (frost$core$Int64) {0u};
 _4971 = _4970.value;
-_4972 = ((frost$unsafe$NewPointer*)_4969)[_4971];
+_4972 = ((frost$unsafe$Pointer*)_4969)[_4971];
 _4973 = _4967.value;
-((frost$unsafe$NewPointer*)_4966)[_4973] = _4972;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:338
+((frost$unsafe$Pointer*)_4966)[_4973] = _4972;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:337
 _4976 = *(&local2);
 _4977 = _4976.value;
 _4978 = (frost$core$Int64) {235u};
@@ -9353,10 +9354,10 @@ _4979 = *(&local2);
 _4980 = _4979.value;
 _4981 = (frost$core$Int64) {0u};
 _4982 = _4981.value;
-_4983 = ((frost$unsafe$NewPointer*)_4980)[_4982];
+_4983 = ((frost$unsafe$Pointer*)_4980)[_4982];
 _4984 = _4978.value;
-((frost$unsafe$NewPointer*)_4977)[_4984] = _4983;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:339
+((frost$unsafe$Pointer*)_4977)[_4984] = _4983;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:338
 _4987 = *(&local2);
 _4988 = _4987.value;
 _4989 = (frost$core$Int64) {236u};
@@ -9364,10 +9365,10 @@ _4990 = *(&local2);
 _4991 = _4990.value;
 _4992 = (frost$core$Int64) {0u};
 _4993 = _4992.value;
-_4994 = ((frost$unsafe$NewPointer*)_4991)[_4993];
+_4994 = ((frost$unsafe$Pointer*)_4991)[_4993];
 _4995 = _4989.value;
-((frost$unsafe$NewPointer*)_4988)[_4995] = _4994;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:340
+((frost$unsafe$Pointer*)_4988)[_4995] = _4994;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:339
 _4998 = *(&local2);
 _4999 = _4998.value;
 _5000 = (frost$core$Int64) {237u};
@@ -9375,10 +9376,10 @@ _5001 = *(&local2);
 _5002 = _5001.value;
 _5003 = (frost$core$Int64) {0u};
 _5004 = _5003.value;
-_5005 = ((frost$unsafe$NewPointer*)_5002)[_5004];
+_5005 = ((frost$unsafe$Pointer*)_5002)[_5004];
 _5006 = _5000.value;
-((frost$unsafe$NewPointer*)_4999)[_5006] = _5005;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:341
+((frost$unsafe$Pointer*)_4999)[_5006] = _5005;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:340
 _5009 = *(&local2);
 _5010 = _5009.value;
 _5011 = (frost$core$Int64) {238u};
@@ -9386,10 +9387,10 @@ _5012 = *(&local2);
 _5013 = _5012.value;
 _5014 = (frost$core$Int64) {0u};
 _5015 = _5014.value;
-_5016 = ((frost$unsafe$NewPointer*)_5013)[_5015];
+_5016 = ((frost$unsafe$Pointer*)_5013)[_5015];
 _5017 = _5011.value;
-((frost$unsafe$NewPointer*)_5010)[_5017] = _5016;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:342
+((frost$unsafe$Pointer*)_5010)[_5017] = _5016;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:341
 _5020 = *(&local2);
 _5021 = _5020.value;
 _5022 = (frost$core$Int64) {239u};
@@ -9397,10 +9398,10 @@ _5023 = *(&local2);
 _5024 = _5023.value;
 _5025 = (frost$core$Int64) {0u};
 _5026 = _5025.value;
-_5027 = ((frost$unsafe$NewPointer*)_5024)[_5026];
+_5027 = ((frost$unsafe$Pointer*)_5024)[_5026];
 _5028 = _5022.value;
-((frost$unsafe$NewPointer*)_5021)[_5028] = _5027;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:343
+((frost$unsafe$Pointer*)_5021)[_5028] = _5027;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:342
 _5031 = *(&local2);
 _5032 = _5031.value;
 _5033 = (frost$core$Int64) {240u};
@@ -9408,10 +9409,10 @@ _5034 = *(&local2);
 _5035 = _5034.value;
 _5036 = (frost$core$Int64) {0u};
 _5037 = _5036.value;
-_5038 = ((frost$unsafe$NewPointer*)_5035)[_5037];
+_5038 = ((frost$unsafe$Pointer*)_5035)[_5037];
 _5039 = _5033.value;
-((frost$unsafe$NewPointer*)_5032)[_5039] = _5038;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:344
+((frost$unsafe$Pointer*)_5032)[_5039] = _5038;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:343
 _5042 = *(&local2);
 _5043 = _5042.value;
 _5044 = (frost$core$Int64) {241u};
@@ -9419,10 +9420,10 @@ _5045 = *(&local2);
 _5046 = _5045.value;
 _5047 = (frost$core$Int64) {0u};
 _5048 = _5047.value;
-_5049 = ((frost$unsafe$NewPointer*)_5046)[_5048];
+_5049 = ((frost$unsafe$Pointer*)_5046)[_5048];
 _5050 = _5044.value;
-((frost$unsafe$NewPointer*)_5043)[_5050] = _5049;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:345
+((frost$unsafe$Pointer*)_5043)[_5050] = _5049;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:344
 _5053 = *(&local2);
 _5054 = _5053.value;
 _5055 = (frost$core$Int64) {242u};
@@ -9430,10 +9431,10 @@ _5056 = *(&local2);
 _5057 = _5056.value;
 _5058 = (frost$core$Int64) {0u};
 _5059 = _5058.value;
-_5060 = ((frost$unsafe$NewPointer*)_5057)[_5059];
+_5060 = ((frost$unsafe$Pointer*)_5057)[_5059];
 _5061 = _5055.value;
-((frost$unsafe$NewPointer*)_5054)[_5061] = _5060;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:346
+((frost$unsafe$Pointer*)_5054)[_5061] = _5060;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:345
 _5064 = *(&local2);
 _5065 = _5064.value;
 _5066 = (frost$core$Int64) {243u};
@@ -9441,10 +9442,10 @@ _5067 = *(&local2);
 _5068 = _5067.value;
 _5069 = (frost$core$Int64) {0u};
 _5070 = _5069.value;
-_5071 = ((frost$unsafe$NewPointer*)_5068)[_5070];
+_5071 = ((frost$unsafe$Pointer*)_5068)[_5070];
 _5072 = _5066.value;
-((frost$unsafe$NewPointer*)_5065)[_5072] = _5071;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:347
+((frost$unsafe$Pointer*)_5065)[_5072] = _5071;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:346
 _5075 = *(&local2);
 _5076 = _5075.value;
 _5077 = (frost$core$Int64) {244u};
@@ -9452,10 +9453,10 @@ _5078 = *(&local2);
 _5079 = _5078.value;
 _5080 = (frost$core$Int64) {0u};
 _5081 = _5080.value;
-_5082 = ((frost$unsafe$NewPointer*)_5079)[_5081];
+_5082 = ((frost$unsafe$Pointer*)_5079)[_5081];
 _5083 = _5077.value;
-((frost$unsafe$NewPointer*)_5076)[_5083] = _5082;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:348
+((frost$unsafe$Pointer*)_5076)[_5083] = _5082;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:347
 _5086 = *(&local2);
 _5087 = _5086.value;
 _5088 = (frost$core$Int64) {245u};
@@ -9463,10 +9464,10 @@ _5089 = *(&local2);
 _5090 = _5089.value;
 _5091 = (frost$core$Int64) {0u};
 _5092 = _5091.value;
-_5093 = ((frost$unsafe$NewPointer*)_5090)[_5092];
+_5093 = ((frost$unsafe$Pointer*)_5090)[_5092];
 _5094 = _5088.value;
-((frost$unsafe$NewPointer*)_5087)[_5094] = _5093;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:349
+((frost$unsafe$Pointer*)_5087)[_5094] = _5093;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:348
 _5097 = *(&local2);
 _5098 = _5097.value;
 _5099 = (frost$core$Int64) {246u};
@@ -9474,10 +9475,10 @@ _5100 = *(&local2);
 _5101 = _5100.value;
 _5102 = (frost$core$Int64) {0u};
 _5103 = _5102.value;
-_5104 = ((frost$unsafe$NewPointer*)_5101)[_5103];
+_5104 = ((frost$unsafe$Pointer*)_5101)[_5103];
 _5105 = _5099.value;
-((frost$unsafe$NewPointer*)_5098)[_5105] = _5104;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:350
+((frost$unsafe$Pointer*)_5098)[_5105] = _5104;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:349
 _5108 = *(&local2);
 _5109 = _5108.value;
 _5110 = (frost$core$Int64) {247u};
@@ -9485,10 +9486,10 @@ _5111 = *(&local2);
 _5112 = _5111.value;
 _5113 = (frost$core$Int64) {0u};
 _5114 = _5113.value;
-_5115 = ((frost$unsafe$NewPointer*)_5112)[_5114];
+_5115 = ((frost$unsafe$Pointer*)_5112)[_5114];
 _5116 = _5110.value;
-((frost$unsafe$NewPointer*)_5109)[_5116] = _5115;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:351
+((frost$unsafe$Pointer*)_5109)[_5116] = _5115;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:350
 _5119 = *(&local2);
 _5120 = _5119.value;
 _5121 = (frost$core$Int64) {248u};
@@ -9496,10 +9497,10 @@ _5122 = *(&local2);
 _5123 = _5122.value;
 _5124 = (frost$core$Int64) {0u};
 _5125 = _5124.value;
-_5126 = ((frost$unsafe$NewPointer*)_5123)[_5125];
+_5126 = ((frost$unsafe$Pointer*)_5123)[_5125];
 _5127 = _5121.value;
-((frost$unsafe$NewPointer*)_5120)[_5127] = _5126;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:352
+((frost$unsafe$Pointer*)_5120)[_5127] = _5126;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:351
 _5130 = *(&local2);
 _5131 = _5130.value;
 _5132 = (frost$core$Int64) {249u};
@@ -9507,10 +9508,10 @@ _5133 = *(&local2);
 _5134 = _5133.value;
 _5135 = (frost$core$Int64) {0u};
 _5136 = _5135.value;
-_5137 = ((frost$unsafe$NewPointer*)_5134)[_5136];
+_5137 = ((frost$unsafe$Pointer*)_5134)[_5136];
 _5138 = _5132.value;
-((frost$unsafe$NewPointer*)_5131)[_5138] = _5137;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:353
+((frost$unsafe$Pointer*)_5131)[_5138] = _5137;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:352
 _5141 = *(&local2);
 _5142 = _5141.value;
 _5143 = (frost$core$Int64) {250u};
@@ -9518,10 +9519,10 @@ _5144 = *(&local2);
 _5145 = _5144.value;
 _5146 = (frost$core$Int64) {0u};
 _5147 = _5146.value;
-_5148 = ((frost$unsafe$NewPointer*)_5145)[_5147];
+_5148 = ((frost$unsafe$Pointer*)_5145)[_5147];
 _5149 = _5143.value;
-((frost$unsafe$NewPointer*)_5142)[_5149] = _5148;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:354
+((frost$unsafe$Pointer*)_5142)[_5149] = _5148;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:353
 _5152 = *(&local2);
 _5153 = _5152.value;
 _5154 = (frost$core$Int64) {251u};
@@ -9529,10 +9530,10 @@ _5155 = *(&local2);
 _5156 = _5155.value;
 _5157 = (frost$core$Int64) {0u};
 _5158 = _5157.value;
-_5159 = ((frost$unsafe$NewPointer*)_5156)[_5158];
+_5159 = ((frost$unsafe$Pointer*)_5156)[_5158];
 _5160 = _5154.value;
-((frost$unsafe$NewPointer*)_5153)[_5160] = _5159;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:355
+((frost$unsafe$Pointer*)_5153)[_5160] = _5159;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:354
 _5163 = *(&local2);
 _5164 = _5163.value;
 _5165 = (frost$core$Int64) {252u};
@@ -9540,10 +9541,10 @@ _5166 = *(&local2);
 _5167 = _5166.value;
 _5168 = (frost$core$Int64) {0u};
 _5169 = _5168.value;
-_5170 = ((frost$unsafe$NewPointer*)_5167)[_5169];
+_5170 = ((frost$unsafe$Pointer*)_5167)[_5169];
 _5171 = _5165.value;
-((frost$unsafe$NewPointer*)_5164)[_5171] = _5170;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:356
+((frost$unsafe$Pointer*)_5164)[_5171] = _5170;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:355
 _5174 = *(&local2);
 _5175 = _5174.value;
 _5176 = (frost$core$Int64) {253u};
@@ -9551,10 +9552,10 @@ _5177 = *(&local2);
 _5178 = _5177.value;
 _5179 = (frost$core$Int64) {0u};
 _5180 = _5179.value;
-_5181 = ((frost$unsafe$NewPointer*)_5178)[_5180];
+_5181 = ((frost$unsafe$Pointer*)_5178)[_5180];
 _5182 = _5176.value;
-((frost$unsafe$NewPointer*)_5175)[_5182] = _5181;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:357
+((frost$unsafe$Pointer*)_5175)[_5182] = _5181;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:356
 _5185 = *(&local2);
 _5186 = _5185.value;
 _5187 = (frost$core$Int64) {254u};
@@ -9562,10 +9563,10 @@ _5188 = *(&local2);
 _5189 = _5188.value;
 _5190 = (frost$core$Int64) {0u};
 _5191 = _5190.value;
-_5192 = ((frost$unsafe$NewPointer*)_5189)[_5191];
+_5192 = ((frost$unsafe$Pointer*)_5189)[_5191];
 _5193 = _5187.value;
-((frost$unsafe$NewPointer*)_5186)[_5193] = _5192;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:358
+((frost$unsafe$Pointer*)_5186)[_5193] = _5192;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:357
 _5196 = *(&local2);
 _5197 = _5196.value;
 _5198 = (frost$core$Int64) {255u};
@@ -9573,415 +9574,415 @@ _5199 = *(&local2);
 _5200 = _5199.value;
 _5201 = (frost$core$Int64) {0u};
 _5202 = _5201.value;
-_5203 = ((frost$unsafe$NewPointer*)_5200)[_5202];
+_5203 = ((frost$unsafe$Pointer*)_5200)[_5202];
 _5204 = _5198.value;
-((frost$unsafe$NewPointer*)_5197)[_5204] = _5203;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:359
+((frost$unsafe$Pointer*)_5197)[_5204] = _5203;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:358
 _5207 = *(&local2);
 return _5207;
 
 }
-frost$unsafe$NewPointer org$frostlang$json$Lexer$getAccepts$R$frost$unsafe$NewPointer$LTfrost$core$Int$GT() {
+frost$unsafe$Pointer org$frostlang$json$Lexer$getAccepts$R$frost$unsafe$Pointer$LTfrost$core$Int$GT() {
 
-frost$unsafe$NewPointer local0;
-frost$unsafe$NewPointer local1;
-frost$unsafe$NewPointer local2;
+frost$unsafe$Pointer local0;
+frost$unsafe$Pointer local1;
+frost$unsafe$Pointer local2;
 frost$core$Int _1;
 int64_t _4;
 int64_t _5;
 int64_t _6;
 int64_t* _9;
-frost$unsafe$NewPointer _11;
-frost$unsafe$NewPointer _14;
-frost$unsafe$NewPointer _18;
+frost$unsafe$Pointer _11;
+frost$unsafe$Pointer _14;
+frost$unsafe$Pointer _18;
 int64_t _19;
 frost$core$Int64 _20;
 frost$core$Int _21;
 int64_t _22;
-frost$unsafe$NewPointer _25;
+frost$unsafe$Pointer _25;
 int64_t _26;
 frost$core$Int64 _27;
 frost$core$Int _28;
 int64_t _29;
-frost$unsafe$NewPointer _32;
+frost$unsafe$Pointer _32;
 int64_t _33;
 frost$core$Int64 _34;
 frost$core$Int _35;
 int64_t _36;
-frost$unsafe$NewPointer _39;
+frost$unsafe$Pointer _39;
 int64_t _40;
 frost$core$Int64 _41;
 frost$core$Int _42;
 int64_t _43;
-frost$unsafe$NewPointer _46;
+frost$unsafe$Pointer _46;
 int64_t _47;
 frost$core$Int64 _48;
 frost$core$Int _49;
 int64_t _50;
-frost$unsafe$NewPointer _53;
+frost$unsafe$Pointer _53;
 int64_t _54;
 frost$core$Int64 _55;
 frost$core$Int _56;
 int64_t _57;
-frost$unsafe$NewPointer _60;
+frost$unsafe$Pointer _60;
 int64_t _61;
 frost$core$Int64 _62;
 frost$core$Int _63;
 int64_t _64;
-frost$unsafe$NewPointer _67;
+frost$unsafe$Pointer _67;
 int64_t _68;
 frost$core$Int64 _69;
 frost$core$Int _70;
 int64_t _71;
-frost$unsafe$NewPointer _74;
+frost$unsafe$Pointer _74;
 int64_t _75;
 frost$core$Int64 _76;
 frost$core$Int _77;
 int64_t _78;
-frost$unsafe$NewPointer _81;
+frost$unsafe$Pointer _81;
 int64_t _82;
 frost$core$Int64 _83;
 frost$core$Int _84;
 int64_t _85;
-frost$unsafe$NewPointer _88;
+frost$unsafe$Pointer _88;
 int64_t _89;
 frost$core$Int64 _90;
 frost$core$Int _91;
 int64_t _92;
-frost$unsafe$NewPointer _95;
+frost$unsafe$Pointer _95;
 int64_t _96;
 frost$core$Int64 _97;
 frost$core$Int _98;
 int64_t _99;
-frost$unsafe$NewPointer _102;
+frost$unsafe$Pointer _102;
 int64_t _103;
 frost$core$Int64 _104;
 frost$core$Int _105;
 int64_t _106;
-frost$unsafe$NewPointer _109;
+frost$unsafe$Pointer _109;
 int64_t _110;
 frost$core$Int64 _111;
 frost$core$Int _112;
 int64_t _113;
-frost$unsafe$NewPointer _116;
+frost$unsafe$Pointer _116;
 int64_t _117;
 frost$core$Int64 _118;
 frost$core$Int _119;
 int64_t _120;
-frost$unsafe$NewPointer _123;
+frost$unsafe$Pointer _123;
 int64_t _124;
 frost$core$Int64 _125;
 frost$core$Int _126;
 int64_t _127;
-frost$unsafe$NewPointer _130;
+frost$unsafe$Pointer _130;
 int64_t _131;
 frost$core$Int64 _132;
 frost$core$Int _133;
 int64_t _134;
-frost$unsafe$NewPointer _137;
+frost$unsafe$Pointer _137;
 int64_t _138;
 frost$core$Int64 _139;
 frost$core$Int _140;
 int64_t _141;
-frost$unsafe$NewPointer _144;
+frost$unsafe$Pointer _144;
 int64_t _145;
 frost$core$Int64 _146;
 frost$core$Int _147;
 int64_t _148;
-frost$unsafe$NewPointer _151;
+frost$unsafe$Pointer _151;
 int64_t _152;
 frost$core$Int64 _153;
 frost$core$Int _154;
 int64_t _155;
-frost$unsafe$NewPointer _158;
+frost$unsafe$Pointer _158;
 int64_t _159;
 frost$core$Int64 _160;
 frost$core$Int _161;
 int64_t _162;
-frost$unsafe$NewPointer _165;
+frost$unsafe$Pointer _165;
 int64_t _166;
 frost$core$Int64 _167;
 frost$core$Int _168;
 int64_t _169;
-frost$unsafe$NewPointer _172;
+frost$unsafe$Pointer _172;
 int64_t _173;
 frost$core$Int64 _174;
 frost$core$Int _175;
 int64_t _176;
-frost$unsafe$NewPointer _179;
+frost$unsafe$Pointer _179;
 int64_t _180;
 frost$core$Int64 _181;
 frost$core$Int _182;
 int64_t _183;
-frost$unsafe$NewPointer _186;
+frost$unsafe$Pointer _186;
 int64_t _187;
 frost$core$Int64 _188;
 frost$core$Int _189;
 int64_t _190;
-frost$unsafe$NewPointer _193;
+frost$unsafe$Pointer _193;
 int64_t _194;
 frost$core$Int64 _195;
 frost$core$Int _196;
 int64_t _197;
-frost$unsafe$NewPointer _200;
+frost$unsafe$Pointer _200;
 int64_t _201;
 frost$core$Int64 _202;
 frost$core$Int _203;
 int64_t _204;
-frost$unsafe$NewPointer _207;
+frost$unsafe$Pointer _207;
 int64_t _208;
 frost$core$Int64 _209;
 frost$core$Int _210;
 int64_t _211;
-frost$unsafe$NewPointer _214;
+frost$unsafe$Pointer _214;
 int64_t _215;
 frost$core$Int64 _216;
 frost$core$Int _217;
 int64_t _218;
-frost$unsafe$NewPointer _221;
+frost$unsafe$Pointer _221;
 int64_t _222;
 frost$core$Int64 _223;
 frost$core$Int _224;
 int64_t _225;
-frost$unsafe$NewPointer _228;
+frost$unsafe$Pointer _228;
 int64_t _229;
 frost$core$Int64 _230;
 frost$core$Int _231;
 int64_t _232;
-frost$unsafe$NewPointer _235;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:364
+frost$unsafe$Pointer _235;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:363
 _1 = (frost$core$Int) {31u};
-// begin inline call to method frost.unsafe.NewPointer.alloc(count:frost.core.Int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from Lexer.frost:364:44
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:49
+// begin inline call to method frost.unsafe.Pointer.alloc(count:frost.core.Int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Lexer.frost:363:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:49
 _4 = _1.value;
 _5 = _4 * 8u;
 _6 = frost$core$Frost$alloc$builtin_int$R$builtin_int(_5);
-// begin inline call to frost.unsafe.NewPointer.init(value:builtin_int):frost.unsafe.NewPointer<frost.unsafe.NewPointer.T> from NewPointer.frost:49:29
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:31
+// begin inline call to frost.unsafe.Pointer.init(value:builtin_int):frost.unsafe.Pointer<frost.unsafe.Pointer.T> from Pointer.frost:49:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:31
 _9 = &(&local1)->value;
 *_9 = _6;
 _11 = *(&local1);
 *(&local0) = _11;
 _14 = *(&local0);
 *(&local2) = _14;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:365
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:364
 _18 = *(&local2);
 _19 = _18.value;
 _20 = (frost$core$Int64) {0u};
 _21 = (frost$core$Int) {18446744073709551615u};
 _22 = _20.value;
 ((frost$core$Int*)_19)[_22] = _21;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:366
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:365
 _25 = *(&local2);
 _26 = _25.value;
 _27 = (frost$core$Int64) {1u};
 _28 = (frost$core$Int) {18446744073709551615u};
 _29 = _27.value;
 ((frost$core$Int*)_26)[_29] = _28;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:367
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:366
 _32 = *(&local2);
 _33 = _32.value;
 _34 = (frost$core$Int64) {2u};
 _35 = (frost$core$Int) {6u};
 _36 = _34.value;
 ((frost$core$Int*)_33)[_36] = _35;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:368
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:367
 _39 = *(&local2);
 _40 = _39.value;
 _41 = (frost$core$Int64) {3u};
 _42 = (frost$core$Int) {18446744073709551615u};
 _43 = _41.value;
 ((frost$core$Int*)_40)[_43] = _42;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:369
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:368
 _46 = *(&local2);
 _47 = _46.value;
 _48 = (frost$core$Int64) {4u};
 _49 = (frost$core$Int) {3u};
 _50 = _48.value;
 ((frost$core$Int*)_47)[_50] = _49;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:370
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:369
 _53 = *(&local2);
 _54 = _53.value;
 _55 = (frost$core$Int64) {5u};
 _56 = (frost$core$Int) {18446744073709551615u};
 _57 = _55.value;
 ((frost$core$Int*)_54)[_57] = _56;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:371
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:370
 _60 = *(&local2);
 _61 = _60.value;
 _62 = (frost$core$Int64) {6u};
 _63 = (frost$core$Int) {14u};
 _64 = _62.value;
 ((frost$core$Int*)_61)[_64] = _63;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:372
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:371
 _67 = *(&local2);
 _68 = _67.value;
 _69 = (frost$core$Int64) {7u};
 _70 = (frost$core$Int) {18446744073709551615u};
 _71 = _69.value;
 ((frost$core$Int*)_68)[_71] = _70;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:373
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:372
 _74 = *(&local2);
 _75 = _74.value;
 _76 = (frost$core$Int64) {8u};
 _77 = (frost$core$Int) {4u};
 _78 = _76.value;
 ((frost$core$Int*)_75)[_78] = _77;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:374
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:373
 _81 = *(&local2);
 _82 = _81.value;
 _83 = (frost$core$Int64) {9u};
 _84 = (frost$core$Int) {5u};
 _85 = _83.value;
 ((frost$core$Int*)_82)[_85] = _84;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:375
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:374
 _88 = *(&local2);
 _89 = _88.value;
 _90 = (frost$core$Int64) {10u};
 _91 = (frost$core$Int) {18446744073709551615u};
 _92 = _90.value;
 ((frost$core$Int*)_89)[_92] = _91;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:376
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:375
 _95 = *(&local2);
 _96 = _95.value;
 _97 = (frost$core$Int64) {11u};
 _98 = (frost$core$Int) {18446744073709551615u};
 _99 = _97.value;
 ((frost$core$Int*)_96)[_99] = _98;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:377
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:376
 _102 = *(&local2);
 _103 = _102.value;
 _104 = (frost$core$Int64) {12u};
 _105 = (frost$core$Int) {5u};
 _106 = _104.value;
 ((frost$core$Int*)_103)[_106] = _105;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:378
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:377
 _109 = *(&local2);
 _110 = _109.value;
 _111 = (frost$core$Int64) {13u};
 _112 = (frost$core$Int) {15u};
 _113 = _111.value;
 ((frost$core$Int*)_110)[_113] = _112;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:379
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:378
 _116 = *(&local2);
 _117 = _116.value;
 _118 = (frost$core$Int64) {14u};
 _119 = (frost$core$Int) {12u};
 _120 = _118.value;
 ((frost$core$Int*)_117)[_120] = _119;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:380
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:379
 _123 = *(&local2);
 _124 = _123.value;
 _125 = (frost$core$Int64) {15u};
 _126 = (frost$core$Int) {13u};
 _127 = _125.value;
 ((frost$core$Int*)_124)[_127] = _126;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:381
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:380
 _130 = *(&local2);
 _131 = _130.value;
 _132 = (frost$core$Int64) {16u};
 _133 = (frost$core$Int) {18446744073709551615u};
 _134 = _132.value;
 ((frost$core$Int*)_131)[_134] = _133;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:382
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:381
 _137 = *(&local2);
 _138 = _137.value;
 _139 = (frost$core$Int64) {17u};
 _140 = (frost$core$Int) {18446744073709551615u};
 _141 = _139.value;
 ((frost$core$Int*)_138)[_141] = _140;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:383
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:382
 _144 = *(&local2);
 _145 = _144.value;
 _146 = (frost$core$Int64) {18u};
 _147 = (frost$core$Int) {18446744073709551615u};
 _148 = _146.value;
 ((frost$core$Int*)_145)[_148] = _147;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:384
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:383
 _151 = *(&local2);
 _152 = _151.value;
 _153 = (frost$core$Int64) {19u};
 _154 = (frost$core$Int) {18446744073709551615u};
 _155 = _153.value;
 ((frost$core$Int*)_152)[_155] = _154;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:385
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:384
 _158 = *(&local2);
 _159 = _158.value;
 _160 = (frost$core$Int64) {20u};
 _161 = (frost$core$Int) {8u};
 _162 = _160.value;
 ((frost$core$Int*)_159)[_162] = _161;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:386
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:385
 _165 = *(&local2);
 _166 = _165.value;
 _167 = (frost$core$Int64) {21u};
 _168 = (frost$core$Int) {18446744073709551615u};
 _169 = _167.value;
 ((frost$core$Int*)_166)[_169] = _168;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:387
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:386
 _172 = *(&local2);
 _173 = _172.value;
 _174 = (frost$core$Int64) {22u};
 _175 = (frost$core$Int) {18446744073709551615u};
 _176 = _174.value;
 ((frost$core$Int*)_173)[_176] = _175;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:388
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:387
 _179 = *(&local2);
 _180 = _179.value;
 _181 = (frost$core$Int64) {23u};
 _182 = (frost$core$Int) {18446744073709551615u};
 _183 = _181.value;
 ((frost$core$Int*)_180)[_183] = _182;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:389
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:388
 _186 = *(&local2);
 _187 = _186.value;
 _188 = (frost$core$Int64) {24u};
 _189 = (frost$core$Int) {9u};
 _190 = _188.value;
 ((frost$core$Int*)_187)[_190] = _189;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:390
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:389
 _193 = *(&local2);
 _194 = _193.value;
 _195 = (frost$core$Int64) {25u};
 _196 = (frost$core$Int) {18446744073709551615u};
 _197 = _195.value;
 ((frost$core$Int*)_194)[_197] = _196;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:391
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:390
 _200 = *(&local2);
 _201 = _200.value;
 _202 = (frost$core$Int64) {26u};
 _203 = (frost$core$Int) {18446744073709551615u};
 _204 = _202.value;
 ((frost$core$Int*)_201)[_204] = _203;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:392
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:391
 _207 = *(&local2);
 _208 = _207.value;
 _209 = (frost$core$Int64) {27u};
 _210 = (frost$core$Int) {18446744073709551615u};
 _211 = _209.value;
 ((frost$core$Int*)_208)[_211] = _210;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:393
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:392
 _214 = *(&local2);
 _215 = _214.value;
 _216 = (frost$core$Int64) {28u};
 _217 = (frost$core$Int) {7u};
 _218 = _216.value;
 ((frost$core$Int*)_215)[_218] = _217;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:394
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:393
 _221 = *(&local2);
 _222 = _221.value;
 _223 = (frost$core$Int64) {29u};
 _224 = (frost$core$Int) {10u};
 _225 = _223.value;
 ((frost$core$Int*)_222)[_225] = _224;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:395
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:394
 _228 = *(&local2);
 _229 = _228.value;
 _230 = (frost$core$Int64) {30u};
 _231 = (frost$core$Int) {11u};
 _232 = _230.value;
 ((frost$core$Int*)_229)[_232] = _231;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:396
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:395
 _235 = *(&local2);
 return _235;
 
@@ -9989,481 +9990,481 @@ return _235;
 void org$frostlang$json$Lexer$cleanup(void* rawSelf) {
 org$frostlang$json$Lexer* param0 = (org$frostlang$json$Lexer*) rawSelf;
 
-frost$unsafe$NewPointer* _1;
-frost$unsafe$NewPointer _2;
+frost$unsafe$Pointer* _1;
+frost$unsafe$Pointer _2;
 int64_t _3;
 frost$core$Int64 _4;
 int64_t _5;
-frost$unsafe$NewPointer _6;
+frost$unsafe$Pointer _6;
 int64_t _9;
-frost$unsafe$NewPointer* _13;
-frost$unsafe$NewPointer _14;
+frost$unsafe$Pointer* _13;
+frost$unsafe$Pointer _14;
 int64_t _15;
 frost$core$Int64 _16;
 int64_t _17;
-frost$unsafe$NewPointer _18;
+frost$unsafe$Pointer _18;
 int64_t _21;
-frost$unsafe$NewPointer* _25;
-frost$unsafe$NewPointer _26;
+frost$unsafe$Pointer* _25;
+frost$unsafe$Pointer _26;
 int64_t _27;
 frost$core$Int64 _28;
 int64_t _29;
-frost$unsafe$NewPointer _30;
+frost$unsafe$Pointer _30;
 int64_t _33;
-frost$unsafe$NewPointer* _37;
-frost$unsafe$NewPointer _38;
+frost$unsafe$Pointer* _37;
+frost$unsafe$Pointer _38;
 int64_t _39;
 frost$core$Int64 _40;
 int64_t _41;
-frost$unsafe$NewPointer _42;
+frost$unsafe$Pointer _42;
 int64_t _45;
-frost$unsafe$NewPointer* _49;
-frost$unsafe$NewPointer _50;
+frost$unsafe$Pointer* _49;
+frost$unsafe$Pointer _50;
 int64_t _51;
 frost$core$Int64 _52;
 int64_t _53;
-frost$unsafe$NewPointer _54;
+frost$unsafe$Pointer _54;
 int64_t _57;
-frost$unsafe$NewPointer* _61;
-frost$unsafe$NewPointer _62;
+frost$unsafe$Pointer* _61;
+frost$unsafe$Pointer _62;
 int64_t _63;
 frost$core$Int64 _64;
 int64_t _65;
-frost$unsafe$NewPointer _66;
+frost$unsafe$Pointer _66;
 int64_t _69;
-frost$unsafe$NewPointer* _73;
-frost$unsafe$NewPointer _74;
+frost$unsafe$Pointer* _73;
+frost$unsafe$Pointer _74;
 int64_t _75;
 frost$core$Int64 _76;
 int64_t _77;
-frost$unsafe$NewPointer _78;
+frost$unsafe$Pointer _78;
 int64_t _81;
-frost$unsafe$NewPointer* _85;
-frost$unsafe$NewPointer _86;
+frost$unsafe$Pointer* _85;
+frost$unsafe$Pointer _86;
 int64_t _87;
 frost$core$Int64 _88;
 int64_t _89;
-frost$unsafe$NewPointer _90;
+frost$unsafe$Pointer _90;
 int64_t _93;
-frost$unsafe$NewPointer* _97;
-frost$unsafe$NewPointer _98;
+frost$unsafe$Pointer* _97;
+frost$unsafe$Pointer _98;
 int64_t _99;
 frost$core$Int64 _100;
 int64_t _101;
-frost$unsafe$NewPointer _102;
+frost$unsafe$Pointer _102;
 int64_t _105;
-frost$unsafe$NewPointer* _109;
-frost$unsafe$NewPointer _110;
+frost$unsafe$Pointer* _109;
+frost$unsafe$Pointer _110;
 int64_t _111;
 frost$core$Int64 _112;
 int64_t _113;
-frost$unsafe$NewPointer _114;
+frost$unsafe$Pointer _114;
 int64_t _117;
-frost$unsafe$NewPointer* _121;
-frost$unsafe$NewPointer _122;
+frost$unsafe$Pointer* _121;
+frost$unsafe$Pointer _122;
 int64_t _123;
 frost$core$Int64 _124;
 int64_t _125;
-frost$unsafe$NewPointer _126;
+frost$unsafe$Pointer _126;
 int64_t _129;
-frost$unsafe$NewPointer* _133;
-frost$unsafe$NewPointer _134;
+frost$unsafe$Pointer* _133;
+frost$unsafe$Pointer _134;
 int64_t _135;
 frost$core$Int64 _136;
 int64_t _137;
-frost$unsafe$NewPointer _138;
+frost$unsafe$Pointer _138;
 int64_t _141;
-frost$unsafe$NewPointer* _145;
-frost$unsafe$NewPointer _146;
+frost$unsafe$Pointer* _145;
+frost$unsafe$Pointer _146;
 int64_t _147;
 frost$core$Int64 _148;
 int64_t _149;
-frost$unsafe$NewPointer _150;
+frost$unsafe$Pointer _150;
 int64_t _153;
-frost$unsafe$NewPointer* _157;
-frost$unsafe$NewPointer _158;
+frost$unsafe$Pointer* _157;
+frost$unsafe$Pointer _158;
 int64_t _159;
 frost$core$Int64 _160;
 int64_t _161;
-frost$unsafe$NewPointer _162;
+frost$unsafe$Pointer _162;
 int64_t _165;
-frost$unsafe$NewPointer* _169;
-frost$unsafe$NewPointer _170;
+frost$unsafe$Pointer* _169;
+frost$unsafe$Pointer _170;
 int64_t _171;
 frost$core$Int64 _172;
 int64_t _173;
-frost$unsafe$NewPointer _174;
+frost$unsafe$Pointer _174;
 int64_t _177;
-frost$unsafe$NewPointer* _181;
-frost$unsafe$NewPointer _182;
+frost$unsafe$Pointer* _181;
+frost$unsafe$Pointer _182;
 int64_t _183;
 frost$core$Int64 _184;
 int64_t _185;
-frost$unsafe$NewPointer _186;
+frost$unsafe$Pointer _186;
 int64_t _189;
-frost$unsafe$NewPointer* _193;
-frost$unsafe$NewPointer _194;
+frost$unsafe$Pointer* _193;
+frost$unsafe$Pointer _194;
 int64_t _195;
 frost$core$Int64 _196;
 int64_t _197;
-frost$unsafe$NewPointer _198;
+frost$unsafe$Pointer _198;
 int64_t _201;
-frost$unsafe$NewPointer* _205;
-frost$unsafe$NewPointer _206;
+frost$unsafe$Pointer* _205;
+frost$unsafe$Pointer _206;
 int64_t _207;
 frost$core$Int64 _208;
 int64_t _209;
-frost$unsafe$NewPointer _210;
+frost$unsafe$Pointer _210;
 int64_t _213;
-frost$unsafe$NewPointer* _217;
-frost$unsafe$NewPointer _218;
+frost$unsafe$Pointer* _217;
+frost$unsafe$Pointer _218;
 int64_t _219;
 frost$core$Int64 _220;
 int64_t _221;
-frost$unsafe$NewPointer _222;
+frost$unsafe$Pointer _222;
 int64_t _225;
-frost$unsafe$NewPointer* _229;
-frost$unsafe$NewPointer _230;
+frost$unsafe$Pointer* _229;
+frost$unsafe$Pointer _230;
 int64_t _231;
 frost$core$Int64 _232;
 int64_t _233;
-frost$unsafe$NewPointer _234;
+frost$unsafe$Pointer _234;
 int64_t _237;
-frost$unsafe$NewPointer* _241;
-frost$unsafe$NewPointer _242;
+frost$unsafe$Pointer* _241;
+frost$unsafe$Pointer _242;
 int64_t _243;
 frost$core$Int64 _244;
 int64_t _245;
-frost$unsafe$NewPointer _246;
+frost$unsafe$Pointer _246;
 int64_t _249;
-frost$unsafe$NewPointer* _253;
-frost$unsafe$NewPointer _254;
+frost$unsafe$Pointer* _253;
+frost$unsafe$Pointer _254;
 int64_t _255;
 frost$core$Int64 _256;
 int64_t _257;
-frost$unsafe$NewPointer _258;
+frost$unsafe$Pointer _258;
 int64_t _261;
-frost$unsafe$NewPointer* _265;
-frost$unsafe$NewPointer _266;
+frost$unsafe$Pointer* _265;
+frost$unsafe$Pointer _266;
 int64_t _267;
 frost$core$Int64 _268;
 int64_t _269;
-frost$unsafe$NewPointer _270;
+frost$unsafe$Pointer _270;
 int64_t _273;
-frost$unsafe$NewPointer* _277;
-frost$unsafe$NewPointer _278;
+frost$unsafe$Pointer* _277;
+frost$unsafe$Pointer _278;
 int64_t _279;
 frost$core$Int64 _280;
 int64_t _281;
-frost$unsafe$NewPointer _282;
+frost$unsafe$Pointer _282;
 int64_t _285;
-frost$unsafe$NewPointer* _289;
-frost$unsafe$NewPointer _290;
+frost$unsafe$Pointer* _289;
+frost$unsafe$Pointer _290;
 int64_t _291;
 frost$core$Int64 _292;
 int64_t _293;
-frost$unsafe$NewPointer _294;
+frost$unsafe$Pointer _294;
 int64_t _297;
-frost$unsafe$NewPointer* _301;
-frost$unsafe$NewPointer _302;
+frost$unsafe$Pointer* _301;
+frost$unsafe$Pointer _302;
 int64_t _305;
-frost$unsafe$NewPointer* _309;
-frost$unsafe$NewPointer _310;
+frost$unsafe$Pointer* _309;
+frost$unsafe$Pointer _310;
 int64_t _313;
 frost$core$Object* _317;
 org$frostlang$plex$runtime$DFA** _319;
 org$frostlang$plex$runtime$DFA* _320;
 frost$core$Object* _321;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:401
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:400
 _1 = &param0->transitions;
 _2 = *_1;
 _3 = _2.value;
 _4 = (frost$core$Int64) {0u};
 _5 = _4.value;
-_6 = ((frost$unsafe$NewPointer*)_3)[_5];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:401:31
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_6 = ((frost$unsafe$Pointer*)_3)[_5];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:400:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _9 = _6.value;
 frost$core$Frost$destroy$builtin_int(_9);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:402
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:401
 _13 = &param0->transitions;
 _14 = *_13;
 _15 = _14.value;
 _16 = (frost$core$Int64) {9u};
 _17 = _16.value;
-_18 = ((frost$unsafe$NewPointer*)_15)[_17];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:402:31
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_18 = ((frost$unsafe$Pointer*)_15)[_17];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:401:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _21 = _18.value;
 frost$core$Frost$destroy$builtin_int(_21);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:403
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:402
 _25 = &param0->transitions;
 _26 = *_25;
 _27 = _26.value;
 _28 = (frost$core$Int64) {34u};
 _29 = _28.value;
-_30 = ((frost$unsafe$NewPointer*)_27)[_29];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:403:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_30 = ((frost$unsafe$Pointer*)_27)[_29];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:402:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _33 = _30.value;
 frost$core$Frost$destroy$builtin_int(_33);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:404
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:403
 _37 = &param0->transitions;
 _38 = *_37;
 _39 = _38.value;
 _40 = (frost$core$Int64) {43u};
 _41 = _40.value;
-_42 = ((frost$unsafe$NewPointer*)_39)[_41];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:404:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_42 = ((frost$unsafe$Pointer*)_39)[_41];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:403:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _45 = _42.value;
 frost$core$Frost$destroy$builtin_int(_45);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:405
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:404
 _49 = &param0->transitions;
 _50 = *_49;
 _51 = _50.value;
 _52 = (frost$core$Int64) {44u};
 _53 = _52.value;
-_54 = ((frost$unsafe$NewPointer*)_51)[_53];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:405:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_54 = ((frost$unsafe$Pointer*)_51)[_53];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:404:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _57 = _54.value;
 frost$core$Frost$destroy$builtin_int(_57);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:406
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:405
 _61 = &param0->transitions;
 _62 = *_61;
 _63 = _62.value;
 _64 = (frost$core$Int64) {45u};
 _65 = _64.value;
-_66 = ((frost$unsafe$NewPointer*)_63)[_65];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:406:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_66 = ((frost$unsafe$Pointer*)_63)[_65];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:405:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _69 = _66.value;
 frost$core$Frost$destroy$builtin_int(_69);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:407
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:406
 _73 = &param0->transitions;
 _74 = *_73;
 _75 = _74.value;
 _76 = (frost$core$Int64) {46u};
 _77 = _76.value;
-_78 = ((frost$unsafe$NewPointer*)_75)[_77];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:407:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_78 = ((frost$unsafe$Pointer*)_75)[_77];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:406:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _81 = _78.value;
 frost$core$Frost$destroy$builtin_int(_81);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:408
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:407
 _85 = &param0->transitions;
 _86 = *_85;
 _87 = _86.value;
 _88 = (frost$core$Int64) {48u};
 _89 = _88.value;
-_90 = ((frost$unsafe$NewPointer*)_87)[_89];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:408:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_90 = ((frost$unsafe$Pointer*)_87)[_89];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:407:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _93 = _90.value;
 frost$core$Frost$destroy$builtin_int(_93);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:409
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:408
 _97 = &param0->transitions;
 _98 = *_97;
 _99 = _98.value;
 _100 = (frost$core$Int64) {58u};
 _101 = _100.value;
-_102 = ((frost$unsafe$NewPointer*)_99)[_101];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:409:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_102 = ((frost$unsafe$Pointer*)_99)[_101];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:408:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _105 = _102.value;
 frost$core$Frost$destroy$builtin_int(_105);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:410
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:409
 _109 = &param0->transitions;
 _110 = *_109;
 _111 = _110.value;
 _112 = (frost$core$Int64) {69u};
 _113 = _112.value;
-_114 = ((frost$unsafe$NewPointer*)_111)[_113];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:410:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_114 = ((frost$unsafe$Pointer*)_111)[_113];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:409:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _117 = _114.value;
 frost$core$Frost$destroy$builtin_int(_117);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:411
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:410
 _121 = &param0->transitions;
 _122 = *_121;
 _123 = _122.value;
 _124 = (frost$core$Int64) {91u};
 _125 = _124.value;
-_126 = ((frost$unsafe$NewPointer*)_123)[_125];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:411:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_126 = ((frost$unsafe$Pointer*)_123)[_125];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:410:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _129 = _126.value;
 frost$core$Frost$destroy$builtin_int(_129);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:412
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:411
 _133 = &param0->transitions;
 _134 = *_133;
 _135 = _134.value;
 _136 = (frost$core$Int64) {92u};
 _137 = _136.value;
-_138 = ((frost$unsafe$NewPointer*)_135)[_137];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:412:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_138 = ((frost$unsafe$Pointer*)_135)[_137];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:411:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _141 = _138.value;
 frost$core$Frost$destroy$builtin_int(_141);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:413
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:412
 _145 = &param0->transitions;
 _146 = *_145;
 _147 = _146.value;
 _148 = (frost$core$Int64) {93u};
 _149 = _148.value;
-_150 = ((frost$unsafe$NewPointer*)_147)[_149];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:413:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_150 = ((frost$unsafe$Pointer*)_147)[_149];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:412:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _153 = _150.value;
 frost$core$Frost$destroy$builtin_int(_153);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:414
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:413
 _157 = &param0->transitions;
 _158 = *_157;
 _159 = _158.value;
 _160 = (frost$core$Int64) {97u};
 _161 = _160.value;
-_162 = ((frost$unsafe$NewPointer*)_159)[_161];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:414:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_162 = ((frost$unsafe$Pointer*)_159)[_161];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:413:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _165 = _162.value;
 frost$core$Frost$destroy$builtin_int(_165);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:415
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:414
 _169 = &param0->transitions;
 _170 = *_169;
 _171 = _170.value;
 _172 = (frost$core$Int64) {98u};
 _173 = _172.value;
-_174 = ((frost$unsafe$NewPointer*)_171)[_173];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:415:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_174 = ((frost$unsafe$Pointer*)_171)[_173];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:414:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _177 = _174.value;
 frost$core$Frost$destroy$builtin_int(_177);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:416
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:415
 _181 = &param0->transitions;
 _182 = *_181;
 _183 = _182.value;
 _184 = (frost$core$Int64) {101u};
 _185 = _184.value;
-_186 = ((frost$unsafe$NewPointer*)_183)[_185];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:416:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_186 = ((frost$unsafe$Pointer*)_183)[_185];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:415:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _189 = _186.value;
 frost$core$Frost$destroy$builtin_int(_189);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:417
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:416
 _193 = &param0->transitions;
 _194 = *_193;
 _195 = _194.value;
 _196 = (frost$core$Int64) {102u};
 _197 = _196.value;
-_198 = ((frost$unsafe$NewPointer*)_195)[_197];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:417:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_198 = ((frost$unsafe$Pointer*)_195)[_197];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:416:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _201 = _198.value;
 frost$core$Frost$destroy$builtin_int(_201);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:418
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:417
 _205 = &param0->transitions;
 _206 = *_205;
 _207 = _206.value;
 _208 = (frost$core$Int64) {108u};
 _209 = _208.value;
-_210 = ((frost$unsafe$NewPointer*)_207)[_209];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:418:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_210 = ((frost$unsafe$Pointer*)_207)[_209];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:417:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _213 = _210.value;
 frost$core$Frost$destroy$builtin_int(_213);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:419
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:418
 _217 = &param0->transitions;
 _218 = *_217;
 _219 = _218.value;
 _220 = (frost$core$Int64) {110u};
 _221 = _220.value;
-_222 = ((frost$unsafe$NewPointer*)_219)[_221];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:419:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_222 = ((frost$unsafe$Pointer*)_219)[_221];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:418:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _225 = _222.value;
 frost$core$Frost$destroy$builtin_int(_225);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:420
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:419
 _229 = &param0->transitions;
 _230 = *_229;
 _231 = _230.value;
 _232 = (frost$core$Int64) {114u};
 _233 = _232.value;
-_234 = ((frost$unsafe$NewPointer*)_231)[_233];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:420:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_234 = ((frost$unsafe$Pointer*)_231)[_233];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:419:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _237 = _234.value;
 frost$core$Frost$destroy$builtin_int(_237);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:421
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:420
 _241 = &param0->transitions;
 _242 = *_241;
 _243 = _242.value;
 _244 = (frost$core$Int64) {115u};
 _245 = _244.value;
-_246 = ((frost$unsafe$NewPointer*)_243)[_245];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:421:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_246 = ((frost$unsafe$Pointer*)_243)[_245];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:420:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _249 = _246.value;
 frost$core$Frost$destroy$builtin_int(_249);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:422
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:421
 _253 = &param0->transitions;
 _254 = *_253;
 _255 = _254.value;
 _256 = (frost$core$Int64) {116u};
 _257 = _256.value;
-_258 = ((frost$unsafe$NewPointer*)_255)[_257];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:422:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_258 = ((frost$unsafe$Pointer*)_255)[_257];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:421:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _261 = _258.value;
 frost$core$Frost$destroy$builtin_int(_261);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:423
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:422
 _265 = &param0->transitions;
 _266 = *_265;
 _267 = _266.value;
 _268 = (frost$core$Int64) {117u};
 _269 = _268.value;
-_270 = ((frost$unsafe$NewPointer*)_267)[_269];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:423:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_270 = ((frost$unsafe$Pointer*)_267)[_269];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:422:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _273 = _270.value;
 frost$core$Frost$destroy$builtin_int(_273);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:424
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:423
 _277 = &param0->transitions;
 _278 = *_277;
 _279 = _278.value;
 _280 = (frost$core$Int64) {123u};
 _281 = _280.value;
-_282 = ((frost$unsafe$NewPointer*)_279)[_281];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:424:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_282 = ((frost$unsafe$Pointer*)_279)[_281];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:423:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _285 = _282.value;
 frost$core$Frost$destroy$builtin_int(_285);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:425
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:424
 _289 = &param0->transitions;
 _290 = *_289;
 _291 = _290.value;
 _292 = (frost$core$Int64) {125u};
 _293 = _292.value;
-_294 = ((frost$unsafe$NewPointer*)_291)[_293];
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:425:33
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+_294 = ((frost$unsafe$Pointer*)_291)[_293];
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:424:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _297 = _294.value;
 frost$core$Frost$destroy$builtin_int(_297);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:425
 _301 = &param0->transitions;
 _302 = *_301;
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:426:28
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:425:28
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _305 = _302.value;
 frost$core$Frost$destroy$builtin_int(_305);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:427
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:426
 _309 = &param0->accepts;
 _310 = *_309;
-// begin inline call to method frost.unsafe.NewPointer.destroy() from Lexer.frost:427:24
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/NewPointer.frost:119
+// begin inline call to method frost.unsafe.Pointer.destroy() from Lexer.frost:426:24
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:132
 _313 = _310.value;
 frost$core$Frost$destroy$builtin_int(_313);
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:400
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:399
 _317 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_317);
 _319 = &param0->dfa;
@@ -10497,16 +10498,16 @@ org$frostlang$plex$runtime$RawToken _22;
 frost$core$Int _23;
 org$frostlang$json$Position _24;
 org$frostlang$json$Token _25;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:431
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:430
 _1 = &param0->dfa;
 _2 = *_1;
 _3 = org$frostlang$plex$runtime$DFA$next$R$org$frostlang$plex$runtime$RawToken(_2);
 *(&local0) = _3;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:432
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:431
 _6 = *(&local0);
 _7 = _6.kind;
-// begin inline call to org.frostlang.json.Token.Kind.init(rv:frost.core.Int):org.frostlang.json.Token.Kind from Lexer.frost:432:70
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Token.frost:11
+// begin inline call to org.frostlang.json.Token.Kind.init(rv:frost.core.Int):org.frostlang.json.Token.Kind from Lexer.frost:431:70
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Token.frost:10
 _10 = &(&local2)->$rawValue;
 *_10 = _7;
 _12 = *(&local2);
@@ -10528,16 +10529,16 @@ return _25;
 void org$frostlang$json$Lexer$init(void* rawSelf) {
 org$frostlang$json$Lexer* param0 = (org$frostlang$json$Lexer*) rawSelf;
 
-frost$unsafe$NewPointer _1;
-frost$unsafe$NewPointer* _2;
-frost$unsafe$NewPointer _5;
-frost$unsafe$NewPointer* _6;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:15
-_1 = org$frostlang$json$Lexer$getTransitions$R$frost$unsafe$NewPointer$LTfrost$unsafe$NewPointer$LTfrost$core$Int$GT$GT();
+frost$unsafe$Pointer _1;
+frost$unsafe$Pointer* _2;
+frost$unsafe$Pointer _5;
+frost$unsafe$Pointer* _6;
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:14
+_1 = org$frostlang$json$Lexer$getTransitions$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT();
 _2 = &param0->transitions;
 *_2 = _1;
-// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:17
-_5 = org$frostlang$json$Lexer$getAccepts$R$frost$unsafe$NewPointer$LTfrost$core$Int$GT();
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:16
+_5 = org$frostlang$json$Lexer$getAccepts$R$frost$unsafe$Pointer$LTfrost$core$Int$GT();
 _6 = &param0->accepts;
 *_6 = _5;
 return;

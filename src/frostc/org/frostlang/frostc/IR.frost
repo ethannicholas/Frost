@@ -96,17 +96,6 @@ class IR {
         NOT(MethodPosition, Value)
 
         ============================================================================================
-        Allocates memory and returns a raw pointer to it. Only POINTER_ operations are legal on a
-        raw pointer.
-        ============================================================================================
-        POINTER_ALLOC(MethodPosition, Value -* count *-, Type)
-
-        ============================================================================================
-        Deallocates a pointer
-        ============================================================================================
-        POINTER_DESTROY(MethodPosition, Value -* pointer *-)
-
-        ============================================================================================
         Dereferences a raw pointer.
         ============================================================================================
         POINTER_GET(MethodPosition, Value, Type)
@@ -115,16 +104,6 @@ class IR {
         Reads from `pointer + index * sizeof(type)`.
         ============================================================================================
         POINTER_GET_INDEX(MethodPosition, Value -* pointer *-, Value -* index *-, Type)
-
-        ============================================================================================
-        Returns `pointer + index * sizeof(type)`.
-        ============================================================================================
-        POINTER_OFFSET(MethodPosition, Value -* pointer *-, Value -* index *-)
-
-        ============================================================================================
-        Equivalent to the C realloc function (other than additionally requiring the old size).
-        ============================================================================================
-        POINTER_REALLOC(MethodPosition, Value -* pointer *-, Value -* oldSize *-, Value -* newSize *-)
 
         ============================================================================================
         Writes to a raw pointer.
@@ -232,22 +211,10 @@ class IR {
                 when NOT(position, _) {
                     return position
                 }
-                when POINTER_ALLOC(position, _, _) {
-                    return position
-                }
-                when POINTER_DESTROY(position, _) {
-                    return position
-                }
                 when POINTER_GET(position, _, _) {
                     return position
                 }
                 when POINTER_GET_INDEX(position, _, _, _) {
-                    return position
-                }
-                when POINTER_OFFSET(position, _, _) {
-                    return position
-                }
-                when POINTER_REALLOC(position, _, _, _) {
                     return position
                 }
                 when POINTER_SET(position, _, _, _) {
@@ -326,23 +293,11 @@ class IR {
                 when NOT(position, value) {
                     return "not \{value}"
                 }
-                when POINTER_ALLOC(position, count, type) {
-                    return "pointer_alloc \{count}, \{type}"
-                }
-                when POINTER_DESTROY(position, ptr) {
-                    return "pointer_destroy \{ptr}"
-                }
                 when POINTER_GET(position, ptr, type) {
                     return "pointer_get \{ptr}, \{type}"
                 }
                 when POINTER_GET_INDEX(position, ptr, index, type) {
                     return "pointer_get_index \{ptr}, \{index}, \{type}"
-                }
-                when POINTER_OFFSET(position, ptr, index) {
-                    return "pointer_offset \{ptr}, \{index}"
-                }
-                when POINTER_REALLOC(position, ptr, oldSize, newSize) {
-                    return "pointer_realloc \{ptr}, \{oldSize}, \{newSize}"
                 }
                 when POINTER_SET(position, value, ptr, type) {
                     return "pointer_set \{value}, \{ptr}, \{type}"

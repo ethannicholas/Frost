@@ -80,9 +80,6 @@ class CCodeGenerator : CodeGenerator {
 
     method writeImport(cl:ClassDecl) {
         try {
-            if cl.name = "frost.unsafe.Pointer" {
-                return 
-            }
             def includePath := hCodeGen.getRelativePath(cl, ".h")
             if !imports.contains(includePath) {
                 includes.printLine("#include \"\{includePath}\"")
@@ -107,11 +104,6 @@ class CCodeGenerator : CodeGenerator {
             }
             when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION {
                 return cType(compiler!.METHOD_TYPE)
-            }
-            when Type.Kind.GENERIC {
-                if t.subtypes[0].name = "frost.unsafe.Pointer" & t.subtypes[1].isMethod {
-                    return cMethodType(t.subtypes[1], null)
-                }
             }
         }
         return hCodeGen.type(t)
@@ -838,7 +830,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getCastReference(value:String, src:Type, target:Type):String {
-        if src.isBuiltinNumber | src.isPointer | target.isBuiltinNumber | target.isPointer {
+        if src.isBuiltinNumber | target.isBuiltinNumber {
             return "((\{cType(target)}) \{value})"
         }
         else {
@@ -898,7 +890,7 @@ class CCodeGenerator : CodeGenerator {
             cType(compiler!.STRING_TYPE)
             strings.print("static frost$core$String \{result} = { " +
                     "(frost$core$Class*) &frost$core$String$class, \{NO_REFCNT}, 0, " +
-                    "(frost$core$Char8*) \"")
+                    "(intptr_t) \"")
             for c in s.utf8 {
                 strings.print("\\x\{c.asUInt8,0>2:x}")
             }
@@ -937,11 +929,11 @@ class CCodeGenerator : CodeGenerator {
             when IR.Value.LOCAL(index, _) {
                 return "(&local\{index})"
             }
-            when IR.Value.METHOD_POINTER(m, _) {
+            when IR.Value.METHOD_POINTER(m, type) {
                 if m.owner.external {
                     writeDeclaration(m)
                 }
-                return getName(m)
+                return "frost$unsafe$Pointer$init$builtin_int((intptr_t) &\{getName(m)})"
             }
             when IR.Value.NULL(type) {
                 return getNullReference(type)
@@ -1190,7 +1182,12 @@ class CCodeGenerator : CodeGenerator {
             if returnType != compiler!.VOID_TYPE {
                 out.print("\{name(id)} = ")
             }
-            out.print("\{getReference(m)}(")
+            if m.type().isPointer {
+                out.print("((\{cMethodType(type, null)}) \{getReference(m)}.value)(")
+            }
+            else {
+                out.print("\{getReference(m)}(")
+            }
             var separator := ""
             for a in args {
                 out.print(separator)
@@ -1307,28 +1304,6 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, t:Type) {
-        try {
-            def countRef := getReference(count)
-            def type := cType(t)
-            out.printLine("\{name(id)} = ((\{type}*) frostAlloc(\{countRef} * " +
-                    "sizeof(\{type})));")
-        }
-        fail(error) {
-            unreachable
-        }
-    }
-
-    method writePointerDestroy(ptr:IR.Value) {
-        try {
-            def ptrRef := getReference(ptr)
-            out.printLine("frostFree(\{ptrRef});")
-        }
-        fail(error) {
-            unreachable
-        }
-    }
-
     method writePointerGet(id:IR.Statement.ID, ptr:IR.Value, type:Type) {
         try {
             if ptr.type() = compiler.BUILTIN_INT_TYPE {
@@ -1353,32 +1328,6 @@ class CCodeGenerator : CodeGenerator {
             else {
                 out.printLine("\{name(id)} = \{base}[\{indexRef}];")
             }
-        }
-        fail(error) {
-            unreachable
-        }
-    }
-
-    method writePointerOffset(id:IR.Statement.ID, ptr:IR.Value, offset:IR.Value) {
-        try {
-            def base := getReference(ptr)
-            def offsetRef := getReference(offset)
-            out.printLine("\{name(id)} = \{base} + \{offsetRef};")
-        }
-        fail(error) {
-            unreachable
-        }
-    }
-
-    method writePointerRealloc(id:IR.Statement.ID, ptr:IR.Value, oldCount:IR.Value,
-            newCount:IR.Value) {
-        try {
-            def ptrRef := getReference(ptr)
-            def oldCountRef := getReference(oldCount)
-            def newCountRef := getReference(newCount)
-            def type := cType(ptr.type().subtypes[1])
-            out.printLine("\{name(id)} = (\{type}*) frostRealloc(\{ptrRef}, \{oldCountRef} * " +
-                    "sizeof(\{type}), \{newCountRef} * sizeof(\{type}));")
         }
         fail(error) {
             unreachable
@@ -1526,23 +1475,11 @@ class CCodeGenerator : CodeGenerator {
                 when IR.Statement.NOT(position, value) {
                     writeNot(id, value)
                 }
-                when IR.Statement.POINTER_ALLOC(position, count, type) {
-                    writePointerAlloc(id, count, type)
-                }
-                when IR.Statement.POINTER_DESTROY(position, ptr) {
-                    writePointerDestroy(ptr)
-                }
                 when IR.Statement.POINTER_GET(position, ptr, type) {
                     writePointerGet(id, ptr, type)
                 }
                 when IR.Statement.POINTER_GET_INDEX(position, ptr, index, type) {
                     writePointerGetIndex(id, ptr, index, type)
-                }
-                when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
-                    writePointerOffset(id, ptr, offset)
-                }
-                when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
-                    writePointerRealloc(id, ptr, oldCount, newCount)
                 }
                 when IR.Statement.POINTER_SET(position, value, ptr, type) {
                     writePointerSet(value, ptr, type)
@@ -1628,20 +1565,11 @@ class CCodeGenerator : CodeGenerator {
                 when IR.Statement.NOT(_, value) {
                     write(cType(value.type()))
                 }
-                when IR.Statement.POINTER_ALLOC(_, _, type) {
-                    write("\{cType(type)}*")
-                }
                 when IR.Statement.POINTER_GET_INDEX(_, ptr, _, type) {
                     write("\{cType(type)}")
                 }
                 when IR.Statement.POINTER_GET(_, ptr, type) {
                     write("\{cType(type)}")
-                }
-                when IR.Statement.POINTER_OFFSET(_, ptr, _) {
-                    write("\{cType(ptr.type())}")
-                }
-                when IR.Statement.POINTER_REALLOC(_, ptr, _, _) {
-                    write("\{cType(ptr.type())}")
                 }
                 when IR.Statement.STATIC_CALL(_, m, _) {
                     def type := m.type(compiler).returnType
@@ -1801,6 +1729,8 @@ class CCodeGenerator : CodeGenerator {
         try {
             out.printLine(includes)
             includes.clear()
+            out.printLine("frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(" +
+                    "int64_t p_value);")
             out.printLine(shimsBuffer)
             shimsBuffer.clear()
             out.printLine(types)

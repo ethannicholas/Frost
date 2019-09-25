@@ -1,7 +1,5 @@
 package frost.core
 
-uses frost.unsafe.Pointer
-
 @package
 @final
 class Method : Immutable {
@@ -24,7 +22,7 @@ class Method : Immutable {
     target will be a struct containing the pointer to the actual method and the actual target.
     ================================================================================================
     @private
-    def pointer:Pointer<Int8>
+    def pointer:builtin_int
 
     ================================================================================================
     Object on which the method is being invoked.
@@ -33,7 +31,7 @@ class Method : Immutable {
     def target:Immutable?
 
     @private
-    init(pointer:Pointer<Int8>, target:Immutable?) {
+    init(pointer:builtin_int, target:Immutable?) {
         self.pointer := pointer
         self.target := target
     }
@@ -41,8 +39,8 @@ class Method : Immutable {
     @override
     function get_asString():String {
         if target !== null {
-            return "Method<\{Frost.pointerConvert(pointer->Pointer<Object?>)}, \{target!}>"
+            return "Method<\{Int(pointer):x}, \{target!}>"
         }
-        return "Method<\{Frost.pointerConvert(pointer->Pointer<Object?>)}>"
+        return "Method<\{Int(pointer):x}>"
     }
 }
