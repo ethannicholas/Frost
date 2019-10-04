@@ -2,7 +2,6 @@ package org.frostlang.frostc.frostdoc
 
 uses org.frostlang.frostc.Annotations
 uses org.frostlang.frostc.ClassDecl
-uses org.frostlang.frostc.CodeGenerator
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.MethodDecl

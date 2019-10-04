@@ -169,7 +169,7 @@ class Unary {
                     return compiler.coerce(position, nonnull, type)
                 }
                 compiler.error(position, "value of type '\{value.type()}' is already non-null")
-                return null
+                return value
             }
         }
         unreachable

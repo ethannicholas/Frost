@@ -31,7 +31,7 @@ org$frostlang$frostc$Interpreter** _3;
 org$frostlang$frostc$Interpreter* _4;
 frost$core$Object* _5;
 org$frostlang$frostc$Interpreter** _7;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:306
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:311
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
 _3 = &param0->$self;
@@ -50,7 +50,7 @@ frost$core$Object* _1;
 org$frostlang$frostc$Interpreter** _3;
 org$frostlang$frostc$Interpreter* _4;
 frost$core$Object* _5;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:306
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:311
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = &param0->$self;
@@ -77,7 +77,7 @@ frost$unsafe$Pointer _14;
 $fn3 _15;
 frost$core$Object* _17;
 frost$core$Int64 _20;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:307
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:312
 _1 = &param0->$self;
 _2 = *_1;
 _3 = (frost$core$Int) {0u};
@@ -85,17 +85,17 @@ _4 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$
 _5 = ((org$frostlang$frostc$IR$Value*) _4);
 _6 = ($fn4) param1->$class->vtable[2];
 _7 = _6(param1, _5);
-// begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Interpreter.frost:307:73
+// begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Interpreter.frost:312:71
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:580
 _10 = _7.value;
 _11 = ((int64_t) _10);
 _12 = (frost$core$Int) {_11};
 _14 = frost$unsafe$Pointer$init$frost$core$Int(_12);
-_15 = ($fn5) _2->$class->vtable[13];
+_15 = ($fn5) _2->$class->vtable[12];
 _15(_2, _14);
 _17 = _4;
 frost$core$Frost$unref$frost$core$Object$Q(_17);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:308
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:313
 _20 = (frost$core$Int64) {18446744073709551615u};
 return _20;
 

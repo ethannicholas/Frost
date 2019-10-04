@@ -1,0 +1,781 @@
+package org.frostlang.frostc
+
+====================================================================================================
+Low-level code representation. IR ("intermediate representation") code is transformed into this as
+the last step before handing it to the Backend.
+====================================================================================================
+class Code {
+    choice PrimitiveType {
+        INT
+        INT8
+        INT16
+        INT32
+        INT64
+        FLOAT32
+        FLOAT64
+        BIT
+        ARRAY(Int, PrimitiveType)
+        STRUCT(FixedArray<PrimitiveType>)
+
+        property isInt:Bit
+        function get_isInt():Bit {
+            match self {
+                when INT, INT8, INT16, INT32, INT64 {
+                    return true
+                }
+            }
+            return false
+        }
+
+        property isFloat:Bit
+        function get_isFloat():Bit {
+            match self {
+                when FLOAT32, FLOAT64 {
+                    return true
+                }
+            }
+            return false
+        }
+
+        @pre(align != 0)
+        @post(@return % align = 0)
+        function alignUp(offset:Int, align:Int):Int {
+            if offset % align != 0 {
+                return offset + align - offset % align
+            }
+            return offset
+        }
+
+        function elementOffset(idx:Int):Int {
+            match self {
+                when STRUCT(types) {
+                    assert idx <= types.count
+                    var result := 0
+                    var totalAlign := 1
+                    for i in 0 .. idx {
+                        def t := types[i]
+                        def align := t.alignment
+                        totalAlign := totalAlign.max(align)
+                        result := alignUp(result, align)
+                        result += t.size
+                    }
+                    if idx = types.count {
+                        result := alignUp(result, totalAlign)
+                    }
+                    else {
+                        result := alignUp(result, types[idx].alignment)
+                    }
+                    return result
+                }
+                otherwise {
+                    unreachable, "cannot get offset into \{self}"
+                }
+            }
+        }
+
+        property size:Int
+        function get_size():Int {
+            match self {
+                when INT {
+                    return 8
+                }
+                when INT8, BIT {
+                    return 1
+                }
+                when INT16 {
+                    return 2
+                }
+                when INT32, FLOAT32 {
+                    return 4
+                }
+                when INT64, FLOAT64 {
+                    return 8
+                }
+                when STRUCT(types) {
+                    return elementOffset(types.count)
+                }
+                when ARRAY(count, type) {
+                    return count * type.size
+                }
+                otherwise {
+                    unreachable
+                }
+            }
+        }
+
+        property alignment:Int
+        function get_alignment():Int {
+            match self {
+                when STRUCT(types) {
+                    return types.map(t => t.size).fold(Int.max)
+                }
+                when ARRAY(count, type) {
+                    return type.alignment
+                }
+                otherwise {
+                    return size
+                }
+            }
+        }
+    }
+
+    ================================================================================================
+    Represents the physical signature of a method call. This signature makes all parameters (such as
+    'self') explicit, shows the extra parameter for implicit struct returns, etc. - it is exactly
+    the signature you would call from a C program.
+    ================================================================================================
+    class Signature {
+        def returnType:PrimitiveType?
+
+        def name:String
+
+        def parameters:FixedArray<PrimitiveType>
+
+        -- external in the sense of "not in the current compilation unit", not in the sense of the
+        -- @external annotation
+        def isExternal:Bit
+
+        init(returnType:PrimitiveType?, name:String, parameters:FixedArray<PrimitiveType>,
+                isExternal:Bit) {
+            self.returnType := returnType
+            self.name := name
+            self.parameters := parameters
+            self.isExternal := isExternal
+        }
+
+        @override
+        function get_asString():String {
+            if returnType !== null {
+                return "\{name}(\{parameters.join(", ")}):\{returnType} - \{isExternal}"
+            }
+            return "\{name}(\{parameters.join(", ")}) - \{isExternal}"
+        }
+    }
+
+    choice Statement {
+        ============================================================================================
+        Adds two ints of the same type.
+        ============================================================================================
+        ADDI(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Adds two floats of the same type.
+        ============================================================================================
+        ADDF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Subtracts two ints of the same type.
+        ============================================================================================
+        SUBI(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Subtracts two floats of the same type.
+        ============================================================================================
+        SUBF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Multiplies two ints of the same type.
+        ============================================================================================
+        MULI(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Multiplies two floats of the same type.
+        ============================================================================================
+        MULF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Divides two signed ints of the same type.
+        ============================================================================================
+        DIVS(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Divides two unsigned ints of the same type.
+        ============================================================================================
+        DIVU(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Divides two floats of the same type.
+        ============================================================================================
+        DIVF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Calculates the remainder of dividing two signed ints of the same type.
+        ============================================================================================
+        REMS(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Calculates the remainder of dividing two unsigned ints of the same type.
+        ============================================================================================
+        REMU(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Bitwise ands two ints of the same type.
+        ============================================================================================
+        ANDI(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Ands two builtin_bits.
+        ============================================================================================
+        ANDB(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Bitwise ors two ints of the same type.
+        ============================================================================================
+        ORI(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Ors two builtin_bits.
+        ============================================================================================
+        ORB(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Bitwise xors two ints of the same type.
+        ============================================================================================
+        XORI(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Xors two builtin_bits.
+        ============================================================================================
+        XORB(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Shift an int left by the (same type) number of bits.
+        ============================================================================================
+        SHL(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Arithmetic shift an int right by the (same type) number of bits.
+        ============================================================================================
+        SHRS(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Logical shift an int right by the (same type) number of bits.
+        ============================================================================================
+        SHRU(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Compares two ints of the same type for equality, resulting in a bit.
+        ============================================================================================
+        EQI(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Compares two floats of the same type for equality, resulting in a bit.
+        ============================================================================================
+        EQF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Compares two ints of the same type for inequality, resulting in a bit.
+        ============================================================================================
+        NEQI(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Compares two floats of the same type for inequality, resulting in a bit.
+        ============================================================================================
+        NEQF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if a signed int is greater than another value of the same type, resulting in a bit.
+        ============================================================================================
+        GTS(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if an unsigned is greater than another value of the same type, resulting in a bit.
+        ============================================================================================
+        GTU(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if a float is greater than another value of the same type, resulting in a bit.
+        ============================================================================================
+        GTF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if a signed int is greater than or equal to another value of the same type, resulting
+        in a bit.
+        ============================================================================================
+        GES(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if an unsigned int is greater than or equal to another value of the same type,
+        resulting in a bit.
+        ============================================================================================
+        GEU(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if a float is greater than or equal to another value of the same type, resulting in a
+        bit.
+        ============================================================================================
+        GEF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if a signed int is less than another value of the same type, resulting in a bit.
+        ============================================================================================
+        LTS(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if an unsigned int is less than another value of the same type, resulting in a bit.
+        ============================================================================================
+        LTU(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if a float is less than another value of the same type, resulting in a bit.
+        ============================================================================================
+        LTF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if a signed int is less than or equal to another value of the same type, resulting in
+        a bit.
+        ============================================================================================
+        LES(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if an unsigned int is less than or equal to another value of the same type, resulting
+        in a bit.
+        ============================================================================================
+        LEU(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Tests if a float is less than or equal to another value of the same type, resulting in a
+        bit.
+        ============================================================================================
+        LEF(MethodPosition, ID, Value, Value)
+
+        ============================================================================================
+        Converts a number to another type. Performs sign extension when increasing the size of
+        integers. When converting float->int or int->float, treats the int as signed.
+        ============================================================================================
+        CONVERTS(MethodPosition, ID, Value, PrimitiveType)
+
+        ============================================================================================
+        Converts a number to another type. Does not perform sign extension when increasing the size
+        of integers. When converting float->int or int->float, treats the int as unsigned.
+        ============================================================================================
+        CONVERTU(MethodPosition, ID, Value, PrimitiveType)
+
+        ============================================================================================
+        Unconditionally branch to the given block.
+        ============================================================================================
+        BRANCH(MethodPosition, Block.ID)
+
+        ============================================================================================
+        Conditionally branch to the first block if true, the second block if false.
+        ============================================================================================
+        CONDITIONAL_BRANCH(MethodPosition, Value, Block.ID, Block.ID)
+
+        COMMENT(MethodPosition, String)
+
+        ============================================================================================
+        Allocates a new object on the heap, returning an INT containing its address.
+        ============================================================================================
+        HEAP_ALLOC(MethodPosition, ID, PrimitiveType, Value -* class *-)
+
+        ============================================================================================
+        Allocates a new block of memory on the stack, returning an INT containing its
+        address.
+        ============================================================================================
+        STACK_ALLOC(MethodPosition, ID, PrimitiveType)
+
+        ============================================================================================
+        Creates an instance of a struct.
+        ============================================================================================
+        CREATE_STRUCT(MethodPosition, ID, PrimitiveType, FixedArray<Value> -* args *-)
+
+        ============================================================================================
+        Dynamically calls a method reference, which must be an INT representing a pointer to
+        a method.
+        ============================================================================================
+        DYNAMIC_CALL(MethodPosition, ID, PrimitiveType -* return type *-, Value -* method *-,
+                FixedArray<Value> -* args *-)
+
+        ============================================================================================
+        Dynamically calls a method reference, which must be an INT representing a pointer to
+        a method which returns void.
+        ============================================================================================
+        DYNAMIC_CALL_VOID(MethodPosition, Value -* method *-, FixedArray<Value> -* args *-)
+
+        ============================================================================================
+        Extracts a field from a struct.
+        ============================================================================================
+        EXTRACT_FIELD(MethodPosition, ID, Value, Int)
+
+        ============================================================================================
+        Dereferences value (which must be an INT) as a pointer to the specified type.
+        ============================================================================================
+        LOAD(MethodPosition, ID, Value, PrimitiveType)
+
+        ============================================================================================
+        Stores value into the memory pointed to by dest pointer (which must be an INT).
+        ============================================================================================
+        STORE(MethodPosition, Value -* value *-, Value -* dest pointer *-)
+
+        ============================================================================================
+        Negates a builtin_int.
+        ============================================================================================
+        NEGS(MethodPosition, ID, Value)
+
+        ============================================================================================
+        Negates a builtin_float.
+        ============================================================================================
+        NEGF(MethodPosition, ID, Value)
+
+        ============================================================================================
+        Bitwise inverts a builtin_int or builtin_uint.
+        ============================================================================================
+        NOTI(MethodPosition, ID, Value)
+
+        ============================================================================================
+        Inverts a builtin_bit.
+        ============================================================================================
+        NOTB(MethodPosition, ID, Value)
+
+        ============================================================================================
+        Returns the specified value.
+        ============================================================================================
+        RETURN(MethodPosition, Value?)
+
+        ============================================================================================
+        A static (non-virtual, non-dynamic) call to a method.
+        ============================================================================================
+        STATIC_CALL(MethodPosition, ID, Signature, FixedArray<Value> -* args *-)
+
+        ============================================================================================
+        A static (non-virtual, non-dynamic) call to a void method.
+        ============================================================================================
+        STATIC_CALL_VOID(MethodPosition, Signature, FixedArray<Value> -* args *-)
+
+        UNREACHABLE(MethodPosition)
+
+        class ID : frost.core.Value, HashKey<ID> {
+            def value:Int
+
+            init(value:Int) {
+                self.value := value
+            }
+
+            @override
+            function get_hash():Int {
+                return value
+            }
+
+            @override
+            function =(other:ID):Bit {
+                return value = other.value
+            }
+
+            @override
+            function get_asString():String {
+                return "$\{value}"
+            }
+        }
+
+        property position:MethodPosition
+        function get_position():MethodPosition {
+            match self {
+                when ADDI(position, _, _, _) {
+                    return position
+                }
+                when ADDF(position, _, _, _) {
+                    return position
+                }
+                when SUBI(position, _, _, _) {
+                    return position
+                }
+                when SUBF(position, _, _, _) {
+                    return position
+                }
+                when MULI(position, _, _, _) {
+                    return position
+                }
+                when MULF(position, _, _, _) {
+                    return position
+                }
+                when DIVS(position, _, _, _) {
+                    return position
+                }
+                when DIVU(position, _, _, _) {
+                    return position
+                }
+                when DIVF(position, _, _, _) {
+                    return position
+                }
+                when REMS(position, _, _, _) {
+                    return position
+                }
+                when REMU(position, _, _, _) {
+                    return position
+                }
+                when ANDI(position, _, _, _) {
+                    return position
+                }
+                when ANDB(position, _, _, _) {
+                    return position
+                }
+                when ORI(position, _, _, _) {
+                    return position
+                }
+                when ORB(position, _, _, _) {
+                    return position
+                }
+                when XORI(position, _, _, _) {
+                    return position
+                }
+                when XORB(position, _, _, _) {
+                    return position
+                }
+                when SHL(position, _, _, _) {
+                    return position
+                }
+                when SHRS(position, _, _, _) {
+                    return position
+                }
+                when SHRU(position, _, _, _) {
+                    return position
+                }
+                when EQI(position, _, _, _) {
+                    return position
+                }
+                when EQF(position, _, _, _) {
+                    return position
+                }
+                when NEQI(position, _, _, _) {
+                    return position
+                }
+                when NEQF(position, _, _, _) {
+                    return position
+                }
+                when GTS(position, _, _, _) {
+                    return position
+                }
+                when GTU(position, _, _, _) {
+                    return position
+                }
+                when GTF(position, _, _, _) {
+                    return position
+                }
+                when GES(position, _, _, _) {
+                    return position
+                }
+                when GEU(position, _, _, _) {
+                    return position
+                }
+                when GEF(position, _, _, _) {
+                    return position
+                }
+                when LTS(position, _, _, _) {
+                    return position
+                }
+                when LTU(position, _, _, _) {
+                    return position
+                }
+                when LTF(position, _, _, _) {
+                    return position
+                }
+                when LES(position, _, _, _) {
+                    return position
+                }
+                when LEU(position, _, _, _) {
+                    return position
+                }
+                when LEF(position, _, _, _) {
+                    return position
+                }
+                when CONVERTU(position, _, _, _) {
+                    return position
+                }
+                when CONVERTS(position, _, _, _) {
+                    return position
+                }
+                when BRANCH(position, _) {
+                    return position
+                }
+                when COMMENT(position, _) {
+                    return position
+                }
+                when CONDITIONAL_BRANCH(position, _, _, _) {
+                    return position
+                }
+                when HEAP_ALLOC(position, _, _, _) {
+                    return position
+                }
+                when STACK_ALLOC(position, _, _) {
+                    return position
+                }
+                when CREATE_STRUCT(position, _, _, _) {
+                    return position
+                }
+                when DYNAMIC_CALL(position, _, _, _, _) {
+                    return position
+                }
+                when DYNAMIC_CALL_VOID(position, _, _) {
+                    return position
+                }
+                when EXTRACT_FIELD(position, _, _, _) {
+                    return position
+                }
+                when LOAD(position, _, _, _) {
+                    return position
+                }
+                when STORE(position, _, _) {
+                    return position
+                }
+                when NEGS(position, _, _) {
+                    return position
+                }
+                when NEGF(position, _, _) {
+                    return position
+                }
+                when NOTI(position, _, _) {
+                    return position
+                }
+                when NOTB(position, _, _) {
+                    return position
+                }
+                when RETURN(position, _) {
+                    return position
+                }
+                when STATIC_CALL(position, _, _, _) {
+                    return position
+                }
+                when STATIC_CALL_VOID(position, _, _) {
+                    return position
+                }
+            }
+            unreachable
+        }
+    }
+
+    class Block {
+        class ID : frost.core.Value, HashKey<ID> {
+            def value:Int
+
+            init(value:Int) {
+                self.value := value
+            }
+
+            @override
+            function =(other:ID):Bit {
+                return value = other.value
+            }
+
+            @override
+            function get_hash():Int {
+                return value
+            }
+
+            @override
+            function get_asString():String {
+                return "block\{value}"
+            }
+        }
+
+        def id:ID
+
+        def statements := Array<Statement>()
+
+        init(id:ID, statements:Array<Statement>) {
+            self.id := id
+            self.statements := statements
+        }
+    }
+
+    choice Value {
+        BIT(Bit)
+        GLOBAL_POINTER(Int)
+        INT(UInt64, PrimitiveType)
+        METHOD_POINTER(Signature)
+        PARAMETER(Int, PrimitiveType)
+        REAL(Real64, PrimitiveType)
+        STATEMENT(Statement.ID, PrimitiveType)
+        ARRAY(PrimitiveType, FixedArray<Value>)
+        STRUCT(FixedArray<Value>)
+        UNDEFINED(PrimitiveType)
+
+        property type:PrimitiveType
+        function get_type():PrimitiveType {
+            match self {
+                when BIT {
+                    return PrimitiveType.BIT
+                }
+                when GLOBAL_POINTER(_) {
+                    return PrimitiveType.INT
+                }
+                when INT(_, type) {
+                    return type
+                }
+                when METHOD_POINTER(_) {
+                    return PrimitiveType.INT
+                }
+                when PARAMETER(_, type) {
+                    return type
+                }
+                when REAL(_, type) {
+                    return type
+                }
+                when STATEMENT(_, type) {
+                    return type
+                }
+                when ARRAY(type, elements) {
+                    return PrimitiveType.ARRAY(elements.count, type)
+                }
+                when STRUCT(args) {
+                    return PrimitiveType.STRUCT(FixedArray<PrimitiveType>.from(args.map(
+                            a => a.type)))
+                }
+                when UNDEFINED(type) {
+                    return type
+                }
+            }
+            unreachable, self.asString
+        }
+    }
+
+    class Global {
+        constant PRIVATE_FLAG := 1
+        constant EXTERNAL_FLAG := 2
+        -- maps to LLVM's unnamed_addr flag. Means that the address of the global isn't significant,
+        -- only its contents, and it can be merged with other globals that have the same value.
+        constant UNNAMED_ADDR_FLAG := 4
+        constant LINKONCE_FLAG := 16
+
+        def name:String
+
+        def type:PrimitiveType
+
+        def comment:String?
+
+        def flags:Int
+
+        init(name:String, type:PrimitiveType, comment:String?, flags:Int) {
+            self.name := name
+            self.type := type
+            self.comment := comment
+            self.flags := flags
+        }
+
+        property isExternal:Bit
+        function get_isExternal():Bit {
+            return flags && EXTERNAL_FLAG != 0
+        }
+
+        property isPrivate:Bit
+        function get_isPrivate():Bit {
+            return flags && PRIVATE_FLAG != 0
+        }
+
+        property isUnnamedAddr:Bit
+        function get_isUnnamedAddr():Bit {
+            return flags && UNNAMED_ADDR_FLAG != 0
+        }
+
+        property isLinkOnce:Bit
+        function get_isLinkOnce():Bit {
+            return flags && LINKONCE_FLAG != 0
+        }
+
+        @override
+        function get_asString():String {
+            return "Global(\{name}, \{type}, \{isExternal})"
+        }
+    }
+
+    def blocks := Array<Block>()
+}

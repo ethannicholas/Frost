@@ -5,8 +5,15 @@
 #include "frost/core/Object.h"
 #include "frost/core/Int.h"
 #include "frost/core/Frost.h"
+#include "frost/core/Int64.h"
+#include "frost/core/Formattable.h"
 
 frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
+__attribute__((weak)) frost$core$String* frost$unsafe$Pointer$get_asString$R$frost$core$String$shim(frost$core$Object* p0) {
+    frost$core$String* result = frost$unsafe$Pointer$get_asString$R$frost$core$String(((frost$unsafe$Pointer$wrapper*) p0)->value);
+
+    return result;
+}
 __attribute__((weak)) void frost$unsafe$Pointer$cleanup$shim(frost$core$Object* p0) {
     frost$unsafe$Pointer$cleanup(((frost$unsafe$Pointer$wrapper*) p0)->value);
 
@@ -68,10 +75,11 @@ __attribute__((weak)) frost$core$Object* frost$unsafe$Pointer$convertTo$R$frost$
 }
 
 static frost$core$String $s1;
-frost$unsafe$Pointer$class_type frost$unsafe$Pointer$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$unsafe$Pointer$cleanup$shim, frost$unsafe$Pointer$get$R$frost$unsafe$Pointer$T$shim, frost$unsafe$Pointer$set$frost$unsafe$Pointer$T$shim, frost$unsafe$Pointer$$IDX$frost$core$Int$R$frost$unsafe$Pointer$T$shim, frost$unsafe$Pointer$$IDXEQ$frost$core$Int$frost$unsafe$Pointer$T$shim, frost$unsafe$Pointer$realloc$frost$core$Int$frost$core$Int$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$T$GT$shim, frost$unsafe$Pointer$$ADD$frost$core$Int$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$T$GT$shim, frost$unsafe$Pointer$$SUB$frost$core$Int$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$T$GT$shim, frost$unsafe$Pointer$destroy$shim, frost$unsafe$Pointer$get_asInt$R$frost$core$Int$shim, frost$unsafe$Pointer$clear$shim, frost$unsafe$Pointer$clear$frost$core$Int$shim, frost$unsafe$Pointer$convertTo$R$frost$unsafe$Pointer$convertTo$T$shim} };
+frost$unsafe$Pointer$class_type frost$unsafe$Pointer$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$unsafe$Pointer$get_asString$R$frost$core$String$shim, frost$unsafe$Pointer$cleanup$shim, frost$unsafe$Pointer$get$R$frost$unsafe$Pointer$T$shim, frost$unsafe$Pointer$set$frost$unsafe$Pointer$T$shim, frost$unsafe$Pointer$$IDX$frost$core$Int$R$frost$unsafe$Pointer$T$shim, frost$unsafe$Pointer$$IDXEQ$frost$core$Int$frost$unsafe$Pointer$T$shim, frost$unsafe$Pointer$realloc$frost$core$Int$frost$core$Int$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$T$GT$shim, frost$unsafe$Pointer$$ADD$frost$core$Int$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$T$GT$shim, frost$unsafe$Pointer$$SUB$frost$core$Int$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$T$GT$shim, frost$unsafe$Pointer$destroy$shim, frost$unsafe$Pointer$get_asInt$R$frost$core$Int$shim, frost$unsafe$Pointer$clear$shim, frost$unsafe$Pointer$clear$frost$core$Int$shim, frost$unsafe$Pointer$convertTo$R$frost$unsafe$Pointer$convertTo$T$shim} };
 
 static frost$core$String $s2;
-frost$unsafe$Pointer$wrapperclass_type frost$unsafe$Pointer$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$unsafe$Pointer$cleanup$shim} };
+frost$unsafe$Pointer$wrapperclass_type frost$unsafe$Pointer$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$unsafe$Pointer$get_asString$R$frost$core$String$shim, frost$unsafe$Pointer$cleanup$shim} };typedef frost$core$String* (*$fn15)(frost$core$Formattable*, frost$core$String*);
+
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x75\x6e\x73\x61\x66\x65\x2e\x50\x6f\x69\x6e\x74\x65\x72", 20, -770938211666792916, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x66\x72\x6f\x73\x74\x2e\x75\x6e\x73\x61\x66\x65\x2e\x50\x6f\x69\x6e\x74\x65\x72", 20, -770938211666792916, NULL };
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x50\x6f\x69\x6e\x74\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, -7296718770870589834, NULL };
@@ -86,6 +94,9 @@ static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x50\x6f\x69\x6e\x74\x65\x72\x2e\x63\x6c\x65\x61\x72\x28\x29\x20\x73\x68\x6f\x75\x6c\x64\x20\x68\x61\x76\x65\x20\x62\x65\x65\x6e\x20\x63\x6f\x6d\x70\x69\x6c\x65\x64\x20\x61\x73\x20\x61\x6e\x20\x69\x6e\x74\x72\x69\x6e\x73\x69\x63", 57, -1524204468135857972, NULL };
 static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x50\x6f\x69\x6e\x74\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, -7296718770870589834, NULL };
 static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x50\x6f\x69\x6e\x74\x65\x72\x2e\x63\x6c\x65\x61\x72\x28\x29\x20\x73\x68\x6f\x75\x6c\x64\x20\x68\x61\x76\x65\x20\x62\x65\x65\x6e\x20\x63\x6f\x6d\x70\x69\x6c\x65\x64\x20\x61\x73\x20\x61\x6e\x20\x69\x6e\x74\x72\x69\x6e\x73\x69\x63", 57, -1524204468135857972, NULL };
+static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x78", 1, -5808529385363204345, NULL };
+static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x50\x6f\x69\x6e\x74\x65\x72\x3c\x30\x78", 10, -1919474771921354774, NULL };
+static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x3e", 1, -5808601953130666271, NULL };
 
 frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t param0) {
 
@@ -296,6 +307,19 @@ return _2;
 }
 void frost$unsafe$Pointer$clear(frost$unsafe$Pointer param0) {
 
+int64_t _1;
+frost$core$Int64 _2;
+int64_t _3;
+frost$core$Object* _4;
+frost$core$Object* _5;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:146
+_1 = param0.value;
+_2 = (frost$core$Int64) {0u};
+_3 = _2.value;
+_4 = ((frost$core$Object**)_1)[_3];
+_5 = _4;
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+((frost$core$Object**)_1)[_3] = ((frost$core$Object*) NULL);
 return;
 
 }
@@ -315,6 +339,48 @@ frost$core$Int _1;
 _1 = (frost$core$Int) {181u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s13, _1, &$s14);
 abort(); // unreachable
+
+}
+frost$core$String* frost$unsafe$Pointer$get_asString$R$frost$core$String(frost$unsafe$Pointer param0) {
+
+int64_t _1;
+frost$core$Int _2;
+frost$core$Formattable* _3;
+$fn15 _4;
+frost$core$String* _5;
+frost$core$String* _6;
+frost$core$String* _7;
+frost$core$Object* _8;
+frost$core$Object* _10;
+frost$core$Object* _12;
+frost$core$Object* _14;
+frost$core$Object* _16;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/Pointer.frost:186
+_1 = param0.value;
+_2 = (frost$core$Int) {_1};
+frost$core$Int$wrapper* $tmp16;
+$tmp16 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp16->value = _2;
+_3 = ((frost$core$Formattable*) $tmp16);
+ITable* $tmp17 = _3->$class->itable;
+while ($tmp17->$class != (frost$core$Class*) &frost$core$Formattable$class) {
+    $tmp17 = $tmp17->next;
+}
+_4 = $tmp17->methods[0];
+_5 = _4(_3, &$s18);
+_6 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s19, _5);
+_7 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_6, &$s20);
+_8 = ((frost$core$Object*) _7);
+frost$core$Frost$ref$frost$core$Object$Q(_8);
+_10 = ((frost$core$Object*) _7);
+frost$core$Frost$unref$frost$core$Object$Q(_10);
+_12 = ((frost$core$Object*) _6);
+frost$core$Frost$unref$frost$core$Object$Q(_12);
+_14 = ((frost$core$Object*) _5);
+frost$core$Frost$unref$frost$core$Object$Q(_14);
+_16 = ((frost$core$Object*) _3);
+frost$core$Frost$unref$frost$core$Object$Q(_16);
+return _7;
 
 }
 void frost$unsafe$Pointer$cleanup(frost$unsafe$Pointer param0) {

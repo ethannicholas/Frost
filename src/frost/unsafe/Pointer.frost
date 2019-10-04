@@ -180,4 +180,9 @@ class Pointer<T> : Value {
     function convertTo<T>():T {
         unreachable, "Pointer.clear() should have been compiled as an intrinsic"
     }
+
+    @override
+    function get_asString():String {
+        return "Pointer<0x\{Int(value):x}>"
+    }
 }

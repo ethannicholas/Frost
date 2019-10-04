@@ -3983,7 +3983,7 @@ _14 = ((frost$core$Object*) param1);
 frost$collections$Array$add$frost$collections$Array$T(_13, _14);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:309
 // begin inline call to function org.frostlang.frostc.Type.nonnullable():org.frostlang.frostc.Type from Type.frost:309:25
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:422
 _19 = &param1->typeKind;
 _20 = *_19;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp205;
@@ -3991,7 +3991,7 @@ $tmp205 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp205->value = _20;
 _21 = ((frost$core$Equatable*) $tmp205);
 _22 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:423:28
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:422:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _25 = &(&local3)->$rawValue;
 *_25 = _22;
@@ -4015,7 +4015,7 @@ _37 = ((frost$core$Object*) _21);
 frost$core$Frost$unref$frost$core$Object$Q(_37);
 if (_34) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:424
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
 _41 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_41);
 *(&local1) = param1;
@@ -4023,8 +4023,8 @@ _44 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_44);
 goto block4;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:426
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:426:16
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:425
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:425:16
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _50 = &param1->_subtypes;
 _51 = *_50;
@@ -4113,7 +4113,7 @@ goto block2;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:312
 // begin inline call to function org.frostlang.frostc.Type.nonnullable():org.frostlang.frostc.Type from Type.frost:312:30
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:422
 _122 = &param1->typeKind;
 _123 = *_122;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp213;
@@ -4121,7 +4121,7 @@ $tmp213 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp213->value = _123;
 _124 = ((frost$core$Equatable*) $tmp213);
 _125 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:423:28
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:422:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _128 = &(&local7)->$rawValue;
 *_128 = _125;
@@ -4145,7 +4145,7 @@ _140 = ((frost$core$Object*) _124);
 frost$core$Frost$unref$frost$core$Object$Q(_140);
 if (_137) goto block19; else goto block20;
 block19:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:424
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
 _144 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_144);
 *(&local5) = param1;
@@ -4153,8 +4153,8 @@ _147 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_147);
 goto block18;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:426
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:426:16
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:425
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:425:16
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _153 = &param1->_subtypes;
 _154 = *_153;
@@ -4243,7 +4243,7 @@ goto block16;
 block17:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:315
 // begin inline call to function org.frostlang.frostc.Type.nonnullable():org.frostlang.frostc.Type from Type.frost:315:30
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:422
 _225 = &param1->typeKind;
 _226 = *_225;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp221;
@@ -4251,7 +4251,7 @@ $tmp221 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp221->value = _226;
 _227 = ((frost$core$Equatable*) $tmp221);
 _228 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:423:28
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:422:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _231 = &(&local11)->$rawValue;
 *_231 = _228;
@@ -4275,7 +4275,7 @@ _243 = ((frost$core$Object*) _227);
 frost$core$Frost$unref$frost$core$Object$Q(_243);
 if (_240) goto block33; else goto block34;
 block33:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:424
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
 _247 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_247);
 *(&local9) = param1;
@@ -4283,8 +4283,8 @@ _250 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_250);
 goto block32;
 block34:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:426
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:426:16
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:425
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:425:16
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _256 = &param1->_subtypes;
 _257 = *_256;
@@ -4375,7 +4375,7 @@ block31:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:319
 _327 = *(&local0);
 // begin inline call to function org.frostlang.frostc.Type.nonnullable():org.frostlang.frostc.Type from Type.frost:319:39
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:422
 _330 = &param1->typeKind;
 _331 = *_330;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp229;
@@ -4383,7 +4383,7 @@ $tmp229 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp229->value = _331;
 _332 = ((frost$core$Equatable*) $tmp229);
 _333 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:423:28
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:422:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _336 = &(&local15)->$rawValue;
 *_336 = _333;
@@ -4407,7 +4407,7 @@ _348 = ((frost$core$Object*) _332);
 frost$core$Frost$unref$frost$core$Object$Q(_348);
 if (_345) goto block44; else goto block45;
 block44:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:424
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
 _352 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_352);
 *(&local13) = param1;
@@ -4415,8 +4415,8 @@ _355 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_355);
 goto block43;
 block45:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:426
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:426:16
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:425
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:425:16
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _361 = &param1->_subtypes;
 _362 = *_361;
@@ -4942,7 +4942,7 @@ frost$core$Object* _89;
 frost$core$Bit _93;
 frost$core$Object* _94;
 frost$core$Object* _96;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:345
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:344
 _1 = &param0->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp261;
@@ -4950,7 +4950,7 @@ $tmp261 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp261->value = _2;
 _3 = ((frost$core$Equatable*) $tmp261);
 _4 = (frost$core$Int) {2u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:345:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:344:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _7 = &(&local4)->$rawValue;
 *_7 = _4;
@@ -4980,7 +4980,7 @@ $tmp264 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp264->value = _21;
 _22 = ((frost$core$Equatable*) $tmp264);
 _23 = (frost$core$Int) {3u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:345:61
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:344:61
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _26 = &(&local6)->$rawValue;
 *_26 = _23;
@@ -5018,7 +5018,7 @@ $tmp267 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp267->value = _47;
 _48 = ((frost$core$Equatable*) $tmp267);
 _49 = (frost$core$Int) {9u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:346:32
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:345:32
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _52 = &(&local8)->$rawValue;
 *_52 = _49;
@@ -5056,7 +5056,7 @@ $tmp270 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp270->value = _73;
 _74 = ((frost$core$Equatable*) $tmp270);
 _75 = (frost$core$Int) {5u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:346:64
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:345:64
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _78 = &(&local10)->$rawValue;
 *_78 = _75;
@@ -5095,7 +5095,7 @@ org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
 frost$core$String* _3;
 frost$core$Bit _4;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:350
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:349
 _1 = ((org$frostlang$frostc$Symbol*) param0);
 _2 = &_1->name;
 _3 = *_2;
@@ -5127,7 +5127,7 @@ frost$core$Bit _23;
 frost$core$Bit _26;
 frost$core$Object* _27;
 frost$core$Object* _29;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:354
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:353
 _1 = &param0->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp275;
@@ -5135,7 +5135,7 @@ $tmp275 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp275->value = _2;
 _3 = ((frost$core$Equatable*) $tmp275);
 _4 = (frost$core$Int) {19u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:354:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:353:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _7 = &(&local2)->$rawValue;
 *_7 = _4;
@@ -5180,7 +5180,7 @@ org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
 frost$core$String* _3;
 frost$core$Bit _4;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:358
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:357
 _1 = ((org$frostlang$frostc$Symbol*) param0);
 _2 = &_1->name;
 _3 = *_2;
@@ -5199,7 +5199,7 @@ frost$core$String** _9;
 frost$core$String* _10;
 frost$core$Bit _11;
 frost$core$Bit _15;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:362
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:361
 _1 = org$frostlang$frostc$Type$get_isNumber$R$frost$core$Bit(param0);
 _2 = _1.value;
 if (_2) goto block1; else goto block2;
@@ -5207,8 +5207,8 @@ block1:;
 *(&local0) = _1;
 goto block3;
 block2:;
-// begin inline call to function org.frostlang.frostc.Type.get_isChar():frost.core.Bit from Type.frost:362:27
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:358
+// begin inline call to function org.frostlang.frostc.Type.get_isChar():frost.core.Bit from Type.frost:361:27
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:357
 _8 = ((org$frostlang$frostc$Symbol*) param0);
 _9 = &_8->name;
 _10 = *_9;
@@ -5288,12 +5288,12 @@ frost$core$Bit _100;
 bool _102;
 frost$core$Bit _105;
 frost$core$Bit _108;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:366
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:365
 _1 = &param0->typeKind;
 _2 = *_1;
 _3 = _2.$rawValue;
 _4 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:367:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:366:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _7 = _3.value;
 _8 = _4.value;
@@ -5303,7 +5303,7 @@ _12 = _10.value;
 if (_12) goto block2; else goto block3;
 block3:;
 _14 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:367:34
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:366:34
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _17 = _3.value;
 _18 = _14.value;
@@ -5313,7 +5313,7 @@ _22 = _20.value;
 if (_22) goto block2; else goto block5;
 block5:;
 _24 = (frost$core$Int) {11u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:367:49
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:366:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _27 = _3.value;
 _28 = _24.value;
@@ -5323,7 +5323,7 @@ _32 = _30.value;
 if (_32) goto block2; else goto block7;
 block7:;
 _34 = (frost$core$Int) {12u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:367:63
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:366:63
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _37 = _3.value;
 _38 = _34.value;
@@ -5333,7 +5333,7 @@ _42 = _40.value;
 if (_42) goto block2; else goto block9;
 block9:;
 _44 = (frost$core$Int) {13u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:368:25
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:367:25
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _47 = _3.value;
 _48 = _44.value;
@@ -5343,7 +5343,7 @@ _52 = _50.value;
 if (_52) goto block2; else goto block11;
 block11:;
 _54 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:368:56
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:367:56
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _57 = _3.value;
 _58 = _54.value;
@@ -5353,7 +5353,7 @@ _62 = _60.value;
 if (_62) goto block2; else goto block13;
 block13:;
 _64 = (frost$core$Int) {15u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:368:69
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:367:69
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _67 = _3.value;
 _68 = _64.value;
@@ -5363,7 +5363,7 @@ _72 = _70.value;
 if (_72) goto block2; else goto block15;
 block15:;
 _74 = (frost$core$Int) {18u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:369:25
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:368:25
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _77 = _3.value;
 _78 = _74.value;
@@ -5373,7 +5373,7 @@ _82 = _80.value;
 if (_82) goto block2; else goto block17;
 block17:;
 _84 = (frost$core$Int) {17u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:369:48
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:368:48
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _87 = _3.value;
 _88 = _84.value;
@@ -5383,7 +5383,7 @@ _92 = _90.value;
 if (_92) goto block2; else goto block19;
 block19:;
 _94 = (frost$core$Int) {10u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:369:73
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:368:73
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _97 = _3.value;
 _98 = _94.value;
@@ -5392,11 +5392,11 @@ _100 = (frost$core$Bit) {_99};
 _102 = _100.value;
 if (_102) goto block2; else goto block21;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:370
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:369
 _105 = (frost$core$Bit) {true};
 return _105;
 block21:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:373
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:372
 _108 = (frost$core$Bit) {false};
 return _108;
 block1:;
@@ -5441,7 +5441,7 @@ frost$core$Object* _42;
 frost$core$Bit _48;
 frost$core$Object* _49;
 frost$core$Object* _51;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:379
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:378
 _1 = &param0->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp282;
@@ -5449,7 +5449,7 @@ $tmp282 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp282->value = _2;
 _3 = ((frost$core$Equatable*) $tmp282);
 _4 = (frost$core$Int) {11u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:379:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:378:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _7 = &(&local2)->$rawValue;
 *_7 = _4;
@@ -5469,7 +5469,7 @@ _15 = _14(_3, _13);
 _16 = _15.value;
 if (_16) goto block2; else goto block3;
 block2:;
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:379:42
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:378:42
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _20 = &param0->_subtypes;
 _21 = *_20;
@@ -5527,7 +5527,7 @@ $fn288 _14;
 frost$core$Bit _15;
 frost$core$Object* _16;
 frost$core$Object* _18;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:383
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:382
 _1 = &param0->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp289;
@@ -5535,7 +5535,7 @@ $tmp289 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp289->value = _2;
 _3 = ((frost$core$Equatable*) $tmp289);
 _4 = (frost$core$Int) {10u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:383:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:382:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _7 = &(&local1)->$rawValue;
 *_7 = _4;
@@ -5591,12 +5591,12 @@ frost$core$Bit _40;
 bool _42;
 frost$core$Bit _45;
 frost$core$Bit _48;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:387
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:386
 _1 = &param0->typeKind;
 _2 = *_1;
 _3 = _2.$rawValue;
 _4 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:388:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:387:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _7 = _3.value;
 _8 = _4.value;
@@ -5606,7 +5606,7 @@ _12 = _10.value;
 if (_12) goto block2; else goto block3;
 block3:;
 _14 = (frost$core$Int) {15u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:388:35
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:387:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _17 = _3.value;
 _18 = _14.value;
@@ -5616,7 +5616,7 @@ _22 = _20.value;
 if (_22) goto block2; else goto block5;
 block5:;
 _24 = (frost$core$Int) {18u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:388:50
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:387:50
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _27 = _3.value;
 _28 = _24.value;
@@ -5626,7 +5626,7 @@ _32 = _30.value;
 if (_32) goto block2; else goto block7;
 block7:;
 _34 = (frost$core$Int) {17u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:388:73
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:387:73
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _37 = _3.value;
 _38 = _34.value;
@@ -5635,11 +5635,11 @@ _40 = (frost$core$Bit) {_39};
 _42 = _40.value;
 if (_42) goto block2; else goto block9;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:389
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:388
 _45 = (frost$core$Bit) {true};
 return _45;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:392
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:391
 _48 = (frost$core$Bit) {false};
 return _48;
 block1:;
@@ -5654,7 +5654,7 @@ org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
 frost$core$String* _3;
 frost$core$Bit _4;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:398
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:397
 _1 = ((org$frostlang$frostc$Symbol*) param0);
 _2 = &_1->name;
 _3 = *_2;
@@ -5669,7 +5669,7 @@ org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
 frost$core$String* _3;
 frost$core$Bit _4;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:402
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:401
 _1 = ((org$frostlang$frostc$Symbol*) param0);
 _2 = &_1->name;
 _3 = *_2;
@@ -5684,7 +5684,7 @@ org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
 frost$core$String* _3;
 frost$core$Bit _4;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:406
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:405
 _1 = ((org$frostlang$frostc$Symbol*) param0);
 _2 = &_1->name;
 _3 = *_2;
@@ -5709,7 +5709,7 @@ $fn295 _14;
 frost$core$Bit _15;
 frost$core$Object* _16;
 frost$core$Object* _18;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:410
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:409
 _1 = &param0->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp296;
@@ -5717,7 +5717,7 @@ $tmp296 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp296->value = _2;
 _3 = ((frost$core$Equatable*) $tmp296);
 _4 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:410:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:409:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _7 = &(&local1)->$rawValue;
 *_7 = _4;
@@ -5790,7 +5790,7 @@ frost$core$Object* _71;
 frost$core$Object* _73;
 frost$collections$Array* _75;
 frost$core$Object* _76;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:414
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:413
 _1 = &param0->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp300;
@@ -5798,7 +5798,7 @@ $tmp300 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp300->value = _2;
 _3 = ((frost$core$Equatable*) $tmp300);
 _4 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:414:27
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:413:27
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _7 = &(&local1)->$rawValue;
 *_7 = _4;
@@ -5822,12 +5822,12 @@ _19 = ((frost$core$Object*) _3);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 if (_16) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:415
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:414
 _23 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_23);
 return param0;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:417
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:416
 _27 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init(_27);
 *(&local2) = ((frost$collections$Array*) NULL);
@@ -5839,22 +5839,22 @@ frost$core$Frost$unref$frost$core$Object$Q(_33);
 *(&local2) = _27;
 _36 = ((frost$core$Object*) _27);
 frost$core$Frost$unref$frost$core$Object$Q(_36);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:418
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:417
 _39 = *(&local2);
 _40 = ((frost$core$Object*) param0);
 frost$collections$Array$add$frost$collections$Array$T(_39, _40);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:419
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:418
 _43 = (org$frostlang$frostc$Type*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type), (frost$core$Class*) &org$frostlang$frostc$Type$class);
 _44 = ((org$frostlang$frostc$Symbol*) param0);
 _45 = &_44->name;
 _46 = *_45;
-// begin inline call to function frost.core.String.get_asString():frost.core.String from Type.frost:419:24
+// begin inline call to function frost.core.String.get_asString():frost.core.String from Type.frost:418:24
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 _49 = ((frost$core$Object*) _46);
 frost$core$Frost$ref$frost$core$Object$Q(_49);
 _52 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_46, &$s303);
 _53 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:419:37
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:418:37
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _56 = &(&local4)->$rawValue;
 *_56 = _53;
@@ -5914,7 +5914,7 @@ org$frostlang$frostc$Type* _44;
 frost$core$Object* _45;
 frost$core$Object* _47;
 frost$core$Object* _49;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:422
 _1 = &param0->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp305;
@@ -5922,7 +5922,7 @@ $tmp305 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp305->value = _2;
 _3 = ((frost$core$Equatable*) $tmp305);
 _4 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:423:28
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:422:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _7 = &(&local1)->$rawValue;
 *_7 = _4;
@@ -5946,13 +5946,13 @@ _19 = ((frost$core$Object*) _3);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 if (_16) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:424
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:423
 _23 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_23);
 return param0;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:426
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:426:16
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:425
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:425:16
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _29 = &param0->_subtypes;
 _30 = *_29;
@@ -6068,7 +6068,7 @@ $tmp315 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp315->value = _1;
 _2 = ((frost$core$Equatable*) $tmp315);
 _3 = (frost$core$Int) {15u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:429:25
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:428:25
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _6 = &(&local1)->$rawValue;
 *_6 = _3;
@@ -6099,7 +6099,7 @@ $tmp318 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp318->value = _22;
 _23 = ((frost$core$Equatable*) $tmp318);
 _24 = (frost$core$Int) {16u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:429:52
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:428:52
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _27 = &(&local3)->$rawValue;
 *_27 = _24;
@@ -6130,7 +6130,7 @@ $tmp321 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp321->value = _43;
 _44 = ((frost$core$Equatable*) $tmp321);
 _45 = (frost$core$Int) {17u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:429:77
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:428:77
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _48 = &(&local5)->$rawValue;
 *_48 = _45;
@@ -6161,7 +6161,7 @@ $tmp324 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp324->value = _64;
 _65 = ((frost$core$Equatable*) $tmp324);
 _66 = (frost$core$Int) {18u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:430:28
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:429:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _69 = &(&local7)->$rawValue;
 *_69 = _66;
@@ -6185,12 +6185,12 @@ _81 = ((frost$core$Object*) _65);
 frost$core$Frost$unref$frost$core$Object$Q(_81);
 if (_78) goto block1; else goto block2;
 block2:;
-_84 = (frost$core$Int) {431u};
+_84 = (frost$core$Int) {430u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s327, _84, &$s328);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:432
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:432:16
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:431
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:431:16
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _90 = &param0->_subtypes;
 _91 = *_90;
@@ -6260,8 +6260,8 @@ frost$core$Object* _45;
 frost$core$Object* _47;
 frost$core$Object* _49;
 frost$core$Object* _51;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:436
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:436:16
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:435
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:435:16
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _3 = &param0->_subtypes;
 _4 = *_3;
@@ -6279,7 +6279,7 @@ _13 = ((frost$core$Object*) _12);
 frost$core$Frost$ref$frost$core$Object$Q(_13);
 _16 = ((frost$collections$ListView*) _12);
 _17 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:436:30
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:435:30
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _20 = &param0->_subtypes;
 _21 = *_20;
@@ -6438,7 +6438,7 @@ $tmp345 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp345->value = _1;
 _2 = ((frost$core$Equatable*) $tmp345);
 _3 = (frost$core$Int) {15u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:439:26
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:438:26
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _6 = &(&local1)->$rawValue;
 *_6 = _3;
@@ -6469,7 +6469,7 @@ $tmp348 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp348->value = _22;
 _23 = ((frost$core$Equatable*) $tmp348);
 _24 = (frost$core$Int) {16u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:439:53
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:438:53
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _27 = &(&local3)->$rawValue;
 *_27 = _24;
@@ -6500,7 +6500,7 @@ $tmp351 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp351->value = _43;
 _44 = ((frost$core$Equatable*) $tmp351);
 _45 = (frost$core$Int) {17u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:439:78
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:438:78
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _48 = &(&local5)->$rawValue;
 *_48 = _45;
@@ -6531,7 +6531,7 @@ $tmp354 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp354->value = _64;
 _65 = ((frost$core$Equatable*) $tmp354);
 _66 = (frost$core$Int) {18u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:440:28
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:439:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _69 = &(&local7)->$rawValue;
 *_69 = _66;
@@ -6563,7 +6563,7 @@ _88 = (frost$core$Bit) {_87};
 _89 = _88.value;
 if (_89) goto block3; else goto block2;
 block3:;
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:440:62
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:439:62
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _93 = &param0->_subtypes;
 _94 = *_93;
@@ -6600,12 +6600,12 @@ _119 = ((frost$core$Object*) _102);
 frost$core$Frost$unref$frost$core$Object$Q(_119);
 if (_118) goto block1; else goto block2;
 block2:;
-_122 = (frost$core$Int) {441u};
+_122 = (frost$core$Int) {440u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s360, _122, &$s361);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:442
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:442:16
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:441
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:441:16
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _128 = &param0->_subtypes;
 _129 = *_128;
@@ -6718,7 +6718,7 @@ $tmp369 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp369->value = _1;
 _2 = ((frost$core$Equatable*) $tmp369);
 _3 = (frost$core$Int) {15u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:445:25
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:444:25
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _6 = &(&local1)->$rawValue;
 *_6 = _3;
@@ -6749,7 +6749,7 @@ $tmp372 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp372->value = _22;
 _23 = ((frost$core$Equatable*) $tmp372);
 _24 = (frost$core$Int) {16u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:445:52
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:444:52
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _27 = &(&local3)->$rawValue;
 *_27 = _24;
@@ -6780,7 +6780,7 @@ $tmp375 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp375->value = _43;
 _44 = ((frost$core$Equatable*) $tmp375);
 _45 = (frost$core$Int) {17u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:445:77
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:444:77
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _48 = &(&local5)->$rawValue;
 *_48 = _45;
@@ -6811,7 +6811,7 @@ $tmp378 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp378->value = _64;
 _65 = ((frost$core$Equatable*) $tmp378);
 _66 = (frost$core$Int) {18u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:446:28
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:445:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _69 = &(&local7)->$rawValue;
 *_69 = _66;
@@ -6835,12 +6835,12 @@ _81 = ((frost$core$Object*) _65);
 frost$core$Frost$unref$frost$core$Object$Q(_81);
 if (_78) goto block1; else goto block2;
 block2:;
-_84 = (frost$core$Int) {447u};
+_84 = (frost$core$Int) {446u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s381, _84, &$s382);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:448
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:448:16
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:447
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:447:16
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _90 = &param0->_subtypes;
 _91 = *_90;
@@ -7434,8 +7434,8 @@ org$frostlang$frostc$Type* _925;
 frost$core$Object* _926;
 org$frostlang$frostc$Type* _929;
 frost$core$Object* _930;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:455
-// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:455:17
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:454
+// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:454:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:256
 _3 = ((org$frostlang$frostc$Symbol*) param0);
 _4 = &_3->name;
@@ -7479,15 +7479,15 @@ _28 = *(&local0);
 _30 = _28.value;
 if (_30) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:456
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:455
 _33 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_33);
 return param0;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:458
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:457
 _37 = &param1->NULL_TYPE;
 _38 = *_37;
-// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:458:17
+// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:457:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:256
 _41 = ((org$frostlang$frostc$Symbol*) param0);
 _42 = &_41->name;
@@ -7531,7 +7531,7 @@ _66 = *(&local1);
 _68 = _66.value;
 if (_68) goto block7; else goto block8;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:459
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:458
 _71 = &param2->typeKind;
 _72 = *_71;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp409;
@@ -7539,7 +7539,7 @@ $tmp409 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp409->value = _72;
 _73 = ((frost$core$Equatable*) $tmp409);
 _74 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:459:37
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:458:37
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _77 = &(&local3)->$rawValue;
 *_77 = _74;
@@ -7563,12 +7563,12 @@ _89 = ((frost$core$Object*) _73);
 frost$core$Frost$unref$frost$core$Object$Q(_89);
 if (_86) goto block13; else goto block14;
 block13:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:460
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:459
 _93 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_93);
 return param2;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:462
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:461
 _97 = org$frostlang$frostc$Type$nullable$R$org$frostlang$frostc$Type(param2);
 _98 = ((frost$core$Object*) _97);
 frost$core$Frost$ref$frost$core$Object$Q(_98);
@@ -7576,10 +7576,10 @@ _100 = ((frost$core$Object*) _97);
 frost$core$Frost$unref$frost$core$Object$Q(_100);
 return _97;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:464
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:463
 _104 = &param1->NULL_TYPE;
 _105 = *_104;
-// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:464:18
+// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:463:18
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:256
 _108 = ((org$frostlang$frostc$Symbol*) param2);
 _109 = &_108->name;
@@ -7623,7 +7623,7 @@ _133 = *(&local4);
 _135 = _133.value;
 if (_135) goto block16; else goto block17;
 block16:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:465
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:464
 _138 = &param0->typeKind;
 _139 = *_138;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp415;
@@ -7631,7 +7631,7 @@ $tmp415 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp415->value = _139;
 _140 = ((frost$core$Equatable*) $tmp415);
 _141 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:465:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:464:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _144 = &(&local6)->$rawValue;
 *_144 = _141;
@@ -7655,12 +7655,12 @@ _156 = ((frost$core$Object*) _140);
 frost$core$Frost$unref$frost$core$Object$Q(_156);
 if (_153) goto block22; else goto block23;
 block22:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:466
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:465
 _160 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_160);
 return param0;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:468
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:467
 _164 = org$frostlang$frostc$Type$nullable$R$org$frostlang$frostc$Type(param0);
 _165 = ((frost$core$Object*) _164);
 frost$core$Frost$ref$frost$core$Object$Q(_165);
@@ -7668,10 +7668,10 @@ _167 = ((frost$core$Object*) _164);
 frost$core$Frost$unref$frost$core$Object$Q(_167);
 return _164;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:470
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:469
 _171 = &param1->INVALID_TYPE;
 _172 = *_171;
-// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:470:17
+// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:469:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:256
 _175 = ((org$frostlang$frostc$Symbol*) param0);
 _176 = &_175->name;
@@ -7715,15 +7715,15 @@ _200 = *(&local7);
 _202 = _200.value;
 if (_202) goto block25; else goto block26;
 block25:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:471
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:470
 _205 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_205);
 return param0;
 block26:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:473
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:472
 _209 = &param1->INVALID_TYPE;
 _210 = *_209;
-// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:473:18
+// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Type.frost:472:18
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:256
 _213 = ((org$frostlang$frostc$Symbol*) param2);
 _214 = &_213->name;
@@ -7767,12 +7767,12 @@ _238 = *(&local8);
 _240 = _238.value;
 if (_240) goto block31; else goto block32;
 block31:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:474
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:473
 _243 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_243);
 return param0;
 block32:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:476
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:475
 _247 = &param0->typeKind;
 _248 = *_247;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp424;
@@ -7780,7 +7780,7 @@ $tmp424 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp424->value = _248;
 _249 = ((frost$core$Equatable*) $tmp424);
 _250 = (frost$core$Int) {5u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:476:27
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:475:27
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _253 = &(&local10)->$rawValue;
 *_253 = _250;
@@ -7808,12 +7808,12 @@ _268 = org$frostlang$frostc$Type$get_isNumber$R$frost$core$Bit(param2);
 _269 = _268.value;
 if (_269) goto block37; else goto block38;
 block37:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:477
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:476
 _272 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_272);
 return param2;
 block38:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:479
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:478
 _276 = org$frostlang$frostc$Type$get_isNumber$R$frost$core$Bit(param0);
 _277 = _276.value;
 if (_277) goto block43; else goto block42;
@@ -7825,7 +7825,7 @@ $tmp427 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp427->value = _280;
 _281 = ((frost$core$Equatable*) $tmp427);
 _282 = (frost$core$Int) {5u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:479:44
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:478:44
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _285 = &(&local12)->$rawValue;
 *_285 = _282;
@@ -7849,14 +7849,14 @@ _297 = ((frost$core$Object*) _281);
 frost$core$Frost$unref$frost$core$Object$Q(_297);
 if (_294) goto block41; else goto block42;
 block41:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:480
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:479
 _301 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_301);
 return param0;
 block42:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:482
-// begin inline call to function org.frostlang.frostc.Type.get_isReal():frost.core.Bit from Type.frost:482:12
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:354
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:481
+// begin inline call to function org.frostlang.frostc.Type.get_isReal():frost.core.Bit from Type.frost:481:12
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:353
 _307 = &param0->typeKind;
 _308 = *_307;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp430;
@@ -7864,7 +7864,7 @@ $tmp430 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp430->value = _308;
 _309 = ((frost$core$Equatable*) $tmp430);
 _310 = (frost$core$Int) {19u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:354:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:353:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _313 = &(&local15)->$rawValue;
 *_313 = _310;
@@ -7902,7 +7902,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_335);
 _338 = _332.value;
 if (_338) goto block45; else goto block46;
 block45:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:483
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:482
 _341 = &param2->typeKind;
 _342 = *_341;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp434;
@@ -7910,7 +7910,7 @@ $tmp434 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp434->value = _342;
 _343 = ((frost$core$Equatable*) $tmp434);
 _344 = (frost$core$Int) {5u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:483:37
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:482:37
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _347 = &(&local17)->$rawValue;
 *_347 = _344;
@@ -7941,7 +7941,7 @@ $tmp437 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp437->value = _363;
 _364 = ((frost$core$Equatable*) $tmp437);
 _365 = (frost$core$Int) {19u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:483:73
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:482:73
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _368 = &(&local19)->$rawValue;
 *_368 = _365;
@@ -7965,17 +7965,17 @@ _380 = ((frost$core$Object*) _364);
 frost$core$Frost$unref$frost$core$Object$Q(_380);
 if (_377) goto block52; else goto block53;
 block52:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:484
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:483
 _384 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_384);
 return param0;
 block53:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:486
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:485
 _388 = org$frostlang$frostc$Type$get_isNumber$R$frost$core$Bit(param2);
 _389 = _388.value;
 if (_389) goto block57; else goto block58;
 block57:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:487
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:486
 _392 = ((org$frostlang$frostc$Symbol*) param2);
 _393 = &_392->name;
 _394 = *_393;
@@ -7983,14 +7983,14 @@ _395 = frost$core$String$endsWith$frost$core$String$R$frost$core$Bit(_394, &$s44
 _396 = _395.value;
 if (_396) goto block59; else goto block60;
 block59:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:488
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:487
 _399 = &param1->REAL64_TYPE;
 _400 = *_399;
 _401 = ((frost$core$Object*) _400);
 frost$core$Frost$ref$frost$core$Object$Q(_401);
 return _400;
 block60:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:490
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:489
 _405 = &param1->REAL32_TYPE;
 _406 = *_405;
 _407 = ((frost$core$Object*) _406);
@@ -7999,9 +7999,9 @@ return _406;
 block58:;
 goto block46;
 block46:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:493
-// begin inline call to function org.frostlang.frostc.Type.get_isReal():frost.core.Bit from Type.frost:493:17
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:354
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:492
+// begin inline call to function org.frostlang.frostc.Type.get_isReal():frost.core.Bit from Type.frost:492:17
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:353
 _414 = &param2->typeKind;
 _415 = *_414;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp441;
@@ -8009,7 +8009,7 @@ $tmp441 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp441->value = _415;
 _416 = ((frost$core$Equatable*) $tmp441);
 _417 = (frost$core$Int) {19u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:354:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:353:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _420 = &(&local22)->$rawValue;
 *_420 = _417;
@@ -8047,7 +8047,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_442);
 _445 = _439.value;
 if (_445) goto block61; else goto block62;
 block61:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:494
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:493
 _448 = &param0->typeKind;
 _449 = *_448;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp445;
@@ -8055,7 +8055,7 @@ $tmp445 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp445->value = _449;
 _450 = ((frost$core$Equatable*) $tmp445);
 _451 = (frost$core$Int) {5u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:494:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:493:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _454 = &(&local24)->$rawValue;
 *_454 = _451;
@@ -8086,7 +8086,7 @@ $tmp448 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp448->value = _470;
 _471 = ((frost$core$Equatable*) $tmp448);
 _472 = (frost$core$Int) {19u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:494:61
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:493:61
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _475 = &(&local26)->$rawValue;
 *_475 = _472;
@@ -8110,17 +8110,17 @@ _487 = ((frost$core$Object*) _471);
 frost$core$Frost$unref$frost$core$Object$Q(_487);
 if (_484) goto block68; else goto block69;
 block68:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:495
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:494
 _491 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_491);
 return param2;
 block69:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:497
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:496
 _495 = org$frostlang$frostc$Type$get_isNumber$R$frost$core$Bit(param0);
 _496 = _495.value;
 if (_496) goto block73; else goto block74;
 block73:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:498
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:497
 _499 = ((org$frostlang$frostc$Symbol*) param0);
 _500 = &_499->name;
 _501 = *_500;
@@ -8128,14 +8128,14 @@ _502 = frost$core$String$endsWith$frost$core$String$R$frost$core$Bit(_501, &$s45
 _503 = _502.value;
 if (_503) goto block75; else goto block76;
 block75:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:499
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:498
 _506 = &param1->REAL64_TYPE;
 _507 = *_506;
 _508 = ((frost$core$Object*) _507);
 frost$core$Frost$ref$frost$core$Object$Q(_508);
 return _507;
 block76:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:501
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:500
 _512 = &param1->REAL32_TYPE;
 _513 = *_512;
 _514 = ((frost$core$Object*) _513);
@@ -8144,7 +8144,7 @@ return _513;
 block74:;
 goto block62;
 block62:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:504
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:503
 _519 = &param0->typeKind;
 _520 = *_519;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp452;
@@ -8152,7 +8152,7 @@ $tmp452 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp452->value = _520;
 _521 = ((frost$core$Equatable*) $tmp452);
 _522 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:504:27
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:503:27
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _525 = &(&local28)->$rawValue;
 *_525 = _522;
@@ -8176,8 +8176,8 @@ _537 = ((frost$core$Object*) _521);
 frost$core$Frost$unref$frost$core$Object$Q(_537);
 if (_534) goto block77; else goto block78;
 block77:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:505
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:505:20
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:504
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:504:20
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _543 = &param0->_subtypes;
 _544 = *_543;
@@ -8210,7 +8210,7 @@ _569 = ((frost$core$Object*) _552);
 frost$core$Frost$unref$frost$core$Object$Q(_569);
 return _560;
 block78:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:507
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:506
 _573 = &param2->typeKind;
 _574 = *_573;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp457;
@@ -8218,7 +8218,7 @@ $tmp457 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp457->value = _574;
 _575 = ((frost$core$Equatable*) $tmp457);
 _576 = (frost$core$Int) {1u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:507:33
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:506:33
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _579 = &(&local30)->$rawValue;
 *_579 = _576;
@@ -8242,8 +8242,8 @@ _591 = ((frost$core$Object*) _575);
 frost$core$Frost$unref$frost$core$Object$Q(_591);
 if (_588) goto block83; else goto block84;
 block83:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:508
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:508:41
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:507
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:507:41
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _597 = &param2->_subtypes;
 _598 = *_597;
@@ -8276,7 +8276,7 @@ _623 = ((frost$core$Object*) _606);
 frost$core$Frost$unref$frost$core$Object$Q(_623);
 return _614;
 block84:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:510
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:509
 _627 = org$frostlang$frostc$Compiler$preferredType$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(param1, param0);
 *(&local31) = ((org$frostlang$frostc$Type*) NULL);
 _629 = ((frost$core$Object*) _627);
@@ -8287,7 +8287,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_632);
 *(&local31) = _627;
 _635 = ((frost$core$Object*) _627);
 frost$core$Frost$unref$frost$core$Object$Q(_635);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:511
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:510
 _638 = org$frostlang$frostc$Compiler$preferredType$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(param1, param2);
 *(&local32) = ((org$frostlang$frostc$Type*) NULL);
 _640 = ((frost$core$Object*) _638);
@@ -8298,7 +8298,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_643);
 *(&local32) = _638;
 _646 = ((frost$core$Object*) _638);
 frost$core$Frost$unref$frost$core$Object$Q(_646);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:512
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:511
 _649 = *(&local31);
 _650 = org$frostlang$frostc$Type$get_isClass$R$frost$core$Bit(_649);
 _651 = _650.value;
@@ -8309,7 +8309,7 @@ _654 = org$frostlang$frostc$Type$get_isClass$R$frost$core$Bit(_653);
 _655 = _654.value;
 if (_655) goto block89; else goto block90;
 block89:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:513
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:512
 _658 = (frost$collections$HashSet*) frostObjectAlloc(sizeof(frost$collections$HashSet), (frost$core$Class*) &frost$collections$HashSet$class);
 frost$collections$HashSet$init(_658);
 *(&local33) = ((frost$collections$HashSet*) NULL);
@@ -8321,7 +8321,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_664);
 *(&local33) = _658;
 _667 = ((frost$core$Object*) _658);
 frost$core$Frost$unref$frost$core$Object$Q(_667);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:514
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:513
 *(&local34) = ((org$frostlang$frostc$Type*) NULL);
 _671 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_671);
@@ -8329,7 +8329,7 @@ _673 = *(&local34);
 _674 = ((frost$core$Object*) _673);
 frost$core$Frost$unref$frost$core$Object$Q(_674);
 *(&local34) = param0;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:515
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:514
 _678 = *(&local31);
 _679 = org$frostlang$frostc$Compiler$getClass$org$frostlang$frostc$Type$R$org$frostlang$frostc$ClassDecl$Q(param1, _678);
 *(&local35) = ((org$frostlang$frostc$ClassDecl*) NULL);
@@ -8341,7 +8341,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_684);
 *(&local35) = _679;
 _687 = ((frost$core$Object*) _679);
 frost$core$Frost$unref$frost$core$Object$Q(_687);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:516
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:515
 goto block92;
 block92:;
 _691 = *(&local35);
@@ -8350,25 +8350,25 @@ _693 = (frost$core$Bit) {_692};
 _694 = _693.value;
 if (_694) goto block93; else goto block94;
 block93:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:517
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:516
 _697 = *(&local33);
 _698 = *(&local34);
 _699 = ((frost$collections$HashKey*) _698);
-// begin inline call to method frost.collections.HashSet.add(value:frost.collections.HashSet.T) from Type.frost:517:30
+// begin inline call to method frost.collections.HashSet.add(value:frost.collections.HashSet.T) from Type.frost:516:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:17
 _702 = &_697->contents;
 _703 = *_702;
 _704 = _699;
 _705 = ((frost$core$Object*) _699);
 frost$collections$HashMap$$IDXEQ$frost$collections$HashMap$K$frost$collections$HashMap$V(_703, _704, _705);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:518
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:517
 _709 = *(&local35);
 _710 = _709 != NULL;
 _711 = (frost$core$Bit) {_710};
 _712 = _711.value;
 if (_712) goto block99; else goto block100;
 block100:;
-_714 = (frost$core$Int) {518u};
+_714 = (frost$core$Int) {517u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s462, _714, &$s463);
 abort(); // unreachable
 block99:;
@@ -8380,7 +8380,7 @@ _721 = (frost$core$Bit) {_720};
 _722 = _721.value;
 if (_722) goto block96; else goto block98;
 block96:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:519
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:518
 _725 = *(&local34);
 _726 = *(&local35);
 _727 = _726 != NULL;
@@ -8388,7 +8388,7 @@ _728 = (frost$core$Bit) {_727};
 _729 = _728.value;
 if (_729) goto block101; else goto block102;
 block102:;
-_731 = (frost$core$Int) {519u};
+_731 = (frost$core$Int) {518u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s464, _731, &$s465);
 abort(); // unreachable
 block101:;
@@ -8400,7 +8400,7 @@ _738 = (frost$core$Bit) {_737};
 _739 = _738.value;
 if (_739) goto block103; else goto block104;
 block104:;
-_741 = (frost$core$Int) {519u};
+_741 = (frost$core$Int) {518u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s466, _741, &$s467);
 abort(); // unreachable
 block103:;
@@ -8414,7 +8414,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_749);
 *(&local34) = _745;
 _752 = ((frost$core$Object*) _745);
 frost$core$Frost$unref$frost$core$Object$Q(_752);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:520
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:519
 _755 = *(&local34);
 _756 = org$frostlang$frostc$Compiler$getClass$org$frostlang$frostc$Type$R$org$frostlang$frostc$ClassDecl$Q(param1, _755);
 _757 = ((frost$core$Object*) _756);
@@ -8428,7 +8428,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_763);
 goto block97;
 block98:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:523
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:522
 _768 = ((frost$core$Object*) ((org$frostlang$frostc$ClassDecl*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_768);
 _770 = *(&local35);
@@ -8439,14 +8439,14 @@ goto block97;
 block97:;
 goto block92;
 block94:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:526
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:525
 _777 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_777);
 _779 = *(&local34);
 _780 = ((frost$core$Object*) _779);
 frost$core$Frost$unref$frost$core$Object$Q(_780);
 *(&local34) = param2;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:527
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:526
 _784 = *(&local32);
 _785 = org$frostlang$frostc$Compiler$getClass$org$frostlang$frostc$Type$R$org$frostlang$frostc$ClassDecl$Q(param1, _784);
 _786 = ((frost$core$Object*) _785);
@@ -8457,7 +8457,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_789);
 *(&local35) = _785;
 _792 = ((frost$core$Object*) _785);
 frost$core$Frost$unref$frost$core$Object$Q(_792);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:528
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:527
 goto block105;
 block105:;
 _796 = *(&local35);
@@ -8466,11 +8466,11 @@ _798 = (frost$core$Bit) {_797};
 _799 = _798.value;
 if (_799) goto block106; else goto block107;
 block106:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:529
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:528
 _802 = *(&local33);
 _803 = *(&local34);
 _804 = ((frost$collections$HashKey*) _803);
-// begin inline call to function frost.collections.HashSet.contains(value:frost.collections.HashSet.T):frost.core.Bit from Type.frost:529:38
+// begin inline call to function frost.collections.HashSet.contains(value:frost.collections.HashSet.T):frost.core.Bit from Type.frost:528:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:47
 _807 = &_802->contents;
 _808 = *_807;
@@ -8479,7 +8479,7 @@ _810 = frost$collections$HashMap$contains$frost$collections$HashMap$K$R$frost$co
 _812 = _810.value;
 if (_812) goto block108; else goto block109;
 block108:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:530
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:529
 _815 = *(&local34);
 _816 = ((frost$core$Object*) _815);
 frost$core$Frost$ref$frost$core$Object$Q(_816);
@@ -8505,14 +8505,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_835);
 *(&local31) = ((org$frostlang$frostc$Type*) NULL);
 return _815;
 block109:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:532
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:531
 _840 = *(&local35);
 _841 = _840 != NULL;
 _842 = (frost$core$Bit) {_841};
 _843 = _842.value;
 if (_843) goto block114; else goto block115;
 block115:;
-_845 = (frost$core$Int) {532u};
+_845 = (frost$core$Int) {531u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s468, _845, &$s469);
 abort(); // unreachable
 block114:;
@@ -8524,7 +8524,7 @@ _852 = (frost$core$Bit) {_851};
 _853 = _852.value;
 if (_853) goto block111; else goto block113;
 block111:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:533
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:532
 _856 = *(&local34);
 _857 = *(&local35);
 _858 = _857 != NULL;
@@ -8532,7 +8532,7 @@ _859 = (frost$core$Bit) {_858};
 _860 = _859.value;
 if (_860) goto block116; else goto block117;
 block117:;
-_862 = (frost$core$Int) {533u};
+_862 = (frost$core$Int) {532u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s470, _862, &$s471);
 abort(); // unreachable
 block116:;
@@ -8544,7 +8544,7 @@ _869 = (frost$core$Bit) {_868};
 _870 = _869.value;
 if (_870) goto block118; else goto block119;
 block119:;
-_872 = (frost$core$Int) {533u};
+_872 = (frost$core$Int) {532u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s472, _872, &$s473);
 abort(); // unreachable
 block118:;
@@ -8558,7 +8558,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_880);
 *(&local34) = _876;
 _883 = ((frost$core$Object*) _876);
 frost$core$Frost$unref$frost$core$Object$Q(_883);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:534
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:533
 _886 = *(&local34);
 _887 = org$frostlang$frostc$Compiler$getClass$org$frostlang$frostc$Type$R$org$frostlang$frostc$ClassDecl$Q(param1, _886);
 _888 = ((frost$core$Object*) _887);
@@ -8572,7 +8572,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_894);
 goto block112;
 block113:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:537
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:536
 _899 = ((frost$core$Object*) ((org$frostlang$frostc$ClassDecl*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_899);
 _901 = *(&local35);
@@ -8597,7 +8597,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_916);
 *(&local33) = ((frost$collections$HashSet*) NULL);
 goto block90;
 block90:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:541
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:540
 _921 = &param1->OBJECT_TYPE;
 _922 = *_921;
 _923 = ((frost$core$Object*) _922);
@@ -8637,8 +8637,8 @@ frost$core$Object* _34;
 org$frostlang$frostc$Type* _38;
 frost$core$Object* _39;
 frost$core$Object* _43;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:548
-// begin inline call to method org.frostlang.frostc.Compiler.coercionCost(type:org.frostlang.frostc.Type, target:org.frostlang.frostc.Type):org.frostlang.frostc.Pair<org.frostlang.frostc.Type, frost.core.Int>? from Type.frost:548:33
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:547
+// begin inline call to method org.frostlang.frostc.Compiler.coercionCost(type:org.frostlang.frostc.Type, target:org.frostlang.frostc.Type):org.frostlang.frostc.Pair<org.frostlang.frostc.Type, frost.core.Int>? from Type.frost:547:33
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:2116
 _3 = (frost$core$Bit) {true};
 _4 = org$frostlang$frostc$Compiler$coercionCost$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$Type$Cfrost$core$Int$GT$Q(param1, param0, param2, _3);
@@ -8653,14 +8653,14 @@ _13 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_13);
 if (_12) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:549
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:548
 _17 = param0;
 _18 = ((frost$core$Object*) _17);
 frost$core$Frost$ref$frost$core$Object$Q(_18);
 return _17;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:551
-// begin inline call to method org.frostlang.frostc.Compiler.coercionCost(type:org.frostlang.frostc.Type, target:org.frostlang.frostc.Type):org.frostlang.frostc.Pair<org.frostlang.frostc.Type, frost.core.Int>? from Type.frost:551:33
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:550
+// begin inline call to method org.frostlang.frostc.Compiler.coercionCost(type:org.frostlang.frostc.Type, target:org.frostlang.frostc.Type):org.frostlang.frostc.Pair<org.frostlang.frostc.Type, frost.core.Int>? from Type.frost:550:33
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:2116
 _24 = (frost$core$Bit) {true};
 _25 = org$frostlang$frostc$Compiler$coercionCost$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$Type$Cfrost$core$Int$GT$Q(param1, param2, param0, _24);
@@ -8675,13 +8675,13 @@ _34 = ((frost$core$Object*) _25);
 frost$core$Frost$unref$frost$core$Object$Q(_34);
 if (_33) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:552
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:551
 _38 = param2;
 _39 = ((frost$core$Object*) _38);
 frost$core$Frost$ref$frost$core$Object$Q(_39);
 return _38;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:554
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:553
 _43 = ((frost$core$Object*) ((org$frostlang$frostc$Type*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_43);
 return ((org$frostlang$frostc$Type*) NULL);
@@ -9133,7 +9133,7 @@ $tmp484 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp484->value = _1;
 _2 = ((frost$core$Equatable*) $tmp484);
 _3 = (frost$core$Int) {6u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:557:26
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:556:26
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _6 = &(&local1)->$rawValue;
 *_6 = _3;
@@ -9157,11 +9157,11 @@ _18 = ((frost$core$Object*) _2);
 frost$core$Frost$unref$frost$core$Object$Q(_18);
 if (_15) goto block1; else goto block2;
 block2:;
-_21 = (frost$core$Int) {559u};
+_21 = (frost$core$Int) {558u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s487, _21, &$s488);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:559
 _52 = ((frost$collections$MapView*) param2);
 ITable* $tmp489 = _52->$class->itable;
 while ($tmp489->$class != (frost$core$Class*) &frost$collections$MapView$class) {
@@ -9170,7 +9170,7 @@ while ($tmp489->$class != (frost$core$Class*) &frost$collections$MapView$class) 
 _53 = $tmp489->methods[0];
 _54 = _53(_52);
 _55 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:560:24
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:559:24
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _58 = _54.value;
 _59 = _55.value;
@@ -9179,18 +9179,18 @@ _61 = (frost$core$Bit) {_60};
 _63 = _61.value;
 if (_63) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:561
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:560
 _66 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_66);
 *(&local2) = param0;
 goto block4;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:563
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:562
 _71 = &param0->typeKind;
 _72 = *_71;
 _73 = _72.$rawValue;
 _74 = (frost$core$Int) {12u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:564:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:563:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _77 = _73.value;
 _78 = _74.value;
@@ -9200,7 +9200,7 @@ _82 = _80.value;
 if (_82) goto block12; else goto block13;
 block13:;
 _84 = (frost$core$Int) {13u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:564:52
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:563:52
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _87 = _73.value;
 _88 = _84.value;
@@ -9209,7 +9209,7 @@ _90 = (frost$core$Bit) {_89};
 _92 = _90.value;
 if (_92) goto block12; else goto block15;
 block12:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:565
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:564
 _95 = ((org$frostlang$frostc$Symbol*) param0);
 _96 = &_95->name;
 _97 = *_96;
@@ -9225,21 +9225,21 @@ frost$core$Frost$unref$frost$core$Object$Q(_105);
 *(&local5) = _100;
 _108 = _99;
 frost$core$Frost$unref$frost$core$Object$Q(_108);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:566
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:565
 _111 = *(&local5);
 _112 = _111 != NULL;
 _113 = (frost$core$Bit) {_112};
 _114 = _113.value;
 if (_114) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:567
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:566
 _117 = *(&local5);
 _118 = _117 != NULL;
 _119 = (frost$core$Bit) {_118};
 _120 = _119.value;
 if (_120) goto block19; else goto block20;
 block20:;
-_122 = (frost$core$Int) {567u};
+_122 = (frost$core$Int) {566u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s490, _122, &$s491);
 abort(); // unreachable
 block19:;
@@ -9253,7 +9253,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_129);
 *(&local2) = _125;
 goto block4;
 block18:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:569
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:568
 _135 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_135);
 _137 = *(&local5);
@@ -9264,7 +9264,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_138);
 goto block4;
 block15:;
 _143 = (frost$core$Int) {11u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:571:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:570:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _146 = _73.value;
 _147 = _143.value;
@@ -9273,8 +9273,8 @@ _149 = (frost$core$Bit) {_148};
 _151 = _149.value;
 if (_151) goto block21; else goto block22;
 block21:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:572
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:572:29
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:571
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:571:29
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _156 = &param0->_subtypes;
 _157 = *_156;
@@ -9307,7 +9307,7 @@ _182 = _170;
 frost$core$Frost$unref$frost$core$Object$Q(_182);
 _184 = ((frost$core$Object*) _165);
 frost$core$Frost$unref$frost$core$Object$Q(_184);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:573
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:572
 _187 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init(_187);
 *(&local7) = ((frost$collections$Array*) NULL);
@@ -9319,9 +9319,9 @@ frost$core$Frost$unref$frost$core$Object$Q(_193);
 *(&local7) = _187;
 _196 = ((frost$core$Object*) _187);
 frost$core$Frost$unref$frost$core$Object$Q(_196);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:574
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:573
 _199 = (frost$core$Int) {1u};
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:574:31
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:573:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _202 = &param0->_subtypes;
 _203 = *_202;
@@ -9368,9 +9368,9 @@ _236 = (frost$core$Bit) {_235};
 _237 = _236.value;
 if (_237) goto block30; else goto block31;
 block30:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:575
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:574
 _240 = *(&local7);
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:575:38
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:574:38
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _243 = &param0->_subtypes;
 _244 = *_243;
@@ -9428,7 +9428,7 @@ goto block30;
 block31:;
 _293 = ((frost$core$Object*) _211);
 frost$core$Frost$unref$frost$core$Object$Q(_293);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:577
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:576
 _296 = *(&local6);
 _297 = *(&local7);
 _298 = ((frost$collections$ListView*) _297);
@@ -9449,7 +9449,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_309);
 goto block4;
 block22:;
 _314 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:579:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:578:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _317 = _73.value;
 _318 = _314.value;
@@ -9458,8 +9458,8 @@ _320 = (frost$core$Bit) {_319};
 _322 = _320.value;
 if (_322) goto block41; else goto block42;
 block41:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:580
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:580:24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:579
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:579:24
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _327 = &param0->_subtypes;
 _328 = *_327;
@@ -9494,7 +9494,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_353);
 goto block4;
 block42:;
 _357 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:582:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:581:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _360 = _73.value;
 _361 = _357.value;
@@ -9504,7 +9504,7 @@ _365 = _363.value;
 if (_365) goto block47; else goto block48;
 block48:;
 _367 = (frost$core$Int) {15u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:582:35
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:581:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _370 = _73.value;
 _371 = _367.value;
@@ -9514,7 +9514,7 @@ _375 = _373.value;
 if (_375) goto block47; else goto block50;
 block50:;
 _377 = (frost$core$Int) {18u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:582:50
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:581:50
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _380 = _73.value;
 _381 = _377.value;
@@ -9524,7 +9524,7 @@ _385 = _383.value;
 if (_385) goto block47; else goto block52;
 block52:;
 _387 = (frost$core$Int) {17u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:582:73
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:581:73
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _390 = _73.value;
 _391 = _387.value;
@@ -9533,7 +9533,7 @@ _393 = (frost$core$Bit) {_392};
 _395 = _393.value;
 if (_395) goto block47; else goto block54;
 block47:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:583
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:582
 _398 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init(_398);
 *(&local9) = ((frost$collections$Array*) NULL);
@@ -9545,8 +9545,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_404);
 *(&local9) = _398;
 _407 = ((frost$core$Object*) _398);
 frost$core$Frost$unref$frost$core$Object$Q(_407);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:584
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:584:24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:583
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:583:24
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _412 = &param0->_subtypes;
 _413 = *_412;
@@ -9577,15 +9577,15 @@ _432 = (frost$core$Bit) {_431};
 _433 = _432.value;
 if (_433) goto block59; else goto block60;
 block60:;
-_435 = (frost$core$Int) {584u};
+_435 = (frost$core$Int) {583u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s504, _435);
 abort(); // unreachable
 block59:;
 _438 = ((frost$core$Object*) _421);
 frost$core$Frost$unref$frost$core$Object$Q(_438);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:585
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:584
 _441 = (frost$core$Int) {0u};
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:585:31
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:584:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _444 = &param0->_subtypes;
 _445 = *_444;
@@ -9637,9 +9637,9 @@ _483 = (frost$core$Bit) {_482};
 _484 = _483.value;
 if (_484) goto block64; else goto block65;
 block64:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:586
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:585
 _487 = *(&local9);
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:586:36
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:585:36
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _490 = &param0->_subtypes;
 _491 = *_490;
@@ -9697,7 +9697,7 @@ goto block64;
 block65:;
 _540 = ((frost$core$Object*) _453);
 frost$core$Frost$unref$frost$core$Object$Q(_540);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:588
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:587
 _543 = ((org$frostlang$frostc$Symbol*) param0);
 _544 = &_543->position;
 _545 = *_544;
@@ -9705,7 +9705,7 @@ _546 = &param0->typeKind;
 _547 = *_546;
 _548 = *(&local9);
 _549 = ((frost$collections$ListView*) _548);
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:589:25
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:588:25
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _552 = &param0->_subtypes;
 _553 = *_552;
@@ -9721,7 +9721,7 @@ block76:;
 _561 = _553;
 _562 = ((frost$core$Object*) _561);
 frost$core$Frost$ref$frost$core$Object$Q(_562);
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:589:34
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:588:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _567 = &param0->_subtypes;
 _568 = *_567;
@@ -9775,7 +9775,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_607);
 goto block4;
 block54:;
 _612 = (frost$core$Int) {10u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:591:22
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Type.frost:590:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _615 = _73.value;
 _616 = _612.value;
@@ -9784,7 +9784,7 @@ _618 = (frost$core$Bit) {_617};
 _620 = _618.value;
 if (_620) goto block81; else goto block82;
 block81:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:592
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:591
 _623 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init(_623);
 *(&local11) = ((frost$collections$Array*) NULL);
@@ -9796,8 +9796,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_629);
 *(&local11) = _623;
 _632 = ((frost$core$Object*) _623);
 frost$core$Frost$unref$frost$core$Object$Q(_632);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:593
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:593:26
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:592
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:592:26
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _637 = &param0->_subtypes;
 _638 = *_637;
@@ -9845,7 +9845,7 @@ _664 = *(&local12);
 _665 = ((frost$core$Object*) _664);
 frost$core$Frost$unref$frost$core$Object$Q(_665);
 *(&local12) = _661;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:594
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:593
 _669 = *(&local11);
 _670 = *(&local12);
 _671 = org$frostlang$frostc$Type$remap$org$frostlang$frostc$Compiler$frost$collections$HashMap$LTfrost$core$String$Corg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type(_670, param1, param2);
@@ -9865,7 +9865,7 @@ _683 = ((frost$core$Object*) _652);
 frost$core$Frost$unref$frost$core$Object$Q(_683);
 _685 = ((frost$core$Object*) _646);
 frost$core$Frost$unref$frost$core$Object$Q(_685);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:596
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:595
 _688 = *(&local11);
 _689 = ((frost$collections$ListView*) _688);
 _690 = org$frostlang$frostc$Type$tuple$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type(_689);
@@ -9880,7 +9880,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_696);
 *(&local2) = _690;
 goto block4;
 block82:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:599
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:598
 _702 = ((frost$core$Object*) param0);
 frost$core$Frost$ref$frost$core$Object$Q(_702);
 *(&local2) = param0;
@@ -9897,7 +9897,7 @@ $tmp520 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$
 $tmp520->value = _26;
 _27 = ((frost$core$Equatable*) $tmp520);
 _28 = (frost$core$Int) {6u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:558:35
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:557:35
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _31 = &(&local4)->$rawValue;
 *_31 = _28;
@@ -9924,7 +9924,7 @@ block6:;
 _49 = *(&local2);
 return _49;
 block7:;
-_44 = (frost$core$Int) {559u};
+_44 = (frost$core$Int) {558u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s523, _44, &$s524);
 abort(); // unreachable
 
@@ -9938,7 +9938,7 @@ frost$core$String* _3;
 frost$collections$HashKey* _4;
 $fn525 _5;
 frost$core$Int _6;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:606
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:605
 _1 = ((org$frostlang$frostc$Symbol*) param0);
 _2 = &_1->name;
 _3 = *_2;
@@ -9959,7 +9959,7 @@ org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
 frost$core$String* _3;
 frost$core$Object* _4;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:611
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:610
 _1 = ((org$frostlang$frostc$Symbol*) param0);
 _2 = &_1->name;
 _3 = *_2;

@@ -221,9 +221,3 @@ return;
 
 }
 
-
-frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
-
-
-
-

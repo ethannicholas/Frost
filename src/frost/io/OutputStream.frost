@@ -254,11 +254,7 @@ class OutputStream {
     @param s the string to write
     ================================================================================================
     method print(s:String):Error? {
-        for c in s {
-            def e := write(c.asChar8)
-        }
-        return null
-        --return write(s.data, s._length)
+        return write(s.data, s._length)
     }
 
     ================================================================================================

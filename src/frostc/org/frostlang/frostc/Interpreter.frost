@@ -6,7 +6,7 @@ uses org.frostlang.frostc.expression.Binary
 ====================================================================================================
 Incredibly slow, even for an interpreter. Just a proof of concept at this point.
 ====================================================================================================
-class Interpreter : CodeGenerator {
+class Interpreter : Backend {
     def strings := HashMap<String, Int64>()
 
     def stackSize := 10240
@@ -17,7 +17,7 @@ class Interpreter : CodeGenerator {
 
     def maxId:Int
 
-    class Code {
+    class MethodCode {
         def locals:Array<Type>
 
         def blocks:Array<Int>
@@ -42,7 +42,7 @@ class Interpreter : CodeGenerator {
         @weak
         def interpreter:Interpreter
 
-        def code:Code
+        def code:MethodCode
 
         def locals:Array<Int>
 
@@ -54,7 +54,7 @@ class Interpreter : CodeGenerator {
         -- the value.
         def statements:Array<Int64?>
 
-        init(interpreter:Interpreter, code:Code) {
+        init(interpreter:Interpreter, code:MethodCode) {
             self.interpreter := interpreter
             self.code := code
 
@@ -117,7 +117,7 @@ class Interpreter : CodeGenerator {
                         assert compiler.instanceFields(string)[1].name = "refCount"
                         assert current.asInt - base.asInt =
                                 compiler.instanceFields(string)[1].offset
-                        current->Pointer<Int32>.set(LLVMCodeGenerator.NO_REFCNT.asInt32)
+                        current->Pointer<Int32>.set(LLVMBackend.NO_REFCNT.asInt32)
                         current += 4
 
                         -- flags
@@ -130,7 +130,7 @@ class Interpreter : CodeGenerator {
                         -- data
                         assert compiler.instanceFields(string)[3].name = "data"
                         assert current.asInt - base.asInt =
-                                compiler.instanceFields(string)[3].offset, "expected \{compiler.instanceFields(string)[3].offset}, have \{current.asInt - base.asInt}"
+                                compiler.instanceFields(string)[3].offset
                         def data := Pointer<Char8>.alloc(s._length)
                         for i in 0 .. s._length {
                             data[i] := s.data[i]
@@ -177,7 +177,7 @@ class Interpreter : CodeGenerator {
 
     def memoryLayout:MemoryLayout
 
-    def methodCode := IdentityMap<MethodDecl, Code>()
+    def methodCode := IdentityMap<MethodDecl, MethodCode>()
 
     def builtins := IdentityMap<MethodDecl, (Context, FixedArray<IR.Value>)=&>(Int64)>()
 
@@ -216,7 +216,7 @@ class Interpreter : CodeGenerator {
             }
             blockIds[b] := i
         }
-        methodCode[m] := Code(ir.locals, blockIds,
+        methodCode[m] := MethodCode(ir.locals, blockIds,
                 ir.blocks.map(b => Array<IR.Statement.ID>(b.ids)),
                 ir.blocks.map(b => Array<IR.Statement>(b.statements)),
                 ir.blocks.map(b => b.ids.map(id => id.value).fold(Int.max)).fold(Int.max))
@@ -244,22 +244,22 @@ class Interpreter : CodeGenerator {
     }
 
     ================================================================================================
-    Returns true if the type in question can be passed around inside an `Int64`. This is true only
-    for [Value]s which are greater than 8 bytes in size (non-`Value` objects are handled as
-    Pointers.)
+    Returns true if the type in question is a Value which is too big to be passed around inside an
+    `Int64`.
     ================================================================================================
     function needsStructPointer(t:Type):Bit {
-        return compiler.isValue(t) & memoryLayout.sizeOf(t) > 8
+        return t.typeKind != Type.Kind.NULLABLE & compiler.isValue(t) & memoryLayout.sizeOf(t) > 8
     }
 
     method destroyObject(o:Pointer<UInt8>) {
         -- call cleanup
-        def cl := Pointer<Int>(o->Pointer<Int>.get()).convertTo<ClassDecl>()
+-*        def cl := Pointer<Int>(o->Pointer<Int>.get()).convertTo<ClassDecl>()
         def cleanup := compiler.getVTable(cl)[1]
         call(cleanup, FixedArray<IR.Value>([IR.Value.INT(o.asInt.asUInt64,
                 compiler.INVALID_TYPE)]))
 
-        o.destroy()
+        o.destroy()*-
+        unreachable
     }
 
     method ref(o:Pointer<UInt8>) {
@@ -268,7 +268,7 @@ class Interpreter : CodeGenerator {
         }
         def refCntPtr := (o + memoryLayout.pointerSize)->Pointer<Int32>
         def refCnt := refCntPtr.get()
-        if refCnt = LLVMCodeGenerator.NO_REFCNT.asInt32 {
+        if refCnt = LLVMBackend.NO_REFCNT.asInt32 {
             return
         }
         refCntPtr.set(refCnt + 1)
@@ -280,7 +280,7 @@ class Interpreter : CodeGenerator {
         }
         def refCntPtr := (o + memoryLayout.pointerSize)->Pointer<Int32>
         def refCnt := refCntPtr.get()
-        if refCnt = LLVMCodeGenerator.NO_REFCNT.asInt32 {
+        if refCnt = LLVMBackend.NO_REFCNT.asInt32 {
             return
         }
         if refCnt = 1 {
@@ -296,6 +296,17 @@ class Interpreter : CodeGenerator {
         if builtin == null {
             def signature := m.owner.name + " " + m.declaration
             match signature {
+                when "frost.core.Frost method frost.core.Frost.alloc(size:builtin_int):builtin_int" {
+                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
+                        return Int(Frost.alloc(context.value(args[0]).asInt.value)).asInt64
+                    }
+                }
+                when "frost.core.Frost method frost.core.Frost.destroy(ptr:builtin_int)" {
+                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
+                        Frost.destroy(context.value(args[0]).asInt.value)
+                        return -1
+                    }
+                }
                 when "frost.core.Frost method frost.core.Frost.ref(o:frost.core.Object?)" {
                     builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
                         self.ref(Pointer<UInt8>(context.value(args[0]).asInt))
@@ -308,11 +319,83 @@ class Interpreter : CodeGenerator {
                         return -1
                     }
                 }
+                when "frost.core.Frost method frost.core.Frost.debugPrint(i:builtin_int64)" {
+                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
+                        Frost.debugPrint(context.value(args[0]).value)
+                        return -1
+                    }
+                }
                 when "frost.io.Console method frost.io.Console.print(s:frost.core.String)" {
                     builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        def p := context.value(args[0]).asInt
+-*                        def p := context.value(args[0]).asInt
                         def s := Pointer<UInt8>(p).convertTo<String>()
                         Console.print(s)
+                        return -1*-
+                        unreachable
+                    }
+                }
+                when "frost.io.Console function frost.io.Console.errorStream():frost.io.OutputStream" {
+                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
+                        def interpreter := context.interpreter
+                        def compiler := interpreter.compiler
+                        def memoryLayout := compiler.memoryLayout
+                        assert memoryLayout.pointerSize = memoryLayout.intSize
+                        def type := Type("frost.io.FileOutputStream", Type.Kind.CLASS, Position(),
+                                true)
+                        def cl := compiler.getClass(type)!
+                        compiler.resolve(cl)
+                        def base := Pointer<UInt8>.alloc(interpreter.memoryLayout.sizeOf(type))
+                        var current := base
+
+                        -- class
+                        assert compiler.instanceFields(cl)[0].name = "$class"
+                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[0].offset
+                        current->Pointer<ClassDecl>.set(cl)
+                        current += memoryLayout.pointerSize
+
+                        -- refCount
+                        assert compiler.instanceFields(cl)[1].name = "refCount"
+                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[1].offset
+                        current->Pointer<Int32>.set(1)
+                        current += 4
+
+                        -- flags
+                        assert compiler.instanceFields(cl)[2].name = "$flags"
+                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[2].offset
+                        current->Pointer<Int8>.set(0)
+                        current += 4
+
+                        -- byteOrder
+                        assert compiler.instanceFields(cl)[3].name = "byteOrder"
+                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[3].offset
+                        current->Pointer<Int>.set(0)
+                        current += memoryLayout.intSize
+
+                        -- lineEnding
+                        assert compiler.instanceFields(cl)[4].name = "lineEnding"
+                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[4].offset
+                        current->Pointer<Int>.set(context.value(IR.Value.STRING("\n",
+                                compiler.STRING_TYPE)).asInt)
+                        current += memoryLayout.pointerSize
+
+                        -- handle
+                        assert compiler.instanceFields(cl)[5].name = "handle"
+                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[5].offset
+                        current->Pointer<Int>.set(2)
+                        current += memoryLayout.intSize
+
+                        -- closeOnCleanup
+                        assert compiler.instanceFields(cl)[6].name = "closeOnCleanup"
+                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[6].offset
+                        current->Pointer<Bit>.set(false)
+                        current += 1
+
+                        return base.asInt.asInt64
+                    }
+                }
+                when "frost.io.FileOutputStream method frost.io.FileOutputStream.write(ptr:frost.unsafe.Pointer<frost.core.UInt8>, size:frost.core.Int):frost.core.Error?" {
+                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
+                        Console.printLine("printing some stuff to stderr")
                         return -1
                     }
                 }
@@ -334,15 +417,18 @@ class Interpreter : CodeGenerator {
     method cast(context:Context, id:IR.Statement.ID, v:IR.Value, t:Type) {
         def srcType := v.type()
         def value := context.value(v)
-        if compiler.isValue(srcType) & !compiler.isValue(t) {
+        if (compiler.isValue(srcType) & !compiler.isValue(t)) | (compiler.isValue(srcType) &
+                t.typeKind = Type.Kind.NULLABLE & t.subtypes[0] = srcType) {
+            -- wrap value
             def raw := Pointer<UInt8>.alloc(memoryLayout.sizeOfWrapper(srcType))
             def cl := compiler.getClass(srcType)!
             raw->Pointer<ClassDecl>.set(cl)
             var dest := raw + memoryLayout.pointerSize
             dest->Pointer<Int32>.set(1)
+            -- FIXME alignment
             dest += 5
             var src:Pointer<UInt8>
-            if needsStructPointer(v.type()) {
+            if needsStructPointer(srcType) {
                 src := Pointer<UInt8>(value.asInt)
             }
             else {
@@ -355,6 +441,28 @@ class Interpreter : CodeGenerator {
             }
             context.statements[id.value] := raw.asInt.asInt64
             return
+        }
+        else if (!compiler.isValue(srcType) & compiler.isValue(t)) | (compiler.isValue(t) &
+                srcType.typeKind = Type.Kind.NULLABLE & srcType.subtypes[0] = t) {
+            -- unwrap value
+            -- FIXME alignment
+            def src := Pointer<UInt8>(value.asInt) + 13
+            if needsStructPointer(srcType) {
+                context.statements[id.value] := stack.asInt
+                def size := memoryLayout.sizeOf(srcType)
+                -- FIXME memcpy
+                for i in 0 .. size {
+                    stack[i] := src[i]
+                }
+                var start := stack
+                stack += size
+                context.statements[id.value] := start.asInt.asInt64
+                return
+            }
+            else {
+                context.statements[id.value] := src->Pointer<Int64>.get()
+                return
+            }
         }
         if srcType.isBuiltinInt & t.isBuiltinInt {
             if srcType.size > t.size {
@@ -470,11 +578,23 @@ class Interpreter : CodeGenerator {
             when Binary.Operator.SUB {
                 context.statements[id.value] := leftValue - rightValue
             }
+            when Binary.Operator.MUL {
+                context.statements[id.value] := leftValue * rightValue
+            }
             when Binary.Operator.INTDIV {
                 context.statements[id.value] := leftValue // rightValue
             }
             when Binary.Operator.REM {
                 context.statements[id.value] := leftValue % rightValue
+            }
+            when Binary.Operator.BITWISEAND {
+                context.statements[id.value] := leftValue && rightValue
+            }
+            when Binary.Operator.BITWISEOR {
+                context.statements[id.value] := leftValue || rightValue
+            }
+            when Binary.Operator.BITWISEXOR {
+                context.statements[id.value] := leftValue ~~ rightValue
             }
             when Binary.Operator.GT {
                 context.statements[id.value] := bit(leftValue > rightValue)
@@ -496,6 +616,14 @@ class Interpreter : CodeGenerator {
                     context.statements[id.value] := 0
                 }
             }
+            when Binary.Operator.NIDENTITY {
+                if leftValue != rightValue {
+                    context.statements[id.value] := 1
+                }
+                else {
+                    context.statements[id.value] := 0
+                }
+            }
             otherwise {
                 unreachable, "unsupported binary operator '\{op}'"
             }
@@ -503,6 +631,10 @@ class Interpreter : CodeGenerator {
     }
 
     method call(m:MethodDecl, args:FixedArray<IR.Value>):Int64 {
+        return call(m, args, null)
+    }
+
+    method call(m:MethodDecl, args:FixedArray<IR.Value>, selfOverride:Int64?):Int64 {
         var code := methodCode[m]
         if code == null {
             if m.body !== null {
@@ -514,9 +646,17 @@ class Interpreter : CodeGenerator {
                 return callBuiltin(contexts[0], m, args)
             }
         }
+        def start:Int
         def context := Context(self, code)
-        for a in args {
-            context.arguments.add(contexts[0].value(a))
+        if selfOverride !== null {
+            context.arguments.add(selfOverride)
+            start := 1
+        }
+        else {
+            start := 0
+        }
+        for i in start .. args.count {
+            context.arguments.add(contexts[0].value(args[i]))
         }
         contexts.push(context)
         var block := 0
@@ -524,6 +664,7 @@ class Interpreter : CodeGenerator {
         loop {
             def id := code.ids[block][statement]
             def stmt := code.ir[block][statement]
+            Console.printLine(stmt)
             match stmt {
                 when IR.Statement.BINARY(_, left, op, right, _) {
                     binary(context, id, left, op, right)
@@ -558,8 +699,17 @@ class Interpreter : CodeGenerator {
                     createStruct(context, id, cl, args)
                 }
                 when IR.Statement.DYNAMIC_CALL(_, value, args) {
-                    def target := Pointer<UInt8>(context.value(value).asInt).convertTo<MethodDecl>()
-                    context.statements[id.value] := call(target, args)
+-*                    def target := Pointer<UInt8>(context.value(value).asInt).convertTo<MethodDecl>()
+                    def selfOverride:Int64?
+                    if compiler!.isValue(target.owner) {
+                        cast(context, id, args[0], target.owner.type)
+                        selfOverride := context.statements[id.value]
+                    }
+                    else {
+                        selfOverride := null
+                    }
+                    context.statements[id.value] := call(target, args, selfOverride)*-
+                    unreachable
                 }
                 when IR.Statement.EXTRACT_FIELD(_, value, field) {
                     extractField(context, id, value, field)
@@ -568,10 +718,11 @@ class Interpreter : CodeGenerator {
                     getFieldPointer(context, id, value, field)
                 }
                 when IR.Statement.GET_VIRTUAL_METHOD(_, target, index, _) {
-                    def p := Pointer<Int>(context.value(target).asInt)
+-*                    def p := Pointer<Int>(context.value(target).asInt)
                     def cl := Pointer<UInt8>(p.get()).convertTo<ClassDecl>()
                     def m := compiler.getVTable(cl)[index]
-                    context.statements[id.value] := Frost.addressOf(m)
+                    context.statements[id.value] := Frost.addressOf(m)*-
+                    unreachable
                 }
                 when IR.Statement.LOAD(_, source) {
                     def p := Pointer<Int>(context.value(source).asInt)
@@ -582,8 +733,10 @@ class Interpreter : CodeGenerator {
                         context.statements[id.value] := p.get()
                     }
                 }
-                when IR.Statement.POINTER_GET_INDEX(_, p, index, _) {
-                    def type := p.type().subtypes[1]
+                when IR.Statement.NEGATE(_, v) {
+                    context.statements[id.value] := -context.value(v)
+                }
+                when IR.Statement.POINTER_GET_INDEX(_, p, index, type) {
                     def src := Pointer<UInt8>((context.value(p) + context.value(index) *
                             memoryLayout.sizeOf(type)).asInt)
                     stack->Pointer<Int64>.set(0)
@@ -630,7 +783,7 @@ class Interpreter : CodeGenerator {
             System.exit(1)
         }
         call(main, FixedArray<IR.Value>())
-        contexts.push(Context(self, Code([], [], [], [], 0)))
+        contexts.push(Context(self, MethodCode([], [], [], [], 0)))
         for v in strings.values {
             destroyObject(Pointer<UInt8>(v.asInt))
         }

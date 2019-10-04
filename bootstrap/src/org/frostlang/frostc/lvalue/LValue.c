@@ -1710,7 +1710,7 @@ if (_291) goto block27; else goto block29;
 block27:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/LValue.frost:49
 // begin inline call to function org.frostlang.frostc.Compiler.getInlineContext():org.frostlang.frostc.Compiler.EnclosingContext? from LValue.frost:49:68
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5743
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5744
 _298 = &param0->enclosingContexts;
 _299 = *_298;
 _300 = ((frost$collections$Iterable*) _299);
@@ -1745,12 +1745,12 @@ _314 = *(&local12);
 _315 = ((frost$core$Object*) _314);
 frost$core$Frost$unref$frost$core$Object$Q(_315);
 *(&local12) = _311;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5744
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5745
 _319 = *(&local12);
 _320 = &_319->$rawValue;
 _321 = *_320;
 _322 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:5745:38
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:5746:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _325 = _321.value;
 _326 = _322.value;
@@ -1759,7 +1759,7 @@ _328 = (frost$core$Bit) {_327};
 _330 = _328.value;
 if (_330) goto block39; else goto block38;
 block39:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5746
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5747
 _333 = *(&local12);
 _334 = _333;
 _335 = ((frost$core$Object*) _334);
@@ -1787,7 +1787,7 @@ goto block35;
 block37:;
 _356 = ((frost$core$Object*) _302);
 frost$core$Frost$unref$frost$core$Object$Q(_356);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5750
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5751
 _359 = ((frost$core$Object*) ((org$frostlang$frostc$Compiler$EnclosingContext*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_359);
 *(&local11) = ((org$frostlang$frostc$Compiler$EnclosingContext*) NULL);
@@ -2484,7 +2484,7 @@ return ((org$frostlang$frostc$lvalue$LValue*) NULL);
 block96:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/LValue.frost:91
 // begin inline call to function org.frostlang.frostc.Compiler.getInlineContext():org.frostlang.frostc.Compiler.EnclosingContext? from LValue.frost:91:68
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5743
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5744
 _981 = &param0->enclosingContexts;
 _982 = *_981;
 _983 = ((frost$collections$Iterable*) _982);
@@ -2519,12 +2519,12 @@ _997 = *(&local21);
 _998 = ((frost$core$Object*) _997);
 frost$core$Frost$unref$frost$core$Object$Q(_998);
 *(&local21) = _994;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5744
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5745
 _1002 = *(&local21);
 _1003 = &_1002->$rawValue;
 _1004 = *_1003;
 _1005 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:5745:38
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:5746:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1008 = _1004.value;
 _1009 = _1005.value;
@@ -2533,7 +2533,7 @@ _1011 = (frost$core$Bit) {_1010};
 _1013 = _1011.value;
 if (_1013) goto block114; else goto block113;
 block114:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5746
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5747
 _1016 = *(&local21);
 _1017 = _1016;
 _1018 = ((frost$core$Object*) _1017);
@@ -2561,7 +2561,7 @@ goto block110;
 block112:;
 _1039 = ((frost$core$Object*) _985);
 frost$core$Frost$unref$frost$core$Object$Q(_1039);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5750
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5751
 _1042 = ((frost$core$Object*) ((org$frostlang$frostc$Compiler$EnclosingContext*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_1042);
 *(&local20) = ((org$frostlang$frostc$Compiler$EnclosingContext*) NULL);
@@ -3429,8 +3429,8 @@ _1828 = *_1827;
 _1829 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s131, _1828);
 _1830 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_1829, &$s132);
 // begin inline call to method org.frostlang.frostc.Compiler.error(pos:org.frostlang.frostc.MethodPosition, msg:frost.core.String) from LValue.frost:159:51
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6108
-// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6108:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6109
+// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6109:18
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodPosition.frost:40
 _1835 = _1824.file;
 _1836 = _1824.line;
@@ -3595,8 +3595,8 @@ block176:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/LValue.frost:178
 _1997 = *(&local0);
 // begin inline call to method org.frostlang.frostc.Compiler.error(pos:org.frostlang.frostc.MethodPosition, msg:frost.core.String) from LValue.frost:178:31
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6108
-// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6108:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6109
+// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6109:18
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodPosition.frost:40
 _2002 = _1997.file;
 _2003 = _1997.line;

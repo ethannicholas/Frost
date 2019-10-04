@@ -5,7 +5,7 @@ class MethodPosition : Value, HashKey<MethodPosition> {
     -- index into the Compiler.file array
     def file:Int
 
-    -- index into the Compiler.methodDecls array. will be -1 if not yet determined or not in a
+    -- index into the Compiler.methods array. will be -1 if not yet determined or not in a
     -- method
     def methodIndex:Int
 

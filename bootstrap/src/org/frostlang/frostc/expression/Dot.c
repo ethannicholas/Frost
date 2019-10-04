@@ -267,8 +267,8 @@ _101 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_100, &$s15)
 _102 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_101, param3);
 _103 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_102, &$s16);
 // begin inline call to method org.frostlang.frostc.Compiler.error(pos:org.frostlang.frostc.MethodPosition, msg:frost.core.String) from Dot.frost:20:27
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6108
-// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6108:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6109
+// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6109:18
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodPosition.frost:40
 _108 = param1.file;
 _109 = param1.line;

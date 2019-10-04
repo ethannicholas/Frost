@@ -5,7 +5,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/UInt8_types.h"
 #include "frost/io/ByteOrder_types.h"
 typedef struct frost$core$String frost$core$String;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 #include "frost/core/Bit_types.h"
 
 typedef struct frost$io$FileOutputStream {
@@ -14,7 +14,7 @@ typedef struct frost$io$FileOutputStream {
     frost$core$UInt8 $flags;
     frost$io$ByteOrder byteOrder;
     frost$core$String* lineEnding;
-    frost$core$Int64 handle;
+    frost$core$Int handle;
     frost$core$Bit closeOnCleanup;
 } frost$io$FileOutputStream;
 #include "frost/core/Class.h"

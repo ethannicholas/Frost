@@ -1,3 +1,6 @@
+# This file is based on the original found at:
+# https://github.com/julp/FindICU.cmake
+
 # This module can find the International Components for Unicode (ICU) libraries
 #
 # Requirements:

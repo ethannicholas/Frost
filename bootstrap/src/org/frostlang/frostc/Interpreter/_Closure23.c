@@ -1,0 +1,103 @@
+#include "org/frostlang/frostc/Interpreter/_Closure23.h"
+#include "frost/core/Object.h"
+#include "frost/core/Class.h"
+#include "frost/core/String.h"
+#include "org/frostlang/frostc/Interpreter.h"
+#include "frost/core/Frost.h"
+#include "frost/core/Int64.h"
+#include "org/frostlang/frostc/Interpreter/Context.h"
+#include "org/frostlang/frostc/FixedArray.h"
+#include "frost/core/Int.h"
+#include "org/frostlang/frostc/IR/Value.h"
+#include "frost/unsafe/Pointer.h"
+
+frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
+
+static frost$core$String $s1;
+org$frostlang$frostc$Interpreter$_Closure23$class_type org$frostlang$frostc$Interpreter$_Closure23$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Interpreter$_Closure23$cleanup, org$frostlang$frostc$Interpreter$_Closure23$$anonymous22$org$frostlang$frostc$Interpreter$Context$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$IR$Value$GT$R$frost$core$Int64} };
+
+typedef frost$core$Int64 (*$fn2)(org$frostlang$frostc$Interpreter$Context*, org$frostlang$frostc$IR$Value*);
+typedef void (*$fn3)(org$frostlang$frostc$Interpreter*, frost$unsafe$Pointer);
+typedef frost$core$Int64 (*$fn4)(org$frostlang$frostc$Interpreter$Context*, org$frostlang$frostc$IR$Value*);
+typedef void (*$fn5)(org$frostlang$frostc$Interpreter*, frost$unsafe$Pointer);
+
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (intptr_t) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x49\x6e\x74\x65\x72\x70\x72\x65\x74\x65\x72\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32\x33", 43, 7903773482342045713, NULL };
+
+void org$frostlang$frostc$Interpreter$_Closure23$init$org$frostlang$frostc$Interpreter(void* rawSelf, org$frostlang$frostc$Interpreter* param1) {
+org$frostlang$frostc$Interpreter$_Closure23* param0 = (org$frostlang$frostc$Interpreter$_Closure23*) rawSelf;
+
+frost$core$Object* _1;
+org$frostlang$frostc$Interpreter** _3;
+org$frostlang$frostc$Interpreter* _4;
+frost$core$Object* _5;
+org$frostlang$frostc$Interpreter** _7;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:317
+_1 = ((frost$core$Object*) param1);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
+_3 = &param0->$self;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->$self;
+*_7 = param1;
+return;
+
+}
+void org$frostlang$frostc$Interpreter$_Closure23$cleanup(void* rawSelf) {
+org$frostlang$frostc$Interpreter$_Closure23* param0 = (org$frostlang$frostc$Interpreter$_Closure23*) rawSelf;
+
+frost$core$Object* _1;
+org$frostlang$frostc$Interpreter** _3;
+org$frostlang$frostc$Interpreter* _4;
+frost$core$Object* _5;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:317
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
+_3 = &param0->$self;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+return;
+
+}
+frost$core$Int64 org$frostlang$frostc$Interpreter$_Closure23$$anonymous22$org$frostlang$frostc$Interpreter$Context$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$IR$Value$GT$R$frost$core$Int64(void* rawSelf, org$frostlang$frostc$Interpreter$Context* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$Interpreter$_Closure23* param0 = (org$frostlang$frostc$Interpreter$_Closure23*) rawSelf;
+
+org$frostlang$frostc$Interpreter** _1;
+org$frostlang$frostc$Interpreter* _2;
+frost$core$Int _3;
+frost$core$Object* _4;
+org$frostlang$frostc$IR$Value* _5;
+$fn2 _6;
+frost$core$Int64 _7;
+int64_t _10;
+int64_t _11;
+frost$core$Int _12;
+frost$unsafe$Pointer _14;
+$fn3 _15;
+frost$core$Object* _17;
+frost$core$Int64 _20;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:318
+_1 = &param0->$self;
+_2 = *_1;
+_3 = (frost$core$Int) {0u};
+_4 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$FixedArray$T(param2, _3);
+_5 = ((org$frostlang$frostc$IR$Value*) _4);
+_6 = ($fn4) param1->$class->vtable[2];
+_7 = _6(param1, _5);
+// begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Interpreter.frost:318:73
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:580
+_10 = _7.value;
+_11 = ((int64_t) _10);
+_12 = (frost$core$Int) {_11};
+_14 = frost$unsafe$Pointer$init$frost$core$Int(_12);
+_15 = ($fn5) _2->$class->vtable[13];
+_15(_2, _14);
+_17 = _4;
+frost$core$Frost$unref$frost$core$Object$Q(_17);
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Interpreter.frost:319
+_20 = (frost$core$Int64) {18446744073709551615u};
+return _20;
+
+}
+

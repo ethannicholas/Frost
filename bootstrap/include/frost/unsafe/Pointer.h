@@ -4,6 +4,7 @@
 #include "frost/unsafe/Pointer_types.h"
 #include "frost/core/Int_types.h"
 typedef struct frost$core$Object frost$core$Object;
+typedef struct frost$core$String frost$core$String;
 
 frost$unsafe$Pointer frost$unsafe$Pointer$init$builtin_int(int64_t p_value);
 frost$unsafe$Pointer frost$unsafe$Pointer$init$frost$core$Int(frost$core$Int p_value);
@@ -20,5 +21,6 @@ frost$core$Int frost$unsafe$Pointer$get_asInt$R$frost$core$Int(frost$unsafe$Poin
 void frost$unsafe$Pointer$clear(frost$unsafe$Pointer self);
 void frost$unsafe$Pointer$clear$frost$core$Int(frost$unsafe$Pointer self, frost$core$Int p_index);
 frost$core$Object* frost$unsafe$Pointer$convertTo$R$frost$unsafe$Pointer$convertTo$T(frost$unsafe$Pointer self);
+frost$core$String* frost$unsafe$Pointer$get_asString$R$frost$core$String(frost$unsafe$Pointer self);
 void frost$unsafe$Pointer$cleanup(frost$unsafe$Pointer self);
 

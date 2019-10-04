@@ -34,7 +34,7 @@ org$frostlang$frostc$FieldDecl** _12;
 org$frostlang$frostc$FieldDecl* _13;
 frost$core$Object* _14;
 org$frostlang$frostc$FieldDecl** _16;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5955
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5956
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
 _3 = &param0->$self;
@@ -43,7 +43,7 @@ _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
 _7 = &param0->$self;
 *_7 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5955
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5956
 _10 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_10);
 _12 = &param0->f;
@@ -65,7 +65,7 @@ frost$core$Object* _5;
 org$frostlang$frostc$FieldDecl** _7;
 org$frostlang$frostc$FieldDecl* _8;
 frost$core$Object* _9;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5955
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5956
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = &param0->$self;
@@ -109,14 +109,14 @@ frost$core$String* _29;
 frost$core$String* _30;
 frost$core$Object* _32;
 frost$core$Object* _34;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5956
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5957
 _1 = &param0->f;
 _2 = *_1;
 _3 = &_2->annotations;
 _4 = *_3;
 _5 = &_4->flags;
 _6 = *_5;
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Compiler.frost:5956:36
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Compiler.frost:5957:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _9 = _6.value;
 _10 = param1.value;
@@ -130,7 +130,7 @@ _18 = (frost$core$Bit) {_17};
 _19 = _18.value;
 if (_19) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5957
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5958
 _22 = &param0->$self;
 _23 = *_22;
 _24 = &param0->f;

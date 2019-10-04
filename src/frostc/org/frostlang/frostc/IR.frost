@@ -2,6 +2,10 @@ package org.frostlang.frostc
 
 uses org.frostlang.frostc.expression.Binary
 
+====================================================================================================
+"Intermediate representation" code which has undergone semantic analysis and is ready for data flow
+analysis and optimization.
+====================================================================================================
 class IR {
     choice Statement {
         ============================================================================================
@@ -478,7 +482,7 @@ class IR {
                     return "REF(\{id}:\{type})"
                 }
                 when STRING(s, _) {
-                    return s.format("frost")
+                    return "STRING(\{s:frost})"
                 }
                 when METHOD(target, m, _) {
                     if target !== null {
@@ -520,10 +524,10 @@ class IR {
     def blocks := Array<Block>()
 
     @private
-    var currentStatementId := 0-1 -- FIXME negative literal failing
+    var currentStatementId := -1
 
     @private
-    var currentBlockID := 0-1
+    var currentBlockID := -1
 
     @private
     def currentBlock:Block

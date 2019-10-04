@@ -11220,22 +11220,22 @@ _464 = &_463->symbolTable;
 _465 = *_464;
 _466 = (org$frostlang$frostc$Alias*) frostObjectAlloc(sizeof(org$frostlang$frostc$Alias), (frost$core$Class*) &org$frostlang$frostc$Alias$class);
 // begin inline call to function org.frostlang.frostc.ClassDecl.simpleName():frost.core.String from Scanner.frost:649:62
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:151
 _469 = &param1->name;
 _470 = *_469;
-// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from ClassDecl.frost:150:38
+// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from ClassDecl.frost:151:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
 _473 = frost$core$String$get_end$R$frost$core$String$Index(_470);
 _474 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(_470, &$s392, _473);
 *(&local24) = _474;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:151
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:152
 _478 = *(&local24);
 _479 = !_478.nonnull;
 _480 = (frost$core$Bit) {_479};
 _481 = _480.value;
 if (_481) goto block38; else goto block39;
 block38:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:152
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:153
 _484 = &param1->name;
 _485 = *_484;
 _486 = ((frost$core$Object*) _485);
@@ -11245,7 +11245,7 @@ _489 = ((frost$core$Object*) _485);
 frost$core$Frost$ref$frost$core$Object$Q(_489);
 goto block36;
 block39:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:154
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:155
 _493 = &param1->name;
 _494 = *_493;
 _495 = &param1->name;
@@ -11256,7 +11256,7 @@ _499 = (frost$core$Bit) {_498};
 _500 = _499.value;
 if (_500) goto block40; else goto block41;
 block41:;
-_502 = (frost$core$Int) {154u};
+_502 = (frost$core$Int) {155u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s393, _502, &$s394);
 abort(); // unreachable
 block40:;

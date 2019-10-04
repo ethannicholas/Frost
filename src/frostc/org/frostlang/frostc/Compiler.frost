@@ -479,7 +479,7 @@ class Compiler {
     var methodSymbolTable:SymbolTable
 
     @private
-    def codeGenerator:CodeGenerator?
+    def backend:Backend?
 
     @private
     var errorQueue:MessageQueue<Message>
@@ -556,13 +556,13 @@ class Compiler {
     @private
     def lambdaTypes := IdentityMap<ASTNode, HashSet<Type>>()
 
-    init(errorQueue:MessageQueue<Message>, codeGenerator:CodeGenerator?, settings:Settings) {
+    init(errorQueue:MessageQueue<Message>, backend:Backend?, settings:Settings) {
         self.settings := settings
         self.scanner := Scanner(self)
         self.root := SymbolTable(self)
         self.parser := Parser(errorQueue)
         self.symbolTable := root
-        self.codeGenerator := codeGenerator
+        self.backend := backend
         self.errorQueue := errorQueue
         root.add(BUILTIN_BIT_TYPE)
         root.add(BUILTIN_INT_TYPE)
@@ -653,8 +653,8 @@ class Compiler {
         addAlias("frost.time.Timer")
         addAlias("frost.json.JSON")
         addAlias("frost.json.JSONParser")
-        if codeGenerator !== null {
-            codeGenerator.setCompiler(self)
+        if backend !== null {
+            backend.setCompiler(self)
         }
     }
 
@@ -680,7 +680,7 @@ class Compiler {
     Attempts to locate a class with the given, possibly not-fully-qualified, class name. Returns
     null and does not report any errors on failure.
     ================================================================================================
-    @post(currentClass.count = @pre(currentClass.count) & errorCount = @pre(errorCount))
+    @post(currentClass.count = @pre(currentClass.count))
     method tryResolveClass(name:String):ClassDecl? {
         def current:ClassDecl?
         if currentClass.count > 0 {
@@ -5218,7 +5218,8 @@ class Compiler {
                 return Target.VARIABLE(v, value)
             }
             otherwise {
-                unreachable
+                error(t.position(), "not a valid assignment target")
+                return null
             }
         }
     }
@@ -5869,12 +5870,12 @@ class Compiler {
                 def analyzer := Analyzer(self, m, ir)
                 analyzer.analyze()
                 optimize(ir, analyzer)
-                codeGenerator.write(m, ir)
+                backend.write(m, ir)
             }
             ir := oldIR
         }
         else {
-            codeGenerator.writeDeclaration(m)
+            backend.writeDeclaration(m)
         }
         currentMethod.pop()
     }
@@ -6005,8 +6006,8 @@ class Compiler {
             return
         }
         if cl.annotations.isSpecialize {
-            codeGenerator.start(cl)
-            codeGenerator.end(cl)
+            backend.start(cl)
+            backend.end(cl)
             currentClass.pop()
             return
         }
@@ -6023,7 +6024,7 @@ class Compiler {
             resolve(m)
         }
         if errorCount = 0 {
-            codeGenerator.start(cl)
+            backend.start(cl)
             started := true
         }
         for m in cl.methods {
@@ -6031,7 +6032,7 @@ class Compiler {
             compile(m)
         }
         if started {
-            codeGenerator.end(cl)
+            backend.end(cl)
         }
         currentClass.pop()
 
@@ -6126,6 +6127,6 @@ class Compiler {
             def cl := pendingClasses.removeIndex(pendingClasses.count - 1)
             compile(cl)
         }
-        codeGenerator.finish()
+        backend.finish()
     }
 }

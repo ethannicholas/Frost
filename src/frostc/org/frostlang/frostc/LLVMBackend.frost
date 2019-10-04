@@ -1,0 +1,746 @@
+package org.frostlang.frostc
+
+uses org.frostlang.frostc.Compiler.Expression
+uses org.frostlang.frostc.expression.Binary
+uses org.frostlang.frostc.parser.Token
+
+@final
+class LLVMBackend : Backend {
+    -- FIXME remove this now that refcounting is reliable; should just be able to give constants a
+    -- starting refcount of 1 and trust they'll never be destroyed
+    constant NO_REFCNT := -999
+
+    class ClassConstant : Immutable {
+        def name:String
+        def type:String
+
+        init(name:String, type:String) {
+            self.name := name
+            self.type := type
+        }
+    }
+
+    constant OBJECT_FIELD_COUNT  := 3
+    constant CLASS_POINTER_INDEX := 0
+    constant ITABLE_INDEX        := 5
+    constant VTABLE_INDEX        := 6
+
+    constant INT_TYPE  := "i64"
+    def INT_CLASS := "%frost$core$Int"
+    constant SIZE_TYPE := "i64"
+
+    def physicalOut:OutputStream
+
+    def out:OutputStream
+
+    @weak
+    def compiler:Compiler?
+
+    def cg:CodeGenerator?
+
+    def signatures := MemoryOutputStream()
+
+    def methods := MemoryOutputStream()
+
+    def metadata := MemoryOutputStream()
+
+    def writtenSignatures := HashSet<String>()
+
+    var varCount := 0
+
+    def debugTypes := IdentityMap<Type, String>()
+
+    var metadataCount := 0
+
+    var wroteCompileUnit := false
+
+    var fileMetadata := Array<String?>()
+
+    var methodMetadata := Array<String?>()
+
+    var lexicalBlockMetadata := Array<String?>()
+
+    def debugPositions := HashMap<MethodPosition, String>()
+
+    init(triple:String, out:OutputStream) {
+        self.physicalOut := out
+
+        try {
+            out.printLine("target datalayout = \"e-m:o-i64:64-f80:128-n8:16:32:64-S128\"")
+            out.printLine("target triple = \"\{triple}\"")
+            out.printLine("declare \{INT_TYPE} @frostObjectAlloc(\{INT_TYPE}, \{INT_TYPE})")
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
+    }
+
+    @override
+    method setCompiler(compiler:Compiler) {
+        self.compiler := compiler
+        cg := CodeGenerator(compiler)
+    }
+
+    function name(id:Code.Statement.ID):String {
+        return "%s\{id.value}"
+    }
+
+    method nextVar():String {
+        varCount += 1
+        return "%tmp\{varCount}"
+    }
+
+    method llvmType(t:Code.PrimitiveType):String {
+        match t {
+            when Code.PrimitiveType.INT8 {
+                 return "i8"
+            }
+            when Code.PrimitiveType.INT16 {
+                 return "i16"
+            }
+            when Code.PrimitiveType.INT32 {
+                 return "i32"
+            }
+            when Code.PrimitiveType.INT64 {
+                 return "i64"
+            }
+            when Code.PrimitiveType.INT {
+                 return INT_TYPE
+            }
+            when Code.PrimitiveType.BIT {
+                return "i1"
+            }
+            when Code.PrimitiveType.FLOAT32 {
+                return "float"
+            }
+            when Code.PrimitiveType.FLOAT64 {
+                return "double"
+            }
+            when Code.PrimitiveType.ARRAY(count, type) {
+                return "[\{count} x \{llvmType(type)}]"
+            }
+            when Code.PrimitiveType.STRUCT(types) {
+                def result := MutableString("{ ")
+                var separator := ""
+                for t in types {
+                    result.append(separator)
+                    result.append(llvmType(t))
+                    separator := ", "
+                }
+                result.append(" }")
+                return result.finish()
+            }
+            otherwise {
+                unreachable, "unsupported type \{t}"
+            }
+        }
+    }
+
+    method llvmType(s:Code.Signature):String {
+        def result := MutableString()
+        if s.returnType !== null {
+            result.append(llvmType(s.returnType))
+        }
+        else {
+            result.append("void")
+        }
+        result.append("(")
+        var separator := ""
+        for p in s.parameters {
+            result.append("\{separator}\{llvmType(p)}")
+            separator := ", "
+        }
+        result.append(")")
+        return result.finish()
+    }
+
+    method getReference(v:Code.Value):String {
+        match v {
+            when Code.Value.BIT(b) {
+                return b.asString
+            }
+            when Code.Value.GLOBAL_POINTER(index) {
+                return "ptrtoint(\{llvmType(cg.globals[index].type)}* @" + cg.globals[index].name +
+                        " to \{INT_TYPE})"
+            }
+            when Code.Value.INT(i, _) {
+                return i.asString
+            }
+            when Code.Value.REAL(r64, type) {
+                match type {
+                    when Code.PrimitiveType.FLOAT32 {
+                        -- LLVM has a bizarre representation of float. You still use a double, but
+                        -- must ensure that said double is exactly representable as a float. We
+                        -- convert through Real32 to ensure this.
+                        def r32 := r64.asReal32.asReal64
+                        return "0x\{Frost.floatToIntBits(r32):x}"
+                    }
+                }
+                return "0x\{Frost.floatToIntBits(r64):x}"
+
+            }
+            when Code.Value.METHOD_POINTER(signature) {
+                return "ptrtoint(\{llvmType(signature)}* @\{signature.name} to \{INT_TYPE})"
+            }
+            when Code.Value.PARAMETER(idx, _) {
+                return "%param\{idx}"
+            }
+            when Code.Value.STATEMENT(id, _) {
+                return name(id)
+            }
+            when Code.Value.ARRAY(_, elements) {
+                return "[" + elements.map(getTypedReference).join(", ") + "]"
+            }
+            when Code.Value.STRUCT(args) {
+                return "{ " + args.map(getTypedReference).join(", ") + " }"
+            }
+            when Code.Value.UNDEFINED(_) {
+                return "undef"
+            }
+            otherwise {
+                unreachable, "unsupported value \{v}"
+            }
+        }
+    }
+
+    method getTypedReference(v:Code.Value):String {
+        return llvmType(v.type) + " " + getReference(v)
+    }
+
+    method debugInfo(p:MethodPosition):String {
+        return ""
+    }
+
+    @pre(s.isExternal)
+    method writeSignature(s:Code.Signature) {
+        try {
+            if writtenSignatures.contains(s.name) {
+                return
+            }
+            writtenSignatures.add(s.name)
+            signatures.print("declare ")
+            if s.returnType !== null {
+                signatures.print(llvmType(s.returnType))
+            }
+            else {
+                signatures.print("void")
+            }
+            signatures.print(" @\{s.name}(")
+            var separator := ""
+            for p in s.parameters {
+                signatures.print("\{separator}\{llvmType(p)}")
+                separator := ", "
+            }
+            signatures.printLine(")")
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    method writeCreateStruct(position:MethodPosition, id:Code.Statement.ID, type:Code.PrimitiveType,
+            args:FixedArray<Code.Value>) {
+        try {
+            assert args.count > 0
+            def type := llvmType(type)
+            var current := "undef"
+            for i in 0 .. args.count {
+                def value := getTypedReference(args[i])
+                def next:String
+                if i = args.count - 1 {
+                    next := name(id)
+                }
+                else {
+                    next := nextVar()
+                }
+                out.printLine("\{next} = insertvalue \{type} \{current}, \{value}, \{i}")
+                current := next
+            }
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    method writeConvert(position:MethodPosition, id:Code.Statement.ID, value:Code.Value,
+            target:Code.PrimitiveType, signed:Bit) {
+        try {
+            def op:String
+            def size1 := value.type.size
+            def size2 := target.size
+            if value.type.isFloat {
+                if target.isFloat {
+                    if size1 > size2 {
+                        op := "fptrunc"
+                    }
+                    else if size1 < size2 {
+                        op := "fpext"
+                    }
+                    else {
+                        -- same LLVM type, write out a useless add 0
+                        out.printLine("\{name(id)} = fadd \{getTypedReference(value)}, 0x0")
+                        return
+                    }
+                }
+                else if signed {
+                    op := "fptosi"
+                }
+                else {
+                    op := "fptoui"
+                }
+            }
+            else if target.isFloat {
+                if signed {
+                    op := "sitofp"
+                }
+                else {
+                    op := "uitofp"
+                }
+            }
+            else {
+                if size1 > size2 {
+                    op := "trunc"
+                }
+                else if size1 < size2 {
+                    if signed {
+                        op := "sext"
+                    }
+                    else {
+                        op := "zext"
+                    }
+                }
+                else {
+                    -- same LLVM type, write out a useless add 0
+                    out.printLine("\{name(id)} = add \{getTypedReference(value)}, 0")
+                    return
+                }
+            }
+            out.printLine("\{name(id)} = \{op} \{getTypedReference(value)} to \{llvmType(target)}")
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    method writeStatement(s:Code.Statement) {
+        try {
+            match s {
+                when Code.Statement.ADDI(position, result, left, right) {
+                    out.printLine("\{name(result)} = add \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.ADDF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fadd \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.SUBI(position, result, left, right) {
+                    out.printLine("\{name(result)} = sub \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.SUBF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fsub \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.MULI(position, result, left, right) {
+                    out.printLine("\{name(result)} = mul \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.MULF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fmul \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.DIVS(position, result, left, right) {
+                    out.printLine("\{name(result)} = sdiv \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.DIVU(position, result, left, right) {
+                    out.printLine("\{name(result)} = udiv \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.DIVF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fdiv \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.REMS(position, result, left, right) {
+                    out.printLine("\{name(result)} = srem \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.REMU(position, result, left, right) {
+                    out.printLine("\{name(result)} = urem \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.ANDI(position, result, left, right) {
+                    out.printLine("\{name(result)} = and \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.ANDB(position, result, left, right) {
+                    out.printLine("\{name(result)} = and \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.ORI(position, result, left, right) {
+                    out.printLine("\{name(result)} = or \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.ORB(position, result, left, right) {
+                    out.printLine("\{name(result)} = or \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.XORI(position, result, left, right) {
+                    out.printLine("\{name(result)} = xor \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.XORB(position, result, left, right) {
+                    out.printLine("\{name(result)} = xor \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.SHRS(position, result, left, right) {
+                    out.printLine("\{name(result)} = ashr \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.SHRU(position, result, left, right) {
+                    out.printLine("\{name(result)} = lshr \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.SHL(position, result, left, right) {
+                    out.printLine("\{name(result)} = shl \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.EQI(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp eq \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.EQF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fcmp oeq \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.NEQI(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp ne \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.NEQF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fcmp one \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.GTS(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp sgt \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.GTU(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp ugt \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.GTF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fcmp ogt \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.GES(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp sge \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.GEU(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp uge \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.GEF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fcmp oge \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.LTS(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp slt \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.LTU(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp ult \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.LTF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fcmp olt \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.LES(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp sle \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.LEU(position, result, left, right) {
+                    out.printLine("\{name(result)} = icmp ule \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.LEF(position, result, left, right) {
+                    out.printLine("\{name(result)} = fcmp ole \{getTypedReference(left)}, " +
+                            getReference(right) + debugInfo(position))
+                }
+                when Code.Statement.BRANCH(position, target) {
+                    out.printLine("br label %\{target}\{debugInfo(position)}")
+                }
+                when Code.Statement.COMMENT(_, text) {
+                    out.printLine("; \{text}")
+                }
+                when Code.Statement.CONVERTS(position, result, value, target) {
+                    writeConvert(position, result, value, target, true)
+                }
+                when Code.Statement.CONVERTU(position, result, value, target) {
+                    writeConvert(position, result, value, target, false)
+                }
+                when Code.Statement.CREATE_STRUCT(position, result, type, args) {
+                    writeCreateStruct(position, result, type, args)
+                }
+                when Code.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
+                    out.printLine("br \{getTypedReference(test)}, label %\{ifTrue}, " +
+                            "label %\{ifFalse}\{debugInfo(position)}")
+                }
+                when Code.Statement.DYNAMIC_CALL(position, result, returnType, m, args) {
+                    def ptrCast := nextVar()
+                    out.printLine("\{ptrCast} = inttoptr \{getTypedReference(m)} to i8*")
+                    def methodCast := nextVar()
+                    def llt := llvmType(Code.Signature(returnType, "<dynamic>",
+                            FixedArray<Code.PrimitiveType>.from(args.map(a => a.type)), false))
+                    out.printLine("\{methodCast} = bitcast i8* \{ptrCast} to \{llt}*")
+                    out.print("\{name(result)} = call \{llvmType(returnType)} \{methodCast}(")
+                    var separator := ""
+                    for a in args {
+                        out.print("\{separator}\{getTypedReference(a)}")
+                        separator := ", "
+                    }
+                    out.printLine(")\{debugInfo(position)}")
+                }
+                when Code.Statement.DYNAMIC_CALL_VOID(position, m, args) {
+                    def ptrCast := nextVar()
+                    out.printLine("\{ptrCast} = inttoptr \{getTypedReference(m)} to i8*")
+                    def methodCast := nextVar()
+                    def llt := llvmType(Code.Signature(null, "<dynamic>",
+                            FixedArray<Code.PrimitiveType>.from(args.map(a => a.type)), false))
+                    out.printLine("\{methodCast} = bitcast i8* \{ptrCast} to \{llt}*")
+                    out.print("call void \{methodCast}(")
+                    var separator := ""
+                    for a in args {
+                        out.print("\{separator}\{getTypedReference(a)}")
+                        separator := ", "
+                    }
+                    out.printLine(")\{debugInfo(position)}")
+                }
+                when Code.Statement.EXTRACT_FIELD(position, result, target, index) {
+                    def targetRef := getTypedReference(target)
+                    out.printLine("\{name(result)} = extractvalue \{targetRef}, \{index}" +
+                            debugInfo(position))
+                }
+                when Code.Statement.HEAP_ALLOC(_, result, type, classConstant) {
+                    out.printLine("\{name(result)} = call \{INT_TYPE} @frostObjectAlloc(" +
+                            "\{INT_TYPE} \{type.size}, \{getTypedReference(classConstant)})")
+                }
+                when Code.Statement.LOAD(position, result, value, type) {
+                    def cast := nextVar()
+                    def llt := llvmType(type)
+                    out.printLine("\{cast} = inttoptr \{INT_TYPE} \{getReference(value)} to " +
+                            "\{llt}*")
+                    out.printLine("\{name(result)} = load \{llt}, \{llt}* \{cast}" +
+                            debugInfo(position))
+                }
+                when Code.Statement.NEGS(position, result, value) {
+                    out.printLine("\{name(result)} = sub \{llvmType(value.type)} 0, " +
+                            "\{getReference(value)}\{debugInfo(position)}")
+                }
+                when Code.Statement.NEGF(position, result, value) {
+                    out.printLine("\{name(result)} = fsub \{llvmType(value.type)} 0x0, " +
+                            "\{getReference(value)}\{debugInfo(position)}")
+                }
+                when Code.Statement.NOTB(position, result, value) {
+                    out.printLine("\{name(result)} = xor \{getTypedReference(value)}, -1" +
+                            debugInfo(position))
+                }
+                when Code.Statement.NOTI(position, result, value) {
+                    out.printLine("\{name(result)} = xor \{getTypedReference(value)}, -1" +
+                            debugInfo(position))
+                }
+                when Code.Statement.RETURN(position, value) {
+                    if value !== null {
+                        out.printLine("ret \{getTypedReference(value)}\{debugInfo(position)}")
+                    }
+                    else {
+                        out.printLine("ret void")
+                    }
+                }
+                when Code.Statement.STACK_ALLOC(_, result, type) {
+                    def ptr := nextVar()
+                    def llt := llvmType(type)
+                    out.printLine("\{ptr} = alloca \{llt}")
+                    out.printLine("\{name(result)} = ptrtoint \{llt}* \{ptr} to \{INT_TYPE}")
+                }
+                when Code.Statement.STATIC_CALL(position, result, m, args) {
+                    if m.isExternal {
+                        writeSignature(m)
+                    }
+                    assert m.returnType !== null, "STATIC_CALL to void method \{m} at \{position}"
+                    out.print("\{name(result)} = call \{llvmType(m.returnType)} @\{m.name}(")
+                    var separator := ""
+                    for a in args {
+                        out.print("\{separator}\{getTypedReference(a)}")
+                        separator := ", "
+                    }
+                    out.printLine(")\{debugInfo(position)}")
+                }
+                when Code.Statement.STATIC_CALL_VOID(position, m, args) {
+                    if m.isExternal {
+                        writeSignature(m)
+                    }
+                    out.print("call void @\{m.name}(")
+                    var separator := ""
+                    for a in args {
+                        out.print("\{separator}\{getTypedReference(a)}")
+                        separator := ", "
+                    }
+                    out.printLine(")\{debugInfo(position)}")
+                }
+                when Code.Statement.STORE(position, value, dest) {
+                    def cast := nextVar()
+                    def llt := llvmType(value.type)
+                    out.printLine("\{cast} = inttoptr \{INT_TYPE} \{getReference(dest)} to \{llt}*")
+                    out.printLine("store \{getTypedReference(value)}, \{llt}* \{cast}" +
+                            debugInfo(position))
+                }
+                when Code.Statement.UNREACHABLE(position) {
+                    out.printLine("unreachable")
+                }
+                otherwise {
+                    unreachable, "unsupported statement \{s}"
+                }
+            }
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    method writeCode(code:Code) {
+        try {
+            for i in 0 .. code.blocks.count {
+                def block := code.blocks[i]
+                if i != 0 {
+                    out.printLine("\{block.id}:")
+                }
+                for s in block.statements {
+                    writeStatement(s)
+                }
+            }
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    @override
+    method write(m:MethodDecl, ir:IR) {
+        write(cg.getSignature(m), cg.convert(m, ir), m.owner.isSpecialization())
+    }
+
+    method write(s:Code.Signature, code:Code, linkOnce:Bit) {
+        if s.name = "frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT$get_asString$R$frost$core$String$shim" {
+            assert linkOnce
+        }
+        out := methods
+        try {
+            out.print("define ")
+            if linkOnce {
+                out.print("linkonce_odr ")
+            }
+            if s.returnType !== null {
+                out.print(llvmType(s.returnType))
+            }
+            else {
+                out.print("void")
+            }
+            out.print(" @\{s.name}(")
+            var separator := ""
+            for i in 0 .. s.parameters.count {
+                out.print("\{separator}\{llvmType(s.parameters[i])} %param\{i}")
+                separator := ", "
+            }
+            out.print(")")
+            out.printLine(" {")
+            writeCode(code)
+            out.printLine("}")
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    @override
+    method writeDeclaration(m:MethodDecl) {
+    }
+
+    @override
+    method start(cl:ClassDecl) {
+        try {
+            if cl.annotations.isSpecialize {
+                return
+            }
+            cg.getClassConstant(cl)
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    @override
+    method end(cl:ClassDecl) {
+    }
+
+    @pre(g.isExternal = (value == null))
+    method writeGlobal(g:Code.Global, value:Code.Value?, out:OutputStream) {
+        try {
+            if g.comment !== null {
+                out.printLine("; \{g.comment}")
+            }
+            out.print("@\{g.name} = ")
+            if g.isExternal {
+                out.print("external ")
+            }
+            if g.isPrivate {
+                out.print("private ")
+            }
+            if g.isLinkOnce {
+                out.print("linkonce_odr ")
+            }
+            if g.isUnnamedAddr {
+                out.print("unnamed_addr ")
+            }
+            if value !== null {
+                out.printLine("constant \{getTypedReference(value!)}")
+            }
+            else {
+                out.printLine("constant \{llvmType(g.type)}")
+            }
+        }
+        fail(error) {
+            Console.printError(error)
+            System.exit(1)
+        }
+    }
+
+    @override
+    method finish() {
+        try {
+            assert cg.globals.count = cg.globalValues.count
+            for i in 0 .. cg.globals.count  {
+                writeGlobal(cg.globals[i], cg.globalValues[i], physicalOut)
+            }
+            for decl in cg.declarations.values.filter(decl => decl.isExternal) {
+                writeSignature(decl)
+            }
+            for (signature, code) in cg.methodShims.values {
+                write(signature, code, true)
+            }
+            physicalOut.print(signatures)
+            physicalOut.print(methods)
+        }
+        fail(error) {
+            Console.printError(error)
+            System.exit(1)
+        }
+    }
+
+    @override
+    method cleanup() {
+    }
+}

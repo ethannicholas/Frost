@@ -6,7 +6,7 @@ uses frost.unsafe.Pointer
 @final
 class FileOutputStream : OutputStream {
     @private
-    def handle:Int64
+    def handle:Int
 
     @private
     var closeOnCleanup:Bit

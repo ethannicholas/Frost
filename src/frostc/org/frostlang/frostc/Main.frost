@@ -332,12 +332,12 @@ class Main {
         def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
                 debug)
         {
-            def cg:CodeGenerator? := null
+            def backend:Backend? := null
             match format {
                 when Format.LLVM, Format.EXECUTABLE, Format.OBJECT {
                     try {
-                        cg := LLVMCodeGenerator(Config.llvmTriple(),
-                                                outFile.withExtension(".ll").openOutputStream())
+                        backend := LLVMBackend(Config.llvmTriple(),
+                                          outFile.withExtension(".ll").openOutputStream())
                     }
                     fail(error) {
                         Console.printErrorLine(error)
@@ -345,14 +345,14 @@ class Main {
                     }
                 }
                 when Format.C_HEADER {
-                    cg := HCodeGenerator(outFile)
+                    backend := HBackend(outFile)
                 }
                 when Format.C {
-                    cg := CCodeGenerator(outFile)
+                    backend := CBackend(outFile)
                 }
                 when Format.STUB {
                     try {
-                        cg := StubCodeGenerator(outFile.openOutputStream())
+                        backend := StubBackend(outFile.openOutputStream())
                     }
                     fail(error) {
                         Console.printErrorLine(error)
@@ -360,11 +360,11 @@ class Main {
                     }
                 }
                 when Format.RUN {
-                    cg := Interpreter()
+                    backend := Interpreter()
                 }
             }
             def errorQueue := MessageQueue<Compiler.Message>()
-            def compiler := Compiler(errorQueue, cg, settings)
+            def compiler := Compiler(errorQueue, backend, settings)
             if format = Format.HTML {
                 if root == null {
                     root := "."
@@ -385,7 +385,7 @@ class Main {
                 compiler.compile(s)
             }
             if format = Format.RUN {
-                cg->Interpreter.run()
+                backend->Interpreter.run()
                 return
             }
             compiler.finish()

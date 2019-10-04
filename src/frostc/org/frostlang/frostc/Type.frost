@@ -340,7 +340,6 @@ class Type : Symbol, HashKey<Type> {
                 typeKind = Kind.INT_LITERAL
     }
 
-
     function get_isBuiltinNumber():Bit {
         return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
                 typeKind = Kind.BUILTIN_FLOAT | typeKind = Kind.INT_LITERAL

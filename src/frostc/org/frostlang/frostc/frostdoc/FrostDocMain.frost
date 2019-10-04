@@ -1,7 +1,7 @@
 package org.frostlang.frostc.frostdoc
 
+uses org.frostlang.frostc.Backend
 uses org.frostlang.frostc.ClassDecl
-uses org.frostlang.frostc.CodeGenerator
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.Message
 uses org.frostlang.frostc.Compiler.Settings
@@ -124,7 +124,7 @@ method main(args:ListView<String>) {
         imports.add(File(Config.frostSourceDir()))
         imports.add(input)
         def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, true)
-        def compiler := Compiler(MessageQueue<Message>(), DummyCodeGenerator(), settings)
+        def compiler := Compiler(MessageQueue<Message>(), DummyBackend(), settings)
         def frostdoc := FrostDoc(compiler, tmpOutput, tocFile, docPath, apiRelativePath)
         process(input, frostdoc)
         frostdoc.finish()

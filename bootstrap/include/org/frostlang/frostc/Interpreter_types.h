@@ -30,6 +30,6 @@ typedef struct org$frostlang$frostc$Interpreter {
     org$frostlang$frostc$MethodDecl* main;
 } org$frostlang$frostc$Interpreter;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[25]; } org$frostlang$frostc$Interpreter$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[26]; } org$frostlang$frostc$Interpreter$class_type;
 extern org$frostlang$frostc$Interpreter$class_type org$frostlang$frostc$Interpreter$class;
 

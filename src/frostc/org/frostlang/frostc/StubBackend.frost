@@ -1,0 +1,247 @@
+package org.frostlang.frostc
+
+@final
+class StubBackend : Backend {
+    @weak
+    var compiler:Compiler?
+
+    def out:OutputStream
+
+    init(out:OutputStream) {
+        self.out := out
+    }
+
+    @override
+    method setCompiler(compiler:Compiler) {
+        self.compiler := compiler
+    }
+
+    function methodType(types:ListView<Type>, yields:String):String {
+        var result := "(" + types[..types.count - 1].map(s => self.type(s)).join(", ") +
+                        ")\{yields}("
+        def returnType := types[types.count - 1]
+        if returnType != compiler.VOID_TYPE {
+            result += type(returnType)
+        }
+        return result + ")"
+    }
+
+    function type(t:Type):String {
+        match t.typeKind {
+            when Type.Kind.GENERIC_CLASS_PARAMETER, Type.Kind.GENERIC_METHOD_PARAMETER {
+                return t.name[t.name.next(t.name.lastIndexOf("."))..]
+            }
+            when Type.Kind.GENERIC {
+                return "\{type(t.subtypes[0])}<\{t.subtypes[1..].map(s => self.type(s)).join(", ")}>"
+            }
+            when Type.Kind.TUPLE {
+                return "(\{t.subtypes.map(s => self.type(s)).join(", ")})"
+            }
+            when Type.Kind.NULLABLE {
+                return type(t.subtypes[0]) + "?"
+            }
+            when Type.Kind.METHOD {
+                return methodType(t.subtypes, "=&>")
+            }
+            when Type.Kind.IMMUTABLE_METHOD {
+                return methodType(t.subtypes, "=&>*")
+            }
+            when Type.Kind.FUNCTION {
+                return methodType(t.subtypes, "=>")
+            }
+            when Type.Kind.IMMUTABLE_FUNCTION {
+                return methodType(t.subtypes, "=>*")
+            }
+            otherwise {
+                return t.name            
+            }
+        }
+    }
+
+    method write(cc:ChoiceCase) {
+        try {
+            out.print(cc.name)
+            if cc.fields.count > 0 {
+                out.print("(" + cc.fields.map(f => self.type(f)).join(", ") + ")")
+            }
+            else {
+                out.printLine()
+            }
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
+    }
+
+    method write(f:FieldDecl) {
+        if f.annotations.isSynthetic {
+            return
+        }
+        if !compiler.resolve(f) {
+            return
+        }
+        try {
+            match f.fieldKind {
+                when FieldDecl.Kind.VAR      { out.print("var ") }
+                when FieldDecl.Kind.DEF      { out.print("def ") }
+                when FieldDecl.Kind.CONSTANT { out.print("constant ") }
+                when FieldDecl.Kind.PROPERTY { out.print("property ") }
+            }
+            out.print(f.name)
+            out.print(":")
+            out.print(type(f.type))
+            if f.fieldKind = FieldDecl.Kind.CONSTANT {
+                out.print(" := ")
+                out.print(f.rawValue)
+            }
+            out.printLine()
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
+    }
+
+    method write(m:MethodDecl) {
+        if m.annotations.isSynthetic {
+            return
+        }
+        if !compiler.resolve(m) {
+            return
+        }
+        try {
+            out.print(m.annotations)
+            match m.methodKind {
+                when MethodDecl.Kind.METHOD {
+                    out.print("method ")
+                }
+                when MethodDecl.Kind.FUNCTION {
+                    out.print("function ")
+                }
+                when MethodDecl.Kind.INIT {
+                }
+                otherwise {
+                    unreachable
+                }
+            }
+            out.print(m.name)
+            if m.genericParameters !== null {
+                out.print("<" +
+                        m.genericParameters.map(p => "\{p.name}:\{self.type(p.bound)}").join(", ") +
+                        ">")
+            }
+            out.print("(")
+            var separator := ""
+            for p in m.parameters {
+                out.print("\{separator}\{p.name}:\{type(p.type)}")
+                separator := ","
+            }
+            out.print(")")
+            if m.methodKind = MethodDecl.Kind.INIT {
+                if !m.annotations.isInline {
+                    out.print("{}")
+                }
+            }
+            else if m.returnType != compiler.VOID_TYPE {
+                out.printLine(":\{type(m.returnType)}")
+            }
+            if m.annotations.isInline {
+                out.print("{")
+                for s in m.body {
+                    out.printLine(s)
+                }
+                out.print("}")
+            }
+            else if m.annotations.isDefault {
+                out.print("{}")
+            }
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
+    }
+
+    method write(cl:ClassDecl) {
+        -- Note that we deliberately do not pretty-print the output of stubs, since it just means
+        -- extra whitespace to read and discard
+        try {
+            if !compiler.resolve(cl) {
+                return
+            }
+            var name := cl.name
+            def parsed := cl.name.parse(/((?:\w|\.)+)\.(\w+)/)
+            if parsed !== null {
+                if cl.owner == null {
+                    out.printLine("package \{parsed[0]}")
+                }
+                name := parsed[1]
+            }
+            out.printLine("@stub")
+            out.print(cl.annotations)
+            match cl.classKind {
+                when ClassDecl.Kind.CLASS     { out.print("class ") }
+                when ClassDecl.Kind.INTERFACE { out.print("interface ") }
+                when ClassDecl.Kind.CHOICE    { out.print("choice ") }
+            }
+            out.print(name)
+            if cl.parameters.count > 0 {
+                out.print("<" +
+                        cl.parameters.map(p => "\{p.name}:\{self.type(p.bound)}").join(", ") + ">")
+            }
+            var separator := ":"
+            if cl.classKind != ClassDecl.Kind.CHOICE {
+                if cl.rawSuper !== null & cl.classKind != ClassDecl.Kind.INTERFACE {
+                    out.print("\{separator}\{type(cl.rawSuper)}")
+                    separator := ","
+                }
+                for intf in cl.rawInterfaces {
+                    out.print("\{separator}\{type(intf)}")
+                    separator := ","
+                }
+            }
+            out.print("{")
+            for cc in cl.choiceCases {
+                write(cc)
+            }
+            for sub in cl.classes {
+                write(sub)
+            }
+            for f in cl.fields {
+                write(f)
+            }
+            for m in cl.methods {
+                write(m)
+            }
+            out.print("}")
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
+    }
+
+    @override
+    method start(cl:ClassDecl) {
+        if cl.owner == null & !cl.annotations.isSynthetic {
+            write(cl)
+        }
+    }
+
+    @override
+    method end(cl:ClassDecl) {
+    }
+
+    @override
+    method writeDeclaration(m:MethodDecl) {
+    }
+
+    @override
+    method write(m:MethodDecl, ir:IR) {
+    }
+
+    @override
+    method finish() {
+    }
+}

@@ -1,0 +1,35 @@
+package org.frostlang.frostc
+
+====================================================================================================
+A compiler backend, responsible for producing the compiler's output artifacts.
+====================================================================================================
+interface Backend {
+    ================================================================================================
+    Called by the compiler prior to writing anything.
+    ================================================================================================
+    method setCompiler(compiler:Compiler)
+
+    ================================================================================================
+    Begin writing a class. This will be called prior to writing any of the class' methods. The
+    compiler will not call `startClass()` again without first calling `endClass()`.
+    ================================================================================================
+    method start(cl:ClassDecl)
+
+    ================================================================================================
+    Informs the code generator that this class is complete and no more methods will be written.
+    ================================================================================================
+    method end(cl:ClassDecl)
+
+    ================================================================================================
+    Writes the declaration (i.e. no method body) of a method.
+    ================================================================================================
+    method writeDeclaration(m:MethodDecl)
+
+    method write(m:MethodDecl, ir:IR)
+
+    ================================================================================================
+    Informs the code generator that the entire compilation is complete and nothing more will be
+    written.
+    ================================================================================================
+    method finish()
+}

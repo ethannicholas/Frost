@@ -1,7 +1,6 @@
 package org.frostlang.frostc.frostdoc
 
 uses org.frostlang.frostc.ClassDecl
-uses org.frostlang.frostc.CodeGenerator
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.Message
 uses org.frostlang.frostc.Compiler.Settings
@@ -39,7 +38,7 @@ method main(args:ListView<String>) {
         def imports := Array<File>() -- FIXME literal
         imports.add(File(Config.frostSourceDir()))
         def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, true)
-        def compiler := Compiler(MessageQueue<Message>(), DummyCodeGenerator(), settings)
+        def compiler := Compiler(MessageQueue<Message>(), DummyBackend(), settings)
         def resolve := LinkResolver(compiler, docPath, "api/").resolve
         output.write(HEADER + Markdown(resolve).process(input.readFully()) + FOOTER)
     }

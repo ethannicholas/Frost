@@ -14,7 +14,7 @@ typedef struct frost$collections$Array frost$collections$Array;
 typedef struct frost$collections$HashMap frost$collections$HashMap;
 typedef struct frost$collections$Stack frost$collections$Stack;
 typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
-typedef struct org$frostlang$frostc$CodeGenerator org$frostlang$frostc$CodeGenerator;
+typedef struct org$frostlang$frostc$Backend org$frostlang$frostc$Backend;
 typedef struct frost$threads$MessageQueue frost$threads$MessageQueue;
 #include "frost/core/Int_types.h"
 #include "frost/core/Bit_types.h"
@@ -96,7 +96,7 @@ typedef struct org$frostlang$frostc$Compiler {
     org$frostlang$frostc$IR* ir;
     org$frostlang$frostc$SymbolTable* symbolTable;
     org$frostlang$frostc$SymbolTable* methodSymbolTable;
-    org$frostlang$frostc$CodeGenerator* codeGenerator;
+    org$frostlang$frostc$Backend* backend;
     frost$threads$MessageQueue* errorQueue;
     frost$collections$Stack* enclosingContexts;
     frost$core$Int errorCount;

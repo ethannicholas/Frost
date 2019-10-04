@@ -22,22 +22,6 @@ class TestRunner : Immutable {
         self.cLibs := ImmutableArray<String>(cLibs)
     }
 
-    method deleteTree(file:File):Error? {
-        try {
-            if file.isDirectory() {
-                def list := file.list()
-                for f in list {
-                    deleteTree(f)
-                }
-            }
-            file.delete()
-            return null
-        }
-        fail(error) {
-            return error
-        }
-    }
-
     method runTest(frostc:File, cLibs:ListView<String>, workingDir:File, test:String) {
         def expected:String
         try {
@@ -72,6 +56,11 @@ class TestRunner : Immutable {
                     return
                 }
                 resultQueue.post(Result.SUCCESS(test))
+                return
+            }
+            if !exe.exists() {
+                resultQueue.post(Result.ERROR(test, ": compiler produced no output (command " +
+                        "line: \{frostc.path} \{args.join(" ")})"))
                 return
             }
             def child := System.exec(exe.path, Array<String>())

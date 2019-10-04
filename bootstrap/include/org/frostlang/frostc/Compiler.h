@@ -3,7 +3,7 @@
 #include "Compiler_types.h"
 typedef struct org$frostlang$frostc$Compiler org$frostlang$frostc$Compiler;
 typedef struct frost$threads$MessageQueue frost$threads$MessageQueue;
-typedef struct org$frostlang$frostc$CodeGenerator org$frostlang$frostc$CodeGenerator;
+typedef struct org$frostlang$frostc$Backend org$frostlang$frostc$Backend;
 typedef struct org$frostlang$frostc$Compiler$Settings org$frostlang$frostc$Compiler$Settings;
 typedef struct frost$core$String frost$core$String;
 #include "frost/core/Bit_types.h"
@@ -40,7 +40,7 @@ typedef struct frost$collections$Array frost$collections$Array;
 typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 typedef struct org$frostlang$frostc$pass$Analyzer org$frostlang$frostc$pass$Analyzer;
 
-void org$frostlang$frostc$Compiler$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT$org$frostlang$frostc$CodeGenerator$Q$org$frostlang$frostc$Compiler$Settings(void* rawSelf, frost$threads$MessageQueue* p_errorQueue, org$frostlang$frostc$CodeGenerator* p_codeGenerator, org$frostlang$frostc$Compiler$Settings* p_settings);
+void org$frostlang$frostc$Compiler$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT$org$frostlang$frostc$Backend$Q$org$frostlang$frostc$Compiler$Settings(void* rawSelf, frost$threads$MessageQueue* p_errorQueue, org$frostlang$frostc$Backend* p_backend, org$frostlang$frostc$Compiler$Settings* p_settings);
 void org$frostlang$frostc$Compiler$addAlias$frost$core$String(void* rawSelf, frost$core$String* p_name);
 frost$core$Bit org$frostlang$frostc$Compiler$isRefCounted$org$frostlang$frostc$Type$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$Type* p_type);
 frost$core$Int org$frostlang$frostc$Compiler$get_currentMethodIndex$R$frost$core$Int(void* rawSelf);

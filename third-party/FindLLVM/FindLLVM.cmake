@@ -1,4 +1,4 @@
-# This file based on the original found at:
+# This file is based on the original found at:
 # https://github.com/ldc-developers/ldc/blob/master/cmake/Modules/FindLLVM.cmake
 
 # - Find LLVM headers and libraries.

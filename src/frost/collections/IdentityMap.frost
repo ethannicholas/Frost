@@ -76,7 +76,6 @@ class IdentityMap<K, V> : Map<K, V> {
     var _count:Int
 
     @private
-    -- must be a power of 2 (see indexFor)
     var bucketCount:Int
 
     @private
@@ -117,7 +116,8 @@ class IdentityMap<K, V> : Map<K, V> {
     ================================================================================================
     @private
     function indexFor(key:K):Int {
-        return frost.core.Frost.addressOf(key) % bucketCount
+        def address := frost.core.Frost.addressOf(key)
+        return address % bucketCount
     }
     
     @override

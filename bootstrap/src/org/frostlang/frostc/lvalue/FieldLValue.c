@@ -671,7 +671,7 @@ _58 = param3;
 _59 = ($fn18) _58->$class->vtable[2];
 _60 = _59(_58);
 // begin inline call to function org.frostlang.frostc.Type.get_isClassLiteral():frost.core.Bit from FieldLValue.frost:33:44
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:379
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:378
 _63 = &_60->typeKind;
 _64 = *_63;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp19;
@@ -679,7 +679,7 @@ $tmp19 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$f
 $tmp19->value = _64;
 _65 = ((frost$core$Equatable*) $tmp19);
 _66 = (frost$core$Int) {11u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:379:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:378:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _69 = &(&local4)->$rawValue;
 *_69 = _66;
@@ -699,7 +699,7 @@ _77 = _76(_65, _75);
 _78 = _77.value;
 if (_78) goto block12; else goto block13;
 block12:;
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:379:42
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:378:42
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:246
 _82 = &_60->_subtypes;
 _83 = *_82;
@@ -846,7 +846,7 @@ _223 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(sizeof(org$frostlang$fr
 _224 = (frost$core$Int) {7u};
 _225 = (frost$core$Int) {18446744073709551615u};
 // begin inline call to org.frostlang.frostc.IR.Statement.ID.init(value:frost.core.Int):org.frostlang.frostc.IR.Statement.ID from FieldLValue.frost:39:60
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:145
 _228 = &(&local6)->value;
 *_228 = _225;
 _230 = *(&local6);
@@ -1224,7 +1224,7 @@ _584 = _576;
 _585 = ($fn52) _584->$class->vtable[2];
 _586 = _585(_584);
 // begin inline call to function org.frostlang.frostc.Type.get_isPointer():frost.core.Bit from FieldLValue.frost:64:34
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:398
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:397
 _589 = ((org$frostlang$frostc$Symbol*) _586);
 _590 = &_589->name;
 _591 = *_590;

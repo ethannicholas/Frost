@@ -10,8 +10,8 @@ class Bench {
                 [File(Config.frostSourceDir())], optimizationLevel, safetyLevel, false)
         def errorQueue := MessageQueue<Compiler.Message>()
         def out := MemoryOutputStream()
-        def cg := LLVMCodeGenerator(Config.llvmTriple(), out)
-        def compiler := Compiler(errorQueue, cg, settings)
+        def backend := LLVMBackend(Config.llvmTriple(), out)
+        def compiler := Compiler(errorQueue, backend, settings)
         compiler.compile(File("/fake/path/BenchDummy.frost"), src)
         compiler.finish()
         while errorQueue.hasMessage() {

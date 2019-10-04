@@ -231,8 +231,9 @@ class Call {
                 return Pair<Bit, IR.Value?>(true, null)
             }
             when "convertTo" {
-                def result := ir.add(IR.Statement.CAST(position, rawTarget, m.returnType,
-                        false))
+                def target := compiler.extractBuiltinInt(position, rawTarget)
+                assert target !== null
+                def result := ir.add(IR.Statement.CAST(position, target, m.returnType, false))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.returnType))
             }
             when "clear" {

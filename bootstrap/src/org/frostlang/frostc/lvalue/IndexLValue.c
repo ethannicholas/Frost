@@ -726,7 +726,7 @@ _162 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(sizeof(org$frostlang$fr
 _163 = (frost$core$Int) {7u};
 _164 = (frost$core$Int) {18446744073709551615u};
 // begin inline call to org.frostlang.frostc.IR.Statement.ID.init(value:frost.core.Int):org.frostlang.frostc.IR.Statement.ID from IndexLValue.frost:59:50
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:145
 _167 = &(&local4)->value;
 *_167 = _164;
 _169 = *(&local4);
@@ -1256,8 +1256,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_104);
 _107 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_99, &$s49);
 _108 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_91, _107);
 // begin inline call to method org.frostlang.frostc.Compiler.error(pos:org.frostlang.frostc.MethodPosition, msg:frost.core.String) from IndexLValue.frost:76:31
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6108
-// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6108:18
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6109
+// begin inline call to function org.frostlang.frostc.MethodPosition.get_asPosition():org.frostlang.frostc.Position from Compiler.frost:6109:18
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodPosition.frost:40
 _113 = _73.file;
 _114 = _73.line;
@@ -1562,7 +1562,7 @@ _393 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(sizeof(org$frostlang$fr
 _394 = (frost$core$Int) {7u};
 _395 = (frost$core$Int) {18446744073709551615u};
 // begin inline call to org.frostlang.frostc.IR.Statement.ID.init(value:frost.core.Int):org.frostlang.frostc.IR.Statement.ID from IndexLValue.frost:105:54
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:145
 _398 = &(&local6)->value;
 *_398 = _395;
 _400 = *(&local6);

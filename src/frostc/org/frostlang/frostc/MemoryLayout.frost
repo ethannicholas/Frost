@@ -144,7 +144,7 @@ class MemoryLayout {
             return fieldSize(t)
         }
         def cl := compiler.getClass(t)
-        assert cl !== null
+        assert cl !== null, "could not load class '\{t}'"
         assert cl.resolved = Compiler.Resolution.RESOLVED,
                 "determining size of unresolved class \{cl.name}"
         var cached := sizes[cl]
