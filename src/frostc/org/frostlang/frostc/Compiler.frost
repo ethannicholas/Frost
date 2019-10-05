@@ -479,6 +479,9 @@ class Compiler {
     var methodSymbolTable:SymbolTable
 
     @private
+    def cg:CodeGenerator
+
+    @private
     def backend:Backend?
 
     @private
@@ -562,6 +565,7 @@ class Compiler {
         self.root := SymbolTable(self)
         self.parser := Parser(errorQueue)
         self.symbolTable := root
+        self.cg := CodeGenerator(self)
         self.backend := backend
         self.errorQueue := errorQueue
         root.add(BUILTIN_BIT_TYPE)
@@ -5870,12 +5874,13 @@ class Compiler {
                 def analyzer := Analyzer(self, m, ir)
                 analyzer.analyze()
                 optimize(ir, analyzer)
-                backend.write(m, ir)
+                backend.writeMethod(m, cg.getSignature(m), cg.convert(m, ir),
+                        m.owner.isSpecialization())
             }
             ir := oldIR
         }
         else {
-            backend.writeDeclaration(m)
+            backend.writeSignature(cg.getSignature(m))
         }
         currentMethod.pop()
     }
@@ -6126,6 +6131,16 @@ class Compiler {
         while pendingClasses.count > 0 {
             def cl := pendingClasses.removeIndex(pendingClasses.count - 1)
             compile(cl)
+        }
+        assert cg.globals.count = cg.globalValues.count
+        for g in cg.globals.combine(cg.globalValues) {
+            backend.writeGlobal(g[0], g[1])
+        }
+        for decl in cg.declarations.values.filter(decl => decl.isExternal) {
+            backend.writeSignature(decl)
+        }
+        for (signature, code) in cg.methodShims.values {
+            backend.writeMethod(null, signature, code, true)
         }
         backend.finish()
     }

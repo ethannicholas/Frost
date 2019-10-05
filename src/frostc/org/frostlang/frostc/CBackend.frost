@@ -8,24 +8,7 @@ uses org.frostlang.frostc.parser.Token
 class CBackend : Backend {
     constant NO_REFCNT := -999
 
-    class ClassConstant : Immutable {
-        def name:String
-        def type:String
-
-        init(name:String, type:String) {
-            self.name := name
-            self.type := type
-        }
-    }
-
-    constant OBJECT_FIELD_COUNT  := 3
-    constant CLASS_POINTER_INDEX := 0
-    constant ITABLE_INDEX        := 5
-    constant VTABLE_INDEX        := 6
-
     constant INT_TYPE  := "i64"
-    def INT_CLASS := "%frost$core$Int"
-    constant SIZE_TYPE := "i64"
 
     def physicalOut:OutputStream
 
@@ -38,7 +21,9 @@ class CBackend : Backend {
 
     def types := MemoryOutputStream()
 
-    def globals := MemoryOutputStream()
+    def globalDeclarations := MemoryOutputStream()
+
+    def globalDefinitions := MemoryOutputStream()
 
     def signatures := MemoryOutputStream()
 
@@ -86,7 +71,7 @@ class CBackend : Backend {
     @override
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
-        cg := CodeGenerator(compiler)
+        self.cg := compiler.cg
     }
 
     function name(id:Code.Statement.ID):String {
@@ -301,6 +286,7 @@ class CBackend : Backend {
         }
     }
 
+    @override
     method writeSignature(s:Code.Signature) {
         try {
             if writtenSignatures.contains(s.name) {
@@ -640,11 +626,7 @@ class CBackend : Backend {
     }
 
     @override
-    method write(m:MethodDecl, ir:IR) {
-        write(cg.getSignature(m), cg.convert(m, ir), m.owner.isSpecialization())
-    }
-
-    method write(s:Code.Signature, code:Code, linkOnce:Bit) {
+    method writeMethod(m:MethodDecl?, s:Code.Signature, code:Code, linkOnce:Bit) {
         writeSignature(s)
         out := methods
         try {
@@ -675,10 +657,6 @@ class CBackend : Backend {
     }
 
     @override
-    method writeDeclaration(m:MethodDecl) {
-    }
-
-    @override
     method start(cl:ClassDecl) {
         try {
             if cl.annotations.isSpecialize {
@@ -695,16 +673,16 @@ class CBackend : Backend {
     method end(cl:ClassDecl) {
     }
 
-    method writeGlobalDeclaration(g:Code.Global) {
+    method writeGlobalDeclaration(g:Code.Global, out:OutputStream) {
         try {
             if g.comment !== null {
-                globals.printLine("// \{g.comment}")
+                out.printLine("// \{g.comment}")
             }
             if g.isExternal {
-                globals.print("extern ")
+                out.print("extern ")
             }
             if g.isPrivate {
-                globals.print("static ")
+                out.print("static ")
             }
             def baseType:Code.PrimitiveType
             def count:Int?
@@ -718,13 +696,13 @@ class CBackend : Backend {
                     count := null
                 }
             }
-            globals.print(cType(baseType) + " ")
+            out.print(cType(baseType) + " ")
             if g.isLinkOnce {
-                globals.print("__attribute__((weak)) ")
+                out.print("__attribute__((weak)) ")
             }
-            globals.print(g.name)
+            out.print(g.name)
             if count !== null {
-                globals.print("[\{count}]")
+                out.print("[\{count}]")
             }
         }
         fail(error) {
@@ -733,47 +711,40 @@ class CBackend : Backend {
         }
     }
 
-    method writeGlobalDefinition(g:Code.Global, value:Code.Value) {
+    method writeGlobalDefinition(g:Code.Global, value:Code.Value, out:OutputStream) {
         try {
-            writeGlobalDeclaration(g)
-            globals.printLine(" = \{getReference(value)};")
+            writeGlobalDeclaration(g, out)
+            out.printLine(" = \{getReference(value)};")
 
         }
         fail(error) {
             Console.printError(error)
             System.exit(1)
+        }
+    }
+
+    @override
+    method writeGlobal(g:Code.Global, value:Code.Value?) {
+        writeGlobalDeclaration(g, globalDeclarations)
+        def error := globalDeclarations.printLine(";")
+        assert error == null
+        if value !== null {
+            writeGlobalDefinition(g, value, globalDefinitions)
         }
     }
 
     @override
     method finish() {
         try {
-            assert cg.globals.count = cg.globalValues.count
-            for g in cg.globals  {
-                writeGlobalDeclaration(g)
-                globals.printLine(";")
-            }
-            for g in cg.globals.combine(cg.globalValues).filter(g => g[1] !== null)  {
-                writeGlobalDefinition(g[0], g[1])
-            }
-            for decl in cg.declarations.values.filter(decl => decl.isExternal) {
-                writeSignature(decl)
-            }
-            for (signature, code) in cg.methodShims.values {
-                write(signature, code, true)
-            }
-            physicalOut.print(types)
-            physicalOut.print(signatures)
-            physicalOut.print(globals)
-            physicalOut.print(methods)
+            physicalOut.print(types.finish())
+            physicalOut.print(signatures.finish())
+            physicalOut.print(globalDeclarations.finish())
+            physicalOut.print(globalDefinitions.finish())
+            physicalOut.print(methods.finish())
         }
         fail(error) {
             Console.printError(error)
             System.exit(1)
         }
-    }
-
-    @override
-    method cleanup() {
     }
 }

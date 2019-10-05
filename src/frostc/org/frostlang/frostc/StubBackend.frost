@@ -234,11 +234,15 @@ class StubBackend : Backend {
     }
 
     @override
-    method writeDeclaration(m:MethodDecl) {
+    method writeSignature(s:Code.Signature) {
     }
 
     @override
-    method write(m:MethodDecl, ir:IR) {
+    method writeMethod(m:MethodDecl?, s:Code.Signature, code:Code, linkOnce:Bit) {
+    }
+
+    @override
+    method writeGlobal(g:Code.Global, value:Code.Value?) {
     }
 
     @override

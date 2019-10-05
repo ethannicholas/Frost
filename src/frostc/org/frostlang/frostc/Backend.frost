@@ -23,9 +23,11 @@ interface Backend {
     ================================================================================================
     Writes the declaration (i.e. no method body) of a method.
     ================================================================================================
-    method writeDeclaration(m:MethodDecl)
+    method writeSignature(s:Code.Signature)
 
-    method write(m:MethodDecl, ir:IR)
+    method writeGlobal(g:Code.Global, value:Code.Value?)
+
+    method writeMethod(m:MethodDecl?, s:Code.Signature, code:Code, linkOnce:Bit)
 
     ================================================================================================
     Informs the code generator that the entire compilation is complete and nothing more will be

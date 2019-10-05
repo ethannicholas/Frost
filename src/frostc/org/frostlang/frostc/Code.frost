@@ -638,8 +638,11 @@ class Code {
                 when STATIC_CALL_VOID(position, _, _) {
                     return position
                 }
+                when UNREACHABLE(position) {
+                    return position
+                }
             }
-            unreachable
+            unreachable, "cannot determine position of \{self}"
         }
     }
 

@@ -1,0 +1,16 @@
+class ValueInitCall : Value {
+    def x:Int
+
+    init() {
+        self.x := 123
+        init(321)
+    }
+
+    init(x:Int) {
+        self.x := x
+    }
+}
+
+method main() {
+    Console.printLine(ValueInitCall().x)
+}

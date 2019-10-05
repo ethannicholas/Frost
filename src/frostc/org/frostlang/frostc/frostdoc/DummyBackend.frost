@@ -2,8 +2,8 @@ package org.frostlang.frostc.frostdoc
 
 uses org.frostlang.frostc.Backend
 uses org.frostlang.frostc.ClassDecl
+uses org.frostlang.frostc.Code
 uses org.frostlang.frostc.Compiler
-uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
 
 @package
@@ -21,11 +21,15 @@ class DummyBackend : Backend {
     }
 
     @override
-    method writeDeclaration(m:MethodDecl) {
+    method writeSignature(s:Code.Signature) {
     }
 
     @override
-    method write(m:MethodDecl, ir:IR) {
+    method writeGlobal(g:Code.Global, value:Code.Value?) {
+    }
+
+    @override
+    method writeMethod(m:MethodDecl?, s:Code.Signature, code:Code, linkOnce:Bit) {
     }
 
     @override

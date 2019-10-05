@@ -25,6 +25,7 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost"
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/config.c"
     "#include <string.h>\n"
+    "#include <inttypes.h>\n"
     "intptr_t frostNewString(const char* s, int length)\n;"
     "static intptr_t configString(const char* s) { return frostNewString(s, strlen(s)); }"
     "intptr_t org$frostlang$frostc$Config$frostSourceDir$R$frost$core$String() { return configString(\"${CMAKE_SOURCE_DIR}/src\"); }\n"

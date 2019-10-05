@@ -8,24 +8,7 @@ uses org.frostlang.frostc.parser.Token
 class LLVMBackend : Backend {
     constant NO_REFCNT := -999
 
-    class ClassConstant : Immutable {
-        def name:String
-        def type:String
-
-        init(name:String, type:String) {
-            self.name := name
-            self.type := type
-        }
-    }
-
-    constant OBJECT_FIELD_COUNT  := 3
-    constant CLASS_POINTER_INDEX := 0
-    constant ITABLE_INDEX        := 5
-    constant VTABLE_INDEX        := 6
-
     constant INT_TYPE  := "i64"
-    def INT_CLASS := "%frost$core$Int"
-    constant SIZE_TYPE := "i64"
 
     def physicalOut:OutputStream
 
@@ -35,6 +18,8 @@ class LLVMBackend : Backend {
     def compiler:Compiler?
 
     def cg:CodeGenerator?
+
+    def globals := MemoryOutputStream()
 
     def signatures := MemoryOutputStream()
 
@@ -77,7 +62,7 @@ class LLVMBackend : Backend {
     @override
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
-        cg := CodeGenerator(compiler)
+        cg := compiler.cg
     }
 
     function name(id:Code.Statement.ID):String {
@@ -87,6 +72,189 @@ class LLVMBackend : Backend {
     method nextVar():String {
         varCount += 1
         return "%tmp\{varCount}"
+    }
+
+    method nextMetadata():String {
+        metadataCount += 1
+        return "!\{metadataCount}"
+    }
+
+    method getFileMetadata(index:Int):String {
+        try {
+            while fileMetadata.count <= index {
+                fileMetadata.add(null)
+            }
+            var meta := fileMetadata[index]
+            if meta == null {
+                meta := nextMetadata()
+                fileMetadata[index] := meta
+                metadata.printLine("\{meta} = distinct !DIFile(" +
+                        "filename: \"\{compiler.files[index]}\", directory: " +
+                        "\"\{System.workingDirectory()}\")")
+                if !wroteCompileUnit {
+                    metadata.printLine("!0 = distinct !DICompileUnit(language:DW_LANG_C89, " +
+                            "producer:\"frostc\", file: \{meta}, isOptimized: " +
+                            "false, runtimeVersion: 0, emissionKind: FullDebug)")
+                    metadata.printLine("!llvm.dbg.cu = !{!0}")
+                    def dwarfVersion := nextMetadata()
+                    metadata.printLine("\{dwarfVersion} = !{i32 2, !\"Dwarf Version\", i32 4}")
+                    def debugVersion := nextMetadata()
+                    metadata.printLine("\{debugVersion} = !{i32 2, !\"Debug Info Version\", i32 3}")
+                    metadata.printLine("!llvm.module.flags = !{\{dwarfVersion}, \{debugVersion}}")
+                    wroteCompileUnit := true
+                }
+            }
+            return meta
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method getMethodMetadata(index:Int):String {
+        try {
+            while methodMetadata.count <= index {
+                methodMetadata.add(null)
+            }
+            var meta := methodMetadata[index]
+            if meta == null {
+                def m := compiler.methods[index]
+                def file := getFileMetadata(m.position.file)
+                meta := nextMetadata()
+                methodMetadata[index] := meta
+                def t:Type
+                if compiler!.hasSelfParam(m) {
+                    t := compiler!.inheritedTypeWithSelf(m)
+                }
+                else {
+                    t := compiler!.inheritedType(m)
+                }
+                def type := getDebugType(t)
+                metadata.printLine("\{meta} = distinct !DISubprogram(name: " +
+                        "\"\{m.owner.name}.\{m.name}\", file: \{file}, " +
+                        "type: \{getDebugType(t)}, unit: !0, scopeLine: \{m.position.line})")
+            }
+            return meta
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method getLexicalBlockMetadata(index:Int):String {
+        try {
+            while lexicalBlockMetadata.count <= index {
+                lexicalBlockMetadata.add(null)
+            }
+            var meta := lexicalBlockMetadata[index]
+            if meta == null {
+                def m := compiler.currentMethod[0]
+                def file := getFileMetadata(compiler.methods[index].position.file)
+                def methodData := getMethodMetadata(compiler.currentMethodIndex)
+                meta := nextMetadata()
+                metadata.printLine("\{meta} = !DILexicalBlock(scope: \{methodData}, file: " +
+                        "\{file}, line: \{m.position.line}, column: \{m.position.column})")
+                lexicalBlockMetadata[index] := meta
+            }
+            return meta
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method getDebugType(t:Type):String {
+        try {
+            var result := debugTypes[t]
+            if result == null {
+                match t.typeKind {
+                    when Type.Kind.METHOD, Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_METHOD,
+                            Type.Kind.IMMUTABLE_FUNCTION {
+                        result := nextMetadata()
+                        def types := Array<String>()
+                        types.add(getDebugType(t.returnType))
+                        for p in t.parameterTypes {
+                            types.add(getDebugType(p))
+                        }
+                        metadata.print("\{result} = !DISubroutineType(types: !{")
+                        metadata.print(types.join(", "))
+                        metadata.printLine("})")
+                    }
+                    when Type.Kind.BUILTIN_INT {
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIBasicType(name: \"\{t.name}\", size: " +
+                                "\{t.size}, align: \{t.size}, encoding: DW_ATE_signed)")
+                    }
+                    when Type.Kind.BUILTIN_UINT {
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIBasicType(name: \"\{t.name}\", size: " +
+                                "\{t.size}, align: \{t.size}, encoding: DW_ATE_unsigned)")
+                    }
+                    when Type.Kind.BUILTIN_FLOAT {
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIBasicType(name: \"\{t.name}\", size: " +
+                                "\{t.size}, align: \{t.size}, encoding: DW_ATE_float)")
+                    }
+                    when Type.Kind.BUILTIN_BIT {
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIBasicType(name: \"\{t.name}\", size: " +
+                                "1, align: 1, encoding: DW_ATE_boolean)")
+                    }
+                    when Type.Kind.CLASS, Type.Kind.NULLABLE {
+                        -- FIXME fix this to actually contain struct info, handle values
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIDerivedType(tag: DW_TAG_pointer_type, " +
+                                "baseType: null, size: \{Code.PrimitiveType.INT.size}, " +
+                                "align: \{Code.PrimitiveType.INT.alignment})")
+                    }
+                    when Type.Kind.VOID {
+                        result := "null"
+                    }
+                    otherwise {
+                        -- FIXME handle everything else
+                        result := nextMetadata()
+                        metadata.printLine("\{result} = !DIDerivedType(tag: DW_TAG_pointer_type, " +
+                                "baseType: null, size: \{Code.PrimitiveType.INT.size}, " +
+                                "align: \{Code.PrimitiveType.INT.alignment})")
+                    }
+                }
+                debugTypes[t] := result
+            }
+            return result
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    method debugInfo(position:MethodPosition):String {
+        try {
+            if !compiler!.settings.debug {
+                return ""
+            }
+            if position.methodIndex != -1 & compiler.currentMethod.count > 0 {
+                var result := debugPositions[position]
+                if result == null {
+                    result := nextMetadata()
+                    def scope:String
+                    if position.methodIndex = compiler.currentMethodIndex {
+                        scope := getMethodMetadata(position.methodIndex)
+                    }
+                    else {
+                        scope := getLexicalBlockMetadata(position.methodIndex)
+                    }
+                    metadata.printLine("\{result} = !DILocation(line: \{position.line}, column: " +
+                            "\{position.column}, scope: \{scope})")
+                    result := ", !dbg \{result}"
+                    debugPositions[position] := result
+                }
+                return result
+            }
+            return ""
+        }
+        fail(error) {
+            unreachable
+        }
     }
 
     method llvmType(t:Code.PrimitiveType):String {
@@ -206,11 +374,7 @@ class LLVMBackend : Backend {
         return llvmType(v.type) + " " + getReference(v)
     }
 
-    method debugInfo(p:MethodPosition):String {
-        return ""
-    }
-
-    @pre(s.isExternal)
+    @override
     method writeSignature(s:Code.Signature) {
         try {
             if writtenSignatures.contains(s.name) {
@@ -627,11 +791,7 @@ class LLVMBackend : Backend {
     }
 
     @override
-    method write(m:MethodDecl, ir:IR) {
-        write(cg.getSignature(m), cg.convert(m, ir), m.owner.isSpecialization())
-    }
-
-    method write(s:Code.Signature, code:Code, linkOnce:Bit) {
+    method writeMethod(m:MethodDecl?, s:Code.Signature, code:Code, linkOnce:Bit) {
         out := methods
         try {
             out.print("define ")
@@ -651,17 +811,18 @@ class LLVMBackend : Backend {
                 separator := ", "
             }
             out.print(")")
+            if m !== null & compiler!.settings.debug {
+                out.print(" !dbg \{getMethodMetadata(m.index)}")
+            }
             out.printLine(" {")
             writeCode(code)
             out.printLine("}")
+            lexicalBlockMetadata.clear()
+            debugPositions.clear()
         }
         fail(error) {
             unreachable, error.asString
         }
-    }
-
-    @override
-    method writeDeclaration(m:MethodDecl) {
     }
 
     @override
@@ -681,30 +842,30 @@ class LLVMBackend : Backend {
     method end(cl:ClassDecl) {
     }
 
-    @pre(g.isExternal = (value == null))
-    method writeGlobal(g:Code.Global, value:Code.Value?, out:OutputStream) {
+    @override
+    method writeGlobal(g:Code.Global, value:Code.Value?) {
         try {
             if g.comment !== null {
-                out.printLine("; \{g.comment}")
+                globals.printLine("; \{g.comment}")
             }
-            out.print("@\{g.name} = ")
+            globals.print("@\{g.name} = ")
             if g.isExternal {
-                out.print("external ")
+                globals.print("external ")
             }
             if g.isPrivate {
-                out.print("private ")
+                globals.print("private ")
             }
             if g.isLinkOnce {
-                out.print("linkonce_odr ")
+                globals.print("linkonce_odr ")
             }
             if g.isUnnamedAddr {
-                out.print("unnamed_addr ")
+                globals.print("unnamed_addr ")
             }
             if value !== null {
-                out.printLine("constant \{getTypedReference(value)}")
+                globals.printLine("constant \{getTypedReference(value)}")
             }
             else {
-                out.printLine("constant \{llvmType(g.type)}")
+                globals.printLine("constant \{llvmType(g.type)}")
             }
         }
         fail(error) {
@@ -716,26 +877,14 @@ class LLVMBackend : Backend {
     @override
     method finish() {
         try {
-            assert cg.globals.count = cg.globalValues.count
-            for i in 0 .. cg.globals.count  {
-                writeGlobal(cg.globals[i], cg.globalValues[i], physicalOut)
-            }
-            for decl in cg.declarations.values.filter(decl => decl.isExternal) {
-                writeSignature(decl)
-            }
-            for (signature, code) in cg.methodShims.values {
-                write(signature, code, true)
-            }
-            physicalOut.print(signatures)
-            physicalOut.print(methods)
+            physicalOut.print(globals.finish())
+            physicalOut.print(signatures.finish())
+            physicalOut.print(methods.finish())
+            physicalOut.print(metadata.finish())
         }
         fail(error) {
             Console.printError(error)
             System.exit(1)
         }
-    }
-
-    @override
-    method cleanup() {
     }
 }

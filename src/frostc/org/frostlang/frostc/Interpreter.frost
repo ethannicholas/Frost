@@ -1,795 +1,740 @@
 package org.frostlang.frostc
 
-uses frost.unsafe.Pointer
+uses org.frostlang.frostc.Compiler.Expression
 uses org.frostlang.frostc.expression.Binary
+uses org.frostlang.frostc.parser.Token
 
-====================================================================================================
-Incredibly slow, even for an interpreter. Just a proof of concept at this point.
-====================================================================================================
+@final
 class Interpreter : Backend {
-    def strings := HashMap<String, Int64>()
+    constant NO_REFCNT := -999
 
-    def stackSize := 10240
+    def physicalOut:OutputStream
 
-    def stackBase := Pointer<UInt8>.alloc(stackSize)
-
-    def stack := stackBase
-
-    def maxId:Int
-
-    class MethodCode {
-        def locals:Array<Type>
-
-        def blocks:Array<Int>
-
-        def ids:Array<Array<IR.Statement.ID>>
-
-        def ir:Array<Array<IR.Statement>>
-
-        def maxId:Int
-
-        init(locals:Array<Type>, blocks:Array<Int>, ids:Array<Array<IR.Statement.ID>>,
-                ir:Array<Array<IR.Statement>>, maxId:Int) {
-            self.locals := locals
-            self.blocks := blocks
-            self.ids := ids
-            self.ir := ir
-            self.maxId := maxId
-        }
-    }
-
-    class Context {
-        @weak
-        def interpreter:Interpreter
-
-        def code:MethodCode
-
-        def locals:Array<Int>
-
-        -- if the value fits into an Int64, contains the value. Otherwise, contains a Pointer to
-        -- the value.
-        def arguments:Array<Int64>
-
-        -- if the value fits into an Int64, contains the value. Otherwise, contains a Pointer to
-        -- the value.
-        def statements:Array<Int64?>
-
-        init(interpreter:Interpreter, code:MethodCode) {
-            self.interpreter := interpreter
-            self.code := code
-
-            locals := Array<Int>(code.locals.count)
-            for i in 0 .. code.locals.count {
-                def t := code.locals[i]
-                locals.add(interpreter.alloca(t).asInt)
-            }
-
-            arguments := Array<Int64>()
-
-            statements := Array<Int64?>(code.maxId + 1, null)
-        }
-
-        method value(value:IR.Value):Int64 {
-            match value {
-                when IR.Value.BIT(b, _) {
-                    return b.choose(1, 0)
-                }
-                when IR.Value.INT(i, _) {
-                    return i.asInt64
-                }
-                when IR.Value.LOCAL(idx, _) {
-                    return locals[idx].asInt64
-                }
-                when IR.Value.METHOD_POINTER(MethodDecl, Type) {
-                    System.crash()
-                }
-                when IR.Value.NULL(Type) {
-                    return 0
-                }
-                when IR.Value.PARAMETER(idx, _) {
-                    return arguments[idx]
-                }
-                when IR.Value.REAL(r, _) {
-                    return Frost.floatToIntBits(r)
-                }
-                when IR.Value.REF(id, _) {
-                    return statements[id.value]
-                }
-                when IR.Value.STRING(s, _) {
-                    var result := interpreter.strings[s]
-                    if result == null {
-                        def compiler := interpreter.compiler
-                        def memoryLayout := compiler.memoryLayout
-                        assert memoryLayout.pointerSize = memoryLayout.intSize
-                        def base := Pointer<UInt8>.alloc(interpreter.memoryLayout.sizeOf(
-                                compiler.STRING_TYPE))
-                        def string := compiler.getClass(compiler.STRING_TYPE)
-                        var current := base
-
-                        -- class
-                        assert compiler.instanceFields(string)[0].name = "$class"
-                        assert current.asInt - base.asInt =
-                                compiler.instanceFields(string)[0].offset
-                        current->Pointer<ClassDecl>.set(string)
-                        current += memoryLayout.pointerSize
-
-                        -- refCount
-                        assert compiler.instanceFields(string)[1].name = "refCount"
-                        assert current.asInt - base.asInt =
-                                compiler.instanceFields(string)[1].offset
-                        current->Pointer<Int32>.set(LLVMBackend.NO_REFCNT.asInt32)
-                        current += 4
-
-                        -- flags
-                        assert compiler.instanceFields(string)[2].name = "$flags"
-                        assert current.asInt - base.asInt =
-                                compiler.instanceFields(string)[2].offset
-                        current->Pointer<Int8>.set(0)
-                        current += 4
-
-                        -- data
-                        assert compiler.instanceFields(string)[3].name = "data"
-                        assert current.asInt - base.asInt =
-                                compiler.instanceFields(string)[3].offset
-                        def data := Pointer<Char8>.alloc(s._length)
-                        for i in 0 .. s._length {
-                            data[i] := s.data[i]
-                        }
-                        current->Pointer<Int>.set(data.asInt)
-                        current += memoryLayout.pointerSize
-
-                        -- _length
-                        assert compiler.instanceFields(string)[4].name = "_length"
-                        assert current.asInt - base.asInt =
-                                compiler.instanceFields(string)[4].offset
-                        current->Pointer<Int>.set(s._length)
-                        current += memoryLayout.intSize
-
-                        -- dummy
-                        assert compiler.instanceFields(string)[5].name = "dummy"
-                        assert current.asInt - base.asInt =
-                                compiler.instanceFields(string)[5].offset
-                        current += memoryLayout.intSize
-
-                        -- owner
-                        assert compiler.instanceFields(string)[6].name = "owner"
-                        assert current.asInt - base.asInt =
-                                compiler.instanceFields(string)[6].offset
-                        current->Pointer<Int>.set(0)
-                        current += memoryLayout.intSize
-
-                        assert current.asInt - base.asInt =
-                                interpreter.memoryLayout.sizeOf(string.type)
-                        result := base.asInt.asInt64
-                        interpreter.strings[s] := result
-                    }
-                    return result
-                }
-                otherwise {
-                    unreachable
-                }
-            }
-        }
-    }
+    def out:OutputStream
 
     @weak
     def compiler:Compiler?
 
-    def memoryLayout:MemoryLayout
+    def cg:CodeGenerator?
 
-    def methodCode := IdentityMap<MethodDecl, MethodCode>()
+    def types := MemoryOutputStream()
 
-    def builtins := IdentityMap<MethodDecl, (Context, FixedArray<IR.Value>)=&>(Int64)>()
+    def globalDeclarations := MemoryOutputStream()
 
-    def contexts := Stack<Context>()
+    def globalDefinitions := MemoryOutputStream()
 
-    def main:MethodDecl?
+    def signatures := MemoryOutputStream()
+
+    def methodHeader := MemoryOutputStream()
+
+    def methods := MemoryOutputStream()
+
+    def metadata := MemoryOutputStream()
+
+    def writtenSignatures := HashSet<String>()
+
+    def definedStatements := HashSet<Code.Statement.ID>()
+
+    var varCount := 0
+
+    def structs := HashMap<String, String>()
+
+    def debugTypes := IdentityMap<Type, String>()
+
+    var metadataCount := 0
+
+    var wroteCompileUnit := false
+
+    var fileMetadata := Array<String?>()
+
+    var methodMetadata := Array<String?>()
+
+    var lexicalBlockMetadata := Array<String?>()
+
+    def debugPositions := HashMap<MethodPosition, String>()
+
+    init() {
+    }
 
     @override
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
-        self.memoryLayout := compiler.memoryLayout
+        self.cg := compiler.cg
+    }
+
+    function name(id:Code.Statement.ID):String {
+        return "$s\{id.value}"
+    }
+
+    method nextVar():String {
+        varCount += 1
+        return "$tmp\{varCount}"
+    }
+
+    method tag(t:Code.PrimitiveType):String {
+        match t {
+            when Code.PrimitiveType.INT8 {
+                 return "1"
+            }
+            when Code.PrimitiveType.INT16 {
+                 return "2"
+            }
+            when Code.PrimitiveType.INT32 {
+                 return "4"
+            }
+            when Code.PrimitiveType.INT64 {
+                 return "8"
+            }
+            when Code.PrimitiveType.INT {
+                 return "i"
+            }
+            when Code.PrimitiveType.BIT {
+                return "b"
+            }
+            when Code.PrimitiveType.FLOAT32 {
+                return "f"
+            }
+            when Code.PrimitiveType.FLOAT64 {
+                return "d"
+            }
+            when Code.PrimitiveType.ARRAY(count, type) {
+                return "A\{count}x\{tag(type)}B"
+            }
+            when Code.PrimitiveType.STRUCT(types) {
+                return "C\{types.map(tag).join("")}D"
+            }
+            otherwise {
+                unreachable, "unsupported type \{t}"
+            }
+        }    
+    }
+
+    method cType(t:Code.PrimitiveType):String {
+        match t {
+            when Code.PrimitiveType.INT8 {
+                 return "int8_t"
+            }
+            when Code.PrimitiveType.INT16 {
+                 return "int16_t"
+            }
+            when Code.PrimitiveType.INT32 {
+                 return "int32_t"
+            }
+            when Code.PrimitiveType.INT64 {
+                 return "int64_t"
+            }
+            when Code.PrimitiveType.INT {
+                 return "intptr_t"
+            }
+            when Code.PrimitiveType.BIT {
+                return "int8_t"
+            }
+            when Code.PrimitiveType.FLOAT32 {
+                return "float"
+            }
+            when Code.PrimitiveType.FLOAT64 {
+                return "double"
+            }
+            when Code.PrimitiveType.ARRAY(count, type) {
+                return "\{cType(type)}[\{count}]"
+            }
+            when Code.PrimitiveType.STRUCT(fields) {
+                def key := t.asString
+                var result := structs[key]
+                if result == null {
+                    try {
+                        result := "struct" + tag(t)
+                        structs[key] := result
+                        def decls := Array<String>()
+                        for p in fields.enumeration {
+                            match p[1] {
+                                when Code.PrimitiveType.ARRAY(count, type) {
+                                    decls.add("\{self.cType(type)} f\{p[0]}[\{count}];")
+                                }
+                                otherwise {
+                                    decls.add("\{self.cType(p[1])} f\{p[0]};")
+                                }
+                            }
+                        }
+                        types.printLine("typedef struct \{result} {")
+                        for d in decls {
+                            types.printLine(d)
+                        }
+                        types.printLine("} \{result};")
+                    }
+                    fail(error) {
+                        unreachable, error.asString
+                    }
+                }
+                return result
+            }
+            otherwise {
+                unreachable, "unsupported type \{t}"
+            }
+        }
+    }
+
+    method cType(s:Code.Signature):String {
+        def result := MutableString()
+        if s.returnType !== null {
+            result.append(cType(s.returnType))
+        }
+        else {
+            result.append("void")
+        }
+        result.append("(*)(")
+        var separator := ""
+        for p in s.parameters {
+            result.append("\{separator}\{cType(p)}")
+            separator := ", "
+        }
+        result.append(")")
+        return result.finish()
+    }
+
+    method getReference(v:Code.Value):String {
+        match v {
+            when Code.Value.BIT(b) {
+                return b.choose("1", "0")
+            }
+            when Code.Value.GLOBAL_POINTER(index) {
+                return "(intptr_t) &" + cg.globals[index].name
+            }
+            when Code.Value.INT(i, t) {
+                return "((\{cType(t)}) \{i}u)"
+            }
+            when Code.Value.REAL(r64, type) {
+                match type {
+                    when Code.PrimitiveType.FLOAT32 {
+                        var s := r64.asString
+                        if !s.contains(".") {
+                            s += ".0"
+                        }
+                        return s + "f"
+                    }
+                }
+                return r64.asString
+
+            }
+            when Code.Value.METHOD_POINTER(signature) {
+                return "(intptr_t) &" + signature.name
+            }
+            when Code.Value.PARAMETER(idx, _) {
+                return "param\{idx}"
+            }
+            when Code.Value.STATEMENT(id, type) {
+                if !definedStatements.contains(id) {
+                    def error := methodHeader.printLine("\{cType(type)} \{name(id)};")
+                    assert error == null
+                    definedStatements.add(id)
+                }
+                return name(id)
+            }
+            when Code.Value.ARRAY(_, elements) {
+                return "{" + elements.map(getReference).join(", ") + "}"
+            }
+            when Code.Value.STRUCT(args) {
+                def t := Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
+                        args.map(a:Code.Value => a.type)))
+                return "(\{cType(t)}) { " + args.map(getReference).join(", ") + " }"
+            }
+            when Code.Value.UNDEFINED(t) {
+                return "(\{cType(t)}) { }"
+            }
+            otherwise {
+                unreachable, "unsupported value \{v}"
+            }
+        }
+    }
+
+    method getUnsignedReference(v:Code.Value):String {
+        def ref := getReference(v)
+        match v.type {
+            when Code.PrimitiveType.INT8 {
+                return "((uint8_t) \{ref})"
+            }
+            when Code.PrimitiveType.INT16 {
+                return "((uint16_t) \{ref})"
+            }
+            when Code.PrimitiveType.INT32 {
+                return "((uint32_t) \{ref})"
+            }
+            when Code.PrimitiveType.INT64 {
+                return "((uint64_t) \{ref})"
+            }
+            when Code.PrimitiveType.INT {
+                return "((unsigned int) \{ref})"
+            }
+            when Code.PrimitiveType.FLOAT32, Code.PrimitiveType.FLOAT64 {
+                return ref
+            }
+            otherwise {
+                unreachable
+            }
+        }
+    }
+
+    @override
+    method writeSignature(s:Code.Signature) {
+        try {
+            if writtenSignatures.contains(s.name) {
+                return
+            }
+            writtenSignatures.add(s.name)
+            if s.returnType !== null {
+                signatures.print(cType(s.returnType))
+            }
+            else {
+                signatures.print("void")
+            }
+            signatures.print(" \{s.name}(")
+            var separator := ""
+            for i in 0 .. s.parameters.count {
+                signatures.print("\{separator}\{cType(s.parameters[i])} param\{i}")
+                separator := ", "
+            }
+            signatures.printLine(");")
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    method writeCreateStruct(position:MethodPosition, id:Code.Statement.ID, type:Code.PrimitiveType,
+            args:FixedArray<Code.Value>) {
+        try {
+            assert args.count > 0
+            out.print("\{name(id)} = (\{cType(type)}) {")
+            var separator := ""
+            for v in args {
+                out.print("\{separator}\{getReference(v)}")
+                separator := ", "
+            }
+            out.printLine("};")
+
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    @pre((id == null) = (returnType == null))
+    method writeDynamicCall(id:Code.Statement.ID?, returnType:Code.PrimitiveType?, m:Code.Value,
+            args:ListView<Code.Value>) {
+        try {
+            if returnType !== null {
+                out.print("\{name(id)} = ")
+            }
+            def ct := cType(Code.Signature(returnType, "<dynamic>",
+                    FixedArray<Code.PrimitiveType>.from(args.map(a => a.type)), false))
+            out.printLine("((\{ct}) \{getReference(m)})(" +
+                    "\{args.map(getReference).join(", ")});")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method define(type:Code.PrimitiveType, id:Code.Statement.ID) {
+        if !definedStatements.contains(id) {
+            try {
+                out.printLine("\{cType(type)} \{name(id)};")
+                definedStatements.add(id)
+            }
+            fail(error) {
+                unreachable
+            }
+        }
+    }
+
+    method define(type:Code.PrimitiveType, id:Code.Statement.ID, value:String) {
+        try {
+            if !definedStatements.contains(id) {
+                out.print("\{cType(type)} ")
+                definedStatements.add(id)
+            }
+            out.printLine("\{name(id)} = \{value};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeStatement(s:Code.Statement) {
+        try {
+            match s {
+                when Code.Statement.ADDI(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} + \{getReference(right)}")
+                }
+                when Code.Statement.ADDF(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} + \{getReference(right)}")
+                }
+                when Code.Statement.SUBI(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} - \{getReference(right)}")
+                }
+                when Code.Statement.SUBF(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} - \{getReference(right)}")
+                }
+                when Code.Statement.MULI(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} * \{getReference(right)}")
+                }
+                when Code.Statement.MULF(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} * \{getReference(right)}")
+                }
+                when Code.Statement.DIVS(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} / \{getReference(right)}")
+                }
+                when Code.Statement.DIVU(position, result, left, right) {
+                    define(left.type, result, getUnsignedReference(left) + " / " +
+                            getUnsignedReference(right))
+                }
+                when Code.Statement.DIVF(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} / \{getReference(right)}")
+                }
+                when Code.Statement.REMS(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} % \{getReference(right)}")
+                }
+                when Code.Statement.REMU(position, result, left, right) {
+                    define(left.type, result, getUnsignedReference(left) + " % " +
+                            getUnsignedReference(right))
+                }
+                when Code.Statement.ANDI(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} & \{getReference(right)}")
+                }
+                when Code.Statement.ANDB(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} & \{getReference(right)}")
+                }
+                when Code.Statement.ORI(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} | \{getReference(right)}")
+                }
+                when Code.Statement.ORB(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} | \{getReference(right)}")
+                }
+                when Code.Statement.XORI(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} ^ \{getReference(right)}")
+                }
+                when Code.Statement.XORB(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} ^ \{getReference(right)}")
+                }
+                when Code.Statement.SHRS(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} >> \{getReference(right)}")
+                }
+                when Code.Statement.SHRU(position, result, left, right) {
+                    define(left.type, result, getUnsignedReference(left) + " >> " +
+                            getUnsignedReference(right))
+                }
+                when Code.Statement.SHL(position, result, left, right) {
+                    define(left.type, result, "\{getReference(left)} << \{getReference(right)}")
+                }
+                when Code.Statement.EQI(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " == " +
+                            getReference(right))
+                }
+                when Code.Statement.EQF(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " == " +
+                            getReference(right))
+                }
+                when Code.Statement.NEQI(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " != " +
+                            getReference(right))
+                }
+                when Code.Statement.NEQF(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " != " +
+                            getReference(right))
+                }
+                when Code.Statement.GTS(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " > " +
+                            getReference(right))
+                }
+                when Code.Statement.GTU(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getUnsignedReference(left) + " > " +
+                            getUnsignedReference(right))
+                }
+                when Code.Statement.GTF(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " > " +
+                            getReference(right))
+                }
+                when Code.Statement.GES(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " >= " +
+                            getReference(right))
+                }
+                when Code.Statement.GEU(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getUnsignedReference(left) + " >= " +
+                            getUnsignedReference(right))
+                }
+                when Code.Statement.GEF(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " >= " +
+                            getReference(right))
+                }
+                when Code.Statement.LTS(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " < " +
+                            getReference(right))
+                }
+                when Code.Statement.LTU(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getUnsignedReference(left) + " < " +
+                            getUnsignedReference(right))
+                }
+                when Code.Statement.LTF(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " < " +
+                            getReference(right))
+                }
+                when Code.Statement.LES(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " <= " +
+                            getReference(right))
+                }
+                when Code.Statement.LEU(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getUnsignedReference(left) + " <= " +
+                            getUnsignedReference(right))
+                }
+                when Code.Statement.LEF(position, result, left, right) {
+                    define(Code.PrimitiveType.INT8, result, getReference(left) + " <= " +
+                            getReference(right))
+                }
+                when Code.Statement.BRANCH(position, target) {
+                    out.printLine("goto \{target};")
+                }
+                when Code.Statement.COMMENT(_, text) {
+                    out.printLine("// \{text}")
+                }
+                when Code.Statement.CONVERTS(position, result, value, target) {
+                    define(target, result, "(\{cType(target)}) \{getReference(value)}")
+                }
+                when Code.Statement.CONVERTU(position, result, value, target) {
+                    define(target, result, "(\{cType(target)}) \{getUnsignedReference(value)}")
+                }
+                when Code.Statement.CREATE_STRUCT(position, result, type, args) {
+                    define(type, result)
+                    writeCreateStruct(position, result, type, args)
+                }
+                when Code.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
+                    out.printLine("if (\{getReference(test)}) goto \{ifTrue}; else goto " +
+                            "\{ifFalse};")
+                }
+                when Code.Statement.DYNAMIC_CALL(position, result, returnType, m, args) {
+                    define(returnType, result)
+                    writeDynamicCall(result, returnType, m, args)
+                }
+                when Code.Statement.DYNAMIC_CALL_VOID(position, m, args) {
+                    writeDynamicCall(null, null, m, args)
+                }
+                when Code.Statement.EXTRACT_FIELD(position, result, target, index) {
+                    match target.type {
+                        when Code.PrimitiveType.STRUCT(types) {
+                            define(types[index], result, "\{getReference(target)}.f\{index}")
+                        }
+                        otherwise {
+                            unreachable
+                        }
+                    }
+                }
+                when Code.Statement.HEAP_ALLOC(_, result, type, classConstant) {
+                    define(Code.PrimitiveType.INT, result, "frostObjectAlloc(\{type.size}, " +
+                            "\{getReference(classConstant)})")
+                }
+                when Code.Statement.LOAD(position, result, value, type) {
+                    define(type, result, "*(\{cType(type)}*) \{getReference(value)}")
+                }
+                when Code.Statement.NEGS(position, result, value) {
+                    define(value.type, result, "-" + getReference(value))
+                }
+                when Code.Statement.NEGF(position, result, value) {
+                    define(value.type, result, "-" + getReference(value))
+                }
+                when Code.Statement.NOTB(position, result, value) {
+                    define(value.type, result, "!" + getReference(value))
+                }
+                when Code.Statement.NOTI(position, result, value) {
+                    define(value.type, result, "~" + getReference(value))
+                }
+                when Code.Statement.RETURN(position, value) {
+                    if value !== null {
+                        out.printLine("return \{getReference(value)};")
+                    }
+                    else {
+                        out.printLine("return;")
+                    }
+                }
+                when Code.Statement.STACK_ALLOC(_, result, type) {
+                    define(Code.PrimitiveType.INT, result, "(intptr_t) alloca(\{type.size})")
+                }
+                when Code.Statement.STATIC_CALL(position, result, m, args) {
+                    assert m.returnType !== null, "STATIC_CALL to void method \{m} at \{position}"
+                    if m.isExternal {
+                        writeSignature(m)
+                    }
+                    define(m.returnType, result, "\{m.name}(\{args.map(getReference).join(", ")});")
+                }
+                when Code.Statement.STATIC_CALL_VOID(position, m, args) {
+                    if m.isExternal {
+                        writeSignature(m)
+                    }
+                    assert m.returnType == null,
+                            "STATIC_CALL_VOID to non-void method \{m} at \{position}"
+                    out.printLine("\{m.name}(\{args.map(getReference).join(", ")});")
+                }
+                when Code.Statement.STORE(position, value, dest) {
+                    out.printLine("*(\{cType(value.type)}*) \{getReference(dest)} = " +
+                                "\{getReference(value)};")
+                }
+                when Code.Statement.UNREACHABLE(position) {
+                    out.printLine("abort(); // unreachable")
+                }
+                otherwise {
+                    unreachable, "unsupported statement \{s}"
+                }
+            }
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    @pre(methodHeader.asString = "")
+    method writeCode(code:Code) {
+        try {
+            def oldOut := out
+            out := MemoryOutputStream()
+            for i in 0 .. code.blocks.count {
+                def block := code.blocks[i]
+                if i != 0 {
+                    out.printLine("\{block.id}:;")
+                }
+                for s in block.statements {
+                    writeStatement(s)
+                }
+            }
+            oldOut.print(methodHeader)
+            oldOut.print(out)
+            out := oldOut
+            methodHeader.clear()
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    @override
+    method writeMethod(m:MethodDecl?, s:Code.Signature, code:Code, linkOnce:Bit) {
+        writeSignature(s)
+        out := methods
+        try {
+            if s.returnType !== null {
+                out.print(cType(s.returnType))
+            }
+            else {
+                out.print("void")
+            }
+            if linkOnce {
+                out.print(" __attribute__((weak))")
+            }
+            out.print(" \{s.name}(")
+            var separator := ""
+            for i in 0 .. s.parameters.count {
+                out.print("\{separator}\{cType(s.parameters[i])} param\{i}")
+                separator := ", "
+            }
+            out.print(")")
+            out.printLine(" {")
+            writeCode(code)
+            out.printLine("}")
+            definedStatements.clear()
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
     }
 
     @override
     method start(cl:ClassDecl) {
+        try {
+            if cl.annotations.isSpecialize {
+                return
+            }
+            cg.getClassConstant(cl)
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
     }
 
     @override
     method end(cl:ClassDecl) {
     }
 
-    @override
-    method writeDeclaration(m:MethodDecl) {
+    method writeGlobalDeclaration(g:Code.Global, out:OutputStream) {
+        try {
+            if g.comment !== null {
+                out.printLine("// \{g.comment}")
+            }
+            if g.isExternal {
+                out.print("extern ")
+            }
+            if g.isPrivate {
+                out.print("static ")
+            }
+            def baseType:Code.PrimitiveType
+            def count:Int?
+            match g.type {
+                when Code.PrimitiveType.ARRAY(arrayCount, type) {
+                    baseType := type
+                    count := arrayCount
+                }
+                otherwise {
+                    baseType := g.type
+                    count := null
+                }
+            }
+            out.print(cType(baseType) + " ")
+            if g.isLinkOnce {
+                out.print("__attribute__((weak)) ")
+            }
+            out.print(g.name)
+            if count !== null {
+                out.print("[\{count}]")
+            }
+        }
+        fail(error) {
+            Console.printError(error)
+            System.exit(1)
+        }
+    }
+
+    method writeGlobalDefinition(g:Code.Global, value:Code.Value, out:OutputStream) {
+        try {
+            writeGlobalDeclaration(g, out)
+            out.printLine(" = \{getReference(value)};")
+
+        }
+        fail(error) {
+            Console.printError(error)
+            System.exit(1)
+        }
     }
 
     @override
-    method write(m:MethodDecl, ir:IR) {
-        if m.name = "main" & m.annotations.isClass {
-            main := m
+    method writeGlobal(g:Code.Global, value:Code.Value?) {
+        writeGlobalDeclaration(g, globalDeclarations)
+        def error := globalDeclarations.printLine(";")
+        assert error == null
+        if value !== null {
+            writeGlobalDefinition(g, value, globalDefinitions)
         }
-        def blockIds := Array<Int>(ir.blocks.count)
-        for i in 0 .. ir.blocks.count {
-            def b := ir.blocks[i].id.value
-            while blockIds.count <= b {
-                blockIds.add(-1)
-            }
-            blockIds[b] := i
-        }
-        methodCode[m] := MethodCode(ir.locals, blockIds,
-                ir.blocks.map(b => Array<IR.Statement.ID>(b.ids)),
-                ir.blocks.map(b => Array<IR.Statement>(b.statements)),
-                ir.blocks.map(b => b.ids.map(id => id.value).fold(Int.max)).fold(Int.max))
     }
 
     @override
     method finish() {
-    }
-
-    function align(p:Pointer<UInt8>, alignment:Int):Pointer<UInt8> {
-        def rem := p.asInt % alignment
-        if rem != 0 {
-            return Pointer<UInt8>(p.asInt + alignment - rem)
-        } 
-        return p
-    }
-
-    -- we reserve 8 bytes of working stack space
-    @pre(stack.asInt - stackBase.asInt + memoryLayout.sizeOf(t) < stackSize - 8)
-    method alloca(t:Type):Pointer<UInt8> {
-        stack := align(stack, memoryLayout.alignment(t))
-        def result := stack
-        stack := Pointer<UInt8>(stack.asInt + memoryLayout.sizeOf(t))
-        return result
-    }
-
-    ================================================================================================
-    Returns true if the type in question is a Value which is too big to be passed around inside an
-    `Int64`.
-    ================================================================================================
-    function needsStructPointer(t:Type):Bit {
-        return t.typeKind != Type.Kind.NULLABLE & compiler.isValue(t) & memoryLayout.sizeOf(t) > 8
-    }
-
-    method destroyObject(o:Pointer<UInt8>) {
-        -- call cleanup
--*        def cl := Pointer<Int>(o->Pointer<Int>.get()).convertTo<ClassDecl>()
-        def cleanup := compiler.getVTable(cl)[1]
-        call(cleanup, FixedArray<IR.Value>([IR.Value.INT(o.asInt.asUInt64,
-                compiler.INVALID_TYPE)]))
-
-        o.destroy()*-
-        unreachable
-    }
-
-    method ref(o:Pointer<UInt8>) {
-        if o.asInt = 0 {
-            return
+        try {
+            physicalOut.print(types)
+            physicalOut.print(signatures)
+            physicalOut.print(globalDeclarations)
+            physicalOut.print(methods)
         }
-        def refCntPtr := (o + memoryLayout.pointerSize)->Pointer<Int32>
-        def refCnt := refCntPtr.get()
-        if refCnt = LLVMBackend.NO_REFCNT.asInt32 {
-            return
-        }
-        refCntPtr.set(refCnt + 1)
-    }
-
-    method unref(o:Pointer<UInt8>) {
-        if o.asInt = 0 {
-            return
-        }
-        def refCntPtr := (o + memoryLayout.pointerSize)->Pointer<Int32>
-        def refCnt := refCntPtr.get()
-        if refCnt = LLVMBackend.NO_REFCNT.asInt32 {
-            return
-        }
-        if refCnt = 1 {
-            destroyObject(o)
-        }
-        else {
-            refCntPtr.set(refCnt - 1)
-        }
-    }
-
-    method getBuiltin(m:MethodDecl):(Context, FixedArray<IR.Value>)=&>(Int64) {
-        var builtin := builtins[m]
-        if builtin == null {
-            def signature := m.owner.name + " " + m.declaration
-            match signature {
-                when "frost.core.Frost method frost.core.Frost.alloc(size:builtin_int):builtin_int" {
-                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        return Int(Frost.alloc(context.value(args[0]).asInt.value)).asInt64
-                    }
-                }
-                when "frost.core.Frost method frost.core.Frost.destroy(ptr:builtin_int)" {
-                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        Frost.destroy(context.value(args[0]).asInt.value)
-                        return -1
-                    }
-                }
-                when "frost.core.Frost method frost.core.Frost.ref(o:frost.core.Object?)" {
-                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        self.ref(Pointer<UInt8>(context.value(args[0]).asInt))
-                        return -1
-                    }
-                }
-                when "frost.core.Frost method frost.core.Frost.unref(o:frost.core.Object?)" {
-                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        self.unref(Pointer<UInt8>(context.value(args[0]).asInt))
-                        return -1
-                    }
-                }
-                when "frost.core.Frost method frost.core.Frost.debugPrint(i:builtin_int64)" {
-                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        Frost.debugPrint(context.value(args[0]).value)
-                        return -1
-                    }
-                }
-                when "frost.io.Console method frost.io.Console.print(s:frost.core.String)" {
-                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
--*                        def p := context.value(args[0]).asInt
-                        def s := Pointer<UInt8>(p).convertTo<String>()
-                        Console.print(s)
-                        return -1*-
-                        unreachable
-                    }
-                }
-                when "frost.io.Console function frost.io.Console.errorStream():frost.io.OutputStream" {
-                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        def interpreter := context.interpreter
-                        def compiler := interpreter.compiler
-                        def memoryLayout := compiler.memoryLayout
-                        assert memoryLayout.pointerSize = memoryLayout.intSize
-                        def type := Type("frost.io.FileOutputStream", Type.Kind.CLASS, Position(),
-                                true)
-                        def cl := compiler.getClass(type)!
-                        compiler.resolve(cl)
-                        def base := Pointer<UInt8>.alloc(interpreter.memoryLayout.sizeOf(type))
-                        var current := base
-
-                        -- class
-                        assert compiler.instanceFields(cl)[0].name = "$class"
-                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[0].offset
-                        current->Pointer<ClassDecl>.set(cl)
-                        current += memoryLayout.pointerSize
-
-                        -- refCount
-                        assert compiler.instanceFields(cl)[1].name = "refCount"
-                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[1].offset
-                        current->Pointer<Int32>.set(1)
-                        current += 4
-
-                        -- flags
-                        assert compiler.instanceFields(cl)[2].name = "$flags"
-                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[2].offset
-                        current->Pointer<Int8>.set(0)
-                        current += 4
-
-                        -- byteOrder
-                        assert compiler.instanceFields(cl)[3].name = "byteOrder"
-                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[3].offset
-                        current->Pointer<Int>.set(0)
-                        current += memoryLayout.intSize
-
-                        -- lineEnding
-                        assert compiler.instanceFields(cl)[4].name = "lineEnding"
-                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[4].offset
-                        current->Pointer<Int>.set(context.value(IR.Value.STRING("\n",
-                                compiler.STRING_TYPE)).asInt)
-                        current += memoryLayout.pointerSize
-
-                        -- handle
-                        assert compiler.instanceFields(cl)[5].name = "handle"
-                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[5].offset
-                        current->Pointer<Int>.set(2)
-                        current += memoryLayout.intSize
-
-                        -- closeOnCleanup
-                        assert compiler.instanceFields(cl)[6].name = "closeOnCleanup"
-                        assert current.asInt - base.asInt = compiler.instanceFields(cl)[6].offset
-                        current->Pointer<Bit>.set(false)
-                        current += 1
-
-                        return base.asInt.asInt64
-                    }
-                }
-                when "frost.io.FileOutputStream method frost.io.FileOutputStream.write(ptr:frost.unsafe.Pointer<frost.core.UInt8>, size:frost.core.Int):frost.core.Error?" {
-                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
-                        Console.printLine("printing some stuff to stderr")
-                        return -1
-                    }
-                }
-                otherwise {
-                    Console.printLine("Fatal error: \{signature} is not supported by the " +
-                            "interpreter")
-                    System.exit(1)
-                }
-            }
-            builtins[m] := builtin
-        }
-        return builtin
-    }
-
-    method callBuiltin(context:Context, m:MethodDecl, args:FixedArray<IR.Value>):Int64 {
-        return getBuiltin(m)(context, args)
-    }
-
-    method cast(context:Context, id:IR.Statement.ID, v:IR.Value, t:Type) {
-        def srcType := v.type()
-        def value := context.value(v)
-        if (compiler.isValue(srcType) & !compiler.isValue(t)) | (compiler.isValue(srcType) &
-                t.typeKind = Type.Kind.NULLABLE & t.subtypes[0] = srcType) {
-            -- wrap value
-            def raw := Pointer<UInt8>.alloc(memoryLayout.sizeOfWrapper(srcType))
-            def cl := compiler.getClass(srcType)!
-            raw->Pointer<ClassDecl>.set(cl)
-            var dest := raw + memoryLayout.pointerSize
-            dest->Pointer<Int32>.set(1)
-            -- FIXME alignment
-            dest += 5
-            var src:Pointer<UInt8>
-            if needsStructPointer(srcType) {
-                src := Pointer<UInt8>(value.asInt)
-            }
-            else {
-                stack->Pointer<Int64>.set(value)
-                src := stack
-            }
-            -- FIXME need memcpy
-            for i in 0 .. memoryLayout.sizeOf(cl.type) {
-                dest[i] := src[i]
-            }
-            context.statements[id.value] := raw.asInt.asInt64
-            return
-        }
-        else if (!compiler.isValue(srcType) & compiler.isValue(t)) | (compiler.isValue(t) &
-                srcType.typeKind = Type.Kind.NULLABLE & srcType.subtypes[0] = t) {
-            -- unwrap value
-            -- FIXME alignment
-            def src := Pointer<UInt8>(value.asInt) + 13
-            if needsStructPointer(srcType) {
-                context.statements[id.value] := stack.asInt
-                def size := memoryLayout.sizeOf(srcType)
-                -- FIXME memcpy
-                for i in 0 .. size {
-                    stack[i] := src[i]
-                }
-                var start := stack
-                stack += size
-                context.statements[id.value] := start.asInt.asInt64
-                return
-            }
-            else {
-                context.statements[id.value] := src->Pointer<Int64>.get()
-                return
-            }
-        }
-        if srcType.isBuiltinInt & t.isBuiltinInt {
-            if srcType.size > t.size {
-                context.statements[id.value] := (value.asUInt64 &&
-                        UInt64.MAX >> (64 - t.size).asUInt64).asInt64
-                return
-            }
-            if srcType.size = t.size {
-                context.statements[id.value] := value
-                return
-            }
-        }
-        context.statements[id.value] := value
-    }
-
-    method createStruct(context:Context, id:IR.Statement.ID, cl:ClassDecl,
-            args:FixedArray<IR.Value>) {
-        def size := memoryLayout.sizeOf(cl.type)
-        var current := stack
-        for a in args {
-            def v := context.value(a)
-            match memoryLayout.sizeOf(a.type()) {
-                -- FIXME ALIGNMENT
-                when 1 {
-                    current.set(v.asUInt8)
-                    current += 1
-                }
-                when 2 {
-                    current->Pointer<Int16>.set(v.asInt16)
-                    current += 2
-                }
-                when 4 {
-                    current->Pointer<Int32>.set(v.asInt32)
-                    current += 4
-                }
-                when 8 {
-                    current->Pointer<Int64>.set(v)
-                    current += 8
-                }
-                otherwise {
-                    unreachable, "unsupported value \{a}"
-                }
-            }
-        }
-        if needsStructPointer(cl.type) {
-            context.statements[id.value] := stack.asInt
-            stack := current
-        }
-        else {
-            for i in current.asInt .. stack.asInt + 8 {
-                Pointer<UInt8>(i).set(0)
-            }
-            context.statements[id.value] := stack->Pointer<Int64>.get()
-        }
-    }
-
-    method extractField(context:Context, id:IR.Statement.ID, value:IR.Value, field:FieldDecl) {
-        if needsStructPointer(field.owner.type) {
-            def p := Pointer<UInt8>(getFieldPointer(context, value, field))
-            match memoryLayout.sizeOf(field.type) {
-                when 1 {
-                    context.statements[id.value] := p.get().asInt64
-                }
-                when 2 {
-                    context.statements[id.value] := p->Pointer<UInt16>.get().asInt64
-                }
-                when 4 {
-                    context.statements[id.value] := p->Pointer<UInt32>.get().asInt64
-                }
-                when 8 {
-                    context.statements[id.value] := p->Pointer<UInt64>.get().asInt64
-                }
-                otherwise {
-                    unreachable, "unsupported field size"
-                }
-            }
-        }
-        else {
-            -- need to implement the full behavior...
-            assert compiler.instanceFields(field.owner).count = 1
-            context.statements[id.value] := context.value(value)
-        }
-    }
-
-    method getFieldPointer(context:Context, value:IR.Value, field:FieldDecl):Int {
-        -- force offset to be calculated
-        if field.offset < 0 {
-            memoryLayout.computeLayout(field.owner)
-            assert field.offset >= 0
-        }
-        return context.value(value).asInt + field.offset
-    }
-
-    method getFieldPointer(context:Context, id:IR.Statement.ID, value:IR.Value, field:FieldDecl) {
-        context.statements[id.value] := getFieldPointer(context, value, field)
-    }
-
-    function bit(b:Bit):Int64 {
-        if b {
-            return 1
-        }
-        return 0
-    }
-
-    method binary(context:Context, id:IR.Statement.ID, left:IR.Value, op:Binary.Operator,
-            right:IR.Value) {
-        def leftValue := context.value(left)
-        def rightValue := context.value(right)
-        match op {
-            when Binary.Operator.ADD {
-                context.statements[id.value] := leftValue + rightValue
-            }
-            when Binary.Operator.SUB {
-                context.statements[id.value] := leftValue - rightValue
-            }
-            when Binary.Operator.MUL {
-                context.statements[id.value] := leftValue * rightValue
-            }
-            when Binary.Operator.INTDIV {
-                context.statements[id.value] := leftValue // rightValue
-            }
-            when Binary.Operator.REM {
-                context.statements[id.value] := leftValue % rightValue
-            }
-            when Binary.Operator.BITWISEAND {
-                context.statements[id.value] := leftValue && rightValue
-            }
-            when Binary.Operator.BITWISEOR {
-                context.statements[id.value] := leftValue || rightValue
-            }
-            when Binary.Operator.BITWISEXOR {
-                context.statements[id.value] := leftValue ~~ rightValue
-            }
-            when Binary.Operator.GT {
-                context.statements[id.value] := bit(leftValue > rightValue)
-            }
-            when Binary.Operator.GTEQ {
-                context.statements[id.value] := bit(leftValue >= rightValue)
-            }
-            when Binary.Operator.LT {
-                context.statements[id.value] := bit(leftValue < rightValue)
-            }
-            when Binary.Operator.LTEQ {
-                context.statements[id.value] := bit(leftValue <= rightValue)
-            }
-            when Binary.Operator.IDENTITY {
-                if leftValue = rightValue {
-                    context.statements[id.value] := 1
-                }
-                else {
-                    context.statements[id.value] := 0
-                }
-            }
-            when Binary.Operator.NIDENTITY {
-                if leftValue != rightValue {
-                    context.statements[id.value] := 1
-                }
-                else {
-                    context.statements[id.value] := 0
-                }
-            }
-            otherwise {
-                unreachable, "unsupported binary operator '\{op}'"
-            }
-        }
-    }
-
-    method call(m:MethodDecl, args:FixedArray<IR.Value>):Int64 {
-        return call(m, args, null)
-    }
-
-    method call(m:MethodDecl, args:FixedArray<IR.Value>, selfOverride:Int64?):Int64 {
-        var code := methodCode[m]
-        if code == null {
-            if m.body !== null {
-                compiler.compile(m.owner)
-                code := methodCode[m]
-                assert code !== null
-            }
-            else {
-                return callBuiltin(contexts[0], m, args)
-            }
-        }
-        def start:Int
-        def context := Context(self, code)
-        if selfOverride !== null {
-            context.arguments.add(selfOverride)
-            start := 1
-        }
-        else {
-            start := 0
-        }
-        for i in start .. args.count {
-            context.arguments.add(contexts[0].value(args[i]))
-        }
-        contexts.push(context)
-        var block := 0
-        var statement := 0
-        loop {
-            def id := code.ids[block][statement]
-            def stmt := code.ir[block][statement]
-            Console.printLine(stmt)
-            match stmt {
-                when IR.Statement.BINARY(_, left, op, right, _) {
-                    binary(context, id, left, op, right)
-                }
-                when IR.Statement.BRANCH(_, target) {
-                    block := code.blocks[target.value]
-                    statement := 0
-                    continue
-                }
-                when IR.Statement.CAST(_, v, t, _) {
-                    cast(context, id, v, t)
-                }
-                when IR.Statement.COMMENT {
-                }
-                when IR.Statement.CONDITIONAL_BRANCH(_, test, target1, target2) {
-                    if context.value(test) != 0 {
-                        block := code.blocks[target1.value]
-                    }
-                    else {
-                        block := code.blocks[target2.value]
-                    }
-                    statement := 0
-                    continue
-                }
-                when IR.Statement.CONSTRUCT(_, cl) {
-                    def raw := Pointer<UInt8>.alloc(memoryLayout.sizeOf(cl.type))
-                    raw->Pointer<ClassDecl>.set(cl)
-                    Pointer<Int32>((raw + memoryLayout.pointerSize).asInt).set(1)
-                    context.statements[id.value] := raw.asInt.asInt64
-                }
-                when IR.Statement.CREATE_STRUCT(_, cl, args) {
-                    createStruct(context, id, cl, args)
-                }
-                when IR.Statement.DYNAMIC_CALL(_, value, args) {
--*                    def target := Pointer<UInt8>(context.value(value).asInt).convertTo<MethodDecl>()
-                    def selfOverride:Int64?
-                    if compiler!.isValue(target.owner) {
-                        cast(context, id, args[0], target.owner.type)
-                        selfOverride := context.statements[id.value]
-                    }
-                    else {
-                        selfOverride := null
-                    }
-                    context.statements[id.value] := call(target, args, selfOverride)*-
-                    unreachable
-                }
-                when IR.Statement.EXTRACT_FIELD(_, value, field) {
-                    extractField(context, id, value, field)
-                }
-                when IR.Statement.GET_FIELD_POINTER(_, value, field) {
-                    getFieldPointer(context, id, value, field)
-                }
-                when IR.Statement.GET_VIRTUAL_METHOD(_, target, index, _) {
--*                    def p := Pointer<Int>(context.value(target).asInt)
-                    def cl := Pointer<UInt8>(p.get()).convertTo<ClassDecl>()
-                    def m := compiler.getVTable(cl)[index]
-                    context.statements[id.value] := Frost.addressOf(m)*-
-                    unreachable
-                }
-                when IR.Statement.LOAD(_, source) {
-                    def p := Pointer<Int>(context.value(source).asInt)
-                    if needsStructPointer(source.type()) {
-                        context.statements[id.value] := p.asInt
-                    }
-                    else {
-                        context.statements[id.value] := p.get()
-                    }
-                }
-                when IR.Statement.NEGATE(_, v) {
-                    context.statements[id.value] := -context.value(v)
-                }
-                when IR.Statement.POINTER_GET_INDEX(_, p, index, type) {
-                    def src := Pointer<UInt8>((context.value(p) + context.value(index) *
-                            memoryLayout.sizeOf(type)).asInt)
-                    stack->Pointer<Int64>.set(0)
-                    for i in 0 .. memoryLayout.sizeOf(type).min(8) {
-                        stack[i] := src[i]
-                    }
-                    context.statements[id.value] := stack->Pointer<Int64>.get()
-                }
-                when IR.Statement.POINTER_SET_INDEX(_, value, p, index, type) {
-                    def dest := Pointer<UInt8>((context.value(p) + context.value(index) *
-                            memoryLayout.sizeOf(value.type())).asInt)
-                    def v := context.value(value)
-                    stack->Pointer<Int64>.set(v)
-                    for i in 0 .. memoryLayout.sizeOf(value.type()).min(8) {
-                        dest[i] := stack[i]
-                    }
-                }
-                when IR.Statement.RETURN(_, value) {
-                    contexts.pop()
-                    if value !== null {
-                        return context.value(value)
-                    }
-                    return -1
-                }
-                when IR.Statement.STATIC_CALL(_, target, args) {
-                    context.statements[id.value] := call(target, args)
-                }
-                when IR.Statement.STORE(_, source, dest) {
-                    def v := context.value(source)
-                    def p := context.value(dest)
-                    Pointer<Int64>(p.asInt).set(v)
-                }
-                otherwise {
-                    unreachable, "unsupported statement: \{stmt}"
-                }
-            }
-            statement += 1
+        fail(error) {
+            Console.printError(error)
+            System.exit(1)
         }
     }
 
     method run() {
-        if main == null {
-            Console.printLine("no main method")
-            System.exit(1)
-        }
-        call(main, FixedArray<IR.Value>())
-        contexts.push(Context(self, MethodCode([], [], [], [], 0)))
-        for v in strings.values {
-            destroyObject(Pointer<UInt8>(v.asInt))
-        }
-        strings.clear()
-        contexts.pop()
-        builtins.clear()
-        assert contexts.count = 0
     }
 }
