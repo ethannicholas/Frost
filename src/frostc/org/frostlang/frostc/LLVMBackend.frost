@@ -6,8 +6,6 @@ uses org.frostlang.frostc.parser.Token
 
 @final
 class LLVMBackend : Backend {
-    -- FIXME remove this now that refcounting is reliable; should just be able to give constants a
-    -- starting refcount of 1 and trust they'll never be destroyed
     constant NO_REFCNT := -999
 
     class ClassConstant : Immutable {
@@ -634,9 +632,6 @@ class LLVMBackend : Backend {
     }
 
     method write(s:Code.Signature, code:Code, linkOnce:Bit) {
-        if s.name = "frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT$get_asString$R$frost$core$String$shim" {
-            assert linkOnce
-        }
         out := methods
         try {
             out.print("define ")
@@ -706,7 +701,7 @@ class LLVMBackend : Backend {
                 out.print("unnamed_addr ")
             }
             if value !== null {
-                out.printLine("constant \{getTypedReference(value!)}")
+                out.printLine("constant \{getTypedReference(value)}")
             }
             else {
                 out.printLine("constant \{llvmType(g.type)}")

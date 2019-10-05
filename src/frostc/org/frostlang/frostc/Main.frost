@@ -11,7 +11,6 @@ class Main {
         LLVM
         EXECUTABLE
         OBJECT
-        C_HEADER
         C
         HTML
         STUB
@@ -252,7 +251,6 @@ class Main {
                         when "exe"  { format := Format.EXECUTABLE }
                         when "o"    { format := Format.OBJECT }
                         when "ll"   { format := Format.LLVM }
-                        when "h"    { format := Format.C_HEADER }
                         when "c"    { format := Format.C }
                         when "html" { format := Format.HTML }
                         when "stub" { format := Format.STUB }
@@ -307,6 +305,7 @@ class Main {
                     when Format.EXECUTABLE { extension := "" }
                     when Format.OBJECT     { extension := ".o" }
                     when Format.LLVM       { extension := ".ll" }
+                    when Format.C          { extension := ".c" }
                     when Format.HTML       { extension := ".html" }
                     when Format.STUB       { extension := ".stub" }
                     otherwise {
@@ -333,35 +332,29 @@ class Main {
                 debug)
         {
             def backend:Backend? := null
-            match format {
-                when Format.LLVM, Format.EXECUTABLE, Format.OBJECT {
-                    try {
+            try {
+                match format {
+                    when Format.LLVM {
+                        backend := LLVMBackend(Config.llvmTriple(), outFile.openOutputStream())
+                    }
+                    when Format.EXECUTABLE, Format.OBJECT {
                         backend := LLVMBackend(Config.llvmTriple(),
-                                          outFile.withExtension(".ll").openOutputStream())
+                                outFile.withExtension(".ll").openOutputStream())
                     }
-                    fail(error) {
-                        Console.printErrorLine(error)
-                        System.exit(1)
+                    when Format.C {
+                        backend := CBackend(outFile.openOutputStream())
                     }
-                }
-                when Format.C_HEADER {
-                    backend := HBackend(outFile)
-                }
-                when Format.C {
-                    backend := CBackend(outFile)
-                }
-                when Format.STUB {
-                    try {
+                    when Format.STUB {
                         backend := StubBackend(outFile.openOutputStream())
                     }
-                    fail(error) {
-                        Console.printErrorLine(error)
-                        System.exit(1)
+                    when Format.RUN {
+                        backend := Interpreter()
                     }
                 }
-                when Format.RUN {
-                    backend := Interpreter()
-                }
+            }
+            fail(error) {
+                Console.printErrorLine(error)
+                System.exit(1)
             }
             def errorQueue := MessageQueue<Compiler.Message>()
             def compiler := Compiler(errorQueue, backend, settings)

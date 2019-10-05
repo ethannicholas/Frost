@@ -1052,7 +1052,7 @@ class Call {
                     v), ClassDecl.RAW_VALUE_NAME)
             assert rawValue !== null
             def test := ir.add(IR.Statement.BINARY(position, compiler.extractBuiltinInt(position,
-                    rawValue), Binary.Operator.EQ, IR.Value.INT(0, compiler.INT64_TYPE),
+                    rawValue), Binary.Operator.EQ, IR.Value.INT(0, compiler.BUILTIN_INT64_TYPE),
                     compiler.BUILTIN_BIT_TYPE))
             def success := ir.newBlock("maybe success")
             def failure := ir.newBlock("maybe error")

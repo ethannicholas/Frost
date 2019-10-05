@@ -317,7 +317,6 @@ class CodeGenerator {
                 parameters.add(Code.PrimitiveType.INT)
             }
             var irId := 0
-            out.add(Code.Statement.COMMENT(raw.methodPosition, "shim \{raw.declaration} -> \{effective}"))
             def unrefs := Array<Code.Statement>()
             for i in 0 .. effective.subtypes.count - 1 {
                 def rawType:Type
@@ -522,6 +521,7 @@ class CodeGenerator {
                 return Code.Value.BIT(b)
             }
             when IR.Value.INT(i, type) {
+                assert type.isBuiltinInt
                 return Code.Value.INT(i, primitiveType(type))
             }
             when IR.Value.LOCAL(slot, type) {
@@ -732,7 +732,6 @@ class CodeGenerator {
                     writeIsNonNull(position, result, left)
                     return
                 }
-                out.add(Code.Statement.COMMENT(position, "neq 1"))
                 out.add(Code.Statement.NEQI(position, result, left, right))
             }
             when Binary.Operator.GT {
@@ -848,7 +847,6 @@ class CodeGenerator {
 
     method wrapValue(position:MethodPosition, id:Code.Statement.ID, srcType:Type, value:Code.Value,
             dstType:Type) {
-        out.add(Code.Statement.COMMENT(position, "wrap \{srcType} -> \{dstType}"))
         try {
             def src := compiler.getClass(srcType)
             assert src !== null
@@ -907,7 +905,6 @@ class CodeGenerator {
 
     method unwrapValue(position:MethodPosition, id:Code.Statement.ID, srcType:Type,
             value:Code.Value, dstType:Type) {
-        out.add(Code.Statement.COMMENT(position, "unwrap \{srcType} -> \{dstType}"))
         try {
             def target := compiler.getClass(dstType)
             assert target !== null
@@ -1007,9 +1004,7 @@ class CodeGenerator {
             return
         }
         else if !srcValue & targetValue {
-            out.add(Code.Statement.COMMENT(position, "unwrapping \{value} -> \{target}"))
             unwrapValue(position, mapId(id), value.type(), convertValue(value), target)
-            out.add(Code.Statement.COMMENT(position, "finished unwrapping \{value} -> \{target}"))
             return
         }
         else if srcValue & target.typeKind = Type.Kind.NULLABLE & target.subtypes[0] = src {
@@ -1311,8 +1306,7 @@ class CodeGenerator {
                 out.add(Code.Statement.ADDI(position, vtableSlot,
                         Code.Value.STATEMENT(cl, Code.PrimitiveType.INT),
                         Code.Value.INT((ccType.elementOffset(VTABLE_INDEX) + index *
-                            POINTER_SIZE).asUInt64,
-                        Code.PrimitiveType.INT)))
+                            POINTER_SIZE).asUInt64, Code.PrimitiveType.INT)))
                 out.add(Code.Statement.LOAD(position, mapId(id), 
                         Code.Value.STATEMENT(vtableSlot, Code.PrimitiveType.INT),
                         Code.PrimitiveType.INT))
@@ -1465,6 +1459,8 @@ class CodeGenerator {
         statements.clear()
         blocks.clear()
         refs.clear()
+        nextStatementID := 0
+        nextBlockID := 0
         return result
     }
 }
