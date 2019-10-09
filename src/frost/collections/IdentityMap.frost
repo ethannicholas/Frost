@@ -167,7 +167,6 @@ class IdentityMap<K, V> : Map<K, V> {
     
     @override
     method remove(key:K) {
-        Console.printLine("removing: \{key}")
         changeCount += 1
         def index := indexFor(key)
         var e := contents[index]

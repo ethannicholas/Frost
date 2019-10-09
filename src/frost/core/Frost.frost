@@ -88,6 +88,10 @@ class Frost {
 
     @class
     @external
+    function intBitsToFloat(i:Int64):Real64
+
+    @class
+    @external
     function addressOf(o:Object):Int
 
     @class

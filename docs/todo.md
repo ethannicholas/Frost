@@ -1,8 +1,3 @@
-Rearchitecture
-==============
-
-inlining
-
 Immediate
 =========
 
@@ -16,6 +11,10 @@ var parameters
 all tests working (incl. C)
 verify build & run from directories containing spaces
 enforce class directory and filename rules
+Non-chained match
+Collapse single-element structs in CodeGenerator
+Are value inits inlinable? Doesn't look like the basic type inits are being inlined.
+Compiler performance
 
 Eventually
 ==========

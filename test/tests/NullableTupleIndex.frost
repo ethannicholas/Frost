@@ -1,0 +1,5 @@
+method main() {
+    def t:(Int, String)? := (5, "Hello")
+    def s:String := t[1]
+    Console.printLine(s)
+}

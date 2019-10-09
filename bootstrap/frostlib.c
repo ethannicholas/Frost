@@ -847,9 +847,12 @@ String* frost$core$Real64$get_asString$R$frost$core$String(Real64 d) {
     return result;
 }
 
-void frost$core$Frost$floatToIntBits$frost$core$Real64$R$frost$core$Int64(Int64* result,
-        Real64 d) {
+void frost$core$Frost$floatToIntBits$frost$core$Real64$R$frost$core$Int64(Int64* result, Real64 d) {
     *result = *(Int64*) &d;
+}
+
+void frost$core$Frost$intBitsToFloat$frost$core$Int64$R$frost$core$Real64(Real64* result, Int64 i) {
+    *result = *(Real64*) &i;
 }
 
 float frost$core$Frost$sqrt$builtin_float32$R$builtin_float32(float v) {

@@ -47,6 +47,9 @@ class CodeGenerator {
     @weak
     def compiler:Compiler
 
+    @weak
+    def backend:Backend
+
     var nextStatementID := 0
 
     var nextBlockID := 0
@@ -55,7 +58,7 @@ class CodeGenerator {
 
     def globals := Array<Code.Global>()
 
-    def globalValues := Array<Code.Value?>()
+    def globalIndices := IdentityMap<Code.Global, Int>()
 
     def classConstants := IdentityMap<ClassDecl, Code.Value>()
 
@@ -77,6 +80,8 @@ class CodeGenerator {
 
     def blocks := HashMap<IR.Block.ID, Code.Block.ID>()
 
+    var allClassConstants := false
+
     -- When we want to refer to a statement, we first check this map and use the value it contains,
     -- if any. We use this to handle IR statements which don't actually do anything, like casting
     -- String to Object - we just add a ref for the statement's ID to the value it was going to
@@ -85,8 +90,9 @@ class CodeGenerator {
 
     def nameCache := IdentityMap<MethodDecl, String>()
 
-    init(compiler:Compiler) {
+    init(compiler:Compiler, backend:Backend) {
         self.compiler := compiler
+        self.backend := backend
     }
 
     ================================================================================================
@@ -127,8 +133,7 @@ class CodeGenerator {
                 Code.PrimitiveType.ARRAY(s.byteLength, Code.PrimitiveType.INT8), null,
                 Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
         def charsRef := Code.Value.GLOBAL_POINTER(charsIndex)
-        globals.add(chars)
-        globalValues.add(Code.Value.ARRAY(Code.PrimitiveType.INT8,
+        writeGlobalValue(chars, Code.Value.ARRAY(Code.PrimitiveType.INT8,
                 FixedArray<Code.Value>.from(s.utf8.map(c => Code.Value.INT(c.asUInt64,
                     Code.PrimitiveType.INT8)))))
 
@@ -145,8 +150,7 @@ class CodeGenerator {
         def string := Code.Global("string\{stringIndex}",
                 Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(types)),
                  s.format("frost"), Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
-        globals.add(string)
-        globalValues.add(Code.Value.STRUCT(FixedArray<Code.Value>.from([
+        writeGlobalValue(string, Code.Value.STRUCT(FixedArray<Code.Value>.from([
             cc,
             Code.Value.INT(NO_REFCNT.asUInt64, Code.PrimitiveType.INT32),
             Code.Value.INT(0, Code.PrimitiveType.INT8),
@@ -179,10 +183,10 @@ class CodeGenerator {
                 ))
                 def value := Code.Value.STRUCT(FixedArray<Code.Value>.from(fields))
                 def index := globals.count
-                globals.add(Code.Global(escapeName(cl.name) + "$" + escapeName(intfType.name) +
-                        "$itable", value.type, null,
-                        cl.isSpecialization().choose(Code.Global.LINKONCE_FLAG, 0)))
-                globalValues.add(value)
+                writeGlobalValue(Code.Global(escapeName(cl.name) + "$" +
+                        escapeName(intfType.name) + "$itable", value.type, null,
+                        cl.isSpecialization().choose(Code.Global.LINKONCE_FLAG, 0)),
+                        value)
                 previous := Code.Value.GLOBAL_POINTER(index)
             }
             def index := globals.count
@@ -243,11 +247,9 @@ class CodeGenerator {
                     flags)
             def index := globals.count
             result := Code.Value.GLOBAL_POINTER(index)
-            globals.add(cc)
-            globalValues.add(null)
+            writeGlobal(cc)
             classConstants[cl] := result
-
-            if !cl.external {
+            if allClassConstants | !cl.external {
                 def fields := Array<Code.Value>()
                 fields.add(getClassConstant(compiler.getClass("frost.core.Class")!))
                 fields.add(Code.Value.INT(NO_REFCNT.asUInt64, Code.PrimitiveType.INT32))
@@ -267,7 +269,7 @@ class CodeGenerator {
                             Code.Value.METHOD_POINTER(self.getMethodTableEntry(m)),
                             Code.Value.INT(0, Code.PrimitiveType.INT))))
                 ))
-                globalValues[index] := Code.Value.STRUCT(FixedArray<Code.Value>.from(fields))
+                writeGlobalValue(cc, Code.Value.STRUCT(FixedArray<Code.Value>.from(fields)))
             }
         }
         return result
@@ -339,7 +341,7 @@ class CodeGenerator {
                         convertCast(position, cast, IR.Value.REF(cast,rawType),
                                 compiler.OBJECT_TYPE)
                         unrefs.add(Code.Statement.STATIC_CALL_VOID(position, Code.Signature(null,
-                                "frost$core$Frost$unref$frost$core$Object$Q",
+                                null, "frost$core$Frost$unref$frost$core$Object$Q",
                                 FixedArray<Code.PrimitiveType>.from([Code.PrimitiveType.INT]),
                                 true), FixedArray<Code.Value>.from([
                                     convertValue(IR.Value.REF(objectCast, compiler.OBJECT_TYPE))])))
@@ -375,7 +377,7 @@ class CodeGenerator {
             statements := oldStatements
             blocks := oldBlocks
             out := oldOut
-            def shim := (Code.Signature(effectiveReturnType, getName(raw) + "$shim",
+            def shim := (Code.Signature(null, effectiveReturnType, getName(raw) + "$shim",
                     FixedArray<Code.PrimitiveType>.from(parameters), false), code)
             methodShims[raw] := shim
             return shim
@@ -993,27 +995,29 @@ class CodeGenerator {
             }
             return
         }
-        def srcClass := compiler.getClass(src)
-        assert srcClass !== null, "class \{src} not found in cast at \{position}"
-        def targetClass := compiler.getClass(target)
-        assert targetClass !== null, "class \{target} not found"
-        def srcValue := compiler.isValue(src)
-        def targetValue := compiler.isValue(target)
-        if srcValue & !targetValue {
-            wrapValue(position, mapId(id), value.type(), convertValue(value), target)
-            return
-        }
-        else if !srcValue & targetValue {
-            unwrapValue(position, mapId(id), value.type(), convertValue(value), target)
-            return
-        }
-        else if srcValue & target.typeKind = Type.Kind.NULLABLE & target.subtypes[0] = src {
-            toNullableValue(position, mapId(id), value.type(), convertValue(value), target)
-            return
-        }
-        else if targetValue & src.typeKind = Type.Kind.NULLABLE & src.subtypes[0] = target {
-            toNonNullableValue(position, mapId(id), value.type(), convertValue(value), target)
-            return
+        if src.typeKind != Type.Kind.BUILTIN_INT {
+            def srcClass := compiler.getClass(src)
+            assert srcClass !== null, "class \{src} not found in cast at \{position}"
+            def targetClass := compiler.getClass(target)
+            assert targetClass !== null, "class \{target} not found"
+            def srcValue := compiler.isValue(src)
+            def targetValue := compiler.isValue(target)
+            if srcValue & !targetValue {
+                wrapValue(position, mapId(id), value.type(), convertValue(value), target)
+                return
+            }
+            else if !srcValue & targetValue {
+                unwrapValue(position, mapId(id), value.type(), convertValue(value), target)
+                return
+            }
+            else if srcValue & target.typeKind = Type.Kind.NULLABLE & target.subtypes[0] = src {
+                toNullableValue(position, mapId(id), value.type(), convertValue(value), target)
+                return
+            }
+            else if targetValue & src.typeKind = Type.Kind.NULLABLE & src.subtypes[0] = target {
+                toNonNullableValue(position, mapId(id), value.type(), convertValue(value), target)
+                return
+            }
         }
         -- else just a straight pointer cast, we don't actually have to do anything
         refs[id] := convertValue(value)
@@ -1100,8 +1104,8 @@ class CodeGenerator {
         var result := declarations[m]
         if result == null {
             if !compiler.resolve(m) {
-                return Code.Signature(null, "<error>", FixedArray<Code.PrimitiveType>.from([]),
-                        true)
+                return Code.Signature(null, null, "<error>",
+                        FixedArray<Code.PrimitiveType>.from([]), true)
             }
             def parameters := Array<Code.PrimitiveType>()
             def returnType:Code.PrimitiveType?
@@ -1127,7 +1131,7 @@ class CodeGenerator {
             if m.annotations.isPointerSize {
                 parameters.add(Code.PrimitiveType.INT)
             }
-            result := Code.Signature(returnType, getName(m),
+            result := Code.Signature(m, returnType, getName(m),
                     FixedArray<Code.PrimitiveType>.from(parameters),
                     m.owner.external | m.annotations.isExternal)
             declarations[m] := result
@@ -1137,7 +1141,7 @@ class CodeGenerator {
 
     method getMethodTableEntry(m:MethodDecl):Code.Signature {
         if !compiler.resolve(m) {
-            return Code.Signature(null, "<error>", FixedArray<Code.PrimitiveType>.from([]),
+            return Code.Signature(null, null, "<error>", FixedArray<Code.PrimitiveType>.from([]),
                     true)
         }
         getSignature(m)
@@ -1167,14 +1171,14 @@ class CodeGenerator {
                 if m.annotations.isPointerSize {
                     parameters.add(Code.PrimitiveType.INT)
                 }
-                return Code.Signature(null, resultName, FixedArray<Code.PrimitiveType>.from(
+                return Code.Signature(m, null, resultName, FixedArray<Code.PrimitiveType>.from(
                         parameters), m.owner.external)
             }
             def returnType:Code.PrimitiveType?
             if inherited.returnType != compiler.VOID_TYPE {
                 returnType := primitiveType(inherited.returnType)
             }
-            return Code.Signature(returnType, resultName,
+            return Code.Signature(m, returnType, resultName,
                     FixedArray<Code.PrimitiveType>.from(inherited.parameterTypes.map(
                         primitiveType)), m.owner.external)
         }
@@ -1193,7 +1197,7 @@ class CodeGenerator {
             else {
                 returnType := null
             }
-            return Code.Signature(returnType, getName(m),
+            return Code.Signature(m, returnType, getName(m),
                     FixedArray<Code.PrimitiveType>.from(parameters), m.owner.external)
         }
     }
@@ -1312,10 +1316,12 @@ class CodeGenerator {
                         Code.PrimitiveType.INT))
             }
             when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
-                def signature := Code.Signature(Code.PrimitiveType.INT, "frostGetInterfaceMethod",
-                        FixedArray<Code.PrimitiveType>.from([Code.PrimitiveType.INT,
-                            Code.PrimitiveType.INT,
-                            Code.PrimitiveType.INT]), true)
+                def signature := Code.Signature(null, Code.PrimitiveType.INT,
+                        "frostGetInterfaceMethod",
+                            FixedArray<Code.PrimitiveType>.from([Code.PrimitiveType.INT,
+                                Code.PrimitiveType.INT,
+                                Code.PrimitiveType.INT]),
+                            true)
                 out.add(Code.Statement.STATIC_CALL(position, mapId(id), signature,
                         FixedArray<Code.Value>.from([convertValue(value), getClassConstant(cl),
                             Code.Value.INT(index.asUInt64, Code.PrimitiveType.INT)])))
@@ -1417,6 +1423,20 @@ class CodeGenerator {
                 unreachable, "unsupported statement \{s}"
             }
         }
+    }
+
+    method writeGlobal(global:Code.Global) {
+        globalIndices[global] := globals.count
+        globals.add(global)
+        backend.writeGlobal(global)
+    }
+
+    method writeGlobalValue(global:Code.Global, value:Code.Value) {
+        if globalIndices[global] == null {
+            globalIndices[global] := globals.count
+            globals.add(global)
+        }
+        backend.writeGlobalValue(global, value)
     }
 
     method createBlock(id:Code.Block.ID) {

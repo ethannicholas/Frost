@@ -31,6 +31,8 @@ class LLVMBackend : Backend {
 
     var varCount := 0
 
+    def externalGlobals := IdentitySet<Code.Global>()
+
     def debugTypes := IdentityMap<Type, String>()
 
     var metadataCount := 0
@@ -344,7 +346,6 @@ class LLVMBackend : Backend {
                     }
                 }
                 return "0x\{Frost.floatToIntBits(r64):x}"
-
             }
             when Code.Value.METHOD_POINTER(signature) {
                 return "ptrtoint(\{llvmType(signature)}* @\{signature.name} to \{INT_TYPE})"
@@ -655,7 +656,7 @@ class LLVMBackend : Backend {
                     def ptrCast := nextVar()
                     out.printLine("\{ptrCast} = inttoptr \{getTypedReference(m)} to i8*")
                     def methodCast := nextVar()
-                    def llt := llvmType(Code.Signature(returnType, "<dynamic>",
+                    def llt := llvmType(Code.Signature(null, returnType, "<dynamic>",
                             FixedArray<Code.PrimitiveType>.from(args.map(a => a.type)), false))
                     out.printLine("\{methodCast} = bitcast i8* \{ptrCast} to \{llt}*")
                     out.print("\{name(result)} = call \{llvmType(returnType)} \{methodCast}(")
@@ -670,7 +671,7 @@ class LLVMBackend : Backend {
                     def ptrCast := nextVar()
                     out.printLine("\{ptrCast} = inttoptr \{getTypedReference(m)} to i8*")
                     def methodCast := nextVar()
-                    def llt := llvmType(Code.Signature(null, "<dynamic>",
+                    def llt := llvmType(Code.Signature(null, null, "<dynamic>",
                             FixedArray<Code.PrimitiveType>.from(args.map(a => a.type)), false))
                     out.printLine("\{methodCast} = bitcast i8* \{ptrCast} to \{llt}*")
                     out.print("call void \{methodCast}(")
@@ -843,15 +844,19 @@ class LLVMBackend : Backend {
     }
 
     @override
-    method writeGlobal(g:Code.Global, value:Code.Value?) {
+    method writeGlobal(g:Code.Global) {
+        externalGlobals.add(g)
+    }
+
+    @override
+    method writeGlobalValue(g:Code.Global, value:Code.Value) {
+        externalGlobals.remove(g)
         try {
             if g.comment !== null {
                 globals.printLine("; \{g.comment}")
             }
             globals.print("@\{g.name} = ")
-            if g.isExternal {
-                globals.print("external ")
-            }
+            assert !g.isExternal
             if g.isPrivate {
                 globals.print("private ")
             }
@@ -861,12 +866,7 @@ class LLVMBackend : Backend {
             if g.isUnnamedAddr {
                 globals.print("unnamed_addr ")
             }
-            if value !== null {
-                globals.printLine("constant \{getTypedReference(value)}")
-            }
-            else {
-                globals.printLine("constant \{llvmType(g.type)}")
-            }
+            globals.printLine("constant \{getTypedReference(value)}")
         }
         fail(error) {
             Console.printError(error)
@@ -878,9 +878,27 @@ class LLVMBackend : Backend {
     method finish() {
         try {
             physicalOut.print(globals.finish())
+            for g in externalGlobals {
+                if g.comment !== null {
+                    physicalOut.printLine("; \{g.comment}")
+                }
+                assert g.isExternal
+                physicalOut.print("@\{g.name} = external ")
+                if g.isPrivate {
+                    physicalOut.print("private ")
+                }
+                if g.isLinkOnce {
+                    physicalOut.print("linkonce_odr ")
+                }
+                if g.isUnnamedAddr {
+                    physicalOut.print("unnamed_addr ")
+                }
+                physicalOut.printLine("constant \{llvmType(g.type)}")
+            }
             physicalOut.print(signatures.finish())
             physicalOut.print(methods.finish())
             physicalOut.print(metadata.finish())
+            physicalOut.close()
         }
         fail(error) {
             Console.printError(error)

@@ -565,7 +565,7 @@ class Compiler {
         self.root := SymbolTable(self)
         self.parser := Parser(errorQueue)
         self.symbolTable := root
-        self.cg := CodeGenerator(self)
+        self.cg := CodeGenerator(self, backend)
         self.backend := backend
         self.errorQueue := errorQueue
         root.add(BUILTIN_BIT_TYPE)
@@ -6131,10 +6131,6 @@ class Compiler {
         while pendingClasses.count > 0 {
             def cl := pendingClasses.removeIndex(pendingClasses.count - 1)
             compile(cl)
-        }
-        assert cg.globals.count = cg.globalValues.count
-        for g in cg.globals.combine(cg.globalValues) {
-            backend.writeGlobal(g[0], g[1])
         }
         for decl in cg.declarations.values.filter(decl => decl.isExternal) {
             backend.writeSignature(decl)

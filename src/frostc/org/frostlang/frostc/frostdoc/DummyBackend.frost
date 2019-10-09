@@ -25,7 +25,11 @@ class DummyBackend : Backend {
     }
 
     @override
-    method writeGlobal(g:Code.Global, value:Code.Value?) {
+    method writeGlobal(g:Code.Global) {
+    }
+
+    @override
+    method writeGlobalValue(g:Code.Global, value:Code.Value) {
     }
 
     @override

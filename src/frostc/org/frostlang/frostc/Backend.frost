@@ -25,7 +25,19 @@ interface Backend {
     ================================================================================================
     method writeSignature(s:Code.Signature)
 
-    method writeGlobal(g:Code.Global, value:Code.Value?)
+    ================================================================================================
+    Reserves a global slot. The order in which globals are written is important, as the
+    GLOBAL_POINTER instruction references them by the order in which they were sent to the backend.
+    `writeGlobal` may or may not be followed by a call to `writeGlobalValue` which gives the global
+    its value; if it is not, this global has external linkage and is merely a declaration.
+    ================================================================================================
+    method writeGlobal(g:Code.Global)
+
+    ================================================================================================
+    Either writes a new global with a value, or adds a value to a global previously written with
+    `writeGlobal`.
+    ================================================================================================
+    method writeGlobalValue(g:Code.Global, value:Code.Value)
 
     method writeMethod(m:MethodDecl?, s:Code.Signature, code:Code, linkOnce:Bit)
 

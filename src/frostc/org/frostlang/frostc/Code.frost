@@ -37,7 +37,7 @@ class Code {
             return false
         }
 
-        @pre(align != 0)
+        @pre(align > 0)
         @post(@return % align = 0)
         function alignUp(offset:Int, align:Int):Int {
             if offset % align != 0 {
@@ -107,7 +107,7 @@ class Code {
         function get_alignment():Int {
             match self {
                 when STRUCT(types) {
-                    return types.map(t => t.size).fold(Int.max)
+                    return types.map(t => t.alignment).fold(Int.max, 1)
                 }
                 when ARRAY(count, type) {
                     return type.alignment
@@ -125,6 +125,8 @@ class Code {
     the signature you would call from a C program.
     ================================================================================================
     class Signature {
+        def methodDecl:MethodDecl?
+
         def returnType:PrimitiveType?
 
         def name:String
@@ -135,8 +137,9 @@ class Code {
         -- @external annotation
         def isExternal:Bit
 
-        init(returnType:PrimitiveType?, name:String, parameters:FixedArray<PrimitiveType>,
-                isExternal:Bit) {
+        init(methodDecl:MethodDecl?, returnType:PrimitiveType?, name:String,
+                parameters:FixedArray<PrimitiveType>, isExternal:Bit) {
+            self.methodDecl := methodDecl
             self.returnType := returnType
             self.name := name
             self.parameters := parameters
@@ -146,9 +149,9 @@ class Code {
         @override
         function get_asString():String {
             if returnType !== null {
-                return "\{name}(\{parameters.join(", ")}):\{returnType} - \{isExternal}"
+                return "\{name}(\{parameters.join(", ")}):\{returnType}"
             }
-            return "\{name}(\{parameters.join(", ")}) - \{isExternal}"
+            return "\{name}(\{parameters.join(", ")})"
         }
     }
 

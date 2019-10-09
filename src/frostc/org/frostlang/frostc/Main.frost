@@ -358,6 +358,9 @@ class Main {
             }
             def errorQueue := MessageQueue<Compiler.Message>()
             def compiler := Compiler(errorQueue, backend, settings)
+            if format = Format.RUN {
+                compiler.cg.allClassConstants := true
+            }
             if format = Format.HTML {
                 if root == null {
                     root := "."
@@ -377,11 +380,11 @@ class Main {
             for s in sources {
                 compiler.compile(s)
             }
+            compiler.finish()
             if format = Format.RUN {
                 backend->Interpreter.run()
                 return
             }
-            compiler.finish()
             while errorQueue.hasMessage() {
                 def error := errorQueue.getMessage()
                 -- FIXME stderr

@@ -41,6 +41,8 @@ class CBackend : Backend {
 
     def structs := HashMap<String, String>()
 
+    def externalGlobals := IdentitySet<Code.Global>()
+
     def debugTypes := IdentityMap<Type, String>()
 
     var metadataCount := 0
@@ -226,7 +228,6 @@ class CBackend : Backend {
                     }
                 }
                 return r64.asString
-
             }
             when Code.Value.METHOD_POINTER(signature) {
                 return "(intptr_t) &" + signature.name
@@ -337,7 +338,7 @@ class CBackend : Backend {
             if returnType !== null {
                 out.print("\{name(id)} = ")
             }
-            def ct := cType(Code.Signature(returnType, "<dynamic>",
+            def ct := cType(Code.Signature(null, returnType, "<dynamic>",
                     FixedArray<Code.PrimitiveType>.from(args.map(a => a.type)), false))
             out.printLine("((\{ct}) \{getReference(m)})(" +
                     "\{args.map(getReference).join(", ")});")
@@ -724,7 +725,13 @@ class CBackend : Backend {
     }
 
     @override
-    method writeGlobal(g:Code.Global, value:Code.Value?) {
+    method writeGlobal(g:Code.Global) {
+        externalGlobals.add(g)
+    }
+
+    @override
+    method writeGlobalValue(g:Code.Global, value:Code.Value) {
+        externalGlobals.remove(g)
         writeGlobalDeclaration(g, globalDeclarations)
         def error := globalDeclarations.printLine(";")
         assert error == null
@@ -739,6 +746,9 @@ class CBackend : Backend {
             physicalOut.print(types.finish())
             physicalOut.print(signatures.finish())
             physicalOut.print(globalDeclarations.finish())
+            for g in externalGlobals {
+                writeGlobalDeclaration(g, physicalOut)
+            }
             physicalOut.print(globalDefinitions.finish())
             physicalOut.print(methods.finish())
         }
