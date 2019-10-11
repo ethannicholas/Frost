@@ -1,0 +1,139 @@
+package org.frostlang.frostc.pass
+
+uses org.frostlang.frostc.LinkedList
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.Type
+
+====================================================================================================
+Removes unnecessary ref/unref pairs in the same basic block. It is always safe to remove an unref
+followed a ref of the same object, since clearly the first unref didn't cause the object to die. It
+is safe to remove a ref followed by an unref as long as there are no intervening unrefs; we boil
+this rule down to "as long as there are no methods called in between the two" since it's hard to
+know whether a method could cause an unref to happen.
+====================================================================================================
+class RemoveRefUnrefPairs {
+    @class
+    function keyFor(value:IR.Value):String {
+        match value {
+            when IR.Value.REF(id, _) {
+                return "$" + id.value
+            }
+        }
+        return value.asString
+    }
+
+    method process(ir:IR, analysis:Analyzer):Bit {
+        var changed := false
+        -- these point to the *predecessor* of the node (so we can remove it), or null for the head
+        def refs := HashMap<String,
+                Array<(LinkedList.Node<IR.Statement.ID>?, LinkedList.Node<IR.Statement>?)>>()
+        def unrefs := HashMap<String,
+                Array<(LinkedList.Node<IR.Statement.ID>?, LinkedList.Node<IR.Statement>?)>>()
+        def casts := HashMap<String, String>()
+        for b in ir.blocks {
+            var previous:LinkedList.Node<IR.Statement>? := null
+            var node := b.statements.head
+            var previousId:LinkedList.Node<IR.Statement.ID>? := null
+            var id := b.ids.head
+            while node !== null {
+                match node.value {
+                    when IR.Statement.CAST(_, v, t, _) {
+                        if analysis.compiler.cg.primitiveType(v.type()).asString =
+                                analysis.compiler.cg.primitiveType(t).asString {
+                            casts["$" + id.value.value] := keyFor(v)
+                        }
+                    }
+                    when IR.Statement.STATIC_CALL(_, m, args) {
+                        if m.owner.name = "frost.core.Frost" {
+                            if m.name = "ref" {
+                                assert args.count = 1
+                                var key := keyFor(args[0])
+                                while casts.contains(key) {
+                                    key := casts[key]
+                                }
+                                var unrefList := unrefs[key]
+                                if unrefList !== null {
+                                    def p := unrefList.last
+                                    unrefList.removeIndex(unrefList.count - 1)
+                                    if p[0] == null {
+                                        assert p[1] == null
+                                        b.ids.head := b.ids.head.next
+                                        b.statements.head := b.statements.head.next
+                                    }
+                                    else {
+                                        assert p[1] !== null
+                                        p[0].next := p[0].next.next
+                                        p[1].next := p[1].next.next
+                                    }
+                                    previousId.next := previousId.next.next
+                                    previous.next := previous.next.next
+                                    return true -- FIXME handle multiples
+                                }
+                                else {
+                                    var refList := refs[key]
+                                    if refList == null {
+                                        refList := Array<(LinkedList.Node<IR.Statement.ID>?,
+                                                LinkedList.Node<IR.Statement>?)>()
+                                        refs[key] := refList
+                                    }
+                                    refList.add((previousId, previous))
+                                }
+                            }
+                            else if m.name = "unref" {
+                                assert args.count = 1
+                                var key := keyFor(args[0])
+                                while casts.contains(key) {
+                                    key := casts[key]
+                                }
+                                var refList := refs[key]
+                                if refList !== null {
+                                    def p := refList.last
+                                    if p[0] == null {
+                                        assert p[1] == null
+                                        b.ids.head := b.ids.head.next
+                                        b.statements.head := b.statements.head.next
+                                    }
+                                    else {
+                                        assert p[1] !== null
+                                        p[0].next := p[0].next.next
+                                        p[1].next := p[1].next.next
+                                    }
+                                    refList.removeIndex(refList.count - 1)
+                                    previousId.next := previousId.next.next
+                                    previous.next := previous.next.next
+                                    return true -- FIXME handle multiples
+                                }
+                                else {
+                                    var unrefList := unrefs[key]
+                                    if unrefList == null {
+                                        unrefList := Array<(LinkedList.Node<IR.Statement.ID>?,
+                                                LinkedList.Node<IR.Statement>?)>()
+                                        unrefs[key] := unrefList
+                                    }
+                                    unrefList.add((previousId, previous))
+                                }
+                            }
+                        }
+                        else if m.methodKind = MethodDecl.Kind.METHOD {
+                            refs.clear()
+                        }
+                    }
+                    when IR.Statement.DYNAMIC_CALL(_, m, _) {
+                        if m.type().typeKind = Type.Kind.METHOD |
+                                m.type().typeKind = Type.Kind.IMMUTABLE_METHOD {
+                            refs.clear()
+                        }
+                    }
+                }
+                previous := node
+                node := node.next
+                previousId := id
+                id := id.next
+            }
+            refs.clear()
+            unrefs.clear()
+        }
+        return changed
+    }
+}

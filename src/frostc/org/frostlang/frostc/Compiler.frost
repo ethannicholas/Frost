@@ -23,6 +23,7 @@ uses org.frostlang.frostc.lvalue.VariableLValue
 uses org.frostlang.frostc.pass.Analyzer
 uses org.frostlang.frostc.pass.MergeBlocks
 uses org.frostlang.frostc.pass.RemoveAsserts
+uses org.frostlang.frostc.pass.RemoveRefUnrefPairs
 uses org.frostlang.frostc.pass.RemoveUnreachableBlocks
 uses org.frostlang.frostc.statement.Assert
 uses org.frostlang.frostc.statement.Assignment
@@ -5352,7 +5353,7 @@ class Compiler {
         }
         def position := MethodPosition(s.position(), currentMethodIndex)
         if position.file >= 0 {
-            ir.add(IR.Statement.COMMENT(position, "\{files[position.file]}:\{position.line}"))
+            ir.add(IR.Statement.COMMENT(position, "\{files[position.file].name}:\{position.line}"))
         }
         else {
             ir.add(IR.Statement.COMMENT(position, "<no location>"))
@@ -5739,6 +5740,7 @@ class Compiler {
                 changed := false
                 changed |= RemoveUnreachableBlocks().process(ir, analysis)
                 changed |= MergeBlocks().process(ir, analysis)
+                changed |= RemoveRefUnrefPairs().process(ir, analysis)
             }
             while changed
         }

@@ -64,6 +64,8 @@ class CodeGenerator {
 
     def methodShims := IdentityMap<MethodDecl, (Code.Signature, Code)>()
 
+    def strings := HashMap<String, Code.Value>()
+
     def currentMethod:MethodDecl?
 
     def ir:IR?
@@ -80,6 +82,8 @@ class CodeGenerator {
 
     def blocks := HashMap<IR.Block.ID, Code.Block.ID>()
 
+    def casts := HashMap<(String, Type), IR.Statement.ID>()
+
     var allClassConstants := false
 
     -- When we want to refer to a statement, we first check this map and use the value it contains,
@@ -87,6 +91,10 @@ class CodeGenerator {
     -- String to Object - we just add a ref for the statement's ID to the value it was going to
     -- operate on.
     def refs := HashMap<IR.Statement.ID, Code.Value>()
+
+    -- When we encounter a reference to a statement before the statement itself, we need to keep
+    -- track of it in case it gets remapped.
+    def earlyRefs := HashMap<IR.Statement.ID, Array<Code.ValueRef>>()
 
     def nameCache := IdentityMap<MethodDecl, String>()
 
@@ -115,12 +123,20 @@ class CodeGenerator {
         if !m.returnType.isClass {
             return false
         }
-        def result := m.annotations.isExternal & m.returnType.isClass &
-                compiler.isValue(compiler.getClass(m.returnType))
-        -- if an external method requires struct indirection, it will have a different signature
-        -- than a non-external method; this means this feature doesn't play nice with overriding. We
-        -- can fix this down the road with shims, but for right now just assert that a method
-        -- requiring struct indirection is not an override and cannot be overridden
+        var result:Bit
+        if m.annotations.isExternal {
+            match primitiveType(m.returnType) {
+                when Code.PrimitiveType.STRUCT {
+                    result := true
+                }
+                otherwise {
+                    result := false
+                }
+            }
+        }
+        else {
+            result := false
+        }
         assert !result | (!m.annotations.isOverride & (m.annotations.isFinal |
                 m.annotations.isClass)), "invalid struct indirection on \{m.signature}"
         return result
@@ -217,8 +233,7 @@ class CodeGenerator {
                 assert compiler.getVTable(compiler.getClass("frost.core.Value")!).count =
                         VALUE_METHOD_COUNT
                 vtable := vtable[..VALUE_METHOD_COUNT]
-                -- FIXME temporary, just use $class once the switchover to Code is complete
-                name := escapeName(cl.name) + "$wrapperclass"
+                name := escapeName(cl.name) + "$class"
             }
             else {
                 name := escapeName(cl.name) + "$class"
@@ -290,6 +305,8 @@ class CodeGenerator {
             statements := HashMap<IR.Statement.ID, Code.Statement.ID>()
             def oldBlocks := blocks
             blocks := HashMap<IR.Block.ID, Code.Block.ID>()
+            def oldCasts := casts
+            casts := HashMap<(String, Type), IR.Statement.ID>()
             def oldOut := out
             out := Array<Code.Statement>()
             def position := raw.methodPosition
@@ -376,6 +393,7 @@ class CodeGenerator {
             refs := oldRefs
             statements := oldStatements
             blocks := oldBlocks
+            casts := oldCasts
             out := oldOut
             def shim := (Code.Signature(null, effectiveReturnType, getName(raw) + "$shim",
                     FixedArray<Code.PrimitiveType>.from(parameters), false), code)
@@ -402,6 +420,16 @@ class CodeGenerator {
         return result
     }
 
+    method addRef(id:IR.Statement.ID, value:Code.Value) {
+        refs[id] := value
+        def early := earlyRefs[id]
+        if early !== null {
+            for r in early {
+                r.value := value
+            }
+        }
+    }
+
     method nextBlock():Code.Block.ID {
         def result := Code.Block.ID(nextBlockID)
         nextBlockID += 1
@@ -417,7 +445,7 @@ class CodeGenerator {
         return result
     }
 
-    function struct(cl:ClassDecl):Code.PrimitiveType {
+    method struct(cl:ClassDecl):Code.PrimitiveType {
         def types := Array<Code.PrimitiveType>()
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
@@ -451,11 +479,28 @@ class CodeGenerator {
     }
 
     function nullableStruct(cl:ClassDecl):Code.PrimitiveType {
-        return Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from([struct(cl),
-                Code.PrimitiveType.BIT]))
+        return Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
+                [primitiveType(cl.type), Code.PrimitiveType.BIT]))
     }
 
-    function primitiveType(cl:ClassDecl):Code.PrimitiveType {
+    ================================================================================================
+    If this class contains only a single instance field (e.g. values like Int and Bit), returns the
+    fields' primitive type. Otherwise, returns null.
+    ================================================================================================
+    method getSingleFieldStructType(cl:ClassDecl):Code.PrimitiveType? {
+        def fields := compiler.instanceFields(cl)
+        if fields.count = 1 {
+            compiler.resolve(fields[0])
+            return primitiveType(fields[0].type)
+        }
+        return null
+    }
+
+    method primitiveType(cl:ClassDecl):Code.PrimitiveType {
+        def simpleType := getSingleFieldStructType(cl)
+        if simpleType !== null {
+            return simpleType
+        }
         if compiler.isValue(cl) {
             return struct(cl)
         }
@@ -493,7 +538,7 @@ class CodeGenerator {
                         -- nullable object, still just a pointer
                         return base
                     }
-                    when Code.PrimitiveType.STRUCT {
+                    otherwise {
                         -- nullable value, add an 'isNull' field
                         return Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
                                 [base, Code.PrimitiveType.BIT]))
@@ -557,7 +602,20 @@ class CodeGenerator {
                 if ref !== null {
                     return ref
                 }
-                return Code.Value.STATEMENT(mapId(id), primitiveType(type))
+                def s := statements[id]
+                if s !== null {
+                    return Code.Value.STATEMENT(s, primitiveType(type))
+                }
+                var list := earlyRefs[id]
+                if list == null {
+                    list := Array<Code.ValueRef>()
+                    earlyRefs[id] := list
+                }
+                def valueRef := Code.ValueRef(Code.Value.STATEMENT(mapId(id), primitiveType(type)))
+                list.add(valueRef)
+                def result := Code.Value.REF(valueRef)
+                refs[id] := result
+                return result
             }
             when IR.Value.STRING(s, _) {
                 return getStringReference(s)
@@ -1020,7 +1078,7 @@ class CodeGenerator {
             }
         }
         -- else just a straight pointer cast, we don't actually have to do anything
-        refs[id] := convertValue(value)
+        addRef(id, convertValue(value))
     }
 
     function escapeName(s:String):String {
@@ -1202,15 +1260,6 @@ class CodeGenerator {
         }
     }
 
-    function unwrapPointer(position:MethodPosition, v:IR.Value):Code.Value {
-        if v.type().isPointer {
-            def value := nextStatement()
-            out.add(Code.Statement.EXTRACT_FIELD(position, value, convertValue(v), 0))
-            return Code.Value.STATEMENT(value, Code.PrimitiveType.INT)
-        }
-        return convertValue(v)
-    }
-
     method convertStatement(id:IR.Statement.ID, s:IR.Statement) {
         match s {
             when IR.Statement.BINARY(position, left, op, right, type) {
@@ -1246,11 +1295,19 @@ class CodeGenerator {
                 for a in args {
                     finalArgs.add(convertValue(a))
                 }
-                out.add(Code.Statement.CREATE_STRUCT(position, mapId(id), primitiveType(cl),
-                        FixedArray<Code.Value>.from(finalArgs)))
+                def simpleType := getSingleFieldStructType(cl)
+                if simpleType !== null {
+                    -- don't actually use a struct, just use the single field type
+                    assert args.count = 1
+                    addRef(id, convertValue(args[0]))
+                }
+                else {
+                    out.add(Code.Statement.CREATE_STRUCT(position, mapId(id), primitiveType(cl),
+                            FixedArray<Code.Value>.from(finalArgs)))
+                }
             }
             when IR.Statement.DYNAMIC_CALL(position, rawM, args) {
-                def m := unwrapPointer(position, rawM)
+                def m := convertValue(rawM)
                 def finalArgs := Array<Code.Value>()
                 for a in args {
                     finalArgs.add(convertValue(a))
@@ -1281,9 +1338,15 @@ class CodeGenerator {
                 }
             }
             when IR.Statement.EXTRACT_FIELD(position, value, field) {
-                def index := compiler.getIndex(field)
-                out.add(Code.Statement.EXTRACT_FIELD(position, mapId(id), convertValue(value),
-                        index))
+                def cl := compiler.getClass(value.type())
+                if getSingleFieldStructType(cl) !== null {
+                    addRef(id, convertValue(value))
+                }
+                else {
+                    def index := compiler.getIndex(field)
+                    out.add(Code.Statement.EXTRACT_FIELD(position, mapId(id), convertValue(value),
+                            index))
+                }
             }
             when IR.Statement.GET_FIELD_POINTER(position, value, field) {
                 def index := compiler.getIndex(field)
@@ -1465,6 +1528,7 @@ class CodeGenerator {
         while !iter1.done {
             convertStatement(iter1.next(), iter2.next())
         }
+        casts.clear()
     }
 
     @pre(locals.count = 0 & statements.count = 0 & refs.count = 0 & blocks.count = 0)
@@ -1479,6 +1543,7 @@ class CodeGenerator {
         statements.clear()
         blocks.clear()
         refs.clear()
+        earlyRefs.clear()
         nextStatementID := 0
         nextBlockID := 0
         return result

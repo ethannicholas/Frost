@@ -683,6 +683,14 @@ class Code {
         }
     }
 
+    class ValueRef {
+        var value:Value
+
+        init(value:Value) {
+            self.value := value
+        }
+    }
+
     choice Value {
         BIT(Bit)
         GLOBAL_POINTER(Int)
@@ -690,6 +698,10 @@ class Code {
         METHOD_POINTER(Signature)
         PARAMETER(Int, PrimitiveType)
         REAL(Real64, PrimitiveType)
+        -- used to handle situations in which we encounter a reference to a statement before we
+        -- encounter the statement itself. By storing the value indirectly, we have the opportunity
+        -- to replace it with something else if we realize we need to.
+        REF(ValueRef)
         STATEMENT(Statement.ID, PrimitiveType)
         ARRAY(PrimitiveType, FixedArray<Value>)
         STRUCT(FixedArray<Value>)
@@ -715,6 +727,9 @@ class Code {
                 }
                 when REAL(_, type) {
                     return type
+                }
+                when REF(ref) {
+                    return ref.value.type
                 }
                 when STATEMENT(_, type) {
                     return type

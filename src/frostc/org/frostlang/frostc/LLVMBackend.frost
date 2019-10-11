@@ -353,6 +353,9 @@ class LLVMBackend : Backend {
             when Code.Value.PARAMETER(idx, _) {
                 return "%param\{idx}"
             }
+            when Code.Value.REF(r) {
+                return getReference(r.value)
+            }
             when Code.Value.STATEMENT(id, _) {
                 return name(id)
             }
@@ -898,7 +901,6 @@ class LLVMBackend : Backend {
             physicalOut.print(signatures.finish())
             physicalOut.print(methods.finish())
             physicalOut.print(metadata.finish())
-            physicalOut.close()
         }
         fail(error) {
             Console.printError(error)

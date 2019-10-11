@@ -235,6 +235,9 @@ class CBackend : Backend {
             when Code.Value.PARAMETER(idx, _) {
                 return "param\{idx}"
             }
+            when Code.Value.REF(r) {
+                return getReference(r.value)
+            }
             when Code.Value.STATEMENT(id, type) {
                 if !definedStatements.contains(id) {
                     def error := methodHeader.printLine("\{cType(type)} \{name(id)};")
@@ -252,7 +255,14 @@ class CBackend : Backend {
                 return "(\{cType(t)}) { " + args.map(getReference).join(", ") + " }"
             }
             when Code.Value.UNDEFINED(t) {
-                return "(\{cType(t)}) { }"
+                match t {
+                    when Code.PrimitiveType.STRUCT {
+                        return "(\{cType(t)}) { }"
+                    }
+                    otherwise {
+                        return "0"
+                    }
+                }
             }
             otherwise {
                 unreachable, "unsupported value \{v}"
@@ -575,7 +585,7 @@ class CBackend : Backend {
                     if m.isExternal {
                         writeSignature(m)
                     }
-                    define(m.returnType, result, "\{m.name}(\{args.map(getReference).join(", ")});")
+                    define(m.returnType, result, "\{m.name}(\{args.map(getReference).join(", ")})")
                 }
                 when Code.Statement.STATIC_CALL_VOID(position, m, args) {
                     if m.isExternal {
