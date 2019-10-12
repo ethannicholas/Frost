@@ -143,39 +143,44 @@ class CodeGenerator {
     }
 
     method getStringReference(s:String):Code.Value {
-        def cc := getClassConstant(compiler.getClass("frost.core.String")!)
-        def charsIndex := globals.count
-        def chars := Code.Global("chars\{charsIndex}",
-                Code.PrimitiveType.ARRAY(s.byteLength, Code.PrimitiveType.INT8), null,
-                Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
-        def charsRef := Code.Value.GLOBAL_POINTER(charsIndex)
-        writeGlobalValue(chars, Code.Value.ARRAY(Code.PrimitiveType.INT8,
-                FixedArray<Code.Value>.from(s.utf8.map(c => Code.Value.INT(c.asUInt64,
-                    Code.PrimitiveType.INT8)))))
+        var result := strings[s]
+        if result == null {
+            def cc := getClassConstant(compiler.getClass("frost.core.String")!)
+            def charsIndex := globals.count
+            def chars := Code.Global("chars\{charsIndex}",
+                    Code.PrimitiveType.ARRAY(s.byteLength, Code.PrimitiveType.INT8), null,
+                    Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
+            def charsRef := Code.Value.GLOBAL_POINTER(charsIndex)
+            writeGlobalValue(chars, Code.Value.ARRAY(Code.PrimitiveType.INT8,
+                    FixedArray<Code.Value>.from(s.utf8.map(c => Code.Value.INT(c.asUInt64,
+                        Code.PrimitiveType.INT8)))))
 
-        def types := [
-            Code.PrimitiveType.INT,   -* class *-
-            Code.PrimitiveType.INT32, -* refcount *-
-            Code.PrimitiveType.INT8,  -* flags *-
-            Code.PrimitiveType.INT,   -* data *-
-            Code.PrimitiveType.INT,   -* _length *-
-            Code.PrimitiveType.INT,   -* dummy *-
-            Code.PrimitiveType.INT    -* owner *-
-        ]
-        def stringIndex := globals.count
-        def string := Code.Global("string\{stringIndex}",
-                Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(types)),
-                 s.format("frost"), Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
-        writeGlobalValue(string, Code.Value.STRUCT(FixedArray<Code.Value>.from([
-            cc,
-            Code.Value.INT(NO_REFCNT.asUInt64, Code.PrimitiveType.INT32),
-            Code.Value.INT(0, Code.PrimitiveType.INT8),
-            Code.Value.GLOBAL_POINTER(charsIndex),
-            Code.Value.INT(s.byteLength.asUInt64, Code.PrimitiveType.INT),
-            Code.Value.INT(0, Code.PrimitiveType.INT),
-            Code.Value.INT(0, Code.PrimitiveType.INT)
-        ])))
-        return Code.Value.GLOBAL_POINTER(stringIndex)
+            def types := [
+                Code.PrimitiveType.INT,   -* class *-
+                Code.PrimitiveType.INT32, -* refcount *-
+                Code.PrimitiveType.INT8,  -* flags *-
+                Code.PrimitiveType.INT,   -* data *-
+                Code.PrimitiveType.INT,   -* _length *-
+                Code.PrimitiveType.INT,   -* dummy *-
+                Code.PrimitiveType.INT    -* owner *-
+            ]
+            def stringIndex := globals.count
+            def string := Code.Global("string\{stringIndex}",
+                    Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(types)),
+                     s.format("frost"), Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
+            writeGlobalValue(string, Code.Value.STRUCT(FixedArray<Code.Value>.from([
+                cc,
+                Code.Value.INT(NO_REFCNT.asUInt64, Code.PrimitiveType.INT32),
+                Code.Value.INT(0, Code.PrimitiveType.INT8),
+                Code.Value.GLOBAL_POINTER(charsIndex),
+                Code.Value.INT(s.byteLength.asUInt64, Code.PrimitiveType.INT),
+                Code.Value.INT(0, Code.PrimitiveType.INT),
+                Code.Value.INT(0, Code.PrimitiveType.INT)
+            ])))
+            result := Code.Value.GLOBAL_POINTER(stringIndex)
+            strings[s] := result
+        }
+        return result
     }
 
     method getITable(cl:ClassDecl):Code.Value {

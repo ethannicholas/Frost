@@ -1,50 +1,114 @@
 package org.frostlang.frostc
 
-class Bench {
-    constant COUNT := 5
+-*
 
-    method bench(name:String, src:String, optimizationLevel:Int, safetyLevel:Int) {
+10/9/19 (no stubs)
+Compile-Hello-O0: 0.143355
+Compile-Hello-O3: 0.147332
+Compile-Wumpus-O0: 1.07063
+Compile-Wumpus-O3: 1.37096
+Compile-Big-O0: 0.312204
+Compile-Big-O3: 1.51414
+Fasta: 2.34387
+
+10/11/19 (no stubs)
+Compile-Hello-O0: 0.10591
+Compile-Hello-O3: 0.113581
+Compile-Wumpus-O0: 0.813284
+Compile-Wumpus-O3: 1.04972
+Compile-Big-O0: 0.261212
+Compile-Big-O3: 1.17465
+Fasta: 0.663245
+
+10/12/19 (no stubs)
+Compile-Hello-O0: 0.0958464
+Compile-Hello-O3: 0.0942385
+Compile-Wumpus-O0: 0.72851
+Compile-Wumpus-O3: 0.888599
+Compile-Big-O0: 0.222927
+Compile-Big-O3: 0.88826
+Fasta: 0.559879
+
+*-
+
+class Bench {
+    constant COUNT := 3
+
+    method benchCompile(name:String, src:String, optimizationLevel:Int, safetyLevel:Int) {
         def timer := frost.time.Timer()
-        timer.reset()
-        def settings := Compiler.Settings(File(Config.frostSourceDir()),
-                [File(Config.frostSourceDir())], optimizationLevel, safetyLevel, false)
-        def errorQueue := MessageQueue<Compiler.Message>()
-        def out := MemoryOutputStream()
-        def backend := LLVMBackend(Config.llvmTriple(), out)
-        def compiler := Compiler(errorQueue, backend, settings)
-        compiler.compile(File("/fake/path/BenchDummy.frost"), src)
-        compiler.finish()
-        while errorQueue.hasMessage() {
-            def error := errorQueue.getMessage()
-            match error {
-                when Compiler.Message.ERROR(file, line, column, message) {
-                    Console.printLine("\{file}:\{line}:\{column}: error: \{message}")
-                }
-                when Compiler.Message.WARNING(file, line, column, message) {
-                    Console.printLine("\{file}:\{line}:\{column}: warning: \{message}")
+        def total := 0.0
+        for i in 0 .. COUNT {
+            timer.reset()
+            def settings := Compiler.Settings(File(Config.frostSourceDir()),
+                    [File(Config.frostSourceDir())], optimizationLevel, safetyLevel, false)
+            def errorQueue := MessageQueue<Compiler.Message>()
+            def out := MemoryOutputStream()
+            def backend := LLVMBackend(Config.llvmTriple(), out)
+            def compiler := Compiler(errorQueue, backend, settings)
+            compiler.compile(File("/fake/path/BenchDummy.frost"), src)
+            compiler.finish()
+            while errorQueue.hasMessage() {
+                def error := errorQueue.getMessage()
+                match error {
+                    when Compiler.Message.ERROR(file, line, column, message) {
+                        Console.printLine("\{file}:\{line}:\{column}: error: \{message}")
+                    }
+                    when Compiler.Message.WARNING(file, line, column, message) {
+                        Console.printLine("\{file}:\{line}:\{column}: warning: \{message}")
+                    }
                 }
             }
+            assert(compiler.errorCount = 0)
+            total += timer.elapsed()
         }
-        assert(compiler.errorCount = 0)
-        Console.printLine("\{name}: \{timer.elapsed()}")
+        Console.printLine("Compile-\{name}: \{total / COUNT}")
     }
 
-    method bench(name:String, src:String) {
-        bench(name + "-O0", src, 0, 0)
-        bench(name + "-O3", src, 3, 3)
+    method benchCompile(name:String, src:String) {
+        benchCompile(name + "-O0", src, 0, 0)
+        benchCompile(name + "-O3", src, 3, 3)
+    }
+
+    method benchRun(name:String, file:File) {
+        def dst := System.temporaryDirectory().resolve("bench").path
+        def args := ["-S", "0", "-O", "3", "-o", dst, file.path]
+        Compiler.run(args)
+        def timer := frost.time.Timer()
+        def total := 0.0
+        for i in 0 .. COUNT {
+            timer.reset()
+            try {
+                def p := System.exec(dst, [])
+                def received := p.standardOutput().readFully()
+                def expected := file.withExtension(".expected").readFully()
+                if received != expected {
+                    Console.printLine("\{name} expected:\n\{expected}\nbut received:\n\{received}")
+                    System.exit(1)
+                }
+                p.waitFor()
+                total += timer.elapsed()
+            }
+            fail(error) {
+                Console.printLine(error)
+                System.exit(1)
+            }
+        }
+        Console.printLine("\{name}: \{total / COUNT}")
     }
 
     method run() {
         try {
-            bench("Hello", "method main() { Console.printLine(\"Hello, World!\") }")
+            Console.printLine("Times in seconds, smaller is better")
+            benchCompile("Hello", "method main() { Console.printLine(\"Hello, World!\") }")
             def wumpus := File(Config.frostSourceDir()).resolve("../test/tests/Wumpus.frost")
-            bench("Wumpus", wumpus.readFully())
+            benchCompile("Wumpus", wumpus.readFully())
             def big := MutableString("method main() {\n")
-            for i in 1 ... 10000 {
+            for i in 1 ... 1000 {
                 big.append("    Console.printLine(\"\{i}\")")
             }
             big.append("}")
-            bench("Big", big.finish())
+            benchCompile("Big", big.finish())
+            benchRun("Fasta", File(Config.frostSourceDir()).resolve("../benchmarks/Fasta.frost"))
         }
         fail(err) {
             Console.printLine(err)

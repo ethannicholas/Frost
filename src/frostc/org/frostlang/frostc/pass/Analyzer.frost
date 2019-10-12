@@ -703,8 +703,11 @@ class Analyzer {
         def removed := ir.blocks[index].id
         ir.blocks.removeIndex(index)
         for b in ir.blocks {
-            def last := b.statements.count - 1
-            match b.statements.last {
+            var last := b.statements.head!
+            while last.next !== null {
+                last := last.next
+            }
+            match last.value {
                 when IR.Statement.BRANCH(_, id) {
                     if id = removed {
                         makeUnreachable(b)
@@ -713,12 +716,10 @@ class Analyzer {
                 when IR.Statement.CONDITIONAL_BRANCH(position, _, ifTrue, ifFalse) {
                     assert ifTrue != ifFalse
                     if ifTrue = removed {
---                        b.statements[last] := IR.Statement.BRANCH(position, ifFalse)
-                        System.crash()
+                        last.value := IR.Statement.BRANCH(position, ifFalse)
                     }
                     else if ifFalse = removed {
---                        b.statements[last] := IR.Statement.BRANCH(position, ifTrue)
-                        System.crash()
+                        last.value := IR.Statement.BRANCH(position, ifTrue)
                     }
                 }
             }

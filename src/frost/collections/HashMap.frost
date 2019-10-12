@@ -126,7 +126,7 @@ class HashMap<K:HashKey<K>, V> : Map<K, V> {
     method cleanup() {
         for i in 0 .. bucketCount {
             if contents[i] !== null {
-                Frost.unref(contents[i])
+                Frost.unrefThreadSafe(contents[i])
             }
         }
         contents.destroy()
@@ -238,7 +238,7 @@ class HashMap<K:HashKey<K>, V> : Map<K, V> {
         _count := 0
         for i in 0 .. bucketCount {
             if contents[i] !== null {
-                Frost.unref(contents[i])
+                Frost.unrefThreadSafe(contents[i])
             }
         }
         contents.destroy()
@@ -274,7 +274,7 @@ class HashMap<K:HashKey<K>, V> : Map<K, V> {
             }
             for i in 0 .. oldBucketCount {
                 if oldContents[i] !== null {
-                    Frost.unref(oldContents[i])
+                    Frost.unrefThreadSafe(oldContents[i])
                 }
             }
             oldContents.destroy()

@@ -46,7 +46,7 @@ class RemoveRefUnrefPairs {
                     }
                     when IR.Statement.STATIC_CALL(_, m, args) {
                         if m.owner.name = "frost.core.Frost" {
-                            if m.name = "ref" {
+                            if m.name.startsWith("ref") {
                                 assert args.count = 1
                                 var key := keyFor(args[0])
                                 while casts.contains(key) {
@@ -80,7 +80,7 @@ class RemoveRefUnrefPairs {
                                     refList.add((previousId, previous))
                                 }
                             }
-                            else if m.name = "unref" {
+                            else if m.name.startsWith("unref") {
                                 assert args.count = 1
                                 var key := keyFor(args[0])
                                 while casts.contains(key) {

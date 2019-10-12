@@ -159,4 +159,5 @@ method main(args:ListView<String>) {
     makeRepeatFasta("ONE", "Homo sapiens alu", ALU, n * 2, out)
     makeRandomFasta("TWO", "IUB ambiguity codes", iub, n * 3, out)
     makeRandomFasta("THREE", "Homo sapiens frequency", homoSapiens, n * 5, out)
+    buffer.destroy()
 }

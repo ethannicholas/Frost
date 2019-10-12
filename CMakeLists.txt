@@ -629,7 +629,7 @@ add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/bootstrap.c
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc ${core_source} ${frostc_source}
             ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost
-            -I ${CMAKE_CURRENT_BINARY_DIR}
+            -I ${CMAKE_CURRENT_BINARY_DIR} -S ${SAFETY} -O ${OPTIMIZATION}
             -f c -o ${CMAKE_CURRENT_BINARY_DIR}/bootstrap.c
     DEPENDS ${core_source} ${frostc_source}
             ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost

@@ -753,6 +753,9 @@ class Interpreter : Backend {
             when Code.Value.PARAMETER(idx, type) {
                 result := write(contexts[0].arguments[idx], type, result)
             }
+            when Code.Value.REF(r) {
+                result := write(r.value, result)
+            }
             when Code.Value.STATEMENT(id, type) {
                 result := write(contexts[0].statements[id], type, result)
             }

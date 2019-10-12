@@ -479,7 +479,6 @@ class Compiler {
     @private
     var methodSymbolTable:SymbolTable
 
-    @private
     def cg:CodeGenerator
 
     @private
@@ -3357,6 +3356,15 @@ class Compiler {
         if type.typeKind = Type.Kind.INVALID {
             return false
         }
+        if type.isClass & target.isClass {
+            def cl := getClass(type)
+            if cl == null {
+                return false
+            }
+            if cl.classKind = ClassDecl.Kind.INTERFACE {
+                return true
+            }
+        }
         return coercionCost(target, type, false) !== null
     }
 
@@ -3522,8 +3530,9 @@ class Compiler {
             for i in 0 .. e.fields.count {
                 if isRefCounted(e.fields[i]) {
                     def p := Position()
+                    def name := "unref" + getRefVariant(e.fields[i])
                     def unref := ASTNode.DOT(p, ASTNode.DOT(p, ASTNode.DOT(p,
-                            ASTNode.IDENTIFIER(p, "frost"), "core"), "Frost"), "unref")
+                            ASTNode.IDENTIFIER(p, "frost"), "core"), "Frost"), name)
                     unrefs.add(ASTNode.CALL(Position(), unref,
                             FixedArray<ASTNode>.from([fields[i]])))
                 }
@@ -4200,19 +4209,66 @@ class Compiler {
         unreachable, "could not find \{m.declaration} in vtable for \{m.owner.name}"
     }
 
+    function unwrap(type:Type):Type {
+        match type.typeKind {
+            when Type.Kind.NULLABLE {
+                return unwrap(type.subtypes[0])
+            }
+            when Type.Kind.GENERIC_CLASS_PARAMETER {
+                return unwrap(type.genericClassParameter!.bound)
+            }
+            when Type.Kind.GENERIC_METHOD_PARAMETER {
+                return unwrap(type.genericMethodParameter!.bound)
+            }
+            otherwise {
+                return type
+            }
+        }
+    }
+
+    method getRefVariant(rawType:Type):String {
+        -- the naming here is potentially confusing - refThreadSafe means that the *ref method* is
+        -- thread safe, which makes it the right variant to use for objects which are themselves
+        -- *not* thread safe
+        def type := unwrap(rawType)
+        if canCast(type, IMMUTABLE_TYPE) {
+            if canCast(type, STRING_TYPE) | canCast(type, CLASS_TYPE) {
+                return "ThreadSafe"
+            }
+            else {
+                return "ThreadSafeNonConstant"
+            }
+        }
+        else {
+            return "ThreadUnsafe"
+        }
+    }
+
     method compileRef(v:IR.Value) {
+        match v {
+            when IR.Value.NULL {
+                return
+            }
+        }
         def args := Array<ASTNode>()
         args.add(ASTNode.IR_WRAPPER(currentMethod[0].position, v))
+        def name := "ref" + getRefVariant(v.type())
         Call.compile(self, MethodPosition(currentMethod[0].position, currentMethodIndex),
-                literalType(FROST_TYPE), "ref", args, TypeContext.UNSPECIFIED)
+                literalType(FROST_TYPE), name, args, TypeContext.UNSPECIFIED)
     }
 
     @pre(isRefCounted(v.type()))
     method compileUnref(v:IR.Value) {
+        match v {
+            when IR.Value.NULL {
+                return
+            }
+        }
         def args := Array<ASTNode>()
         args.add(ASTNode.IR_WRAPPER(currentMethod[0].position, v))
+        def name := "unref" + getRefVariant(v.type())
         Call.compile(self, MethodPosition(currentMethod[0].position, currentMethodIndex),
-                literalType(FROST_TYPE), "unref", args, TypeContext.UNSPECIFIED)
+                literalType(FROST_TYPE), name, args, TypeContext.UNSPECIFIED)
     }
 
     @pre(type.isNumber)
@@ -5854,8 +5910,10 @@ class Compiler {
                     symbolTable.add(v)
                     index += 1
                 }
-                compilePreconditions()
-                compilePostconditions()
+                if settings.safetyLevel >= 3 {
+                    compilePreconditions()
+                    compilePostconditions()
+                }
                 for s in m.body {
                     compileStatement(s)
                 }
@@ -6129,6 +6187,10 @@ class Compiler {
         }
     }
 
+    method warn(pos:MethodPosition, msg:String) {
+        warn(pos.asPosition, msg)
+    }
+
     method finish() {
         while pendingClasses.count > 0 {
             def cl := pendingClasses.removeIndex(pendingClasses.count - 1)
@@ -6141,5 +6203,431 @@ class Compiler {
             backend.writeMethod(null, signature, code, true)
         }
         backend.finish()
+    }
+
+    ------------------------------------------------------------------------------------------------
+
+    choice Format {
+        LLVM
+        EXECUTABLE
+        OBJECT
+        C
+        HTML
+        STUB
+        RUN
+    }
+
+    class Arguments {
+        @private
+        def args:ListView<String>
+
+        @private
+        def index := 0
+
+        property done:Bit
+
+        init(args:ListView<String>) {
+            self.args := args
+        }
+
+        function get_done():Bit {
+            return index = args.count
+        }
+
+        method next():String {
+            assert !done
+            index += 1
+            return args[index - 1]
+        }
+
+        method next(label:String):String {
+            if done {
+                Console.printErrorLine("expected \{label} after '\{args[args.count - 1]}'")
+                System.exit(1)
+            }
+            return next()
+        }
+    }
+
+    @class
+    method toObject(clang:File, llvm:File, dest:File, preserveTemporaries:Bit,
+            settings:Compiler.Settings):File {
+        def args := Array<String>() -- FIXME literal
+        args.add(llvm.path)
+        args.add("-m64")
+        args.add("-fPIC")
+        args.add("-c")
+        if settings.debug {
+            args.add("-g")
+        }
+        args.add("-O\{settings.optimizationLevel}")
+        args.add("-o")
+        args.add(dest.path)
+        def p:System.Process
+        try {
+            p := System.exec(clang.path, args)
+            -- FIXME shouldn't have to use unsafeStart here
+            def t1 := Thread.unsafeStart(method() {
+                try {
+                    p.standardOutput().sendTo(Console.outputStream())
+                }
+                fail(error) {
+                    Console.printLine(error)
+                    System.exit(1)
+                }
+            })
+            def t2 := Thread.unsafeStart(method() {
+                try {
+                    p.standardError().sendTo(Console.errorStream())
+                }
+                fail(error) {
+                    Console.printLine(error)
+                    System.exit(1)
+                }
+            })
+            t1.waitFor()
+            t2.waitFor()
+        }
+        fail(error) {
+            Console.printErrorLine(error)
+            System.exit(1)
+        }
+        def exitCode := p.waitFor()
+        if !preserveTemporaries {
+            try {
+                llvm.delete()
+            }
+            fail(error) {
+                Console.printErrorLine(error)
+                System.exit(1)
+            }
+        }
+        if exitCode != 0 {
+            System.exit(1)
+        }
+        return dest
+    }
+
+    @class
+    method toExecutable(clang:File, libraryPaths:Array<File>, libraries:Array<String>, llvm:File,
+            dest:File, preserveTemporaries:Bit, settings:Compiler.Settings):File {
+        def args := Array<String>() -- FIXME literal
+        args.add(llvm.path)
+        args.add("-L\{Config.frostLibDir()}")
+        args.add("-lfrost")
+        args.add("-lm")
+        args.add("-lpthread")
+        args.addAll(libraryPaths.map(p => "-L" + p))
+        args.addAll(libraries.map(l => "-l" + l))
+        def icuLibs := Config.icuLibraries().split(";")
+        for lib in icuLibs {
+            def libFile := File(lib)
+            args.add("-L" + libFile.parent!)
+            var simpleName := libFile.simpleName
+            assert simpleName.startsWith("lib")
+            simpleName := simpleName[3..]
+            args.add("-l" + simpleName)
+        }
+        args.add("-m64")
+        args.add("-fPIC")
+        if settings.debug {
+            args.add("-g")
+        }
+        args.add("-O\{settings.optimizationLevel}")
+        args.add("-Wno-override-module")
+        args.add("-o")
+        args.add(dest.path)
+        def p:System.Process
+        try {
+            p := System.exec(clang.path, args)
+            Console.printError(p.standardOutput().readFully())
+            Console.printError(p.standardError().readFully())
+        }
+        fail(error) {
+            Console.printErrorLine(error)
+            System.exit(1)
+        }
+        def exitCode := p.waitFor()
+        if !preserveTemporaries {
+            try {
+                llvm.delete()
+            }
+            fail(error) {
+                Console.printErrorLine(error)
+                System.exit(1)
+            }
+        }
+        if exitCode != 0 {
+            System.exit(1)
+        }
+        return dest
+    }
+
+    @class
+    method printUsage(out:OutputStream) {
+        try {
+            out.printLine("Usage: frostc [options] <sources>")
+            out.printLine()
+            out.printLine("Source filenames must end in '.frost'.")
+            out.printLine()
+            out.printLine("Options:")
+            out.printLine("  -o <path>    output path")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    @class
+    method run(rawArgs:ListView<String>):Bit {
+        def args := Arguments(rawArgs)
+        def sources := Array<File>()
+        def imports := Array<File>()
+        def libraryPaths := Array<File>()
+        def libraries := Array<String>()
+        var outFile:File? := null
+        var optimizationLevel := 3
+        var safetyLevel := 3
+        var format:Format? := null
+        var root:String? := null
+        var preserveTemporaries := true
+        var debug := true
+        while !args.done {
+            def a := args.next()
+            match a {
+                when "--fuzz" {
+                    try {
+                        def path := File("/tmp/fuzz.frost")
+                        Console.inputStream().sendTo(path.openOutputStream())
+                        sources.add(path)
+                    }
+                    fail(error) {
+                        Console.printErrorLine(error)
+                        System.exit(1)
+                    }
+                }
+                when "-o" {
+                    if outFile !== null {
+                        Console.printErrorLine("'-o' may only be specified once")
+                        System.exit(1)
+                    }
+                    outFile := File(args.next("a filename"))
+                    try {
+                        outFile.parent!.createDirectories()
+                    }
+                    fail(error) {
+                        Console.printErrorLine(error)
+                        System.exit(1)
+                    }
+                }
+                when "-O" {
+                    def level := args.next("a number from 0-3")
+                    var parsed := level.asInt
+                    if parsed == null | parsed > 3 | parsed < 0 {
+                        Console.printErrorLine("expected a number from 0-3 after '-O'")
+                        System.exit(1)
+                    }
+                    optimizationLevel := parsed
+                }
+                when "-S" {
+                    def level := args.next("a number from 0-3")
+                    def parsed := level.asInt
+                    if parsed == null | parsed > 3 | parsed < 0 {
+                        Console.printErrorLine("expected a number from 0-3 after '-S'")
+                        System.exit(1)
+                    }
+                    safetyLevel := parsed
+                }
+                when "-f" {
+                    if format !== null {
+                        Console.printErrorLine("'-f' may only be specified once")
+                        System.exit(1)
+                    }
+                    def f := args.next("an output format")
+                    match f {
+                        when "exe"  { format := Format.EXECUTABLE }
+                        when "o"    { format := Format.OBJECT }
+                        when "ll"   { format := Format.LLVM }
+                        when "c"    { format := Format.C }
+                        when "html" { format := Format.HTML }
+                        when "stub" { format := Format.STUB }
+                        when "run"  { format := Format.RUN }
+                        otherwise {
+                            Console.printErrorLine("unsupported output format '\{f}'")
+                            System.exit(1)
+                        }
+                    }
+                }
+                when "-I" {
+                    imports.add(File(args.next("a path to an import directory")))
+                }
+                when "-L" {
+                    libraryPaths.add(File(args.next("a path to a library directory")))
+                }
+                when "-l" {
+                    libraries.add(args.next("a library name"))
+                }
+                when "--root" {
+                    root := args.next("a path")
+                }
+                otherwise {
+                    if a.endsWith(".frost") {
+                        def f := File(a)
+                        sources.add(f)
+                    }
+                    else {
+                        Console.printErrorLine("unrecognized argument '\{a}'")
+                        System.exit(1)
+                    }
+                }
+            }
+        }
+        if format == null | format != Format.STUB {
+            imports.add(File(Config.frostLibDir()).resolve("stubs"))
+        }
+        def frostHome := File(Config.frostSourceDir())
+        imports.add(frostHome)
+        def llvmDir := File(Config.llvmDir())
+        def clang := File("/usr/bin/clang")
+        if sources.count = 0 {
+            Console.printErrorLine("no input files specified")
+            System.exit(1)
+        }
+        if format == null {
+            format := Format.EXECUTABLE
+        }
+        if outFile == null & format != Format.RUN {
+            if sources.count = 1 {
+                def extension:String
+                match format {
+                    when Format.EXECUTABLE { extension := "" }
+                    when Format.OBJECT     { extension := ".o" }
+                    when Format.LLVM       { extension := ".ll" }
+                    when Format.C          { extension := ".c" }
+                    when Format.HTML       { extension := ".html" }
+                    when Format.STUB       { extension := ".stub" }
+                    otherwise {
+                        Console.printErrorLine("output format requires a '-o' output to be " +
+                                "specified")
+                        System.exit(1)
+                    }
+                }
+                outFile := sources[0].withExtension(extension)
+            }
+            else if format = Format.HTML {
+                Console.printErrorLine("format 'html' requires exactly one input file")
+                System.exit(1)
+            }
+            else {
+                Console.printErrorLine("multiple input files specified, must use '-o' to specify " +
+                        "output file")
+                System.exit(1)
+            }
+        }
+        var errorCount := 0
+        var warningCount := 0
+        def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
+                debug)
+        {
+            def backend:Backend? := null
+            try {
+                match format {
+                    when Format.LLVM {
+                        backend := LLVMBackend(Config.llvmTriple(), outFile.openOutputStream())
+                    }
+                    when Format.EXECUTABLE, Format.OBJECT {
+                        backend := LLVMBackend(Config.llvmTriple(),
+                                outFile.withExtension(".ll").openOutputStream())
+                    }
+                    when Format.C {
+                        backend := CBackend(outFile.openOutputStream())
+                    }
+                    when Format.STUB {
+                        backend := StubBackend(outFile.openOutputStream())
+                    }
+                    when Format.RUN {
+                        backend := Interpreter()
+                    }
+                }
+            }
+            fail(error) {
+                Console.printErrorLine(error)
+                System.exit(1)
+            }
+            def errorQueue := MessageQueue<Compiler.Message>()
+            def compiler := Compiler(errorQueue, backend, settings)
+            if format = Format.RUN {
+                compiler.cg.allClassConstants := true
+            }
+            if format = Format.HTML {
+                if root == null {
+                    root := "."
+                }
+                HTMLProcessor(compiler).process(sources[0], outFile, root)
+                return true
+            }
+            if root !== null {
+                Console.printErrorLine("--root requires 'html' output format")
+                System.exit(1)
+            }
+            for s in sources {
+                for cl in compiler.scan(s) {
+                    compiler.markNonExternal(cl)
+                }
+            }
+            for s in sources {
+                compiler.compile(s)
+            }
+            compiler.finish()
+            if format = Format.RUN {
+                backend->Interpreter.run()
+                return true
+            }
+            while errorQueue.hasMessage() {
+                def error := errorQueue.getMessage()
+                -- FIXME stderr
+                match error {
+                    when Compiler.Message.ERROR(file, line, column, message) {
+                        errorCount += 1
+                        Console.printLine("\{file}:\{line}:\{column}: error: \{message}")
+                    }
+                    when Compiler.Message.WARNING(file, line, column, message) {
+                        warningCount += 1
+                        Console.printLine("\{file}:\{line}:\{column}: warning: \{message}")
+                    }
+                }
+            }
+        }
+        if warningCount = 1 {
+            -- FIXME stderr
+            Console.printLine("1 warning")
+        }
+        else if warningCount > 0 {
+            -- FIXME stderr
+            Console.printLine("\{warningCount} warnings")
+        }
+        if errorCount = 0 {
+            match format {
+                when Format.EXECUTABLE {
+                    toExecutable(clang, libraryPaths, libraries, outFile.withExtension(".ll"),
+                            outFile, preserveTemporaries, settings)
+                }
+                when Format.OBJECT {
+                    toObject(clang, outFile.withExtension(".ll"), outFile, preserveTemporaries,
+                            settings)
+                }
+            }
+        }
+        else {
+            if errorCount = 1 {
+                -- FIXME stderr
+                Console.printLine("1 error")
+            }
+            else {
+                -- FIXME stderr
+                Console.printLine("\{errorCount} errors")
+            }
+        }
+        return errorCount = 0
     }
 }

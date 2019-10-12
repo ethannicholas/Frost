@@ -25,6 +25,8 @@
 #include <mach/mach_time.h>
 #endif
 
+#define FROST_DEBUG
+
 typedef int8_t bool;
 
 typedef intptr_t frost_int;
@@ -222,9 +224,11 @@ Object* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$co
 
 Object* frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(String*);
 
-void frost$core$Frost$ref$frost$core$Object$Q(Object*);
+void frost$core$Frost$refThreadSafe$frost$core$Object$Q(Object*);
 
-void frost$core$Frost$unref$frost$core$Object$Q(Object*);
+void frost$core$Frost$unrefThreadSafe$frost$core$Object$Q(Object*);
+
+void frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q(Object*);
 
 void frost$core$Frost$dumpReport$frost$core$Frost$TraceData(Object*);
 
@@ -268,7 +272,11 @@ void _frostAssert(int i, const char* file, int line) {
     }
 }
 
+#ifdef FROST_DEBUG
 #define frostAssert(i) _frostAssert(i, __FILE__, __LINE__)
+#else
+#define frostAssert(i)
+#endif
 
 void* frostAlloc(size_t size) {
     __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
@@ -330,7 +338,7 @@ char* frostConvertToString(void* o) {
     String* (*convert)(void*) = (String*(*)(void*)) ((Object*) o)->cl->vtable[0]; // FIXME hardcoded index to convert
     String* frostString = convert(o);
     char* result = frostGetCString(frostString);
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) frostString);
+    frost$core$Frost$unrefThreadSafe$frost$core$Object$Q((Object*) frostString);
     return result;
 }
 
@@ -347,14 +355,14 @@ String* frostNewString(const char* s, int length) {
 // returns o wrapped in a Maybe.SUCCESS, *without* increasing its refcount
 Object* frostMaybeSuccess(Object* o) {
     Object* result = frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(o);
-    frost$core$Frost$unref$frost$core$Object$Q(o);
+    frost$core$Frost$unrefThreadSafe$frost$core$Object$Q(o);
     return result;
 }    
 
 // returns s wrapped in a Maybe.ERROR, *without* increasing its refcount
 Object* frostMaybeError(String* s) {
     Object* result = frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(s);
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) s);
+    frost$core$Frost$unrefThreadSafe$frost$core$Object$Q((Object*) s);
     return result;
 }    
 
@@ -394,10 +402,10 @@ int main(int argc, char** argv) {
         }
         pthread_cond_wait(&preventsExitThreadsVar, &preventsExitThreadsMutex);
     }
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) args);
+    frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q((Object*) args);
     if (weakReferences) {
         frostAssert(weakReferences->refcnt == 1);
-        frost$core$Frost$unref$frost$core$Object$Q(weakReferences);
+        frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q(weakReferences);
     }
     if (refErrorReporting) {
         if (allocations && allocations != 1) {
@@ -516,26 +524,26 @@ Object* frost$core$System$exec$frost$core$String$frost$collections$ListView$LTfr
 
 Object* frost$core$System$Process$standardInput$R$frost$io$OutputStream(Process* p) {
     Object* result = (Object*) p->_stdin;
-    frost$core$Frost$ref$frost$core$Object$Q(result);
+    frost$core$Frost$refThreadSafe$frost$core$Object$Q(result);
     return result;
 }
 
 Object* frost$core$System$Process$standardOutput$R$frost$io$InputStream(Process* p) {
     Object* result = (Object*) p->_stdout;
-    frost$core$Frost$ref$frost$core$Object$Q(result);
+    frost$core$Frost$refThreadSafe$frost$core$Object$Q(result);
     return result;
 }
 
 Object* frost$core$System$Process$standardError$R$frost$io$InputStream(Process* p) {
     Object* result = (Object*) p->_stderr;
-    frost$core$Frost$ref$frost$core$Object$Q(result);
+    frost$core$Frost$refThreadSafe$frost$core$Object$Q(result);
     return result;
 }
 
 void frost$core$System$Process$_cleanup(Process* p) {
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->_stdin);
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->_stdout);
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->_stderr);
+    frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q((Object*) p->_stdin);
+    frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q((Object*) p->_stdout);
+    frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q((Object*) p->_stderr);
 }
 
 void frost$core$System$Process$exitCode$R$frost$core$Int$Q(NullableInt* result, Process* p) {
@@ -692,6 +700,44 @@ double frost$core$Real64$get_tan$R$frost$core$Real64(double x) {
 
 #define NO_REFCNT -999
 
+
+void frost$core$Frost$ref$frost$core$Object$Q(Object* o) {
+    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
+    // it anyway
+    if (o && o->refcnt != NO_REFCNT) {
+        int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
+        if (newCount <= 1 && refErrorReporting) {
+            printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
+            printf("    class: %s\n", frostGetCString(o->cl->name));
+            abort();
+        }
+    }
+}
+
+void frost$core$Frost$unref$frost$core$Object$Q(Object* o) {
+    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
+    // it anyway
+    if (o && o->refcnt != NO_REFCNT) {
+        int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
+        if (newCount < 0 && refErrorReporting) {
+            printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
+            printf("    class: %s\n", frostGetCString(o->cl->name));
+            abort();
+        }
+        if (newCount == 0) {
+            void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
+            o->refcnt = 1; // no other thread can see it, so we no longer need to use atomics here
+            cleanup(o);
+            if (o->refcnt != 1) {
+                char* cl = frostGetCString(o->cl->name);
+                printf("internal error: refcount of %s(%p) changed during cleanup\n", cl, o);
+                abort();
+            }
+            frostObjectFree(o);
+        }
+    }
+}
+
 void* frost$core$Frost$alloc$builtin_int$R$builtin_int(int size) {
     return frostAlloc(size);
 }
@@ -727,39 +773,107 @@ void frost$core$Frost$debugPrint$frost$core$Object(void* object) {
     frostDebugPrintObject(object);
 }
 
-void frost$core$Frost$ref$frost$core$Object$Q(Object* o) {
-    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
-    // it anyway
+// known to not be a constant, so we don't have to check for NO_REFCNT
+void frost$core$Frost$refThreadSafeNonConstant$frost$core$Object$Q(Object* o) {
+    if (o) {
+        int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
+        #ifdef FROST_DEBUG
+            if (newCount <= 1 && refErrorReporting) {
+                printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
+                printf("    class: %s\n", frostGetCString(o->cl->name));
+                abort();
+            }
+        #endif
+    }
+}
+
+void frost$core$Frost$refThreadSafe$frost$core$Object$Q(Object* o) {
+    // should be ok to check whether it's NO_REFCNT without a lock - if it is, nobody should be
+    // changing it anyway
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
-        if (newCount <= 1 && refErrorReporting) {
-            printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
-            printf("    class: %s\n", frostGetCString(o->cl->name));
-            abort();
+        #ifdef FROST_DEBUG
+            if (newCount <= 1 && refErrorReporting) {
+                printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
+                printf("    class: %s\n", frostGetCString(o->cl->name));
+                abort();
+            }
+        #endif
+    }
+}
+
+void frost$core$Frost$refThreadUnsafe$frost$core$Object$Q(Object* o) {
+    // objects which are known to only be used in a single thread can't be NO_REFCNT
+    if (o) {
+        ++o->refcnt;
+        #ifdef FROST_DEBUG
+            if (o->refcnt <= 1 && refErrorReporting) {
+                printf("internal error: ref %p with refcnt = %d\n", o, o->refcnt);
+                printf("    class: %s\n", frostGetCString(o->cl->name));
+                abort();
+            }
+        #endif
+    }
+}
+
+void frostDestroy(Object* o) {
+    void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
+    o->refcnt = 1; // no other thread can see it, so we no longer need to use atomics here
+    cleanup(o);
+    if (o->refcnt != 1) {
+        char* cl = frostGetCString(o->cl->name);
+        printf("internal error: refcount of %s(%p) changed during cleanup\n", cl, o);
+        abort();
+    }
+    frostObjectFree(o);
+}
+
+void frost$core$Frost$unrefThreadSafeNonConstant$frost$core$Object$Q(Object* o) {
+    // should be ok to check whether it's NO_REFCNT without a lock - if it is, nobody should be
+    // changing it anyway
+    if (o && o->refcnt != NO_REFCNT) {
+        int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
+        #ifdef FROST_DEBUG
+            if (newCount < 0 && refErrorReporting) {
+                printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
+                printf("    class: %s\n", frostGetCString(o->cl->name));
+                abort();
+            }
+        #endif
+        if (newCount == 0) {
+            frostDestroy(o);
         }
     }
 }
 
-void frost$core$Frost$unref$frost$core$Object$Q(Object* o) {
-    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
-    // it anyway
+void frost$core$Frost$unrefThreadSafe$frost$core$Object$Q(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
-        if (newCount < 0 && refErrorReporting) {
-            printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
-            printf("    class: %s\n", frostGetCString(o->cl->name));
-            abort();
-        }
-        if (newCount == 0) {
-            void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
-            o->refcnt = 1; // no other thread can see it, so we no longer need to use atomics here
-            cleanup(o);
-            if (o->refcnt != 1) {
-                char* cl = frostGetCString(o->cl->name);
-                printf("internal error: refcount of %s(%p) changed during cleanup\n", cl, o);
+        #ifdef FROST_DEBUG
+            if (newCount < 0 && refErrorReporting) {
+                printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
+                printf("    class: %s\n", frostGetCString(o->cl->name));
                 abort();
             }
-            frostObjectFree(o);
+        #endif
+        if (newCount == 0) {
+            frostDestroy(o);
+        }
+    }
+}
+
+void frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q(Object* o) {
+    if (o) {
+        --o->refcnt;
+        #ifdef FROST_DEBUG
+            if (o->refcnt < 0 && refErrorReporting) {
+                printf("internal error: unref %p with refcnt = %d\n", o, o->refcnt + 1);
+                printf("    class: %s\n", frostGetCString(o->cl->name));
+                abort();
+            }
+        #endif
+        if (o->refcnt == 0) {
+            frostDestroy(o);
         }
     }
 }
@@ -955,7 +1069,7 @@ Matcher* frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Mat
         RegularExpression* self, String* s) {
     Matcher* result = frostObjectAlloc(sizeof(Matcher), &frost$core$Matcher$class);
     result->searchText = s;
-    frost$core$Frost$ref$frost$core$Object$Q((Object*) s);
+    frost$core$Frost$refThreadSafe$frost$core$Object$Q((Object*) s);
 #ifdef __EMSCRIPTEN__
     char* str = frostGetCString(s);
     result->nativeHandle = (void*) createMatcher((int) self->nativeHandle, str);
@@ -1124,7 +1238,7 @@ void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Thread* thread, 
     }
     pthread_t threadId;
     ThreadInfo* threadInfo = frostAlloc(sizeof(ThreadInfo));
-    frost$core$Frost$ref$frost$core$Object$Q((Object*) run);
+    frost$core$Frost$refThreadSafe$frost$core$Object$Q((Object*) run);
     threadInfo->run = run;
     threadInfo->preventsExit = preventsExit;
     if (threadInfo->preventsExit) {

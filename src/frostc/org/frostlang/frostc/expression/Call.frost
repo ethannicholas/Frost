@@ -202,7 +202,7 @@ class Call {
                 def target := compiler.extractBuiltinInt(position, rawTarget)
                 assert target !== null
                 def index := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
+                        TypeContext.TYPE(compiler.INT_TYPE, false))
                 if index == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
@@ -214,7 +214,7 @@ class Call {
                 def target := compiler.extractBuiltinInt(position, rawTarget)
                 assert target !== null
                 def index := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(compiler.INT64_TYPE, false))
+                        TypeContext.TYPE(compiler.INT_TYPE, false))
                 def value := compiler.compileExpression(args[1],
                         TypeContext.TYPE(pointerType, false))
                 if index !== null & value !== null {
@@ -241,7 +241,7 @@ class Call {
                     def target := compiler.extractBuiltinInt(position, rawTarget)
                     def nullableType := pointerType.nullable()
                     def index := compiler.compileExpression(args[0],
-                            TypeContext.TYPE(compiler.INT64_TYPE, false))
+                            TypeContext.TYPE(compiler.INT_TYPE, false))
                     if compiler.isRefCounted(nullableType) {
                         def indexValue := compiler.extractBuiltinInt(position, index)
                         def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,

@@ -29,11 +29,27 @@ class Frost {
 
     @class
     @external
-    method ref(o:Object?)
+    method refThreadUnsafe(o:Object?)
 
     @class
     @external
-    method unref(o:Object?)
+    method refThreadSafe(o:Object?)
+
+    @class
+    @external
+    method refThreadSafeNonConstant(o:Object?)
+
+    @class
+    @external
+    method unrefThreadUnsafe(o:Object?)
+
+    @class
+    @external
+    method unrefThreadSafe(o:Object?)
+
+    @class
+    @external
+    method unrefThreadSafeNonConstant(o:Object?)
 
     @class
     @external
