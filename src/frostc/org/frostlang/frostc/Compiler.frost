@@ -3185,7 +3185,7 @@ class Compiler {
                     assert initMethod.methodKind = MethodDecl.Kind.INIT
                     assert initMethod.annotations.isImplicit
                     -- FIXME figure out where this 2 came from and whether it's the right value,
-                    -- make it a constant if it's necessarys
+                    -- make it a constant if it's necessary
                     return Pair<Type, Int>(target, 2->Int - initMethod.priority)
                 }
                 def preferred := preferredType(expr)
@@ -5159,7 +5159,9 @@ class Compiler {
     }
 
     method extractBuiltinInt(position:MethodPosition, int:IR.Value):IR.Value {
-        def field := getSymbolTable(getClass(int.type()))["value"]->FieldDecl?
+        def cl := getClass(int.type())
+        assert cl !== null
+        def field := getSymbolTable(cl)["value"]->FieldDecl?
         assert field !== null, "no 'value' field in \{int}:\{int.type()}"
         resolve(field)
         def result := ir.add(IR.Statement.EXTRACT_FIELD(position, int, field))

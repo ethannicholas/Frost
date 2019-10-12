@@ -239,6 +239,9 @@ class Annotations {
         if isNoReturn {
             result.append("@noReturn\n")
         }
+        if isPointerSize {
+            result.append("@pointerSize\n")
+        }
         if expressions !== null {
             for expr in expressions! {
                 result.append("\{expr}\n")

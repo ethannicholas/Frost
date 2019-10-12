@@ -178,6 +178,11 @@ class StubBackend : Backend {
                 }
                 name := parsed[1]
             }
+            if cl.owner == null {
+                for u in cl.aliases.values {
+                    out.printLine("uses \{u}")
+                }
+            }
             out.printLine("@stub")
             out.print(cl.annotations)
             match cl.classKind {

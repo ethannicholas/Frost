@@ -29,6 +29,15 @@ Compile-Big-O0: 0.222927
 Compile-Big-O3: 0.88826
 Fasta: 0.559879
 
+10/12/19 (stubs)
+Compile-Hello-O0: 0.0705467
+Compile-Hello-O3: 0.0678659
+Compile-Wumpus-O0: 0.697261
+Compile-Wumpus-O3: 0.896412
+Compile-Big-O0: 0.198075
+Compile-Big-O3: 0.871444
+Fasta: 0.582676
+
 *-
 
 class Bench {
@@ -40,7 +49,8 @@ class Bench {
         for i in 0 .. COUNT {
             timer.reset()
             def settings := Compiler.Settings(File(Config.frostSourceDir()),
-                    [File(Config.frostSourceDir())], optimizationLevel, safetyLevel, false)
+                    [File(Config.frostLibDir()).resolve("stubs"), File(Config.frostSourceDir())],
+                    optimizationLevel, safetyLevel, false)
             def errorQueue := MessageQueue<Compiler.Message>()
             def out := MemoryOutputStream()
             def backend := LLVMBackend(Config.llvmTriple(), out)
