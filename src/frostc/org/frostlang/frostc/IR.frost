@@ -523,6 +523,8 @@ class IR {
 
     def blocks := Array<Block>()
 
+    def statements := HashMap<IR.Statement.ID, IR.Statement>()
+
     @private
     var currentStatementId := -1
 
@@ -547,6 +549,7 @@ class IR {
         def result := Statement.ID(currentStatementId)
         currentBlock.ids.add(result)
         currentBlock.statements.add(s)
+        statements[result] := s
         return result
     }
 

@@ -360,10 +360,11 @@ class CodeGenerator {
                     if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
                         def objectCast := IR.Statement.ID(irId)
                         irId += 1
-                        convertCast(position, cast, IR.Value.REF(cast,rawType),
+                        convertCast(position, cast, IR.Value.REF(cast, rawType),
                                 compiler.OBJECT_TYPE)
+                        def variant := compiler.getRefVariant(rawType)
                         unrefs.add(Code.Statement.STATIC_CALL_VOID(position, Code.Signature(null,
-                                null, "frost$core$Frost$unref$frost$core$Object$Q",
+                                null, "frost$core$Frost$unref\{variant}$frost$core$Object$Q",
                                 FixedArray<Code.PrimitiveType>.from([Code.PrimitiveType.INT]),
                                 true), FixedArray<Code.Value>.from([
                                     convertValue(IR.Value.REF(objectCast, compiler.OBJECT_TYPE))])))

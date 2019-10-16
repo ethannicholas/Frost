@@ -1223,13 +1223,71 @@ class Call {
     }
 
     @class
+    function unwrapCast(compiler:Compiler, v:IR.Value):Type {
+        match v {
+            when IR.Value.REF(id, _) {
+                if id.value >= 0 {
+                    def s := compiler.ir.statements[id]
+                    match s {
+                        when IR.Statement.CAST(_, v, _, _) {
+                            return v.type()
+                        }
+                    }
+                }
+            }
+        }
+        return v.type()
+    }
+
+    @class
+    method findStaticImpl(compiler:Compiler, cl:ClassDecl, m:MethodRef):MethodRef? {
+        def methods := cl.methods
+        outer: for m2 in methods {
+            if m2.name != m.value.name {
+                continue
+            }
+            var testM:MethodDecl? := m2
+            loop {
+                if testM == m.value {
+                    return MethodRef(compiler, m2.owner.type, m2)
+                }
+                testM := compiler.getOverriddenMethod(testM)
+                if testM == null {
+                    break
+                }
+            }
+        }
+        for raw in cl.rawInterfaces {
+            def intf := compiler.getClass(raw)
+            if intf !== null {
+                def result := findStaticImpl(compiler, intf, m)
+                if result !== null {
+                    return result
+                }
+            }
+        }
+        if cl.rawSuper !== null {
+            def s := compiler.getClass(cl.rawSuper)
+            if s !== null {
+                def result := findStaticImpl(compiler, s, m)
+                if result !== null {
+                    return result
+                }
+            }
+        }
+        return null
+    }
+
+    -- FIXME dear god this method this method has grown out of control and needs to be broken up
+    @class
     @post((rawM.returnType = compiler.VOID_TYPE & @return == null) | @return !== null |
             compiler.errorCount > 0 | !compiler.reportErrors)
-    method compile(compiler:Compiler, position:MethodPosition, target:IR.Value?, rawM:MethodRef,
+    method compile(compiler:Compiler, position:MethodPosition, rawTarget:IR.Value?, rawM:MethodRef,
             args:ListView<ASTNode>, type:TypeContext):IR.Value? {
         assert position.methodIndex >= 0, "call to \{rawM.value.declaration} with invalid " +
                 "position: \{position}, \{position.methodIndex}"
         def ir := compiler.ir
+        var target := rawTarget
         -- FIXME var param
         var m := rawM
         if m.value.methodKind = MethodDecl.Kind.INIT {
@@ -1348,16 +1406,17 @@ class Call {
                 }
                 otherwise {
                     if m.value.owner.name = Compiler.NEW_POINTER_NAME {
-                        finalTarget := compiler.coerce(position, target,
+                        finalTarget := compiler.cast(position, target,
                                 actualType.parameterType(0))
                     }
                     else if isSuper {
-                        finalTarget := compiler.coerce(position,
+                        finalTarget := compiler.cast(position,
                                 compiler.compileSelf(position, false),
-                                m.value.owner.type)
+                                m.value.owner.typeWithParameters())
                     }
                     else {
-                        finalTarget := compiler.coerce(position, target, m.value.owner.type)
+                        finalTarget := compiler.cast(position, target,
+                                m.value.owner.typeWithParameters())
                     }
                     if finalTarget == null {
                         return null
@@ -1374,7 +1433,8 @@ class Call {
             }
             finalTarget := compiler.compileSelf(position, false)
             if !m.value.owner.type.isPointer {
-                finalTarget := compiler.coerce(position, finalTarget, m.value.owner.type)
+                finalTarget := compiler.cast(position, finalTarget,
+                        m.value.owner.typeWithParameters())
             }
             if finalTarget == null {
                 return null
@@ -1383,6 +1443,37 @@ class Call {
         }
         else {
             finalTarget := null
+        }
+        var dynamic := false
+        if !isSuper & m.value.isVirtual {
+            if target !== null {
+                var type1 := target.type()
+                def cl1 := compiler.getClass(type1)
+                if cl1 == null {
+                    return null
+                }
+                dynamic := !cl1.annotations.isFinal
+                if dynamic {
+                    def type2 := unwrapCast(compiler, target)
+                    if type1 != type2 {
+                        def cl2 := compiler.getClass(type2)
+                        if cl2 == null {
+                            return null
+                        }
+                        dynamic := !cl2.annotations.isFinal
+                        if !dynamic {
+                            m := findStaticImpl(compiler, cl2, m)
+                            finalTarget := compiler.cast(position, target,
+                                    m.value.owner.typeWithParameters())
+                            finalArgs[0] := finalTarget
+                            actualType := compiler.declaredTypeWithSelf(m.value, selfType, false)
+                        }
+                    }
+                }
+            }
+            else {
+                dynamic := true
+            }
         }
         def start:Int -- skip over self if it's implicit
         if !m.value.annotations.isClass & target !== null & target.type().isClassLiteral {
@@ -1432,7 +1523,7 @@ class Call {
             }
         }
         var result:IR.Value?
-        if !isSuper & m.value.isVirtual {
+        if dynamic {
             def mref:IR.Statement.ID
             if m.value.owner.classKind = ClassDecl.Kind.INTERFACE {
                 mref := ir.add(IR.Statement.GET_INTERFACE_METHOD(position, finalTarget,

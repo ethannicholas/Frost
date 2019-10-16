@@ -2,7 +2,7 @@ package org.frostlang.frostc
 
 -*
 
-10/9/19 (no stubs)
+10/9/19
 Compile-Hello-O0: 0.143355
 Compile-Hello-O3: 0.147332
 Compile-Wumpus-O0: 1.07063
@@ -11,32 +11,14 @@ Compile-Big-O0: 0.312204
 Compile-Big-O3: 1.51414
 Fasta: 2.34387
 
-10/11/19 (no stubs)
-Compile-Hello-O0: 0.10591
-Compile-Hello-O3: 0.113581
-Compile-Wumpus-O0: 0.813284
-Compile-Wumpus-O3: 1.04972
-Compile-Big-O0: 0.261212
-Compile-Big-O3: 1.17465
-Fasta: 0.663245
-
-10/12/19 (no stubs)
-Compile-Hello-O0: 0.0958464
-Compile-Hello-O3: 0.0942385
-Compile-Wumpus-O0: 0.72851
-Compile-Wumpus-O3: 0.888599
-Compile-Big-O0: 0.222927
-Compile-Big-O3: 0.88826
-Fasta: 0.559879
-
-10/12/19 (stubs)
-Compile-Hello-O0: 0.0705467
-Compile-Hello-O3: 0.0678659
-Compile-Wumpus-O0: 0.697261
-Compile-Wumpus-O3: 0.896412
-Compile-Big-O0: 0.198075
-Compile-Big-O3: 0.871444
-Fasta: 0.582676
+10/16/19
+Compile-Hello-O0: 0.0478991
+Compile-Hello-O3: 0.0462566
+Compile-Wumpus-O0: 0.51996
+Compile-Wumpus-O3: 0.671395
+Compile-Big-O0: 0.153277
+Compile-Big-O3: 0.790451
+Fasta: 0.516418
 
 *-
 
