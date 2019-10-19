@@ -3530,7 +3530,7 @@ class Compiler {
             for i in 0 .. e.fields.count {
                 if isRefCounted(e.fields[i]) {
                     def p := Position()
-                    def name := "unref" + getRefVariant(e.fields[i])
+                    def name := "unref" + getUnrefVariant(e.fields[i])
                     def unref := ASTNode.DOT(p, ASTNode.DOT(p, ASTNode.DOT(p,
                             ASTNode.IDENTIFIER(p, "frost"), "core"), "Frost"), name)
                     unrefs.add(ASTNode.CALL(Position(), unref,
@@ -4060,8 +4060,8 @@ class Compiler {
             assert srcType.isClass
             -- FIXME add explicit check back in when null safety becomes an error instead of a
             -- warning
-            if -*explicit & *-value.type().isNullable & !target.isNullable &
-                    target.typeKind != Type.Kind.GENERIC_CLASS_PARAMETER &
+            if -*explicit & *- settings.safetyLevel >= 3 & value.type().isNullable &
+                    !target.isNullable & target.typeKind != Type.Kind.GENERIC_CLASS_PARAMETER &
                     target.typeKind != Type.Kind.GENERIC_METHOD_PARAMETER {
                 def basePos := position.asPosition
                 Assert.compile(self, position, ASTNode.BINARY(basePos,
@@ -4226,10 +4226,8 @@ class Compiler {
         }
     }
 
+    -- See Frost.frost for an explanation of the various variants
     method getRefVariant(rawType:Type):String {
-        -- the naming here is potentially confusing - refThreadSafe means that the *ref method* is
-        -- thread safe, which makes it the right variant to use for objects which are themselves
-        -- *not* thread safe
         def type := unwrap(rawType)
         if canCast(type, IMMUTABLE_TYPE) {
             if canCast(type, STRING_TYPE) | canCast(type, CLASS_TYPE) {
@@ -4242,6 +4240,46 @@ class Compiler {
         else {
             return "ThreadUnsafe"
         }
+    }
+
+    method hasNontrivialCleanup(cl:ClassDecl):Bit {
+        if cl.hasNontrivialCleanup == null {
+            resolve(cl)
+            def cleanup := getVTable(cl)[1]
+            assert cleanup.name = "cleanup"
+            if cleanup.body !== null & cleanup.body.count > 0 {
+                cl.hasNontrivialCleanup := true
+                return true
+            }
+            for f in cl.fields {
+                resolve(f)
+                if isRefCounted(f.type) {
+                    cl.hasNontrivialCleanup := true
+                    return true
+                }
+            }
+            if cl.rawSuper !== null {
+                def s := getClass(remapType(cl.type, cl.rawSuper))
+                if s !== null {
+                    return hasNontrivialCleanup(s)
+                }
+            }
+            cl.hasNontrivialCleanup := false
+            return false
+        }
+        return cl.hasNontrivialCleanup
+    }
+
+    method getUnrefVariant(rawType:Type):String {
+        -- See Frost.frost for an explanation of the various variants
+        def type := unwrap(rawType)
+        def result := getRefVariant(type)
+        def cl := getClass(type)
+        if cl !== null & cl.annotations.isFinal & !hasNontrivialCleanup(cl) {
+            Console.printLine("no cleanup for \{rawType}")
+            return result + "NoCleanup"
+        }
+        return result
     }
 
     method compileRef(v:IR.Value) {
@@ -4266,7 +4304,7 @@ class Compiler {
         }
         def args := Array<ASTNode>()
         args.add(ASTNode.IR_WRAPPER(currentMethod[0].position, v))
-        def name := "unref" + getRefVariant(v.type())
+        def name := "unref" + getUnrefVariant(v.type())
         Call.compile(self, MethodPosition(currentMethod[0].position, currentMethodIndex),
                 literalType(FROST_TYPE), name, args, TypeContext.UNSPECIFIED)
     }
@@ -5012,8 +5050,7 @@ class Compiler {
                 match type {
                     when TypeContext.TYPE(t, _) {
                         if !t.nonnullable().isMethod {
-                            error(position, "unresolved method reference cannot possibly " +
-                                    "be an instance of '\{t}'")
+                            error(position, "ambiguous method reference")
                         }
                         def best := Array<MethodDecl>()
                         var bestCost := Int.MAX

@@ -6,6 +6,18 @@ uses org.frostlang.frostc.parser.Token
 
 @final
 class LLVMBackend : Backend {
+    choice Intrinsic {
+        REF_THREAD_UNSAFE
+        REF_THREAD_SAFE_NONCONSTANT
+        REF_THREAD_SAFE
+        UNREF_THREAD_UNSAFE
+        UNREF_THREAD_SAFE_NONCONSTANT
+        UNREF_THREAD_SAFE
+        UNREF_THREAD_UNSAFE_NOCLEANUP
+        UNREF_THREAD_SAFE_NONCONSTANT_NOCLEANUP
+        UNREF_THREAD_SAFE_NOCLEANUP
+    }
+
     constant NO_REFCNT := -999
 
     constant INT_TYPE  := "i64"
@@ -378,6 +390,41 @@ class LLVMBackend : Backend {
         return llvmType(v.type) + " " + getReference(v)
     }
 
+    function getIntrinsic(s:Code.Signature):Intrinsic? {
+        match s.name {
+            when "frost$core$Frost$refThreadUnsafe$frost$core$Object$Q" {
+                return Intrinsic.REF_THREAD_UNSAFE
+            }
+            when "frost$core$Frost$refThreadSafeNonConstant$frost$core$Object$Q" {
+                return Intrinsic.REF_THREAD_SAFE_NONCONSTANT
+            }
+            when "frost$core$Frost$refThreadSafe$frost$core$Object$Q" {
+                return Intrinsic.REF_THREAD_SAFE
+            }
+            when "frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q" {
+                return Intrinsic.UNREF_THREAD_UNSAFE
+            }
+            when "frost$core$Frost$unrefThreadSafeNonConstant$frost$core$Object$Q" {
+                return Intrinsic.UNREF_THREAD_SAFE_NONCONSTANT
+            }
+            when "frost$core$Frost$unrefThreadSafe$frost$core$Object$Q" {
+                return Intrinsic.UNREF_THREAD_SAFE
+            }
+            when "frost$core$Frost$unrefThreadUnsafeNoCleanup$frost$core$Object$Q" {
+                return Intrinsic.UNREF_THREAD_UNSAFE_NOCLEANUP
+            }
+            when "frost$core$Frost$unrefThreadSafeNonConstantNoCleanup$frost$core$Object$Q" {
+                return Intrinsic.UNREF_THREAD_SAFE_NONCONSTANT_NOCLEANUP
+            }
+            when "frost$core$Frost$unrefThreadSafeNoCleanup$frost$core$Object$Q" {
+                return Intrinsic.UNREF_THREAD_SAFE_NOCLEANUP
+            }
+            otherwise {
+                return null
+            }
+        }
+    }
+
     @override
     method writeSignature(s:Code.Signature) {
         try {
@@ -385,6 +432,11 @@ class LLVMBackend : Backend {
                 return
             }
             writtenSignatures.add(s.name)
+            def intrinsic := getIntrinsic(s)
+            if intrinsic !== null {
+                writeIntrinsicSignature(intrinsic)
+                return
+            }
             signatures.print("declare ")
             if s.returnType !== null {
                 signatures.print(llvmType(s.returnType))
@@ -483,6 +535,166 @@ class LLVMBackend : Backend {
                 }
             }
             out.printLine("\{name(id)} = \{op} \{getTypedReference(value)} to \{llvmType(target)}")
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    method writeIntrinsicSignature(intrinsic:Intrinsic) {
+        try {
+            match intrinsic {
+                -- we include code for all of the ref / unref methods to allow for inlining;
+                -- they are called so frequently that anything we can do to reduce their
+                -- overhead is worthwhile
+                when Intrinsic.REF_THREAD_UNSAFE {
+                    signatures.printLine("define linkonce_odr void @frost$core$Frost$refThreadUnsafe$frost$core$Object$Q_intrinsic(i64 %p) alwaysinline {")
+                    signatures.printLine("    %1 = icmp eq i64 %p, 0")
+                    signatures.printLine("    br i1 %1, label %end, label %nonNull")
+                    signatures.printLine("    nonNull:")
+                    signatures.printLine("    %2 = inttoptr i64 %p to { i64, i32 }*")
+                    signatures.printLine("    %3 = getelementptr inbounds { i64, i32 }, { i64, i32 }* %2, i64 0, i32 1")
+                    signatures.printLine("    %4 = load i32, i32* %3")
+                    signatures.printLine("    %5 = add i32 %4, 1")
+                    signatures.printLine("    store i32 %5, i32* %3")
+                    signatures.printLine("    br label %end")
+                    signatures.printLine("    end:")
+                    signatures.printLine("    ret void")
+                    signatures.printLine("}")
+                }
+                when Intrinsic.REF_THREAD_SAFE_NONCONSTANT {
+                    signatures.printLine("define linkonce_odr void @frost$core$Frost$refThreadSafeNonConstant$frost$core$Object$Q_intrinsic(i64 %p) alwaysinline {")
+                    signatures.printLine("    %1 = icmp eq i64 %p, 0")
+                    signatures.printLine("    br i1 %1, label %end, label %nonNull")
+                    signatures.printLine("    nonNull:")
+                    signatures.printLine("    %2 = inttoptr i64 %p to { i64, i32 }*")
+                    signatures.printLine("    %3 = getelementptr inbounds { i64, i32 }, { i64, i32 }* %2, i64 0, i32 1")
+                    signatures.printLine("    %4 = atomicrmw add i32* %3, i32 1 monotonic")
+                    signatures.printLine("    br label %end")
+                    signatures.printLine("    end:")
+                    signatures.printLine("    ret void")
+                    signatures.printLine("}")
+                }
+                when Intrinsic.REF_THREAD_SAFE {
+                    signatures.printLine("define linkonce_odr void @frost$core$Frost$refThreadSafe$frost$core$Object$Q_intrinsic(i64 %p) alwaysinline {")
+                    signatures.printLine("    %1 = icmp eq i64 %p, 0")
+                    signatures.printLine("    br i1 %1, label %end, label %nonNull")
+                    signatures.printLine("    nonNull:")
+                    signatures.printLine("    %2 = inttoptr i64 %p to { i64, i32 }*")
+                    signatures.printLine("    %3 = getelementptr inbounds { i64, i32 }, { i64, i32 }* %2, i64 0, i32 1")
+                    signatures.printLine("    %4 = load i32, i32* %3")
+                    signatures.printLine("    %5 = icmp ne i32 %4, -999")
+                    signatures.printLine("    br i1 %5, label %nonConstant, label %end")
+                    signatures.printLine("    nonConstant:")
+                    signatures.printLine("    %6 = atomicrmw add i32* %3, i32 1 monotonic")
+                    signatures.printLine("    br label %end")
+                    signatures.printLine("    end:")
+                    signatures.printLine("    ret void")
+                    signatures.printLine("}")
+                }
+                when Intrinsic.UNREF_THREAD_UNSAFE, Intrinsic.UNREF_THREAD_UNSAFE_NOCLEANUP {
+                    def destroyMethod:String
+                    def cleanup:String
+                    if intrinsic = Intrinsic.UNREF_THREAD_UNSAFE {
+                        destroyMethod := "frostDestroy"
+                        cleanup := ""
+                    }
+                    else {
+                        destroyMethod := "frostObjectFree"
+                        cleanup := "NoCleanup"
+                    }
+                    if !writtenSignatures.contains(destroyMethod) {
+                        signatures.printLine("declare void @\{destroyMethod}(i64)")
+                        writtenSignatures.add(destroyMethod)
+                    }
+                    signatures.printLine("define linkonce_odr void @frost$core$Frost$unrefThreadUnsafe\{cleanup}$frost$core$Object$Q_intrinsic(i64 %p) alwaysinline {")
+                    signatures.printLine("    %1 = icmp eq i64 %p, 0")
+                    signatures.printLine("    br i1 %1, label %end, label %nonNull")
+                    signatures.printLine("    nonNull:")
+                    signatures.printLine("    %2 = inttoptr i64 %p to { i64, i32 }*")
+                    signatures.printLine("    %3 = getelementptr inbounds { i64, i32 }, { i64, i32 }* %2, i64 0, i32 1")
+                    signatures.printLine("    %4 = load i32, i32* %3")
+                    signatures.printLine("    %5 = sub i32 %4, 1")
+                    signatures.printLine("    store i32 %5, i32* %3")
+                    signatures.printLine("    %6 = icmp eq i32 %5, 0")
+                    signatures.printLine("    br i1 %6, label %destroy, label %end")
+                    signatures.printLine("    destroy:")
+                    signatures.printLine("    call void @\{destroyMethod}(i64 %p)")
+                    signatures.printLine("    br label %end")
+                    signatures.printLine("    end:")
+                    signatures.printLine("    ret void")
+                    signatures.printLine("}")
+                }
+                when Intrinsic.UNREF_THREAD_SAFE_NONCONSTANT,
+                        Intrinsic.UNREF_THREAD_SAFE_NONCONSTANT_NOCLEANUP {
+                    def destroyMethod:String
+                    def cleanup:String
+                    if intrinsic = Intrinsic.UNREF_THREAD_SAFE_NONCONSTANT {
+                        destroyMethod := "frostDestroy"
+                        cleanup := ""
+                    }
+                    else {
+                        destroyMethod := "frostObjectFree"
+                        cleanup := "NoCleanup"
+                    }
+                    if !writtenSignatures.contains(destroyMethod) {
+                        signatures.printLine("declare void @\{destroyMethod}(i64)")
+                        writtenSignatures.add(destroyMethod)
+                    }
+                    signatures.printLine("define linkonce_odr void @frost$core$Frost$unrefThreadSafeNonConstant\{cleanup}$frost$core$Object$Q_intrinsic(i64 %p) alwaysinline {")
+                    signatures.printLine("    %1 = icmp eq i64 %p, 0")
+                    signatures.printLine("    br i1 %1, label %end, label %nonNull")
+                    signatures.printLine("    nonNull:")
+                    signatures.printLine("    %2 = inttoptr i64 %p to { i64, i32 }*")
+                    signatures.printLine("    %3 = getelementptr inbounds { i64, i32 }, { i64, i32 }* %2, i64 0, i32 1")
+                    signatures.printLine("    %4 = atomicrmw sub i32* %3, i32 1 monotonic")
+                    signatures.printLine("    %5 = icmp eq i32 %4, 1")
+                    signatures.printLine("    br i1 %5, label %destroy, label %end")
+                    signatures.printLine("    destroy:")
+                    signatures.printLine("    call void @\{destroyMethod}(i64 %p)")
+                    signatures.printLine("    br label %end")
+                    signatures.printLine("    end:")
+                    signatures.printLine("    ret void")
+                    signatures.printLine("}")
+                }
+                when Intrinsic.UNREF_THREAD_SAFE, Intrinsic.UNREF_THREAD_SAFE_NOCLEANUP {
+                    def destroyMethod:String
+                    def cleanup:String
+                    if intrinsic = Intrinsic.UNREF_THREAD_SAFE {
+                        destroyMethod := "frostDestroy"
+                        cleanup := ""
+                    }
+                    else {
+                        destroyMethod := "frostObjectFree"
+                        cleanup := "NoCleanup"
+                    }
+                    if !writtenSignatures.contains(destroyMethod) {
+                        signatures.printLine("declare void @\{destroyMethod}(i64)")
+                        writtenSignatures.add(destroyMethod)
+                    }
+                    signatures.printLine("define linkonce_odr void @frost$core$Frost$unrefThreadSafe\{cleanup}$frost$core$Object$Q_intrinsic(i64 %p) alwaysinline {")
+                    signatures.printLine("    %1 = icmp eq i64 %p, 0")
+                    signatures.printLine("    br i1 %1, label %end, label %nonNull")
+                    signatures.printLine("    nonNull:")
+                    signatures.printLine("    %2 = inttoptr i64 %p to { i64, i32 }*")
+                    signatures.printLine("    %3 = getelementptr inbounds { i64, i32 }, { i64, i32 }* %2, i64 0, i32 1")
+                    signatures.printLine("    %4 = load i32, i32* %3")
+                    signatures.printLine("    %cast2 = sext i32 %4 to i64")                        
+                    signatures.printLine("    %5 = icmp ne i32 %4, -999")
+                    signatures.printLine("    br i1 %5, label %nonConstant, label %end")
+                    signatures.printLine("    nonConstant:")
+                    signatures.printLine("    %6 = atomicrmw sub i32* %3, i32 1 monotonic")
+                    signatures.printLine("    %cast = sext i32 %6 to i64")                        
+                    signatures.printLine("    %7 = icmp eq i32 %6, 1")
+                    signatures.printLine("    br i1 %7, label %destroy, label %end")
+                    signatures.printLine("    destroy:")
+                    signatures.printLine("    call void @\{destroyMethod}(i64 %p)")
+                    signatures.printLine("    br label %end")
+                    signatures.printLine("    end:")
+                    signatures.printLine("    ret void")
+                    signatures.printLine("}")
+                }
+            }
         }
         fail(error) {
             unreachable, error.asString
@@ -737,7 +949,11 @@ class LLVMBackend : Backend {
                         writeSignature(m)
                     }
                     assert m.returnType !== null, "STATIC_CALL to void method \{m} at \{position}"
-                    out.print("\{name(result)} = call \{llvmType(m.returnType)} @\{m.name}(")
+                    out.print("\{name(result)} = call \{llvmType(m.returnType)} @\{m.name}")
+                    if getIntrinsic(m) !== null {
+                        out.print("_intrinsic")
+                    }
+                    out.print("(")
                     var separator := ""
                     for a in args {
                         out.print("\{separator}\{getTypedReference(a)}")
@@ -749,7 +965,11 @@ class LLVMBackend : Backend {
                     if m.isExternal {
                         writeSignature(m)
                     }
-                    out.print("call void @\{m.name}(")
+                    out.print("call void @\{m.name}")
+                    if getIntrinsic(m) !== null {
+                        out.print("_intrinsic")
+                    }
+                    out.print("(")
                     var separator := ""
                     for a in args {
                         out.print("\{separator}\{getTypedReference(a)}")
@@ -815,8 +1035,17 @@ class LLVMBackend : Backend {
                 separator := ", "
             }
             out.print(")")
-            if m !== null & compiler!.settings.debug {
-                out.print(" !dbg \{getMethodMetadata(m.index)}")
+            if m !== null {
+                -*
+                FIXME put this back in once function safety is in, or at least I figure out where
+                the breakage is
+                if m.methodKind = MethodDecl.Kind.FUNCTION {
+                    out.print(" readonly")
+                }
+                *-
+                if compiler!.settings.debug {
+                    out.print(" !dbg \{getMethodMetadata(m.index)}")
+                }
             }
             out.printLine(" {")
             writeCode(code)

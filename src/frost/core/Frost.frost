@@ -27,6 +27,34 @@ class Frost {
         return Maybe<Object>.ERROR(Error(msg))
     }
 
+    -*
+
+    Since refs / unrefs happen so incredibly often, even a tiny difference in performance is worth
+    pursuing. Consequently we have a bunch of different variations of them, tuned to different kinds
+    of objects.
+
+    The things we key off of are are:
+        thread safety - mutable objects should only be accessible from a single thread, so we can
+                        use the ThreadUnsafe versions of ref / unref on them. Note that these names
+                        might be confusing: we use the thread *unsafe* methods to ref / unref
+                        objects which are themseves thread *safe*, and vice versa.
+        constant - constant objects are written directly into the executable (e.g. string
+                   literals). Not only will they never be destroyed, they can't safely be reffed /
+                   unreffed at all, because they might occupy constant memory. So they have to have
+                   a special out-of-band refcount (NO_REFCNT) which signals that we should never
+                   modify their refcount, which entails an additional test in the code. When the
+                   object's compile-time type is something that can't possibly be a constant (any
+                   type that can't hold a String or Class), we can call the NonConstant versions of
+                   the methods and avoid the NO_REFCNT test. Note that constant and thread safety
+                   are intertwined: the constant types are immutable, so are always potentially
+                   visible from multiple threads, and so there are no ThreadUnsafeNonConstant
+                   variants.
+        no cleanup - Object's cleanup method doesn't do anything. So if we destroy a non-extendable
+                     object which does not override cleanup, we don't actually have to call cleanup
+                     when destroying the object.
+
+    *-
+
     @class
     @external
     method refThreadUnsafe(o:Object?)
@@ -50,6 +78,18 @@ class Frost {
     @class
     @external
     method unrefThreadSafeNonConstant(o:Object?)
+
+    @class
+    @external
+    method unrefThreadUnsafeNoCleanup(o:Object?)
+
+    @class
+    @external
+    method unrefThreadSafeNoCleanup(o:Object?)
+
+    @class
+    @external
+    method unrefThreadSafeNonConstantNoCleanup(o:Object?)
 
     @class
     @external

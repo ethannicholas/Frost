@@ -11,14 +11,14 @@ Compile-Big-O0: 0.312204
 Compile-Big-O3: 1.51414
 Fasta: 2.34387
 
-10/16/19
-Compile-Hello-O0: 0.0478991
-Compile-Hello-O3: 0.0462566
-Compile-Wumpus-O0: 0.51996
-Compile-Wumpus-O3: 0.671395
-Compile-Big-O0: 0.153277
-Compile-Big-O3: 0.790451
-Fasta: 0.516418
+10/18/19
+Compile-Hello-O0: 0.0779327
+Compile-Hello-O3: 0.0768616
+Compile-Wumpus-O0: 0.564584
+Compile-Wumpus-O3: 0.720001
+Compile-Big-O0: 0.197874
+Compile-Big-O3: 0.895961
+Fasta: 0.567027
 
 *-
 
@@ -27,9 +27,8 @@ class Bench {
 
     method benchCompile(name:String, src:String, optimizationLevel:Int, safetyLevel:Int) {
         def timer := frost.time.Timer()
-        def total := 0.0
+        timer.reset()
         for i in 0 .. COUNT {
-            timer.reset()
             def settings := Compiler.Settings(File(Config.frostSourceDir()),
                     [File(Config.frostLibDir()).resolve("stubs"), File(Config.frostSourceDir())],
                     optimizationLevel, safetyLevel, false)
@@ -51,9 +50,8 @@ class Bench {
                 }
             }
             assert(compiler.errorCount = 0)
-            total += timer.elapsed()
         }
-        Console.printLine("Compile-\{name}: \{total / COUNT}")
+        Console.printLine("Compile-\{name}: \{timer.elapsed() / COUNT}")
     }
 
     method benchCompile(name:String, src:String) {
@@ -66,9 +64,8 @@ class Bench {
         def args := ["-S", "0", "-O", "3", "-o", dst, file.path]
         Compiler.run(args)
         def timer := frost.time.Timer()
-        def total := 0.0
+        timer.reset()
         for i in 0 .. COUNT {
-            timer.reset()
             try {
                 def p := System.exec(dst, [])
                 def received := p.standardOutput().readFully()
@@ -78,14 +75,13 @@ class Bench {
                     System.exit(1)
                 }
                 p.waitFor()
-                total += timer.elapsed()
             }
             fail(error) {
                 Console.printLine(error)
                 System.exit(1)
             }
         }
-        Console.printLine("\{name}: \{total / COUNT}")
+        Console.printLine("\{name}: \{timer.elapsed() / COUNT}")
     }
 
     method run() {

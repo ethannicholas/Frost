@@ -14,7 +14,12 @@ class Assignment {
     method compile(compiler:Compiler, position:MethodPosition, rawLeft:ASTNode, op:Binary.Operator,
             rawRight:ASTNode) {
         if !op.isAssignment {
-            compiler.error(position, "not a statement")
+            if op = Binary.Operator.EQ {
+                compiler.error(position, "not a statement (did you mean ':='?)")
+            }
+            else {
+                compiler.error(position, "not a statement")
+            }
             return
         }
         if op = Binary.Operator.ASSIGNMENT {

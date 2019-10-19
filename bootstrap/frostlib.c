@@ -25,7 +25,7 @@
 #include <mach/mach_time.h>
 #endif
 
-#define FROST_DEBUG
+//#define FROST_DEBUG
 
 typedef int8_t bool;
 
@@ -874,6 +874,56 @@ void frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q(Object* o) {
         #endif
         if (o->refcnt == 0) {
             frostDestroy(o);
+        }
+    }
+}
+
+void frost$core$Frost$unrefThreadSafeNonConstantNoCleanup$frost$core$Object$Q(Object* o) {
+    // should be ok to check whether it's NO_REFCNT without a lock - if it is, nobody should be
+    // changing it anyway
+    if (o && o->refcnt != NO_REFCNT) {
+        int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
+        #ifdef FROST_DEBUG
+            if (newCount < 0 && refErrorReporting) {
+                printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
+                printf("    class: %s\n", frostGetCString(o->cl->name));
+                abort();
+            }
+        #endif
+        if (newCount == 0) {
+            frostObjectFree(o);
+        }
+    }
+}
+
+void frost$core$Frost$unrefThreadSafeNoCleanup$frost$core$Object$Q(Object* o) {
+    if (o && o->refcnt != NO_REFCNT) {
+        int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
+        #ifdef FROST_DEBUG
+            if (newCount < 0 && refErrorReporting) {
+                printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
+                printf("    class: %s\n", frostGetCString(o->cl->name));
+                abort();
+            }
+        #endif
+        if (newCount == 0) {
+            frostObjectFree(o);
+        }
+    }
+}
+
+void frost$core$Frost$unrefThreadUnsafeNoCleanup$frost$core$Object$Q(Object* o) {
+    if (o) {
+        --o->refcnt;
+        #ifdef FROST_DEBUG
+            if (o->refcnt < 0 && refErrorReporting) {
+                printf("internal error: unref %p with refcnt = %d\n", o, o->refcnt + 1);
+                printf("    class: %s\n", frostGetCString(o->cl->name));
+                abort();
+            }
+        #endif
+        if (o->refcnt == 0) {
+            frostObjectFree(o);
         }
     }
 }

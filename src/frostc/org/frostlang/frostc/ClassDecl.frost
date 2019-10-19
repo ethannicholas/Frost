@@ -110,6 +110,8 @@ class ClassDecl {
     -- true if this class is not present in the current compilation unit and requires linkage
     var external := true
 
+    var hasNontrivialCleanup:Bit? := null
+
     def virtualMethods := Array<MethodDecl>()
 
     def classResolutionCache := HashMap<String, Resolution>()

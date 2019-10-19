@@ -594,8 +594,7 @@ class CodeGenerator {
                 }
             }
             when IR.Value.METHOD_POINTER(m, _) {
-                return Code.Value.STRUCT(FixedArray<Code.Value>.from([Code.Value.METHOD_POINTER(
-                        getSignature(m))]))
+                return Code.Value.METHOD_POINTER(getSignature(m))
             }
             when IR.Value.PARAMETER(slot, type) {
                 return Code.Value.PARAMETER(slot, primitiveType(type))
