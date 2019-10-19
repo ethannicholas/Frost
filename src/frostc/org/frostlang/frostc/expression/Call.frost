@@ -1049,7 +1049,7 @@ class Call {
             def cl := compiler.getClass(type)
             assert cl !== null
             def rawValue := Dot.compile(compiler, position, ASTNode.IR_WRAPPER(position.asPosition,
-                    v), ClassDecl.RAW_VALUE_NAME)
+                    v), ClassDecl.TAG_NAME)
             assert rawValue !== null
             def test := ir.add(IR.Statement.BINARY(position, compiler.extractBuiltinInt(position,
                     rawValue), Binary.Operator.EQ, IR.Value.INT(0, compiler.BUILTIN_INT64_TYPE),

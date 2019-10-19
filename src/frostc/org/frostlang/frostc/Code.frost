@@ -445,6 +445,12 @@ class Code {
         ============================================================================================
         STATIC_CALL_VOID(MethodPosition, Signature, FixedArray<Value> -* args *-)
 
+        ============================================================================================
+        Compares the value against the various test numbers, jumping to the block of the matching
+        number, or to the otherwise block if none match.
+        ============================================================================================
+        SWITCH(MethodPosition, Value, FixedArray<(UInt64, Block.ID)>, Block.ID -* otherwise *-)
+
         UNREACHABLE(MethodPosition)
 
         class ID : frost.core.Value, HashKey<ID> {

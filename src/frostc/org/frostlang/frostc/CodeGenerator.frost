@@ -1484,6 +1484,11 @@ class CodeGenerator {
             when IR.Statement.STORE(position, value, ptr) {
                 out.add(Code.Statement.STORE(position, convertValue(value), convertValue(ptr)))
             }
+            when IR.Statement.SWITCH(position, value, cases, other) {
+                def c := cases.map(c => (c[0], self.mapId(c[1])))
+                out.add(Code.Statement.SWITCH(position, convertValue(value),
+                        FixedArray<(UInt64, Code.Block.ID)>.from(c), mapId(other)))
+            }
             when IR.Statement.UNREACHABLE(position) {
                 out.add(Code.Statement.UNREACHABLE(position))
             }

@@ -599,6 +599,14 @@ class CBackend : Backend {
                     out.printLine("*(\{cType(value.type)}*) \{getReference(dest)} = " +
                                 "\{getReference(value)};")
                 }
+                when Code.Statement.SWITCH(position, value, cases, other) {
+                    out.printLine("switch (\{getReference(value)}) {")
+                    for c in cases {
+                        out.printLine("case \{c[0]}: goto \{c[1]};")
+                    }
+                    out.printLine("default: goto \{other};")
+                    out.printLine("}")
+                }
                 when Code.Statement.UNREACHABLE(position) {
                     out.printLine("abort(); // unreachable")
                 }

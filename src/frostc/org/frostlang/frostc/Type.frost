@@ -47,6 +47,8 @@ class Type : Symbol, HashKey<Type> {
 
     def methodRef:MethodRef?
 
+    property isInt:Bit
+
     property isNumber:Bit
 
     property size:Int
@@ -327,6 +329,10 @@ class Type : Symbol, HashKey<Type> {
         children.add(endpoint)
         children.add(step)
         return generic(compiler.STEPPED_RANGE_TYPE, children)
+    }
+
+    function get_isInt():Bit {
+        return name.startsWith("frost.core.Int") | name.startsWith("frost.core.UInt")
     }
 
     function get_isNumber():Bit {

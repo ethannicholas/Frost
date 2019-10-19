@@ -11,7 +11,7 @@ class ClassDecl {
     ================================================================================================
     Field which holds the numeric value of choice instances.
     ================================================================================================
-    constant RAW_VALUE_NAME := "$rawValue"
+    constant TAG_NAME := "tag"
 
     ================================================================================================
     Placeholder field for the data associated with choice entries. The Backend will make this field

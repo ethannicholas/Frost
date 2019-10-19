@@ -21,13 +21,9 @@ class Symbol {
     def name:String
 
     init(kind:Kind, position:Position, name:String) {
-        if name = "anonymous.CollectionView.map.U" {
-            assert self->Type.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER, "actual value: \{self->Type.typeKind.$rawValue}"
-        }
         self.kind := kind
         self.position := position
         self.name := name
-        assert name != "1"
     }
 
     function get_heritable():Bit {

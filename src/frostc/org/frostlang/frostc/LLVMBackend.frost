@@ -984,6 +984,12 @@ class LLVMBackend : Backend {
                     out.printLine("store \{getTypedReference(value)}, \{llt}* \{cast}" +
                             debugInfo(position))
                 }
+                when Code.Statement.SWITCH(position, value, cases, other) {
+                    def type := llvmType(value.type)
+                    out.printLine("switch \{type} \{getReference(value)}, label %\{other} [" +
+                            cases.map(c => "\{type} \{c[0]}, label %\{c[1]}").join("\n") + "]" +
+                            debugInfo(position))
+                }
                 when Code.Statement.UNREACHABLE(position) {
                     out.printLine("unreachable")
                 }

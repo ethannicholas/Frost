@@ -101,7 +101,7 @@ class Scanner {
                 return Type.tuple(finalArgs)
             }
             otherwise {
-                unreachable, "unsupported type \{type}(\{type.$rawValue})"
+                unreachable, "unsupported type \{type}(\{type.tag})"
             }
         }
         unreachable
@@ -748,7 +748,7 @@ class Scanner {
         if kind = ClassDecl.Kind.CHOICE {
             def rawValue := FieldDecl(result, result.position, null,
                     Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
-                    ClassDecl.RAW_VALUE_NAME, compiler.INT_TYPE, null)
+                    ClassDecl.TAG_NAME, compiler.INT_TYPE, null)
             result.fields.add(rawValue)
             result.symbolTable.add(rawValue)
             def data := FieldDecl(result, result.position, null,
@@ -981,7 +981,7 @@ class Scanner {
                             }
                         }
                         otherwise {
-                            unreachable, "unsupported: \{e}(\{e.$rawValue}):\{e.position()}"
+                            unreachable, "unsupported: \{e}(\{e.tag}):\{e.position()}"
                         }
                     }
                 }

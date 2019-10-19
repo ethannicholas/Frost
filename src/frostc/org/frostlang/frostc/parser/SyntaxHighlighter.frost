@@ -35,7 +35,7 @@ class SyntaxHighlighter {
     }
 
     method close(kind:Kind) {
-        assert stack[0].$rawValue = kind.$rawValue
+        assert stack[0].tag = kind.tag
         stack.pop()
     }
 

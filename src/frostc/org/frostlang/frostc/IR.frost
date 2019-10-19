@@ -136,6 +136,12 @@ class IR {
         ============================================================================================
         STORE(MethodPosition, Value -* value *-, Value -* dest pointer *-)
 
+        ============================================================================================
+        Compares the value against the various test numbers, jumping to the block of the matching
+        number, or to the otherwise block if none match.
+        ============================================================================================
+        SWITCH(MethodPosition, Value, FixedArray<(UInt64, Block.ID)>, Block.ID -* otherwise *-)
+
         UNREACHABLE(MethodPosition)
 
         class ID : frost.core.Value, HashKey<ID> {
@@ -321,6 +327,9 @@ class IR {
                 when STORE(position, value, ptr) {
                     return "store \{value}, \{ptr}"
                 }
+                when SWITCH(position, value, cases, other) {
+                    return "switch \{value}, \{cases}, \{other}"
+                }
                 when UNREACHABLE(position) {
                     return "unreachable"
                 }
@@ -447,7 +456,7 @@ class IR {
                 when TYPE(_, type) {
                     return type
                 }
-                when METHOD, METHODS, GENERIC_METHOD, GENERIC_METHODS, SUPER, TYPE {
+                when GENERIC_METHOD, GENERIC_METHODS {
                     return Type("<invalid>", Type.Kind.INVALID, Position(), true)
                 }
             }
@@ -584,7 +593,7 @@ class IR {
         }
         match currentBlock.statements.last {
             when Statement.BRANCH, Statement.CONDITIONAL_BRANCH, Statement.END, Statement.RETURN,
-                    Statement.UNREACHABLE {
+                    Statement.SWITCH, Statement.UNREACHABLE {
                 return true
             }
             otherwise {

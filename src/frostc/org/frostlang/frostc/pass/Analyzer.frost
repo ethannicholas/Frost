@@ -187,7 +187,8 @@ class Analyzer {
     ================================================================================================
     Represents an exit from a block. Blocks which end in conditional branches have two exits (exit
     0 for when the condition is true, and exit 1 for when it is false), blocks which end in
-    unconditional branches have only a single exit, and other blocks do not have exits.
+    unconditional branches have only a single exit, blocks whicn end in switches have any number of
+    exits, and other blocks do not have exits.
     ================================================================================================
     class BlockExit : Value, HashKey<BlockExit> {
         def id:IR.Block.ID
@@ -609,6 +610,12 @@ class Analyzer {
             when IR.Statement.END {
             }
             when IR.Statement.RETURN {
+            }
+            when IR.Statement.SWITCH(_, _, whens, other) {
+                for i in 0 .. whens.count {
+                    propagate(BlockExit(block.id, i), whens[i][1])
+                }
+                propagate(BlockExit(block.id, whens.count), other)
             }
             when IR.Statement.UNREACHABLE {
             }

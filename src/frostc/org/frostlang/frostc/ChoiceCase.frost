@@ -9,18 +9,18 @@ class ChoiceCase : Symbol {
 
     def fields:Array<Type>
 
-    def rawValue:Int
+    def tag:Int
 
     @weak
     def initMethod:MethodDecl? := null
 
     var resolved:Compiler.Resolution := Compiler.Resolution.UNRESOLVED
 
-    init(owner:ClassDecl, position:Position, name:String, doccomment:String?, rawValue:Int,
+    init(owner:ClassDecl, position:Position, name:String, doccomment:String?, tag:Int,
             fields:ListView<Type>) {
         self.owner := owner
         self.doccomment := doccomment
-        self.rawValue := rawValue
+        self.tag := tag
         self.fields := Array<Type>(fields)
         super.init(Symbol.Kind.CHOICE_CASE, position, name)
     }

@@ -3406,7 +3406,7 @@ class Compiler {
         parameters.add(MethodDecl.Parameter("rv", INT_TYPE))
         def statements := Array<ASTNode>()
         statements.add(ASTNode.BINARY(cl.position,
-                ASTNode.IDENTIFIER(cl.position, ClassDecl.RAW_VALUE_NAME),
+                ASTNode.IDENTIFIER(cl.position, ClassDecl.TAG_NAME),
                 Binary.Operator.ASSIGNMENT, ASTNode.IDENTIFIER(cl.position, "rv")))
         for i in 0 .. entry.fields.count {
             parameters.add(MethodDecl.Parameter("f\{i}", entry.fields[i]))
@@ -3746,7 +3746,7 @@ class Compiler {
                 resolve(cc)
                 def inits := getSymbolTable(cc.owner)["init"]
                 assert inits !== null
-                def args := [ASTNode.INT(position.asPosition, cc.rawValue.asUInt64)]
+                def args := [ASTNode.INT(position.asPosition, cc.tag.asUInt64)]
                 if isValue(cc.owner) {
                     return Call.compile(self, position, symbolRef(position, null, inits), args,
                             TypeContext.UNSPECIFIED)
@@ -4501,7 +4501,7 @@ class Compiler {
             return null
         }
         def finalArgs := Array<ASTNode>()
-        finalArgs.add(ASTNode.INT(position.asPosition, cc.rawValue.asUInt64))
+        finalArgs.add(ASTNode.INT(position.asPosition, cc.tag.asUInt64))
         finalArgs.addAll(args)
         if isValue(cc.owner) {
             return coerce(position, Call.compile(self, position,
