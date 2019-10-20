@@ -1384,15 +1384,68 @@ class CodeGenerator {
                         Code.PrimitiveType.INT))
             }
             when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
-                def signature := Code.Signature(null, Code.PrimitiveType.INT,
-                        "frostGetInterfaceMethod",
-                            FixedArray<Code.PrimitiveType>.from([Code.PrimitiveType.INT,
-                                Code.PrimitiveType.INT,
-                                Code.PrimitiveType.INT]),
-                            true)
-                out.add(Code.Statement.STATIC_CALL(position, mapId(id), signature,
-                        FixedArray<Code.Value>.from([convertValue(value), getClassConstant(cl),
-                            Code.Value.INT(index.asUInt64, Code.PrimitiveType.INT)])))
+                def cc := getClassConstant(compiler.getClass(value.type())!)
+                def ccType:Code.PrimitiveType
+                match cc {
+                    when Code.Value.GLOBAL_POINTER(idx) {
+                        ccType := globals[idx].type
+                    }
+                    otherwise {
+                        unreachable
+                    }
+                }
+                def initialCl := nextStatement()
+                out.add(Code.Statement.LOAD(position, initialCl, convertValue(value),
+                        Code.PrimitiveType.INT))
+                def itableStatement := nextStatement()
+                block0.insert(0, Code.Statement.STACK_ALLOC(position, itableStatement,
+                        Code.PrimitiveType.INT))
+                def itable := Code.Value.STATEMENT(itableStatement, Code.PrimitiveType.INT)
+                def itableSlot := nextStatement()
+                out.add(Code.Statement.ADDI(position, itableSlot,
+                        Code.Value.STATEMENT(initialCl, Code.PrimitiveType.INT),
+                        Code.Value.INT(ccType.elementOffset(ITABLE_INDEX).asUInt64,
+                            Code.PrimitiveType.INT)))
+                def initialItable := nextStatement()
+                out.add(Code.Statement.LOAD(position, initialItable,
+                        Code.Value.STATEMENT(itableSlot, Code.PrimitiveType.INT),
+                        Code.PrimitiveType.INT))
+                out.add(Code.Statement.STORE(position, Code.Value.STATEMENT(initialItable,
+                        Code.PrimitiveType.INT), itable))
+                def loopStart := nextBlock()
+                def loopBody := nextBlock()
+                def loopEnd := nextBlock()
+                out.add(Code.Statement.BRANCH(position, loopStart))
+                createBlock(loopStart)
+                def itableLoad := nextStatement()
+                out.add(Code.Statement.LOAD(position, itableLoad, itable, Code.PrimitiveType.INT))
+                def clLoad := nextStatement()
+                out.add(Code.Statement.LOAD(position, clLoad, Code.Value.STATEMENT(itableLoad,
+                        Code.PrimitiveType.INT), Code.PrimitiveType.INT))
+                def test := nextStatement()
+                out.add(Code.Statement.EQI(position, test, Code.Value.STATEMENT(clLoad,
+                        Code.PrimitiveType.INT), getClassConstant(cl)))
+                out.add(Code.Statement.CONDITIONAL_BRANCH(position, Code.Value.STATEMENT(test,
+                        Code.PrimitiveType.BIT), loopEnd, loopBody))
+                createBlock(loopBody)
+                def nextPtr := nextStatement()
+                out.add(Code.Statement.ADDI(position, nextPtr, Code.Value.STATEMENT(itableLoad,
+                        Code.PrimitiveType.INT), Code.Value.INT(POINTER_SIZE.asUInt64,
+                        Code.PrimitiveType.INT)))
+                def next := nextStatement()
+                out.add(Code.Statement.LOAD(position, next, Code.Value.STATEMENT(nextPtr,
+                        Code.PrimitiveType.INT), Code.PrimitiveType.INT))
+                out.add(Code.Statement.STORE(position, Code.Value.STATEMENT(next,
+                        Code.PrimitiveType.INT), itable))
+                out.add(Code.Statement.BRANCH(position, loopStart))
+                createBlock(loopEnd)
+                def finalPtr := nextStatement()
+                out.add(Code.Statement.ADDI(position, finalPtr, Code.Value.STATEMENT(itableLoad,
+                        Code.PrimitiveType.INT),
+                        Code.Value.INT((POINTER_SIZE * (2 + index)).asUInt64,
+                            Code.PrimitiveType.INT)))
+                out.add(Code.Statement.LOAD(position, mapId(id), Code.Value.STATEMENT(finalPtr,
+                        Code.PrimitiveType.INT), Code.PrimitiveType.INT))
             }
             when IR.Statement.LOAD(position, value) {
                 out.add(Code.Statement.LOAD(position, mapId(id), convertValue(value),
