@@ -745,18 +745,6 @@ class Scanner {
         def result := ClassDecl(source, position, aliases, doccomment, annotations, kind, fullName,
                 supertypes, parameters, compiler.root)
         compiler.currentClass.push(result)
-        if kind = ClassDecl.Kind.CHOICE {
-            def rawValue := FieldDecl(result, result.position, null,
-                    Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
-                    ClassDecl.TAG_NAME, compiler.INT_TYPE, null)
-            result.fields.add(rawValue)
-            result.symbolTable.add(rawValue)
-            def data := FieldDecl(result, result.position, null,
-                    Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
-                    ClassDecl.CHOICE_DATA_NAME, compiler.CHOICE_DATA_TYPE, null)
-            result.fields.add(data)
-            result.symbolTable.add(data)
-        }
         for m in members {
             match m {
                 when ASTNode.METHOD(mPosition, _, _, methodKind, _, _,  _, _, _) {
@@ -779,6 +767,20 @@ class Scanner {
                 }
             }
             scanClassChild(result, m)
+        }
+        if kind = ClassDecl.Kind.CHOICE {
+            def tag := FieldDecl(result, result.position, null,
+                    Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
+                    ClassDecl.TAG_NAME, compiler.INT_TYPE, null)
+            result.fields.add(tag)
+            result.symbolTable.add(tag)
+            if result.choiceCases.filter(cc => cc.fields.count > 0).count > 0 {
+                def data := FieldDecl(result, result.position, null,
+                        Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
+                        ClassDecl.CHOICE_DATA_NAME, compiler.CHOICE_DATA_TYPE, null)
+                result.fields.add(data)
+                result.symbolTable.add(data)
+            }
         }
         var foundInit := false
         var foundCleanup := false

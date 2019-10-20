@@ -11,14 +11,14 @@ Compile-Big-O0: 0.312204
 Compile-Big-O3: 1.51414
 Fasta: 2.34387
 
-10/19/19
-Compile-Hello-O0: 0.0484078
-Compile-Hello-O3: 0.0446846
-Compile-Wumpus-O0: 0.427292
-Compile-Wumpus-O3: 0.592539
-Compile-Big-O0: 0.162878
-Compile-Big-O3: 0.790468
-Fasta: 0.487982
+10/19/19 (no stubs, -S3)
+Compile-Hello-O0: 0.072511
+Compile-Hello-O3: 0.0712944
+Compile-Wumpus-O0: 0.466147
+Compile-Wumpus-O3: 0.611986
+Compile-Big-O0: 0.182463
+Compile-Big-O3: 0.77859
+Fasta: 0.50863
 
 *-
 
