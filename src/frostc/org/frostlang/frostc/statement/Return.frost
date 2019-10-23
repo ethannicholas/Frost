@@ -113,9 +113,6 @@ class Return {
                                 }
                                 ir.add(IR.Statement.STORE(position, compiled,
                                         IR.Value.LOCAL(returnSlot, compiled.type())))
-                                if refResult & compiler.isRefCounted(compiled.type()) {
-                                    compiler.compileRef(compiled)
-                                }
                             }
                             else {
                                 inlineReturn.value := compiled

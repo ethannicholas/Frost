@@ -70,6 +70,17 @@ class LinkedList<T> : Collection<T> {
         _count += 1
     }
 
+    method insertHead(value:T) {
+        if count = 0 {
+            add(value)
+        }
+        else {
+            def node := Node<T>(value)
+            node.next := head
+            head := node
+        }
+    }
+
     ================================================================================================
     Removes all elements from the specified `LinkedList` and adds them to this list. Unlike
     `addAll()`, which takes time proportional to the number of elements, `merge()` takes constant

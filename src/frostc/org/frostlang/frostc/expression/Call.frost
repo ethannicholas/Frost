@@ -1153,7 +1153,7 @@ class Call {
         def mergeBlock := compiler.ir.newBlock("inline merge")
         {
             def context:AutoContext
-            if m.returnType = compiler.VOID_TYPE | countReturns(m.body) = 1 {
+            if m.returnType = compiler.VOID_TYPE | countReturns(m.body) <= 1 {
                 inlineReturn := Compiler.InlineReturn(null)
                 context := AutoContext(compiler, EnclosingContext.INLINE_CONTEXT(args,
                         compiler.ir.locals.count, inlineReturn, mergeBlock))
@@ -1162,18 +1162,24 @@ class Call {
                 compiler.tempCount += 1
                 inlineReturnSlot := compiler.ir.locals.count
                 def returnVar := Variable(position.asPosition, Variable.Kind.DEF,
-                        "inlineReturn\{compiler.tempCount}", m.returnType,
+                        "$inlineReturn\{compiler.tempCount}", m.returnType,
                         Variable.Storage.LOCAL(inlineReturnSlot))
                 compiler.symbolTable.add(returnVar)
                 returnVar.owner := compiler.currentMethod[0]
-                if compiler.isRefCounted(returnVar.type) {
-                    compiler.enclosingContexts.push(Compiler.EnclosingContext.VARIABLE_SCOPE(
-                            returnVar))
-                }
-                compiler.ir.locals.add(returnVar.type)
                 inlineReturn := Compiler.InlineReturn(returnVar)
                 context := AutoContext(compiler, EnclosingContext.INLINE_CONTEXT(args,
                         compiler.ir.locals.count, inlineReturn, mergeBlock))
+                if compiler.isRefCounted(returnVar.type) {
+                    def setNull := IR.Statement.STORE(position,
+                            IR.Value.NULL(returnVar.type.nullable()),
+                            IR.Value.LOCAL(inlineReturnSlot, returnVar.type))
+                    def id := IR.Statement.ID(compiler.ir.currentStatementId)
+                    compiler.ir.blocks[0].statements.insertHead(setNull)
+                    compiler.ir.blocks[0].ids.insertHead(id)
+                    compiler.ir.statements[id] := setNull
+                    compiler.ir.currentStatementId += 1
+                }
+                compiler.ir.locals.add(returnVar.type)
             }
             compiler.currentClass.push(m.owner)
             -- FIXME move all of this stuff into a MethodContext(?) class for easier save / restore
