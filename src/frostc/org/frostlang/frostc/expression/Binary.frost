@@ -187,7 +187,7 @@ class Binary {
 
     @class
     method findOverloadedOperator(compiler:Compiler, left:Type, op:Operator, right:ASTNode,
-            type:TypeContext):Pair<ListView<MethodRef>, Int>? {
+            type:TypeContext):Pair<Array<MethodRef>, Int>? {
         if !left.isClass {
             return null
         }
@@ -271,10 +271,10 @@ class Binary {
 
     @class
     method findOverloadedOperator(compiler:Compiler, left:ASTNode, op:Operator, right:ASTNode,
-            type:TypeContext):Pair<ListView<MethodRef>, Int>? {
+            type:TypeContext):Pair<Array<MethodRef>, Int>? {
         def leftTypes := compiler.possibleTypes(left)
         if leftTypes !== null {
-            def best:Pair<ListView<MethodRef>, Int>? := null
+            def best:Pair<Array<MethodRef>, Int>? := null
             for t in leftTypes {
                 def compilerCost := compiler.coercionCost(left, t)
                 assert compilerCost !== null,
@@ -283,7 +283,7 @@ class Binary {
                 if ops !== null {
                     def cost := ops.second + compilerCost.second
                     if best == null | cost < best.second {
-                        best := Pair<ListView<MethodRef>, Int>(ops.first, cost)
+                        best := Pair<Array<MethodRef>, Int>(ops.first, cost)
                     }
                     else if cost = best.second {
                         def a := Array<MethodRef>()
@@ -296,7 +296,7 @@ class Binary {
                             }
                             a.add(op)
                         }
-                        best := Pair<ListView<MethodRef>, Int>(a, cost)
+                        best := Pair<Array<MethodRef>, Int>(a, cost)
                     }
                 }
             }
@@ -440,8 +440,7 @@ class Binary {
     }
 
     @class
-    function binaryType(compiler:Compiler, left:ASTNode, op:Operator,
-            right:ASTNode):ListView<Type>? {
+    function binaryType(compiler:Compiler, left:ASTNode, op:Operator, right:ASTNode):Array<Type>? {
         match op {
             when Operator.CAST {
                 def rawTarget := compiler.scanner.convertType(right)
@@ -464,7 +463,7 @@ class Binary {
                         }
                         def result := Array<Type>()
                         for t in base {
-                            def types := compiler.dotTypes(t,
+                            def types := Dot.dotTypes(compiler, t,
                                     rawTarget.name[rawTarget.name.next(index)..])
                             if types !== null {
                                 result.addAll(types)

@@ -56,7 +56,7 @@ class Call {
     @private
     @class
     method possibleMatches(compiler:Compiler, methodTypes:CollectionView<Type>,
-            args:ListView<ASTNode>, type:TypeContext):Pair<CollectionView<Type>, Int>? {
+            args:ListView<ASTNode>, type:TypeContext):Pair<Array<Type>, Int>? {
         var bestCost := Int.MAX
         def best := Array<Type>()
         outer: for raw in methodTypes {
@@ -116,7 +116,7 @@ class Call {
         if best.count = 0 {
             return null
         }
-        return Pair<CollectionView<Type>, Int>(best, bestCost)
+        return Pair<Array<Type>, Int>(best, bestCost)
     }
 
     @private
@@ -413,16 +413,16 @@ class Call {
     `[1]`. Returns null if no such type was located.
     ================================================================================================
     @class
-    function findGenericParameters(m:MethodDecl, t:Type):ListView<ListView<Int>>? {
+    function findGenericParameters(m:MethodDecl, t:Type):Array<Array<Int>>? {
         if !t.hasSubtypes {
             return null
         }
-        var result:Array<ListView<Int>>? := null
+        var result:Array<Array<Int>>? := null
         for i in 0 .. t.subtypes.count {
             if t.subtypes[i].typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
                 if t.subtypes[i].genericMethodParameter.owner = m.owner.name + "." + m.name {
                     if result == null {
-                        result := Array<ListView<Int>>()
+                        result := Array<Array<Int>>()
                     }
                     result.add([i])
                 }
@@ -431,7 +431,7 @@ class Call {
                 def paths := findGenericParameters(m, t.subtypes[i])
                 if paths !== null {
                     if result == null {
-                        result := Array<ListView<Int>>()
+                        result := Array<Array<Int>>()
                     }
                     for path in paths {
                         def finalPath:Array<Int> := [i]
@@ -660,7 +660,7 @@ class Call {
     @class
     method findBestMethod(compiler:Compiler, position:MethodPosition, target:IR.Value?,
             methods:ListView<MethodDecl>, args:ListView<ASTNode>,
-            type:TypeContext):Pair<ListView<MethodRef>, Int>? {
+            type:TypeContext):Pair<Array<MethodRef>, Int>? {
         return findBestMethod(compiler, position, target, methods, null, args, type)
     }
 
@@ -668,7 +668,7 @@ class Call {
     @post(@return == null | @return.first.count > 0)
     method findBestMethod(compiler:Compiler, position:MethodPosition, target:IR.Value?,
             methods:ListView<MethodDecl>, genericArguments:ListView<Type>?, args:ListView<ASTNode>,
-            type:TypeContext):Pair<ListView<MethodRef>, Int>? {
+            type:TypeContext):Pair<Array<MethodRef>, Int>? {
         if methods.count = 0 {
             return null
         }
@@ -738,7 +738,7 @@ class Call {
         if best.count = 0 {
             return null
         }
-        return Pair<ListView<MethodRef>, Int>(best, bestCost)
+        return Pair<Array<MethodRef>, Int>(best, bestCost)
     }
 
     @class
@@ -1145,7 +1145,7 @@ class Call {
 
     @class
     method inlineCall(compiler:Compiler, position:MethodPosition, m:MethodDecl,
-            args:ListView<IR.Value>):IR.Value? {
+            args:FixedArray<IR.Value>):IR.Value? {
         compiler.ir.add(IR.Statement.COMMENT(position, "begin inline call to \{m.declaration} from \{position.asString(compiler)}"))
         def scope:Compiler.EnclosingContext
         def inlineReturn:Compiler.InlineReturn
@@ -1548,7 +1548,8 @@ class Call {
         else {
             if compiler.settings.optimizationLevel > 1 & m.value.annotations.isInline &
                     compiler.currentMethod.count < 3 {
-                result := inlineCall(compiler, position, m.value, finalArgs)
+                result := inlineCall(compiler, position, m.value,
+                        FixedArray<IR.Value>.from(finalArgs))
                 if result == null {
                     return null
                 }

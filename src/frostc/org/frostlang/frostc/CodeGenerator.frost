@@ -237,7 +237,7 @@ class CodeGenerator {
                 constant VALUE_METHOD_COUNT := 2
                 assert compiler.getVTable(compiler.getClass("frost.core.Value")!).count =
                         VALUE_METHOD_COUNT
-                vtable := vtable[..VALUE_METHOD_COUNT]
+                vtable := vtable[..VALUE_METHOD_COUNT]->Array<MethodDecl>
                 name := escapeName(cl.name) + "$class"
             }
             else {

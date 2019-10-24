@@ -110,10 +110,26 @@ class Compiler {
         init(variable:Variable?) {
             self.variable := variable
         }
+
+        @override
+        function get_asString():String {
+            def result := MutableString("InlineReturn<")
+            if variable !== null {
+                result.append("variable=\{variable}")
+                if value !== null {
+                    result.append(", ")
+                }
+            }
+            if value !== null {
+                result.append("value=\{value}")
+            }
+            result.append(">")
+            return result.finish()
+        }
     }
 
     choice EnclosingContext {
-        INLINE_CONTEXT(ListView<IR.Value> -* params *-, Int -* first local index *-, InlineReturn,
+        INLINE_CONTEXT(FixedArray<IR.Value> -* params *-, Int -* first local index *-, InlineReturn,
                 IR.Block.ID -* merge block *-)
         LOOP(String? -* label *-, IR.Block.ID -* break target *-, IR.Block.ID -* continue target *-)
         SCOPE
@@ -245,7 +261,7 @@ class Compiler {
 
         def intSize := 8
 
-        init(frostHome:File, importDirs:ListView<File>, optimizationLevel:Int, safetyLevel:Int,
+        init(frostHome:File, importDirs:Array<File>, optimizationLevel:Int, safetyLevel:Int,
              debug:Bit) {
             self.frostHome := frostHome
             self.importDirs := ImmutableArray<File>(importDirs)
@@ -459,7 +475,7 @@ class Compiler {
     def methods := Array<MethodDecl>()
 
     @private
-    def scans := HashMap<File, ListView<ClassDecl>>()
+    def scans := HashMap<File, Array<ClassDecl>>()
 
     @private
     def classes := HashMap<String, ClassDecl>()
@@ -548,7 +564,7 @@ class Compiler {
     def coercionCosts := HashMap<CoercionKey, Pair<Type, Int>>()
 
     @private
-    def binaryTypes := HashMap<BinaryKey, ListView<Type>?>()
+    def binaryTypes := HashMap<BinaryKey, Array<Type>?>()
 
     -- Sometimes we need to resolve an untyped lambda against several different types, such as when
     -- calling an overloaded method which can take different types of functions. If, say, the lambda
@@ -760,7 +776,7 @@ class Compiler {
                 return typeParameters(type.subtypes[0])
             }
             otherwise {
-                return Array<Type>()
+                return []
             }
         }
     }
@@ -1473,7 +1489,7 @@ class Compiler {
         return isImmutable(cl)
     }
 
-    method instanceFields(cl:ClassDecl):ListView<FieldDecl> {
+    method instanceFields(cl:ClassDecl):Array<FieldDecl> {
         def result := Array<FieldDecl>()
         if resolve(cl) {
             if !isValue(cl) & cl.rawSuper !== null {
@@ -1857,7 +1873,7 @@ class Compiler {
         return null
     }
 
-    method interfaceMethods(cl:ClassDecl, intf:Type):ListView<MethodDecl> {
+    method interfaceMethods(cl:ClassDecl, intf:Type):Array<MethodDecl> {
         def intfClass := getClass(intf)
         assert intfClass !== null
         def result := Array<MethodDecl>()
@@ -1912,7 +1928,7 @@ class Compiler {
     }
 
     @post(currentClass.count = @pre(currentClass.count))
-    method getVTable(cl:ClassDecl):ListView<MethodDecl> {
+    method getVTable(cl:ClassDecl):Array<MethodDecl> {
         if cl.virtualMethods.count = 0 {
             resolve(cl)
             currentClass.push(cl) -- FIXME Auto
@@ -1970,8 +1986,8 @@ class Compiler {
 
     ================================================================================================
     Return the concrete version of a type appearing in the context of another type. For instance,
-    if we reference `ListView<T>` from within the type `Array<String>`, we are really referring to
-    `ListView<String>`.
+    if we reference `Array<T>` from within the type `Array<String>`, we are really referring to
+    `Array<String>`.
     ================================================================================================
     method remapType(context:Type, raw:Type):Type {
         if context.isClassLiteral {
@@ -2378,12 +2394,12 @@ class Compiler {
         return currentMethod[0].annotations.isClass
     }
 
-    function symbolType(target:Type?, s:Symbol):ListView<Type>? {
+    function symbolType(target:Type?, s:Symbol):Array<Type>? {
         return symbolType(target, s, null)
     }
 
     function symbolType(target:Type?, s:Symbol,
-            genericArguments:ListView<ASTNode>?):ListView<Type>? {
+            genericArguments:FixedArray<ASTNode>?):Array<Type>? {
         def result := Array<Type>()
         def resolvedArguments:Array<Type>?
         if genericArguments !== null {
@@ -2489,38 +2505,11 @@ class Compiler {
         return result    
     }
 
-    method dotTypes(base:Type, name:String):ListView<Type>? {
-        return dotTypes(base, name, null)
-    }
-
-    method dotTypes(base:Type, name:String, genericArguments:ListView<ASTNode>?):ListView<Type>? {
-        if base.isClass {
-            def cl:ClassDecl?
-            def isClass := base.isClassLiteral
-            if isClass {
-                -- class literal, grab the class itself rather than frost.core.Class
-                cl := getClass(base.subtypes[1])
-            }
-            else {
-                cl := getClass(base)
-            }
-            if cl == null {
-                return null
-            }
-            def symbol := getSymbolTable(cl)[name]
-            if symbol == null {
-                return null
-            }
-            return symbolType(base, symbol, genericArguments)
-        }
-        return null
-    }
-
-    method identifierType(name:String):ListView<Type>? {
+    method identifierType(name:String):Array<Type>? {
         return identifierType(name, null)
     }
 
-    method identifierType(name:String, genericArguments:ListView<ASTNode>?):ListView<Type>? {
+    method identifierType(name:String, genericArguments:FixedArray<ASTNode>?):Array<Type>? {
         def s := symbolTable[name]
         if s !== null {
             return symbolType(null, s, genericArguments)
@@ -2710,7 +2699,7 @@ class Compiler {
     }
 
     function binaryType(position:Position, left:ASTNode, op:Binary.Operator,
-            right:ASTNode):ListView<Type>? {
+            right:ASTNode):Array<Type>? {
         def key := BinaryKey(left, op, right)
         if binaryTypes.contains(key) {
             return binaryTypes[key]
@@ -2781,7 +2770,7 @@ class Compiler {
                     return null
                 }
                 for t in baseTypes {
-                    def list := dotTypes(t, name)
+                    def list := Dot.dotTypes(self, t, name)
                     if list !== null {
                         if result == null {
                             result := Array<Type>()
@@ -2802,7 +2791,7 @@ class Compiler {
                     return null
                 }
                 for t in baseTypes {
-                    def list := dotTypes(t, name, genericArguments)
+                    def list := Dot.dotTypes(self, t, name, genericArguments)
                     if list !== null {
                         if result == null {
                             result := Array<Type>()
@@ -3369,7 +3358,7 @@ class Compiler {
     }
 
     -- FIXME figure out how to handle list comparisons
-    function equal(a:ListView<Type>, b:ListView<Type>):Bit {
+    function equal(a:Array<Type>, b:Array<Type>):Bit {
         if a.count != b.count {
             return false
         }
@@ -4297,6 +4286,9 @@ class Compiler {
 
     @pre(isRefCounted(v.type()))
     method compileUnref(v:IR.Value) {
+--        def f := v.asString = "REF($102:frost.collections.Array<frost.collections.Array.T>)"
+--        ir.add(IR.Statement.COMMENT( MethodPosition(currentMethod[0].position, currentMethodIndex), "compile unref \{v.asString} \{f}"))
+--        assert !f
         match v {
             when IR.Value.NULL {
                 return
@@ -4374,8 +4366,8 @@ class Compiler {
     }
 
     @pre(methods.count > 1)
-    method reportAmbiguousMatch(position:Position, methods:ListView<MethodRef>,
-            args:ListView<ASTNode>, type:TypeContext) {
+    method reportAmbiguousMatch(position:Position, methods:Array<MethodRef>, args:ListView<ASTNode>,
+            type:TypeContext) {
         def msg := MutableString("call to '\{methods[0].value.name}' is ambiguous. The following " +
                 "methods are equally good matches:")
         for m in methods.sort((a, b) => a.value.position > b.value.position) {
@@ -6148,7 +6140,7 @@ class Compiler {
         assert compilationQueue.count = 0
     }
 
-    method scan(file:File):ListView<ClassDecl> {
+    method scan(file:File):Array<ClassDecl> {
         try {
             def path := file.absolute()
             return scan(path, file.readFully())
@@ -6160,7 +6152,7 @@ class Compiler {
         }
     }
 
-    method scan(path:File, text:String):ListView<ClassDecl> {
+    method scan(path:File, text:String):Array<ClassDecl> {
         var result := scans[path]
         if result == null {
             parser.start(path, files.count, text)

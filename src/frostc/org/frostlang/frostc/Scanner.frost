@@ -876,7 +876,7 @@ class Scanner {
         compiler.error(position, msg)
     }
 
-    method scan(source:File, file:ASTNode):ListView<ClassDecl> {
+    method scan(source:File, file:ASTNode):Array<ClassDecl> {
         self.source := source
         match file {
             when ASTNode.FILE(entries) {

@@ -237,7 +237,7 @@ class Closure {
                     -- evaluating untyped lambdas we may repeatedly reevaluate the same expr->target
                     -- coercion with different symbol definitions
                     def oldBinaryTypes := compiler.binaryTypes
-                    compiler.binaryTypes := HashMap<BinaryKey, ListView<Type>?>()
+                    compiler.binaryTypes := HashMap<BinaryKey, Array<Type>?>()
                     def cost := compiler.computeCoercionCost(expr, target)
                     compiler.binaryTypes := oldBinaryTypes
                     if cost == null {
