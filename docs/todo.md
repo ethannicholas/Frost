@@ -4,32 +4,30 @@ Immediate
 Detect and error on parameter reassignment
 fix command line parsing
 permissions
-handle duplicate classes, more than one public class per file, classes not being in the correct path
-figure out rules for init / cleanup, make sure I'm following them consistently, check any cases I
-    can that don't rely on dataflow
-var parameters
-all tests working (incl. C)
 verify build & run from directories containing spaces
-enforce class directory and filename rules
-Non-chained match
-Collapse single-element structs in CodeGenerator
-Are value inits inlinable? Doesn't look like the basic type inits are being inlined.
+fix make -j
+fix stubs
+fix -S0
+all tests working (incl. C)
 Compiler performance
-
-Eventually
-==========
-
-Dataflow, null safety, function safety
-Proper native code headers
-Property error reporting
-automatically calculate dependency information during build
-DWARF info
-Move wrappers / structs / casting / etc. out of CG and into Compiler. Create IR.Type. ...Maybe?
 Automatically turn code snippets in documentation into testcases
     Comment at the beginning to identity testcase name
     Testcase name matches up to a frost file which receives the code snippet as input, produces
     finished testcase program
     Have normal .in / .expected files to go along with it (should introduce .args or something too)
+
+Eventually
+==========
+
+handle duplicate classes, more than one public class per file, classes not being in the correct path
+enforce class directory and filename rules
+figure out rules for init / cleanup, make sure I'm following them consistently, check any cases I
+    can that don't rely on dataflow
+var parameters
+Dataflow, null safety, function safety
+Proper native code headers
+Property error reporting
+automatically calculate dependency information during build
 
 Bugs
 ====

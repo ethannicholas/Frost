@@ -700,44 +700,6 @@ double frost$core$Real64$get_tan$R$frost$core$Real64(double x) {
 
 #define NO_REFCNT -999
 
-
-void frost$core$Frost$ref$frost$core$Object$Q(Object* o) {
-    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
-    // it anyway
-    if (o && o->refcnt != NO_REFCNT) {
-        int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
-        if (newCount <= 1 && refErrorReporting) {
-            printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
-            printf("    class: %s\n", frostGetCString(o->cl->name));
-            abort();
-        }
-    }
-}
-
-void frost$core$Frost$unref$frost$core$Object$Q(Object* o) {
-    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
-    // it anyway
-    if (o && o->refcnt != NO_REFCNT) {
-        int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
-        if (newCount < 0 && refErrorReporting) {
-            printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
-            printf("    class: %s\n", frostGetCString(o->cl->name));
-            abort();
-        }
-        if (newCount == 0) {
-            void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
-            o->refcnt = 1; // no other thread can see it, so we no longer need to use atomics here
-            cleanup(o);
-            if (o->refcnt != 1) {
-                char* cl = frostGetCString(o->cl->name);
-                printf("internal error: refcount of %s(%p) changed during cleanup\n", cl, o);
-                abort();
-            }
-            frostObjectFree(o);
-        }
-    }
-}
-
 void* frost$core$Frost$alloc$builtin_int$R$builtin_int(int size) {
     return frostAlloc(size);
 }
@@ -1267,7 +1229,7 @@ void frostThreadEntry(ThreadInfo* threadInfo) {
     else {
         ((void(*)()) threadInfo->run->pointer)();
     }
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) threadInfo->run);
+    frost$core$Frost$unrefThreadSafe$frost$core$Object$Q((Object*) threadInfo->run);
     frostFree(threadInfo);
     if (threadInfo->preventsExit) {
         pthread_mutex_lock(&preventsExitThreadsMutex);

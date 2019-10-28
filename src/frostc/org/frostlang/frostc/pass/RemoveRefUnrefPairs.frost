@@ -86,7 +86,14 @@ class RemoveRefUnrefPairs {
                                 while casts.contains(key) {
                                     key := casts[key]
                                 }
-                                var refList := refs[key]
+                                -- Crashing when this side of the optimization is left enabled.
+                                -- I *think* the optimization is valid, so this is probably a
+                                -- symptom of the fact that function safety isn't being enforced and
+                                -- I've inadvertently got some functions that aren't actually
+                                -- functions. FIXME uncomment this when function safety is enabled,
+                                -- see if an updated bootstrap works. Don't forget about the
+                                -- similar issue with readonly in LLVMBackend.
+                                -*var refList := refs[key]
                                 if refList !== null {
                                     def p := refList.last
                                     if p[0] == null {
@@ -104,7 +111,7 @@ class RemoveRefUnrefPairs {
                                     previous.next := previous.next.next
                                     return true -- FIXME handle multiples
                                 }
-                                else {
+                                else {*-
                                     var unrefList := unrefs[key]
                                     if unrefList == null {
                                         unrefList := Array<(LinkedList.Node<IR.Statement.ID>?,
@@ -112,7 +119,7 @@ class RemoveRefUnrefPairs {
                                         unrefs[key] := unrefList
                                     }
                                     unrefList.add((previousId, previous))
-                                }
+                                --}
                             }
                         }
                         else if m.methodKind = MethodDecl.Kind.METHOD {

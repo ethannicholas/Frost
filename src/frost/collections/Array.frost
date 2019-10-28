@@ -71,8 +71,46 @@ class Array<T> : List<T> {
     }
 
     @override
+    @priority(2)
     function [](index:Int):T {
         return data[index]
+    }
+
+    @priority(2)
+    function [](r:Range<Int>):Array<T> {
+        var max := r.max
+        if r.inclusive {
+            max += 1
+        }
+        def count := max - r.min
+        def result := Pointer<T>.alloc(count)
+        for i in 0 .. count {
+            result[i] := self[r.min + i]
+        }
+        return Array<T>(result, count)
+    }
+
+    @priority(1)
+    function [](r:Range<Int?>):Array<T> {
+        def start:Int
+        if r.min !== null {
+            start := r.min
+        }
+        else {
+            start := 0
+        }
+
+        var end:Int
+        if r.max !== null {
+            end := r.max
+        }
+        else {
+            end := count
+            if r.inclusive {
+                end -= 1
+            }
+        }
+        return self[Range<Int>(start, end, r.inclusive)]
     }
 
     @override
@@ -142,6 +180,18 @@ class Array<T> : List<T> {
         }
     }
 
+    @priority(2)
+    function filter(predicate:(T)=>(Bit)):Array<T> {
+        def result := Array<T>()
+        for v in self {
+            if predicate(v) {
+                result.add(v)
+            }
+        }
+        return result
+    }
+
+    @priority(2)
     method filter(predicate:(T)=&>(Bit)):Array<T> {
         def result := Array<T>()
         for v in self {

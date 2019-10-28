@@ -435,6 +435,9 @@ class Scanner {
             when ASTNode.METHOD {
                 return INLINE_THRESHOLD + 1
             }
+            when ASTNode.METHOD_TYPE {
+                return 0
+            }
             when ASTNode.NULL {
                 return 1
             }
