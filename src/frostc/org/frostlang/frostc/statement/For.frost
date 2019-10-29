@@ -9,6 +9,7 @@ uses org.frostlang.frostc.Compiler.EnclosingContext
 uses org.frostlang.frostc.Compiler.Target
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.Compiler.VariableLValue
+uses org.frostlang.frostc.expression.Binary
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodPosition
@@ -656,6 +657,33 @@ class For {
         ir.setCurrentBlock(endBlock)
     }
 
+    ================================================================================================
+    Special case of looping over an Array for performance reasons. Compiles `for v in a { ... }` as
+    if it had been written:
+
+        for $tmp in a {
+            def v := a[$tmp]
+            ...
+        }
+
+    (Naturally, 'a' is not actually evaluted twice.)
+    ================================================================================================
+    @private
+    @class
+    method compileArrayFor(compiler:Compiler, position:MethodPosition, label:String?,
+            astTarget:ASTNode, list:IR.Value, statements:ListView<ASTNode>) {
+        def finalStatements := Array<ASTNode>()
+        def p := position.asPosition
+        compiler.tempCount += 1
+        def loopIdx := ASTNode.IDENTIFIER(p, "$loopIdx\{compiler.tempCount}")
+        def value := ASTNode.BINARY(p, ASTNode.IR_WRAPPER(p, list), Binary.Operator.INDEX, loopIdx)
+        finalStatements.add(ASTNode.VAR(p, Variable.Kind.DEF,
+                FixedArray<ASTNode>.from([ASTNode.DECLARATION(p, astTarget, value)])))
+        finalStatements.addAll(statements)
+        compileRangeFor(compiler, position, label, loopIdx, ASTNode.RANGE(p, ASTNode.INT(p, 0),
+                false, ASTNode.DOT(p, ASTNode.IR_WRAPPER(p, list), "count"), null), finalStatements)
+    }
+
     @class
     method compile(compiler:Compiler, position:MethodPosition, label:String?, rawTarget:ASTNode,
             rawList:ASTNode, statements:ListView<ASTNode>) {
@@ -671,13 +699,17 @@ class For {
         if list == null {
             return
         }
-        if list.type().isRange | list.type().isSteppedRange {
+        def listType := list.type()
+        if listType.isRange | listType.isSteppedRange {
             -- it's a range, but not an unresolved one
             compileRangeFor(compiler, position, label, rawTarget, list, statements)
         }
+        else if listType.isArray {
+            compileArrayFor(compiler, position, label, rawTarget, list, statements)
+        }
         else {
             def listPosition := MethodPosition(rawList.position(), position.methodIndex)
-            for intf in compiler.allInterfaces(list.type()) {
+            for intf in compiler.allInterfaces(listType) {
                 if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = compiler.ITERATOR_TYPE {
                     def iterator := compiler.coerce(listPosition, list, intf)
                     if iterator == null {
@@ -700,7 +732,7 @@ class For {
                 }
             }
             compiler.error(rawList.position(), "expected a range, Iterable, or Iterator, but " +
-                    "found '\{list.type()}'")
+                    "found '\{listType}'")
         }
     }
 }

@@ -79,6 +79,8 @@ class Type : Symbol, HashKey<Type> {
 
     property isSteppedRange:Bit
 
+    property isArray:Bit
+
     property isNullable:Bit
 
     property parameterCount:Int
@@ -409,6 +411,10 @@ class Type : Symbol, HashKey<Type> {
 
     function get_isSteppedRange():Bit {
         return name.startsWith("frost.core.SteppedRange<")
+    }
+
+    function get_isArray():Bit {
+        return name.startsWith("frost.collections.Array<")
     }
 
     function get_isNullable():Bit {
