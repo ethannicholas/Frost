@@ -761,11 +761,15 @@ class CBackend : Backend {
     @override
     method finish() {
         try {
+            for g in externalGlobals {
+                cType(g.type)
+            }
             physicalOut.print(types.finish())
             physicalOut.print(signatures.finish())
             physicalOut.print(globalDeclarations.finish())
             for g in externalGlobals {
                 writeGlobalDeclaration(g, physicalOut)
+                physicalOut.printLine(";")
             }
             physicalOut.print(globalDefinitions.finish())
             physicalOut.print(methods.finish())

@@ -298,15 +298,6 @@ void* frostObjectAlloc(size_t size, Class* cl) {
     return result;
 }
 
-void* frostRealloc(void* ptr, size_t oldSize, size_t newSize) {
-    void* result = realloc(ptr, newSize);
-    frostAssert(result != NULL || newSize == 0);
-    if (newSize > oldSize) {
-        memset(result + oldSize, 0, newSize - oldSize);
-    }
-    return result;
-}
-
 void frostFree(void* ptr) {
     __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
     free(ptr);
@@ -1493,11 +1484,12 @@ bool frost$io$File$isDirectory$R$frost$core$Bit(File* file) {
 }
 
 Error* frost$io$File$createDirectory$R$frost$core$Error$Q(File* file) {
-    bool directoryExists = frost$io$File$isDirectory$R$frost$core$Bit(file);
-    if (!directoryExists) {
+    if (!frost$io$File$isDirectory$R$frost$core$Bit(file)) {
         char* path = frostGetCString(file->path);
-        int result = mkdir(path, 0755);
-        if (result) {
+        int result = mkdir(path, 0700);
+        // we double-check existence on failure, in case the failure was caused by another thread
+        // having created the directory while we were trying to...
+        if (result && !frost$io$File$isDirectory$R$frost$core$Bit(file)) {
             String* result = frostFileErrorMessage("Could not create directory", path);
             frostFree(path);
             return frostError(result);

@@ -2,7 +2,7 @@ project(frost)
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
-set(OPTIMIZATION 3)
+set(OPTIMIZATION 0)
 set(SAFETY 3)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindICU")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindLLVM")
@@ -10,7 +10,6 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 set(SYSTEM_LIBRARIES m Threads::Threads)
 
-find_package(LLVM 4.0 REQUIRED)
 find_package(ICU COMPONENTS uc i18n REQUIRED)
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost"
@@ -18,7 +17,6 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost"
     "class Config {\n"
     "@class function frostSourceDir():String { return \"${CMAKE_SOURCE_DIR}/src\" }\n"
     "@class function frostLibDir():String { return \"${CMAKE_CURRENT_BINARY_DIR}\" }\n"
-    "@class function llvmDir():String { return \"${LLVM_ROOT_DIR}\" }\n"
     "@class function llvmTriple():String { return \"${LLVM_HOST_TARGET}\" }\n"
     "@class function icuLibraries():String { return \"${ICU_LIBRARIES}\" }\n"
     "}")
@@ -30,7 +28,6 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/config.c"
     "static intptr_t configString(const char* s) { return frostNewString(s, strlen(s)); }"
     "intptr_t org$frostlang$frostc$Config$frostSourceDir$R$frost$core$String() { return configString(\"${CMAKE_SOURCE_DIR}/src\"); }\n"
     "intptr_t org$frostlang$frostc$Config$frostLibDir$R$frost$core$String() { return configString(\"${CMAKE_CURRENT_BINARY_DIR}\"); }\n"
-    "intptr_t org$frostlang$frostc$Config$llvmDir$R$frost$core$String() { return configString(\"${LLVM_ROOT_DIR}\"); }\n"
     "intptr_t org$frostlang$frostc$Config$llvmTriple$R$frost$core$String() { return configString(\"${LLVM_HOST_TARGET}\"); }\n"
     "intptr_t org$frostlang$frostc$Config$icuLibraries$R$frost$core$String() { return configString(\"${ICU_LIBRARIES}\"); }\n"
 )
@@ -310,7 +307,9 @@ add_custom_command(
     OUTPUT writeOperators
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -o writeOperators
             ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.frost
-    DEPENDS src/tools/WriteOperators.frost frostc
+    # it doesn't really depend upon stubs, but it isn't safe to run this while stubs are being
+    # generated
+    DEPENDS src/tools/WriteOperators.frost frostc stubs
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -548,7 +547,6 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/IndexLValue.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/LValue.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/VariableLValue.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MemoryLayout.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodDecl.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodPosition.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodRef.frost
@@ -685,6 +683,7 @@ add_custom_command(
 
 compile_frostc_sources(frostmd_objects
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/FrostMDMain.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost
     ${frostc_source}
 )
 
@@ -769,6 +768,7 @@ compile_frostc_sources(frostdoc_objects
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/FrostDocMain.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/TableOfContentsNode.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/XMLWriter.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost
     ${frostc_source}
 )
 

@@ -2,6 +2,7 @@ package org.frostlang.frostc.pass
 
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.FieldDecl
+uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.Pair
@@ -727,6 +728,31 @@ class Analyzer {
                     }
                     else if ifFalse = removed {
                         last.value := IR.Statement.BRANCH(position, ifTrue)
+                    }
+                }
+                when IR.Statement.SWITCH(position, value, cases, other) {
+                    if other = removed {
+                        -- there's nothing special about cases[0], but we need to put *some* block
+                        -- in as the other target. Since it's unreachable, it doesn't actually
+                        -- matter.
+                        last.value := IR.Statement.SWITCH(position, value, cases, cases[0][1])
+                    }
+                    else {
+                        for i in 0 .. cases.count {
+                            if cases[i][1] = removed {
+                                if cases.count > 1 {
+                                    def finalCases := Array<(UInt64, IR.Block.ID)>(cases)
+                                    finalCases.removeIndex(i)
+                                    last.value := IR.Statement.SWITCH(position, value,
+                                            FixedArray<(UInt64, IR.Block.ID)>.from(finalCases),
+                                            other)
+                                }
+                                else {
+                                    last.value := IR.Statement.BRANCH(position, other)
+                                }
+                                break
+                            }
+                        }
                     }
                 }
             }

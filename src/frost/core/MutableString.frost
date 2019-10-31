@@ -636,7 +636,7 @@ class MutableString {
     method finish():String {
         -- FIXME this transformation is only safe at -S0
         data := data.realloc(maxLength, _length)
-        maxLength := 0 -- maxLength and hash live at the same address, zero the hash
+        maxLength := -1
         self.$class := "".$class
         return self->Object->String
 --        maxLength := -1

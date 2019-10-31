@@ -277,7 +277,7 @@ class Compiler {
         SELF
     }
 
-    class CoercionKey : HashKey<CoercionKey> {
+    class ExpressionCoercionKey : HashKey<ExpressionCoercionKey> {
         def expr:ASTNode
 
         def target:Type
@@ -288,13 +288,42 @@ class Compiler {
         }
 
         @override
-        function =(other:CoercionKey):Bit {
+        function =(other:ExpressionCoercionKey):Bit {
             return expr == other.expr & target = other.target
         }
 
         @override
         function get_hash():Int {
             return Frost.addressOf(expr) ~~ target.hash
+        }
+    }
+
+    class TypeCoercionKey : HashKey<TypeCoercionKey> {
+        def type:Type
+
+        def target:Type
+
+        def permitImplicitConstruction:Bit
+
+        init(type:Type, target:Type, permitImplicitConstruction:Bit) {
+            self.type := type
+            self.target := target
+            self.permitImplicitConstruction := permitImplicitConstruction
+        }
+
+        @override
+        function =(other:TypeCoercionKey):Bit {
+            return type == other.type & target = other.target &
+                    permitImplicitConstruction = other.permitImplicitConstruction
+        }
+
+        @override
+        function get_hash():Int {
+            def result := type.hash ~~ target.hash
+            if permitImplicitConstruction {
+                return !!result
+            }
+            return result
         }
     }
 
@@ -462,8 +491,6 @@ class Compiler {
 
     def scanner:Scanner
 
-    def memoryLayout := MemoryLayout(self)
-
     def root:SymbolTable
 
     var compiling:ClassDecl? := null
@@ -561,7 +588,10 @@ class Compiler {
     var inFieldCleanup := false
 
     @private
-    def coercionCosts := HashMap<CoercionKey, Pair<Type, Int>>()
+    def expressionCoercionCosts := HashMap<ExpressionCoercionKey, Pair<Type, Int>>()
+
+    @private
+    def typeCoercionCosts := HashMap<TypeCoercionKey, Pair<Type, Int>>()
 
     @private
     def binaryTypes := HashMap<BinaryKey, Array<Type>?>()
@@ -581,8 +611,10 @@ class Compiler {
         self.root := SymbolTable(self)
         self.parser := Parser(errorQueue)
         self.symbolTable := root
-        self.cg := CodeGenerator(self, backend)
-        self.backend := backend
+        if backend !== null {
+            self.cg := CodeGenerator(self, backend)
+            self.backend := backend
+        }
         self.errorQueue := errorQueue
         root.add(BUILTIN_BIT_TYPE)
         root.add(BUILTIN_INT_TYPE)
@@ -2136,7 +2168,25 @@ class Compiler {
         return coercionCost(type, target, true)
     }
 
+    @pre(target.resolved)
     method coercionCost(type:Type, target:Type, permitImplicitConstruction:Bit):Pair<Type, Int>? {
+        def key := TypeCoercionKey(type, target, permitImplicitConstruction)
+        var cached := typeCoercionCosts[key]
+        if cached !== null {
+            if cached.second = -1 {
+                return null
+            }
+            return cached
+        }
+        def result := computeCoercionCost(type, target, permitImplicitConstruction)
+        if result == null {
+            typeCoercionCosts[key] := Pair<Type, Int>(VOID_TYPE, -1)
+        }
+        return result
+    }
+
+    method computeCoercionCost(type:Type, target:Type,
+            permitImplicitConstruction:Bit):Pair<Type, Int>? {
         assert type.resolved, "unresolved type '\{type}'"
         assert target.resolved, "unresolved type '\{target}'"
         if type = target {
@@ -2315,15 +2365,13 @@ class Compiler {
             return null
         }
         if permitImplicitConstruction {
-            for m in targetCl.methods {
-                if m.annotations.isImplicit & m.parameters.count = 1 {
-                    resolve(m)
-                    if type = m.parameters[0].type {
-                        -- FIXME I don't remember where this 6 came from. Figure this out, and if
-                        -- it's necessary figure out what the right value is for it and use a named
-                        -- constant.
-                        return Pair<Type, Int>(target, 6->Int - m.priority)
-                    }
+            for m in getImplicitInits(targetCl) {
+                resolve(m)
+                if type = m.parameters[0].type {
+                    -- FIXME I don't remember where this 6 came from. Figure this out, and if
+                    -- it's necessary figure out what the right value is for it and use a named
+                    -- constant.
+                    return Pair<Type, Int>(target, 6->Int - m.priority)
                 }
             }
         }
@@ -3294,8 +3342,8 @@ class Compiler {
     ================================================================================================
     @pre(target.resolved)
     method coercionCost(expr:ASTNode, target:Type):Pair<Type, Int>? {
-        def key := CoercionKey(expr, target)
-        var cached := coercionCosts[key]
+        def key := ExpressionCoercionKey(expr, target)
+        var cached := expressionCoercionCosts[key]
         if cached !== null {
             if cached.second = -1 {
                 return null
@@ -3304,7 +3352,7 @@ class Compiler {
         }
         def result := computeCoercionCost(expr, target)
         if result == null {
-            coercionCosts[key] := Pair<Type, Int>(VOID_TYPE, -1)
+            expressionCoercionCosts[key] := Pair<Type, Int>(VOID_TYPE, -1)
         }
         return result
     }
@@ -3929,6 +3977,35 @@ class Compiler {
         return coerce(position, value, target, false)
     }
 
+    method getImplicitInits(cl:ClassDecl):Array<MethodDecl> {
+        var result := cl.implicitInits
+        if result == null {
+            def inits := getSymbolTable(cl)["init"]
+            assert inits !== null
+            match inits.kind {
+                when Symbol.Kind.METHOD {
+                    def m := inits->MethodDecl
+                    if m.annotations.isImplicit {
+                        result := [m]
+                    }
+                    else {
+                        result := []
+                    }
+                }
+                when Symbol.Kind.METHODS {
+                    result := []
+                    for m in inits->Methods.methods {
+                        if m.annotations.isImplicit {
+                            result.add(m)
+                        }
+                    }
+                }
+            }
+            cl.implicitInits := result
+        }
+        return result
+    }
+
     ================================================================================================
     Coerces a value to a different type, returning a new value representing the converted type (or
     report an error and return `null` if no such coercion is possible). "Coerce", in Frost's
@@ -4018,32 +4095,24 @@ class Compiler {
             if cl == null {
                 return null
             }
-            def inits := getSymbolTable(cl)["init"]
-            assert inits !== null
-            match inits.kind {
-                when Symbol.Kind.METHOD {
-                    def m := inits->MethodDecl
-                    if m.annotations.isImplicit {
-                        if resolve(m) & coercionCost(srcType, m.parameters[0].type) !== null {
-                            return coerce(position, implicitInit(position, value, m), target)
-                        }
-                    }
+            def implicitInits := getImplicitInits(cl)
+            if implicitInits.count = 1 {
+                def m := implicitInits[0]
+                if resolve(m) & coercionCost(srcType, m.parameters[0].type) !== null {
+                    return coerce(position, implicitInit(position, value, m), target)
                 }
-                when Symbol.Kind.METHODS {
-                    def methods := inits->Methods.methods.filter(m => m.annotations.isImplicit)
-                    if methods.count > 0 {
-                        def args := Array<ASTNode>()
-                        args.add(ASTNode.IR_WRAPPER(position.asPosition, value))
-                        def best := Call.findBestMethod(self, position, null, methods, args,
-                                TypeContext.UNSPECIFIED)
-                        if best !== null {
-                            if best.first.count = 1 {
-                                return coerce(position, implicitInit(position, value,
-                                        best.first[0].value), target)
-                            }
-                            unreachable, "ambiguous implicit init"
-                        }
+            }
+            else if implicitInits.count > 1 {
+                def args := Array<ASTNode>()
+                args.add(ASTNode.IR_WRAPPER(position.asPosition, value))
+                def best := Call.findBestMethod(self, position, null, implicitInits, args,
+                        TypeContext.UNSPECIFIED)
+                if best !== null {
+                    if best.first.count = 1 {
+                        return coerce(position, implicitInit(position, value,
+                                best.first[0].value), target)
                     }
+                    unreachable, "ambiguous implicit init"
                 }
             }
             assert srcType.isClass
@@ -5848,7 +5917,7 @@ class Compiler {
         if !resolve(m) {
             return
         }
-        coercionCosts.clear()
+        expressionCoercionCosts.clear()
         binaryTypes.clear()
         currentMethod.push(m)
         if m.owner.classKind = ClassDecl.Kind.CHOICE & m.name = "cleanup" {
@@ -6518,7 +6587,6 @@ class Compiler {
         }
         def frostHome := File(Config.frostSourceDir())
         imports.add(frostHome)
-        def llvmDir := File(Config.llvmDir())
         def clang := File("/usr/bin/clang")
         if sources.count = 0 {
             Console.printErrorLine("no input files specified")

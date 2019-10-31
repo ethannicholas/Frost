@@ -1509,12 +1509,12 @@ class Call {
                     target.type().subtypes[1].subtypes[1].typeKind !=
                             Type.Kind.GENERIC_METHOD_PARAMETER {
                 finalArgs.add(IR.Value.INT(
-                        compiler.memoryLayout.sizeOf(target.type().subtypes[1].subtypes[1]).asUInt64,
+                        compiler.cg.primitiveType(target.type().subtypes[1].subtypes[1]).size.asUInt64,
                         compiler.BUILTIN_INT_TYPE))
             }
             else if target !== null & targetType.isPointer {
                 finalArgs.add(IR.Value.INT(
-                        compiler.memoryLayout.sizeOf(target.type().subtypes[1]).asUInt64,
+                        compiler.cg.primitiveType(target.type().subtypes[1]).size.asUInt64,
                         compiler.BUILTIN_INT_TYPE))
             }
             else if compiler.currentMethod[0].annotations.isPointerSize {

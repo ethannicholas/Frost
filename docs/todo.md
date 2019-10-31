@@ -5,9 +5,6 @@ Detect and error on parameter reassignment
 fix command line parsing
 permissions
 verify build & run from directories containing spaces
-fix make -j
-fix stubs
-fix -S0
 all tests working (incl. C)
 Compiler performance
 Automatically turn code snippets in documentation into testcases
