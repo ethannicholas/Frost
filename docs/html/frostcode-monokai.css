@@ -12,63 +12,64 @@ pre {
     margin-right: 30pt;
 }
 
-.frostcode {
+pre .frostcode {
     font-family: Menlo, Consolas, Andale Mono, sans-serif;
     color: #F8F8F2;
 }
 
-.frostcode .comment {
+pre .frostcode .comment {
     color: #857A65;
     font-style: italic;
 }
 
-.frostcode .lineNumber {
+pre .frostcode .lineNumber {
     color: #857A65;
     font-style: italic;
     font-size: 90%;
 }
 
-.frostcode .annotation, .frostcode .label {
+pre .frostcode .annotation, pre .frostcode .label {
     color: #D6C2FF;
     font-style: italic;
 }
 
-.frostcode .control, .frostcode .VAR_TOKEN, .frostcode .DEF_TOKEN, .frostcode .CONSTANT_TOKEN,
-        .frostcode .PROPERTY_TOKEN, .frostcode .AT_RETURN_TOKEN, .frostcode .DOT_TOKEN {
+pre .frostcode .control, pre .frostcode .VAR_TOKEN, pre .frostcode .DEF_TOKEN,
+        pre .frostcode .CONSTANT_TOKEN, pre .frostcode .PROPERTY_TOKEN,
+        pre .frostcode .AT_RETURN_TOKEN, pre .frostcode .DOT_TOKEN {
     color: #F92672;
 }
 
-.frostcode .PACKAGE_TOKEN, .frostcode .CLASS_TOKEN, .frostcode .CHOICE_TOKEN,
-        .frostcode .INTERFACE_TOKEN, .frostcode .FUNCTION_TOKEN, .frostcode .METHOD,
-        .frostcode .INIT_TOKEN {
+pre .frostcode .PACKAGE_TOKEN, pre .frostcode .CLASS_TOKEN, pre .frostcode .CHOICE_TOKEN,
+        pre .frostcode .INTERFACE_TOKEN, pre .frostcode .FUNCTION_TOKEN, pre .frostcode .METHOD,
+        pre .frostcode .INIT_TOKEN {
     color: #30E1EF;
     font-style: italic;
 }
 
-.frostcode .control {
+pre .frostcode .control {
     font-style: italic;
 }
 
-.frostcode .methodName {
+pre .frostcode .methodName {
     color: #A6E22E;
 }
 
-.frostcode .type {
+pre .frostcode .type {
     color: #66D9EF;
 }
 
-.frostcode .literal {
+pre .frostcode .literal {
     color: #AE81FF;
 }
 
-.frostcode .STRING {
+pre .frostcode .STRING {
     color: #E6DB74;
 }
 
-.frostcode .parameterName {
+pre .frostcode .parameterName {
     color: #FD971F;
 }
 
-.frostcode .ellipsis {
+pre .frostcode .ellipsis {
     color: #F8F8F2;
 }

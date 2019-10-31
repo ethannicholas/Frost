@@ -351,8 +351,7 @@ class CodeGenerator {
                     rawType := raw.parameters[i - 1].type
                 }
                 def p := IR.Value.PARAMETER(i + start, effective.subtypes[i])
-                -- FIXME need to allow interfaces on choices, make PrimitiveType equatable
-                if primitiveType(rawType).asString != primitiveType(effective.subtypes[i]).asString {
+                if rawType != effective.subtypes[i] {
                     def cast := IR.Statement.ID(irId)
                     irId += 1
                     convertCast(position, cast, p, rawType)
@@ -516,11 +515,15 @@ class CodeGenerator {
     function primitiveType(type:Type):Code.PrimitiveType {
         match type.typeKind {
             when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT {
+                if type = compiler.BUILTIN_INT_TYPE | type = compiler.BUILTIN_UINT_TYPE {
+                    return Code.PrimitiveType.INT
+                }
                 match type.size {
                     when 8  { return Code.PrimitiveType.INT8  }
                     when 16 { return Code.PrimitiveType.INT16 }
                     when 32 { return Code.PrimitiveType.INT32 }
                     when 64 { return Code.PrimitiveType.INT64 }
+                    otherwise { unreachable }
                 }
             }
             when Type.Kind.BUILTIN_FLOAT {
@@ -539,17 +542,13 @@ class CodeGenerator {
             }
             when Type.Kind.NULLABLE {
                 def base := primitiveType(type.subtypes[0])
-                match base {
-                    when Code.PrimitiveType.INT {
-                        -- nullable object, still just a pointer
-                        return base
-                    }
-                    otherwise {
-                        -- nullable value, add an 'isNull' field
-                        return Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
-                                [base, Code.PrimitiveType.BIT]))
-                    }
+                if compiler.isValue(type.subtypes[0]) {
+                    -- nullable value, add an 'isNull' field
+                    return Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
+                            [base, Code.PrimitiveType.BIT]))
                 }
+                -- nullable object, still just a pointer
+                return base
             }
             when Type.Kind.METHOD, Type.Kind.IMMUTABLE_METHOD, Type.Kind.FUNCTION,
                     Type.Kind.IMMUTABLE_FUNCTION {

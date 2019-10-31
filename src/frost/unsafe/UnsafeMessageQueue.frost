@@ -1,5 +1,15 @@
 package frost.unsafe
 
+====================================================================================================
+A message queue which allows mutable objects to be passed between threads, violating the normal
+Frost assumption that a mutable object is accessible only from a single thread.
+
+This is much more dangerous than one would assume at first glance, since *any* interaction with a
+mutable object passed between threads is dangerous. As Frost assumes that mutable objects are not
+shared between threads, it does not take any measures to ensure thread safety while refcounting
+objects that are known at compile time to be mutable. Even read-only multithreaded access to mutable
+objects can cause undefined behavior in the absence of very careful locking.
+====================================================================================================
 @final
 @unsafeImmutable
 class UnsafeMessageQueue<T> : Immutable {

@@ -286,7 +286,7 @@ class CBackend : Backend {
                 return "((uint64_t) \{ref})"
             }
             when Code.PrimitiveType.INT {
-                return "((unsigned int) \{ref})"
+                return "((uintptr_t) \{ref})"
             }
             when Code.PrimitiveType.FLOAT32, Code.PrimitiveType.FLOAT64 {
                 return ref
@@ -546,7 +546,7 @@ class CBackend : Backend {
                             define(types[index], result, "\{getReference(target)}.f\{index}")
                         }
                         otherwise {
-                            unreachable
+                            unreachable, "extracting a field from \{target}"
                         }
                     }
                 }

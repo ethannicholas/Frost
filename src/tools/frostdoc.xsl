@@ -147,6 +147,14 @@
                         <xsl:text>frostcode-light.css</xsl:text>
                     </xsl:attribute>
                 </link>
+                <link rel="stylesheet" type="text/css">
+                    <xsl:attribute name="href">
+                        <xsl:call-template name="basePath">
+                            <xsl:with-param name="className" select="$name"/> 
+                        </xsl:call-template>
+                        <xsl:text>frostcode-monokai.css</xsl:text>
+                    </xsl:attribute>
+                </link>
                 <script>
                     <xsl:attribute name="src">
                         <xsl:call-template name="basePath">

@@ -12,7 +12,7 @@ constant HEADER :=
     "  <head>\n" +
     "    <link rel=\"stylesheet\" type=\"text/css\" href=\"frost-main.css\" />\n" +
     "    <link rel=\"stylesheet\" type=\"text/css\" href=\"frostdoc.css\" />\n" +
-    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"frostcode-light.css\" />\n" +
+    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"frostcode-monokai.css\" />\n" +
     "  </head>\n" +
     "  <body>\n" +
     "    <div id=\"main\">" +

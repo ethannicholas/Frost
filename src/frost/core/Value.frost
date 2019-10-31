@@ -10,8 +10,8 @@ subclass of [Immutable], are naturally immutable as well. "Tricking" Frost into 
     def i2:Object := 5
     Console.printLine(i1 == i2)
 
-gives undefined results. This program could legally print either `true` or `false`, and the result
-may differ from run to run of the same binary.
+gives undefined results. This could legally print either `true` or `false`, and the result may
+differ from run to run of the same code.
 
 #Performance
 
@@ -27,12 +27,12 @@ C programming language, with the same performance characteristics.
 
 Converting a `Value` to an ordinary class type (e.g. `def o:Object := 5`) requires it to be
 "wrapped" in an actual `Object` instance. This wrapping is handled automatically by the compiler,
-but does carry a performance penalty due to the memory allocation it entails.
+but does carry a performance penalty due to the memory allocation and reference counting it entails.
 
 Converting a `Value` to its corresponding nullable type (e.g. `def i:Int? := 5`) is much cheaper
 than wrapping it. `Int?`, or any nullable `Value`, is internally represented using only a single
 extra [Bit] to distinguish `null` from non-`null` values. Nullable `Value`s are still stack
-allocated and passed by value.
+allocated and passed by value with no reference counting.
 
 Again, the compiler handles all of these details automatically. It is only explained here so that
 the performance implications are clear.

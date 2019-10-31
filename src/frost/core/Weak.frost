@@ -7,14 +7,6 @@ participate in reference counting. Objects are destroyed when there are no remai
 ====================================================================================================
 @final
 class Weak<T> {
-    @private
-    @class
-    function checkValid(o:Object?):Bit {
-        return o !== null & o->Weak<Object>.valid
-    }
-
-    property valid:Bit
-
     -- This is special cased within the compiler
     @private
     def value:T?
@@ -37,12 +29,8 @@ class Weak<T> {
     are disabled.
     ================================================================================================
     method get():T {
-        assert valid, "dereferencing weak pointer after its referent was destroyed"
+        assert _valid, "dereferencing weak pointer after its referent was destroyed"
         return value!
-    }
-
-    function get_valid():Bit {
-        return _valid
     }
 
     @override

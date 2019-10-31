@@ -249,6 +249,9 @@ class Match {
                                 }
                                 else {
                                     def v := compiler.compileExpression(t)
+                                    if v == null {
+                                        return
+                                    }
                                     var found := false
                                     match v {
                                         when IR.Value.REF(id, t) {

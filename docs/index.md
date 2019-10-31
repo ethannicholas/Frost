@@ -9,7 +9,6 @@ Frost is a high-level, general-purpose multiparadigm programming language with s
 * Non-nullable references, static proofs of `null` safety
 * Contracts (preconditions and postconditions)
 * Tuples
-* "Sane" operator overloading
 * Actor model threading
 
 And many other features. This is what a simple Frost program looks like:

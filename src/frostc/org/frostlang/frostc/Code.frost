@@ -687,6 +687,11 @@ class Code {
             self.id := id
             self.statements := statements
         }
+
+        @override
+        function get_asString():String {
+            return "\{id}:\n" + statements.map(s => s.asString).join("\n")
+        }
     }
 
     class ValueRef {
@@ -802,6 +807,11 @@ class Code {
         function get_asString():String {
             return "Global(\{name}, \{type}, \{isExternal})"
         }
+    }
+
+    @override
+    function get_asString():String {
+        return blocks.map(b => b.asString).join("\n\n")
     }
 
     def blocks := Array<Block>()

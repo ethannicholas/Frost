@@ -283,7 +283,7 @@ Match
         when <expression> { -- run this code if the value matches
             ...
         }
-        when <expression>, <expression>, <expression> { -- match any of these three values
+        when <expression>, <expression>, <expression> { -- match any of these values
             ...
         }
         otherwise { -- run this code if there are no matches
@@ -604,7 +604,7 @@ syntax creates a value of type [RegularExpression], which many methods in `Strin
 `MutableString` operate on. `RegularExpression` may also be used to directly create a `Matcher`
 object to do your own matching.
 
-    Console.printLine("There is a number 57 in this string, can you find it?".parse(/.*?(\d+).*?/))
+    Console.printLine("Can you find the number 57?".parse(/.*?(\d+).*?/))
 
 And, of course, you may directly create `RegularExpression` objects without relying on the built-in
 syntax for it.
