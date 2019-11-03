@@ -86,15 +86,12 @@ class HTMLProcessor {
 
     method process(input:File, output:File, root:String) {
         try {
-            def errors := MessageQueue<Compiler.Message>()
-            def parser := Parser(errors)
+            def parser := Parser(compiler)
             parser.syntaxHighlighter := SyntaxHighlighter()
             parser.start(input, compiler.files.count, input.readFully())
             compiler.files.add(input)
             if parser.file() == null {
-                while errors.hasMessage() {
-                    Console.printLine(errors.getMessage())
-                }
+                return
             }
             def lines := prettyPrint(parser).split("\n")
             def width := lines.count.asString.length

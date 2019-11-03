@@ -3,6 +3,7 @@ package org.frostlang.frostc.parser
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.ClassDecl
 uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.ErrorReporter
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.Position
@@ -38,7 +39,8 @@ class Parser {
 
     def regexParser:RegexParser
 
-    def errors:MessageQueue<Compiler.Message>
+    @weak
+    def errorReporter:ErrorReporter
 
     var path:File
 
@@ -56,10 +58,10 @@ class Parser {
 
     var syntaxHighlighter:SyntaxHighlighter?
 
-    init(errors:MessageQueue<Compiler.Message>) {
-        self.errors := errors
+    init(errorReporter:ErrorReporter) {
+        self.errorReporter := errorReporter
         commaSeparatedExpressionContext.push(false)
-        regexParser := RegexParser(errors)
+        regexParser := RegexParser(errorReporter)
     }
 
     method start(path:File, pathIndex:Int, source:String) {
@@ -190,8 +192,7 @@ class Parser {
 
     method error(token:Token, msg:String) {
         if speculativeBuffers.count = 0 & reportErrors {
-            errors.post(Compiler.Message.ERROR(path.name, token.position.line,
-                    token.position.column, msg))
+            errorReporter.error(token.position, msg)
         }
     }
 

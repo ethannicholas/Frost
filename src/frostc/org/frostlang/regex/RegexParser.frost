@@ -3,13 +3,15 @@ package org.frostlang.regex
 uses frost.unsafe.Pointer
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.ErrorReporter
 uses org.frostlang.frostc.Position
 
 @final
 class RegexParser {
     def lexer := RegexLexer()
 
-    def errors:MessageQueue<Compiler.Message>
+    @weak
+    def errorReporter:ErrorReporter
 
     var path:File
 
@@ -19,8 +21,8 @@ class RegexParser {
 
     def pushbackBuffer := SpecializedArray<RegexToken>()
 
-    init(errors:MessageQueue<Compiler.Message>) {
-        self.errors := errors
+    init(errorReporter:ErrorReporter) {
+        self.errorReporter := errorReporter
     }
 
     method start(path:File, pathIndex:Int, source:String) {
@@ -72,8 +74,7 @@ class RegexParser {
     }
 
     method error(token:RegexToken, msg:String) {
-        errors.post(Compiler.Message.ERROR(path.name, token.position.line, token.position.column,
-                msg))
+        errorReporter.error(token.position, msg)
     }
 
     function text(token:RegexToken):String {

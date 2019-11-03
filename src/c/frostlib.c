@@ -393,10 +393,12 @@ int main(int argc, char** argv) {
         }
         pthread_cond_wait(&preventsExitThreadsVar, &preventsExitThreadsMutex);
     }
+    pthread_mutex_unlock(&preventsExitThreadsMutex);
     frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q((frost_int) args);
     if (weakReferences) {
         frostAssert(weakReferences->refcnt == 1);
         frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q((frost_int) weakReferences);
+        weakReferences = NULL;
     }
     if (refErrorReporting) {
         if (allocations && allocations != 1) {

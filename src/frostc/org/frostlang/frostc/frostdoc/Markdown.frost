@@ -1,6 +1,8 @@
 package org.frostlang.frostc.frostdoc
 
 uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.ErrorReporter
+uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.parser.Parser
 uses org.frostlang.frostc.parser.SyntaxHighlighter
 uses org.frostlang.frostc.parser.Token
@@ -91,13 +93,44 @@ class Markdown {
         }
     }
 
+    class DummyErrorReporter : ErrorReporter {
+        var _errorCount := 0
+
+        var _warningCount := 0
+
+        @override
+        method error(pos:Position, msg:String) {
+            _errorCount += 1
+        }
+
+        @override
+        method warn(pos:Position, msg:String) {
+            _warningCount += 1
+        }
+
+        @override
+        function get_errorCount():Int {
+            return _errorCount
+        }
+
+        @override
+        function get_warningCount():Int {
+            return _warningCount
+        }
+
+        method clear() {
+            _errorCount := 0
+            _warningCount := 0
+        }
+    }
+
     constant TAB_WIDTH := 4
 
     def source:File
 
-    def errorQueue := MessageQueue<Compiler.Message>()
+    def errorReporter := DummyErrorReporter()
 
-    def parser := Parser(errorQueue)
+    def parser := Parser(errorReporter)
 
     @private
     def linkResolver:(String)=&>(String?)?
@@ -579,36 +612,36 @@ class Markdown {
     }
 
     method syntaxHighlight(ed:MutableString) {
-        errorQueue.clear()
+        errorReporter.clear()
         def text := ed.asString.trimmed
         parser.start(source, -1, text)
         def file := parser.file()
-        if file !== null & errorQueue.pendingMessages() = 0 {
+        if file !== null & errorReporter.errorCount = 0 {
             ed[..] := prettyPrint(parser)
             return
         }
 
-        errorQueue.clear()
+        errorReporter.clear()
         parser.start(source, -1, text)
-        while parser.peek().kind != Token.Kind.EOF & errorQueue.pendingMessages() = 0 {
+        while parser.peek().kind != Token.Kind.EOF & errorReporter.errorCount = 0 {
             parser.statement()
         }
-        if errorQueue.pendingMessages() = 0 {
+        if errorReporter.errorCount = 0 {
             ed[..] := prettyPrint(parser)
             return
         }
 
-        errorQueue.clear()
+        errorReporter.clear()
         parser.start(source, -1, text)
-        while parser.peek().kind != Token.Kind.EOF & errorQueue.pendingMessages() = 0 {
+        while parser.peek().kind != Token.Kind.EOF & errorReporter.errorCount = 0 {
             parser.expression()
         }
-        if errorQueue.pendingMessages() = 0 {
+        if errorReporter.errorCount = 0 {
             ed[..] := prettyPrint(parser)
             return
         }
 
-        errorQueue.clear()
+        errorReporter.clear()
         parser.start(source, -1, text)
         loop {
             def next := parser.next()

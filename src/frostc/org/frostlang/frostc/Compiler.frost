@@ -41,7 +41,7 @@ uses org.frostlang.frostc.statement.While
 uses org.frostlang.frostc.statement.Var
 
 @final
-class Compiler {
+class Compiler : ErrorReporter {
     choice Resolution {
         UNRESOLVED
         IN_PROGRESS
@@ -535,7 +535,10 @@ class Compiler {
     var enclosingContexts := Stack<EnclosingContext>()
 
     @private
-    var errorCount := 0
+    var _errorCount := 0
+
+    @private
+    var _warningCount := 0
 
     @private
     var closureCount := 0
@@ -610,7 +613,7 @@ class Compiler {
         self.settings := settings
         self.scanner := Scanner(self)
         self.root := SymbolTable(self)
-        self.parser := Parser(errorQueue)
+        self.parser := Parser(self)
         self.symbolTable := root
         if backend !== null {
             self.cg := CodeGenerator(self, backend)
@@ -6257,9 +6260,10 @@ class Compiler {
         }
     }
 
+    @override
     method error(pos:Position, msg:String) {
         if reportErrors {
-            errorCount += 1
+            _errorCount += 1
             def path:String
             if pos.file >= 0 & pos.file < files.count {
                 path := files[pos.file].name
@@ -6275,8 +6279,10 @@ class Compiler {
         error(pos.asPosition, msg)
     }
 
+    @override
     method warn(pos:Position, msg:String) {
         if reportErrors {
+            _warningCount += 1
             def path:String
             if pos.file >= 0 {
                 path := files[pos.file].name
@@ -6290,6 +6296,16 @@ class Compiler {
 
     method warn(pos:MethodPosition, msg:String) {
         warn(pos.asPosition, msg)
+    }
+
+    @override
+    function get_errorCount():Int {
+        return _errorCount
+    }
+
+    @override
+    function get_warningCount():Int {
+        return _warningCount
     }
 
     method finish() {
@@ -6479,6 +6495,41 @@ class Compiler {
         }
     }
 
+    method showErrors():Bit {
+        while errorQueue.hasMessage() {
+            def error := errorQueue.getMessage()
+            -- FIXME stderr
+            match error {
+                when Compiler.Message.ERROR(file, line, column, message) {
+                    Console.printLine("\{file}:\{line}:\{column}: error: \{message}")
+                }
+                when Compiler.Message.WARNING(file, line, column, message) {
+                    Console.printLine("\{file}:\{line}:\{column}: warning: \{message}")
+                }
+            }
+        }
+        if warningCount = 1 {
+            -- FIXME stderr
+            Console.printLine("1 warning")
+        }
+        else if warningCount > 0 {
+            -- FIXME stderr
+            Console.printLine("\{warningCount} warnings")
+        }
+        if errorCount = 1 {
+            -- FIXME stderr
+            Console.printLine("1 error")
+        }
+        else if errorCount > 0 {
+            -- FIXME stderr
+            Console.printLine("\{errorCount} errors")
+        }
+        def result := errorCount > 0
+        _errorCount := 0
+        _warningCount := 0
+        return result
+    }
+
     @class
     method run(rawArgs:ListView<String>):Bit {
         def args := Arguments(rawArgs)
@@ -6634,10 +6685,9 @@ class Compiler {
                 System.exit(1)
             }
         }
-        var errorCount := 0
-        var warningCount := 0
         def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
                 intSize, debug)
+        def success:Bit
         {
             def backend:Backend? := null
             try {
@@ -6689,34 +6739,13 @@ class Compiler {
                 compiler.compile(s)
             }
             compiler.finish()
-            if format = Format.RUN {
+            success := !compiler.showErrors()
+            if success & format = Format.RUN {
                 backend->Interpreter.run()
                 return true
             }
-            while errorQueue.hasMessage() {
-                def error := errorQueue.getMessage()
-                -- FIXME stderr
-                match error {
-                    when Compiler.Message.ERROR(file, line, column, message) {
-                        errorCount += 1
-                        Console.printLine("\{file}:\{line}:\{column}: error: \{message}")
-                    }
-                    when Compiler.Message.WARNING(file, line, column, message) {
-                        warningCount += 1
-                        Console.printLine("\{file}:\{line}:\{column}: warning: \{message}")
-                    }
-                }
-            }
         }
-        if warningCount = 1 {
-            -- FIXME stderr
-            Console.printLine("1 warning")
-        }
-        else if warningCount > 0 {
-            -- FIXME stderr
-            Console.printLine("\{warningCount} warnings")
-        }
-        if errorCount = 0 {
+        if success {
             match format {
                 when Format.EXECUTABLE {
                     toExecutable(clang, libraryPaths, libraries, outFile.withExtension(".ll"),
@@ -6728,16 +6757,6 @@ class Compiler {
                 }
             }
         }
-        else {
-            if errorCount = 1 {
-                -- FIXME stderr
-                Console.printLine("1 error")
-            }
-            else {
-                -- FIXME stderr
-                Console.printLine("\{errorCount} errors")
-            }
-        }
-        return errorCount = 0
+        return success
     }
 }

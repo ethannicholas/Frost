@@ -1,0 +1,13 @@
+package org.frostlang.frostc
+
+interface ErrorReporter {
+    method error(position:Position, msg:String)
+
+    method warn(position:Position, msg:String)
+
+    property errorCount:Int
+    function get_errorCount():Int
+
+    property warningCount:Int
+    function get_warningCount():Int
+}

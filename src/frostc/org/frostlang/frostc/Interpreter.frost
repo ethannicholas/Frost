@@ -258,6 +258,9 @@ class Interpreter : Backend {
             compiler.currentClass.push(cl)
             compiler.resolve(cl)
             compiler.compile(s.methodDecl)
+            if compiler.showErrors() {
+                return null
+            }
             -- create the shim, if needed
             cg.getMethodTableEntry(s.methodDecl)
             def shim := cg.methodShims[s.methodDecl]
