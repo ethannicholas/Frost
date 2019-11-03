@@ -40,12 +40,12 @@ class CodeGenerator {
 
     constant CHOICE_DATA_INDEX := 4
 
-    constant POINTER_SIZE := 8
-
     constant VALUE_INDEX := 3
 
     @weak
     def compiler:Compiler
+
+    def settings:Compiler.Settings
 
     @weak
     def backend:Backend
@@ -100,6 +100,7 @@ class CodeGenerator {
 
     init(compiler:Compiler, backend:Backend) {
         self.compiler := compiler
+        self.settings := compiler.settings
         self.backend := backend
     }
 
@@ -458,7 +459,7 @@ class CodeGenerator {
                 var size := 0
                 for cc in cl.choiceCases {
                     size := size.max(Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
-                            cc.fields.map(primitiveType))).size)
+                            cc.fields.map(primitiveType))).size(settings))
                 }
                 types.add(Code.PrimitiveType.ARRAY(size, Code.PrimitiveType.INT8))
             }
@@ -620,6 +621,9 @@ class CodeGenerator {
                 def result := Code.Value.REF(valueRef)
                 refs[id] := result
                 return result
+            }
+            when IR.Value.SIZE_OF(t) {
+                return Code.Value.SIZE_OF(primitiveType(t))
             }
             when IR.Value.STRING(s, _) {
                 return getStringReference(s)
@@ -955,8 +959,7 @@ class CodeGenerator {
             def wrapper := wrapperStruct(src)
             out.add(Code.Statement.HEAP_ALLOC(position, id, wrapper, cc))
             def structPtr := nextStatement()
-            def offset := Code.Value.INT(wrapper.elementOffset(VALUE_INDEX).asUInt64,
-                    Code.PrimitiveType.INT)
+            def offset := Code.Value.FIELD_OFFSET(wrapper, VALUE_INDEX)
             out.add(Code.Statement.ADDI(position, structPtr, Code.Value.STATEMENT(id,
                     Code.PrimitiveType.INT), offset))
             out.add(Code.Statement.STORE(position, value,
@@ -1020,8 +1023,7 @@ class CodeGenerator {
             }
             def structPtr := nextStatement()
             def wrapper := wrapperStruct(target)
-            def offset := Code.Value.INT(wrapper.elementOffset(VALUE_INDEX).asUInt64,
-                    Code.PrimitiveType.INT)
+            def offset := Code.Value.FIELD_OFFSET(wrapper, VALUE_INDEX)
             out.add(Code.Statement.ADDI(position, structPtr, value, offset))
             out.add(Code.Statement.LOAD(position, id, Code.Value.STATEMENT(structPtr,
                     Code.PrimitiveType.INT), primitiveType(target)))
@@ -1057,7 +1059,7 @@ class CodeGenerator {
             }
             return
         }
-        if src.typeKind != Type.Kind.BUILTIN_INT {
+        if src.typeKind != Type.Kind.BUILTIN_INT & src.typeKind != Type.Kind.BUILTIN_UINT {
             def srcClass := compiler.getClass(src)
             assert srcClass !== null, "class \{src} not found in cast at \{position}"
             def targetClass := compiler.getClass(target)
@@ -1280,11 +1282,8 @@ class CodeGenerator {
                 out.add(Code.Statement.COMMENT(position, text))
             }
             when IR.Statement.GET_CHOICE_FIELD_POINTER(position, value, case, field) {
-                def offset := Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
-                        case.fields.map(primitiveType))).elementOffset(field) +
-                        struct(compiler.getClass(value.type())!).elementOffset(CHOICE_DATA_INDEX)
-                out.add(Code.Statement.ADDI(position, mapId(id), convertValue(value),
-                        Code.Value.INT(offset.asUInt64, Code.PrimitiveType.INT)))
+                def offset := Code.Value.CHOICE_FIELD_OFFSET(case, field)
+                out.add(Code.Statement.ADDI(position, mapId(id), convertValue(value), offset))
             }
             when IR.Statement.CONDITIONAL_BRANCH(position, value, ifTrue, ifFalse) {
                 out.add(Code.Statement.CONDITIONAL_BRANCH(position, convertValue(value),
@@ -1355,29 +1354,18 @@ class CodeGenerator {
             when IR.Statement.GET_FIELD_POINTER(position, value, field) {
                 def index := compiler.getIndex(field)
                 def converted := convertValue(value)
-                def offset := Code.Value.INT(struct(field.owner).elementOffset(index).asUInt64,
-                        Code.PrimitiveType.INT)
+                def offset := Code.Value.FIELD_OFFSET(struct(field.owner), index)
                 out.add(Code.Statement.ADDI(position, mapId(id), converted, offset))
             }
             when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
                 def cc := getClassConstant(compiler.getClass(value.type())!)
-                def ccType:Code.PrimitiveType
-                match cc {
-                    when Code.Value.GLOBAL_POINTER(idx) {
-                        ccType := globals[idx].type
-                    }
-                    otherwise {
-                        unreachable
-                    }
-                }
                 def cl := nextStatement()
                 out.add(Code.Statement.LOAD(position, cl, convertValue(value),
                         Code.PrimitiveType.INT))
                 def vtableSlot := nextStatement()
                 out.add(Code.Statement.ADDI(position, vtableSlot,
                         Code.Value.STATEMENT(cl, Code.PrimitiveType.INT),
-                        Code.Value.INT((ccType.elementOffset(VTABLE_INDEX) + index *
-                            POINTER_SIZE).asUInt64, Code.PrimitiveType.INT)))
+                        Code.Value.VTABLE_OFFSET(cc, index)))
                 out.add(Code.Statement.LOAD(position, mapId(id), 
                         Code.Value.STATEMENT(vtableSlot, Code.PrimitiveType.INT),
                         Code.PrimitiveType.INT))
@@ -1403,8 +1391,7 @@ class CodeGenerator {
                 def itableSlot := nextStatement()
                 out.add(Code.Statement.ADDI(position, itableSlot,
                         Code.Value.STATEMENT(initialCl, Code.PrimitiveType.INT),
-                        Code.Value.INT(ccType.elementOffset(ITABLE_INDEX).asUInt64,
-                            Code.PrimitiveType.INT)))
+                        Code.Value.FIELD_OFFSET(ccType, ITABLE_INDEX)))
                 def initialItable := nextStatement()
                 out.add(Code.Statement.LOAD(position, initialItable,
                         Code.Value.STATEMENT(itableSlot, Code.PrimitiveType.INT),
@@ -1429,8 +1416,7 @@ class CodeGenerator {
                 createBlock(loopBody)
                 def nextPtr := nextStatement()
                 out.add(Code.Statement.ADDI(position, nextPtr, Code.Value.STATEMENT(itableLoad,
-                        Code.PrimitiveType.INT), Code.Value.INT(POINTER_SIZE.asUInt64,
-                        Code.PrimitiveType.INT)))
+                        Code.PrimitiveType.INT), Code.Value.SIZE_OF(Code.PrimitiveType.INT)))
                 def next := nextStatement()
                 out.add(Code.Statement.LOAD(position, next, Code.Value.STATEMENT(nextPtr,
                         Code.PrimitiveType.INT), Code.PrimitiveType.INT))
@@ -1440,9 +1426,7 @@ class CodeGenerator {
                 createBlock(loopEnd)
                 def finalPtr := nextStatement()
                 out.add(Code.Statement.ADDI(position, finalPtr, Code.Value.STATEMENT(itableLoad,
-                        Code.PrimitiveType.INT),
-                        Code.Value.INT((POINTER_SIZE * (2 + index)).asUInt64,
-                            Code.PrimitiveType.INT)))
+                        Code.PrimitiveType.INT), Code.Value.ITABLE_OFFSET(index)))
                 out.add(Code.Statement.LOAD(position, mapId(id), Code.Value.STATEMENT(finalPtr,
                         Code.PrimitiveType.INT), Code.PrimitiveType.INT))
             }
@@ -1473,7 +1457,7 @@ class CodeGenerator {
             when IR.Statement.POINTER_GET_INDEX(position, ptr, idx, type) {
                 def offset := nextStatement()
                 out.add(Code.Statement.MULI(position, offset, convertValue(idx),
-                        Code.Value.INT(primitiveType(type).size.asUInt64, Code.PrimitiveType.INT)))
+                        Code.Value.SIZE_OF(primitiveType(type))))
                 def add := nextStatement()
                 out.add(Code.Statement.ADDI(position, add, convertValue(ptr),
                         Code.Value.STATEMENT(offset, Code.PrimitiveType.INT)))
@@ -1487,7 +1471,7 @@ class CodeGenerator {
             when IR.Statement.POINTER_SET_INDEX(position, value, ptr, idx, type) {
                 def offset := nextStatement()
                 out.add(Code.Statement.MULI(position, offset, convertValue(idx),
-                        Code.Value.INT(primitiveType(type).size.asUInt64, Code.PrimitiveType.INT)))
+                        Code.Value.SIZE_OF(primitiveType(type))))
                 def add := nextStatement()
                 out.add(Code.Statement.ADDI(position, add, convertValue(ptr),
                         Code.Value.STATEMENT(offset, Code.PrimitiveType.INT)))

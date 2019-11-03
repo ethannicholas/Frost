@@ -31,6 +31,8 @@ typedef int8_t bool;
 
 typedef intptr_t frost_int;
 
+typedef uintptr_t frost_uint;
+
 #define true 1
 #define false 0
 
@@ -689,16 +691,16 @@ double frost$core$Real64$get_tan$R$frost$core$Real64(double x) {
 
 #define NO_REFCNT -999
 
-frost_int frost$core$Frost$alloc$builtin_int$R$builtin_int(int size) {
+frost_uint frost$core$Frost$alloc$builtin_int$R$builtin_uint(frost_int size) {
     return (frost_int) frostAlloc(size);
 }
 
-void frost$core$Frost$destroy$builtin_int(frost_int ptr) {
+void frost$core$Frost$destroy$builtin_uint(frost_uint ptr) {
     frostFree((void*) ptr);
 }
 
-frost_int frost$core$Frost$realloc$builtin_int$builtin_int$builtin_int$R$builtin_int(frost_int ptr,
-        frost_int oldSize, frost_int newSize) {
+frost_uint frost$core$Frost$realloc$builtin_uint$builtin_int$builtin_int$R$builtin_uint(
+        frost_uint ptr, frost_int oldSize, frost_int newSize) {
     void* result = realloc((void*) ptr, newSize);
     frostAssert(result != NULL || newSize == 0);
     if (newSize > oldSize) {

@@ -19,6 +19,8 @@ class CBackend : Backend {
 
     def cg:CodeGenerator?
 
+    def settings:Compiler.Settings?
+
     def types := MemoryOutputStream()
 
     def globalDeclarations := MemoryOutputStream()
@@ -60,6 +62,7 @@ class CBackend : Backend {
     init(out:OutputStream) {
         self.physicalOut := out
         try {
+            out.printLine("#include <stddef.h>")
             out.printLine("#include <stdlib.h>")
             out.printLine("#include <inttypes.h>")
             out.printLine("intptr_t frostObjectAlloc(int size, intptr_t cl);")
@@ -74,6 +77,7 @@ class CBackend : Backend {
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
         self.cg := compiler.cg
+        self.settings := compiler.settings
     }
 
     function name(id:Code.Statement.ID):String {
@@ -208,14 +212,30 @@ class CBackend : Backend {
 
     method getReference(v:Code.Value):String {
         match v {
+            when Code.Value.ARRAY(_, elements) {
+                return "{" + elements.map(getReference).join(", ") + "}"
+            }
             when Code.Value.BIT(b) {
                 return b.choose("1", "0")
+            }
+            when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
+                def struct := Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
+                            cc.fields.map(cg.primitiveType)))
+                return "(offsetof(\{cType(cg.struct(cc.owner))}, " +
+                        "f\{CodeGenerator.CHOICE_DATA_INDEX}) + " +
+                        "offsetof(\{cType(struct)}, f\{index}))"
+            }
+            when Code.Value.FIELD_OFFSET(type, index) {
+                return "offsetof(\{cType(type)}, f\{index})"
             }
             when Code.Value.GLOBAL_POINTER(index) {
                 return "(intptr_t) &" + cg.globals[index].name
             }
             when Code.Value.INT(i, t) {
                 return "((\{cType(t)}) \{i}u)"
+            }
+            when Code.Value.ITABLE_OFFSET(index) {
+                return "(sizeof(void*) * (\{index} + 2))"
             }
             when Code.Value.REAL(r64, type) {
                 match type {
@@ -238,6 +258,9 @@ class CBackend : Backend {
             when Code.Value.REF(r) {
                 return getReference(r.value)
             }
+            when Code.Value.SIZE_OF(t) {
+                return "sizeof(\{cType(t)})"
+            }
             when Code.Value.STATEMENT(id, type) {
                 if !definedStatements.contains(id) {
                     def error := methodHeader.printLine("\{cType(type)} \{name(id)};")
@@ -245,9 +268,6 @@ class CBackend : Backend {
                     definedStatements.add(id)
                 }
                 return name(id)
-            }
-            when Code.Value.ARRAY(_, elements) {
-                return "{" + elements.map(getReference).join(", ") + "}"
             }
             when Code.Value.STRUCT(args) {
                 def t := Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
@@ -263,6 +283,19 @@ class CBackend : Backend {
                         return "0"
                     }
                 }
+            }
+            when Code.Value.VTABLE_OFFSET(cc, index) {
+                def ccType:Code.PrimitiveType
+                match cc {
+                    when Code.Value.GLOBAL_POINTER(idx) {
+                        ccType := cg.globals[idx].type
+                    }
+                    otherwise {
+                        unreachable
+                    }
+                }
+                return "(offsetof(\{cType(ccType)}, f\{CodeGenerator.VTABLE_INDEX}) + " +
+                        "sizeof(void*) * \{index})"
             }
             otherwise {
                 unreachable, "unsupported value \{v}"
@@ -385,6 +418,7 @@ class CBackend : Backend {
 
     method writeStatement(s:Code.Statement) {
         try {
+            out.printLine("// \{s}")
             match s {
                 when Code.Statement.ADDI(position, result, left, right) {
                     define(left.type, result, "\{getReference(left)} + \{getReference(right)}")
@@ -551,8 +585,9 @@ class CBackend : Backend {
                     }
                 }
                 when Code.Statement.HEAP_ALLOC(_, result, type, classConstant) {
-                    define(Code.PrimitiveType.INT, result, "frostObjectAlloc(\{type.size}, " +
-                            "\{getReference(classConstant)})")
+                    define(Code.PrimitiveType.INT, result,
+                            "frostObjectAlloc(sizeof(\{cType(type)}), " +
+                                "\{getReference(classConstant)})")
                 }
                 when Code.Statement.LOAD(position, result, value, type) {
                     define(type, result, "*(\{cType(type)}*) \{getReference(value)}")
@@ -578,7 +613,8 @@ class CBackend : Backend {
                     }
                 }
                 when Code.Statement.STACK_ALLOC(_, result, type) {
-                    define(Code.PrimitiveType.INT, result, "(intptr_t) alloca(\{type.size})")
+                    define(Code.PrimitiveType.INT, result,
+                            "(intptr_t) alloca(sizeof(\{cType(type)}))")
                 }
                 when Code.Statement.STATIC_CALL(position, result, m, args) {
                     assert m.returnType !== null, "STATIC_CALL to void method \{m} at \{position}"

@@ -1508,14 +1508,10 @@ class Call {
                     targetType.subtypes[1].name.startsWith("frost.unsafe.Pointer<") &
                     target.type().subtypes[1].subtypes[1].typeKind !=
                             Type.Kind.GENERIC_METHOD_PARAMETER {
-                finalArgs.add(IR.Value.INT(
-                        compiler.cg.primitiveType(target.type().subtypes[1].subtypes[1]).size.asUInt64,
-                        compiler.BUILTIN_INT_TYPE))
+                finalArgs.add(IR.Value.SIZE_OF(target.type().subtypes[1].subtypes[1]))
             }
             else if target !== null & targetType.isPointer {
-                finalArgs.add(IR.Value.INT(
-                        compiler.cg.primitiveType(target.type().subtypes[1]).size.asUInt64,
-                        compiler.BUILTIN_INT_TYPE))
+                finalArgs.add(IR.Value.SIZE_OF(target.type().subtypes[1]))
             }
             else if compiler.currentMethod[0].annotations.isPointerSize {
                 def pointerSize := Identifier.compile(compiler, position, "pointerSize")

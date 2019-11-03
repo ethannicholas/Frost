@@ -24,17 +24,17 @@ class Pointer<T> : Value {
     *-
 
     @private
-    def value:builtin_int
+    def value:builtin_uint
 
     @private
-    init(value:builtin_int) {
+    init(value:builtin_uint) {
         self.value := value
     }
 
     ================================================================================================
     Creates a pointer with a specific integer value.
     ================================================================================================
-    init(value:Int) {
+    init(value:UInt) {
         self.value := value.value
     }
 
@@ -104,7 +104,7 @@ class Pointer<T> : Value {
     function +(count:Int):Pointer<T> {
         def m1:builtin_int := count.value
         def m2:builtin_int := pointerSize
-        return Pointer<T>(value + m1 * m2)
+        return Pointer<T>(value + Int(m1 * m2).asUInt.value)
     }
 
     ================================================================================================
@@ -117,7 +117,7 @@ class Pointer<T> : Value {
     function -(count:Int):Pointer<T> {
         def m1:builtin_int := count.value
         def m2:builtin_int := pointerSize
-        return Pointer<T>(value - m1 * m2)
+        return Pointer<T>(value - Int(m1 * m2).asUInt.value)
     }
 
     ================================================================================================
@@ -132,8 +132,8 @@ class Pointer<T> : Value {
         Frost.destroy(value)
     }
 
-    property asInt:Int
-    function get_asInt():Int {
+    property asUInt:UInt
+    function get_asUInt():UInt {
         return value
     }
 
@@ -178,11 +178,11 @@ class Pointer<T> : Value {
     ================================================================================================
     @private
     function convertTo<T>():T {
-        unreachable, "Pointer.clear() should have been compiled as an intrinsic"
+        unreachable, "Pointer.convertTo() should have been compiled as an intrinsic"
     }
 
     @override
     function get_asString():String {
-        return "Pointer<0x\{Int(value):x}>"
+        return "Pointer<0x\{asUInt:x}>"
     }
 }

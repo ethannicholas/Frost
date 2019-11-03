@@ -93,15 +93,15 @@ class Frost {
 
     @class
     @external
-    method alloc(size:builtin_int):builtin_int
+    method alloc(size:builtin_int):builtin_uint
 
     @class
     @external
-    method destroy(ptr:builtin_int)
+    method destroy(ptr:builtin_uint)
 
     @class
     @external
-    method realloc(ptr:builtin_int, oldSize:builtin_int, newSize:builtin_int):builtin_int
+    method realloc(ptr:builtin_uint, oldSize:builtin_int, newSize:builtin_int):builtin_uint
 
     @class
     @external

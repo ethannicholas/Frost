@@ -405,6 +405,7 @@ class IR {
         PARAMETER(Int, Type)
         REAL(Real64, Type)
         REF(Statement.ID, Type)
+        SIZE_OF(Type)
         STRING(String, Type)
 
         -- intermediate values; these never show up in finished IR sent to the code generator
@@ -450,6 +451,9 @@ class IR {
                 when METHODS(_, _, type) {
                     return type
                 }
+                when SIZE_OF {
+                    return Type("builtin_int", Type.Kind.BUILTIN_INT, 64)
+                }
                 when SUPER(type) {
                     return type
                 }
@@ -461,70 +465,6 @@ class IR {
                 }
             }
             unreachable, self.asString
-        }
-
-        @override
-        function get_asString():String {
-            match self {
-                when BIT(value, _) {
-                    return value.asString
-                }
-                when INT(value, _) {
-                    return value.asString
-                }
-                when LOCAL(slot, type) {
-                    return "LOCAL(\{slot}:\{type}*)"
-                }
-                when NULL(type) {
-                    return "NULL(\{type})"
-                }
-                when METHOD_POINTER(m, _) {
-                    return "METHOD_POINTER(\{m.declaration})"
-                }
-                when PARAMETER(index, type) {
-                    return "PARAMETER(\{index}:\{type})"
-                }
-                when REAL(value, _) {
-                    return value.asString
-                }
-                when REF(id, type) {
-                    return "REF(\{id}:\{type})"
-                }
-                when STRING(s, _) {
-                    return "STRING(\{s:frost})"
-                }
-                when METHOD(target, m, _) {
-                    if target !== null {
-                        return "METHOD(\{target}, \{m.declaration})"
-                    }
-                    return "METHOD(\{m.declaration})"
-                }
-                when METHODS(target, m, _) {
-                    if target !== null {
-                        return "METHODS(\{target}, \{m})"
-                    }
-                    return "METHODS(<null>, \{m})"
-                }
-                when GENERIC_METHOD(target, m, types) {
-                    if target !== null {
-                        return "GENERIC_METHOD(\{target}, \{m.declaration}, \{types})"
-                    }
-                    return "GENERIC_METHOD(\{m.declaration}, \{types})"
-                }
-                when GENERIC_METHODS(target, m, types) {
-                    if target !== null {
-                        return "GENERIC_METHODS(\{target}, \{m}, \{types})"
-                    }
-                    return "GENERIC_METHODS(<null>, \{m}, \{types})"
-                }
-                when SUPER(type) {
-                    return "SUPER(\{type})"
-                }
-                when TYPE(type, _) {
-                    return "TYPE(\{type.asString})"
-                }
-            }
-            unreachable
         }
     }
 

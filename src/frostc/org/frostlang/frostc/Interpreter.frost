@@ -24,14 +24,26 @@ class Interpreter : Backend {
 
         method value(v:Code.Value):Int64 {
             match v {
+                when Code.Value.ARRAY(t, _) {
+                    def result := Interpreter.alignUp(interpreter.stack,
+                            t.alignment(interpreter.settings!)).asUInt.asInt64
+                    interpreter.stack := interpreter.write(v, interpreter.stack)
+                    return result
+                }
                 when Code.Value.BIT(b) {
                     return b.choose(1, 0)
                 }
+                when Code.Value.FIELD_OFFSET(t, index) {
+                    return t.elementOffset(interpreter.settings!, index).asInt64
+                }
                 when Code.Value.GLOBAL_POINTER(index) {
-                    return (interpreter.globalMemory + interpreter.globals[index][1]).asInt.asInt64
+                    return (interpreter.globalMemory + interpreter.globals[index][1]).asUInt.asInt64
                 }
                 when Code.Value.INT(i, _) {
                     return i.asInt64
+                }
+                when Code.Value.ITABLE_OFFSET(index) {
+                    return ((2 + index) * interpreter.settings!.intSize).asInt64
                 }
                 when Code.Value.REAL(r, _) {
                     return Frost.floatToIntBits(r)
@@ -42,22 +54,35 @@ class Interpreter : Backend {
                 when Code.Value.PARAMETER(idx, _) {
                     return arguments[idx]
                 }
+                when Code.Value.SIZE_OF(t) {
+                    return t.size(interpreter.settings!).asInt64
+                }
                 when Code.Value.STATEMENT(id, type) {
                     return statements[id]
                 }
-                when Code.Value.ARRAY(t, _) {
-                    def result := Interpreter.alignUp(interpreter.stack, t.alignment).asInt.asInt64
-                    interpreter.stack := interpreter.write(v, interpreter.stack)
-                    return result
-                }
                 when Code.Value.STRUCT(args) {
-                    def alignment := args.map(a => a.type.alignment).fold(Int.max)
-                    def result := Interpreter.alignUp(interpreter.stack, alignment).asInt.asInt64
+                    def alignment := args.map(
+                            a => a.type.alignment(self.interpreter.settings!)).fold(Int.max)
+                    def result := Interpreter.alignUp(interpreter.stack, alignment).asUInt.asInt64
                     interpreter.stack := interpreter.write(v, interpreter.stack)
                     return result
                 }
                 when Code.Value.UNDEFINED(t) {
                     return 0
+                }
+                when Code.Value.VTABLE_OFFSET(cc, index) {
+                    def ccType:Code.PrimitiveType
+                    match cc {
+                        when Code.Value.GLOBAL_POINTER(idx) {
+                            ccType := interpreter.cg.globals[idx].type
+                        }
+                        otherwise {
+                            unreachable
+                        }
+                    }
+                    return (ccType.elementOffset(interpreter.settings!,
+                            CodeGenerator.VTABLE_INDEX) +
+                            index * interpreter.settings!.intSize).asInt64
                 }
                 otherwise {
                     unreachable, "unsupported value \{v}"
@@ -91,6 +116,8 @@ class Interpreter : Backend {
 
     def cg:CodeGenerator?
 
+    def settings:Compiler.Settings?
+
     def stackSize := 1 << 20
 
     constant MEMORY_SIZE := 1 << 20
@@ -119,8 +146,8 @@ class Interpreter : Backend {
     def builtins := HashMap<String, (Context, FixedArray<Code.Value>)=&>(Int64)>()
 
     init() {
-        methods.add(Code.Signature(null, null, "<error>", FixedArray<Code.PrimitiveType>(),
-                false))
+        methods.add(Code.Signature(null, null, "<null method pointer>",
+                FixedArray<Code.PrimitiveType>(), false))
     }
 
     @class
@@ -135,11 +162,11 @@ class Interpreter : Backend {
 
     @class
     @pre(align > 0)
-    @post(@return.asInt % align = 0)
+    @post(@return.asUInt % align = 0)
     function alignUp<T>(p:Pointer<T>, align:Int):Pointer<T> {
-        def offset := p.asInt
+        def offset := p.asUInt
         if offset % align != 0 {
-            return Pointer<T>(offset + align - offset % align)
+            return Pointer<T>(offset + align.asUInt - offset % align.asUInt)
         }
         return p
     }
@@ -149,6 +176,7 @@ class Interpreter : Backend {
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
         self.cg := compiler.cg
+        self.settings := compiler.settings
     }
 
     @override
@@ -180,18 +208,24 @@ class Interpreter : Backend {
 
     method destroyObject(o:Pointer<Int8>) {
         -- call cleanup
-        def cleanup := Pointer<Int>(o->Pointer<Int>.get() + 48).get()
+        def offset:UInt
+        match compiler.settings.intSize {
+            when 4 { offset := 28 }
+            when 8 { offset := 48 }
+            otherwise { unreachable }
+        }
+        def cleanup := Pointer<UInt>(o->Pointer<UInt>.get() + offset).get()
         dynamicCall(null, null, Code.Value.INT(cleanup.asUInt64, Code.PrimitiveType.INT),
-                FixedArray<Code.Value>.from([Code.Value.INT(o.asInt.asUInt64,
+                FixedArray<Code.Value>.from([Code.Value.INT(o.asUInt.asUInt64,
                     Code.PrimitiveType.INT)]))
         o.destroy()
     }
 
     method ref(o:Pointer<Int8>) {
-        if o.asInt = 0 {
+        if o.asUInt = 0 {
             return
         }
-        def refCntPtr := (o + 8)->Pointer<Int32>
+        def refCntPtr := (o + settings.intSize)->Pointer<Int32>
         def refCnt := refCntPtr.get()
         if refCnt = NO_REFCNT.asInt32 {
             return
@@ -200,10 +234,10 @@ class Interpreter : Backend {
     }
 
     method unref(o:Pointer<Int8>) {
-        if o.asInt = 0 {
+        if o.asUInt = 0 {
             return
         }
-        def refCntPtr := (o + 8)->Pointer<Int32>
+        def refCntPtr := (o + settings.intSize)->Pointer<Int32>
         def refCnt := refCntPtr.get()
         if refCnt = NO_REFCNT.asInt32 {
             return
@@ -249,50 +283,33 @@ class Interpreter : Backend {
     method getBuiltin(s:Code.Signature):(Context, FixedArray<Code.Value>)=&>(Int64) {
         var builtin := builtins[s.name]
         if builtin == null {
+            def intSize := settings.intSize
             -- note that while the objects match the structure and layout of "real" Frost objects,
             -- the class pointers and vtable / itable entries are not the same. Thus it is sometimes
             -- possible to call the "real" Frost method directly on an object, and sometimes not,
             -- depending upon what that method does with the object. Anything that involves making
             -- dynamic method calls is right out.
             match s.name {
-                when "frostGetInterfaceMethod" {
+                when "frost$core$Frost$unrefThreadSafe$frost$core$Object$Q" {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        def o := context.value(args[0])
-                        def cl := context.value(args[1])
-                        def index := context.value(args[2])
-                        var itable := Pointer<Int>(Pointer<Int>(o.asInt).get() + 32).get()
-                        while Pointer<Int>(itable).get() != cl {
-                            itable := Pointer<Int>(itable + 8).get()
-                        }
-                        return Pointer<Int>(itable + 16 + 8 * index.asInt).get()
-                    }
-                }
-                when "frost$core$Frost$ref$frost$core$Object$Q" {
-                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        self.ref(Pointer<Int8>(context.value(args[0]).asInt))
+                        self.unref(Pointer<Int8>(context.value(args[0]).asUInt))
                         return -1
                     }
                 }
-                when "frost$core$Frost$unref$frost$core$Object$Q" {
+                when "frost$core$Frost$alloc$builtin_int$R$builtin_uint" {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        self.unref(Pointer<Int8>(context.value(args[0]).asInt))
+                        return UInt(Frost.alloc(context.value(args[0]).asInt.value)).asInt64
+                    }
+                }
+                when "frost$core$Frost$destroy$builtin_uint" {
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        Frost.destroy(context.value(args[0]).asUInt.value)
                         return -1
                     }
                 }
-                when "frost$core$Frost$alloc$builtin_int$R$builtin_int" {
+                when "frost$core$Frost$realloc$builtin_uint$builtin_int$builtin_int$R$builtin_uint" {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        return Int(Frost.alloc(context.value(args[0]).asInt.value)).asInt64
-                    }
-                }
-                when "frost$core$Frost$destroy$builtin_int" {
-                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        Frost.destroy(context.value(args[0]).asInt.value)
-                        return -1
-                    }
-                }
-                when "frost$core$Frost$realloc$builtin_int$builtin_int$builtin_int$R$builtin_int" {
-                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        return Int(Frost.realloc(context.value(args[0]).asInt.value,
+                        return UInt(Frost.realloc(context.value(args[0]).asUInt.value,
                                 context.value(args[1]).asInt.value,
                                 context.value(args[2]).asInt.value)).asInt64
                     }
@@ -305,7 +322,7 @@ class Interpreter : Backend {
                 }
                 when "frost$io$Console$read$R$frost$core$Char8$Q" {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        def target := Pointer<Char8?>(context.value(args[0]).asInt)
+                        def target := Pointer<Char8?>(context.value(args[0]).asUInt)
                         target.set(Console.read())
                         return -1
                     }
@@ -313,17 +330,36 @@ class Interpreter : Backend {
                 when "frost$io$Console$print$frost$core$String" {
                     def out := Console.outputStream()
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        def p := context.value(args[0]).asInt
+                        def p := context.value(args[0]).asUInt
                         def s := Pointer<Int8>(p).convertTo<String>()
                         def error := out.write(s.data, s.byteLength)
                         assert error == null
                         return -1
                     }
                 }
+                when "frost$io$Console$errorStream$R$frost$io$OutputStream" {
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        return Frost.addressOf(Console.errorStream()).asInt64
+                    }
+                }
                 otherwise {
-                    Console.printLine("Fatal error: \{s.name} is not supported by the " +
-                            "interpreter")
-                    System.exit(1)
+                    if s.name.startsWith("frost$core$Frost$ref") {
+                        builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                            self.ref(Pointer<Int8>(context.value(args[0]).asUInt))
+                            return -1
+                        }
+                    }
+                    else if s.name.startsWith("frost$core$Frost$unref") {
+                        builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                            self.unref(Pointer<Int8>(context.value(args[0]).asUInt))
+                            return -1
+                        }
+                    }
+                    else {
+                        Console.printLine("Fatal error: \{s.name} is not supported by the " +
+                                "interpreter")
+                        System.exit(1)
+                    }
                 }
             }
             builtins[s.name] := builtin
@@ -332,7 +368,7 @@ class Interpreter : Backend {
     }
 
     method load(target:Code.Statement.ID, value:Code.Value, type:Code.PrimitiveType) {
-        def ptr := Pointer<Int8>(contexts[0].value(value).asInt)
+        def ptr := Pointer<Int8>(contexts[0].value(value).asUInt)
         load(target, ptr, type)
     }
 
@@ -342,22 +378,29 @@ class Interpreter : Backend {
                 contexts[0].statements[target] := ptr.get().asInt64
             }
             when Code.PrimitiveType.INT16 {
-                contexts[0].statements[target] := ptr->Pointer<Int16>.get().asInt64
+                contexts[0].statements[target] := ptr->Pointer<UInt16>.get().asUInt64.asInt64
             }
             when Code.PrimitiveType.INT32, Code.PrimitiveType.FLOAT32 {
-                contexts[0].statements[target] := ptr->Pointer<Int32>.get().asInt64
+                contexts[0].statements[target] := ptr->Pointer<UInt32>.get().asUInt64.asInt64
             }
-            when Code.PrimitiveType.INT64, Code.PrimitiveType.FLOAT64, Code.PrimitiveType.INT {
+            when Code.PrimitiveType.INT64, Code.PrimitiveType.FLOAT64 {
                 contexts[0].statements[target] := ptr->Pointer<Int64>.get()
             }
+            when Code.PrimitiveType.INT {
+                match settings.intSize {
+                    when 4 { contexts[0].statements[target] := ptr->Pointer<UInt32>.get().asUInt64.asInt64 }
+                    when 8 { contexts[0].statements[target] := ptr->Pointer<Int64>.get() }
+                    otherwise { unreachable }
+                }
+            }
             when Code.PrimitiveType.ARRAY, Code.PrimitiveType.STRUCT {
-                stack := alignUp(stack, type.alignment)
-                contexts[0].statements[target] := stack.asInt.asInt64
+                stack := alignUp(stack, type.alignment(settings!))
+                contexts[0].statements[target] := stack.asUInt.asInt64
                 -- FIXME need memcpy
-                for i in 0 .. type.size {
+                for i in 0 .. type.size(settings!) {
                     stack[i] := ptr[i]
                 }
-                stack += type.size
+                stack += type.size(settings!)
             }
             otherwise {
                 unreachable
@@ -368,15 +411,15 @@ class Interpreter : Backend {
     method convert(result:Code.Statement.ID, value:Code.Value, target:Code.PrimitiveType,
             signed:Bit) {
         def v := contexts[0].value(value)
-        if value.type.size > target.size {
-            match target.size {
+        if value.type.size(settings!) > target.size(settings!) {
+            match target.size(settings!) {
                 when 1 { contexts[0].statements[result] := v && 0xFF }
                 when 2 { contexts[0].statements[result] := v && 0xFFFF }
                 when 4 { contexts[0].statements[result] := v && 0xFFFFFFFF }
             }
         }
-        else if signed & value.type.size <  target.size {
-            match value.type.size {
+        else if signed & value.type.size(settings!) <  target.size(settings!) {
+            match value.type.size(settings!) {
                 when 1 { contexts[0].statements[result] := v.asInt8.asInt64 }
                 when 2 { contexts[0].statements[result] := v.asInt16.asInt64 }
                 when 4 { contexts[0].statements[result] := v.asInt32.asInt64 }
@@ -390,8 +433,8 @@ class Interpreter : Backend {
     method call(s:Code.Signature, args:FixedArray<Code.Value>):Int64 {
         def code := getInterpreterCode(s)
         if code == null {
-            def result := getBuiltin(s)(contexts[0], args)
-            return result
+            def builtin := getBuiltin(s)
+            return builtin(contexts[0], args)
         }
         def context := Context(self)
         for a in args {
@@ -566,7 +609,7 @@ class Interpreter : Backend {
                 }
                 when Code.Statement.EXTRACT_FIELD(_, result, target, index) {
                     def ptr := Pointer<Int8>((context.value(target) +
-                            target.type.elementOffset(index)).asInt)
+                            target.type.elementOffset(settings!, index)).asUInt)
                     match target.type {
                         when Code.PrimitiveType.STRUCT(fields) {
                             load(result, ptr, fields[index])
@@ -577,10 +620,14 @@ class Interpreter : Backend {
                     }
                 }
                 when Code.Statement.HEAP_ALLOC(_, result, type, classConstant) {
-                    def raw := Pointer<Int8>.alloc(type.size)
-                    raw->Pointer<Int64>.set(context.value(classConstant))
-                    Pointer<Int32>((raw + 8).asInt).set(1)
-                    context.statements[result] := raw.asInt.asInt64
+                    def raw := Pointer<Int8>.alloc(type.size(settings!))
+                    match settings.intSize {
+                        when 4 { raw->Pointer<Int32>.set(context.value(classConstant).asInt32) }
+                        when 8 { raw->Pointer<Int64>.set(context.value(classConstant)) }
+                        otherwise { unreachable }
+                    }
+                    Pointer<Int32>((raw + settings.intSize).asUInt).set(1)
+                    context.statements[result] := raw.asUInt.asInt64
                 }
                 when Code.Statement.LOAD(position, result, value, type) {
                     load(result, value, type)
@@ -616,13 +663,13 @@ class Interpreter : Backend {
                     }
                 }
                 when Code.Statement.STACK_ALLOC(_, result, type) {
-                    stack := alignUp(stack, type.alignment)
-                    contexts[0].statements[result] := stack.asInt.asInt64
+                    stack := alignUp(stack, type.alignment(settings))
+                    contexts[0].statements[result] := stack.asUInt.asInt64
                     -- FIXME need memset
-                    for i in 0 .. type.size {
+                    for i in 0 .. type.size(settings) {
                         stack[i] := 0
                     }
-                    stack += type.size
+                    stack += type.size(settings)
                 }
                 when Code.Statement.STATIC_CALL(_, result, m, args) {
                     context.statements[result] := call(m, args)
@@ -631,7 +678,7 @@ class Interpreter : Backend {
                     call(m, args)
                 }
                 when Code.Statement.STORE(position, value, dest) {
-                    write(value, Pointer<Int8>(context.value(dest).asInt))
+                    write(value, Pointer<Int8>(context.value(dest).asUInt))
                 }
                 when Code.Statement.UNREACHABLE(position) {
                     unreachable
@@ -679,6 +726,14 @@ class Interpreter : Backend {
     method write(v:Int64, type:Code.PrimitiveType, dest:Pointer<Int8>):Pointer<Int8> {
         var result := dest
         match type {
+            when Code.PrimitiveType.INT {
+                match settings.intSize {
+                    when 4 { result->Pointer<Int32>.set(v.asInt32) }
+                    when 8 { result->Pointer<Int64>.set(v) }
+                    otherwise { unreachable }
+                }
+                result += settings.intSize
+            }
             when Code.PrimitiveType.INT8, Code.PrimitiveType.BIT {
                 result.set(v.asInt8)
                 result += 1
@@ -693,19 +748,19 @@ class Interpreter : Backend {
                 result->Pointer<Int32>.set(v.asInt32)
                 result += 4
             }
-            when Code.PrimitiveType.INT64, Code.PrimitiveType.FLOAT64, Code.PrimitiveType.INT {
+            when Code.PrimitiveType.INT64, Code.PrimitiveType.FLOAT64 {
                 result := alignUp(result, 8)
                 result->Pointer<Int64>.set(v)
                 result += 8
             }
             when Code.PrimitiveType.ARRAY, Code.PrimitiveType.STRUCT {
-                result := alignUp(result, type.alignment)
-                def src := Pointer<Int8>(v.asInt)
+                result := alignUp(result, type.alignment(settings))
+                def src := Pointer<Int8>(v.asUInt)
                 -- FIXME need memcpy
-                for i in 0 .. type.size {
+                for i in 0 .. type.size(settings) {
                     result[i] := src[i]
                 }
-                result += type.size
+                result += type.size(settings)
             }
             otherwise {
                 unreachable, "unsupported write: \{type}"
@@ -724,6 +779,9 @@ class Interpreter : Backend {
     method write(v:Code.Value, dest:Pointer<Int8>):Pointer<Int8> {
         var result := dest
         match v {
+            when Code.Value.ARRAY(_, elements) {
+                result := write(Code.Value.STRUCT(elements), result)
+            }
             when Code.Value.BIT(b) {
                 if b {
                     result.set(1)
@@ -733,10 +791,25 @@ class Interpreter : Backend {
                 }
                 result += 1
             }
+            when Code.Value.FIELD_OFFSET(type, index) {
+                result := write(type.elementOffset(settings, index).asInt64, Code.PrimitiveType.INT,
+                        result)
+            }
             when Code.Value.GLOBAL_POINTER(index) {
-                result := Interpreter.alignUp(result, 8)
-                result->Pointer<Int64>.set((globalMemory + globals[index][1]).asInt.asInt64)
-                result += 8
+                def newResult := Interpreter.alignUp(result, settings.intSize)
+                result := newResult
+                match settings.intSize {
+                    when 4 {
+                        result->Pointer<Int32>.set((globalMemory + globals[index][1]).asUInt.asInt32)
+                    }
+                    when 8 {
+                        result->Pointer<Int64>.set((globalMemory + globals[index][1]).asUInt.asInt64)
+                    }
+                    otherwise {
+                        unreachable
+                    }
+                }
+                result += settings.intSize
             }
             when Code.Value.INT(i, t) {
                 result := write(i.asInt64, t, result)
@@ -746,9 +819,13 @@ class Interpreter : Backend {
             }
             when Code.Value.METHOD_POINTER(signature) {
                 def p := getMethodPointer(signature)
-                result := alignUp(result, 8)
-                result->Pointer<Int64>.set(p)
-                result += 8
+                result := alignUp(result, settings.intSize)
+                match settings.intSize {
+                    when 4 { result->Pointer<Int32>.set(p.asInt32) }
+                    when 8 { result->Pointer<Int64>.set(p) }
+                    otherwise { unreachable }
+                }
+                result += settings.intSize
             }
             when Code.Value.PARAMETER(idx, type) {
                 result := write(contexts[0].arguments[idx], type, result)
@@ -756,23 +833,23 @@ class Interpreter : Backend {
             when Code.Value.REF(r) {
                 result := write(r.value, result)
             }
+            when Code.Value.SIZE_OF(type) {
+                result := write(type.size(settings).asInt64, Code.PrimitiveType.INT, result)
+            }
             when Code.Value.STATEMENT(id, type) {
                 result := write(contexts[0].statements[id], type, result)
-            }
-            when Code.Value.ARRAY(_, elements) {
-                result := write(Code.Value.STRUCT(elements), result)
             }
             when Code.Value.STRUCT(args) {
                 result := alignUp(result,
                         Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
-                                args.map(a => a.type))).alignment)
+                                args.map(a => a.type))).alignment(settings))
                 for a in args {
                     result := write(a, result)
                 }
             }
             when Code.Value.UNDEFINED(t) {
-                result := alignUp(result, t.alignment)
-                result += t.size
+                result := alignUp(result, t.alignment(settings))
+                result += t.size(settings)
             }
             otherwise {
                 unreachable, "unsupported value \{v}"
@@ -783,10 +860,10 @@ class Interpreter : Backend {
 
     @override
     method writeGlobal(g:Code.Global) {
-        nextGlobal := alignUp(nextGlobal, g.type.alignment)
+        nextGlobal := alignUp(nextGlobal, g.type.alignment(settings))
         globalIndices[g] := globals.count
         globals.add((null, nextGlobal))
-        nextGlobal += g.type.size
+        nextGlobal += g.type.size(settings)
     }
 
     @override
@@ -798,13 +875,13 @@ class Interpreter : Backend {
             globals[index] := (value, offset)
         }
         else {
-            offset := alignUp(nextGlobal, g.type.alignment)
+            offset := alignUp(nextGlobal, g.type.alignment(settings))
             globalIndices[g] := globals.count
             globals.add((value, offset))
-            nextGlobal := offset + g.type.size
+            nextGlobal := offset + g.type.size(settings)
             assert nextGlobal <= MEMORY_SIZE
         }
-        if globalMemory.asInt != 0 {
+        if globalMemory.asUInt != 0 {
             write(value, globalMemory + offset)
         }
     }

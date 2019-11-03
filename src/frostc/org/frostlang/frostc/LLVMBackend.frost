@@ -31,6 +31,8 @@ class LLVMBackend : Backend {
 
     def cg:CodeGenerator?
 
+    def settings:Compiler.Settings?
+
     def globals := MemoryOutputStream()
 
     def signatures := MemoryOutputStream()
@@ -77,6 +79,7 @@ class LLVMBackend : Backend {
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
         cg := compiler.cg
+        settings := compiler.settings
     }
 
     function name(id:Code.Statement.ID):String {
@@ -218,8 +221,8 @@ class LLVMBackend : Backend {
                         -- FIXME fix this to actually contain struct info, handle values
                         result := nextMetadata()
                         metadata.printLine("\{result} = !DIDerivedType(tag: DW_TAG_pointer_type, " +
-                                "baseType: null, size: \{Code.PrimitiveType.INT.size}, " +
-                                "align: \{Code.PrimitiveType.INT.alignment})")
+                                "baseType: null, size: \{Code.PrimitiveType.INT.size(settings)}, " +
+                                "align: \{Code.PrimitiveType.INT.alignment(settings)})")
                     }
                     when Type.Kind.VOID {
                         result := "null"
@@ -228,8 +231,8 @@ class LLVMBackend : Backend {
                         -- FIXME handle everything else
                         result := nextMetadata()
                         metadata.printLine("\{result} = !DIDerivedType(tag: DW_TAG_pointer_type, " +
-                                "baseType: null, size: \{Code.PrimitiveType.INT.size}, " +
-                                "align: \{Code.PrimitiveType.INT.alignment})")
+                                "baseType: null, size: \{Code.PrimitiveType.INT.size(settings)}, " +
+                                "align: \{Code.PrimitiveType.INT.alignment(settings)})")
                     }
                 }
                 debugTypes[t] := result
@@ -337,8 +340,21 @@ class LLVMBackend : Backend {
 
     method getReference(v:Code.Value):String {
         match v {
+            when Code.Value.ARRAY(_, elements) {
+                return "[" + elements.map(getTypedReference).join(", ") + "]"
+            }
             when Code.Value.BIT(b) {
                 return b.asString
+            }
+            when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
+                return (cg.struct(cc.owner).elementOffset(settings!,
+                            CodeGenerator.CHOICE_DATA_INDEX) +
+                        Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
+                            cc.fields.map(cg.primitiveType))).elementOffset(settings!,
+                                index)).asString
+            }
+            when Code.Value.FIELD_OFFSET(type, index) {
+                return type.elementOffset(settings!, index).asString
             }
             when Code.Value.GLOBAL_POINTER(index) {
                 return "ptrtoint(\{llvmType(cg.globals[index].type)}* @" + cg.globals[index].name +
@@ -346,6 +362,15 @@ class LLVMBackend : Backend {
             }
             when Code.Value.INT(i, _) {
                 return i.asString
+            }
+            when Code.Value.ITABLE_OFFSET(index) {
+                return ((2 + index) * settings.intSize).asString
+            }
+            when Code.Value.METHOD_POINTER(signature) {
+                return "ptrtoint(\{llvmType(signature)}* @\{signature.name} to \{INT_TYPE})"
+            }
+            when Code.Value.PARAMETER(idx, _) {
+                return "%param\{idx}"
             }
             when Code.Value.REAL(r64, type) {
                 match type {
@@ -359,26 +384,33 @@ class LLVMBackend : Backend {
                 }
                 return "0x\{Frost.floatToIntBits(r64):x}"
             }
-            when Code.Value.METHOD_POINTER(signature) {
-                return "ptrtoint(\{llvmType(signature)}* @\{signature.name} to \{INT_TYPE})"
-            }
-            when Code.Value.PARAMETER(idx, _) {
-                return "%param\{idx}"
-            }
             when Code.Value.REF(r) {
                 return getReference(r.value)
             }
+            when Code.Value.SIZE_OF(t) {
+                return t.size(settings).asString
+            }
             when Code.Value.STATEMENT(id, _) {
                 return name(id)
-            }
-            when Code.Value.ARRAY(_, elements) {
-                return "[" + elements.map(getTypedReference).join(", ") + "]"
             }
             when Code.Value.STRUCT(args) {
                 return "{ " + args.map(getTypedReference).join(", ") + " }"
             }
             when Code.Value.UNDEFINED(_) {
                 return "undef"
+            }
+            when Code.Value.VTABLE_OFFSET(cc, index) {
+                def ccType:Code.PrimitiveType
+                match cc {
+                    when Code.Value.GLOBAL_POINTER(idx) {
+                        ccType := cg.globals[idx].type
+                    }
+                    otherwise {
+                        unreachable
+                    }
+                }
+                return (ccType.elementOffset(settings!, CodeGenerator.VTABLE_INDEX) +
+                        index * settings.intSize).asString
             }
             otherwise {
                 unreachable, "unsupported value \{v}"
@@ -485,8 +517,8 @@ class LLVMBackend : Backend {
             target:Code.PrimitiveType, signed:Bit) {
         try {
             def op:String
-            def size1 := value.type.size
-            def size2 := target.size
+            def size1 := value.type.size(settings!)
+            def size2 := target.size(settings!)
             if value.type.isFloat {
                 if target.isFloat {
                     if size1 > size2 {
@@ -904,7 +936,8 @@ class LLVMBackend : Backend {
                 }
                 when Code.Statement.HEAP_ALLOC(_, result, type, classConstant) {
                     out.printLine("\{name(result)} = call \{INT_TYPE} @frostObjectAlloc(" +
-                            "\{INT_TYPE} \{type.size}, \{getTypedReference(classConstant)})")
+                            "\{INT_TYPE} \{type.size(settings)}, " +
+                            "\{getTypedReference(classConstant)})")
                 }
                 when Code.Statement.LOAD(position, result, value, type) {
                     def cast := nextVar()

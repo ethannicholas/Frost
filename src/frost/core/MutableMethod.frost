@@ -20,13 +20,13 @@ class, the reference does not capture anything and so does not itself carry any 
 @final
 class MutableMethod {
     @private
-    def pointer:builtin_int
+    def pointer:builtin_uint
 
     @private
     def target:Object?
 
     @private
-    init(pointer:builtin_int, target:Object?) {
+    init(pointer:builtin_uint, target:Object?) {
         self.pointer := pointer
         self.target := target
     }
@@ -34,8 +34,8 @@ class MutableMethod {
     @override
     function get_asString():String {
         if target !== null {
-            return "ImmutableMethod<\{Int(pointer):x}, \{target!}>"
+            return "MutableMethod<\{UInt(pointer):x}, \{target!}>"
         }
-        return "ImmutableMethod<\{Int(pointer):x}>"
+        return "MutableMethod<\{UInt(pointer):x}>"
     }
 }

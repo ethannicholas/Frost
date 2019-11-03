@@ -46,7 +46,7 @@ class Code {
             return offset
         }
 
-        function elementOffset(idx:Int):Int {
+        function elementOffset(settings:Compiler.Settings, idx:Int):Int {
             match self {
                 when STRUCT(types) {
                     assert idx <= types.count
@@ -54,16 +54,16 @@ class Code {
                     var totalAlign := 1
                     for i in 0 .. idx {
                         def t := types[i]
-                        def align := t.alignment
+                        def align := t.alignment(settings)
                         totalAlign := totalAlign.max(align)
                         result := alignUp(result, align)
-                        result += t.size
+                        result += t.size(settings)
                     }
                     if idx = types.count {
                         result := alignUp(result, totalAlign)
                     }
                     else {
-                        result := alignUp(result, types[idx].alignment)
+                        result := alignUp(result, types[idx].alignment(settings))
                     }
                     return result
                 }
@@ -73,11 +73,10 @@ class Code {
             }
         }
 
-        property size:Int
-        function get_size():Int {
+        function size(settings:Compiler.Settings):Int {
             match self {
                 when INT {
-                    return 8
+                    return settings.intSize
                 }
                 when INT8, BIT {
                     return 1
@@ -92,10 +91,10 @@ class Code {
                     return 8
                 }
                 when STRUCT(types) {
-                    return elementOffset(types.count)
+                    return elementOffset(settings, types.count)
                 }
                 when ARRAY(count, type) {
-                    return count * type.size
+                    return count * type.size(settings)
                 }
                 otherwise {
                     unreachable
@@ -103,17 +102,16 @@ class Code {
             }
         }
 
-        property alignment:Int
-        function get_alignment():Int {
+        function alignment(settings:Compiler.Settings):Int {
             match self {
                 when STRUCT(types) {
-                    return types.map(t => t.alignment).fold(Int.max, 1)
+                    return types.map(t => t.alignment(settings)).fold(Int.max, 1)
                 }
                 when ARRAY(count, type) {
-                    return type.alignment
+                    return type.alignment(settings)
                 }
                 otherwise {
-                    return size
+                    return size(settings)
                 }
             }
         }
@@ -706,9 +704,16 @@ class Code {
         BIT(Bit)
         GLOBAL_POINTER(Int)
         INT(UInt64, PrimitiveType)
+        CHOICE_FIELD_OFFSET(ChoiceCase, Int)
+        FIELD_OFFSET(PrimitiveType, Int)
+        -- offset of a particular method within an itable
+        ITABLE_OFFSET(Int)
         METHOD_POINTER(Signature)
         PARAMETER(Int, PrimitiveType)
         REAL(Real64, PrimitiveType)
+        SIZE_OF(PrimitiveType)
+        -- offset of a particular method within a class structure
+        VTABLE_OFFSET(Code.Value, Int)
         -- used to handle situations in which we encounter a reference to a statement before we
         -- encounter the statement itself. By storing the value indirectly, we have the opportunity
         -- to replace it with something else if we realize we need to.
@@ -741,6 +746,9 @@ class Code {
                 }
                 when REF(ref) {
                     return ref.value.type
+                }
+                when SIZE_OF(_) {
+                    return PrimitiveType.INT
                 }
                 when STATEMENT(_, type) {
                     return type

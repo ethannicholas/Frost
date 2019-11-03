@@ -47,13 +47,11 @@ interface MapView<K, V> {
 
     @default
     function get_keys():Iterator<K> {
-        -- FIXME inference
-        return entries.map<K>(e => e[0])
+        return entries.map(e => e[0])
     }
 
     @default
     function get_values():Iterator<V> {
-        -- FIXME inference
-        return entries.map<V>(e => e[1])
+        return entries.map(e => e[1])
     }
 }

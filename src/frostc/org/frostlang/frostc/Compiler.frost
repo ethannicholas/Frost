@@ -257,16 +257,17 @@ class Compiler {
 
         def safetyLevel:Int
 
+        def intSize:Int
+
         def debug:Bit
 
-        def intSize := 8
-
         init(frostHome:File, importDirs:Array<File>, optimizationLevel:Int, safetyLevel:Int,
-             debug:Bit) {
+                intSize:Int, debug:Bit) {
             self.frostHome := frostHome
             self.importDirs := ImmutableArray<File>(importDirs)
             self.optimizationLevel := optimizationLevel
             self.safetyLevel := safetyLevel
+            self.intSize := intSize
             self.debug := debug
         }
     }
@@ -6488,6 +6489,7 @@ class Compiler {
         var outFile:File? := null
         var optimizationLevel := 3
         var safetyLevel := 3
+        var intSize := 8
         var format:Format? := null
         var root:String? := null
         var preserveTemporaries := true
@@ -6537,6 +6539,15 @@ class Compiler {
                         System.exit(1)
                     }
                     safetyLevel := parsed
+                }
+                when "-m" {
+                    def bits := args.next("32 or 64")
+                    def parsed := bits.asInt
+                    if parsed == null | (parsed != 32 & parsed != 64) {
+                        Console.printErrorLine("expected '32' or '64' after '-m'")
+                        System.exit(1)
+                    }
+                    intSize := parsed // 8
                 }
                 when "-f" {
                     if format !== null {
@@ -6626,7 +6637,7 @@ class Compiler {
         var errorCount := 0
         var warningCount := 0
         def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
-                debug)
+                intSize, debug)
         {
             def backend:Backend? := null
             try {

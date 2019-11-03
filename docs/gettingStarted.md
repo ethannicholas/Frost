@@ -7,7 +7,7 @@ Prerequisites
 Frost currently only works under Linux and MacOS. Building Frost requires the following
 prerequisites:
 
-* clang
+* clang (4.0 or higher)
 * cmake
 * ICU (Internationalization Components for Unicode)
 

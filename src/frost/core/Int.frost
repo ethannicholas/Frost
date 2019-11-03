@@ -14,12 +14,12 @@ class Int : Value, HashKey<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===
     The smallest value this type can hold (Int,64.,MIN,.as,Int).
     ===
-    constant MIN:Int := Int64.MIN.asInt
+    constant MIN:Int := Int32.MIN.asInt
 
     ===
     The largest value this type can hold (Int,64.,MAX,.as,Int).
     ===
-    constant MAX:Int := Int64.MAX.asInt
+    constant MAX:Int := Int32.MAX.asInt
 
     @private
     def value:builtin_int

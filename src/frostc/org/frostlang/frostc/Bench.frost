@@ -31,7 +31,7 @@ class Bench {
         for i in 0 .. COUNT {
             def settings := Compiler.Settings(File(Config.frostSourceDir()),
                     [File(Config.frostLibDir()).resolve("stubs"), File(Config.frostSourceDir())],
-                    optimizationLevel, safetyLevel, false)
+                    optimizationLevel, safetyLevel, 8, false)
             def errorQueue := MessageQueue<Compiler.Message>()
             def out := MemoryOutputStream()
             def backend := LLVMBackend(Config.llvmTriple(), out)
