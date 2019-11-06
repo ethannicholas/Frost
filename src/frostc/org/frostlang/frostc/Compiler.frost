@@ -669,6 +669,7 @@ class Compiler : ErrorReporter {
         addAlias("frost.core.Int64")
         addAlias("frost.core.Int")
         addAlias("frost.core.Immutable")
+        addAlias("frost.core.Matcher")
         addAlias("frost.core.Maybe")
         addAlias("frost.core.Method")
         addAlias("frost.core.MutableString")

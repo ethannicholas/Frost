@@ -135,6 +135,8 @@ class Interpreter : Backend {
 
     constant NO_REFCNT := -999
 
+    constant OBJECT_FIELD_COUNT := 3
+
     def physicalOut:OutputStream
 
     def out:OutputStream
@@ -317,11 +319,22 @@ class Interpreter : Backend {
         }
     }
 
-    method interpreterStringFrom(str:String):Int64 {
+    ================================================================================================
+    Creates an interpreter string from a native Frost string. While interpreter objects have the
+    same memory layout as their native counterparts, they differ in that their class pointer points
+    to a ClassDecl rather than to a Class. We could in theory convert the objects back and forth by
+    simply updating the class pointer, and might do that in the future, but right this second we're
+    playing things safe and keeping interpreter objects and Frost objects segregated.
+    ================================================================================================
+    method interpreterStringFrom(str:String?):Int64 {
+        if str == null {
+            return 0
+        }
         def cl := compiler.getClass("frost.core.String")!
         def cc := cg.getClassConstant(cl)
         def type := cg.struct(cl)
         def copy := Pointer<Char8>.alloc(str.byteLength)
+        -- FIXME memcpy
         for i in 0 .. str.byteLength {
             copy[i] := str.data[i]
         }
@@ -333,6 +346,25 @@ class Interpreter : Backend {
                     Code.PrimitiveType.INT), Code.Value.INT(str.byteLength.asUInt64,
                     Code.PrimitiveType.INT)]))
         return result
+    }
+
+    ================================================================================================
+    Creates a native Frost string from an interpreter string. See the comment on
+    [interpreterStringFrom] for why this is necessary.
+    ================================================================================================
+    method frostStringFrom(value:Int64):String {
+        def cl := compiler.getClass("frost.core.String")!
+        def type := cg.struct(cl)
+        def data := Pointer<Pointer<Char8>>(value.asUInt +
+                type.elementOffset(settings, OBJECT_FIELD_COUNT).asUInt).get()
+        def length := Pointer<Int>(value.asUInt +
+                type.elementOffset(settings, OBJECT_FIELD_COUNT + 1).asUInt).get()
+        def copy := Pointer<Char8>.alloc(length)
+        -- FIXME memcpy
+        for i in 0 .. length {
+            copy[i] := data[i]
+        }
+        return String(copy, length)
     }
 
     method getBuiltin(s:Code.Signature):(Context, FixedArray<Code.Value>)=&>(Int64) {
@@ -425,6 +457,125 @@ class Interpreter : Backend {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
                         def str := Frost.intBitsToFloat(context.value(args[0])).asString
                         return weakSelf.get().interpreterStringFrom(str)
+                    }
+                }
+                when "frost$core$RegularExpression$compile$frost$core$String$frost$core$Int" {
+                    def cl := compiler.getClass("frost.core.RegularExpression")!
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def str := weakSelf.get().frostStringFrom(context.value(args[1]))
+                        def flags := context.value(args[2]).asInt
+                        def r := RegularExpression(str, flags)
+                        def offset := type.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        Pointer<RegularExpression>(context.value(args[0]).asUInt + offset).set(r)
+                        return -1
+                    }
+                }
+                when "frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher" {
+                    def rcl := compiler.getClass("frost.core.RegularExpression")!
+                    def mcl := compiler.getClass("frost.core.Matcher")!
+                    def mcc := cg.getClassConstant(mcl)
+                    def mtype := cg.struct(mcl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def result := weakSelf.get().heapAlloc(mtype, mcc)
+                        def offset := mtype.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        def r := Pointer<RegularExpression>(context.value(args[0]).asUInt +
+                                offset).get()
+                        def m := r.matcher(weakSelf.get().frostStringFrom(context.value(args[1])))
+                        Pointer<Matcher>(result.asUInt + offset).set(m)
+                        Pointer<Int>(result.asUInt + offset +
+                                weakSelf.get().settings.intSize.asUInt).set(
+                                    context.value(args[1]).asInt)
+                        return result
+                    }
+                }
+                when "frost$core$Matcher$matches$R$frost$core$Bit" {
+                    def cl := compiler.getClass("frost.core.Matcher")!
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def offset := type.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        def m := Pointer<Matcher>(context.value(args[0]).asUInt + offset).get()
+                        return m.matches().choose(1, 0)
+                    }
+                }
+                when "frost$core$Matcher$get_groupCount$R$frost$core$Int" {
+                    def cl := compiler.getClass("frost.core.Matcher")!
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def offset := type.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        def m := Pointer<Matcher>(context.value(args[0]).asUInt + offset).get()
+                        return m.groupCount.asInt64
+                    }
+                }
+                when "frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q" {
+                    def cl := compiler.getClass("frost.core.Matcher")!
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def offset := type.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        def m := Pointer<Matcher>(context.value(args[0]).asUInt + offset).get()
+                        return weakSelf.get().interpreterStringFrom(
+                                m.group(context.value(args[1]).asInt))
+                    }
+                }
+                when "frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit" {
+                    def cl := compiler.getClass("frost.core.Matcher")!
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def offset := type.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        def m := Pointer<Matcher>(context.value(args[0]).asUInt + offset).get()
+                        return m.nativeFind(String.Index(context.value(args[1]).asInt)).choose(1, 0)
+                    }
+                }
+                when "frost$core$Matcher$get_start$R$frost$core$String$Index" {
+                    def cl := compiler.getClass("frost.core.Matcher")!
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def offset := type.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        def m := Pointer<Matcher>(context.value(args[0]).asUInt + offset).get()
+                        return m.start.value.asInt64
+                    }
+                }
+                when "frost$core$Matcher$get_end$R$frost$core$String$Index" {
+                    def cl := compiler.getClass("frost.core.Matcher")!
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def offset := type.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        def m := Pointer<Matcher>(context.value(args[0]).asUInt + offset).get()
+                        return m.end.value.asInt64
+                    }
+                }
+                when "frost$core$Matcher$destroy" {
+                    def cl := compiler.getClass("frost.core.Matcher")!
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def offset := type.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        Pointer<Matcher>(context.value(args[0]).asUInt + offset).clear(0)
+                        return -1
+                    }
+                }
+                when "frost$core$RegularExpression$destroy" {
+                    def cl := compiler.getClass("frost.core.RegularExpression")!
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def offset := type.elementOffset(weakSelf.get().settings,
+                                Interpreter.OBJECT_FIELD_COUNT).asUInt
+                        Pointer<frost.core.RegularExpression>(context.value(args[0]).asUInt +
+                                offset).clear(0)
+                        return -1
+                    }
+                }
+                when "frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int" {
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        return context.value(args[0]).asInt
                     }
                 }
                 otherwise {
