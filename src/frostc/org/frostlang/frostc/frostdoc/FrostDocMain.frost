@@ -123,7 +123,7 @@ method main(args:ListView<String>) {
         def imports := Array<File>() -- FIXME literal
         imports.add(File(Config.frostSourceDir()))
         imports.add(input)
-        def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, true)
+        def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, 8, true)
         def compiler := Compiler(MessageQueue<Message>(), DummyBackend(), settings)
         def frostdoc := FrostDoc(compiler, tmpOutput, tocFile, docPath, apiRelativePath)
         process(input, frostdoc)

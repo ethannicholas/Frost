@@ -1,0 +1,47 @@
+choice Expression {
+    NUMBER(Int)
+    ADD(Expression, Expression)
+    SUB(Expression, Expression)
+    MUL(Expression, Expression)
+    DIV(Expression, Expression)
+    NEGATE(Expression)
+
+    property value:Int
+    function get_value():Int {
+        match self {
+            when NUMBER(v) { return v }
+            when ADD(a, b) { return a.value + b.value }
+            when SUB(a, b) { return a.value - b.value }
+            when MUL(a, b) { return a.value * b.value }
+            when DIV(a, b) { return a.value // b.value }
+            when NEGATE(v) { return -v.value }
+            otherwise { unreachable }
+        }
+    }
+
+    @override
+    function get_asString():String {
+        match self {
+            when NUMBER(v) { return v.asString }
+            when ADD(a, b) { return "(\{a} + \{b})" }
+            when SUB(a, b) { return "(\{a} - \{b})" }
+            when MUL(a, b) { return "(\{a} * \{b})" }
+            when DIV(a, b) { return "(\{a} / \{b})" }
+            when NEGATE(v) { return "-\{v}" }
+            otherwise { unreachable }
+        }
+    }
+
+    @class
+    method main() {
+        method show(expr:Expression) {
+            Console.printLine("\{expr} = \{expr.value}")
+        }
+        show(NUMBER(1))
+        show(ADD(NUMBER(1), NUMBER(1)))
+        show(DIV(NUMBER(6), NUMBER(2)))
+        show(MUL(NUMBER(2), NUMBER(2)))
+        show(SUB(NUMBER(20), NUMBER(15)))
+        show(ADD(MUL(NUMBER(3), NUMBER(6)), NEGATE(NUMBER(12))))
+    }
+}

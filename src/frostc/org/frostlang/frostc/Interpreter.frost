@@ -33,14 +33,27 @@ class Interpreter : Backend {
                 when Code.Value.BIT(b) {
                     return b.choose(1, 0)
                 }
+                when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
+                    return (interpreter.cg.struct(cc.owner).elementOffset(interpreter.settings!,
+                                CodeGenerator.CHOICE_DATA_INDEX) +
+                            Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
+                                cc.fields.map(interpreter.cg.primitiveType))).elementOffset(
+                                    interpreter.settings!, index))
+                }
                 when Code.Value.FIELD_OFFSET(t, index) {
                     return t.elementOffset(interpreter.settings!, index).asInt64
                 }
                 when Code.Value.GLOBAL_POINTER(index) {
                     return (interpreter.globalMemory + interpreter.globals[index][1]).asUInt.asInt64
                 }
-                when Code.Value.INT(i, _) {
-                    return i.asInt64
+                when Code.Value.INT(i, type) {
+                    match type.size(interpreter.settings) {
+                        when 1 { return i.asInt8.asInt64 }
+                        when 2 { return i.asInt16.asInt64 }
+                        when 4 { return i.asInt32.asInt64 }
+                        when 8 { return i.asInt64 }
+                        otherwise { unreachable }
+                    }
                 }
                 when Code.Value.ITABLE_OFFSET(index) {
                     return ((2 + index) * interpreter.settings!.intSize).asInt64
@@ -54,10 +67,14 @@ class Interpreter : Backend {
                 when Code.Value.PARAMETER(idx, _) {
                     return arguments[idx]
                 }
+                when Code.Value.REF(indirect) {
+                    return value(indirect.value)
+                }
                 when Code.Value.SIZE_OF(t) {
                     return t.size(interpreter.settings!).asInt64
                 }
                 when Code.Value.STATEMENT(id, type) {
+                    assert statements.contains(id)
                     return statements[id]
                 }
                 when Code.Value.STRUCT(args) {
@@ -87,6 +104,17 @@ class Interpreter : Backend {
                 otherwise {
                     unreachable, "unsupported value \{v}"
                 }
+            }
+        }
+
+        method valueU(v:Code.Value):UInt64 {
+            def result := value(v)
+            match v.type.size(interpreter.settings) {
+                when 1 { return result.asUInt64 && 0xFF }
+                when 2 { return result.asUInt64 && 0xFFFF }
+                when 4 { return result.asUInt64 && 0xFFFFFFFF }
+                when 8 { return result.asUInt64 }
+                otherwise { unreachable }
             }
         }
 
@@ -148,6 +176,12 @@ class Interpreter : Backend {
     init() {
         methods.add(Code.Signature(null, null, "<null method pointer>",
                 FixedArray<Code.PrimitiveType>(), false))
+    }
+
+    @override
+    method cleanup() {
+        stackBase.destroy()
+        globalMemory.destroy()
     }
 
     @class
@@ -283,10 +317,29 @@ class Interpreter : Backend {
         }
     }
 
+    method interpreterStringFrom(str:String):Int64 {
+        def cl := compiler.getClass("frost.core.String")!
+        def cc := cg.getClassConstant(cl)
+        def type := cg.struct(cl)
+        def copy := Pointer<Char8>.alloc(str.byteLength)
+        for i in 0 .. str.byteLength {
+            copy[i] := str.data[i]
+        }
+        def result := heapAlloc(type, cc)
+        assert cl.methods[0].name = "init"
+        call(cg.getSignature(cl.methods[0]),
+                FixedArray<Code.Value>.from([Code.Value.INT(result.asUInt64,
+                    Code.PrimitiveType.INT), Code.Value.INT(copy.asUInt.asUInt64,
+                    Code.PrimitiveType.INT), Code.Value.INT(str.byteLength.asUInt64,
+                    Code.PrimitiveType.INT)]))
+        return result
+    }
+
     method getBuiltin(s:Code.Signature):(Context, FixedArray<Code.Value>)=&>(Int64) {
         var builtin := builtins[s.name]
         if builtin == null {
             def intSize := settings.intSize
+            def weakSelf := Weak<Interpreter>(self)
             -- note that while the objects match the structure and layout of "real" Frost objects,
             -- the class pointers and vtable / itable entries are not the same. Thus it is sometimes
             -- possible to call the "real" Frost method directly on an object, and sometimes not,
@@ -295,7 +348,7 @@ class Interpreter : Backend {
             match s.name {
                 when "frost$core$Frost$unrefThreadSafe$frost$core$Object$Q" {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        self.unref(Pointer<Int8>(context.value(args[0]).asUInt))
+                        weakSelf.get().unref(Pointer<Int8>(context.value(args[0]).asUInt))
                         return -1
                     }
                 }
@@ -340,21 +393,50 @@ class Interpreter : Backend {
                         return -1
                     }
                 }
-                when "frost$io$Console$errorStream$R$frost$io$OutputStream" {
+                when "frost$io$Console$outputStream$R$frost$io$OutputStream",
+                        "frost$io$Console$errorStream$R$frost$io$OutputStream" {
+                    def cl := compiler.getClass("frost.io.FileOutputStream")!
+                    def cc := cg.getClassConstant(cl)
+                    def type := cg.struct(cl)
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        return Frost.addressOf(Console.errorStream()).asInt64
+                        def result := weakSelf.get().heapAlloc(type, cc)
+                        assert cl.methods[0].name = "init"
+                        weakSelf.get().call(weakSelf.get().cg.getSignature(cl.methods[0]),
+                                FixedArray<Code.Value>.from([Code.Value.INT(result.asUInt64,
+                                    Code.PrimitiveType.INT)]))
+                        -- Note that we don't bother to initialize the stream's native handle. See
+                        -- the comment in FileOutputStream.write below.
+                        return result
+                    }
+                }
+                when "frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q" {
+                    -- There's currently no way to get a FileOutputStream in interpreted code other
+                    -- than Console.outputStream / errorStream, so we just assume that we should be
+                    -- writing to stdout (we don't bother to separate stdout / stderr at the moment)
+                    def out := Console.outputStream()
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def p := context.value(args[1]).asUInt
+                        def error := out.write(Pointer<Int8>(p), context.value(args[2]).asInt)
+                        assert error == null
+                        return 0
+                    }
+                }
+                when "frost$core$Real64$get_asString$R$frost$core$String" {
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def str := Frost.intBitsToFloat(context.value(args[0])).asString
+                        return weakSelf.get().interpreterStringFrom(str)
                     }
                 }
                 otherwise {
                     if s.name.startsWith("frost$core$Frost$ref") {
                         builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                            self.ref(Pointer<Int8>(context.value(args[0]).asUInt))
+                            weakSelf.get().ref(Pointer<Int8>(context.value(args[0]).asUInt))
                             return -1
                         }
                     }
                     else if s.name.startsWith("frost$core$Frost$unref") {
                         builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                            self.unref(Pointer<Int8>(context.value(args[0]).asUInt))
+                            weakSelf.get().unref(Pointer<Int8>(context.value(args[0]).asUInt))
                             return -1
                         }
                     }
@@ -381,10 +463,10 @@ class Interpreter : Backend {
                 contexts[0].statements[target] := ptr.get().asInt64
             }
             when Code.PrimitiveType.INT16 {
-                contexts[0].statements[target] := ptr->Pointer<UInt16>.get().asUInt64.asInt64
+                contexts[0].statements[target] := ptr->Pointer<Int16>.get().asInt64
             }
             when Code.PrimitiveType.INT32, Code.PrimitiveType.FLOAT32 {
-                contexts[0].statements[target] := ptr->Pointer<UInt32>.get().asUInt64.asInt64
+                contexts[0].statements[target] := ptr->Pointer<Int32>.get().asInt64
             }
             when Code.PrimitiveType.INT64, Code.PrimitiveType.FLOAT64 {
                 contexts[0].statements[target] := ptr->Pointer<Int64>.get()
@@ -413,24 +495,30 @@ class Interpreter : Backend {
 
     method convert(result:Code.Statement.ID, value:Code.Value, target:Code.PrimitiveType,
             signed:Bit) {
-        def v := contexts[0].value(value)
-        if value.type.size(settings!) > target.size(settings!) {
+        if signed {
+            def v := contexts[0].value(value)
             match target.size(settings!) {
-                when 1 { contexts[0].statements[result] := v && 0xFF }
-                when 2 { contexts[0].statements[result] := v && 0xFFFF }
-                when 4 { contexts[0].statements[result] := v && 0xFFFFFFFF }
-            }
-        }
-        else if signed & value.type.size(settings!) <  target.size(settings!) {
-            match value.type.size(settings!) {
                 when 1 { contexts[0].statements[result] := v.asInt8.asInt64 }
                 when 2 { contexts[0].statements[result] := v.asInt16.asInt64 }
                 when 4 { contexts[0].statements[result] := v.asInt32.asInt64 }
+                when 8 { contexts[0].statements[result] := v }
+                otherwise { unreachable }
             }
         }
         else {
-            contexts[0].statements[result] := v
+            contexts[0].statements[result] := contexts[0].valueU(value).asInt64
         }
+    }
+
+    method heapAlloc(type:Code.PrimitiveType, classConstant:Code.Value):Int64 {
+        def raw := Pointer<Int8>.alloc(type.size(settings!))
+        match settings.intSize {
+            when 4 { raw->Pointer<Int32>.set(contexts[0].value(classConstant).asInt32) }
+            when 8 { raw->Pointer<Int64>.set(contexts[0].value(classConstant)) }
+            otherwise { unreachable }
+        }
+        Pointer<Int32>((raw + settings.intSize).asUInt).set(1)
+        return raw.asUInt.asInt64
     }
 
     method call(s:Code.Signature, args:FixedArray<Code.Value>):Int64 {
@@ -447,7 +535,7 @@ class Interpreter : Backend {
         var block := code.blocks[Code.Block.ID(0)]
         var statement := 0
         def stackStart := stack
-        loop {
+        outer: loop {
             def stmt := block.statements[statement]
             match stmt {
                 when Code.Statement.ADDI(_, result, left, right) {
@@ -475,8 +563,8 @@ class Interpreter : Backend {
                     context.statements[result] := context.value(left) // context.value(right)
                 }
                 when Code.Statement.DIVU(_, result, left, right) {
-                    context.statements[result] := (context.value(left).asUInt64 //
-                            context.value(right).asUInt64).asInt64
+                    context.statements[result] := (context.valueU(left) //
+                            context.valueU(right)).asInt64
                 }
                 when Code.Statement.DIVF(_, result, left, right) {
                     context.statements[result] := Frost.floatToIntBits(context.floatValue(left) /
@@ -486,8 +574,8 @@ class Interpreter : Backend {
                     context.statements[result] := context.value(left) % context.value(right)
                 }
                 when Code.Statement.REMU(_, result, left, right) {
-                    context.statements[result] := (context.value(left).asUInt64 %
-                            context.value(right).asUInt64).asInt64
+                    context.statements[result] := (context.valueU(left) %
+                            context.valueU(right)).asInt64
                 }
                 when Code.Statement.ANDI(_, result, left, right) {
                     context.statements[result] := context.value(left) && context.value(right)
@@ -514,8 +602,8 @@ class Interpreter : Backend {
                     context.statements[result] := context.value(left) >> context.value(right)
                 }
                 when Code.Statement.SHRU(_, result, left, right) {
-                    context.statements[result] := (context.value(left).asUInt64 >>
-                            context.value(right).asUInt64).asInt64
+                    context.statements[result] := (context.valueU(left) >>
+                            context.valueU(right)).asInt64
                 }
                 when Code.Statement.SHL(_, result, left, right) {
                     context.statements[result] := context.value(left) << context.value(right)
@@ -538,8 +626,8 @@ class Interpreter : Backend {
                     context.statements[result] := int(context.value(left) > context.value(right))
                 }
                 when Code.Statement.GTU(_, result, left, right) {
-                    context.statements[result] := int(context.value(left).asUInt64 >
-                            context.value(right).asUInt64)
+                    context.statements[result] := int(context.valueU(left) >
+                            context.valueU(right))
                 }
                 when Code.Statement.GTF(_, result, left, right) {
                     context.statements[result] := int(context.floatValue(left) >
@@ -549,8 +637,7 @@ class Interpreter : Backend {
                     context.statements[result] := int(context.value(left) >= context.value(right))
                 }
                 when Code.Statement.GEU(_, result, left, right) {
-                    context.statements[result] := int(context.value(left).asUInt64 >=
-                            context.value(right).asUInt64)
+                    context.statements[result] := int(context.valueU(left) >= context.valueU(right))
                 }
                 when Code.Statement.GEF(_, result, left, right) {
                     context.statements[result] := int(context.floatValue(left) >=
@@ -560,8 +647,7 @@ class Interpreter : Backend {
                     context.statements[result] := int(context.value(left) < context.value(right))
                 }
                 when Code.Statement.LTU(_, result, left, right) {
-                    context.statements[result] := int(context.value(left).asUInt64 <
-                            context.value(right).asUInt64)
+                    context.statements[result] := int(context.valueU(left) < context.valueU(right))
                 }
                 when Code.Statement.LTF(_, result, left, right) {
                     context.statements[result] := int(context.floatValue(left) <
@@ -571,8 +657,7 @@ class Interpreter : Backend {
                     context.statements[result] := int(context.value(left) <= context.value(right))
                 }
                 when Code.Statement.LEU(_, result, left, right) {
-                    context.statements[result] := int(context.value(left).asUInt64 <=
-                            context.value(right).asUInt64)
+                    context.statements[result] := int(context.valueU(left) <= context.valueU(right))
                 }
                 when Code.Statement.LEF(_, result, left, right) {
                     context.statements[result] := int(context.floatValue(left) <=
@@ -589,7 +674,7 @@ class Interpreter : Backend {
                     convert(result, value, target, true)
                 }
                 when Code.Statement.CONVERTU(_, result, value, target) {
-                    convert(result, value, target, true)
+                    convert(result, value, target, false)
                 }
                 when Code.Statement.CONDITIONAL_BRANCH(_, test, ifTrue, ifFalse) {
                     if context.value(test) != 0 {
@@ -623,14 +708,7 @@ class Interpreter : Backend {
                     }
                 }
                 when Code.Statement.HEAP_ALLOC(_, result, type, classConstant) {
-                    def raw := Pointer<Int8>.alloc(type.size(settings!))
-                    match settings.intSize {
-                        when 4 { raw->Pointer<Int32>.set(context.value(classConstant).asInt32) }
-                        when 8 { raw->Pointer<Int64>.set(context.value(classConstant)) }
-                        otherwise { unreachable }
-                    }
-                    Pointer<Int32>((raw + settings.intSize).asUInt).set(1)
-                    context.statements[result] := raw.asUInt.asInt64
+                    context.statements[result] := heapAlloc(type, classConstant)
                 }
                 when Code.Statement.LOAD(position, result, value, type) {
                     load(result, value, type)
@@ -680,8 +758,21 @@ class Interpreter : Backend {
                 when Code.Statement.STATIC_CALL_VOID(_, m, args) {
                     call(m, args)
                 }
-                when Code.Statement.STORE(position, value, dest) {
+                when Code.Statement.STORE(_, value, dest) {
                     write(value, Pointer<Int8>(context.value(dest).asUInt))
+                }
+                when Code.Statement.SWITCH(_, value, cases, other) {
+                    def v := context.value(value).asUInt64
+                    for c in cases {
+                        if v = c[0] {
+                            block := code.blocks[c[1]]
+                            statement := 0
+                            continue outer
+                        }
+                    }
+                    block := code.blocks[other]
+                    statement := 0
+                    continue
                 }
                 when Code.Statement.UNREACHABLE(position) {
                     unreachable

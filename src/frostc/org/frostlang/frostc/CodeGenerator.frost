@@ -1353,9 +1353,14 @@ class CodeGenerator {
             }
             when IR.Statement.GET_FIELD_POINTER(position, value, field) {
                 def index := compiler.getIndex(field)
-                def converted := convertValue(value)
-                def offset := Code.Value.FIELD_OFFSET(struct(field.owner), index)
-                out.add(Code.Statement.ADDI(position, mapId(id), converted, offset))
+                if index != 0 {
+                    def converted := convertValue(value)
+                    def offset := Code.Value.FIELD_OFFSET(struct(field.owner), index)
+                    out.add(Code.Statement.ADDI(position, mapId(id), converted, offset))
+                }
+                else {
+                    addRef(id, convertValue(value))
+                }
             }
             when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
                 def cc := getClassConstant(compiler.getClass(value.type())!)

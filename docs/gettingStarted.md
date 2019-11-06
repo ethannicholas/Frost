@@ -1,6 +1,12 @@
 Getting Started
 ===============
 
+Running Online
+--------------
+
+The easiest way to try Frost is to use the [online demo](try.html), which includes a number of
+example programs. The instructions below are for building and installing Frost locally.
+
 Prerequisites
 -------------
 

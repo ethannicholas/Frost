@@ -441,6 +441,9 @@ class Analyzer {
             when IR.Value.REF(statement, _) {
                 return getValue(statement, s)
             }
+            when IR.Value.SIZE_OF(_) {
+                return DataFlowValue(compiler.INT_TYPE, Definition.UNSPECIFIED)
+            }
             when IR.Value.STRING(_, type) {
                 return DataFlowValue(type, Definition.UNSPECIFIED)
             }

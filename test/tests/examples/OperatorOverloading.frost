@@ -1,0 +1,28 @@
+class Complex : Value {
+    def r:Real
+
+    def i:Real
+
+    init(r:Real, i:Real) {
+        self.r := r
+        self.i := i
+    }
+
+    function +(other:Complex):Complex {
+        return Complex(r + other.r, i + other.i)
+    }
+
+    function *(other:Complex):Complex {
+        return Complex(r * other.r - i * other.i, r * other.i + i * other.r)
+    }
+
+    @override
+    function get_asString():String {
+        return "(\{r} + \{i}i)"
+    }
+}
+
+method main() {
+    Console.printLine(Complex(12.5, 0) + Complex(2, -2))
+    Console.printLine(Complex(5, 3) * Complex(7.25, 4))
+}

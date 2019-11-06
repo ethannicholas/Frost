@@ -60,8 +60,8 @@ Frost does not have a dedicated `Char` literal syntax. Any single-character stri
 String
 ------
 
-Frost strings are represented by a double-quoted sequence of characters that does not contain a
-newline character. Within a string, the following escape sequences are recognized:
+Frost strings are represented by a single- or double-quoted sequence of characters that does not
+contain a newline character. Within a string, the following escape sequences are recognized:
 
 * `\n` - a newline (code point 10)
 * `\r` - a carriage return (code point 13)

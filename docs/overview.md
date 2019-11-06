@@ -38,17 +38,17 @@ instead.
 Strings
 -------
 
-Frost [strings](String) are double-quoted, with support for backslashed escape sequences similar to
-C.
+Frost [strings](String) are either single- or double-quoted, with support for backslashed escape
+sequences similar to C.
 
 String literals may have expressions embedded into them using the syntax `\{expression}`, e.g.:
 
     Console.printLine("Hello, \{firstName} \{lastName}!")
 
 This is called [string interpolation](stringInterpolation.md), and it has quite a few other tricks
-up its sleeve.
+up its sleeves.
 
-Frost's strings are immutable, but there is a mutable variant called `MutableString`.
+Frost's strings are immutable, but there is a mutable variant called [MutableString].
 
 Basic Types
 -----------

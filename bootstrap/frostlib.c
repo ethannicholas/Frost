@@ -400,6 +400,7 @@ int main(int argc, char** argv) {
         frost$core$Frost$unrefThreadUnsafe$frost$core$Object$Q((frost_int) weakReferences);
         weakReferences = NULL;
     }
+#ifndef __EMSCRIPTEN__
     if (refErrorReporting) {
         if (allocations && allocations != 1) {
             printf("warning: %d objects were still in memory on exit\n", allocations);
@@ -408,6 +409,7 @@ int main(int argc, char** argv) {
             printf("warning: 1 object was still in memory on exit\n");
         }
     }
+#endif
     return 0;
 }
 
