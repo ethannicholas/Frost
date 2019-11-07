@@ -4,6 +4,7 @@ package frost.core
 Similar to [Range], but with a `step` value that indicates the number of steps to take during each
 iteration. For instance, the code:
 
+    -- testcase SteppedRangeIntro1(Simple)
     for i in SteppedRange<Int, Int>(0, 100, 10, true) {
         Console.printLine(i)
     }
@@ -12,6 +13,7 @@ will count by 10 and print the numbers 0, 10, 20, ..., 90, 100. The exclusive ra
 inclusive range (`...`) operators provide a shorthand syntax for creating `Range` and `SteppedRange`
 objects; the loop above could be more succinctly (and readably) written:
 
+    -- testcase SteppedRangeIntro2(Simple)
     for i in 0 ... 100 by 10 {
         Console.printLine(i)
     }

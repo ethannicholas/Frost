@@ -17,20 +17,21 @@ class LinkResolver {
     def docPath:File
 
     @private
-    def apiRelativePath:String
+    def contextClass:ClassDecl?
 
     @private
-    def context:ClassDecl?
+    def contextPackage:String?
 
-    init(compiler:Compiler, docPath:File, apiRelativePath:String) {
-        init(compiler, docPath, apiRelativePath, null)
-    }
-
-    init(compiler:Compiler, docPath:File, apiRelativePath:String, context:ClassDecl?) {
+    init(compiler:Compiler, docPath:File, context:ClassDecl?) {
         self.compiler := compiler
         self.docPath := docPath
-        self.apiRelativePath := apiRelativePath
-        self.context := context
+        self.contextClass := context
+    }
+
+    init(compiler:Compiler, docPath:File, context:String?) {
+        self.compiler := compiler
+        self.docPath := docPath
+        self.contextPackage := context
     }
 
     function matches(m:MethodDecl, parameters:ListView<Type>):Bit {
@@ -45,15 +46,19 @@ class LinkResolver {
         return true
     }
 
-    function linkTo(cl:ClassDecl):String {
+    function getAPIPath():String {
         def base:String
-        if context !== null {
-            base := "../" * context.name.find(".").count()
+        if contextClass !== null {
+            return "../" * contextClass.name.find(".").count()
         }
         else {
-            base := apiRelativePath
+            assert contextPackage !== null
+            return "../" * (contextPackage.find(".").count() + 1)
         }
-        return base + cl.name.replace(".", "/") + ".html"
+    }
+
+    function linkTo(cl:ClassDecl):String {
+        return getAPIPath() + cl.name.replace(".", "/") + ".html"
     }
 
     function linkTo(f:FieldDecl):String? {
@@ -109,14 +114,7 @@ class LinkResolver {
             return link
         }
         if link.startsWith("example:") {
-            def base:String
-            if context !== null {
-                base := "../" * context.name.find(".").count()
-            }
-            else {
-                base := apiRelativePath
-            }
-            return base + "../try.html?\{link['example:'.length..]}"        
+            return getAPIPath() + "../try.html?\{link['example:'.length..]}"
         }
         if link.endsWith(".md") {
             if docPath.resolve(link).exists() {
@@ -128,8 +126,8 @@ class LinkResolver {
         if cl !== null {
             return linkTo(cl)
         }
-        if context !== null & link.matches(/\w+/) {
-            def s := compiler.getSymbolTable(context)[link]
+        if contextClass !== null & link.matches(/\w+/) {
+            def s := compiler.getSymbolTable(contextClass)[link]
             if s !== null {
                 return linkTo(s)
             }
@@ -141,7 +139,7 @@ class LinkResolver {
                 if cl !== null {
                     def s := compiler.getSymbolTable(cl)[link[link.next(index)..]]
                     if s == null {
-                        Console.printLine("could not resolve1: \{link}")
+                        Console.printLine("could not resolve: \{link}")
                         return null
                     }
                     return linkTo(s)
@@ -181,7 +179,7 @@ class LinkResolver {
                 symbolName := name[name.next(index)..]
             }
             else {
-                cl := context
+                cl := contextClass
                 symbolName := name
             }
             if cl !== null {

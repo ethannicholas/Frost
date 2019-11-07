@@ -171,10 +171,11 @@ class File : Immutable, HashKey<File> {
 
     Examples:
 
+        -- testcase FileWithExtension
         File("/tmp/foo.gif").withExtension(".png") => /tmp/foo.png
         File("/tmp/foo").withExtension(".png") => /tmp/foo.png
         File("/tmp/foo.gif").withExtension("") => /tmp/foo
-        File("/tmp/foo.tar.gz").withExtension("") => /tmp/foo
+        File("/tmp/foo.tar.gz").withExtension("") => /tmp/foo.tar
 
     @param ext the new extension
     @returns the path with a new extension

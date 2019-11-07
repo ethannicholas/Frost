@@ -1,0 +1,6 @@
+method main() {
+    Console.printLine(File("/tmp/foo.gif").withExtension(".png"))
+    Console.printLine(File("/tmp/foo").withExtension(".png"))
+    Console.printLine(File("/tmp/foo.gif").withExtension(""))
+    Console.printLine(File("/tmp/foo.tar.gz").withExtension(""))
+}

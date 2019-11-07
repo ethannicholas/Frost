@@ -415,6 +415,7 @@ class MutableString {
     Searches the string for a regular expression, replacing occurrences of the regular expression
     with new text determined by a function. For instance, given:
 
+        -- testcase MutableStringReplace(PrintLine)
         "This is a test!".replace(/\w+/, word => word.length)
 
     The regular expression `/\w+/` matches sequences of one or more word characters; in other words,

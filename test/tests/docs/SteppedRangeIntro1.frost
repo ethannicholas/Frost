@@ -1,0 +1,5 @@
+method main() {
+    for i in SteppedRange<Int, Int>(0, 100, 10, true) {
+        Console.printLine(i)
+    }
+}

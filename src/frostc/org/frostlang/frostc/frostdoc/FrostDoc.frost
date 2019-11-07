@@ -32,6 +32,8 @@ class FrostDoc {
 
     var currentClass:ClassDecl?
 
+    var currentPackage:String?
+
     var haveSees := false
 
     def tableOfContents := TableOfContentsNode("", "index.html")
@@ -234,7 +236,7 @@ class FrostDoc {
 
     function getMarkdown():Markdown {
         return Markdown(testPath.resolve("generators"), testPath.resolve("tests"),
-                LinkResolver(compiler, docPath, apiRelativePath, currentClass).resolve)
+                linkResolver().resolve)
     }
 
     method writeDoc(doccomment:String):Error? {
@@ -539,16 +541,23 @@ class FrostDoc {
         }
     }
 
+    function linkResolver():LinkResolver {
+        if currentClass !== null {
+            return LinkResolver(compiler, docPath, currentClass)
+        }
+        return LinkResolver(compiler, docPath, currentPackage)
+        }
+
     function linkTo(cl:ClassDecl):String {
-        return LinkResolver(compiler, docPath, apiRelativePath, currentClass).linkTo(cl)
+        return linkResolver().linkTo(cl)
     }
 
     function linkTo(m:MethodDecl):String {
-        return LinkResolver(compiler, docPath, apiRelativePath, currentClass).linkTo(m)
+        return linkResolver().linkTo(m)
     }
 
     function linkTo(f:FieldDecl):String {
-        return LinkResolver(compiler, docPath, apiRelativePath, currentClass).linkTo(f)
+        return linkResolver().linkTo(f)
     }
 
     method writeInheritedFields(cl:ClassDecl):Error? {
@@ -813,7 +822,7 @@ class FrostDoc {
             out.open("package")
             out.write("name", node.name)
             out.open("contents")
-            for c in node.children.values {
+            for c in node.children.values.all().sort((a, b) => a.name > b.name) {
                 def cl := compiler.getClass(c.name)
                 if cl == null {
                     writePackage(c)
@@ -839,11 +848,12 @@ class FrostDoc {
     method writePackages(node:TableOfContentsNode):Error? {
         try {
             if compiler.getClass(node.name) == null {
+                currentPackage := node.name
                 def dest := outDir.resolve(node.name.replace(".", "/")).resolve("index.xml")
                 out := XMLWriter(dest.openOutputStream())
                 writePackage(node)
             }
-            for c in node.children.values {
+            for c in node.children.values.all().sort((a, b) => a.name > b.name) {
                 writePackages(c)
             }
             return null
@@ -859,6 +869,7 @@ class FrostDoc {
             for cl in classes {
                 process(cl)
             }
+            currentClass := null
             writePackages(tableOfContents)
             out := XMLWriter(tocFile.openOutputStream())
             tableOfContents.write(apiRelativePath, out)

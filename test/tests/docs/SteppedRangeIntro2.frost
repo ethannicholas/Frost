@@ -1,0 +1,5 @@
+method main() {
+    for i in 0 ... 100 by 10 {
+        Console.printLine(i)
+    }
+}

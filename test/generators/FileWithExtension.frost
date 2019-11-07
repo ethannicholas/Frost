@@ -1,0 +1,16 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("method main() {")
+        out.level += 1
+        for line in Console.inputStream().lines().map(line => line.split(" => ")[0]) {
+            out.printLine("Console.printLine(\{line})")
+        }
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}
