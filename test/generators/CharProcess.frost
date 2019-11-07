@@ -1,0 +1,22 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("method process(c:Char32) {")
+        out.level += 1
+        out.printLine("Console.printLine(\"'\\{c}'\")")
+        out.level -= 1
+        out.printLine("}")
+        out.printLine()
+        out.printLine("method main() {")
+        out.level += 1
+        out.printLine("def string := \"Hello\"")
+        Console.inputStream().sendTo(out)
+        Console.printLine()
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

@@ -1,0 +1,17 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("method main() {")
+        out.level += 1
+        out.printLine("def iter := Int[1 ... 10].iterator")
+        out.print("Console.printLine(")
+        Console.inputStream().sendTo(out)
+        Console.printLine(")")
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

@@ -128,6 +128,10 @@ class Markdown {
 
     def source:File
 
+    def generatorPath:File
+
+    def testPath:File
+
     def errorReporter := DummyErrorReporter()
 
     def parser := Parser(errorReporter)
@@ -150,11 +154,13 @@ class Markdown {
     var listLevel := 0
 
     init() {
-        init(null)
+        init(File("/invalid"), File("/invalid"), null)
     }
 
-    init(linkResolver:(String)=&>(String?)?) {
+    init(generatorPath:File, testPath:File, linkResolver:(String)=&>(String?)?) {
         self.source := File("/tmp/dummy")
+        self.generatorPath := generatorPath
+        self.testPath := testPath
         self.linkResolver := linkResolver
         parser.syntaxHighlighter := SyntaxHighlighter()
     }
@@ -481,6 +487,11 @@ class Markdown {
 
         function replacement(groups:ListView<String?>):String {
             def codeBlock := groups[1]
+            def testCase := codeBlock.parse(/[\s\S]*--\s+testcase\s+(\w+)(?:\((\w+)\))?[\s\S]*/)
+            if testCase !== null {
+                codeBlock := codeBlock.replace(/--\s+testcase\s+(\w+)(?:\((\w+)\))?/, "")
+                markdown.processTestCase(testCase[0], testCase[1], codeBlock)
+            }
             def ed := MutableString(codeBlock)
             Markdown.outdent(ed)
             markdown.encodeCode(ed)
@@ -496,8 +507,18 @@ class Markdown {
             else {
               out := genericCodeBlock(text)
             }
+            if testCase !== null & markdown.linkResolver !== null {
+                def url := "example:\{testCase[0]}.frost"
+                out += "\n<div class=\"afterPre\">\n" +
+                        "    <a href=\"\{markdown.linkResolver(url)}\">Try it!</a>\n" +
+                        "</div>"
+            }
+            else {
+                out += "\n<div class=\"afterPre\">\n</div>"
+            }
+            out += "\n\n"
             return out
-        }
+        }        
 
         function firstLine(text:String):String {
             return text.split("\n")[0]
@@ -518,7 +539,7 @@ class Markdown {
         }
 
         function genericCodeBlock(text:String):String {
-            return "\n\n<pre><code>\{text}\n</code></pre>\n\n"
+            return "\n\n<pre><code>\{text}\n</code></pre>"
         }
     }
 
@@ -1127,5 +1148,68 @@ class Markdown {
                 return "<code>\{sub}</code>"
             }
         )
+    }
+
+    method processTestCase(name:String, rawGenerator:String?, code:String) {
+        def generator:File
+        if rawGenerator !== null & rawGenerator != "" {
+            generator := generatorPath.resolve(rawGenerator + ".frost")
+        }
+        else {
+            generator := generatorPath.resolve(name + ".frost")
+        }
+        try {
+            def exe := System.temporaryDirectory().resolve("generator")
+            if exe.exists() {
+                exe.delete()
+            }
+            def frostc := System.exec("./frostc", [generator.path, "-o", exe.path])
+            -- FIXME shouldn't have to use unsafeStart here
+            Thread.unsafeStart(method() {
+                try {
+                    frostc.standardOutput().sendTo(Console.outputStream())
+                }
+                fail(error) {
+                }
+            })
+            Thread.unsafeStart(method() {
+                try {
+                    frostc.standardError().sendTo(Console.errorStream())
+                }
+                fail(error) {
+                }
+            })
+            if frostc.waitFor() != 0 {
+                System.exit(1)
+            }
+            def p := System.exec(exe.path, [])
+            def input := p.standardInput()
+            def finalCode := MutableString(code)
+            outdent(finalCode)
+            input.print(finalCode.asString.trimmed)
+            input.close()
+            def dest := testPath.resolve("docs/\{name}.frost")
+            Thread.unsafeStart(method() {
+                try {
+                    p.standardOutput().sendTo(dest.openOutputStream())
+                }
+                fail(error) {
+                    Console.printLine(error)
+                    System.exit(1)
+                }
+            })
+            Thread.unsafeStart(method() {
+                try {
+                    p.standardError().sendTo(Console.errorStream())
+                }
+                fail(error) {
+                }
+            })
+            p.waitFor()
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
     }
 }

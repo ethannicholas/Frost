@@ -94,22 +94,28 @@
         callMain(["-m", "32", "-I", "src", "-f", "run", "Input.frost"]);
       }
 
-      function loadExample() {
-        var name = document.getElementById("example").value;
-        if (name != "") {
+      function loadExample(name) {
+        if (name && name != "") {
           var xhr = new XMLHttpRequest();
           xhr.open('GET', "examples/" + name);
           xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
               document.getElementById("input").value = xhr.responseText;
             }
           };
           xhr.send();
+          document.getElementById("example").value = name;
+        }
+      }
+
+      function loaded() {
+        if (window.location.search) {
+          loadExample(window.location.search.substring(1));
         }
       }
     </script>
   </head>
-  <body>
+  <body onload="loaded()">
     <div id="main">
     <!--TOCBEGIN--><!--TOCEND-->
       <div id="content">
@@ -137,7 +143,7 @@
 }</textarea>
         <button id="run" onclick="runFrost()">Run</button> &nbsp; &nbsp;
         Load Example:
-        <select id="example" onchange="loadExample()">
+        <select id="example" onchange="loadExample(event.target.value)">
           <option></option>
           <option>Choice.frost</option>
           <option>Fold.frost</option>

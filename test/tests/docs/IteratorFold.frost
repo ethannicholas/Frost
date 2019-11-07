@@ -1,0 +1,4 @@
+method main() {
+    def iter := Int[1 ... 10].iterator
+    Console.printLine(iter.fold(Int.+))
+}

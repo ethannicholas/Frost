@@ -1,0 +1,8 @@
+method process(s:String) {
+    Console.printLine(s.length)
+}
+
+method main() {
+    def words := "This will do something with the words in this string".find(/\w+/)
+    words.map(m => m.groups[0]).apply(process)
+}

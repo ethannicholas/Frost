@@ -1,0 +1,6 @@
+method main() {
+    def arr := Int[1 ... 10]
+    for v in arr.iterator[1.. by 2] {
+        Console.printLine(v)
+    }
+}

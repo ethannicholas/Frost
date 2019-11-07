@@ -13,6 +13,8 @@ class FrostDoc {
 
     def tocFile:File
 
+    def testPath:File
+
     def docPath:File
 
     def apiRelativePath:String
@@ -34,10 +36,12 @@ class FrostDoc {
 
     def tableOfContents := TableOfContentsNode("", "index.html")
 
-    init(compiler:Compiler, outDir:File, tocFile:File, docPath:File, apiRelativePath:String) {
+    init(compiler:Compiler, outDir:File, tocFile:File, testPath:File, docPath:File,
+            apiRelativePath:String) {
         self.compiler := compiler
         self.outDir := outDir
         self.tocFile := tocFile
+        self.testPath := testPath
         self.docPath := docPath
         self.apiRelativePath := apiRelativePath
     }
@@ -229,7 +233,8 @@ class FrostDoc {
     }
 
     function getMarkdown():Markdown {
-        return Markdown(LinkResolver(compiler, docPath, apiRelativePath, currentClass).resolve)
+        return Markdown(testPath.resolve("generators"), testPath.resolve("tests"),
+                LinkResolver(compiler, docPath, apiRelativePath, currentClass).resolve)
     }
 
     method writeDoc(doccomment:String):Error? {

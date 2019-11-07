@@ -27,20 +27,22 @@ constant FOOTER :=
 
 method main(args:ListView<String>) {
     try {
-        if args.count != 4 {
-            Console.errorStream().printLine("usage: frostmd <doc root> <input.md> <output.html>")
+        if args.count != 5 {
+            Console.errorStream().printLine("usage: frostmd <doc root> <test root> <input.md> <output.html>")
             System.exit(1)
         }
         def docPath := File(args[1])
-        def input := File(args[2])
-        def output := File(args[3])
+        def testPath := File(args[2])
+        def input := File(args[3])
+        def output := File(args[4])
         output.parent.createDirectories()
         def imports := Array<File>() -- FIXME literal
         imports.add(File(Config.frostSourceDir()))
         def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, 8, true)
         def compiler := Compiler(MessageQueue<Message>(), DummyBackend(), settings)
-        def resolve := LinkResolver(compiler, docPath, "api/").resolve
-        output.write(HEADER + Markdown(resolve).process(input.readFully()) + FOOTER)
+        def resolver := LinkResolver(compiler, docPath, "api/").resolve
+        output.write(HEADER + Markdown(testPath.resolve("generators"), testPath.resolve("tests"),
+                resolver).process(input.readFully()) + FOOTER)
     }
     fail(error) {
         Console.printLine("error: \{error}")

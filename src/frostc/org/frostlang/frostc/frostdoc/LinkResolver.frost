@@ -108,6 +108,16 @@ class LinkResolver {
         if link.startsWith("http") | link.endsWith(".html") {
             return link
         }
+        if link.startsWith("example:") {
+            def base:String
+            if context !== null {
+                base := "../" * context.name.find(".").count()
+            }
+            else {
+                base := apiRelativePath
+            }
+            return base + "../try.html?\{link['example:'.length..]}"        
+        }
         if link.endsWith(".md") {
             if docPath.resolve(link).exists() {
                 return link.replace(".md", ".html")

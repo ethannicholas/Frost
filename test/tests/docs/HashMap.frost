@@ -1,0 +1,7 @@
+method main() {
+    def alignment := HashMap<String, String>()
+    alignment["faerie"] := "good"
+    alignment["orc"]    := "evil"
+    alignment["golem"]  := "neutral"
+    Console.printLine(alignment["faerie"])
+}

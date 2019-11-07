@@ -1,0 +1,25 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("method main() {")
+        out.level += 1
+        out.printLine("try {")
+        out.level += 1
+        Console.inputStream().sendTo(out)
+        out.level -= 1
+        out.printLine()
+        out.printLine("}")
+        out.printLine("fail(error) {")
+        out.level += 1
+        out.printLine("Console.printLine(error)")
+        out.printLine("System.exit(1)")
+        out.level -= 1
+        out.printLine("}")
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

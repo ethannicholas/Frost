@@ -209,10 +209,10 @@ interface Iterator<T> {
 
     Example:
 
-        File(path).lines()[..count].apply(Console.printLine)
+        -- testcase IteratorRangeIndex
+        base[..10].map(x => x * x)
 
-    This is roughly equivalent to the Unix `head` utility, in that it will print the first `count`
-    lines of a file.
+    This produces an iterator which squares the first ten numbers produced by the base iterator.
 
     The range iterator will never read past the end of the base iterator. If the base iterator does
     not produce enough elements to finish the range, iteration will simply end at that point.
@@ -228,8 +228,9 @@ interface Iterator<T> {
 
     Example:
 
-        for v in arr.iterator()[1.. by 2] {
-            ...
+        -- testcase IteratorSteppedRangeIndex
+        for v in arr.iterator[1.. by 2] {
+            Console.printLine(v)
         }
 
     This will loop over every odd-numbered element in `arr`.
@@ -259,9 +260,11 @@ interface Iterator<T> {
     Scans through the `Iterator` until the end, calling the specified method on each object
     returned.
 
-    For example, to call a method named `process` on each line in a file:
+    For example, to call a method named `process` on each word in a string:
 
-        File(path).lines().apply(process)
+        -- testcase IteratorApply(StringProcess)
+        def words := "This will do something with the words in this string".find(/\w+/)
+        words.map(m => m.groups[0]).apply(process)
     ================================================================================================
     @default
     @post(done)
@@ -276,6 +279,7 @@ interface Iterator<T> {
     single value. For instance, if we have an `Iterator<Int64>` and fold it using the binary
     function [Int64.+(Int64)], as in:
 
+        -- testcase IteratorFold
         iter.fold(Int.+)
 
     this would add the first and second elements returned by the iterator together, and

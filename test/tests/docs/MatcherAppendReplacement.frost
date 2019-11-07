@@ -1,0 +1,10 @@
+method main() {
+    def result := MutableString()
+    def regex := /\s+/ -- match all whitespace
+    def matcher := regex.matcher("Hello, can anyone hear me?")
+    while matcher.find() {
+        matcher.appendReplacement(result, "|")
+    }
+    matcher.appendTail(result)
+    Console.printLine(result)
+}

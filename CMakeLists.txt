@@ -702,8 +702,8 @@ function(run_markdown out_var)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/${output}.html")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostmd ${CMAKE_CURRENT_SOURCE_DIR}/docs ${input}
-                    ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostmd ${CMAKE_CURRENT_SOURCE_DIR}/docs
+                    ${CMAKE_CURRENT_SOURCE_DIR}/test ${input} ${output}
             DEPENDS frostmd ${input}
         )
         list(APPEND result ${output})
@@ -803,6 +803,7 @@ syntax_highlight(frost_source_html
 
 add_custom_target(docs
     COMMAND frostdoc ${CMAKE_CURRENT_SOURCE_DIR}/src/frost ${CMAKE_CURRENT_BINARY_DIR}/docs api
-            ${CMAKE_CURRENT_SOURCE_DIR}/docs
+            ${CMAKE_CURRENT_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR}/docs
+
     DEPENDS frostdoc ${public_source} ${markdown_html} ${frost_source_html}
 )

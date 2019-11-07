@@ -95,6 +95,7 @@ class Matcher {
     `appendReplacement` is intended to be used in a loop with [find()] and completed with
     [appendTail()](appendTail), such as in this example:
 
+        -- testcase MatcherAppendReplacement(Simple)
         def result := MutableString()
         def regex := /\s+/ -- match all whitespace
         def matcher := regex.matcher("Hello, can anyone hear me?")

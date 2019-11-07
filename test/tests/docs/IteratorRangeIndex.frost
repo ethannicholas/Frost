@@ -1,0 +1,4 @@
+method main() {
+    def base := Int[1 ... 100].iterator
+    base[..10].map(x => x * x).apply(Console.printLine)
+}

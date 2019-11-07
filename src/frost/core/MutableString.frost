@@ -426,9 +426,18 @@ class MutableString {
 
     @param search the regular expression to match the string with
     @param replacement a function generating the replacement text
-    ============================================================================
+    ================================================================================================
     -- FIXME @self
     method replace(search:RegularExpression, replacement:(String)=>(Object)) {
+        def matcher := search.matcher(asString)
+        clear()
+        while matcher.find() {
+            matcher.appendReplacement(self, replacement(matcher.group(0)).asString, false)
+        }
+        matcher.appendTail(self)
+    }
+
+    method replace(search:RegularExpression, replacement:(String)=&>(Object)) {
         def matcher := search.matcher(asString)
         clear()
         while matcher.find() {
@@ -448,6 +457,19 @@ class MutableString {
     ================================================================================================
     -- FIXME @self
     method replace(search:RegularExpression, replacement:(ListView<String?>)=>(Object)) {
+        def matcher := search.matcher(asString)
+        clear()
+        while matcher.find() {
+            def groups := Array<String?>()
+            for i in 0 .. matcher.get_groupCount() {
+                groups.add(matcher.group(i))
+            }
+            matcher.appendReplacement(self, replacement(groups).asString, false)
+        }
+        matcher.appendTail(self)
+    }
+
+    method replace(search:RegularExpression, replacement:(ListView<String?>)=&>(Object)) {
         def matcher := search.matcher(asString)
         clear()
         while matcher.find() {

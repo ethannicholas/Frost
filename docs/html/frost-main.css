@@ -66,3 +66,11 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.afterPre {
+    margin-left: 6pt;
+    font-style: italic;
+    font-size: 10pt;
+    margin-top: 0pt;
+    margin-bottom: 16pt;
+}

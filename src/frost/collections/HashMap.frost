@@ -6,6 +6,7 @@ uses frost.unsafe.Pointer
 Standard implementation of the [Map] interface, which associates keys with values. An arbitrary
 number of values can be stored in a `HashMap` and then retrieved in constant average time:
 
+    -- testcase HashMap(Simple)
     def alignment := HashMap<String, String>()
     alignment["faerie"] := "good"
     alignment["orc"]    := "evil"

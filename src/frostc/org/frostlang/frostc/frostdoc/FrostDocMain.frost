@@ -110,14 +110,16 @@ method addTableOfContents(tocFile:File, tree:File, apiRelativePath:String):Error
 
 method main(args:ListView<String>) {
     try {
-        if args.count != 5 {
-            Console.printErrorLine("usage: frostdoc <source dir> <api dir> <doc path> <root dir>")
+        if args.count != 6 {
+            Console.printErrorLine("usage: frostdoc <source dir> <root dir> <api dir> <test path>" +
+                    " <doc path>")
             System.exit(1)
         }
         def input := File(args[1])
         def root := File(args[2])
         def apiRelativePath := args[3] + "/"
-        def docPath := File(args[4])
+        def testPath := File(args[4])
+        def docPath := File(args[5])
         def tmpOutput := System.temporaryDirectory().resolve("frostdoc-tmp")
         def tocFile := System.temporaryDirectory().resolve("frostdoc-toc.xml")
         def imports := Array<File>() -- FIXME literal
@@ -125,7 +127,7 @@ method main(args:ListView<String>) {
         imports.add(input)
         def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, 8, true)
         def compiler := Compiler(MessageQueue<Message>(), DummyBackend(), settings)
-        def frostdoc := FrostDoc(compiler, tmpOutput, tocFile, docPath, apiRelativePath)
+        def frostdoc := FrostDoc(compiler, tmpOutput, tocFile, testPath, docPath, apiRelativePath)
         process(input, frostdoc)
         frostdoc.finish()
         def mainXSL := File(Config.frostSourceDir()).resolve("tools/frostdoc.xsl")
