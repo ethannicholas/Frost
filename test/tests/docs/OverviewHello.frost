@@ -1,0 +1,6 @@
+class Hello {
+    @class
+    method main(args:ListView<String>) {
+        Console.printLine("Hello, World!")
+    }
+}

@@ -1,0 +1,30 @@
+class Bag<T> {
+    @private
+    def random:Random
+
+    @private
+    def contents := Array<T>()
+
+    init(random:Random) {
+        self.random := random
+    }
+
+    method add(object:T) {
+        contents.add(object)
+    }
+
+    method pull():T {
+        def index := random.int(contents.count)
+        return contents.removeIndex(index)
+    }
+}
+
+method main() {
+    def bag := Bag<Int>(XorShift128Plus(0))
+    for i in 1 .. 10 {
+        bag.add(i)
+    }
+    for i in 1 .. 10 {
+        Console.printLine(bag.pull())
+    }
+}

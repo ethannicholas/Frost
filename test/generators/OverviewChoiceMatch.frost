@@ -1,0 +1,40 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("choice Expression {")
+        out.level += 1
+        out.printLine("NUMBER(Int)")
+        out.printLine("ADD(Expression, Expression)")
+        out.printLine("SUB(Expression, Expression)")
+        out.printLine("MUL(Expression, Expression)")
+        out.printLine("DIV(Expression, Expression)")
+        out.printLine("NEGATE(Expression)")
+        out.printLine()
+        out.printLine("@override")
+        out.printLine("function get_asString():String {")
+        out.level += 1
+        out.printLine("def expr := self")
+        out.printLine(Console.inputStream().readFully().replace("...",
+                "when SUB(left, right) {\n        return \"\\{left} - \\{right}\"\n    }\n" +
+                "    when MUL(left, right) {\n        return \"\\{left} * \\{right}\"\n    }\n" +
+                "    when DIV(left, right) {\n        return \"\\{left} / \\{right}\"\n    }\n" +
+                "    when NEGATE(v) {\n        return \"-\\{v}\"\n    }"))
+        out.level -= 1
+        out.printLine("}")
+        out.level -= 1
+        out.printLine("}")
+        out.printLine()
+        out.printLine("method main() {")
+        out.level += 1
+        out.printLine("Console.printLine(Expression.ADD(Expression.NUMBER(6), " +
+                "Expression.NUMBER(17)))")
+        out.level -= 1
+        out.printLine("}")
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

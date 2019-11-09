@@ -1,0 +1,17 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.printLine()
+        out.printLine("method main() {")
+        out.level += 1
+        out.printLine("Console.printLine(add(19, 24))")
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

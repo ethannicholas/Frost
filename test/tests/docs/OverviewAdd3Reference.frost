@@ -1,0 +1,4 @@
+method main() {
+    def add3:(Int)=>(Int) := 3.+
+    Console.printLine(add3(8)) -- prints 11
+}

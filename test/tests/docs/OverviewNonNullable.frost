@@ -1,0 +1,12 @@
+function getResult():Int? {
+    return 82
+}
+method main() {
+    def result:Object? := getResult()
+    if result !== null {
+        Console.printLine(result)
+    }
+    else {
+        Console.printLine("<null>")
+    }
+}

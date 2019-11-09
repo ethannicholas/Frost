@@ -1,0 +1,18 @@
+interface Formattable {
+    function format(fmt:String):String
+}
+
+class Bar {
+}
+
+class Foo : Bar, Formattable {
+    @override
+    function format(fmt:String):String {
+        return "I am an instance of Foo!"
+    }
+}
+
+method main() {
+    def f:Formattable := Foo()
+    Console.printLine(f.format(""))
+}

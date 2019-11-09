@@ -1,0 +1,15 @@
+method main() {
+    -- an inefficient, naive way to find duplicate elements in a list
+    def array := [1, 9, 8, 10, 53, -12, 9, 17, 26]
+    def count := array.count
+    var found := false
+    outer: for i in 0 .. count {
+        for j in 0 .. count {
+            if i != j & array[i] = array[j] {
+                found := true
+                break outer
+            }
+        }
+    }
+    Console.printLine(found)
+}

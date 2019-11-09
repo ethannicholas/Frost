@@ -1,0 +1,18 @@
+function empty():Int {
+    return 0
+}
+
+function empty():String {
+    return ""
+}
+
+function empty():Bit {
+    return false
+}
+
+method main() {
+    def i:Int    := empty() -- calls empty():Int
+    def s:String := empty() -- calls empty():String
+    def b:Bit    := empty() -- calls empty():Bit
+    def broken   := empty() -- ERROR, ambiguous!
+}

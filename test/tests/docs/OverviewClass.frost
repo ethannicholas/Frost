@@ -1,0 +1,15 @@
+class Adder {
+    def x:Int
+
+    init(x:Int) {
+        self.x := x
+    }
+
+    function add(y:Int):Int {
+        return x + y
+    }
+}
+
+method main() {
+    Console.printLine(Adder(12).add(6)) -- prints 18
+}

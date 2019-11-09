@@ -1,0 +1,7 @@
+function add(x:Int, y:Int):Int {
+    return x + y
+}
+
+method main() {
+    Console.printLine(add(19, 24))
+}

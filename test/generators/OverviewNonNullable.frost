@@ -1,0 +1,18 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("function getResult():Int? {")
+        out.printLine("    return 82")
+        out.printLine("}")
+        out.printLine("method main() {")
+        out.level += 1
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

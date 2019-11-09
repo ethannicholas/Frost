@@ -1,0 +1,37 @@
+choice Expression {
+    NUMBER(Int)
+    ADD(Expression, Expression)
+    SUB(Expression, Expression)
+    MUL(Expression, Expression)
+    DIV(Expression, Expression)
+    NEGATE(Expression)
+
+    @override
+    function get_asString():String {
+        def expr := self
+        match expr {
+            when NUMBER(value) {
+                return value.asString
+            }
+            when ADD(left, right) {
+                return "\{left} + \{right}"
+            }
+            when SUB(left, right) {
+                return "\{left} - \{right}"
+            }
+            when MUL(left, right) {
+                return "\{left} * \{right}"
+            }
+            when DIV(left, right) {
+                return "\{left} / \{right}"
+            }
+            when NEGATE(v) {
+                return "-\{v}"
+            }
+        }
+    }
+}
+
+method main() {
+    Console.printLine(Expression.ADD(Expression.NUMBER(6), Expression.NUMBER(17)))
+}

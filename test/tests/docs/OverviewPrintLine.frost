@@ -1,0 +1,5 @@
+method main() {
+    def firstName := "Sarah"
+    def lastName := "Smith"
+    Console.printLine("Hello, \{firstName} \{lastName}!")
+}

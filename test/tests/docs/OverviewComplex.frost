@@ -1,0 +1,23 @@
+class Complex : Value {
+    def realPart:Real
+
+    def imaginaryPart:Real
+
+    init(realPart:Real, imaginaryPart:Real) {
+        self.realPart := realPart
+        self.imaginaryPart := imaginaryPart
+    }
+
+    function +(other:Complex):Complex {
+        return Complex(realPart + other.realPart, imaginaryPart + other.imaginaryPart)
+    }
+
+    @override
+    function get_asString():String {
+        return "(\{realPart} + \{imaginaryPart}i)"
+    }
+}
+
+method main() {
+    Console.printLine(Complex(9, 3) + Complex(-2, 14))
+}

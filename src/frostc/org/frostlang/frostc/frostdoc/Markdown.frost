@@ -1173,6 +1173,7 @@ class Markdown {
     }
 
     method processTestCase(name:String, rawGenerator:String?, code:String) {
+        Console.printLine("Generating test case \{name}(\{rawGenerator})")
         def generator:File
         if rawGenerator !== null & rawGenerator != "" {
             generator := generatorPath.resolve(rawGenerator + ".frost")

@@ -1,0 +1,19 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("method main() {")
+        out.level += 1
+        out.printLine("-- an inefficient, naive way to find duplicate elements in a list")
+        out.printLine("def array := [1, 9, 8, 10, 53, -12, 9, 17, 26]")
+        out.printLine("def count := array.count")
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.printLine("Console.printLine(found)")
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

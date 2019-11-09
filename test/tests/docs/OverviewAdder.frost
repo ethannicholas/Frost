@@ -1,0 +1,9 @@
+function getAdder(x:Int):(Int)=>(Int) {
+    return function(y:Int):Int {
+        return x + y
+    }
+}
+method main() {
+    def add10 := getAdder(10)
+    Console.printLine(add10(5))
+}

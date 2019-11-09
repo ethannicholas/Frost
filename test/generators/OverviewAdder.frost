@@ -1,0 +1,15 @@
+method main() {
+    try {
+        def out := Console.outputStream()
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.printLine("method main() {")
+        out.printLine("    def add10 := getAdder(10)")
+        out.printLine("    Console.printLine(add10(5))")
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

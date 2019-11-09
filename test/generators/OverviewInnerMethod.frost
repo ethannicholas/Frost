@@ -1,0 +1,29 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("class Person {")
+        out.level += 1
+        out.printLine("def firstName:String")
+        out.printLine("def middleName:String")
+        out.printLine("def lastName:String")
+        out.printLine()
+        out.printLine("init(firstName:String, middleName:String, lastName:String) {")
+        out.printLine("    self.firstName := firstName")
+        out.printLine("    self.middleName := middleName")
+        out.printLine("    self.lastName := lastName")
+        out.printLine("}")
+        out.printLine()
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.level -= 1
+        out.printLine("}")
+        out.printLine()
+        out.printLine("method main() {")
+        out.printLine("    Person(\"Lucius\", \"M\", \"Fox\").dump()")
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

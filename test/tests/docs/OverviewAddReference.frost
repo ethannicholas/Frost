@@ -1,0 +1,4 @@
+method main() {
+    def add:(Int, Int)=>(Int) := Int.+
+    Console.printLine(add(17, 6)) -- prints 23
+}

@@ -1,0 +1,32 @@
+interface Formattable {
+    function format(fmt:String):String
+}
+
+class Weight : Formattable {
+    def weight:Real
+
+    init(weight:Real) {
+        self.weight := weight
+    }
+
+    @override
+    function format(fmt:String):String {
+        match fmt {
+            when "kg" {
+                return "\{weight}kg"
+            }
+            when "lb" {
+                return "\{weight * 2.2}lb"
+            }
+            otherwise {
+                unreachable
+            }
+        }
+    }
+}
+
+method main() {
+    def f:Formattable := Weight(100)
+    Console.printLine(f.format("kg"))
+    Console.printLine(f.format("lb"))
+}

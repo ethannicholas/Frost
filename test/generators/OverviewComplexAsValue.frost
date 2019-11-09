@@ -1,0 +1,31 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("class Complex : Value {")
+        out.printLine("    def realPart:Real")
+        out.printLine("")
+        out.printLine("    def imaginaryPart:Real")
+        out.printLine("")
+        out.printLine("    init(realPart:Real, imaginaryPart:Real) {")
+        out.printLine("        self.realPart := realPart")
+        out.printLine("        self.imaginaryPart := imaginaryPart")
+        out.printLine("    }")
+        out.printLine("")
+        out.printLine("    function +(other:Complex):Complex {")
+        out.printLine("        return Complex(realPart + other.realPart, imaginaryPart + other.imaginaryPart)")
+        out.printLine("    }")
+        out.printLine("")
+        out.printLine("    @override")
+        out.printLine("    function get_asString():String {")
+        out.printLine("        return \"(\\{realPart} + \\{imaginaryPart}i)\"")
+        out.printLine("    }")
+        out.printLine("}")
+        out.printLine()
+        Console.inputStream().sendTo(out)
+        out.printLine()
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

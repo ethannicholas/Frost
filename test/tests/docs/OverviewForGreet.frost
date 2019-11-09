@@ -1,0 +1,5 @@
+method main() {
+    for greeting in ["Hello", "Bonjour", "Hola", "Guten tag"] {
+        Console.printLine(greeting)
+    }
+}

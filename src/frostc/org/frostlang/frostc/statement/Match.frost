@@ -210,6 +210,7 @@ class Match {
         def startBlock := ir.currentBlock.id
         def end := ir.newBlock("match end")
         def cases := Array<(UInt64, IR.Block.ID)>()
+        def hitCases := IdentitySet<ChoiceCase>()
         for i in 0 .. whens.count {
             def w := whens[i]
             match w {
@@ -226,6 +227,13 @@ class Match {
                                     if cc !== null {
                                         if checkChoiceMatch(compiler, getPosition(base), cc.second,
                                                 choiceClass, value, tests.count, args.count) {
+                                            if !hitCases.contains(cc.second) {
+                                                hitCases.add(cc.second)
+                                            }
+                                            else {
+                                                compiler.error(position, "duplicate 'when' test " +
+                                                        "'\{cc.second.name}'")
+                                            }
                                             cases.add((cc.second.tag.asUInt64, block))
                                             destructureChoiceCase(compiler, ir, position, value,
                                                     cc.second, args)
@@ -306,6 +314,12 @@ class Match {
             if !ir.currentBlockFinished {
                 ir.add(IR.Statement.BRANCH(position, end))
             }
+        }
+        else if hitCases.count > 0 & hitCases.count = choiceClass!.choiceCases.count {
+            -- Exhaustive. Doesn't really matter where the (unreachable) otherBlock is
+            -- directed to, so long as it doesn't make the analyzer think we can skip past this
+            -- switch
+            otherBlock := cases[0][1]
         }
         else {
             otherBlock := end

@@ -4,7 +4,6 @@ Syntax Overview
 This is a basic overview of Frost's syntax and features, intended to help experienced programmers
 quickly get started in Frost.
 
-
 Comments
 --------
 
@@ -44,6 +43,9 @@ sequences similar to C.
 
 String literals may have expressions embedded into them using the syntax `\{expression}`, e.g.:
 
+    -- testcase OverviewPrintLine(Simple)
+    def firstName := "Sarah"
+    def lastName := "Smith"
     Console.printLine("Hello, \{firstName} \{lastName}!")
 
 This is called [string interpolation](stringInterpolation.md), and it has quite a few other tricks
@@ -193,18 +195,21 @@ For Loops
 
 To count from 1 to 10:
 
+    -- testcase OverviewFor(Simple)
     for i in 1 ... 10 {
         Console.printLine(i)
     }
 
 To count backwards from 100 by 10:
 
+    -- testcase OverviewForBackwards(Simple)
     for i in 100 ... 0 by -10 {
         Console.printLine(i)
     }
 
 To iterate over a collection:
 
+    -- testcase OverviewForGreet(Simple)
     for greeting in ["Hello", "Bonjour", "Hola", "Guten tag"] {
         Console.printLine(greeting)
     }
@@ -249,6 +254,7 @@ Flow Control Statements
 Any loop may be prefixed with a named `label:`, to make it a target for labeled `break` and
 `continue` statements:
 
+    -- testcase OverviewBreak
     var found := false
     outer: for i in 0 .. count {
         for j in 0 .. count {
@@ -300,6 +306,7 @@ it is more efficient if they are).
 Methods
 -------
 
+    -- testcase OverviewMethodAdd(OverviewAdd)
     method add(x:Int, y:Int):Int {
         return x + y
     }
@@ -308,18 +315,32 @@ Methods
 indirectly) modify any external-visible state. Since the above `add` method does not modify any
 state, it could have been declared as a `function`:
 
+    -- testcase OverviewFunctionAdd(OverviewAdd)
     function add(x:Int, y:Int):Int {
         return x + y
     }
 
-Frost supports overloading by method parameters *and* by return type. Overloading by return type is
-used frequently in the core APIs; for instance, many classes provide multiple `convert()` functions
-for converting to various other types. The appropriate function is chosen based on context:
+Frost supports overloading by method parameters *and* by return type. For example:
 
-    def i:Int     := 32
-    def i8:Int8   := i.convert() -- calls Int.convert():Int8
-    def i16:Int16 := i.convert() -- calls Int.convert():Int16
-    def fail      := i.convert() -- ERROR, ambiguous!
+    -- testcase OverviewReturnOverload(Complete)    
+    function empty():Int {
+        return 0
+    }
+
+    function empty():String {
+        return ""
+    }
+
+    function empty():Bit {
+        return false
+    }
+
+    method main() {
+        def i:Int    := empty() -- calls empty():Int
+        def s:String := empty() -- calls empty():String
+        def b:Bit    := empty() -- calls empty():Bit
+        def broken   := empty() -- ERROR, ambiguous!
+    }
 
 [Read more about methods.](methods.md)
 
@@ -328,6 +349,7 @@ Classes
 
 The syntax for creating classes is similar to most object-oriented languages:
 
+    -- testcase OverviewClass(Complete)
     class Adder {
         def x:Int
 
@@ -360,13 +382,16 @@ as in:
 Interfaces
 ----------
 
+    -- testcase OverviewFormattable
     interface Formattable {
         function format(fmt:String):String
     }
 
 Interfaces may provide a *default implementation* of a method:
 
+    -- testcase OverviewFormattableDefault
     interface Formattable {
+        @default
         function format(fmt:String):String {
             return "<formatted object>"
         }
@@ -380,6 +405,7 @@ its own implementation.
 Inheritance
 -----------
 
+    -- testcase OverviewInheritance
     class Foo : Bar, Formattable {
         @override
         function format(fmt:String):String {
@@ -414,9 +440,10 @@ A `choice` is a special kind of class which functions similarly to a C++ `enum c
 When a choice entry has data fields associated with it, as with `Expression` above, the fields may
 be extracted using `match`:
 
+    -- testcase OverviewChoiceMatch
     match expr {
         when NUMBER(value) {
-            return value.convert()
+            return value.asString
         }
         when ADD(left, right) {
             return "\{left} + \{right}"
@@ -544,12 +571,14 @@ receive its command line arguments). For convenience, you may also define `main`
 class](bareCode.md), in which case a class is synthesized to hold it. This means that the simplest
 way to write "Hello, World!" in Frost is:
 
+    -- testcase OverviewBareHello(Complete)
     method main() {
         Console.printLine("Hello, World!")
     }
 
 but you could also write it as:
 
+    -- testcase OverviewHello(Complete)
     class Hello {
         @class
         method main(args:ListView<String>) {
@@ -587,8 +616,9 @@ that the value cannot actually be `null` at that particular point. For example:
 
 But if we prove that the value can't be `null` at the point where it is referenced, it works:
 
+    -- testcase OverviewNonNullable
     def result:Object? := getResult()
-    if result != null {
+    if result !== null {
         Console.printLine(result)
     }
     else {
@@ -605,7 +635,8 @@ syntax creates a value of type [RegularExpression], which many methods in `Strin
 `MutableString` operate on. `RegularExpression` may also be used to directly create a `Matcher`
 object to do your own matching.
 
-    Console.printLine("Can you find the number 57?".parse(/.*?(\d+).*?/))
+    -- testcase OverviewRegex(Simple)
+    Console.printLine("Can you find the number 57?".parse(/.*?(\d+).*?/)!)
 
 And, of course, you may directly create `RegularExpression` objects without relying on the built-in
 syntax for it.
@@ -647,6 +678,7 @@ Operator Overloading
 
 Operators are overloaded by defining a function with the operator's name, as in `function +` below:
 
+    -- testcase OverviewComplex
     class Complex : Value {
         def realPart:Real
 
@@ -662,7 +694,7 @@ Operators are overloaded by defining a function with the operator's name, as in 
         }
 
         @override
-        function convert():String {
+        function get_asString():String {
             return "(\{realPart} + \{imaginaryPart}i)"
         }
     }
@@ -674,6 +706,7 @@ Generic Types
 
 Here is an example generic class which holds objects of type `T` and pulls them back out at random:
 
+    -- testcase OverviewBag
     class Bag<T> {
         @private
         def random:Random
@@ -733,6 +766,7 @@ case it takes exactly its declared parameters) or as a member of its class (in w
 takes an extra parameter representing its `self`). For instance, we can use the `Complex` class
 above like this:
 
+    -- testcase OverviewComplexAsValue
     method main() {
         def add := Complex.+
         Console.printLine(add(Complex(3, 1), Complex(7, 2))) -- prints (10 + 3i)
@@ -757,6 +791,7 @@ and returns an `Int` has type:
 
 This allows us to specify which `Int.+` we want:
 
+    -- testcase OverviewAddReference(Simple)
     def add:(Int, Int)=>(Int) := Int.+
     Console.printLine(add(17, 6)) -- prints 23
 
@@ -764,6 +799,7 @@ Note that since we grabbed `+` out of the `Int` class, it takes an extra paramet
 We could also have referred to `+` as a member of a specific `Int` instance, in which case its
 `self` is the object from which it was taken:
 
+    -- testcase OverviewAdd3Reference(Simple)
     def add3:(Int)=>(Int) := 3.+
     Console.printLine(add3(8)) -- prints 11
 
@@ -778,6 +814,7 @@ Anonymous Methods
 
 Inside of a method, you may create anonymous method values:
 
+    -- testcase OverviewAdder
     function getAdder(x:Int):(Int)=>(Int) {
         return function(y:Int):Int {
             return x + y
@@ -791,6 +828,7 @@ enclosing method's `self` value must be explicitly specified.
 Named Inner Methods
 -------------------
 
+    -- testcase OverviewInnerMethod
     method dump() {
         method indent(indentation:Int, s:String) {
             Console.printLine(" " * indentation + s)

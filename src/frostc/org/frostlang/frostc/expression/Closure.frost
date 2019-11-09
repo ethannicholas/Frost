@@ -88,26 +88,23 @@ class Closure {
         def p := m.position
         m.annotations := Annotations(0)
         compiler.closureCount += 1
-        def supers := Array<Type>()
-        if compiler.isImmutable(compiler.currentClass[0].type) {
-            supers.add(compiler.IMMUTABLE_TYPE)
-            for c in captures {
-                match c {
-                    when Capture.VARIABLE(v) {
-                        if !compiler.isImmutable(v.type) {
-                            supers.clear()
-                            break
-                        }
+        def supers := [compiler.IMMUTABLE_TYPE]
+        for c in captures {
+            match c {
+                when Capture.VARIABLE(v) {
+                    if !compiler.isImmutable(v.type) {
+                        supers.clear()
+                        break
                     }
-                    when Capture.SELF {
-                        if !compiler.isImmutable(capturedSelfType(compiler)) {
-                            supers.clear()
-                            break
-                        }
+                }
+                when Capture.SELF {
+                    if !compiler.isImmutable(capturedSelfType(compiler)) {
+                        supers.clear()
+                        break
                     }
-                    otherwise {
-                        unreachable, c.asString
-                    }
+                }
+                otherwise {
+                    unreachable, c.asString
                 }
             }
         }

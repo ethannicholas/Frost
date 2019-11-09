@@ -1,0 +1,23 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.printLine()
+        out.printLine("method main() {")
+        out.level += 1
+        out.printLine("def bag := Bag<Int>(XorShift128Plus(0))")
+        out.printLine("for i in 1 .. 10 {")
+        out.printLine("    bag.add(i)")
+        out.printLine("}")
+        out.printLine("for i in 1 .. 10 {")
+        out.printLine("    Console.printLine(bag.pull())")
+        out.printLine("}")
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

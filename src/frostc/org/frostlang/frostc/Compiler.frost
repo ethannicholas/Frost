@@ -2124,9 +2124,6 @@ class Compiler : ErrorReporter {
         def bestCost := Int.MAX
         var foundInt := false
         for t in possible {
-            if t = INT_TYPE {
-                foundInt := true
-            }
             def cost := coercionCost(expr, t)
             assert cost !== null
             if cost.second < bestCost {
@@ -3846,7 +3843,7 @@ class Compiler : ErrorReporter {
         if target !== null & !target.type().isClassLiteral {
             -- we're taking a reference which has a fixed 'self' parameter, as in '1.+'. Easiest way
             -- to do this is compile the closure 'x => 1.+(x)'. (Well, it's not actually a lambda,
-            -- because it can be a method and return void, but you get the point)
+            -- because it can be a method and can return void, but you get the point)
             assert !m.annotations.isClass
             def old := enclosingContexts
             -- keep TRY_SCOPE from affecting effective return type
@@ -4339,7 +4336,6 @@ class Compiler : ErrorReporter {
         def result := getRefVariant(type)
         def cl := getClass(type)
         if cl !== null & cl.annotations.isFinal & !hasNontrivialCleanup(cl) {
-            Console.printLine("no cleanup for \{rawType}")
             return result + "NoCleanup"
         }
         return result

@@ -1,0 +1,19 @@
+interface Formattable {
+    @default
+    function format(fmt:String):String {
+        return "<formatted object>"
+    }
+}
+
+class Weight : Formattable {
+    def weight:Int
+
+    init(weight:Int) {
+        self.weight := weight
+    }
+}
+
+method main() {
+    def f:Formattable := Weight(100)
+    Console.printLine(f.format(""))
+}

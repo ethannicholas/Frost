@@ -1,0 +1,24 @@
+method main() {
+    try {
+        def out := Console.outputStream()
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.printLine()
+        out.printLine("class Weight : Formattable {")
+        out.printLine("    def weight:Int")
+        out.printLine()
+        out.printLine("    init(weight:Int) {")
+        out.printLine("        self.weight := weight")
+        out.printLine("    }")
+        out.printLine("}")
+        out.printLine()
+        out.printLine("method main() {")
+        out.printLine("    def f:Formattable := Weight(100)")
+        out.printLine("    Console.printLine(f.format(\"\"))")
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

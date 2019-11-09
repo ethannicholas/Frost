@@ -1,0 +1,25 @@
+class Person {
+    def firstName:String
+    def middleName:String
+    def lastName:String
+
+    init(firstName:String, middleName:String, lastName:String) {
+        self.firstName := firstName
+        self.middleName := middleName
+        self.lastName := lastName
+    }
+
+    method dump() {
+        method indent(indentation:Int, s:String) {
+            Console.printLine(" " * indentation + s)
+        }
+        Console.printLine("Name:")
+        indent(4, "First: \{firstName}")
+        indent(4, "Middle: \{middleName}")
+        indent(4, "Last: \{lastName}")
+    }
+}
+
+method main() {
+    Person("Lucius", "M", "Fox").dump()
+}

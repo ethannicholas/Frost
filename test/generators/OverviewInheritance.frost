@@ -1,0 +1,23 @@
+method main() {
+    try {
+        def out := Console.outputStream()
+        out.printLine("interface Formattable {")
+        out.printLine("    function format(fmt:String):String")
+        out.printLine("}")
+        out.printLine()
+        out.printLine("class Bar {")
+        out.printLine("}")
+        out.printLine()
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.printLine()
+        out.printLine("method main() {")
+        out.printLine("    def f:Formattable := Foo()")
+        out.printLine("    Console.printLine(f.format(\"\"))")
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}
