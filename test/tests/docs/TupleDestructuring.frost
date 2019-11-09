@@ -1,0 +1,6 @@
+method main() {
+    def suffix := ("KB", 1024)
+    def (name, value) := suffix
+    Console.printLine(name)  -- prints "KB"
+    Console.printLine(value) -- prints "1024"
+}

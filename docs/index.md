@@ -49,5 +49,5 @@ And many other features. This is what a simple Frost program looks like:
 You can see more examples by [trying Frost directly in your Web browser!](try.html).
 
 For a more comprehensive overview of Frost's syntax and features, see the 
-[Syntax Overview](overview.md) or [API documentation](api/frost/index.html). If you'd like to
-install the Frost compiler for yourself, see the [Getting Started](gettingStarted.md) page.
+[Syntax Overview](overview.md) or [API documentation](api/index.html). If you'd like to install the
+Frost compiler for yourself, see the [Getting Started](gettingStarted.md) page.

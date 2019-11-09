@@ -5,7 +5,7 @@ method main() {
         out.level += 1
         out.printLine("def arr := Int[1 ... 10]")
         Console.inputStream().sendTo(out)
-        Console.printLine()
+        out.printLine()
         out.level -= 1
         out.printLine("}")
     }

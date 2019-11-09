@@ -5314,7 +5314,7 @@ class Compiler : ErrorReporter {
                 symbolTable.add(v)
                 return Target.VARIABLE(v, value)
             }
-            when ASTNode.TUPLE_TARGET(_, targets) {
+            when ASTNode.TUPLE(_, targets) {
                 def finalType:Type? := null
                 def compiledTuple:IR.Value?
                 if rawValue !== null {

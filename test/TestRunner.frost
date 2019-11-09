@@ -23,13 +23,13 @@ class TestRunner : Immutable {
     }
 
     method runTest(frostc:File, cLibs:ListView<String>, workingDir:File, test:String) {
+        def expectedPath := workingDir.resolve(test + ".expected")
         def expected:String
         try {
-            expected := workingDir.resolve(test + ".expected").readFully()
+            expected := expectedPath.readFully()
         }
         fail(error) {
-            Console.printLine(error)
-            System.exit(1)
+            expected := "<error reading \{expectedPath}>"
         }
         try {
             def exe := System.temporaryDirectory().resolve(test + ".out")

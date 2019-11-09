@@ -50,7 +50,7 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
     }
 
     ================================================================================================
-    As [sorted], but performs the sort in-place rather than returning a new list.
+    As [sort], but performs the sort in-place rather than returning a new list.
     ================================================================================================
     @default
     method sortInPlace(greater:(T, T)=>(Bit)) {

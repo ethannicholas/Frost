@@ -1,0 +1,7 @@
+method main() {
+    def value:Int
+    def suffix := ("KB", 1024)
+    -- ignore the text, only extract the numeric value
+    (_, value) := suffix
+    Console.printLine(value)
+}

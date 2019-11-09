@@ -6,7 +6,7 @@ method main() {
         out.printLine("def iter := Int[1 ... 10].iterator")
         out.print("Console.printLine(")
         Console.inputStream().sendTo(out)
-        Console.printLine(")")
+        out.printLine(")")
         out.level -= 1
         out.printLine("}")
     }

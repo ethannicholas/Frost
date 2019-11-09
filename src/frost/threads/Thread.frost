@@ -1,9 +1,11 @@
 package frost.threads
 
+uses frost.unsafe.UnsafeMessageQueue
+
 ====================================================================================================
 Represents a thread of execution within a program. Each program begins with a single thread, and may
 create more. By default, any living threads prevent a program from exiting, even if its `main()`
-method ends. The [preventsExit] flag may be toggled to change this behavior.
+method ends. The optional `preventsExit` argument to `run()` changes this behavior.
 
 As Frost has neither global nor class-level mutable variables, threads do not normally have any
 access to each other's mutable data. Eliminating memory sharing means that there is generally no

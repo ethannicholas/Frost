@@ -4,6 +4,7 @@ Syntax Overview
 This is a basic overview of Frost's syntax and features, intended to help experienced programmers
 quickly get started in Frost.
 
+
 Comments
 --------
 
@@ -743,7 +744,7 @@ The first reference to `Complex.+` gives us a method reference which requires an
 represent its `self`, while the second reference is taken out of a `Complex` instance and thus
 already has a `self`, so it needs only its single declared `Complex` parameter.
 
-Method names are often ambiguous. For instance, there are several [Int.+] functions with various
+Method names are often ambiguous. For instance, there are several `Int.+` functions with various
 parameter types, which means that:
 
     def add := Int.+
@@ -850,6 +851,42 @@ directly to the `fail` block. You *must* (directly or via a `try` block) look at
 a method that can fail; it is a compile-time error to ignore errors.
 
 [Read more about error handling.](errorHandling.md)
+
+Semicolons
+----------
+
+Frost statements do not require a terminator, but may optionally be followed by a semicolon.
+Generally speaking, you should only use semicolons for clarity when a line contains more than one
+statement. Both
+
+    x := 0 y := 0
+
+and
+
+    x := 0; y := 0
+
+are perfectly legal, but the latter is easier to read.
+
+Whitespace
+----------
+
+Other than the fact that it separates tokens, whitespace is generally ignored. There is one
+exception to this rule: parenthesized and bracketed expressions are interpreted as method calls when
+they appear after another expression on the same line, and as the beginnings of statements when they
+appear at the beginning of a line. This means that
+
+    foo(x)[3].apply(Console.printLne)
+
+is a single statement meaning "call the method `foo(x)`, and then call the `[](3)` method on its
+return value, and then call `apply(Console.printLine)` on the result of that".
+
+But by formatting the same sequence of tokens differently:
+
+    foo(x)
+    [3].apply(Console.printLne)
+
+we have two separate statements - a method call `foo(x)`, and then a statement which calls `apply`
+on an array literal.
 
 And that's it!
 --------------

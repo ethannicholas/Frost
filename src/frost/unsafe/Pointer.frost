@@ -126,7 +126,7 @@ class Pointer<T> : Value {
     the pointed-to memory**. If, for instance, you wish to destroy a `Pointer<Pointer<Char8>>`, you
     must first `destroy` all of the inner `Pointer<Char8>`s or you will leak memory. If the values
     pointed to by the pointer are reference counted objects, you must call `Frost.unref()` (or
-    use [clear]) to unref them.
+    use [clear(Int)]) to unref them.
     ================================================================================================
     method destroy() {
         Frost.destroy(value)

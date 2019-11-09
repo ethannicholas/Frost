@@ -1,0 +1,17 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("method main() {")
+        out.level += 1
+        out.printLine("def value:Int")
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.printLine("Console.printLine(value)")
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

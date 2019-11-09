@@ -5,7 +5,6 @@ method main() {
         out.level += 1
         out.printLine("def collection := [\"Hello\", \"Bonjour\", \"Hola\", \"Guten Tag\"]")
         Console.inputStream().sendTo(out)
-        Console.printLine()
         out.level -= 1
         out.printLine("}")
     }

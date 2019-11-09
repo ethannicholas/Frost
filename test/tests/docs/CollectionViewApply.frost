@@ -1,4 +1,3 @@
 method main() {
     def collection := ["Hello", "Bonjour", "Hola", "Guten Tag"]
-    collection.apply(Console.printLine)
-}
+    collection.apply(Console.printLine)}

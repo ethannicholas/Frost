@@ -16,28 +16,44 @@ class LinkResolver {
     @private
     def docPath:File
 
-    @private
-    def contextClass:ClassDecl?
+    choice Context {
+        CLASS(ClassDecl, String? -* api path override *-)
+        PACKAGE(String)
+        API_PATH(String -* api path *-, File -* from file *-)
 
-    @private
-    def contextPackage:String?
-
-    init(compiler:Compiler, docPath:File, context:ClassDecl?) {
-        self.compiler := compiler
-        self.docPath := docPath
-        self.contextClass := context
+        @override
+        function get_asString():String {
+            match self {
+                when CLASS(cl, _) {
+                    return cl.name
+                }
+                when PACKAGE(name) {
+                    return name
+                }
+                when API_PATH(_, path) {
+                    return path.asString
+                }
+                otherwise {
+                    unreachable
+                }
+            }
+        }
     }
 
-    init(compiler:Compiler, docPath:File, context:String?) {
+    @private
+    def context:Context?
+
+    init(compiler:Compiler, docPath:File, context:Context) {
         self.compiler := compiler
         self.docPath := docPath
-        self.contextPackage := context
+        self.context := context
     }
 
     function matches(m:MethodDecl, parameters:ListView<Type>):Bit {
         if m.parameters.count != parameters.count {
             return false
         }
+        compiler.resolve(m)
         for i in 0 .. parameters.count {
             if m.parameters[i].type != parameters[i] {
                 return false
@@ -48,12 +64,22 @@ class LinkResolver {
 
     function getAPIPath():String {
         def base:String
-        if contextClass !== null {
-            return "../" * contextClass.name.find(".").count()
-        }
-        else {
-            assert contextPackage !== null
-            return "../" * (contextPackage.find(".").count() + 1)
+        match context {
+            when Context.CLASS(cl, path) {
+                if path !== null {
+                    return path
+                }
+                return "../" * cl.name.find(".").count()
+            }
+            when Context.PACKAGE(name) {
+                return "../" * name.find(/\w+/).count()
+            }
+            when Context.API_PATH(path, _) {
+                return path
+            }
+            otherwise {
+                unreachable
+            }
         }
     }
 
@@ -120,18 +146,24 @@ class LinkResolver {
             if docPath.resolve(link).exists() {
                 return link.replace(".md", ".html")
             }
+            Console.printLine("link to nonexistent file \{link} in \{context}")
             return null
         }
         var cl := compiler.tryResolveClass(link)
         if cl !== null {
             return linkTo(cl)
         }
-        if contextClass !== null & link.matches(/\w+/) {
-            def s := compiler.getSymbolTable(contextClass)[link]
-            if s !== null {
-                return linkTo(s)
+        match context {
+            when Context.CLASS(cl, _) {
+                if link.matches(/\w+/) {
+                    def s := compiler.getSymbolTable(cl)[link]
+                    if s !== null {
+                        return linkTo(s)
+                    }
+                }
             }
         }
+        -- dotted name
         if link.matches(/\w+(?:\.\w+)*/) {
             def index := link.lastIndexOf(".")
             if index !== null {
@@ -139,14 +171,15 @@ class LinkResolver {
                 if cl !== null {
                     def s := compiler.getSymbolTable(cl)[link[link.next(index)..]]
                     if s == null {
-                        Console.printLine("could not resolve: \{link}")
+                        Console.printLine("could not resolve: \{link} in \{context}")
                         return null
                     }
                     return linkTo(s)
                 }
             }
         }
-        def parsed := link.parse(/(\w+(?:\.\w+)*)\((.*)\)/)
+        -- method signature
+        def parsed := link.parse(/([^(]+)\((.*)\)/)
         if parsed !== null {
             def parameters := Array<Type>()
             if parsed[1].trimmed != "" {
@@ -160,9 +193,20 @@ class LinkResolver {
                         return null
                     }
                     def converted := compiler.scanner.convertType(type)
-                    def resolved := compiler.resolve(converted)
+                    match context {
+                        when Context.CLASS(cl, _) {
+                            compiler.currentClass.push(cl)
+                            compiler.symbolTable := compiler.getSymbolTable(cl)
+                        }
+                    }
+                    def resolved := compiler.resolve(converted, false)
+                    match context {
+                        when Context.CLASS {
+                            compiler.currentClass.pop()
+                        }
+                    }
                     if resolved == null {
-                        Console.printLine("could not resolve: \{type}")
+                        Console.printLine("could not resolve type: \{converted} in \{context}")
                         return null
                     }
                     parameters.add(resolved)
@@ -179,12 +223,17 @@ class LinkResolver {
                 symbolName := name[name.next(index)..]
             }
             else {
-                cl := contextClass
+                match context {
+                    when Context.CLASS(contextClass, _) {
+                        cl := contextClass
+                    }
+                }
                 symbolName := name
             }
             if cl !== null {
                 def s := compiler.getSymbolTable(cl)[symbolName]
                 if s == null {
+                    Console.printLine("no symbol '\{symbolName}' in \{context}")
                     return null
                 }
                 match s.kind {
@@ -201,9 +250,11 @@ class LinkResolver {
                         }
                     }
                 }
+                Console.printLine("no match for link to method '\{link}' in \{context}")
                 return null
             }
         }
+        Console.printLine("no match for link to '\{link}' in \{context}")
         return null
     }
 }

@@ -1,0 +1,4 @@
+method main() {
+    def suffix := ("KB", 1024)
+    Console.printLine(suffix[0]) -- writes "KB"
+}

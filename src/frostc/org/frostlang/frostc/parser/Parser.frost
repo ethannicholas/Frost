@@ -1043,6 +1043,12 @@ class Parser {
     between generic parameters and comparison expressions, e.g. foo(X < Y, Z > ... could be either a
     generic type X<Y, Z> or two comparison expressions X < Y and Z > <whatever the next token is>.
     We can't disambiguate this until we see the next token.
+
+    This is also one of the few areas that we are sensitive to whitespace. We refuse to recognize
+    call or indices unless they are on the same line (i.e. foo   () is a valid call expression, but
+    foo
+    ()
+    is not).
     ================================================================================================
     method postfixExpression():ASTNode? {
         var result := term()
@@ -1050,9 +1056,18 @@ class Parser {
             return null
         }
         loop {
+
+            def raw := rawNext()
+            pushback(raw)
             def token := next()
             match token.kind {
                 when Token.Kind.LPAREN {
+                    if token.position.line != raw.position.line {
+                        -- the parenthesis didn't show up until a different line, so assume it's not
+                        -- a call
+                        pushback(token)
+                        return result
+                    }
                     commaSeparatedExpressionContext.push(true) -- FIXME use init / cleanup to automate this
                     def args := Array<ASTNode>()
                     if checkNext(Token.Kind.RPAREN) == null {
@@ -1080,6 +1095,12 @@ class Parser {
                             FixedArray<ASTNode>.from(args))
                 }
                 when Token.Kind.LBRACKET {
+                    if token.position.line != raw.position.line {
+                        -- the bracket didn't show up until a different line, so assume it's not
+                        -- a call
+                        pushback(token)
+                        return result
+                    }
                     def arg := expression()
                     if arg == null {
                         return null
@@ -1594,7 +1615,7 @@ class Parser {
                 targets.add(t)
             }
             expect(Token.Kind.RPAREN, "')'")
-            return ASTNode.TUPLE_TARGET(paren.position, FixedArray<ASTNode>(targets))
+            return ASTNode.TUPLE(paren.position, FixedArray<ASTNode>(targets))
         }
         def id := expect(Token.Kind.IDENTIFIER, "an identifier")
         if id == null {
@@ -1873,7 +1894,7 @@ class Parser {
     }
 
     ================================================================================================
-    expressionOrAssignment = expression assignmentOperator expression)?
+    expressionOrAssignment = expression (assignmentOperator expression)?
     ================================================================================================
     method expressionOrAssignment():ASTNode? {
         def start := expression()
@@ -2177,10 +2198,10 @@ class Parser {
     }
 
     ================================================================================================
-    statement = ifStatement | anyLoop | expressionOrAssignment | assertStatement | matchStatement |
-            block | varDeclaration | initCall | innerMethod | try | unreachable
+    statementBody = ifStatement | anyLoop | expressionOrAssignment | assertStatement |
+            matchStatement | block | varDeclaration | initCall | innerMethod | try | unreachable
     ================================================================================================
-    method statement():ASTNode? {
+    method statementBody():ASTNode? {
         match peek().kind {
             when Token.Kind.IF     { return ifStatement() }
             when Token.Kind.FOR    { return forLoop(null) }
@@ -2207,9 +2228,6 @@ class Parser {
                 pushback(id)
                 return expressionOrAssignment()
             }
-            when Token.Kind.SELF, Token.Kind.SUPER {
-                return expressionOrAssignment()
-            }
             when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT {
                 return varDeclaration()
             }
@@ -2226,11 +2244,18 @@ class Parser {
                 return unreachableStatement()
             }
             otherwise {
-                -- trigger error
-                expect(Token.Kind.IF, "a statement")
-                return null
+                return expressionOrAssignment()
             }
         }
+    }
+
+    ================================================================================================
+    statement = statementBody SEMICOLON?
+    ================================================================================================
+    method statement():ASTNode? {
+        def result := statementBody()
+        checkNext(Token.Kind.SEMICOLON)
+        return result
     }
 
     ================================================================================================

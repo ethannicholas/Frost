@@ -125,7 +125,7 @@ class FrostDoc {
             out.open("type")
             out.write("name", escape(t.name))
             out.write("simpleName", escape(simpleName(t)))
-            if t.isClass {
+            if !t.nonnullable().isMethod & t.isClass {
                 def cl := compiler.getClass(t)
                 if cl !== null {
                     if cl.isSpecialization() {
@@ -543,10 +543,23 @@ class FrostDoc {
 
     function linkResolver():LinkResolver {
         if currentClass !== null {
-            return LinkResolver(compiler, docPath, currentClass)
+            def apiPath:String?
+            if currentPackage !== null {
+                if currentPackage != "" {
+                    apiPath := "../" * currentPackage.find(/\w+/).count()
+                }
+                else {
+                    apiPath := ""
+                }
+            }
+            else {
+                apiPath := null
+            }
+            return LinkResolver(compiler, docPath, LinkResolver.Context.CLASS(currentClass,
+                    apiPath))
         }
-        return LinkResolver(compiler, docPath, currentPackage)
-        }
+        return LinkResolver(compiler, docPath, LinkResolver.Context.PACKAGE(currentPackage))
+    }
 
     function linkTo(cl:ClassDecl):String {
         return linkResolver().linkTo(cl)
@@ -798,7 +811,7 @@ class FrostDoc {
             writeInheritedFields(cl)
             writeInheritedMethods(cl)
             for sub in cl.classes {
-                write(cl)
+                write(sub)
             }
             for f in cl.fields {
                 write(f)
@@ -831,7 +844,9 @@ class FrostDoc {
                     out.open("class")
                     write(cl.type)
                     if cl.doccomment !== null {
+                        currentClass := cl
                         writeDoc(cl.doccomment)
+                        currentClass := null
                     }
                     out.close("class")
                 }

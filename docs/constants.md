@@ -20,7 +20,9 @@ methods. Constants in class bodies are scoped to the class, for instance:
         constant H := 6.62606957e-34
     }
 
-    Console.writeLine("The speed of light is \{Physics.C} m/s")
+    method main() {
+        Console.writeLine("The speed of light is \{Physics.C} m/s")
+    }
 
 Constants appearing in methods are treated much like local [variables](variables.md), except that
 they are read-only and must be immutable. 

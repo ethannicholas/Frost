@@ -4,9 +4,9 @@ method process(c:Char32) {
 
 method main() {
     def string := "Hello"
+
     var index := string.start
     while index != string.end {
         process(string[index])
         index := string.next(index)
-    }
-}
+    }}

@@ -1,0 +1,9 @@
+method main() {
+    try {
+        Console.inputStream().sendTo(Console.outputStream())
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

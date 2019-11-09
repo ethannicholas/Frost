@@ -74,7 +74,6 @@ class UnsafeMessageQueue<T> : Immutable {
     @returns the number of messages in this `MessageQueue`
     @see hasMessage()
     @see getMessage()
-    @see getMessage(Int)
     ================================================================================================
     method pendingMessages():Int {
         def scope := ScopedLock(lock)
@@ -87,7 +86,6 @@ class UnsafeMessageQueue<T> : Immutable {
     @returns whether this queue has pending messages
     @see pendingMessages()
     @see getMessage()
-    @see getMessage(Int)
     ================================================================================================
     method hasMessage():Bit {
         return pendingMessages() > 0
@@ -96,7 +94,6 @@ class UnsafeMessageQueue<T> : Immutable {
     ================================================================================================
     Returns the next message from the queue, blocking until one is available.
     
-    @see getMessage(Int)
     @returns the next message from the queue
     ================================================================================================
     method getMessage():T {

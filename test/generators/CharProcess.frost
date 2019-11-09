@@ -10,9 +10,8 @@ method main() {
         out.printLine("method main() {")
         out.level += 1
         out.printLine("def string := \"Hello\"")
-        Console.printLine()
+        out.printLine()
         Console.inputStream().sendTo(out)
-        Console.printLine()
         out.level -= 1
         out.printLine("}")
     }

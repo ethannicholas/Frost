@@ -1,0 +1,20 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("method main() {")
+        out.level += 1
+        Console.inputStream().sendTo(out)
+        out.printLine()
+        out.printLine("Console.printLine(this)")
+        out.printLine("Console.printLine(is)")
+        out.printLine("Console.printLine(a)")
+        out.printLine("Console.printLine(nested)")
+        out.printLine("Console.printLine(tuple)")
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

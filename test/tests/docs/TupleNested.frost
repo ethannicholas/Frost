@@ -1,0 +1,8 @@
+method main() {
+    def ((this, is), a, (nested, tuple)) := (("This", "is"), "a", ("nested", "tuple"))
+    Console.printLine(this)
+    Console.printLine(is)
+    Console.printLine(a)
+    Console.printLine(nested)
+    Console.printLine(tuple)
+}

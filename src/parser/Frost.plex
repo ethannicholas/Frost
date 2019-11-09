@@ -108,4 +108,5 @@ LPAREN                   := "("
 RPAREN                   := ")"
 COMMA                    := ","
 BACKSLASH                := "\\"
+SEMICOLON                := ";"
 INVALID                  := /./

@@ -5,7 +5,7 @@ method main() {
         out.level += 1
         out.printLine("def base := Int[1 ... 100].iterator")
         Console.inputStream().sendTo(out)
-        Console.printLine(".apply(Console.printLine)")
+        out.printLine(".apply(Console.printLine)")
         out.level -= 1
         out.printLine("}")
     }

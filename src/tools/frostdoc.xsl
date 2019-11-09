@@ -706,12 +706,19 @@
     </xsl:template>
 
     <xsl:template match="type" name="type">
-        <xsl:variable name="href">
-            <xsl:apply-templates select="." mode="href"/>
-        </xsl:variable>
-        <a href="{$href}">
-            <code><xsl:apply-templates select="simpleName"/></code>
-        </a>
+        <xsl:choose>
+            <xsl:when test="url">
+                <xsl:variable name="href">
+                    <xsl:apply-templates select="." mode="href"/>
+                </xsl:variable>
+                <a href="{$href}">
+                    <code><xsl:apply-templates select="simpleName"/></code>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <code><xsl:apply-templates select="simpleName"/></code>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <xsl:template match="type" mode="link">
@@ -724,12 +731,19 @@
     </xsl:template>
 
     <xsl:template match="type" mode="simple">
-        <xsl:variable name="href">
-            <xsl:apply-templates select="." mode="href"/>
-        </xsl:variable>
-        <a href="{$href}">
-            <xsl:apply-templates select="simpleName"/>
-        </a>
+        <xsl:choose>
+            <xsl:when test="url">
+                <xsl:variable name="href">
+                    <xsl:apply-templates select="." mode="href"/>
+                </xsl:variable>
+                <a href="{$href}">
+                    <code><xsl:apply-templates select="simpleName"/></code>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <code><xsl:apply-templates select="simpleName"/></code>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="seeAlsos">

@@ -412,6 +412,12 @@ class Markdown {
         }
     }
 
+    method unescapeSpecialChars(s:String):String {
+        def m := MutableString(s)
+        unescapeSpecialChars(m)
+        return m.finish()
+    }
+
     function encodeEmail(s:String):String {
         def result := MutableString()
         for ch in s {
@@ -980,18 +986,30 @@ class Markdown {
         })
     }
 
+    function stripHTML(s:String):String {
+        return s.replace(/<[^>]*>/, "")
+    }
+
+    method simpleEscape(s:String):String {
+        return s.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("*", charProtector.encode("*"))
+                .replace("_", charProtector.encode("_"))
+    }
+
     method doAnchors(markup:MutableString) {
         -- Internal references: [link text] [id]
-        def internalLink := RegularExpression("(" +
-                "\\[(.*?)\\]" + -- Link text = $2
+        def internalLink := RegularExpression(
+                "\\[([^\\[\\]]+)\\]" + -- Link text = $1
                 "[ ]?(?:\\n[ ]*)?" +
-                "\\[(.*?)\\]" + -- ID = $3
-                ")")
+                "\\[(.*?)\\]" -- ID = $2
+                )
         markup.replace(internalLink, function(groups:ListView<String?>):Object {
             def replacementText:String
-            def wholeMatch := groups[1]
-            def linkText := groups[2]
-            var id := groups[3] -- FIXME .toLowerCase();
+            def wholeMatch := groups[0]
+            def linkText := groups[1]
+            var id := groups[2] -- FIXME .toLowerCase();
             if id = "" { -- for shortcut links like [this][]
                 id := linkText -- .toLowerCase()
             }
@@ -1018,23 +1036,22 @@ class Markdown {
             return replacementText
         })
 
-        -- Inline-style links: [link text](url "optional title")
-        def inlineLink := RegularExpression("(" + -- Whole match = $1
-                "\\[(.*?)\\]" + -- Link text = $2
+        -- Inline-style links: [link text](url)
+        def inlineLink := RegularExpression(
+                "\\[([^\\[\\]]+)\\]" + -- Link text = $1
                 "\\(" +
                 "[ \\t]*" +
-                "<?(.*?)>?" + -- href = $3
+                "<?(.*?)>?" + -- href = $2
                 "[ \\t]*" +
-                "\\)" +
-                ")",
+                "\\)",
                 RegularExpression.DOTALL)
         def raw := markup.asString
         def matcher := inlineLink.matcher(raw)
         markup.clear()
         var index := raw.start
         while matcher.find(index) {
-            def linkText := matcher.group(2)
-            var url := matcher.group(3)
+            def linkText := unescapeSpecialChars(matcher.group(1))
+            var url := matcher.group(2)
             index := matcher.end
             while index < raw.end & url.find("(").count() > url.find(")").count() {
                 def next := raw.indexOf(")", index)
@@ -1106,20 +1123,25 @@ class Markdown {
                 }
                 replacementText := "<a href=\"\{url}\"\{titleTag}>\{linkText}</a>"
             }
-            else {
+            else if !linkText.contains("<span") {
                 if self.linkResolver !== null {
-                    replacementText := self.linkResolver(linkText)
-                    if replacementText !== null {
-                        def escaped := linkText.replace("&", "&amp;").replace("<", "&lt;")
-                        replacementText := "<a href=\"\{replacementText}\"><code>\{escaped}</code></a>"
+                    def url := self.linkResolver(self.unescapeSpecialChars(linkText))
+                    def escaped := self.simpleEscape(linkText)
+                    if url !== null {
+                        replacementText := "<a href=\"\{self.simpleEscape(url)}\"><code>" +
+                                "\{escaped}</code></a>"
                     }
                     else {
-                        replacementText := "(no match)"
+                        replacementText := "[\{escaped}]"
+                        Console.printLine("failed to resolve \{linkText}")
                     }
                 }
                 else {
                     replacementText := "(no link resolver)"
                 }
+            }
+            else {
+                replacementText := "[\{linkText}]"   
             }
             return replacementText
         })

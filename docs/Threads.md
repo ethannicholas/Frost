@@ -4,8 +4,8 @@ Threads
 A thread is an independent stream of execution. A complete program may consist of many threads, all
 running different code at the same time.
 
-Threads are created by the [Thread.start()] method, passing in the method to run in the background.
-The method will run asynchronously in a separate system thread.
+Threads are created by the [Thread.start(()=&>*())] method, passing in the method to run in the
+background. The method will run asynchronously in a separate system thread.
 
 Example:
 

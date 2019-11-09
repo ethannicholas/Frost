@@ -4,7 +4,7 @@ method main() {
         out.printLine("method main() {")
         out.level += 1
         Console.inputStream().sendTo(out)
-        Console.printLine()
+        out.printLine()
         out.level -= 1
         out.printLine("}")
     }

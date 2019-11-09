@@ -13,7 +13,7 @@ any of a number of other reasons.
 There are three main ways for a method to communicate failures back to its caller:
 
 1. A nullable result. This is the right choice when there is no need to convey any additional
-   information back to the caller beyond "it failed". For instance, when the [Int64.parse()]
+   information back to the caller beyond "it failed". For instance, when the [Int64.parse]
    function cannot parse a string, it simply returns `null` to indicate that "this wasn't a valid
    number". There really isn't any need for further information, so the function doesn't bother with
    the [Error] class at all.

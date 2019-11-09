@@ -179,7 +179,7 @@ interface LValue {
                 return null
             }
         }
-        compiler.error(expr.position(), "cannot assign to this expression)")
+        compiler.error(expr.position(), "cannot assign to this expression")
         return null
     }
 }

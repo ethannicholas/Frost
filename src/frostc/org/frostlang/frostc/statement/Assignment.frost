@@ -22,6 +22,43 @@ class Assignment {
             }
             return
         }
+        match rawLeft {
+            when ASTNode.TUPLE(_, lvalues) {
+                def right := compiler.compileExpression(rawRight, Compiler.TypeContext.NON_VOID)
+                if right == null {
+                    return
+                }
+                def rightType := right.type().nonnullable()
+                if !rightType.isTuple {
+                    compiler.error(rawRight.position(),
+                            "expected a tuple in destructuring assignment")
+                    return
+                }
+                if lvalues.count != rightType.subtypes.count {
+                    compiler.error(position, "expected tuple with \{lvalues.count} " +
+                            "elements, but found \{rightType.subtypes.count}")
+                    return
+                }
+                def wrapped := ASTNode.IR_WRAPPER(position.asPosition, right)
+                for i in 0 .. lvalues.count {
+                    match lvalues[i] {
+                        when ASTNode.IDENTIFIER(_, text) {
+                            if text = "_" {
+                                continue
+                            }
+                        }
+                    }
+                    def extract := Binary.compile(compiler, position, wrapped,
+                            Binary.Operator.INDEX, ASTNode.INT(position.asPosition, i.asUInt64),
+                            Compiler.TypeContext.UNSPECIFIED)
+                    if extract !== null {
+                        compile(compiler, position, lvalues[i], op,
+                                ASTNode.IR_WRAPPER(rawRight.position(), extract))
+                    }
+                }
+                return
+            }
+        }
         if op = Binary.Operator.ASSIGNMENT {
             match rawLeft {
                 when ASTNode.BINARY(position, base, op, index) {

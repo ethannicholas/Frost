@@ -1,0 +1,13 @@
+choice Node {
+    NULL
+    PERSON((String, String, String), String)
+}
+
+method main() {
+    def p := Node.PERSON(("Smith", "Robert", "J."), "555-1212")
+    match p {
+        when Node.PERSON((last, first, middle), phone) {
+            Console.printLine("\{first} \{middle} \{last}: \{phone}")
+        }
+    }
+}

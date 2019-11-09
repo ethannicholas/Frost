@@ -4,7 +4,7 @@ method process(c:Char32) {
 
 method main() {
     def string := "Hello"
+
     for c in string {
         process(c)
-    }
-}
+    }}

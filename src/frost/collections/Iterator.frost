@@ -154,8 +154,26 @@ interface Iterator<T> {
         }
     }
 
+    ================================================================================================
+    True if this iterator has no more elements to return.
+    ================================================================================================
     property done:Bit
 
+    ================================================================================================
+    Returns an iterator which reads from this iterator and returns `(index, value)` tuples. For
+    example,
+
+        -- testcase IteratorEnumeration(Simple)
+        for (i, v) in ["A", "B", "C"].iterator.enumeration {
+            Console.printLine("\{i}: \{v}")
+        }
+
+    will display:
+
+        0: A
+        1: B
+        2: C
+    ================================================================================================
     property enumeration:Iterator<(Int, T)>
 
     function get_done():Bit
@@ -224,7 +242,7 @@ interface Iterator<T> {
     }
 
     ================================================================================================
-    As [[\](Range<Int?>)], but additionally handles a `step`.
+    As [\[\](Range<Int?>)], but additionally handles a `step`.
 
     Example:
 

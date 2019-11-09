@@ -1,0 +1,5 @@
+method main() {
+    for (i, v) in ["A", "B", "C"].iterator.enumeration {
+        Console.printLine("\{i}: \{v}")
+    }
+}

@@ -7,7 +7,7 @@ Standard implementation of the `List` interface. `Array` is a resizable random-a
 featuring constant time reads and writes. Appending new elements to the array can be expensive, as
 it may require the backing store to be increased in size which in turn may require a memory copy.
 
-Particularly for bigger arrays, tt is best to avoid this expensive size increase by pre-allocating
+Particularly for bigger arrays, it is best to avoid this expensive size increase by pre-allocating
 the array with the expected number of elements it will contain using [init(Int)].
 ====================================================================================================
 @final
