@@ -17,9 +17,9 @@ class UInt : Value, HashKey<UInt>, Comparable<UInt>, Formattable, ListView<Bit> 
     constant MIN:UInt := 0
 
     ===
-    The largest value this type can hold (UI,nt6,4.M,AX.,asU,Int).
+    The largest value this type can hold ((-,1).,asU,Int).
     ===
-    constant MAX:UInt := UInt64.MAX.asUInt
+    constant MAX:UInt := (-1).asUInt
 
     @private
     def value:builtin_uint
@@ -710,6 +710,12 @@ class UInt : Value, HashKey<UInt>, Comparable<UInt>, Formattable, ListView<Bit> 
     @priority(20)
     function <=(other:UInt):Bit {
         return value <= other.value
+    }
+
+    ===Returns the square root of this number.===
+    property sqrt:Real64
+    function get_sqrt():Real64 {
+        return asReal64.sqrt
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===

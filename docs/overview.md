@@ -514,8 +514,8 @@ A class which subclasses [Value] is referred to as a *value class*, and behaves 
 other classes.
 
 Value objects are similar to C structs. They are passed by value rather than reference, do not have
-a header (they are "plain old data" objects), and do not have a distinct "identity" they way normal
-objects do.
+an object header (they are "plain old data" objects), and do not have a distinct "identity" they way
+normal objects do.
 
 [Read more about values.](values.md)
 
@@ -526,24 +526,24 @@ Immutability is enforced: a class which subclasses [Immutable] may not contain a
 Only immutable objects may be used as `constant`s, and normally only immutable objects may be shared
 between multiple threads.
 
-[Read more about immutabilitys.](immutability.md)
+[Read more about immutability.](immutability.md)
 
 Everything is an Object
 -----------------------
 
 Every value in Frost is an object, even basic types such as numbers. The common mathematical
 functions are defined directly on the numbers themselves, so you may compute the square root of 2
-by writing `2.sqrt()`.
+by writing `2.sqrt`.
 
 Basic types such as `Int64` are value classes. `Int64`'s data representation is exactly 64 bits
 long and, even though it is a full-fledged class, after optimization it collapses down to the exact
-same basic processor math instructions you would expect.
+same basic processor math instructions you would expect to see from equivalent C code.
 
 Memory
 ------
 
 Frost features [automatic reference counting](memoryManagement.md). Objects will be promptly
-cleaned up when no longer referenced. Objects have a special [`cleanup()`](Object.cleanup) method
+destroyed when no longer referenced. Objects have a special [`cleanup()`](Object.cleanup) method
 which is called before they are destroyed; unlike with typical garbage collectors, this cleanup is
 guaranteed to happen as soon as the object is no longer referenced. Because of this, `cleanup()` is
 frequently used to tie operations to a particular scope, such as with [ScopedLock]:

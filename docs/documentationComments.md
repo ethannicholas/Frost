@@ -36,9 +36,9 @@ treated as a URL. Otherwise, the compiler will attempt to resolve it as a refere
 field, or method. Classes may be named using their fully-qualified names, or simple name / alias 
 if there is a `use` directive for them. Fields may be referenced by their simple name, if within the
 same class, or by an expression of the form `ClassName.fieldName`. Methods may be referenced in the
-same fashion as fields, but may also have a list of parameter types to disambiguate similarly-named 
+same fashion as fields, but may also have a list of parameter types to disambiguate overloaded
 methods (e.g. `Int64.max(Int)`). The return type may also be provided to disambiguate methods with
-the same parameter types (e.g. `convert():String`).
+the same parameter types (e.g. `readFully():String`).
 
 Frost also extends the Markdown link syntax to allow for "simple" links. Normally, you would specify
 the link target using a parenthesized URL after the link text, as in `[Object](Object)`. In Frost

@@ -415,6 +415,12 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
         return self
     }
 
+    ===Returns the square root of this number.===
+    property sqrt:Real64
+    function get_sqrt():Real64 {
+        return asReal64.sqrt
+    }
+
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
     @priority(8)
     function min(other:Int8):Int64 {

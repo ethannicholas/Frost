@@ -365,6 +365,8 @@ class Compiler : ErrorReporter {
     constant STEPPED_RANGE_NAME := "frost.core.SteppedRange"
     
     constant SELF_NAME := "self"
+
+    constant INT_SIZE_NAME := "$int_size"
     
     def VOID_TYPE := Type("void", Type.Kind.VOID, Position(), true)
 
@@ -620,6 +622,16 @@ class Compiler : ErrorReporter {
             self.backend := backend
         }
         self.errorQueue := errorQueue
+        def builtinName := "<builtin>"
+        def builtin := ClassDecl(File(builtinName), Position(), HashMap<String, String>(), null,
+                Annotations(0), ClassDecl.Kind.CLASS,
+                Type(builtinName, Type.Kind.CLASS, Position(), true), [], [], root)
+        classes[builtinName] := builtin
+        def intSize := FieldDecl(builtin, Position(), null, Annotations(Annotations.Flag.CLASS),
+                FieldDecl.Kind.CONSTANT, INT_SIZE_NAME, BUILTIN_INT_TYPE, ASTNode.INT(Position(),
+                settings.intSize.asUInt64 * 8))
+        intSize.resolved := Resolution.RESOLVED
+        root.add(intSize)
         root.add(BUILTIN_BIT_TYPE)
         root.add(BUILTIN_INT_TYPE)
         root.add(BUILTIN_INT8_TYPE)

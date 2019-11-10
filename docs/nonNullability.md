@@ -82,3 +82,24 @@ to do so and will report an error. The easiest way to work around this issue is 
 [cast or force non-null operator](operators.md#cast) to cast the value to a non-nullable type at
 the point of access.
 
+Performance Considerations
+--------------------------
+
+Treating a member of a [value type](values.md), such as [Int], as if it were a full-fledged object
+requires an actual object instance to be created in order to hold it. For instance,
+
+    def o:Object := 5
+
+allocates memory on the heap to hold an instance of the `Int` class because of the conversion to
+`Object`. This has an impact on both memory and performance, relative to always treating the value
+as an `Int`.
+
+You might expect that the same situation would hold true if you were to write:
+
+   def i:Int? := 5
+
+After all, the value can be set to `null`, and doesn't `null` imply that we're using a pointer? Not
+in this case: we really only need to be able to distinguish between `null` and non-`null` values,
+and all we need to do that is a single extra bit of storage. `Int?` is internally represented as an
+`Int` followed by a single extra byte to keep track of whether or not it is `null`. The performance
+impact of doing this is much lower than turning it into a heap-allocated object instance.

@@ -12,14 +12,14 @@ A 32-bit signed integer.
 @final
 class Int : Value, HashKey<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===
-    The smallest value this type can hold (Int,64.,MIN,.as,Int).
+    The smallest value this type can hold (1 ,<< ,($i,nt_,siz,e -, 1)).
     ===
-    constant MIN:Int := Int32.MIN.asInt
+    constant MIN:Int := 1 << ($int_size - 1)
 
     ===
-    The largest value this type can hold (Int,64.,MAX,.as,Int).
+    The largest value this type can hold (1 <,< (,$in,t_s,ize, - ,1) ,- 1).
     ===
-    constant MAX:Int := Int32.MAX.asInt
+    constant MAX:Int := 1 << ($int_size - 1) - 1
 
     @private
     def value:builtin_int
@@ -732,6 +732,12 @@ class Int : Value, HashKey<Int>, Comparable<Int>, Formattable, ListView<Bit> {
             return -self
         }
         return self
+    }
+
+    ===Returns the square root of this number.===
+    property sqrt:Real64
+    function get_sqrt():Real64 {
+        return asReal64.sqrt
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===

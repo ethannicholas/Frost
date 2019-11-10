@@ -22,7 +22,7 @@ class Interpreter : Backend {
             arguments := Array<Int64>()
         }
 
-        method value(v:Code.Value):Int64 {
+        method value64(v:Code.Value):Int64 {
             match v {
                 when Code.Value.ARRAY(t, _) {
                     def result := Interpreter.alignUp(interpreter.stack,
@@ -104,6 +104,24 @@ class Interpreter : Backend {
                 otherwise {
                     unreachable, "unsupported value \{v}"
                 }
+            }
+        }
+
+        method value(v:Code.Value):Int64 {
+            def result := value64(v)
+
+            match v.type {
+                when Code.PrimitiveType.INT, Code.PrimitiveType.INT8, Code.PrimitiveType.INT16,
+                        Code.PrimitiveType.INT32, Code.PrimitiveType.INT64 {
+                    match v.type.size(interpreter.settings) {
+                        when 1 { return (result << 56) >> 56  }
+                        when 2 { return (result << 48) >> 48 }
+                        when 4 { return (result << 32) >> 32 }
+                        when 8 { return result }
+                        otherwise { unreachable }
+                    }
+                }
+                otherwise { return result }
             }
         }
 
@@ -910,7 +928,7 @@ class Interpreter : Backend {
                     call(m, args)
                 }
                 when Code.Statement.STORE(_, value, dest) {
-                    write(value, Pointer<Int8>(context.value(dest).asUInt))
+                    write(value, Pointer<Int8>(context.value64(dest).asUInt))
                 }
                 when Code.Statement.SWITCH(_, value, cases, other) {
                     def v := context.value(value).asUInt64

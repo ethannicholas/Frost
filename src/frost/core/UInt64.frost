@@ -388,6 +388,12 @@ class UInt64 : Value, HashKey<UInt64>, Comparable<UInt64>, Formattable, ListView
         return value <= other.value->builtin_uint64
     }
 
+    ===Returns the square root of this number.===
+    property sqrt:Real64
+    function get_sqrt():Real64 {
+        return asReal64.sqrt
+    }
+
 
 
 

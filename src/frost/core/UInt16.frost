@@ -852,6 +852,12 @@ class UInt16 : Value, HashKey<UInt16>, Comparable<UInt16>, Formattable, ListView
         return value->builtin_uint <= other.value
     }
 
+    ===Returns the square root of this number.===
+    property sqrt:Real32
+    function get_sqrt():Real32 {
+        return asReal32.sqrt
+    }
+
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
     @priority(3)
     function min(other:Int8):Int32 {

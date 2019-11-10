@@ -733,6 +733,12 @@ class Int32 : Value, HashKey<Int32>, Comparable<Int32>, Formattable, ListView<Bi
         return self
     }
 
+    ===Returns the square root of this number.===
+    property sqrt:Real32
+    function get_sqrt():Real32 {
+        return asReal32.sqrt
+    }
+
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
     @priority(6)
     function min(other:Int8):Int32 {

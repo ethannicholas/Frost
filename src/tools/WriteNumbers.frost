@@ -35,6 +35,24 @@ class WriteNumbers {
     }
 
     @class
+    function real(type:Type):String {
+        match type {
+            when Type.INT    { return "Real64" }
+            when Type.INT8   { return "Real32" }
+            when Type.INT16  { return "Real32" }
+            when Type.INT32  { return "Real32" }
+            when Type.INT64  { return "Real64" }
+            when Type.UINT   { return "Real64" }
+            when Type.UINT8  { return "Real32" }
+            when Type.UINT16 { return "Real32" }
+            when Type.UINT32 { return "Real32" }
+            when Type.UINT64 { return "Real64" }
+            when Type.REAL32 { return "Real32" }
+            when Type.REAL64 { return "Real64" }
+        }
+        unreachable, "invalid type \{type}"
+    }
+    @class
     function object(type:Type):String {
         match type {
             when Type.INT    { return "Int" }
@@ -134,7 +152,7 @@ class WriteNumbers {
             when Type.INT16  { return "-32768" }
             when Type.INT32  { return "-2147483648" }
             when Type.INT64  { return "-9223372036854775808" }
-            when Type.INT    { return "Int64.MIN.asInt" }
+            when Type.INT    { return "1 << ($int_size - 1)" }
             when Type.UINT8  { return "0" }
             when Type.UINT16 { return "0" }
             when Type.UINT32 { return "0" }
@@ -151,12 +169,12 @@ class WriteNumbers {
             when Type.INT16  { return "32767" }
             when Type.INT32  { return "2147483647" }
             when Type.INT64  { return "9223372036854775807" }
-            when Type.INT    { return "Int64.MAX.asInt" }
+            when Type.INT    { return "1 << ($int_size - 1) - 1" }
             when Type.UINT8  { return "255" }
             when Type.UINT16 { return "65535" }
             when Type.UINT32 { return "4294967295" }
             when Type.UINT64 { return "18446744073709551615" }
-            when Type.UINT   { return "UInt64.MAX.asUInt" }
+            when Type.UINT   { return "(-1).asUInt" }
         }
         unreachable
     }
@@ -856,6 +874,21 @@ class WriteNumbers {
     }
 
     @class
+    method writeRealProperty(returnType:Type, name:String, doc:String, out:OutputStream) {
+        try {
+            out.printLine()
+            out.printLine("    ===\{doc}===")
+            out.printLine("    property \{name}:\{real(returnType)}")
+            out.printLine("    function get_\{name}():\{real(returnType)} {")
+            out.printLine("        return as\{real(returnType)}.\{name}")
+            out.printLine("    }")
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    @class
     function insertCommas(s:String):String {
         if s.length < 4 {
             return s
@@ -950,6 +983,7 @@ class WriteNumbers {
         if signed(type) {
             writeAbs(type, out)
         }
+        writeRealProperty(type, "sqrt", "Returns the square root of this number.", out)
         writeMin(type, out)
         writeMax(type, out)
         writeIndex(type, out)
@@ -1113,7 +1147,7 @@ class WriteNumbers {
                     "the direction of negative infinity) to the nearest integer.", out)
             writeExternalProperty(type, "ceiling", "Returns this number rounded up (that is, in " +
                     "the direction of positive infinity) to the nearest integer.", out)
-            writeExternalProperty(type, "sqrt","Returns the square root of this number.", out)
+            writeExternalProperty(type, "sqrt", "Returns the square root of this number.", out)
             writeExternalProperty(type, "sin", "Returns the trigonometric sine of this number.", out)
             writeExternalProperty(type, "cos", "Returns the trigonometric cosine of this number.", out)
             writeExternalProperty(type, "tan", "Returns the trigonometric tangent of this number.", out)

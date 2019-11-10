@@ -729,13 +729,16 @@ class Code {
                 when BIT {
                     return PrimitiveType.BIT
                 }
-                when GLOBAL_POINTER(_) {
+                when FIELD_OFFSET {
+                    return PrimitiveType.INT
+                }
+                when GLOBAL_POINTER {
                     return PrimitiveType.INT
                 }
                 when INT(_, type) {
                     return type
                 }
-                when METHOD_POINTER(_) {
+                when METHOD_POINTER {
                     return PrimitiveType.INT
                 }
                 when PARAMETER(_, type) {
@@ -747,7 +750,7 @@ class Code {
                 when REF(ref) {
                     return ref.value.type
                 }
-                when SIZE_OF(_) {
+                when SIZE_OF {
                     return PrimitiveType.INT
                 }
                 when STATEMENT(_, type) {
@@ -762,6 +765,9 @@ class Code {
                 }
                 when UNDEFINED(type) {
                     return type
+                }
+                when VTABLE_OFFSET {
+                    return PrimitiveType.INT
                 }
             }
             unreachable, self.asString

@@ -867,6 +867,12 @@ class Int16 : Value, HashKey<Int16>, Comparable<Int16>, Formattable, ListView<Bi
         return self
     }
 
+    ===Returns the square root of this number.===
+    property sqrt:Real32
+    function get_sqrt():Real32 {
+        return asReal32.sqrt
+    }
+
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
     @priority(4)
     function min(other:Int8):Int16 {
