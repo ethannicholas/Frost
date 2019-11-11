@@ -702,6 +702,7 @@ class Code {
 
     choice Value {
         BIT(Bit)
+        CHARS(String)
         GLOBAL_POINTER(Int)
         INT(UInt64, PrimitiveType)
         CHOICE_FIELD_OFFSET(ChoiceCase, Int)
@@ -729,6 +730,9 @@ class Code {
                 when BIT {
                     return PrimitiveType.BIT
                 }
+                when CHARS(s) {
+                    return PrimitiveType.ARRAY(s.byteLength, PrimitiveType.INT8)
+                }
                 when FIELD_OFFSET {
                     return PrimitiveType.INT
                 }
@@ -737,6 +741,9 @@ class Code {
                 }
                 when INT(_, type) {
                     return type
+                }
+                when ITABLE_OFFSET {
+                    return PrimitiveType.INT
                 }
                 when METHOD_POINTER {
                     return PrimitiveType.INT

@@ -346,6 +346,19 @@ class LLVMBackend : Backend {
             when Code.Value.BIT(b) {
                 return b.asString
             }
+            when Code.Value.CHARS(s) {
+                def result := MutableString('c"')
+                for c in s.utf8 {
+                    if c.asUInt8 >= 32 & c.asUInt8 <= 127 & c != '"' {
+                        result.append(c)
+                    }
+                    else {
+                        result.append("\\\{c.asUInt8,0>2:x}")
+                    }
+                }
+                result.append('"')
+                return result.finish()
+            }
             when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
                 return (cg.struct(cc.owner).elementOffset(settings!,
                             CodeGenerator.CHOICE_DATA_INDEX) +

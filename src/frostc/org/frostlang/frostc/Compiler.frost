@@ -6547,13 +6547,13 @@ class Compiler : ErrorReporter {
         def libraryPaths := Array<File>()
         def libraries := Array<String>()
         var outFile:File? := null
-        var optimizationLevel := 3
+        var optimizationLevel := 0
         var safetyLevel := 3
         var intSize := 8
         var format:Format? := null
         var root:String? := null
         var preserveTemporaries := true
-        var debug := true
+        var debug := false
         while !args.done {
             def a := args.next()
             match a {
@@ -6637,6 +6637,9 @@ class Compiler : ErrorReporter {
                 }
                 when "-l" {
                     libraries.add(args.next("a library name"))
+                }
+                when "-g" {
+                    debug := true
                 }
                 when "--root" {
                     root := args.next("a path")

@@ -152,9 +152,7 @@ class CodeGenerator {
                     Code.PrimitiveType.ARRAY(s.byteLength, Code.PrimitiveType.INT8), null,
                     Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
             def charsRef := Code.Value.GLOBAL_POINTER(charsIndex)
-            writeGlobalValue(chars, Code.Value.ARRAY(Code.PrimitiveType.INT8,
-                    FixedArray<Code.Value>.from(s.utf8.map(c => Code.Value.INT(c.asUInt64,
-                        Code.PrimitiveType.INT8)))))
+            writeGlobalValue(chars, Code.Value.CHARS(s))
 
             def types := [
                 Code.PrimitiveType.INT,   -* class *-
@@ -168,7 +166,7 @@ class CodeGenerator {
             def stringIndex := globals.count
             def string := Code.Global("string\{stringIndex}",
                     Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(types)),
-                     s.format("frost"), Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
+                    null, Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
             writeGlobalValue(string, Code.Value.STRUCT(FixedArray<Code.Value>.from([
                 cc,
                 Code.Value.INT(NO_REFCNT.asUInt64, Code.PrimitiveType.INT32),
