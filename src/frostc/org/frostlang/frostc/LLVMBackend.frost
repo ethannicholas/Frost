@@ -349,7 +349,7 @@ class LLVMBackend : Backend {
             when Code.Value.CHARS(s) {
                 def result := MutableString('c"')
                 for c in s.utf8 {
-                    if c.asUInt8 >= 32 & c.asUInt8 <= 127 & c != '"' {
+                    if c.asUInt8 >= 32 & c.asUInt8 <= 127 & c != '"' & c != "\\" {
                         result.append(c)
                     }
                     else {

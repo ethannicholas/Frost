@@ -33,6 +33,11 @@ class Interpreter : Backend {
                 when Code.Value.BIT(b) {
                     return b.choose(1, 0)
                 }
+                when Code.Value.CHARS(s) {
+                    def result := interpreter.stack.asUInt.asInt64
+                    interpreter.stack := interpreter.write(v, interpreter.stack)
+                    return result
+                }
                 when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
                     return (interpreter.cg.struct(cc.owner).elementOffset(interpreter.settings!,
                                 CodeGenerator.CHOICE_DATA_INDEX) +
@@ -1053,6 +1058,12 @@ class Interpreter : Backend {
                     result.set(0)
                 }
                 result += 1
+            }
+            when Code.Value.CHARS(s) {
+                for c in s.utf8 {
+                    result.set(c.asInt8)
+                    result += 1
+                }
             }
             when Code.Value.FIELD_OFFSET(type, index) {
                 result := write(type.elementOffset(settings, index).asInt64, Code.PrimitiveType.INT,

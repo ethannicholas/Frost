@@ -218,6 +218,19 @@ class CBackend : Backend {
             when Code.Value.BIT(b) {
                 return b.choose("1", "0")
             }
+            when Code.Value.CHARS(s) {
+                def result := MutableString('"')
+                for c in s.utf8 {
+                    if c.asUInt8 >= 32 & c.asUInt8 <= 127 & c != '"' & c != '\\' {
+                        result.append(c)
+                    }
+                    else {
+                        result.append("\" \"\\x\{c.asUInt8,0>2:x}\" \"")
+                    }
+                }
+                result.append('"')
+                return result.finish()
+            }
             when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
                 def struct := Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
                             cc.fields.map(cg.primitiveType)))
