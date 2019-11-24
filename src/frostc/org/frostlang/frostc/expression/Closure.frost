@@ -15,7 +15,6 @@ uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.MethodPosition
-uses org.frostlang.frostc.Pair
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
@@ -240,7 +239,7 @@ class Closure {
                     if cost == null {
                         return null
                     }
-                    returnType := cost.first
+                    returnType := cost[0]
                 }
             }
             otherwise {
@@ -358,7 +357,7 @@ class Closure {
 
     @class
     method untypedLambdaCoercionCost(compiler:Compiler, parameters:ListView<ASTNode>, body:ASTNode,
-            target:Type):Pair<Type, Int>? {
+            target:Type):(Type, Int)? {
         if !target.nonnullable().isMethod {
             return compiler.coercionCost(compiler.MUTABLE_METHOD_TYPE, target)
         }
@@ -368,8 +367,7 @@ class Closure {
             if result == null {
                 return null
             }
-            return Pair<Type, Int>(result.first, result.second +
-                    compiler.NONNULLABLE_TO_NULLABLE_CAST_COST)
+            return (result[0], result[1] + compiler.NONNULLABLE_TO_NULLABLE_CAST_COST)
         }
         if target.typeKind != Type.Kind.FUNCTION {
             def result := untypedLambdaCoercionCost(compiler, parameters, body,
@@ -379,7 +377,7 @@ class Closure {
             if result == null {
                 return null
             }
-            return Pair<Type, Int>(result.first, result.second + 1)
+            return (result[0], result[1] + 1)
         }
         if target.parameterCount != parameters.count {
             return null
@@ -411,7 +409,7 @@ class Closure {
 
     @class
     method typedLambdaCoercionCost(compiler:Compiler, parameters:ListView<ASTNode>, body:ASTNode,
-            target:Type):Pair<Type, Int>? {
+            target:Type):(Type, Int)? {
         if !target.nonnullable().isMethod {
             return compiler.coercionCost(compiler.MUTABLE_METHOD_TYPE, target)
         }
@@ -420,8 +418,7 @@ class Closure {
             if result == null {
                 return null
             }
-            return Pair<Type, Int>(result.first, result.second +
-                    compiler.NONNULLABLE_TO_NULLABLE_CAST_COST)
+            return (result[0], result[1] + compiler.NONNULLABLE_TO_NULLABLE_CAST_COST)
         }
         if target.parameterCount != parameters.count {
             return null
@@ -438,7 +435,7 @@ class Closure {
                     if parameterCost == null {
                         return null
                     }
-                    cost += parameterCost.second
+                    cost += parameterCost[1]
                 }
             }
         }
@@ -448,8 +445,8 @@ class Closure {
         }
         def returnCost := compiler.coercionCost(type.returnType, target.returnType)
         assert returnCost !== null
-        cost += returnCost.second
-        return Pair<Type, Int>(type, cost)
+        cost += returnCost[1]
+        return (type!, cost)
     }
 
     @class
@@ -487,7 +484,7 @@ class Closure {
                 return null
             }
         }
-        def currentCaptures := Pair<MethodDecl, Map<String, Capture>>(compiler.currentMethod[0],
+        def currentCaptures:(MethodDecl, Map<String, Capture>) := (compiler.currentMethod[0],
                 HashMap<String, Capture>())
         compiler.captures.push(currentCaptures)
         def annotations := Annotations(Annotations.Flag.CLASS)
@@ -510,11 +507,11 @@ class Closure {
 
         def immutable:Bit
         def target:ASTNode?
-        if currentCaptures.second.count != 0 {
+        if currentCaptures[1].count != 0 {
             -- we have captures, need to build an actual closure for it
-            def cl := createClosureClass(compiler, methodDecl, currentCaptures.second.values.all())
+            def cl := createClosureClass(compiler, methodDecl, currentCaptures[1].values.all())
             def args := Array<ASTNode>()
-            for capture in currentCaptures.second.values {
+            for capture in currentCaptures[1].values {
                 match capture {
                     when Capture.VARIABLE(v) {
                         args.add(ASTNode.IDENTIFIER(position.asPosition, v.name))

@@ -431,7 +431,6 @@ class CBackend : Backend {
 
     method writeStatement(s:Code.Statement) {
         try {
-            out.printLine("// \{s}")
             match s {
                 when Code.Statement.ADDI(position, result, left, right) {
                     define(left.type, result, "\{getReference(left)} + \{getReference(right)}")

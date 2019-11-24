@@ -2,6 +2,9 @@ package org.frostlang.frostc
 
 -*
 
+Keep in mind that the compile times include only the Frost side of things, so we're not counting
+Clang's compilation time here.
+
 10/9/19
 Compile-Hello-O0: 0.143355
 Compile-Hello-O3: 0.147332
@@ -11,14 +14,16 @@ Compile-Big-O0: 0.312204
 Compile-Big-O3: 1.51414
 Fasta: 2.34387
 
-10/19/19 (no stubs, -S3)
-Compile-Hello-O0: 0.072511
-Compile-Hello-O3: 0.0712944
-Compile-Wumpus-O0: 0.466147
-Compile-Wumpus-O3: 0.611986
-Compile-Big-O0: 0.182463
-Compile-Big-O3: 0.77859
-Fasta: 0.50863
+11/12/19 (stubs, -S0)
+Compile-Hello-O0: 0.0459104
+Compile-Hello-O3: 0.0392957
+Compile-Wumpus-O0: 0.253385
+Compile-Wumpus-O3: 0.274485
+Compile-Big-O0: 0.145444
+Compile-Big-O3: 0.142478
+Fasta: 1.68861
+Fasta is slower than it should be because I had to disable a RefUnrefPair optimization. Should be
+able to reenable when function safety is fixed.
 
 *-
 
@@ -31,7 +36,7 @@ class Bench {
         for i in 0 .. COUNT {
             def settings := Compiler.Settings(File(Config.frostSourceDir()),
                     [File(Config.frostLibDir()).resolve("stubs"), File(Config.frostSourceDir())],
-                    optimizationLevel, safetyLevel, 8, false)
+                    optimizationLevel, safetyLevel, 8, false, false)
             def errorQueue := MessageQueue<Compiler.Message>()
             def out := MemoryOutputStream()
             def backend := LLVMBackend(Config.llvmTriple(), out)

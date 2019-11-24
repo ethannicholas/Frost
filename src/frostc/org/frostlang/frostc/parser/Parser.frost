@@ -154,10 +154,9 @@ class Parser {
 
     method pushback(token:Token) {
         if syntaxHighlighter !== null {
-            while text(syntaxHighlighter.tokens[syntaxHighlighter.tokens.count - 1].first) !=
+            while text(syntaxHighlighter.tokens[syntaxHighlighter.tokens.count - 1][0]) !=
                     text(token) {
-                pushbackBuffer.add(syntaxHighlighter.tokens[syntaxHighlighter.tokens.count -
-                        1].first)
+                pushbackBuffer.add(syntaxHighlighter.tokens[syntaxHighlighter.tokens.count - 1][0])
                 syntaxHighlighter.rewind()
             }
             syntaxHighlighter.rewind()

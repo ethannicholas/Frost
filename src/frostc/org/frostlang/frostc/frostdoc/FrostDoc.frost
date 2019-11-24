@@ -200,7 +200,7 @@ class FrostDoc {
     `"This is a doccomment @param foo a Foo @returns a Bar", returns `[("", "This is a doccomment"),
     ("param", "foo a Foo"), ("returns", "a Bar")]`.
     ================================================================================================
-    function splitDoc(text:String):ListView<Pair<String, String>> {
+    function splitDoc(text:String):ListView<(String, String)> {
         -- figure out how many spaces are at the start of each line and remove them
         def lines := Array<String>(text.split(/\r?\n/))
         if lines[0] = "" {
@@ -218,17 +218,18 @@ class FrostDoc {
             }
         }
 
-        def result := Array<Pair<String, String>>()
+        def result := Array<(String, String)>()
         def split := lines.join("\n").split(/(?m)^(?=[ \t]*@\w+)/)
         for raw in split {
             def s := raw.trimmed
             if !s.startsWith("@") {
-                result.add(Pair<String, String>("", s))
+                result.add(("", s))
             }
             else {
                 def parsed := s.parse(/(?s)@(\w*)\s*(.*)/)
                 if parsed !== null {
-                result.add(Pair<String, String>(parsed[0], parsed[1])) }
+                    result.add((parsed[0], parsed[1]))
+                }
             }
         }
         return result
@@ -316,15 +317,15 @@ class FrostDoc {
         try {
             if f.doccomment !== null {
                 def split := splitDoc(f.doccomment)
-                writeDoc(split[0].second)
+                writeDoc(split[0][1])
                 for tag in split[1..] {
-                    match tag.first {
+                    match tag[0] {
                         when "see" {
-                            writeSee(tag.second)
+                            writeSee(tag[1])
                         }
                         otherwise {
                             compiler.error(f.position,
-                                    "tag '@\{tag.first}' is not supported on fields")
+                                    "tag '@\{tag[0]}' is not supported on fields")
                         }
                     }
                 }
@@ -428,26 +429,26 @@ class FrostDoc {
                 return null
             }
             def split := splitDoc(c)
-            writeDoc(split[0].second)
+            writeDoc(split[0][1])
             for tag in split[1..] {
-                match tag.first {
+                match tag[0] {
                     when "param" {
-                        def split := tag.second.parse(/(?s)(\S+)\s+(.+)/)
+                        def split := tag[1].parse(/(?s)(\S+)\s+(.+)/)
                         if split == null {
-                            compiler.error(m.position, "invalid '@param' contents '\{tag.second}'")
+                            compiler.error(m.position, "invalid '@param' contents '\{tag[1]}'")
                             continue
                         }
                         params[split[0]] := stripParagraph(getMarkdown().process(split[1]))
                     }
                     when "returns" {
-                        returns := stripParagraph(getMarkdown().process(tag.second))
+                        returns := stripParagraph(getMarkdown().process(tag[1]))
                     }
                     when "see" {
-                        writeSee(tag.second)
+                        writeSee(tag[1])
                     }
                     otherwise {
                         compiler.error(m.position,
-                                "tag '@\{tag.first}' is not supported on methods")
+                                "tag '@\{tag[0]}' is not supported on methods")
                     }
                 }
             }
@@ -689,15 +690,15 @@ class FrostDoc {
         try {
             if cl.doccomment !== null {
                 def split := splitDoc(cl.doccomment)
-                writeDoc(split[0].second)
+                writeDoc(split[0][1])
                 for tag in split[1..] {
-                    match tag.first {
+                    match tag[0] {
                         when "see" {
-                            writeSee(tag.second)
+                            writeSee(tag[1])
                         }
                         otherwise {
                             compiler.error(cl.position,
-                                    "tag '@\{tag.first}' is not supported on classes")
+                                    "tag '@\{tag[0]}' is not supported on classes")
                         }
                     }
                 }

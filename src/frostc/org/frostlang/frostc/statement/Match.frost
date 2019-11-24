@@ -113,13 +113,13 @@ class Match {
                                     def position := getPosition(t)
                                     def cc := compiler.getChoiceCase(base)
                                     if cc !== null {
-                                        if checkChoiceMatch(compiler, getPosition(base), cc.second,
+                                        if checkChoiceMatch(compiler, getPosition(base), cc[1],
                                                 choiceClass, value, tests.count, args.count) {
                                             def testBit:IR.Value
                                             {
                                                 def unrefs := AutoUnrefs(compiler)
                                                 def eqArgs := [ASTNode.INT(base.position(),
-                                                        cc.second.tag.asUInt64)]
+                                                        cc[1].tag.asUInt64)]
                                                 def test := Call.compile(compiler,
                                                         getPosition(base), choiceTag, "=", eqArgs,
                                                         TypeContext.TYPE(compiler.BIT_TYPE, false))
@@ -131,7 +131,7 @@ class Match {
                                                     testBit, testSuccess, nextBlock))
                                             ir.setCurrentBlock(testSuccess)
                                             destructureChoiceCase(compiler, ir, position, value,
-                                                    cc.second, args)
+                                                    cc[1], args)
                                         }
                                         continue
                                     }
@@ -145,11 +145,11 @@ class Match {
                                 if cc !== null {
                                     if choiceTag == null {
                                         compiler.error(position, "'\{value.type()}' is not an " +
-                                                "instance of '\{cc.second.owner.name}'")
+                                                "instance of '\{cc[1].owner.name}'")
                                         return
                                     }
                                     def args := [ASTNode.INT(t.position(),
-                                            cc.second.tag.asUInt64)]
+                                            cc[1].tag.asUInt64)]
                                     test := Call.compile(compiler, getPosition(t), choiceTag, "=",
                                             args, TypeContext.TYPE(compiler.BIT_TYPE, false))
                                     if test == null {
@@ -225,18 +225,18 @@ class Match {
                                     def position := getPosition(t)
                                     def cc := compiler.getChoiceCase(base)
                                     if cc !== null {
-                                        if checkChoiceMatch(compiler, getPosition(base), cc.second,
+                                        if checkChoiceMatch(compiler, getPosition(base), cc[1],
                                                 choiceClass, value, tests.count, args.count) {
-                                            if !hitCases.contains(cc.second) {
-                                                hitCases.add(cc.second)
+                                            if !hitCases.contains(cc[1]) {
+                                                hitCases.add(cc[1])
                                             }
                                             else {
                                                 compiler.error(position, "duplicate 'when' test " +
-                                                        "'\{cc.second.name}'")
+                                                        "'\{cc[1].name}'")
                                             }
-                                            cases.add((cc.second.tag.asUInt64, block))
+                                            cases.add((cc[1].tag.asUInt64, block))
                                             destructureChoiceCase(compiler, ir, position, value,
-                                                    cc.second, args)
+                                                    cc[1], args)
                                         }
                                         continue
                                     }
@@ -250,10 +250,10 @@ class Match {
                                 if cc !== null {
                                     if choiceTag == null {
                                         compiler.error(position, "'\{value.type()}' is not an " +
-                                                "instance of '\{cc.second.owner.name}'")
+                                                "instance of '\{cc[1].owner.name}'")
                                         return
                                     }
-                                    cases.add((cc.second.tag.asUInt64, block))
+                                    cases.add((cc[1].tag.asUInt64, block))
                                 }
                                 else {
                                     def v := compiler.compileExpression(t)

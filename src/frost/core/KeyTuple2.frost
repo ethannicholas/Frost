@@ -1,6 +1,6 @@
 package frost.core
 @package
-class KeyTuple2<T0:HashKey<T0>, T1:HashKey<T1>> : HashKey<KeyTuple2<T0, T1>> {
+class KeyTuple2<T0:HashKey<T0>?, T1:HashKey<T1>?> : HashKey<KeyTuple2<T0, T1>> {
     def f0:T0
     def f1:T1
 
@@ -27,8 +27,8 @@ class KeyTuple2<T0:HashKey<T0>, T1:HashKey<T1>> : HashKey<KeyTuple2<T0, T1>> {
     @override
     function get_hash():Int {
         var result := 0
-        result ~~= f0.hash
-        result ~~= f1.hash
+--        result ~~= f0.hash
+  --      result ~~= f1.hash
         return result
     }
     @override

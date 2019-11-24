@@ -50,9 +50,9 @@ class IndexLValue : LValue {
             def m := Binary.findOverloadedOperator(compiler, target.type(), Binary.Operator.INDEX,
                     rawIndex, TypeContext.NON_VOID)
             if m !== null {
-                assert m.first.count = 1 -- FIXME handle ambiguous matches
+                assert m[0].count = 1 -- FIXME handle ambiguous matches
                 index := compiler.compileExpression(rawIndex,
-                        TypeContext.TYPE(m.first[0].parameterType(0), false))
+                        TypeContext.TYPE(m[0][0].parameterType(0), false))
             }
         }
         if index == null {
@@ -96,9 +96,9 @@ class IndexLValue : LValue {
             def m := Call.findBestMethod(compiler, position, target, methods, args,
                     TypeContext.UNSPECIFIED)
             if m !== null {
-                assert m.first.count = 1 -- FIXME handle ambiguous matches
+                assert m[0].count = 1 -- FIXME handle ambiguous matches
                 index := compiler.compileExpression(rawIndex,
-                        TypeContext.TYPE(m.first[0].parameterType(0), false))
+                        TypeContext.TYPE(m[0][0].parameterType(0), false))
             }
             if index == null {
                 -- just to get us through to where the error should occur down below at call

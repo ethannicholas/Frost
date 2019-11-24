@@ -261,14 +261,17 @@ class Compiler : ErrorReporter {
 
         def debug:Bit
 
+        def isBootstrap:Bit
+
         init(frostHome:File, importDirs:Array<File>, optimizationLevel:Int, safetyLevel:Int,
-                intSize:Int, debug:Bit) {
+                intSize:Int, debug:Bit, isBootstrap:Bit) {
             self.frostHome := frostHome
             self.importDirs := ImmutableArray<File>(importDirs)
             self.optimizationLevel := optimizationLevel
             self.safetyLevel := safetyLevel
             self.intSize := intSize
             self.debug := debug
+            self.isBootstrap := isBootstrap
         }
     }
 
@@ -296,6 +299,11 @@ class Compiler : ErrorReporter {
         @override
         function get_hash():Int {
             return Frost.addressOf(expr) ~~ target.hash
+        }
+
+        @override
+        function get_asString():String {
+            return "ExpressionCoercionKey<\{expr} -> \{target}>"
         }
     }
 
@@ -585,7 +593,7 @@ class Compiler : ErrorReporter {
 
     -- MethodDecl is the method *containing* the closure, not the closure itself
     @private
-    def captures := Stack<Pair<MethodDecl, Map<String, Capture>>>()
+    def captures := Stack<(MethodDecl, Map<String, Capture>)>()
 
     @private
     var writeCode := true
@@ -594,10 +602,10 @@ class Compiler : ErrorReporter {
     var inFieldCleanup := false
 
     @private
-    def expressionCoercionCosts := HashMap<ExpressionCoercionKey, Pair<Type, Int>>()
+    def expressionCoercionCosts := HashMap<ExpressionCoercionKey, (Type, Int?)>()
 
     @private
-    def typeCoercionCosts := HashMap<TypeCoercionKey, Pair<Type, Int>>()
+    def typeCoercionCosts := HashMap<TypeCoercionKey, (Type, Int?)>()
 
     @private
     def binaryTypes := HashMap<BinaryKey, Array<Type>?>()
@@ -691,7 +699,6 @@ class Compiler : ErrorReporter {
         addAlias("frost.core.Real32")
         addAlias("frost.core.Real64")
         addAlias("frost.core.RegularExpression")
-        addAlias("frost.core.SimpleRange")
         addAlias("frost.core.SteppedRange")
         addAlias("frost.core.String")
         addAlias("frost.core.System")
@@ -702,7 +709,6 @@ class Compiler : ErrorReporter {
         addAlias("frost.core.UInt")
         addAlias("frost.core.Value")
         addAlias("frost.core.Weak")
-        addAlias("frost.math.MersenneTwister")
         addAlias("frost.math.Random")
         addAlias("frost.math.XorShift128Plus")
         addAlias("frost.io.Console")
@@ -904,7 +910,7 @@ class Compiler : ErrorReporter {
             when Type.Kind.NULLABLE {
                 assert type.subtypes.count = 1
                 def subtypes := Array<Type>()
-                def sub := resolve(type.subtypes[0])
+                def sub := resolve(type.subtypes[0], checkArguments)
                 if sub == null {
                     return null
                 }
@@ -920,7 +926,7 @@ class Compiler : ErrorReporter {
                 }
                 def args := Array<Type>()
                 for i in 1 .. type.subtypes.count {
-                    def resolved := resolve(type.subtypes[i])
+                    def resolved := resolve(type.subtypes[i], checkArguments)
                     if resolved == null {
                         return null
                     }
@@ -938,13 +944,13 @@ class Compiler : ErrorReporter {
                     Type.Kind.IMMUTABLE_FUNCTION {
                 def params := Array<Type>()
                 for i in 0 .. type.parameterCount {
-                    def resolved := resolve(type.parameterType(i))
+                    def resolved := resolve(type.parameterType(i), checkArguments)
                     if resolved == null {
                         return null
                     }
                     params.add(resolved)
                 }
-                def returnType := resolve(type.returnType)
+                def returnType := resolve(type.returnType, checkArguments)
                 if returnType == null {
                     return null
                 }
@@ -954,7 +960,7 @@ class Compiler : ErrorReporter {
                 assert type.subtypes.count >= 2, "invalid tuple type \{type}"
                 def args := Array<Type>()
                 for a in type.subtypes {
-                    def resolved := resolve(a)
+                    def resolved := resolve(a, checkArguments)
                     if resolved == null {
                         return null
                     }
@@ -1801,10 +1807,11 @@ class Compiler : ErrorReporter {
                 def key := getClass("frost.collections.HashKey")
                 assert key !== null
                 for t in type.subtypes {
-                    if isEquatable & findType(t, equatable) == null {
+                    if isEquatable & (t.typeKind = Type.Kind.NULLABLE |
+                            findType(t, equatable) == null) {
                         isEquatable := false
                     }
-                    if isKey & findType(t, key) == null {
+                    if isKey & (t.typeKind = Type.Kind.NULLABLE | findType(t, key) == null) {
                         isKey := false
                     }
                 }
@@ -2138,11 +2145,11 @@ class Compiler : ErrorReporter {
         for t in possible {
             def cost := coercionCost(expr, t)
             assert cost !== null
-            if cost.second < bestCost {
-                bestCost := cost.second
+            if cost[1] < bestCost {
+                bestCost := cost[1]
                 best.clear()
             }
-            if cost.second = bestCost {
+            if cost[1] = bestCost {
                 best.add(t)
             }
         }
@@ -2178,40 +2185,46 @@ class Compiler : ErrorReporter {
         return null
     }
 
-    method coercionCost(type:Type, target:Type):Pair<Type, Int>? {
+    method coercionCost(type:Type, target:Type):(Type, Int)? {
         return coercionCost(type, target, true)
     }
 
     @pre(target.resolved)
-    method coercionCost(type:Type, target:Type, permitImplicitConstruction:Bit):Pair<Type, Int>? {
+    method coercionCost(type:Type, target:Type, permitImplicitConstruction:Bit):(Type, Int)? {
+        if type = target {
+            return (target, 0)
+        }
         def key := TypeCoercionKey(type, target, permitImplicitConstruction)
         var cached := typeCoercionCosts[key]
         if cached !== null {
-            if cached.second = -1 {
+            if cached[1] == null {
                 return null
             }
-            return cached
+            -- FIXME shouldn't need '!''
+            return (cached[0], cached[1]!)
         }
         def result := computeCoercionCost(type, target, permitImplicitConstruction)
-        if result == null {
-            typeCoercionCosts[key] := Pair<Type, Int>(VOID_TYPE, -1)
+        if result !== null {
+            typeCoercionCosts[key] := (result[0], result[1])
+        }
+        else {
+            typeCoercionCosts[key] := (VOID_TYPE, null)
         }
         return result
     }
 
+    @post(@return == null | @return[1] >= 0)
     method computeCoercionCost(type:Type, target:Type,
-            permitImplicitConstruction:Bit):Pair<Type, Int>? {
+            permitImplicitConstruction:Bit):(Type, Int)? {
         assert type.resolved, "unresolved type '\{type}'"
         assert target.resolved, "unresolved type '\{target}'"
-        if type = target {
-            return Pair<Type, Int>(target, 0)
-        }
+        assert type != target
         if type = VOID_TYPE {
             return null
         }
         if type.typeKind = Type.Kind.NULL {
             if target.typeKind = Type.Kind.NULLABLE {
-                return Pair<Type, Int>(target, 0)
+                return (target, 0)
             }
             return null
         }
@@ -2220,7 +2233,7 @@ class Compiler : ErrorReporter {
             if result == null {
                 return null
             }
-            return Pair<Type, Int>(result.first, result.second + NULLABLE_TO_NONNULLABLE_CAST_COST)
+            return (result[0], result[1] + NULLABLE_TO_NONNULLABLE_CAST_COST)
         }
         match target.typeKind {
             when Type.Kind.NULLABLE {
@@ -2228,8 +2241,7 @@ class Compiler : ErrorReporter {
                 if result == null {
                     return null
                 }
-                return Pair<Type, Int>(result.first,
-                        result.second + NONNULLABLE_TO_NULLABLE_CAST_COST)
+                return (result[0], result[1] + NONNULLABLE_TO_NULLABLE_CAST_COST)
             }
             when Type.Kind.GENERIC_CLASS_PARAMETER {
                 return null
@@ -2248,7 +2260,8 @@ class Compiler : ErrorReporter {
                     -- unresolved method parameters
                     def result := coercionCostUnresolvedParameters(type, target)
                     if result !== null {
-                        return Pair<Type, Int>(type, result)
+                        -- FIXME shouldn't need '!'
+                        return (type, result!)
                     }
                     return null
                 }
@@ -2259,7 +2272,7 @@ class Compiler : ErrorReporter {
                     def cl := getClass(type)
                     if cl !== null & (cl.name.startsWith("frost.core.EquatableTuple") |
                             cl.name.startsWith("frost.core.KeyTuple")) {
-                        return Pair<Type, Int>(type, 0)
+                        return (type, 0)
                     }
                 }
                 if type.typeKind = Type.Kind.TUPLE &
@@ -2267,7 +2280,7 @@ class Compiler : ErrorReporter {
                         target.subtypes[1] = type {
                     def cl := getClass(type)
                     if cl !== null & cl.name.startsWith("frost.core.KeyTuple") {
-                        return Pair<Type, Int>(type, 0)
+                        return (type, 0)
                     }
                 }
             }
@@ -2335,14 +2348,14 @@ class Compiler : ErrorReporter {
                     if cost == null {
                         return null
                     }
-                    total += cost.second
+                    total += cost[1]
                 }
                 def cost := coercionCost(type.returnType, target.returnType)
                 if cost == null {
                     return null
                 }
-                total += cost.second
-                return Pair<Type, Int>(target, total)
+                total += cost[1]
+                return (target, total)
             }
             if type.typeKind = Type.Kind.IMMUTABLE_METHOD |
                     type.typeKind = Type.Kind.IMMUTABLE_FUNCTION {
@@ -2358,16 +2371,16 @@ class Compiler : ErrorReporter {
                 return coercionCost(BIT_TYPE, target)
             }
             when Type.Kind.GENERIC_CLASS_PARAMETER {
-                return coercionCost(type.genericClassParameter.bound, target)
+                return coercionCost(resolve(type.genericClassParameter.bound, false), target)
             }
             when Type.Kind.GENERIC_METHOD_PARAMETER {
-                return coercionCost(type.genericMethodParameter.bound, target)
+                return coercionCost(resolve(type.genericMethodParameter.bound, false), target)
             }
             when Type.Kind.TUPLE {
                 if target.name = "frost.core.Tuple\{type.subtypes.count}" |
                         target.name = "frost.core.KeyTuple\{type.subtypes.count}" |
                         target.name = "frost.core.EquatableTuple\{type.subtypes.count}" {
-                    return Pair<Type, Int>(target, 1)
+                    return (target, 1)
                 }
             }
         }
@@ -2385,7 +2398,7 @@ class Compiler : ErrorReporter {
                     -- FIXME I don't remember where this 6 came from. Figure this out, and if
                     -- it's necessary figure out what the right value is for it and use a named
                     -- constant.
-                    return Pair<Type, Int>(target, 6->Int - m.priority)
+                    return (target, 6->Int - m.priority)
                 }
             }
         }
@@ -2401,33 +2414,33 @@ class Compiler : ErrorReporter {
             if cl.rawSuper !== null {
                 def cost := coercionCost(remapType(type, remapType(type, cl.rawSuper)), target)
                 if cost !== null {
-                    return Pair<Type, Int>(cost.first, cost.second + 1)
+                    return (cost[0], cost[1] + 1)
                 }
             }
             for intf in cl.rawInterfaces {
                 def cost := coercionCost(remapType(type, remapType(type, intf)), target)
                 if cost !== null {
-                    return Pair<Type, Int>(cost.first, cost.second + 1)
+                    return (cost[0], cost[1] + 1)
                 }
             }
         }
         return null
     }
 
-    method coercionCost(type:Type, target:TypeContext):Pair<Type, Int>? {
+    method coercionCost(type:Type, target:TypeContext):(Type, Int)? {
         match target {
             when TypeContext.UNSPECIFIED {
-                return Pair<Type, Int>(type, 0)
+                return (type, 0)
             }
             when TypeContext.NON_VOID {
                 if type = VOID_TYPE {
                     return null
                 }
-                return Pair<Type, Int>(type, 0)
+                return (type, 0)
             }
             when TypeContext.IMMUTABLE {
                 if isImmutable(type) {
-                    return Pair<Type, Int>(type, 0)
+                    return (type, 0)
                 }
                 return null
             }
@@ -2438,15 +2451,15 @@ class Compiler : ErrorReporter {
         unreachable
     }
 
-    method coercionCost(types:CollectionView<Type>, target:Type):Pair<Type, Int>? {
-        def best := Pair<Type, Int>(VOID_TYPE, Int.MAX)
+    method coercionCost(types:CollectionView<Type>, target:Type):(Type, Int)? {
+        def best := (VOID_TYPE, Int.MAX)
         for t in types {
             def cost := coercionCost(t, target)
-            if cost !== null & cost.second < best.second {
+            if cost !== null & cost[1] < best[1] {
                 best := cost
             }
         }
-        if best.second != Int.MAX {
+        if best[1] != Int.MAX {
             return best
         }
         return null
@@ -3053,7 +3066,7 @@ class Compiler : ErrorReporter {
     }
 
     method binaryCost(left:ASTNode, op:Binary.Operator, right:ASTNode,
-            type:TypeContext):Pair<Type, Int>? {
+            type:TypeContext):(Type, Int)? {
         if op = Binary.Operator.CAST {
             def target := tryResolveType(right)
             if target == null {
@@ -3074,7 +3087,7 @@ class Compiler : ErrorReporter {
         }
         def result := Binary.findOverloadedOperator(self, left, op, right, type)
         if result !== null {
-            return Pair<Type, Int>(result.first[0].returnType, result.second)
+            return (result[0][0].returnType, result[1])
         }
         def preferred := preferredType(ASTNode.BINARY(left.position(), left, op, right))
         if preferred !== null {
@@ -3084,13 +3097,13 @@ class Compiler : ErrorReporter {
     }
 
     method rangeCoercionCost(start:ASTNode?, end:ASTNode?, step:ASTNode?,
-            target:Type):Pair<Type, Int>? {
+            target:Type):(Type, Int)? {
         if target.typeKind = Type.Kind.NULLABLE {
             def result := rangeCoercionCost(start, end, step, target.nonnullable())
             if result == null {
                 return null
             }
-            return Pair<Type, Int>(result.first, result.second + 1)
+            return (result[0], result[1] + 1)
         }
         if target.typeKind = Type.Kind.GENERIC {
             if target.subtypes[0].name = RANGE_NAME & target.subtypes.count = 2 |
@@ -3101,7 +3114,7 @@ class Compiler : ErrorReporter {
                     if startCost == null {
                         return null
                     }
-                    cost += startCost.second
+                    cost += startCost[1]
                 }
                 else if target.subtypes[1].typeKind != Type.Kind.NULLABLE {
                     return null
@@ -3111,7 +3124,7 @@ class Compiler : ErrorReporter {
                     if endCost == null {
                         return null
                     }
-                    cost += endCost.second
+                    cost += endCost[1]
                 }
                 else if target.subtypes[1].typeKind != Type.Kind.NULLABLE {
                     return null
@@ -3129,9 +3142,9 @@ class Compiler : ErrorReporter {
                     if stepCost == null {
                         return null
                     }
-                    cost += stepCost.second
+                    cost += stepCost[1]
                 }
-                return Pair<Type, Int>(target, cost)
+                return (target, cost)
             }
         }
         def type := preferredType(ASTNode.RANGE(Position(), start, true, end, step))
@@ -3142,7 +3155,7 @@ class Compiler : ErrorReporter {
     }
 
     method arrayCoercionCost(position:Position, elements:FixedArray<ASTNode>,
-            target:Type):Pair<Type, Int>? {
+            target:Type):(Type, Int)? {
         def t := getListType(target)
         if t == null {
             def p := preferredType(ASTNode.ARRAY(position, elements))
@@ -3151,16 +3164,16 @@ class Compiler : ErrorReporter {
             }
             return coercionCost(p, target)
         }
-        if t.first {
-            return coercionCost(Type.ArrayOf(self, t.second), target)
+        if t[0] {
+            return coercionCost(Type.ArrayOf(self, t[1]), target)
         }
         else {
-            return coercionCost(Type.ImmutableArrayOf(self, t.second), target)
+            return coercionCost(Type.ImmutableArrayOf(self, t[1]), target)
         }
     }
 
     @pre(target.resolved)
-    method computeCoercionCost(expr:ASTNode, target:Type):Pair<Type, Int>? {
+    method computeCoercionCost(expr:ASTNode, target:Type):(Type, Int)? {
         match expr {
             when ASTNode.ARRAY(position, elements) {
                 return arrayCoercionCost(position, elements, target)
@@ -3224,10 +3237,10 @@ class Compiler : ErrorReporter {
                         IntLiteral.requiredSize(value.asInt64) <= target.size) |
                         (target.typeKind = Type.Kind.BUILTIN_UINT &
                         IntLiteral.requiredSize(value) <= target.size) {
-                    return Pair<Type, Int>(target, 0)
+                    return (target, 0)
                 }
                 if target.typeKind = Type.Kind.BUILTIN_FLOAT {
-                    return Pair<Type, Int>(target, 1)
+                    return (target, 1)
                 }
                 if target.isNumber {
                     def cl := getClass(target)
@@ -3237,7 +3250,7 @@ class Compiler : ErrorReporter {
                     assert initMethod.annotations.isImplicit
                     -- FIXME figure out where this 2 came from and whether it's the right value,
                     -- make it a constant if it's necessary
-                    return Pair<Type, Int>(target, 2->Int - initMethod.priority)
+                    return (target, 2->Int - initMethod.priority)
                 }
                 def preferred := preferredType(expr)
                 assert preferred !== null
@@ -3288,7 +3301,7 @@ class Compiler : ErrorReporter {
             }
             when ASTNode.NULL {
                 if target.typeKind = Type.Kind.NULLABLE {
-                    return Pair<Type, Int>(target, 0)
+                    return (target, 0)
                 }
                 return null
             }
@@ -3297,10 +3310,10 @@ class Compiler : ErrorReporter {
             }
             when ASTNode.REAL {
                 if (target.typeKind = Type.Kind.BUILTIN_FLOAT) {
-                    return Pair<Type, Int>(target, 0)
+                    return (target, 0)
                 }
                 if target.isReal {
-                    return Pair<Type, Int>(target, 1)
+                    return (target, 1)
                 }
                 def preferred := preferredType(expr)
                 assert preferred !== null
@@ -3322,12 +3335,12 @@ class Compiler : ErrorReporter {
                         when CHAR32_TYPE { targetSize := 32 }
                     }
                     if targetSize >= size {
-                        return Pair<Type, Int>(target, 1)
+                        return (target, 1)
                     }
                     return null
                 }
                 if target == VALUE_TYPE & text.length = 1 {
-                    return Pair<Type, Int>(target, 1)
+                    return (target, 1)
                 }
                 return coercionCost(STRING_TYPE, target)
             }
@@ -3355,23 +3368,27 @@ class Compiler : ErrorReporter {
     unspecified method generic parameters).
     ================================================================================================
     @pre(target.resolved)
-    method coercionCost(expr:ASTNode, target:Type):Pair<Type, Int>? {
+    method coercionCost(expr:ASTNode, target:Type):(Type, Int)? {
         def key := ExpressionCoercionKey(expr, target)
         var cached := expressionCoercionCosts[key]
         if cached !== null {
-            if cached.second = -1 {
+            if cached[1] == null {
                 return null
             }
-            return cached
+            -- FIXME shouldn't need '!'
+            return (cached[0], cached[1]!)
         }
         def result := computeCoercionCost(expr, target)
-        if result == null {
-            expressionCoercionCosts[key] := Pair<Type, Int>(VOID_TYPE, -1)
+        if result !== null {
+            expressionCoercionCosts[key] := (result[0], result[1])
+        }
+        else {
+            expressionCoercionCosts[key] := (VOID_TYPE, null)
         }
         return result
     }
 
-    method coercionCost(expr:ASTNode, target:TypeContext):Pair<Type, Int>? {
+    method coercionCost(expr:ASTNode, target:TypeContext):(Type, Int)? {
         match target {
             when TypeContext.UNSPECIFIED, TypeContext.NON_VOID {
                 return coercionCost(expr, ANY_TYPE)
@@ -3688,8 +3705,8 @@ class Compiler : ErrorReporter {
     method capture(position:MethodPosition, v:Variable) {
         if v.name = SELF_NAME {
             for c in captures {
-                c.second[SELF_NAME] := Capture.SELF
-                if !c.first.annotations.isCapture {
+                c[1][SELF_NAME] := Capture.SELF
+                if !c[0].annotations.isCapture {
                     return
                 }
             }
@@ -3699,8 +3716,8 @@ class Compiler : ErrorReporter {
                 error(position, "closure cannot capture 'var \{v}'; use 'def' instead")
                 break
             }
-            c.second[v.name] := Capture.VARIABLE(v)
-            if v.owner == c.first {
+            c[1][v.name] := Capture.VARIABLE(v)
+            if v.owner == c[0] {
                 break
             }
         }
@@ -3708,8 +3725,8 @@ class Compiler : ErrorReporter {
 
     method capture(position:MethodPosition, f:FieldDecl) {
         for c in captures {
-            c.second[f.name] := Capture.FIELD(f)
-            if f.owner == c.first.owner {
+            c[1][f.name] := Capture.FIELD(f)
+            if f.owner == c[0].owner {
                 break
             }
         }
@@ -3831,8 +3848,8 @@ class Compiler : ErrorReporter {
         assert coerced !== null
         def intrinsic := Call.compileIntrinsic(self, position, null, MethodRef(self, m.owner.type,
                 m), [ASTNode.IR_WRAPPER(position.asPosition, coerced)])
-        if intrinsic.first {
-            return intrinsic.second
+        if intrinsic[0] {
+            return intrinsic[1]
         }
         def cl := m.owner
         assert isValue(cl), "can't implicit init \{cl.name} using \{m.declaration}:\{m.position} " +
@@ -4072,11 +4089,11 @@ class Compiler : ErrorReporter {
                         def ref := MethodRef(self, targetType, m)
                         def cost := coercionCost(ref.effectiveType, target)
                         if cost !== null {
-                            if cost.second < bestCost {
+                            if cost[1] < bestCost {
                                 best.clear()
-                                bestCost := cost.second
+                                bestCost := cost[1]
                             }
-                            if cost.second = bestCost {
+                            if cost[1] = bestCost {
                                 best.add(m)
                             }
                         }
@@ -4122,9 +4139,9 @@ class Compiler : ErrorReporter {
                 def best := Call.findBestMethod(self, position, null, implicitInits, args,
                         TypeContext.UNSPECIFIED)
                 if best !== null {
-                    if best.first.count = 1 {
+                    if best[0].count = 1 {
                         return coerce(position, implicitInit(position, value,
-                                best.first[0].value), target)
+                                best[0][0].value), target)
                     }
                     unreachable, "ambiguous implicit init"
                 }
@@ -4508,7 +4525,7 @@ class Compiler : ErrorReporter {
     If `t` is a type to which an array literal can be coerced, returns whether or not the resulting
     collection should be mutable and the element type.
     ================================================================================================
-    function getListType(t:Type):Pair<Bit, Type>? {
+    function getListType(t:Type):(Bit, Type)? {
         if t.typeKind = Type.Kind.NULLABLE {
             return getListType(t.subtypes[0])
         }
@@ -4549,11 +4566,11 @@ class Compiler : ErrorReporter {
                     return null
                 }
             }
-            return Pair<Bit, Type>(mutable, t.subtypes[1])
+            return (mutable, t.subtypes[1])
         }
         match t.name {
             when "frost.core.Object", "frost.core.Immutable" {
-                return Pair<Bit, Type>(false, ANY_TYPE)
+                return (false, ANY_TYPE)
             }
             otherwise {
                 return null
@@ -4596,13 +4613,13 @@ class Compiler : ErrorReporter {
     If `node` is a reference to a [ChoiceCase], returns it. Otherwise, returns `null` without
     reporting an error.
     ================================================================================================
-    method getChoiceCase(node:ASTNode):Pair<Type, ChoiceCase>? {
+    method getChoiceCase(node:ASTNode):(Type, ChoiceCase)? {
         match node {
             when ASTNode.IDENTIFIER(_, text) {
                 if currentClass[0].classKind = ClassDecl.Kind.CHOICE {
                     def s := getSymbolTable(currentClass[0])[text]
                     if s !== null & s.kind = Symbol.Kind.CHOICE_CASE {
-                        return Pair<Type, ChoiceCase>(currentClass[0].type, s->ChoiceCase)
+                        return (currentClass[0].type, s->ChoiceCase)
                     }
                 }
             }
@@ -4613,7 +4630,7 @@ class Compiler : ErrorReporter {
                     if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
                         def s := getSymbolTable(cl)[text]
                         if s !== null & s.kind = Symbol.Kind.CHOICE_CASE {
-                            return Pair<Type, ChoiceCase>(baseType.subtypes[1], s->ChoiceCase)
+                            return (baseType.subtypes[1], s->ChoiceCase)
                         }
                     }
                 }
@@ -4903,9 +4920,9 @@ class Compiler : ErrorReporter {
     method compileSelf(position:MethodPosition, explicit:Bit):IR.Value? {
         if captures.count > 0 {
             for c in captures {
-                c.second[SELF_NAME] := Capture.SELF
+                c[1][SELF_NAME] := Capture.SELF
             }
-            var cl := captures[0].first.owner
+            var cl := captures[0][0].owner
             while cl.annotations.isSynthetic {
                 assert cl.owner !== null
                 cl := cl.owner
@@ -5132,11 +5149,11 @@ class Compiler : ErrorReporter {
                             if resolve(m) {
                                 def cost := coercionCost(m.type(self), t)
                                 if cost !== null {
-                                    if cost.second < bestCost {
-                                        bestCost := cost.second
+                                    if cost[1] < bestCost {
+                                        bestCost := cost[1]
                                         best.clear()
                                     }
-                                    if cost.second = bestCost {
+                                    if cost[1] = bestCost {
                                         best.add(m)
                                     }
                                 }
@@ -5236,11 +5253,11 @@ class Compiler : ErrorReporter {
         return null
     }
 
-    function getTryScope():Pair<IR.Block.ID?, Variable?>? {
+    function getTryScope():(IR.Block.ID?, Variable?)? {
         for c in enclosingContexts {
             match c {
                 when EnclosingContext.TRY_SCOPE(failBlock, errorVar) {
-                    return Pair<IR.Block.ID?, Variable?>(failBlock, errorVar)
+                    return (failBlock, errorVar)
                 }
                 when EnclosingContext.INLINE_CONTEXT {
                     return null
@@ -5521,11 +5538,14 @@ class Compiler : ErrorReporter {
             }
         }
         def position := MethodPosition(s.position(), currentMethodIndex)
-        if position.file >= 0 {
-            ir.add(IR.Statement.COMMENT(position, "\{files[position.file].name}:\{position.line}"))
-        }
-        else {
-            ir.add(IR.Statement.COMMENT(position, "<no location>"))
+        if settings.debug {
+            if position.file >= 0 {
+                ir.add(IR.Statement.COMMENT(position,
+                        "\{files[position.file].name}:\{position.line}"))
+            }
+            else {
+                ir.add(IR.Statement.COMMENT(position, "<no location>"))
+            }
         }
         def unrefs := AutoUnrefs(self)
         match s {
@@ -6554,6 +6574,7 @@ class Compiler : ErrorReporter {
         var root:String? := null
         var preserveTemporaries := true
         var debug := false
+        var isBootstrap := false
         while !args.done {
             def a := args.next()
             match a {
@@ -6644,6 +6665,9 @@ class Compiler : ErrorReporter {
                 when "--root" {
                     root := args.next("a path")
                 }
+                when "--bootstrap" {
+                    isBootstrap := true
+                }
                 otherwise {
                     if a.endsWith(".frost") {
                         def f := File(a)
@@ -6698,7 +6722,7 @@ class Compiler : ErrorReporter {
             }
         }
         def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
-                intSize, debug)
+                intSize, debug, isBootstrap)
         def success:Bit
         {
             def backend:Backend? := null

@@ -9,7 +9,6 @@ uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.MethodRef
 uses org.frostlang.frostc.Methods
-uses org.frostlang.frostc.Pair
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
@@ -67,7 +66,7 @@ class Unary {
 
     @class
     method coercionCost(compiler:Compiler, position:Position, op:Operator,
-            operand:ASTNode, target:Type):Pair<Type, Int>? {
+            operand:ASTNode, target:Type):(Type, Int)? {
         -- need to special-case things like -128, which can fit into an Int8 despite 128 not
         -- doing so
         match op {

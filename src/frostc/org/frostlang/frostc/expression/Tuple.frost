@@ -13,6 +13,9 @@ uses org.frostlang.frostc.Type
 class Tuple {
     @class
     function indexType(compiler:Compiler, tuple:Type, index:ASTNode):Type {
+        if tuple.typeKind = Type.Kind.NULLABLE {
+            return indexType(compiler, tuple.nonnullable(), index)
+        }
         match index {
             when ASTNode.INT(_, value) {
                 if value > tuple.subtypes.count.asUInt64 {
@@ -40,7 +43,7 @@ class Tuple {
 
     @class
     method coercionCost(compiler:Compiler, args:FixedArray<ASTNode>,
-            target:Type):Pair<Type, Int>? {
+            target:Type):(Type, Int)? {
         if target.typeKind = Type.Kind.TUPLE & target.subtypes.count = args.count {
             var result := 0
             for i in 0 .. args.count {
@@ -48,9 +51,9 @@ class Tuple {
                 if cost == null {
                     return null
                 }
-                result += cost.second
+                result += cost[1]
             }
-            return Pair<Type, Int>(target, result)
+            return (target, result)
         }
         def pref := possibleTypes(compiler, args)
         if pref == null {

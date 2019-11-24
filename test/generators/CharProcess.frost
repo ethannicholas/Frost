@@ -12,6 +12,7 @@ method main() {
         out.printLine("def string := \"Hello\"")
         out.printLine()
         Console.inputStream().sendTo(out)
+        out.printLine()
         out.level -= 1
         out.printLine("}")
     }

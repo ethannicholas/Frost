@@ -8,7 +8,6 @@ uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.MethodRef
 uses org.frostlang.frostc.Methods
-uses org.frostlang.frostc.Pair
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
@@ -187,7 +186,7 @@ class Binary {
 
     @class
     method findOverloadedOperator(compiler:Compiler, left:Type, op:Operator, right:ASTNode,
-            type:TypeContext):Pair<Array<MethodRef>, Int>? {
+            type:TypeContext):(Array<MethodRef>, Int)? {
         if !left.isClass {
             return null
         }
@@ -271,32 +270,32 @@ class Binary {
 
     @class
     method findOverloadedOperator(compiler:Compiler, left:ASTNode, op:Operator, right:ASTNode,
-            type:TypeContext):Pair<Array<MethodRef>, Int>? {
+            type:TypeContext):(Array<MethodRef>, Int)? {
         def leftTypes := compiler.possibleTypes(left)
         if leftTypes !== null {
-            def best:Pair<Array<MethodRef>, Int>? := null
+            def best:(Array<MethodRef>, Int)? := null
             for t in leftTypes {
                 def compilerCost := compiler.coercionCost(left, t)
                 assert compilerCost !== null,
                         "failed compiler cast \{left}->\{t} at \{left.position()}"
                 def ops := findOverloadedOperator(compiler, t, op, right, type)
                 if ops !== null {
-                    def cost := ops.second + compilerCost.second
-                    if best == null | cost < best.second {
-                        best := Pair<Array<MethodRef>, Int>(ops.first, cost)
+                    def cost := ops[1] + compilerCost[1]
+                    if best == null | cost < best[1] {
+                        best := (ops[0], cost)
                     }
-                    else if cost = best.second {
+                    else if cost = best[1] {
                         def a := Array<MethodRef>()
-                        a.addAll(best.first)
-                        outer: for op in ops.first {
-                            for old in best.first {
+                        a.addAll(best[0])
+                        outer: for op in ops[0] {
+                            for old in best[0] {
                                 if old.value == op.value {
                                     continue outer
                                 }
                             }
                             a.add(op)
                         }
-                        best := Pair<Array<MethodRef>, Int>(a, cost)
+                        best := (a, cost)
                     }
                 }
             }
@@ -510,12 +509,12 @@ class Binary {
                 def matches := findOverloadedOperator(compiler, left, op, right,
                         TypeContext.NON_VOID)
                 if matches !== null {
-                    if op = Operator.INDEX & matches.first.count = 1 &
-                            compiler.isTuple(matches.first[0].value.owner) {
-                        return [Tuple.indexType(compiler, matches.first[0].target, right)]
+                    if op = Operator.INDEX & matches[0].count = 1 &
+                            compiler.isTuple(matches[0][0].value.owner) {
+                        return [Tuple.indexType(compiler, matches[0][0].target, right)]
                     }
                     def result := Array<Type>()
-                    for m in matches.first { -- FIXME map
+                    for m in matches[0] { -- FIXME map
                         result.add(m.returnType)
                     }
                     return result
@@ -580,12 +579,12 @@ class Binary {
             otherwise {
                 def matches := findOverloadedOperator(compiler, left, op, right, type)
                 if matches !== null {
-                    if matches.first.count > 1 {
-                        compiler.reportAmbiguousMatch(position.asPosition, matches.first,
+                    if matches[0].count > 1 {
+                        compiler.reportAmbiguousMatch(position.asPosition, matches[0],
                                 [left, right], type)
                         return null
                     }
-                    def m := matches.first[0].value
+                    def m := matches[0][0].value
                     if op = Operator.INDEX & compiler.isTuple(m.owner) {
                         match right {
                             when ASTNode.INT(_, v) {
@@ -596,8 +595,9 @@ class Binary {
                                 }
                                 return compiler.coerce(position, compiler.cast(position,
                                         Dot.compile(compiler, position, compiledLeft, "f\{v}"),
-                                            compiledLeft.type().subtypes[v.asInt]), type)
-                            }
+                                            compiledLeft.type().nonnullable().subtypes[v.asInt]),
+                                            type)
+                           }
                         }
                     }
                     if m.annotations.isClass {
@@ -630,12 +630,12 @@ class Binary {
                 if compiledLeft == null {
                     return null
                 }
-                if op = Operator.INDEX & compiledLeft.type().isTuple {
+                if op = Operator.INDEX & compiledLeft.type().nonnullable().isTuple {
                     match right {
                         when ASTNode.INT(_, v) {
                             return compiler.coerce(position, compiler.cast(position,
                                     Dot.compile(compiler, position, compiledLeft, "f\{v}"),
-                                        compiledLeft.type().subtypes[v.asInt]), type)
+                                        compiledLeft.type().nonnullable().subtypes[v.asInt]), type)
                         }
                     }
                 }
@@ -663,7 +663,7 @@ class Binary {
                         return null
                     }
                 }
-                compiler.error(position, "no match for '\{op.asString}' on " +
+                compiler.error(position, "no match(updated) for '\{op.asString}' on " +
                         "'\{compiledLeft.type()}', '\{compiledRight.type()}'" +
                         type.description())
                 return null

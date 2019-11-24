@@ -7,4 +7,5 @@ method main() {
 
     for i in 0 .. string.length {
         process(string[i])
-    }}
+    }
+}

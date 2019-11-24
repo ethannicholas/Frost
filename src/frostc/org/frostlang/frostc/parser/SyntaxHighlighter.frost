@@ -23,7 +23,7 @@ class SyntaxHighlighter {
     def stack := Stack<Kind>()
 
     @private
-    def tokens := Array<Pair<Token, Kind>>()
+    def tokens := Array<(Token, Kind)>()
 
     method reset() {
         tokens.clear()
@@ -40,7 +40,7 @@ class SyntaxHighlighter {
     }
 
     method add(token:Token, syntaxKind:SyntaxHighlighter.Kind) {
-        tokens.add(Pair<Token, Kind>(token, syntaxKind))
+        tokens.add((token, syntaxKind))
     }
 
     method add(token:Token) {

@@ -7,4 +7,5 @@ method main() {
 
     for c in string {
         process(c)
-    }}
+    }
+}

@@ -9,4 +9,5 @@ method main() {
     while index != string.end {
         process(string[index])
         index := string.next(index)
-    }}
+    }
+}

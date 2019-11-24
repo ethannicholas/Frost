@@ -6,14 +6,13 @@ uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodPosition
-uses org.frostlang.frostc.Pair
 uses org.frostlang.frostc.Type
 
 class ArrayLiteral {
     @class
     method compile(compiler:Compiler, position:MethodPosition, elements:FixedArray<ASTNode>,
             type:TypeContext):IR.Value?  {
-        var listType:Pair<Bit, Type>?
+        var listType:(Bit, Type)?
         match type {
             when TypeContext.TYPE(t, _) {
                 listType := compiler.getListType(t)
@@ -40,7 +39,7 @@ class ArrayLiteral {
                 listType := compiler.getListType(t)
             }
         }
-        def arrayType := Type.ArrayOf(compiler, listType.second)
+        def arrayType := Type.ArrayOf(compiler, listType[1])
         var result := Call.compile(compiler, position, compiler.literalType(arrayType),
                 [ASTNode.INT(position.asPosition, elements.count.asUInt64)],
                 TypeContext.UNSPECIFIED)
@@ -50,9 +49,9 @@ class ArrayLiteral {
         for e in elements {
             Call.compile(compiler, position, result, "add", [e], TypeContext.UNSPECIFIED)
         }
-        if !listType.first {
+        if !listType[0] {
             result := Call.compile(compiler, position,
-                    compiler.literalType(Type.ImmutableArrayOf(compiler, listType.second)), "from",
+                    compiler.literalType(Type.ImmutableArrayOf(compiler, listType[1])), "from",
                     [ASTNode.IR_WRAPPER(position.asPosition, result)], TypeContext.UNSPECIFIED)
             if result == null {
                 return null

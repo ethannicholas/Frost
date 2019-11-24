@@ -32,7 +32,7 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/config.c"
     "intptr_t org$frostlang$frostc$Config$icuLibraries$R$frost$core$String() { return configString(\"${ICU_LIBRARIES}\"); }\n"
 )
 
-set(BOOTSTRAP_ARGS "-O" ${OPTIMIZATION} "-S" ${SAFETY})
+set(BOOTSTRAP_ARGS "-O" ${OPTIMIZATION} "-S" ${SAFETY} "-g")
 include_directories(
     ${ICU_INCLUDE_DIRS}
 )
@@ -552,7 +552,6 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodPosition.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodRef.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Methods.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Pair.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Position.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Scanner.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/StubBackend.frost
@@ -629,7 +628,7 @@ add_custom_command(
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc ${core_source} ${frostc_source}
             ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost
             -I ${CMAKE_CURRENT_BINARY_DIR} -S ${SAFETY} -O ${OPTIMIZATION}
-            -f c -o ${CMAKE_CURRENT_BINARY_DIR}/bootstrap.c
+            -f c -m 32 --bootstrap -o ${CMAKE_CURRENT_BINARY_DIR}/bootstrap.c
     DEPENDS ${core_source} ${frostc_source}
             ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}

@@ -16,11 +16,11 @@ class HTMLProcessor {
         def result := MutableString("<span class=\"frostcode\">")
         var current := SyntaxHighlighter.Kind.DEFAULT
         for t in parser.syntaxHighlighter.tokens {
-            if t.second != current & current != SyntaxHighlighter.Kind.DEFAULT {
+            if t[1] != current & current != SyntaxHighlighter.Kind.DEFAULT {
                 result.append("</span>")
             }
-            if t.second != current {
-                current := t.second
+            if t[1] != current {
+                current := t[1]
                 match current {
                     when SyntaxHighlighter.Kind.DEFAULT {
                         -- do nithing
@@ -63,13 +63,13 @@ class HTMLProcessor {
                     }
                 }
             }
-            def s := MutableString(parser.text(t.first))
+            def s := MutableString(parser.text(t[0]))
             s.replace("&", "&amp;")
             s.replace("<", "&lt;")
             s.replace(">", "&gt;")
             if current != SyntaxHighlighter.Kind.COMMENT &
                     current != SyntaxHighlighter.Kind.DOC_COMMENT {
-                result.append("<span class=\"\{t.first.kind}_TOKEN\">")
+                result.append("<span class=\"\{t[0].kind}_TOKEN\">")
             }
             result.append(s)
             if current != SyntaxHighlighter.Kind.COMMENT &

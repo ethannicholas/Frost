@@ -453,12 +453,31 @@ class CodeGenerator {
         def types := Array<Code.PrimitiveType>()
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
+            -- we try to avoid having to calculate the size or offset of anything ourselves, so that
+            -- we can function on various compilers and in both 32/64 bit mode. However, the one
+            -- spot that (as far as I can tell) we can't just let the backend worry about it is in
+            -- choices - we need the choice data structure to be big enough to hold any of the
+            -- possible cases, so we figure out whichever case is the biggest and allocate that one.
+            -- The issue, of course, is that which one is biggest depends on whether we're in 32 or
+            -- 64 bit mode.
+            -- Normally we know which one we're compiling for, but the one exception is bootstrap.c,
+            -- which has to work in both 32 and 64 bit mode. So in that specific case, we compile in
+            -- 32 bit mode, which works (even when compiled using for 64 bits) for everything but
+            -- choices. So when compiling bootstrap choices, we temporarily force 64 bit mode. This
+            -- isn't guaranteed to be correct - you can contrive cases where this produces the wrong
+            -- results. But it gets us past the problem for now, and hopefully someone can figure
+            -- out a better solution down the road.
             if f.name = ClassDecl.CHOICE_DATA_NAME {
                 var size := 0
+                def oldSize := settings.intSize
+                if settings.isBootstrap {
+                    settings.intSize := 8
+                }
                 for cc in cl.choiceCases {
                     size := size.max(Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
                             cc.fields.map(primitiveType))).size(settings))
                 }
+                settings.intSize := oldSize
                 types.add(Code.PrimitiveType.ARRAY(size, Code.PrimitiveType.INT8))
             }
             else {
