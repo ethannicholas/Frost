@@ -74,9 +74,6 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             return value > other.value
         }
 
-        ============================================================================================
-        @inherit
-        ============================================================================================
         @override
         function get_hash():Int {
             return value
@@ -1552,9 +1549,6 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         return Frost.toReal64(self)
     }
 
-    ================================================================================================
-    @inherit
-    ================================================================================================
     @override
     function get_hash():Int {
         -- FNV-1a hash, thanks to Fowler, Landon, and Vo. This algorithm is in the public

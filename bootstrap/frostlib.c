@@ -977,10 +977,11 @@ void frost$core$Frost$addWeakReference$frost$core$Weak$LTfrost$core$Frost$addWea
         for (var i = 0; i < index; ++i) {
             if (!re[i]) {
                 index = i;
+                break;
             }
         }
-        re[i] = new RegExp(UTF8ToString(str), "g");
-        return i;
+        re[index] = new RegExp(UTF8ToString(str), "g");
+        return index;
     });
 
     EM_JS(int, createMatcher, (int regex, const char* str), {
@@ -990,10 +991,11 @@ void frost$core$Frost$addWeakReference$frost$core$Weak$LTfrost$core$Frost$addWea
         for (var i = 0; i < index; ++i) {
             if (!re[i]) {
                 index = i;
+                break;
             }
         }
-        re[i] = { regexp:re[regex], str:UTF8ToString(str) };
-        return i;
+        re[index] = { regexp:re[regex], str:UTF8ToString(str) };
+        return index;
     });
 
     EM_JS(void, destroyRegex, (int regex), {

@@ -50,6 +50,9 @@ class Array<T> : List<T> {
         }
     }
 
+    ================================================================================================
+    Creates a new `Array` containing `count` copies of `value`.
+    ================================================================================================
     init(count:Int, value:T) {
         init(capacity)
         for i in 0 .. count {
@@ -144,6 +147,7 @@ class Array<T> : List<T> {
         }
     }
 
+    @private
     method ensureCapacity(newCapacity:Int) {
         if newCapacity <= capacity {
             return
@@ -180,6 +184,9 @@ class Array<T> : List<T> {
         }
     }
 
+    ================================================================================================
+    As [ListView.filter((T)=>(Bit))], but returns an `Array`.
+    ================================================================================================
     @priority(2)
     function filter(predicate:(T)=>(Bit)):Array<T> {
         def result := Array<T>()
@@ -191,6 +198,9 @@ class Array<T> : List<T> {
         return result
     }
 
+    ================================================================================================
+    As [ListView.filter((T)=&>(Bit))], but returns an `Array`.
+    ================================================================================================
     @priority(2)
     method filter(predicate:(T)=&>(Bit)):Array<T> {
         def result := Array<T>()
@@ -202,6 +212,9 @@ class Array<T> : List<T> {
         return result
     }
 
+    ================================================================================================
+    As [ListView.combine(ListView<U>)], but returns an `Array`.
+    ================================================================================================
     @priority(2)
     @pre(count = other.count)
     function combine<U>(other:ListView<U>):Array<(T, U)> {
@@ -212,6 +225,9 @@ class Array<T> : List<T> {
         return result
     }
 
+    ================================================================================================
+    As [ListView.combine(ListView<U>, (T, U)=>(V))], but returns an `Array`.
+    ================================================================================================
     @priority(4)
     @pre(count = other.count)
     function combine<U, V>(other:ListView<U>, f:(T, U)=>(V)):Array<V> {
@@ -222,6 +238,9 @@ class Array<T> : List<T> {
         return result
     }
 
+    ================================================================================================
+    As [ListView.combine(ListView<U>, (T, U)=&>(V))], but returns an `Array`.
+    ================================================================================================
     @priority(3)
     @pre(count = other.count)
     method combine<U, V>(other:ListView<U>, f:(T, U)=&>(V)):Array<V> {
@@ -232,6 +251,9 @@ class Array<T> : List<T> {
         return result
     }
 
+    ================================================================================================
+    As [ListView.sort], but returns an `Array`.
+    ================================================================================================
     @priority(1)
     method sort(greater:(T, T)=>(Bit)):Array<T> {
         def result := Array<T>(self)

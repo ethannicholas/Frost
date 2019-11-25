@@ -526,7 +526,7 @@
     </xsl:template>
     
     <xsl:template match="method|function|field" mode="inherited">
-        <a href="{link}"><code><xsl:value-of select="name"/></code></a><br/>
+        <a href="{url}"><code><xsl:value-of select="name"/></code></a><br/>
     </xsl:template>
 
     <xsl:template match="summary">
@@ -614,6 +614,7 @@
                     <xsl:apply-templates select="doc/description"/>
                     <xsl:apply-templates select="params" mode="description"/>
                     <xsl:apply-templates select="return/description"/>
+                    <xsl:apply-templates select="overrides"/>
                     <xsl:apply-templates select="seeAlsos"/>
                 </div>
             </div>
@@ -746,6 +747,13 @@
         </xsl:choose>
     </xsl:template>
 
+    <xsl:template match="overrides">
+        <dl>
+            <dt><b>Overrides:</b></dt>
+            <dd><a href="{url}"><xsl:apply-templates select="method/text()"/></a></dd>
+        </dl>
+    </xsl:template>
+    
     <xsl:template match="seeAlsos">
         <dl>
             <dt><b>See also:</b></dt>

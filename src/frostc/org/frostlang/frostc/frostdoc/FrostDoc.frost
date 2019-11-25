@@ -61,11 +61,7 @@ class FrostDoc {
         match t.typeKind {
             when Type.Kind.CLASS, Type.Kind.GENERIC_CLASS_PARAMETER,
                     Type.Kind.GENERIC_METHOD_PARAMETER {
-                def index := t.name.lastIndexOf(".")
-                if index == null {
-                    return t.name
-                }
-                return t.name[t.name.next(index)..]
+                return t.name.split(".").last
             }
             when Type.Kind.NULLABLE {
                 return simpleName(t.subtypes[0]) + "?"
@@ -242,14 +238,33 @@ class FrostDoc {
 
     method writeDoc(doccomment:String):Error? {
         try {
-            def summary:String
-            def index := doccomment.indexOf(".")
-            if index !== null {
-                summary := doccomment.substring(...index)
+            var index := doccomment.start
+            var parenCount := 0
+            var bracketCount := 0
+            while index < doccomment.end {
+                match doccomment[index] {
+                    when "." {
+                        if parenCount = 0 & bracketCount = 0 {
+                            index := doccomment.next(index)
+                            break
+                        }
+                    }
+                    when "(" {
+                        parenCount += 1
+                    }
+                    when ")" {
+                        parenCount -= 1
+                    }
+                    when "[" {
+                        bracketCount += 1
+                    }
+                    when "]" {
+                        bracketCount -= 1
+                    }
+                }
+                index := doccomment.next(index)
             }
-            else {
-                summary := doccomment
-            }
+            def summary := doccomment[doccomment.start .. index]
             def md := getMarkdown()
             out.open("doc")
             def oldLevel := out.out.level
@@ -396,20 +411,12 @@ class FrostDoc {
     }
 
     method getDocComment(m:MethodDecl):String? {
-        if m.doccomment !== null & m.doccomment.trimmed = "@inherit" {
+        if m.doccomment == null {
             def overridden := compiler.getOverriddenMethod(m)
             if overridden == null {
-                compiler.error(m.position, "method specifies '@inherit', but no matching method " +
-                        "found among its ancestors")
                 return null
             }
-            def result := getDocComment(overridden)
-            if result == null {
-                compiler.error(m.position, "method specifies '@inherit', but " +
-                        "\{overridden.declaration} does not have any documentation")
-                return null
-            }
-            return result
+            return getDocComment(overridden)
         }
         return m.doccomment
     }
@@ -424,7 +431,7 @@ class FrostDoc {
 
     method writeDoc(m:MethodDecl):Error? {
         try {
-            def c := getDocComment(m)
+            var c := getDocComment(m)
             if c == null {
                 return null
             }
@@ -453,6 +460,13 @@ class FrostDoc {
                 }
             }
             finishSees()
+            def overridden := compiler.getOverriddenMethod(m)
+            if overridden !== null {
+                out.open("overrides")
+                out.write("method", escape(overridden.owner.name + "." + overridden.name))
+                out.write("url", escape(linkTo(overridden)))
+                out.close("overrides")
+            }
             return null
         }
         fail(error) {
@@ -484,7 +498,17 @@ class FrostDoc {
                 }
             }
             out.open(tag)
-            out.write("name", escape(m.name))
+            var name := m.name
+            if m.genericParameters !== null {
+                name += "<" + m.genericParameters.map(function(p:MethodDecl.GenericParameter):String {
+                    def result := p.name.split(".").last
+                    if p.bound != self.compiler.ANY_TYPE {
+                        return result + ":" + p.bound.name
+                    }
+                    return result
+                }).join(", ") + ">"
+            }
+            out.write("name", escape(name))
             writeDoc(m)
             def annotations := m.annotations
             if m.owner.annotations.isFinal {
@@ -598,7 +622,7 @@ class FrostDoc {
                 for f in fields {
                     out.open("field")
                     out.write("name", f.name)
-                    out.write("link", escape(linkTo(f)))
+                    out.write("url", escape(linkTo(f)))
                     out.close("field")
                 }
                 out.close("inheritedFields")
@@ -674,7 +698,7 @@ class FrostDoc {
                 for m in methods {
                     out.open("method")
                     out.write("name", escape(simpleSignature(m)))
-                    out.write("link", escape(linkTo(m)))
+                    out.write("url", escape(linkTo(m)))
                     out.close("method")
                 }
                 out.close("inheritedMethods")
@@ -752,21 +776,25 @@ class FrostDoc {
             }
             self.currentClass := cl
             def dest := getPath(cl, ".xml")
+            Console.printLine(dest)
             dest.parent.createDirectories()
             out := XMLWriter(dest.openOutputStream())
             out.open("class")
             out.write("name", cl.name)
             var simple := simpleName(cl.type)
             if cl.parameters.count != 0 {
-                var separator := "&lt;"
+                var separator := "<"
                 for p in cl.parameters {
                     simple += separator
                     simple += p.name
+                    if p.bound != compiler.ANY_TYPE {
+                        simple += ":" + simpleName(p.bound)
+                    }
                     separator := ", "
                 }
-                simple += "&gt;"
+                simple += ">"
             }
-            out.write("simpleName", simple)
+            out.write("simpleName", escape(simple))
             match cl.classKind {
                 when ClassDecl.Kind.CLASS {
                     out.write("kind", "class")

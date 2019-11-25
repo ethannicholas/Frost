@@ -49,13 +49,30 @@ class LinkResolver {
         self.context := context
     }
 
-    function matches(m:MethodDecl, parameters:ListView<Type>):Bit {
+    method resolveInContext(m:MethodDecl, type:Type):Type {
+        compiler.currentClass.push(m.owner)
+        def auto := Compiler.AutoScope(compiler, compiler.getSymbolTable(m.owner))
+        if m.genericParameters !== null {
+            for g in m.genericParameters {
+                compiler.symbolTable.add(g)
+            }
+        }
+        def resolved := compiler.resolve(type, false)
+        compiler.currentClass.pop()
+        if resolved == null {
+            return type
+        }
+        return resolved
+    }
+
+    method matches(m:MethodDecl, parameters:ListView<Type>):Bit {
+        Console.printLine("matched \{m.declaration}, \{parameters}")
         if m.parameters.count != parameters.count {
             return false
         }
         compiler.resolve(m)
         for i in 0 .. parameters.count {
-            if m.parameters[i].type != parameters[i] {
+            if m.parameters[i].type != resolveInContext(m, parameters[i]) {
                 return false
             }
         }
@@ -136,7 +153,7 @@ class LinkResolver {
             }
             return result + link[hash..]
         }
-        if link.startsWith("http") | link.endsWith(".html") {
+        if link.startsWith("http") | link.endsWith(".html") | link.startsWith("/") {
             return link
         }
         if link.startsWith("example:") {
@@ -179,7 +196,7 @@ class LinkResolver {
             }
         }
         -- method signature
-        def parsed := link.parse(/([^(]+)\((.*)\)/)
+        def parsed := link.parse(/([^(]+)\((.*)\)(?::(.*))?/)
         if parsed !== null {
             def parameters := Array<Type>()
             if parsed[1].trimmed != "" {
@@ -189,31 +206,26 @@ class LinkResolver {
                 loop {
                     def type := compiler.parser.type()
                     if type == null {
-                        Console.printLine("could not parse: \{parsed[1]}")
+                        Console.printLine("could not parse: '\{parsed[1]}'")
                         return null
                     }
-                    def converted := compiler.scanner.convertType(type)
-                    match context {
-                        when Context.CLASS(cl, _) {
-                            compiler.currentClass.push(cl)
-                            compiler.symbolTable := compiler.getSymbolTable(cl)
-                        }
-                    }
-                    def resolved := compiler.resolve(converted, false)
-                    match context {
-                        when Context.CLASS {
-                            compiler.currentClass.pop()
-                        }
-                    }
-                    if resolved == null {
-                        Console.printLine("could not resolve type: \{converted} in \{context}")
-                        return null
-                    }
-                    parameters.add(resolved)
+                    parameters.add(compiler.scanner.convertType(type))
                     if compiler.parser.checkNext(Token.Kind.COMMA) == null {
                         break
                     }
                 }
+            }
+            def returnType:Type? := null
+            if parsed[2] != "" {
+                def src := File(parsed[2])
+                compiler.parser.start(src, compiler.files.count, parsed[2])
+                compiler.files.add(src)
+                def type := compiler.parser.type()
+                if type == null {
+                    Console.printLine("could not parse2: '\{parsed[2]}'")
+                    return null
+                }
+                returnType := compiler.scanner.convertType(type)
             }
             def name := parsed[0]
             def index := name.lastIndexOf(".")

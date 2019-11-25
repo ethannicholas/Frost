@@ -9,6 +9,9 @@ remove elements, but not to retrieve them.
 @see ListWriter
 ====================================================================================================
 interface CollectionWriter<T> {
+    ================================================================================================
+    The number of elements in the collection.
+    ================================================================================================
     property count:Int
 
     function get_count():Int

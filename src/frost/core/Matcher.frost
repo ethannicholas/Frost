@@ -1,5 +1,9 @@
 package frost.core
 
+====================================================================================================
+Represents the process of scanning a string for matches to a regular expression. `Matcher` objects
+are created by [RegularExpression] to scan particular strings, and return matches one at a time.
+====================================================================================================
 @final
 class Matcher {
     @private
@@ -24,25 +28,44 @@ class Matcher {
     @private
     var replacementIndex:String.Index
 
+    ================================================================================================
+    Returns the index of the beginning of the last match located by `find()`. It is a [safety
+    violation](/safetyViolations.md) to read this property unless the last call to `matches()` or
+    `find()` was successful.
+    ================================================================================================
     property start:String.Index
 
+    ================================================================================================
+    Returns the index of the end of the last match located by `find()`. It is a [safety
+    violation](/safetyViolations.md) to read this property unless the last call to `matches()` or
+    `find()` was successful.
+    ================================================================================================
     property end:String.Index
 
+    ================================================================================================
+    Returns the number of groups contained in the match. This is always at least 1, as group zero
+    represents the entire matched text. It is a [safety violation](/safetyViolations.md) to read
+    this property unless the last call to `matches()` or `find()` was successful.
+    ================================================================================================
     property groupCount:Int
 
     @private
     init() {
     }
 
+    ================================================================================================
+    Checks to see if the regular expression matches the entire string. While `find()` tolerates
+    additional unmatched text before or after the match, `matches()` does not.
+    ================================================================================================
     -- @self FIXME
     @external
     method matches():Bit
 
     ================================================================================================
     Returns the next occurrence of the matcher's regular expression within the string, starting just
-    past the last match (or at the beginning of the string). Returns a `Bit` indicating whether or
-    not a match was found. Use [start], [end], and [group(Int)] for more information about the
-    match.
+    past the last match (or at the beginning of the string, if this is the first call to `find()`).
+    Returns a `Bit` indicating whether or not a match was found. Use [start], [end], and
+    [group(Int)] for more information about the match.
     
     @returns `true` if a match was found
     @see matches()
@@ -175,15 +198,37 @@ class Matcher {
     method nativeFind(start:String.Index):Bit
 
     @external
+    @pre(matched)
     function get_start():String.Index
 
     @external
+    @pre(matched)
     function get_end():String.Index
 
     @external
+    @pre(matched)
     function get_groupCount():Int
 
+    ================================================================================================
+    Returns the contents of the indicated match group. Group zero is the entire matched text, and
+    additional groups are defined by parentheses in the regular expression. For example:
+
+        -- testcase MatcherGroup(Simple)
+        def m := /(\d+) plus (\d+) equals (\d+)/.matcher("12 plus 8 equals 20")
+        if m.matches() {
+            for i in m.groupCount {
+                Console.printLine(m.group(i))
+            }
+        }
+
+    This will display:
+
+        12
+        8
+        20
+    ================================================================================================
     @external
+    @pre(matched)
     function group(index:Int):String?
 
     @override

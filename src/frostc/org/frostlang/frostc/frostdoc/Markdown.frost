@@ -1182,7 +1182,7 @@ class Markdown {
             generator := generatorPath.resolve(name + ".frost")
         }
         try {
-            def exe := System.temporaryDirectory().resolve("generator")
+            def exe := System.temporaryDirectory().resolve("\{name}_generator")
             if exe.exists() {
                 exe.delete()
             }
@@ -1229,6 +1229,7 @@ class Markdown {
                 }
             })
             p.waitFor()
+            exe.delete()
         }
         fail(error) {
             Console.printLine(error)
