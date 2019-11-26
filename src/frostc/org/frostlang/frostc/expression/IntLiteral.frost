@@ -81,8 +81,8 @@ class IntLiteral {
                     return null
                 }
                 if t.typeKind = Type.Kind.BUILTIN_INT {
-                    if requiredSize(-value.asInt64) <= t.size {
-                        return IR.Value.INT((-value.asInt64).asUInt64, t)
+                    if requiredSize(-value.toInt64) <= t.size {
+                        return IR.Value.INT((-value.toInt64).toUInt64, t)
                     }
                     else {
                         compiler.error(position, "integer literal is out of range")
@@ -90,7 +90,7 @@ class IntLiteral {
                     }
                 }
                 if t.typeKind = Type.Kind.BUILTIN_FLOAT {
-                    return IR.Value.REAL(-value.asInt64, t)
+                    return IR.Value.REAL(-value.toInt64, t)
                 }
                 if t.isNumber {
                     def cl := compiler.getClass(t)

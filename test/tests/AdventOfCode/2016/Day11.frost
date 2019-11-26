@@ -144,7 +144,7 @@ choice Thing {
     CHIP(String)
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         match self {
             when Thing.RTG(name) {
                 return name + "_g"
@@ -169,7 +169,7 @@ class State {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "<" + elevator + ", " + floors + ">"
     }
 
@@ -196,7 +196,7 @@ class State {
                     }
                 }
             }
-            if copy.asString.contains("_g") & copy.asString.contains("_c") {
+            if copy.toString.contains("_g") & copy.toString.contains("_c") {
                 return false
             }
             key.append("|")
@@ -219,7 +219,7 @@ class State {
                 found := seen.count
                 seen.add(matcher.group(1))
             }
-            matcher.appendReplacement(final, found.asString + matcher.group(2))
+            matcher.appendReplacement(final, found.toString + matcher.group(2))
         }
         matcher.appendTail(final)
         self.key := final.finish()
@@ -237,7 +237,7 @@ class Day11 {
             newState.floors[from].filterInPlace(t => t != c)
         }
         newState.floors[to].addAll(carrying)
-        newState.floors[to].sortInPlace((a, b) => a.asString > b.asString)
+        newState.floors[to].sortInPlace((a, b) => a.toString > b.toString)
         if newState.validate() & !visited.contains(newState.key) {
             states.add(newState)
             visited.add(newState.key)
@@ -292,7 +292,7 @@ class Day11 {
             def floor := Array<Thing>()
             floor.addAll(line.find(/(\w+) generator/).map(m => Thing.RTG(m.groups[1])).all())
             floor.addAll(line.find(/(\w+)-compatible/).map(m => Thing.CHIP(m.groups[1])).all())
-            floor.sortInPlace((a, b) => a.asString > b.asString)
+            floor.sortInPlace((a, b) => a.toString > b.toString)
             floors.add(floor)
         }
         def startState := State(0, floors, null)

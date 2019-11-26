@@ -37,7 +37,7 @@ class KeyTuple3<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>> : HashKey<KeyTup
         return result
     }
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "(\{f0}, \{f1}, \{f2})"
     }
 }

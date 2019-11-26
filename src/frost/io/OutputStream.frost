@@ -258,13 +258,13 @@ class OutputStream {
     }
 
     ================================================================================================
-    Prints the string represention of an object (as given by [asString](Object.asString)) to the
+    Prints the string represention of an object (as given by [toString](Object.toString)) to the
     stream.
 
     @param o the object to write
     ================================================================================================
     method print(o:Object):Error? {
-        return print(o.asString)
+        return print(o.toString)
     }
 
     ================================================================================================
@@ -284,13 +284,13 @@ class OutputStream {
     }
 
     ================================================================================================
-    Prints the string represention of an object (as given by [asString](Object.asString)) to the
+    Prints the string represention of an object (as given by [toString](Object.toString)) to the
     stream, followed by a [line ending](lineEnding).
 
     @param o the object to write
     ================================================================================================
     method printLine(o:Object):Error? {
-        return printLine(o.asString)
+        return printLine(o.toString)
     }
 
     ================================================================================================

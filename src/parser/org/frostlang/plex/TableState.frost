@@ -24,7 +24,7 @@ class TableState : State {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         def result := MutableString()
         result.append("Table(")
         result.append(inverse)

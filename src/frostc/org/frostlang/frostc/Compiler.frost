@@ -112,7 +112,7 @@ class Compiler : ErrorReporter {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             def result := MutableString("InlineReturn<")
             if variable !== null {
                 result.append("variable=\{variable}")
@@ -302,7 +302,7 @@ class Compiler : ErrorReporter {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "ExpressionCoercionKey<\{expr} -> \{target}>"
         }
     }
@@ -1118,9 +1118,9 @@ class Compiler : ErrorReporter {
     }
 
     @pre(cl.classKind = ClassDecl.Kind.CHOICE)
-    method createChoiceAsStringIfNeeded(cl:ClassDecl) {
+    method createChoiceToStringIfNeeded(cl:ClassDecl) {
         for m in cl.methods {
-            if m.name = "get_asString" & m.parameters.count = 0 {
+            if m.name = "get_toString" & m.parameters.count = 0 {
                 def returnType := resolve(m.returnType)
                 if returnType !== null & returnType = STRING_TYPE {
                     return
@@ -1159,12 +1159,12 @@ class Compiler : ErrorReporter {
         def body := Array<ASTNode>()
         body.add(ASTNode.MATCH(p, ASTNode.SELF(p), FixedArray<ASTNode>.from(whens),
                 FixedArray<ASTNode>.from([ASTNode.UNREACHABLE(p, null)])))
-        def asString := MethodDecl(cl, p, methods.count, null,
+        def toString := MethodDecl(cl, p, methods.count, null,
                 Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
-                MethodDecl.Kind.FUNCTION, "get_asString", null, [], STRING_TYPE,
+                MethodDecl.Kind.FUNCTION, "get_toString", null, [], STRING_TYPE,
                 FixedArray<ASTNode>.from(body))
-        methods.add(asString)
-        cl.methods.add(asString)
+        methods.add(toString)
+        cl.methods.add(toString)
     }
 
     @pre(cl.classKind = ClassDecl.Kind.CHOICE)
@@ -1211,7 +1211,7 @@ class Compiler : ErrorReporter {
             if cl.classKind = ClassDecl.Kind.CHOICE {
                 createChoiceEqualsIfNeeded(cl)
                 createChoiceHashIfNeeded(cl)
-                createChoiceAsStringIfNeeded(cl)
+                createChoiceToStringIfNeeded(cl)
             }
             def supertypes := HashSet<String>()
             for rawS in cl.declaredSupers {
@@ -2906,7 +2906,7 @@ class Compiler : ErrorReporter {
             }
             when ASTNode.INT(_, value) {
                 def result := Array<Type>()
-                def signedValue := value.asInt64
+                def signedValue := value.toInt64
                 if signedValue >= Int8.MIN.asInt64 & signedValue <= Int8.MAX.asInt64 {
                     result.add(BUILTIN_INT8_TYPE)
                     result.add(INT8_TYPE)
@@ -3234,7 +3234,7 @@ class Compiler : ErrorReporter {
             }
             when ASTNode.INT(_, value) {
                 if (target.typeKind = Type.Kind.BUILTIN_INT &
-                        IntLiteral.requiredSize(value.asInt64) <= target.size) |
+                        IntLiteral.requiredSize(value.toInt64) <= target.size) |
                         (target.typeKind = Type.Kind.BUILTIN_UINT &
                         IntLiteral.requiredSize(value) <= target.size) {
                     return (target, 0)
@@ -4273,7 +4273,7 @@ class Compiler : ErrorReporter {
     }
 
     ================================================================================================
-    Converts an object to a different type using the appropriate `as` property. Reports an error and
+    Converts an object to a different type using the appropriate `to` property. Reports an error and
     returns `null` if no such conversion is possible.
     ================================================================================================
     method convert(value:IR.Value?, target:Type):IR.Value? {
@@ -4285,7 +4285,7 @@ class Compiler : ErrorReporter {
         }
         def simpleName := target.name[target.name.next(target.name.lastIndexOf("."))..]
         return Call.compile(self, MethodPosition(currentMethod[0].position, currentMethodIndex),
-                value, "get_as\{simpleName}", [], TypeContext.TYPE(target, false))
+                value, "get_to\{simpleName}", [], TypeContext.TYPE(target, false))
     }
 
     method getVTableIndex(m:MethodDecl):Int {
@@ -4385,8 +4385,8 @@ class Compiler : ErrorReporter {
 
     @pre(isRefCounted(v.type()))
     method compileUnref(v:IR.Value) {
---        def f := v.asString = "REF($102:frost.collections.Array<frost.collections.Array.T>)"
---        ir.add(IR.Statement.COMMENT( MethodPosition(currentMethod[0].position, currentMethodIndex), "compile unref \{v.asString} \{f}"))
+--        def f := v.toString = "REF($102:frost.collections.Array<frost.collections.Array.T>)"
+--        ir.add(IR.Statement.COMMENT( MethodPosition(currentMethod[0].position, currentMethodIndex), "compile unref \{v.toString} \{f}"))
 --        assert !f
         match v {
             when IR.Value.NULL {
@@ -4710,13 +4710,13 @@ class Compiler : ErrorReporter {
         }
         if coercionCost(compiledLeft.type(), compiledRight.type()) == null &
                 coercionCost(compiledRight.type(), compiledLeft.type()) == null {
-            error(position, "'\{op.asString}' cannot compare dissimilar types " +
+            error(position, "'\{op.toString}' cannot compare dissimilar types " +
                     "'\{compiledLeft.type()}' and '\{compiledRight.type()}'")
             return null
         }
         if isValue(compiledLeft.type()) & !isNull(compiledRight) |
                 isValue(compiledRight.type()) & !isNull(compiledLeft) {
-            error(position, "'\{op.asString}' cannot operate on value types")
+            error(position, "'\{op.toString}' cannot operate on value types")
             return null
         }
         def builtinBit := ir.add(IR.Statement.BINARY(position, compiledLeft, op, compiledRight,

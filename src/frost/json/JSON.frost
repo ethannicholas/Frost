@@ -322,19 +322,19 @@ choice JSON {
     Returns a JSON string representing this node.
     ================================================================================================
     @override
-    function get_asString():String {
+    function get_toString():String {
         match self {
             when INT(value) {
-                return value.asString
+                return value.toString
             }
             when REAL(value) {
-                return value.asString
+                return value.toString
             }
             when STRING(value) {
                 return value.format("frost")
             }
             when BIT(value) {
-                return value.asString
+                return value.toString
             }
             when MAP(fields) {
                 def result := MutableString("{")

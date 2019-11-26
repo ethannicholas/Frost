@@ -169,11 +169,11 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             assert index < str._length
             def c := str.data[index]
             var result := c.asInt32
-            if c.value->builtin_int64 && 0xFF < 0b10000000 {
+            if c.asInt && 0xFF < 0b10000000 {
                 index += 1
                 return Char32(result)
             }
-            if c.value->builtin_int64 && 0xFF < 0b11000000 {
+            if c.asInt && 0xFF < 0b11000000 {
                 if index + 1 < str._length {
                     result := (result && 0b11111) << 6 + str.data[index + 1].asInt32 &&
                             0b111111
@@ -184,7 +184,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 index += 2
                 return Char32(result)
             }
-            if c.value->builtin_int64 && 0xFF < 0b11100000 {
+            if c.asInt && 0xFF < 0b11100000 {
                 if index + 2 < str._length {
                     result := (result && 0b1111) << 12 + (str.data[index + 1].asInt32 &&
                             0b111111) << 6 + str.data[index + 2].asInt32 && 0b111111
@@ -276,7 +276,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "Match(\{groups[0]})"
         }
     }
@@ -386,7 +386,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     Returns this string.
     ================================================================================================
     @override
-    function get_asString():String {
+    function get_toString():String {
         return self
     }
 
@@ -554,10 +554,10 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
 
     ================================================================================================
     Returns the concatenation of this string and another object's string representation. The
-    object's string representation is computed using its [asString property](Object.asString).
+    object's string representation is computed using its [toString property](Object.toString).
     ================================================================================================
     function +(other:Object):String {
-        return self + other.asString
+        return self + other.toString
     }
 
     ================================================================================================
@@ -587,11 +587,11 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
 
     ================================================================================================
     Returns the concatenation of another object's string representation and this string. The
-    object's string representation is computed using its [asString property](Object.asString).
+    object's string representation is computed using its [toString property](Object.toString).
     ================================================================================================
     @class
     function +(o:Object, s:String):String {
-        return o.asString + s
+        return o.toString + s
     }
 
     ================================================================================================
@@ -847,7 +847,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 }
                 for i in 1 .. step {
                     if current >= end {
-                        return result.asString
+                        return result.toString
                     }
                     current := next(Index(current)).value
                 }
@@ -877,7 +877,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 }
                 for i in -1 .. step by -1 {
                     if current <= end {
-                        return result.asString
+                        return result.toString
                     }
                     current := previous(Index(current)).value
                 }
@@ -1153,20 +1153,20 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         def result := MutableString()
         def matcher := search.matcher(self)
         while matcher.find() {
-            matcher.appendReplacement(result, replacement(matcher.group(0)).asString, false)
+            matcher.appendReplacement(result, replacement(matcher.group(0)).toString, false)
         }
         matcher.appendTail(result)
-        return result.asString
+        return result.toString
     }
 
     method replace(search:RegularExpression, replacement:(String)=&>(Object)):String {
         def result := MutableString()
         def matcher := search.matcher(self)
         while matcher.find() {
-            matcher.appendReplacement(result, replacement(matcher.group(0)).asString, false)
+            matcher.appendReplacement(result, replacement(matcher.group(0)).toString, false)
         }
         matcher.appendTail(result)
-        return result.asString
+        return result.toString
     }
 
     ================================================================================================
@@ -1187,10 +1187,10 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             for i in 0 .. matcher.get_groupCount() {
                 groups.add(matcher.group(i))
             }
-            matcher.appendReplacement(result, replacement(groups).asString, false)
+            matcher.appendReplacement(result, replacement(groups).toString, false)
         }
         matcher.appendTail(result)
-        return result.asString
+        return result.toString
     }
 
     method replace(search:RegularExpression, replacement:(ListView<String?>)=&>(Object)):String {
@@ -1201,10 +1201,10 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             for i in 0 .. matcher.get_groupCount() {
                 groups.add(matcher.group(i))
             }
-            matcher.appendReplacement(result, replacement(groups).asString, false)
+            matcher.appendReplacement(result, replacement(groups).toString, false)
         }
         matcher.appendTail(result)
-        return result.asString
+        return result.toString
     }
     
     function find(needle:String):Iterator<String.Index> {
@@ -1267,8 +1267,8 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     function previous(i:Index):Index {
         assert i.value > 0
         var newValue := i.value - 1
-        while data[newValue].value->builtin_int64 && 0xFF >= 0b10000000 &
-                data[newValue].value->builtin_int64 && 0xFF < 0b11000000 {
+        while data[newValue].asInt && 0xFF >= 0b10000000 &
+                data[newValue].asInt && 0xFF < 0b11000000 {
             newValue -= 1
         }
         return Index(newValue)
@@ -1504,7 +1504,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             start := 0
         }
         for i in start .. _length {
-            def digit := Int64(data[i].value->builtin_int64) - 48
+            def digit := data[i].asInt64 - 48
             if digit < 0 | digit > 9 {
                 return null
             }
@@ -1529,7 +1529,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         }
         var result:UInt64 := 0
         for i in 0 .. _length {
-            def digit := UInt64(data[i].value->builtin_uint64) - 48
+            def digit := data[i].asUInt64 - 48
             if digit < 0 | digit > 9 {
                 return null
             }
@@ -1555,7 +1555,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         -- domain: http://www.isthe.com/chongo/tech/comp/fnv/index.html#public_domain
         var h := 0xcbf29ce484222325
         for i in 0 .. _length {
-            h ~~= data[i].asInt8
+            h ~~= data[i].asUInt8
             h *= 0x100000001b3
         }
         return h

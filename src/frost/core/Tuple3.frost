@@ -22,7 +22,7 @@ class Tuple3<T0, T1, T2> {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "(\{f0}, \{f1}, \{f2})"
     }
 }

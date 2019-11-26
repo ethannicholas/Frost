@@ -34,7 +34,7 @@ class Weak<T> {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "Weak(\{value})"
     }
 }

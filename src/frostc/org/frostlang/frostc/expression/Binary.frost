@@ -137,7 +137,7 @@ class Binary {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             match self {
                 when ADD           { return "+" }
                 when SUB           { return "-" }
@@ -195,7 +195,7 @@ class Binary {
             return null
         }
         def target := IR.Value.REF(IR.Statement.ID(-1), left) -- fake target, just used for matching
-        var methods := compiler.getSymbolTable(leftCl)[op.asString]
+        var methods := compiler.getSymbolTable(leftCl)[op.toString]
         if methods !== null {
             def args := [right]
             -- look for left.op(right)
@@ -237,7 +237,7 @@ class Binary {
         if rightCl == null {
             return null
         }
-        methods := compiler.getSymbolTable(rightCl)[op.asString]
+        methods := compiler.getSymbolTable(rightCl)[op.toString]
         if methods == null {
             return null
         }
@@ -333,15 +333,15 @@ class Binary {
         }
         match op {
             when Operator.ADD {
-                def v := (l + r).asUInt64
+                def v := (l + r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.SUB {
-                def v := (l - r).asUInt64
+                def v := (l - r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.MUL {
-                def v := (l * r).asUInt64
+                def v := (l * r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.INTDIV {
@@ -349,7 +349,7 @@ class Binary {
                     compiler.error(right.position(), "division by 0")
                     return null
                 }
-                def v := (l // r).asUInt64
+                def v := (l // r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.REM {
@@ -357,7 +357,7 @@ class Binary {
                     compiler.error(right.position(), "division by 0")
                     return null
                 }
-                def v := (l % r).asUInt64
+                def v := (l % r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.EQ {
@@ -379,27 +379,27 @@ class Binary {
                 return ASTNode.BIT(left.position(), l >= r)
             }
             when Operator.BITWISEAND {
-                def v := (l && r).asUInt64
+                def v := (l && r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.BITWISEOR {
-                def v := (l || r).asUInt64
+                def v := (l || r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.BITWISEXOR {
-                def v := (l ~~ r).asUInt64
+                def v := (l ~~ r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.SHIFTLEFT {
-                def v := (l << r).asUInt64
+                def v := (l << r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.SHIFTRIGHT {
-                def v := (l >> r).asUInt64
+                def v := (l >> r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
         }
-        compiler.error(left.position(), "'\{op.asString}' cannot operate on 'frost.core.Int64', " +
+        compiler.error(left.position(), "'\{op.toString}' cannot operate on 'frost.core.Int64', " +
                 "'frost.core.Int64'")
         return null
     }
@@ -663,7 +663,7 @@ class Binary {
                         return null
                     }
                 }
-                compiler.error(position, "no match(updated) for '\{op.asString}' on " +
+                compiler.error(position, "no match for '\{op.toString}' on " +
                         "'\{compiledLeft.type()}', '\{compiledRight.type()}'" +
                         type.description())
                 return null

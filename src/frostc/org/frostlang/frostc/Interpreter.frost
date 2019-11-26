@@ -476,9 +476,9 @@ class Interpreter : Backend {
                         return 0
                     }
                 }
-                when "frost$core$Real64$get_asString$R$frost$core$String" {
+                when "frost$core$Real64$get_toString$R$frost$core$String" {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        def str := Frost.intBitsToFloat(context.value(args[0])).asString
+                        def str := Frost.intBitsToFloat(context.value(args[0])).toString
                         return weakSelf.get().interpreterStringFrom(str)
                     }
                 }
@@ -973,7 +973,7 @@ class Interpreter : Backend {
             cg.getClassConstant(cl)
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 

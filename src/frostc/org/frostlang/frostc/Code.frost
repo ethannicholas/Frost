@@ -145,7 +145,7 @@ class Code {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             if returnType !== null {
                 return "\{name}(\{parameters.join(", ")}):\{returnType}"
             }
@@ -469,7 +469,7 @@ class Code {
             }
 
             @override
-            function get_asString():String {
+            function get_toString():String {
                 return "$\{value}"
             }
         }
@@ -672,7 +672,7 @@ class Code {
             }
 
             @override
-            function get_asString():String {
+            function get_toString():String {
                 return "block\{value}"
             }
         }
@@ -687,8 +687,8 @@ class Code {
         }
 
         @override
-        function get_asString():String {
-            return "\{id}:\n" + statements.map(s => s.asString).join("\n")
+        function get_toString():String {
+            return "\{id}:\n" + statements.map(s => s.toString).join("\n")
         }
     }
 
@@ -777,7 +777,7 @@ class Code {
                     return PrimitiveType.INT
                 }
             }
-            unreachable, self.asString
+            unreachable, self.toString
         }
     }
 
@@ -825,14 +825,14 @@ class Code {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "Global(\{name}, \{type}, \{isExternal})"
         }
     }
 
     @override
-    function get_asString():String {
-        return blocks.map(b => b.asString).join("\n\n")
+    function get_toString():String {
+        return blocks.map(b => b.toString).join("\n\n")
     }
 
     def blocks := Array<Block>()

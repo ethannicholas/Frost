@@ -24,7 +24,7 @@ method main() {
     Console.printLine(s[s.offset(s.end, -4)])
     Console.printLine(s.utf8.count)
     for c in s.utf8 {
-        Console.printLine(c.asInt8)
+        Console.printLine(c.asUInt8)
     }
     Console.printLine(Char8(65))
     Console.printLine(Char16(9749))

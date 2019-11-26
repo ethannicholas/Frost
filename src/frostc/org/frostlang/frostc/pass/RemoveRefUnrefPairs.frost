@@ -20,7 +20,7 @@ class RemoveRefUnrefPairs {
                 return "$" + id.value
             }
         }
-        return value.asString
+        return value.toString
     }
 
     method process(ir:IR, analysis:Analyzer):Bit {
@@ -39,8 +39,8 @@ class RemoveRefUnrefPairs {
             while node !== null {
                 match node.value {
                     when IR.Statement.CAST(_, v, t, _) {
-                        if analysis.compiler.cg.primitiveType(v.type()).asString =
-                                analysis.compiler.cg.primitiveType(t).asString {
+                        if analysis.compiler.cg.primitiveType(v.type()).toString =
+                                analysis.compiler.cg.primitiveType(t).toString {
                             casts["$" + id.value.value] := keyFor(v)
                         }
                     }

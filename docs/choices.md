@@ -40,9 +40,9 @@ destructure it:
         DIVIDE(Expression, Expression)
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             match self {
-                when Expression.LITERAL(v)     { return v.asString }
+                when Expression.LITERAL(v)     { return v.toString }
                 when Expression.ADD(a, b)      { return "\{a} + \{b}" }
                 when Expression.SUBTRACT(a, b) { return "\{a} - \{b}" }
                 when Expression.MULTIPLY(a, b) { return "\{a} * \{b}" }
@@ -57,7 +57,7 @@ contain fields (other than [constants](constants.md)).
 Default Methods
 ---------------
 
-Choices which do not override [Object.get_asString] will receive a default implementation that
+Choices which do not override [Object.get_toString] will receive a default implementation that
 returns the name of the choice and its data, such as `LITERAL(3)`.
 
 If all of the data elements of a choice implement [Equatable], the choice itself will implement

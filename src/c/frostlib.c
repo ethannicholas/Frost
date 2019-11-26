@@ -905,7 +905,7 @@ double frost$core$Frost$toReal64$frost$core$String$R$frost$core$Real64(frost_int
     return result;
 }
 
-frost_int frost$core$Real32$get_asString$R$frost$core$String(float d) {
+frost_int frost$core$Real32$get_toString$R$frost$core$String(float d) {
     size_t len = snprintf(NULL, 0, "%g", d);
     char* chars = (char*) frostAlloc(len + 1);
     snprintf(chars, len + 1, "%g", d);
@@ -914,7 +914,7 @@ frost_int frost$core$Real32$get_asString$R$frost$core$String(float d) {
     return (frost_int) result;
 }
 
-frost_int frost$core$Real64$get_asString$R$frost$core$String(double d) {
+frost_int frost$core$Real64$get_toString$R$frost$core$String(double d) {
     size_t len = snprintf(NULL, 0, "%g", d);
     char* chars = (char*) frostAlloc(len + 1);
     snprintf(chars, len + 1, "%g", d);

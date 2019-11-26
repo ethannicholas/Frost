@@ -28,7 +28,7 @@ class Tuple5<T0, T1, T2, T3, T4> {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "(\{f0}, \{f1}, \{f2}, \{f3}, \{f4})"
     }
 }

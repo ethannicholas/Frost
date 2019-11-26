@@ -44,11 +44,11 @@ class MethodPosition : Value, HashKey<MethodPosition> {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "\{line}:\{column}"
     }
 
-    function asString(compiler:Compiler):String {
+    function toString(compiler:Compiler):String {
         if file = -1 {
             return "<internal>:\{line}:\{column}"
         }

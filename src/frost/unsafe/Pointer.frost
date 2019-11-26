@@ -182,7 +182,7 @@ class Pointer<T> : Value {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "Pointer<0x\{asUInt:x}>"
     }
 }

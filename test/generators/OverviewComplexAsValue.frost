@@ -16,7 +16,7 @@ method main() {
         out.printLine("    }")
         out.printLine("")
         out.printLine("    @override")
-        out.printLine("    function get_asString():String {")
+        out.printLine("    function get_toString():String {")
         out.printLine("        return \"(\\{realPart} + \\{imaginaryPart}i)\"")
         out.printLine("    }")
         out.printLine("}")

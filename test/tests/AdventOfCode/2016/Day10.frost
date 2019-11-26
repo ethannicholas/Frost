@@ -82,7 +82,7 @@ class Day10 {
                 def bot := bots[id]
                 if bot.holding > -1 {
                     def values := [bot.holding, value].sort(Int.>)
-                    if values.asString = trigger {
+                    if values.toString = trigger {
                         Console.printLine(id)
                     }
                     give(bot.low, values[0])

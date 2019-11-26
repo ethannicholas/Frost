@@ -37,7 +37,7 @@ class Method : Immutable {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         if target !== null {
             return "Method<\{UInt(pointer):x}, \{target!}>"
         }

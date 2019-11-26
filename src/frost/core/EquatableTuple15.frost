@@ -77,7 +77,7 @@ class EquatableTuple15<T0:Equatable<T0>, T1:Equatable<T1>, T2:Equatable<T2>, T3:
         return true
     }
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "(\{f0}, \{f1}, \{f2}, \{f3}, \{f4}, \{f5}, \{f6}, \{f7}, \{f8}, \{f9}, \{f10}, \{f11}, \{f12}, \{f13}, \{f14})"
     }
 }

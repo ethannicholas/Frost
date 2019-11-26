@@ -20,9 +20,9 @@ choice Expression {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         match self {
-            when NUMBER(v) { return v.asString }
+            when NUMBER(v) { return v.toString }
             when ADD(a, b) { return "(\{a} + \{b})" }
             when SUB(a, b) { return "(\{a} - \{b})" }
             when MUL(a, b) { return "(\{a} * \{b})" }

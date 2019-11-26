@@ -240,7 +240,7 @@ class LLVMBackend : Backend {
             return result
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -344,7 +344,7 @@ class LLVMBackend : Backend {
                 return "[" + elements.map(getTypedReference).join(", ") + "]"
             }
             when Code.Value.BIT(b) {
-                return b.asString
+                return b.toString
             }
             when Code.Value.CHARS(s) {
                 def result := MutableString('c"')
@@ -364,20 +364,20 @@ class LLVMBackend : Backend {
                             CodeGenerator.CHOICE_DATA_INDEX) +
                         Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
                             cc.fields.map(cg.primitiveType))).elementOffset(settings!,
-                                index)).asString
+                                index)).toString
             }
             when Code.Value.FIELD_OFFSET(type, index) {
-                return type.elementOffset(settings!, index).asString
+                return type.elementOffset(settings!, index).toString
             }
             when Code.Value.GLOBAL_POINTER(index) {
                 return "ptrtoint(\{llvmType(cg.globals[index].type)}* @" + cg.globals[index].name +
                         " to \{INT_TYPE})"
             }
             when Code.Value.INT(i, _) {
-                return i.asString
+                return i.toString
             }
             when Code.Value.ITABLE_OFFSET(index) {
-                return ((2 + index) * settings.intSize).asString
+                return ((2 + index) * settings.intSize).toString
             }
             when Code.Value.METHOD_POINTER(signature) {
                 return "ptrtoint(\{llvmType(signature)}* @\{signature.name} to \{INT_TYPE})"
@@ -401,7 +401,7 @@ class LLVMBackend : Backend {
                 return getReference(r.value)
             }
             when Code.Value.SIZE_OF(t) {
-                return t.size(settings).asString
+                return t.size(settings).toString
             }
             when Code.Value.STATEMENT(id, _) {
                 return name(id)
@@ -423,7 +423,7 @@ class LLVMBackend : Backend {
                     }
                 }
                 return (ccType.elementOffset(settings!, CodeGenerator.VTABLE_INDEX) +
-                        index * settings.intSize).asString
+                        index * settings.intSize).toString
             }
             otherwise {
                 unreachable, "unsupported value \{v}"
@@ -498,7 +498,7 @@ class LLVMBackend : Backend {
             signatures.printLine(")")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -522,7 +522,7 @@ class LLVMBackend : Backend {
             }
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -582,7 +582,7 @@ class LLVMBackend : Backend {
             out.printLine("\{name(id)} = \{op} \{getTypedReference(value)} to \{llvmType(target)}")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -742,7 +742,7 @@ class LLVMBackend : Backend {
             }
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -1045,7 +1045,7 @@ class LLVMBackend : Backend {
             }
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -1062,7 +1062,7 @@ class LLVMBackend : Backend {
             }
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -1106,7 +1106,7 @@ class LLVMBackend : Backend {
             debugPositions.clear()
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -1119,7 +1119,7 @@ class LLVMBackend : Backend {
             cg.getClassConstant(cl)
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 

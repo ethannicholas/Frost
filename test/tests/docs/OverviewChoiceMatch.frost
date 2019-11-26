@@ -7,11 +7,11 @@ choice Expression {
     NEGATE(Expression)
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         def expr := self
         match expr {
             when NUMBER(value) {
-                return value.asString
+                return value.toString
             }
             when ADD(left, right) {
                 return "\{left} + \{right}"

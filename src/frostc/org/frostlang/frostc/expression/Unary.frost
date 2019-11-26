@@ -22,7 +22,7 @@ class Unary {
         NONNULL
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             match self {
                 when NOT        { return "!" }
                 when BITWISENOT { return "!!" }
@@ -44,7 +44,7 @@ class Unary {
             return result
         }
         return compiler.possibleTypes(ASTNode.CALL(position,
-                ASTNode.DOT(position, operand, op.asString),
+                ASTNode.DOT(position, operand, op.toString),
                 FixedArray<ASTNode>()))
     }
 
@@ -58,7 +58,7 @@ class Unary {
              -- fake target, just used for matching
             def target := IR.Value.REF(IR.Statement.ID(-1), baseType)
             return compiler.preferredType(ASTNode.CALL(position,
-                    ASTNode.DOT(position, ASTNode.IR_WRAPPER(position, target), op.asString),
+                    ASTNode.DOT(position, ASTNode.IR_WRAPPER(position, target), op.toString),
                     FixedArray<ASTNode>()))
         }
         return null
@@ -99,7 +99,7 @@ class Unary {
             return compiler.coercionCost(preferred, target)
         }
         return compiler.coercionCost(ASTNode.CALL(position,
-                ASTNode.DOT(position, operand, op.asString),
+                ASTNode.DOT(position, operand, op.toString),
                     FixedArray<ASTNode>()),
                 target)
     }

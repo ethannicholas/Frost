@@ -17,7 +17,7 @@ class Complex : Value {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "(\{r} + \{i}i)"
     }
 }

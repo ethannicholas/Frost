@@ -49,7 +49,7 @@ class SteppedRange<EndPoint:Value?, Step:Value> : Value {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         def result := MutableString()
         if start !== null {
             result.append(start!)

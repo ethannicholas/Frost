@@ -142,6 +142,6 @@ method main() {
     def a := circuit.get("a")
     Console.printLine(a)
     circuit.cache.clear()
-    circuit.wires["b"] := Wire.RAW(a.asString)
+    circuit.wires["b"] := Wire.RAW(a.toString)
     Console.printLine(circuit.get("a"))
 }

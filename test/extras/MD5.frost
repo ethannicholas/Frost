@@ -7,16 +7,16 @@ class MD5 {
     constant CHUNK_SIZE := 64
 
     @private
-    var a0:Int32 := 0x67452301.asInt32
+    var a0:Int32 := 0x67452301.toInt32
 
     @private
-    var b0:Int32 := 0xefcdab89.asInt32
+    var b0:Int32 := 0xefcdab89.toInt32
 
     @private
-    var c0:Int32 := 0x98badcfe.asInt32
+    var c0:Int32 := 0x98badcfe.toInt32
 
     @private
-    var d0:Int32 := 0x10325476.asInt32
+    var d0:Int32 := 0x10325476.toInt32
 
     @private
     var bitLength := 0
@@ -34,7 +34,7 @@ class MD5 {
 
     @private
     function leftRotate(x:Int32, c:Int32):Int32 {
-        return (x << c) || (x.asUInt32 >> (32 - c).asUInt32).asInt32
+        return (x << c) || (x.toUInt32 >> (32 - c).toUInt32).toInt32
     }
 
     @private
@@ -70,7 +70,7 @@ class MD5 {
         return (buffer[i * 4 + 3] << 24 ||
                 buffer[i * 4 + 2] << 16 ||
                 buffer[i * 4 + 1] <<  8 ||
-                buffer[i * 4 + 0]).asInt32
+                buffer[i * 4 + 0]).toInt32
     }
 
     @private
@@ -79,70 +79,70 @@ class MD5 {
         var b := b0
         var c := c0
         var d := d0
-        a := ff(a, b, c, d, word( 0),   7, 0xd76aa478.asInt32)
-        d := ff(d, a, b, c, word( 1),  12, 0xe8c7b756.asInt32)
-        c := ff(c, d, a, b, word( 2),  17, 0x242070db.asInt32)
-        b := ff(b, c, d, a, word( 3),  22, 0xc1bdceee.asInt32)
-        a := ff(a, b, c, d, word( 4),   7, 0xf57c0faf.asInt32)
-        d := ff(d, a, b, c, word( 5),  12, 0x4787c62a.asInt32)
-        c := ff(c, d, a, b, word( 6),  17, 0xa8304613.asInt32)
-        b := ff(b, c, d, a, word( 7),  22, 0xfd469501.asInt32)
-        a := ff(a, b, c, d, word( 8),   7, 0x698098d8.asInt32)
-        d := ff(d, a, b, c, word( 9),  12, 0x8b44f7af.asInt32)
-        c := ff(c, d, a, b, word(10),  17, 0xffff5bb1.asInt32)
-        b := ff(b, c, d, a, word(11),  22, 0x895cd7be.asInt32)
-        a := ff(a, b, c, d, word(12),   7, 0x6b901122.asInt32)
-        d := ff(d, a, b, c, word(13),  12, 0xfd987193.asInt32)
-        c := ff(c, d, a, b, word(14),  17, 0xa679438e.asInt32)
-        b := ff(b, c, d, a, word(15),  22, 0x49b40821.asInt32)
-        a := gg(a, b, c, d, word( 1),   5, 0xf61e2562.asInt32)
-        d := gg(d, a, b, c, word( 6),   9, 0xc040b340.asInt32)
-        c := gg(c, d, a, b, word(11),  14, 0x265e5a51.asInt32)
-        b := gg(b, c, d, a, word( 0),  20, 0xe9b6c7aa.asInt32)
-        a := gg(a, b, c, d, word( 5),   5, 0xd62f105d.asInt32)
-        d := gg(d, a, b, c, word(10),   9,  0x2441453.asInt32)
-        c := gg(c, d, a, b, word(15),  14, 0xd8a1e681.asInt32)
-        b := gg(b, c, d, a, word( 4),  20, 0xe7d3fbc8.asInt32)
-        a := gg(a, b, c, d, word( 9),   5, 0x21e1cde6.asInt32)
-        d := gg(d, a, b, c, word(14),   9, 0xc33707d6.asInt32)
-        c := gg(c, d, a, b, word( 3),  14, 0xf4d50d87.asInt32)
-        b := gg(b, c, d, a, word( 8),  20, 0x455a14ed.asInt32)
-        a := gg(a, b, c, d, word(13),   5, 0xa9e3e905.asInt32)
-        d := gg(d, a, b, c, word( 2),   9, 0xfcefa3f8.asInt32)
-        c := gg(c, d, a, b, word( 7),  14, 0x676f02d9.asInt32)
-        b := gg(b, c, d, a, word(12),  20, 0x8d2a4c8a.asInt32)
-        a := hh(a, b, c, d, word( 5),   4, 0xfffa3942.asInt32)
-        d := hh(d, a, b, c, word( 8),  11, 0x8771f681.asInt32)
-        c := hh(c, d, a, b, word(11),  16, 0x6d9d6122.asInt32)
-        b := hh(b, c, d, a, word(14),  23, 0xfde5380c.asInt32)
-        a := hh(a, b, c, d, word( 1),   4, 0xa4beea44.asInt32)
-        d := hh(d, a, b, c, word( 4),  11, 0x4bdecfa9.asInt32)
-        c := hh(c, d, a, b, word( 7),  16, 0xf6bb4b60.asInt32)
-        b := hh(b, c, d, a, word(10),  23, 0xbebfbc70.asInt32)
-        a := hh(a, b, c, d, word(13),   4, 0x289b7ec6.asInt32)
-        d := hh(d, a, b, c, word( 0),  11, 0xeaa127fa.asInt32)
-        c := hh(c, d, a, b, word( 3),  16, 0xd4ef3085.asInt32)
-        b := hh(b, c, d, a, word( 6),  23,  0x4881d05.asInt32)
-        a := hh(a, b, c, d, word( 9),   4, 0xd9d4d039.asInt32)
-        d := hh(d, a, b, c, word(12),  11, 0xe6db99e5.asInt32)
-        c := hh(c, d, a, b, word(15),  16, 0x1fa27cf8.asInt32)
-        b := hh(b, c, d, a, word( 2),  23, 0xc4ac5665.asInt32)
-        a := ii(a, b, c, d, word( 0),   6, 0xf4292244.asInt32)
-        d := ii(d, a, b, c, word( 7),  10, 0x432aff97.asInt32)
-        c := ii(c, d, a, b, word(14),  15, 0xab9423a7.asInt32)
-        b := ii(b, c, d, a, word( 5),  21, 0xfc93a039.asInt32)
-        a := ii(a, b, c, d, word(12),   6, 0x655b59c3.asInt32)
-        d := ii(d, a, b, c, word( 3),  10, 0x8f0ccc92.asInt32)
-        c := ii(c, d, a, b, word(10),  15, 0xffeff47d.asInt32)
-        b := ii(b, c, d, a, word( 1),  21, 0x85845dd1.asInt32)
-        a := ii(a, b, c, d, word( 8),   6, 0x6fa87e4f.asInt32)
-        d := ii(d, a, b, c, word(15),  10, 0xfe2ce6e0.asInt32)
-        c := ii(c, d, a, b, word( 6),  15, 0xa3014314.asInt32)
-        b := ii(b, c, d, a, word(13),  21, 0x4e0811a1.asInt32)
-        a := ii(a, b, c, d, word( 4),   6, 0xf7537e82.asInt32)
-        d := ii(d, a, b, c, word(11),  10, 0xbd3af235.asInt32)
-        c := ii(c, d, a, b, word( 2),  15, 0x2ad7d2bb.asInt32)
-        b := ii(b, c, d, a, word( 9),  21, 0xeb86d391.asInt32)
+        a := ff(a, b, c, d, word( 0),   7, 0xd76aa478.toInt32)
+        d := ff(d, a, b, c, word( 1),  12, 0xe8c7b756.toInt32)
+        c := ff(c, d, a, b, word( 2),  17, 0x242070db.toInt32)
+        b := ff(b, c, d, a, word( 3),  22, 0xc1bdceee.toInt32)
+        a := ff(a, b, c, d, word( 4),   7, 0xf57c0faf.toInt32)
+        d := ff(d, a, b, c, word( 5),  12, 0x4787c62a.toInt32)
+        c := ff(c, d, a, b, word( 6),  17, 0xa8304613.toInt32)
+        b := ff(b, c, d, a, word( 7),  22, 0xfd469501.toInt32)
+        a := ff(a, b, c, d, word( 8),   7, 0x698098d8.toInt32)
+        d := ff(d, a, b, c, word( 9),  12, 0x8b44f7af.toInt32)
+        c := ff(c, d, a, b, word(10),  17, 0xffff5bb1.toInt32)
+        b := ff(b, c, d, a, word(11),  22, 0x895cd7be.toInt32)
+        a := ff(a, b, c, d, word(12),   7, 0x6b901122.toInt32)
+        d := ff(d, a, b, c, word(13),  12, 0xfd987193.toInt32)
+        c := ff(c, d, a, b, word(14),  17, 0xa679438e.toInt32)
+        b := ff(b, c, d, a, word(15),  22, 0x49b40821.toInt32)
+        a := gg(a, b, c, d, word( 1),   5, 0xf61e2562.toInt32)
+        d := gg(d, a, b, c, word( 6),   9, 0xc040b340.toInt32)
+        c := gg(c, d, a, b, word(11),  14, 0x265e5a51.toInt32)
+        b := gg(b, c, d, a, word( 0),  20, 0xe9b6c7aa.toInt32)
+        a := gg(a, b, c, d, word( 5),   5, 0xd62f105d.toInt32)
+        d := gg(d, a, b, c, word(10),   9,  0x2441453.toInt32)
+        c := gg(c, d, a, b, word(15),  14, 0xd8a1e681.toInt32)
+        b := gg(b, c, d, a, word( 4),  20, 0xe7d3fbc8.toInt32)
+        a := gg(a, b, c, d, word( 9),   5, 0x21e1cde6.toInt32)
+        d := gg(d, a, b, c, word(14),   9, 0xc33707d6.toInt32)
+        c := gg(c, d, a, b, word( 3),  14, 0xf4d50d87.toInt32)
+        b := gg(b, c, d, a, word( 8),  20, 0x455a14ed.toInt32)
+        a := gg(a, b, c, d, word(13),   5, 0xa9e3e905.toInt32)
+        d := gg(d, a, b, c, word( 2),   9, 0xfcefa3f8.toInt32)
+        c := gg(c, d, a, b, word( 7),  14, 0x676f02d9.toInt32)
+        b := gg(b, c, d, a, word(12),  20, 0x8d2a4c8a.toInt32)
+        a := hh(a, b, c, d, word( 5),   4, 0xfffa3942.toInt32)
+        d := hh(d, a, b, c, word( 8),  11, 0x8771f681.toInt32)
+        c := hh(c, d, a, b, word(11),  16, 0x6d9d6122.toInt32)
+        b := hh(b, c, d, a, word(14),  23, 0xfde5380c.toInt32)
+        a := hh(a, b, c, d, word( 1),   4, 0xa4beea44.toInt32)
+        d := hh(d, a, b, c, word( 4),  11, 0x4bdecfa9.toInt32)
+        c := hh(c, d, a, b, word( 7),  16, 0xf6bb4b60.toInt32)
+        b := hh(b, c, d, a, word(10),  23, 0xbebfbc70.toInt32)
+        a := hh(a, b, c, d, word(13),   4, 0x289b7ec6.toInt32)
+        d := hh(d, a, b, c, word( 0),  11, 0xeaa127fa.toInt32)
+        c := hh(c, d, a, b, word( 3),  16, 0xd4ef3085.toInt32)
+        b := hh(b, c, d, a, word( 6),  23,  0x4881d05.toInt32)
+        a := hh(a, b, c, d, word( 9),   4, 0xd9d4d039.toInt32)
+        d := hh(d, a, b, c, word(12),  11, 0xe6db99e5.toInt32)
+        c := hh(c, d, a, b, word(15),  16, 0x1fa27cf8.toInt32)
+        b := hh(b, c, d, a, word( 2),  23, 0xc4ac5665.toInt32)
+        a := ii(a, b, c, d, word( 0),   6, 0xf4292244.toInt32)
+        d := ii(d, a, b, c, word( 7),  10, 0x432aff97.toInt32)
+        c := ii(c, d, a, b, word(14),  15, 0xab9423a7.toInt32)
+        b := ii(b, c, d, a, word( 5),  21, 0xfc93a039.toInt32)
+        a := ii(a, b, c, d, word(12),   6, 0x655b59c3.toInt32)
+        d := ii(d, a, b, c, word( 3),  10, 0x8f0ccc92.toInt32)
+        c := ii(c, d, a, b, word(10),  15, 0xffeff47d.toInt32)
+        b := ii(b, c, d, a, word( 1),  21, 0x85845dd1.toInt32)
+        a := ii(a, b, c, d, word( 8),   6, 0x6fa87e4f.toInt32)
+        d := ii(d, a, b, c, word(15),  10, 0xfe2ce6e0.toInt32)
+        c := ii(c, d, a, b, word( 6),  15, 0xa3014314.toInt32)
+        b := ii(b, c, d, a, word(13),  21, 0x4e0811a1.toInt32)
+        a := ii(a, b, c, d, word( 4),   6, 0xf7537e82.toInt32)
+        d := ii(d, a, b, c, word(11),  10, 0xbd3af235.toInt32)
+        c := ii(c, d, a, b, word( 2),  15, 0x2ad7d2bb.toInt32)
+        b := ii(b, c, d, a, word( 9),  21, 0xeb86d391.toInt32)
 
         a0 += a
         b0 += b
@@ -180,14 +180,14 @@ class MD5 {
             }
         }
         bitLength += count * 8
-        buffer[56] := bitLength.asUInt8
-        buffer[57] := (bitLength >> 8).asUInt8
-        buffer[58] := (bitLength >> 16).asUInt8
-        buffer[59] := (bitLength >> 24).asUInt8
-        buffer[60] := (bitLength >> 32).asUInt8
-        buffer[61] := (bitLength >> 40).asUInt8
-        buffer[62] := (bitLength >> 48).asUInt8
-        buffer[63] := (bitLength >> 56).asUInt8
+        buffer[56] := bitLength.toUInt8
+        buffer[57] := (bitLength >> 8).toUInt8
+        buffer[58] := (bitLength >> 16).toUInt8
+        buffer[59] := (bitLength >> 24).toUInt8
+        buffer[60] := (bitLength >> 32).toUInt8
+        buffer[61] := (bitLength >> 40).toUInt8
+        buffer[62] := (bitLength >> 48).toUInt8
+        buffer[63] := (bitLength >> 56).toUInt8
         processChunk()
 
         constant DIGITS := "0123456789abcdef"
@@ -199,10 +199,10 @@ class MD5 {
             result.add(DIGITS[i2.asInt].asChar8)
         }
         method outputWord(i:Int32) {
-            outputByte(i.asUInt8)
-            outputByte((i >> 8).asUInt8)
-            outputByte((i >> 16).asUInt8)
-            outputByte((i >> 24).asUInt8)
+            outputByte(i.toUInt8)
+            outputByte((i >> 8).toUInt8)
+            outputByte((i >> 16).toUInt8)
+            outputByte((i >> 24).toUInt8)
         }
         outputWord(a0)
         outputWord(b0)

@@ -106,7 +106,7 @@ class WriteNumbers {
     }
 
     @class
-    function real(type:Type):Bit {
+    function isReal(type:Type):Bit {
         match type {
             when Type.REAL32, Type.REAL64 {
                 return true
@@ -138,7 +138,15 @@ class WriteNumbers {
     }
 
     @class
-    function castInt(type:Type, target:Type):String {
+    function toInt(type:Type, target:Type):String {
+        if type = target {
+            return ""
+        }
+        return ".to\{object(target)}"
+    }
+
+    @class
+    function asInt(type:Type, target:Type):String {
         if type = target {
             return ""
         }
@@ -181,7 +189,7 @@ class WriteNumbers {
 
     @class
     function binaryType(leftType:Type, rightType:Type, signMatters:Bit, promote32:Bit):Type {
-        if real(leftType) | real(rightType) {
+        if isReal(leftType) | isReal(rightType) {
             if size(leftType) = 64 | size(rightType) = 64 {
                 return Type.REAL64
             }
@@ -254,13 +262,13 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
     @class
     method writeInits(type:Type, out:OutputStream) {
-        if real(type) {
+        if isReal(type) {
             writeInit(type, Type.INT8,   out)
             writeInit(type, Type.INT16,  out)
             writeInit(type, Type.INT32,  out)
@@ -361,13 +369,13 @@ class WriteNumbers {
             }
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
     @class
     method writeOperator(op:String, doc:String, type:Type, signMatters:Bit, out:OutputStream) {
-        if real(type) {
+        if isReal(type) {
             writeOperator(op, doc, type, Type.REAL32, true, out)
             writeOperator(op, doc, type, Type.REAL64, true, out)
         }
@@ -404,7 +412,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -432,7 +440,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -456,13 +464,13 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
     @class
     method writeComparisonOperator(op:String, doc:String, type:Type, out:OutputStream) {
-        if real(type) {
+        if isReal(type) {
             writeComparisonOperator(op, doc, type, Type.REAL32, out)
             writeComparisonOperator(op, doc, type, Type.REAL64, out)
         }
@@ -500,7 +508,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -538,7 +546,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -568,7 +576,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -604,7 +612,7 @@ class WriteNumbers {
             writeIndex(type, Type.INT, out)
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -615,11 +623,11 @@ class WriteNumbers {
             out.printLine("    @override")
             out.printLine("    function get_iterator():Iterator<Bit> {")
             out.printLine("        return org.frostlang.frost.IntBitIterator(self" +
-                    "\{castInt(type, Type.UINT64)}, 1 << \{size(type) - 1})")
+                    "\{toInt(type, Type.UINT64)}, 1 << \{size(type) - 1})")
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -635,7 +643,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -649,24 +657,24 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
     @class
-    method writeAsString(type:Type, out:OutputStream) {
+    method writeToString(type:Type, out:OutputStream) {
         try {
             out.printLine()
-            if real(type) {
+            if isReal(type) {
                 out.printLine("    @override")
                 out.printLine("    @external")
-                out.printLine("    function get_asString():String")
+                out.printLine("    function get_toString():String")
                 return
             }
             out.printLine("    ===Returns this number converted to a decimal string.===")
             out.printLine("    @override")
-            out.printLine("    function get_asString():String {")
-            var max := max(fixedSize(type)).asString.length
+            out.printLine("    function get_toString():String {")
+            var max := max(fixedSize(type)).toString.length
             if signed(type) {
                 max += 1 -- for minus sign
             }
@@ -677,7 +685,7 @@ class WriteNumbers {
             out.printLine("        if value >= 0 {")
             out.printLine("            do {")
             out.printLine("                chars[index] := Char8((value % 10 + 48).asUInt8)")
-            out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
+            out.printLine("                value := (value // 10)\{asInt(max32(type), type)}")
             out.printLine("                index -= 1")
             out.printLine("            }")
             out.printLine("            while value > 0")
@@ -686,7 +694,7 @@ class WriteNumbers {
             out.printLine("        else {")
             out.printLine("            do {")
             out.printLine("                chars[index] := Char8((48 - value % 10).asUInt8)")
-            out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
+            out.printLine("                value := (value // 10)\{asInt(max32(type), type)}")
             out.printLine("                index -= 1")
             out.printLine("            }")
             out.printLine("            while value < 0")
@@ -700,15 +708,18 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
     @class
-    method writeAs(type:Type, target:Type, out:OutputStream) {
+    method writeConvert(type:Type, target:Type, safe:Bit, out:OutputStream) {
         try {
             out.printLine()
             def converted:String
+            if isReal(type) | isReal(target) {
+                converted := "converted"
+            }
             if size(type) > size(target) {
                 converted := "truncated"
             }
@@ -721,53 +732,102 @@ class WriteNumbers {
             else {
                 converted := "reinterpreted"
             }
-            out.printLine("    ===Returns this number \{converted} to a\{size(target) = 8:n|} " +
-                    "\{size(target)} bit \{signed(target):signed|unsigned} number.===")
-            out.printLine("    property as\{object(target)}:\{object(target)}")
-            out.printLine("    function get_as\{object(target)}():\{object(target)} {")
+            def description:String
+            if isReal(target) {
+                description := "a \{size(target)} bit floating point number"
+            }
+            else {
+                description := "a\{size(target) = 8:n|} \{size(target)} bit " +
+                        "\{signed(target):signed|unsigned} number"
+            }
+            out.printLine("    ===Returns this number \{converted} to \{description}.")
+            if (isReal(type) & !isReal(target)) | (isReal(target) & !isReal(type) &
+                    size(type) >= size(target)) {
+                if safe {
+                    out.printLine("If this number cannot be exactly represented as \{description}" +
+                            ", a safety violation occurs.")
+                }
+            }
+            else if size(type) >= size(target) {
+                if safe {
+                    out.printLine("If this number is not in the range of \{description}, a " +
+                            "safety violation occurs.")
+                }
+                else {
+                    out.printLine("This function never fails, even if the number is not in the " +
+                            "range of \{description}.")
+                }
+            }
+            out.printLine("===")
+            def name := safe.choose("as", "to")
+            out.printLine("    property \{name}\{object(target)}:\{object(target)}")
+            if safe & size(type) >= size(target) {
+                if isReal(type) | isReal(target) {
+                    out.printLine("    @post(@return.to\{object(type)} = self)")
+                } 
+                else {
+                    out.print("    @pre(")
+                    var separator := ""
+                    if signed(type) {
+                        out.print("value >= \{object(target)}.MIN.to\{object(type)}.value")
+                        separator := " & "
+                    }
+                    if !signed(type) | signed(target) | size(type) != size(target) {
+                        out.print(separator)
+                        out.print("value <= \{object(target)}.MAX.to\{object(type)}.value")
+                    }
+                    out.printLine(")")
+                }
+            }
+            out.printLine("    function get_\{name}\{object(target)}():\{object(target)} {")
             out.printLine("        return \{object(target)}(value->\{builtin(target)})")
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
     @class
-    method writeAs(type:Type, out:OutputStream) {
+    method writeConvert(type:Type, out:OutputStream) {
+        method write(type:Type, target:Type, out:OutputStream) {
+            writeConvert(type, target, true, out)
+            writeConvert(type, target, false, out)
+        }
+
         if type != Type.INT {
-            writeAs(type, Type.INT, out)
+            write(type, Type.INT, out)
         }
         if type != Type.INT8 {
-            writeAs(type, Type.INT8, out)
+            write(type, Type.INT8, out)
         }
         if type != Type.INT16 {
-            writeAs(type, Type.INT16, out)
+            write(type, Type.INT16, out)
         }
         if type != Type.INT32 {
-            writeAs(type, Type.INT32, out)
+            write(type, Type.INT32, out)
         }
         if type != Type.INT64 {
-            writeAs(type, Type.INT64, out)
+            write(type, Type.INT64, out)
         }
         if type != Type.UINT {
-            writeAs(type, Type.UINT, out)
+            write(type, Type.UINT, out)
         }
         if type != Type.UINT8 {
-            writeAs(type, Type.UINT8, out)
+            write(type, Type.UINT8, out)
         }
         if type != Type.UINT16 {
-            writeAs(type, Type.UINT16, out)
+            write(type, Type.UINT16, out)
         }
         if type != Type.UINT32 {
-            writeAs(type, Type.UINT32, out)
+            write(type, Type.UINT32, out)
         }
         if type != Type.UINT64 {
-            writeAs(type, Type.UINT64, out)
+            write(type, Type.UINT64, out)
         }
-        writeAs(type, Type.REAL32, out)
-        writeAs(type, Type.REAL64, out)
-        writeAsString(type, out)
+        write(type, Type.REAL32, out)
+        write(type, Type.REAL64, out)
+        writeToString(type, out)
     }
 
     @class
@@ -789,16 +849,16 @@ class WriteNumbers {
             out.printLine("    @override")
             out.printLine("    function format(fmt:String):String {")
             if signed(type) {
-                out.printLine("        return Frost.format(value < 0, abs.asUInt64, \{mask}, fmt)")
+                out.printLine("        return Frost.format(value < 0, abs.toUInt64, \{mask}, fmt)")
             }
             else {
-                out.printLine("        return Frost.format(false, self\{castInt(type, Type.UINT64)}, " +
+                out.printLine("        return Frost.format(false, self\{toInt(type, Type.UINT64)}, " +
                         "\{mask}, fmt)")
             }
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -816,7 +876,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -835,14 +895,14 @@ class WriteNumbers {
                 out.printLine("            if abs == null {")
                 out.printLine("                return null")
                 out.printLine("            }")
-                out.printLine("            return -(abs\{castInt(Type.UINT64, type)})")
+                out.printLine("            return -(abs\{asInt(Type.UINT64, type)})")
                 out.printLine("        }")
                 out.printLine("        else {")
                 out.printLine("            def result := Frost.parse(str, radix)")
                 out.printLine("            if result == null {")
                 out.printLine("                return null")
                 out.printLine("            }")
-                out.printLine("            return result\{castInt(Type.UINT64, type)}")
+                out.printLine("            return result\{asInt(Type.UINT64, type)}")
                 out.printLine("        }")
             }
             else {
@@ -850,12 +910,12 @@ class WriteNumbers {
                 out.printLine("        if result == null {")
                 out.printLine("            return null")
                 out.printLine("        }")
-                out.printLine("        return result\{castInt(Type.UINT64, type)}")
+                out.printLine("        return result\{asInt(Type.UINT64, type)}")
             }
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -869,7 +929,7 @@ class WriteNumbers {
             out.printLine("    function get_\{name}():\{object(returnType)}")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -880,11 +940,11 @@ class WriteNumbers {
             out.printLine("    ===\{doc}===")
             out.printLine("    property \{name}:\{real(returnType)}")
             out.printLine("    function get_\{name}():\{real(returnType)} {")
-            out.printLine("        return as\{real(returnType)}.\{name}")
+            out.printLine("        return to\{real(returnType)}.\{name}")
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -944,7 +1004,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
         writeInits(type, out)
         writeOperator("+", "Adds another number to this number.", type, true, out)
@@ -993,13 +1053,13 @@ class WriteNumbers {
         writeIterator(type, out)
         writeHash(type, out)
         writeParse(type, out)
-        writeAs(type, out)
+        writeConvert(type, out)
         writeFormat(type, out)
         try {
             out.printLine("}")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -1084,17 +1144,17 @@ class WriteNumbers {
             out.printLine("    @override")
             out.printLine("    function [](index:Int):\{cl} {")
             out.printLine("        return (range.start + range.step * index" +
-                    "\{castInt(Type.INT, type)})\{castInt(max32(type), type)}")
+                    "\{asInt(Type.INT, type)})\{asInt(max32(type), type)}")
             out.printLine("    }")
             out.printLine()
             out.printLine("    @override")
-            out.printLine("    function get_asString():String {")
+            out.printLine("    function get_toString():String {")
             out.printLine("        return \"[\\{join(\", \")}]\"")
             out.printLine("    }")
             out.printLine("}")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -1152,12 +1212,12 @@ class WriteNumbers {
             writeExternalProperty(type, "cos", "Returns the trigonometric cosine of this number.", out)
             writeExternalProperty(type, "tan", "Returns the trigonometric tangent of this number.", out)
             writeHash(type, out)
-            writeAs(type, out)
+            writeConvert(type, out)
             writeFormat(type, out)
             out.printLine("}")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -1192,7 +1252,7 @@ class WriteNumbers {
             writeReal(Type.REAL64, corePath.resolve("Real64.frost").openOutputStream())
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 }

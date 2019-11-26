@@ -162,7 +162,7 @@ class IR {
             }
 
             @override
-            function get_asString():String {
+            function get_toString():String {
                 return "$\{value}"
             }
         }
@@ -250,7 +250,7 @@ class IR {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             match self {
                 when BINARY(position, left, op, right, type) {
                     return "binary \{left}, \{op}, \{right}, \{type}"
@@ -357,7 +357,7 @@ class IR {
             }
 
             @override
-            function get_asString():String {
+            function get_toString():String {
                 return "block\{value}"
             }
         }
@@ -381,7 +381,7 @@ class IR {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             def result := MutableString("\{id}:\n")
             def iter1 := ids.iterator
             def iter2 := statements.iterator
@@ -464,7 +464,7 @@ class IR {
                     return Type("<invalid>", Type.Kind.INVALID, Position(), true)
                 }
             }
-            unreachable, self.asString
+            unreachable, self.toString
         }
     }
 
@@ -543,7 +543,7 @@ class IR {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         def result := MutableString()
         for i in 0 .. locals.count {
             result.append("local\{i}: \{locals[i]}\n")

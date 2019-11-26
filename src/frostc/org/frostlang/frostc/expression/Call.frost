@@ -1148,7 +1148,7 @@ class Call {
             args:FixedArray<IR.Value>):IR.Value? {
         if compiler.settings.debug {
             compiler.ir.add(IR.Statement.COMMENT(position,
-                    "begin inline call to \{m.declaration} from \{position.asString(compiler)}"))
+                    "begin inline call to \{m.declaration} from \{position.toString(compiler)}"))
         }
         def scope:Compiler.EnclosingContext
         def inlineReturn:Compiler.InlineReturn

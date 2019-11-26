@@ -48,11 +48,11 @@ method main() {
     def _visited := HashSet<String>()
     def twice:Int? := null
     method visited(pos:Array<Int>):Bit {
-        if _visited.contains(pos.asString) {
+        if _visited.contains(pos.toString) {
             return true
         }
         else {
-            _visited.add(pos.asString)
+            _visited.add(pos.toString)
             return false
         }
     }

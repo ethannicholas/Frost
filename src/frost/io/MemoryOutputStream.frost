@@ -52,13 +52,13 @@ class MemoryOutputStream : OutputStream {
     [finish()] for performance reasons, as that does not make a copy.
     ================================================================================================
     @override
-    function get_asString():String {
-        return data.asString
+    function get_toString():String {
+        return data.toString
     }
 
     ================================================================================================
     Invalidates this stream and returns its contents as an immutable `String`. This is generally
-    preferable to [asString], as it does not copy the stream's contents. Interacting in any way
+    preferable to [toString], as it does not copy the stream's contents. Interacting in any way
     with a `MemoryOutputStream` after `finish`ing it will cause precondition violations (or, if
     safety checks are disabled, undefined behavior).
     ================================================================================================

@@ -11,7 +11,7 @@ class Bit : Value, HashKey<Bit>, Formattable {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         if self {
             return "true"
         }

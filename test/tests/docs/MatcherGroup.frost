@@ -1,7 +1,7 @@
 method main() {
     def m := /(\d+) plus (\d+) equals (\d+)/.matcher("12 plus 8 equals 20")
     if m.matches() {
-        for i in m.groupCount {
+        for i in 0 .. m.groupCount {
             Console.printLine(m.group(i))
         }
     }

@@ -20,7 +20,7 @@ class MessageQueue<T:Immutable> : Immutable {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             if next !== null {
                 return "Message(\{payload}, \{next})"
             }

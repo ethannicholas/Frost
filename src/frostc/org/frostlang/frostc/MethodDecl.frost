@@ -24,7 +24,7 @@ class MethodDecl : Symbol {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "\{name}:\{type}"
         }
     }
@@ -41,7 +41,7 @@ class MethodDecl : Symbol {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "\{owner}.\{name}:\{bound}"
         }
     }
@@ -213,7 +213,7 @@ class MethodDecl : Symbol {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         if body !== null {
             return "\{annotations}\{signature} \{body}"
         }

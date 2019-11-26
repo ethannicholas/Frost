@@ -343,7 +343,7 @@ class Parser {
 
     @private
     function convertToString(expr:ASTNode):ASTNode {
-        def dot := ASTNode.DOT(expr.position(), expr, "get_asString")
+        def dot := ASTNode.DOT(expr.position(), expr, "get_toString")
         def call := ASTNode.CALL(expr.position(), dot, FixedArray<ASTNode>())
         def stringType := ASTNode.TYPE(expr.position(), "frost.core.String")
         return ASTNode.BINARY(expr.position(), call, Binary.Operator.CAST, stringType)

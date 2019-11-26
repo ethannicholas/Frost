@@ -6,7 +6,7 @@ method main(args:ListView<String>) {
         }
         def frostc := File(args[0]).parent.resolve("frostc")
         def out := System.temporaryDirectory().resolve("frost-tmp")
-        def frostcProcess := System.exec(frostc.path, [args[1], "-o", out.asString])
+        def frostcProcess := System.exec(frostc.path, [args[1], "-o", out.toString])
         Thread.start(method() {
             try {
                 Console.inputStream().sendTo(frostcProcess.openStandardInput())

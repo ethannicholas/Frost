@@ -618,7 +618,7 @@ class Type : Symbol, HashKey<Type> {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return name
     }
 }

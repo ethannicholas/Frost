@@ -22,7 +22,7 @@ class Analyzer {
         UNSPECIFIED
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             match self {
                 when CONSTRUCTOR(id) {
                     return "CONSTRUCTOR(id)"
@@ -177,7 +177,7 @@ class Analyzer {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             if nonNullImplications !== null {
                 return "DataFlowValue(\{type}, \{definition}, \{nonNullImplications})"
             }
@@ -206,7 +206,7 @@ class Analyzer {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "BlockExit<\{id}, \{exit}>"
         }
 
@@ -262,7 +262,7 @@ class Analyzer {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "State(\{locals}, \{parameters})"
         }
     }

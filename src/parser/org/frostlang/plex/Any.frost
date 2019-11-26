@@ -11,7 +11,7 @@ class Any : Node {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "."
     }
 }

@@ -24,7 +24,7 @@ class UnsafeMessageQueue<T> : Immutable {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             if next !== null {
                 return "Message(\{payload}, \{next})"
             }

@@ -100,29 +100,28 @@ class MutableString {
         def value := c.value
         if value < 0x80 {
             ensureCapacity(_length + 1)
-            data[_length] := Char8(UInt8(value->builtin_uint8))
+            data[_length] := c.toChar8
             _length += 1
         }
         else if value < 0x800 {
             ensureCapacity(_length + 2)
-            data[_length + 0] := Char8(UInt8((value >> 6 || 0b11000000)->builtin_uint8))
-            data[_length + 1] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
+            data[_length + 0] := Char8((value >> 6 || 0b11000000).asUInt8)
+            data[_length + 1] := Char8((value && 0b111111 || 0b10000000).asUInt8)
             _length += 2
         }
         else if value < 0x10000 {
             ensureCapacity(_length + 3)
-            data[_length + 0] := Char8(UInt8((value >> 12 || 0b11100000)->builtin_uint8))
-            data[_length + 1] := Char8(UInt8((value >> 6 && 0b111111 || 0b10000000)->builtin_uint8))
-            data[_length + 2] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
+            data[_length + 0] := Char8((value >> 12 || 0b11100000).asUInt8)
+            data[_length + 1] := Char8((value >> 6 && 0b111111 || 0b10000000).asUInt8)
+            data[_length + 2] := Char8((value && 0b111111 || 0b10000000).asUInt8)
             _length += 3
         }
         else {
             ensureCapacity(_length + 4)
-            data[_length + 0] := Char8(UInt8((value >> 18 || 0b11110000)->builtin_uint8))
-            data[_length + 1] := Char8(UInt8((value >> 12 && 0b111111 ||
-                    0b10000000)->builtin_uint8))
-            data[_length + 2] := Char8(UInt8((value >> 6 && 0b111111 || 0b10000000)->builtin_uint8))
-            data[_length + 3] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
+            data[_length + 0] := Char8((value >> 18 || 0b11110000).asUInt8)
+            data[_length + 1] := Char8((value >> 12 && 0b111111 || 0b10000000).asUInt8)
+            data[_length + 2] := Char8((value >> 6 && 0b111111 || 0b10000000).asUInt8)
+            data[_length + 3] := Char8((value && 0b111111 || 0b10000000).asUInt8)
             _length += 4
         }
     }
@@ -147,7 +146,7 @@ class MutableString {
 
     -- FIXME @self
     method append(o:Object) {
-        append(o.asString)
+        append(o.toString)
     }
 
     ================================================================================================
@@ -195,7 +194,7 @@ class MutableString {
     ================================================================================================
     function next(i:Index):Index {
         assert i.value < _length
-        def c := data[i.value].value->builtin_int64 && 0xFF
+        def c := data[i.value].asInt && 0xFF
         if c >= 0b11110000 {
             return Index(i.value + 4)
         }
@@ -217,8 +216,8 @@ class MutableString {
     function previous(i:Index):Index {
         assert i.value > 0
         var newValue := i.value - 1
-        while data[newValue].value->builtin_int64 && 0xFF >= 0b10000000 &
-                data[newValue].value->builtin_int64 && 0xFF < 0b11000000 {
+        while data[newValue].asInt && 0xFF >= 0b10000000 &
+                data[newValue].asInt && 0xFF < 0b11000000 {
             newValue -= 1
         }
         return Index(newValue)
@@ -365,7 +364,7 @@ class MutableString {
     @returns `true` if the string matches
     ================================================================================================
     function matches(regex:RegularExpression):Bit {
-        return regex.matcher(asString).matches()
+        return regex.matcher(toString).matches()
     }
 
     ================================================================================================
@@ -376,7 +375,7 @@ class MutableString {
     @returns `true` if the string contains a match
     ================================================================================================
     function contains(needle:RegularExpression):Bit {
-        return needle.matcher(asString).find()
+        return needle.matcher(toString).find()
     }
 
     -- FIXME @self
@@ -403,7 +402,7 @@ class MutableString {
 
     -- FIXME @self
     method replace(search:RegularExpression, replacement:String, allowGroupReferences:Bit) {
-        def matcher := search.matcher(asString)
+        def matcher := search.matcher(toString)
         clear()
         while matcher.find() {
             matcher.appendReplacement(self, replacement, allowGroupReferences)
@@ -430,19 +429,19 @@ class MutableString {
     ================================================================================================
     -- FIXME @self
     method replace(search:RegularExpression, replacement:(String)=>(Object)) {
-        def matcher := search.matcher(asString)
+        def matcher := search.matcher(toString)
         clear()
         while matcher.find() {
-            matcher.appendReplacement(self, replacement(matcher.group(0)).asString, false)
+            matcher.appendReplacement(self, replacement(matcher.group(0)).toString, false)
         }
         matcher.appendTail(self)
     }
 
     method replace(search:RegularExpression, replacement:(String)=&>(Object)) {
-        def matcher := search.matcher(asString)
+        def matcher := search.matcher(toString)
         clear()
         while matcher.find() {
-            matcher.appendReplacement(self, replacement(matcher.group(0)).asString, false)
+            matcher.appendReplacement(self, replacement(matcher.group(0)).toString, false)
         }
         matcher.appendTail(self)
     }
@@ -458,27 +457,27 @@ class MutableString {
     ================================================================================================
     -- FIXME @self
     method replace(search:RegularExpression, replacement:(ListView<String?>)=>(Object)) {
-        def matcher := search.matcher(asString)
+        def matcher := search.matcher(toString)
         clear()
         while matcher.find() {
             def groups := Array<String?>()
             for i in 0 .. matcher.get_groupCount() {
                 groups.add(matcher.group(i))
             }
-            matcher.appendReplacement(self, replacement(groups).asString, false)
+            matcher.appendReplacement(self, replacement(groups).toString, false)
         }
         matcher.appendTail(self)
     }
 
     method replace(search:RegularExpression, replacement:(ListView<String?>)=&>(Object)) {
-        def matcher := search.matcher(asString)
+        def matcher := search.matcher(toString)
         clear()
         while matcher.find() {
             def groups := Array<String?>()
             for i in 0 .. matcher.get_groupCount() {
                 groups.add(matcher.group(i))
             }
-            matcher.appendReplacement(self, replacement(groups).asString, false)
+            matcher.appendReplacement(self, replacement(groups).toString, false)
         }
         matcher.appendTail(self)
     }
@@ -490,15 +489,15 @@ class MutableString {
         def idx := index.value
         def c := data[idx]
         var result := c.asInt32
-        if c.value->builtin_int64 && 0xFF < 0b11000000 {
+        if c.asInt && 0xFF < 0b11000000 {
             return Char32(result)
         }
-        if c.value->builtin_int64 && 0xFF < 0b11100000 {
+        if c.asInt && 0xFF < 0b11100000 {
             assert idx + 1 < _length
             result := result && 0b11111 << 6 + data[idx + 1].asInt32 && 0b111111
             return Char32(result)
         }
-        if c.value->builtin_int64 && 0xFF < 0b11110000 {
+        if c.asInt && 0xFF < 0b11110000 {
             assert idx + 2 < _length
             result := result && 0b1111 << 12 + data[idx + 1].asInt32 && 0b111111 << 6 +
                     data[idx + 2].asInt32 && 0b111111
@@ -522,7 +521,7 @@ class MutableString {
 
     -- FIXME @self
     method []:=(index:Index, c:Char32) {
-        self[index ... index] := c.asString
+        self[index ... index] := c.toString
     }
 
     -- FIXME @self
@@ -641,7 +640,7 @@ class MutableString {
     performance reasons, as that does not make a copy.
     ================================================================================================
     @override
-    function get_asString():String {
+    function get_toString():String {
         def result := Pointer<Char8>.alloc(_length)
         for i in 0 .. _length {
             result[i] := data[i]
@@ -651,7 +650,7 @@ class MutableString {
 
     ================================================================================================
     Invalidates this `MutableString` and returns its contents as an immutable `String`. This is
-    generally preferable to [asString], as it does not copy the string's contents. Interacting in
+    generally preferable to [toString], as it does not copy the string's contents. Interacting in
     any way with a `MutableString` after `finish`ing will cause precondition violations (or, if
     safety checks are disabled, undefined behavior).
     ================================================================================================

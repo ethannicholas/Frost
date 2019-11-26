@@ -31,7 +31,7 @@ class ClassDecl {
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "\{owner}.\{name}:\{bound}"
         }
     }
@@ -171,7 +171,7 @@ class ClassDecl {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         def result := MutableString("\{annotations}class \{name}")
         var separator := " : "
         if rawSuper !== null {

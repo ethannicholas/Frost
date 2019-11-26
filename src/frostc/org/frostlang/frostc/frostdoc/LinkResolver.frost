@@ -22,7 +22,7 @@ class LinkResolver {
         API_PATH(String -* api path *-, File -* from file *-)
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             match self {
                 when CLASS(cl, _) {
                     return cl.name
@@ -31,7 +31,7 @@ class LinkResolver {
                     return name
                 }
                 when API_PATH(_, path) {
-                    return path.asString
+                    return path.toString
                 }
                 otherwise {
                     unreachable

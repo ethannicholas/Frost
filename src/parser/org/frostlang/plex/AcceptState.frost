@@ -14,7 +14,7 @@ class AcceptState : State {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "Accept(\{token})"
     }
 }

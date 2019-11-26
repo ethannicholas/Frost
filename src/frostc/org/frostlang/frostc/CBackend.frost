@@ -157,7 +157,7 @@ class CBackend : Backend {
                 return "\{cType(type)}[\{count}]"
             }
             when Code.PrimitiveType.STRUCT(fields) {
-                def key := t.asString
+                def key := t.toString
                 var result := structs[key]
                 if result == null {
                     try {
@@ -181,7 +181,7 @@ class CBackend : Backend {
                         types.printLine("} \{result};")
                     }
                     fail(error) {
-                        unreachable, error.asString
+                        unreachable, error.toString
                     }
                 }
                 return result
@@ -253,14 +253,14 @@ class CBackend : Backend {
             when Code.Value.REAL(r64, type) {
                 match type {
                     when Code.PrimitiveType.FLOAT32 {
-                        var s := r64.asString
+                        var s := r64.toString
                         if !s.contains(".") {
                             s += ".0"
                         }
                         return s + "f"
                     }
                 }
-                return r64.asString
+                return r64.toString
             }
             when Code.Value.METHOD_POINTER(signature) {
                 return "(intptr_t) &" + signature.name
@@ -365,7 +365,7 @@ class CBackend : Backend {
             signatures.printLine(");")
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -383,7 +383,7 @@ class CBackend : Backend {
 
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -664,11 +664,11 @@ class CBackend : Backend {
             }
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
-    @pre(methodHeader.asString = "")
+    @pre(methodHeader.toString = "")
     method writeCode(code:Code) {
         try {
             def oldOut := out
@@ -688,7 +688,7 @@ class CBackend : Backend {
             methodHeader.clear()
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -719,7 +719,7 @@ class CBackend : Backend {
             definedStatements.clear()
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 
@@ -732,7 +732,7 @@ class CBackend : Backend {
             cg.getClassConstant(cl)
         }
         fail(error) {
-            unreachable, error.asString
+            unreachable, error.toString
         }
     }
 

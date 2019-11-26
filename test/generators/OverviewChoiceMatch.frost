@@ -11,7 +11,7 @@ method main() {
         out.printLine("NEGATE(Expression)")
         out.printLine()
         out.printLine("@override")
-        out.printLine("function get_asString():String {")
+        out.printLine("function get_toString():String {")
         out.level += 1
         out.printLine("def expr := self")
         out.printLine(Console.inputStream().readFully().replace("...",

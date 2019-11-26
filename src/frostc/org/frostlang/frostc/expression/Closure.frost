@@ -103,7 +103,7 @@ class Closure {
                     }
                 }
                 otherwise {
-                    unreachable, c.asString
+                    unreachable, c.toString
                 }
             }
         }
@@ -187,7 +187,7 @@ class Closure {
                     result.fields.add(field)
                 }
                 otherwise {
-                    unreachable, c.asString
+                    unreachable, c.toString
                 }
             }
         }

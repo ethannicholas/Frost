@@ -15,7 +15,7 @@ function asSortedString(node:JSON):String {
             return result.finish()
         }
         otherwise {
-            return node.asString
+            return node.toString
         }
     }
 }

@@ -13,10 +13,10 @@ codepoints 0 to 65535) may be used wherever a `Char16` is expected. That is, it 
 @final
 class Char16 : Value, HashKey<Char16>, Comparable<Char16> {
     @private
-    def value:builtin_uint16
+    def value:UInt16
 
     init(value:UInt16) {
-        self.value := value.value
+        self.value := value
     }
 
     @override
@@ -85,52 +85,112 @@ class Char16 : Value, HashKey<Char16>, Comparable<Char16> {
 
     property asInt8:Int8
     function get_asInt8():Int8 {
-        return Int8(value->builtin_int8)
+        return value.asInt8
     }
 
     property asInt16:Int16
     function get_asInt16():Int16 {
-        return Int16(value->builtin_int16)
+        return value.asInt16
     }
 
     property asInt32:Int32
     function get_asInt32():Int32 {
-        return Int32(value->builtin_int32)
+        return value.asInt32
     }
 
     property asInt64:Int64
     function get_asInt64():Int64 {
-        return Int64(value->builtin_int64)
+        return value.asInt64
     }
 
     property asInt:Int
     function get_asInt():Int {
-        return Int(value->builtin_int)
+        return value.asInt
     }
 
     property asUInt8:UInt8
     function get_asUInt8():UInt8 {
-        return UInt8(value->builtin_uint8)
+        return value.asUInt8
     }
 
     property asUInt16:UInt16
     function get_asUInt16():UInt16 {
-        return UInt16(value)
+        return value
     }
 
     property asUInt32:UInt32
     function get_asUInt32():UInt32 {
-        return UInt32(value->builtin_uint32)
+        return value.asUInt32
     }
 
     property asUInt64:UInt64
     function get_asUInt64():UInt64 {
-        return UInt64(value->builtin_uint64)
+        return value.asUInt64
     }
 
     property asUInt:UInt
     function get_asUInt():UInt {
-        return UInt(value->builtin_uint)
+        return value.asUInt
+    }
+
+    property toChar8:Char8
+    function get_toChar8():Char8 {
+        return Char8(toUInt8)
+    }
+
+    property toChar32:Char32
+    function get_toChar32():Char32 {
+        return Char32(toInt32)
+    }
+
+    property toInt8:Int8
+    function get_toInt8():Int8 {
+        return value.toInt8
+    }
+
+    property toInt16:Int16
+    function get_toInt16():Int16 {
+        return value.toInt16
+    }
+
+    property toInt32:Int32
+    function get_toInt32():Int32 {
+        return value.toInt32
+    }
+
+    property toInt64:Int64
+    function get_toInt64():Int64 {
+        return value.toInt64
+    }
+
+    property toInt:Int
+    function get_toInt():Int {
+        return value.toInt
+    }
+
+    property toUInt8:UInt8
+    function get_toUInt8():UInt8 {
+        return value.toUInt8
+    }
+
+    property toUInt16:UInt16
+    function get_toUInt16():UInt16 {
+        return value
+    }
+
+    property toUInt32:UInt32
+    function get_toUInt32():UInt32 {
+        return value.toUInt32
+    }
+
+    property toUInt64:UInt64
+    function get_toUInt64():UInt64 {
+        return value.toUInt64
+    }
+
+    property toUInt:UInt
+    function get_toUInt():UInt {
+        return value.toUInt
     }
 
     ================================================================================================
@@ -139,7 +199,7 @@ class Char16 : Value, HashKey<Char16>, Comparable<Char16> {
     `Char32` before being reencoded into a `String`.
     ================================================================================================
     @override
-    function get_asString():String {
+    function get_toString():String {
         if value < 0x80 {
             def data := Pointer<Char8>.alloc(1)
             data[0] := Char8(asUInt8)
@@ -147,14 +207,14 @@ class Char16 : Value, HashKey<Char16>, Comparable<Char16> {
         }
         if value < 0x800 {
             def data := Pointer<Char8>.alloc(2)
-            data[0] := Char8(UInt8((value >> 6 || 0b11000000)->builtin_uint8))
-            data[1] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
+            data[0] := Char8((value >> 6 || 0b11000000).asUInt8)
+            data[1] := Char8((value && 0b111111 || 0b10000000).asUInt8)
             return String(data, 2)
         }
         def data := Pointer<Char8>.alloc(3)
-        data[0] := Char8(UInt8((value >> 12 || 0b11100000)->builtin_uint8))
-        data[1] := Char8(UInt8((value >> 6 && 0b111111 || 0b10000000)->builtin_uint8))
-        data[2] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
+        data[0] := Char8((value >> 12 || 0b11100000).asUInt8)
+        data[1] := Char8((value >> 6 && 0b111111 || 0b10000000).asUInt8)
+        data[2] := Char8((value && 0b111111 || 0b10000000).asUInt8)
         return String(data, 3)
     }
 }

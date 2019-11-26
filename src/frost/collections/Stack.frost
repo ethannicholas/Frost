@@ -92,7 +92,7 @@ class Stack<T> : Iterable<T> {
     }
 
     @override
-    function get_asString():String {
-        return contents.asString
+    function get_toString():String {
+        return contents.toString
     }
 }

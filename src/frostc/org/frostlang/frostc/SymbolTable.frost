@@ -160,7 +160,7 @@ class SymbolTable {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "SymbolTable<parents(\{parents.count}), symbols=\{symbols}>"
     }
 }

@@ -38,8 +38,8 @@ class FieldDecl : Symbol {
     }
 
     @override
-    function get_asString():String {
-        def result := MutableString(annotations.asString)
+    function get_toString():String {
+        def result := MutableString(annotations.toString)
         match fieldKind {
             when Kind.VAR      { result.append("var ") }
             when Kind.DEF      { result.append("def ") }

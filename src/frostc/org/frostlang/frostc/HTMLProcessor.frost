@@ -94,10 +94,10 @@ class HTMLProcessor {
                 return
             }
             def lines := prettyPrint(parser).split("\n")
-            def width := lines.count.asString.length
+            def width := lines.count.toString.length
             def highlighted := MutableString()
             for i in 0 .. lines.count {
-                def lineNumber := (i + 1).asString.rightAlign(width)
+                def lineNumber := (i + 1).toString.rightAlign(width)
                 highlighted.append("<span class=\"lineNumber\">\{lineNumber}</span>  \{lines[i]}\n")
             }
             def out := output.openOutputStream()

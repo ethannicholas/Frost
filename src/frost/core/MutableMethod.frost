@@ -32,7 +32,7 @@ class MutableMethod {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         if target !== null {
             return "MutableMethod<\{UInt(pointer):x}, \{target!}>"
         }

@@ -32,7 +32,7 @@ length of the new result?
 *-
 
 function lookAndSay(s:String):String {
-    return s.replace(/(\d)\1*/, s => s.length.asString + s[0])
+    return s.replace(/(\d)\1*/, s => s.length.toString + s[0])
 }
 
 function repeat<T>(f:(T)=>(T), count:Int):(T)=>(T) {

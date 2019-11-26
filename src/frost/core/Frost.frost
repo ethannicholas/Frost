@@ -294,7 +294,7 @@ class Frost {
         }
         var value:UInt64 -- FIXME make rawValue a var parameter
         if sign & base != 10 {
-            value := (-rawValue.asInt64).asUInt64 && mask
+            value := (-rawValue.asInt64).toUInt64 && mask
         }
         else {
             value := rawValue
@@ -331,7 +331,7 @@ class Frost {
     @class
     function string(o:Object?):String {
         if o !== null {
-            return o.asString
+            return o.toString
         }
         return "<null>"
     }

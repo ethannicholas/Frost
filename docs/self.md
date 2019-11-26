@@ -12,7 +12,7 @@ Example:
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "an instance of Example"
         }
 

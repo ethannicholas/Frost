@@ -29,7 +29,7 @@ class EquatableTuple3<T0:Equatable<T0>, T1:Equatable<T1>, T2:Equatable<T2>> : Eq
         return true
     }
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "(\{f0}, \{f1}, \{f2})"
     }
 }

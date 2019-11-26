@@ -47,7 +47,7 @@ class UIntList : ListView<UInt> {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "[\{join(", ")}]"
     }
 }

@@ -33,7 +33,7 @@ class Range<T:Value?> : Value {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         def result := MutableString()
         if min !== null {
             result.append(min!)

@@ -87,7 +87,7 @@ class KeyTuple13<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>,
         return result
     }
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "(\{f0}, \{f1}, \{f2}, \{f3}, \{f4}, \{f5}, \{f6}, \{f7}, \{f8}, \{f9}, \{f10}, \{f11}, \{f12})"
     }
 }

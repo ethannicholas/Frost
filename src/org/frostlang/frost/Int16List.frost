@@ -57,7 +57,7 @@ class Int16List : ListView<Int16> {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "[\{join(", ")}]"
     }
 }

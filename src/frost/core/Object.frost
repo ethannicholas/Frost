@@ -19,9 +19,9 @@ class Object {
     `"<Class Name>"`, but many classes override this to provide a more useful description of the
     object.
     ================================================================================================
-    property asString:String
+    property toString:String
 
-    function get_asString():String {
+    function get_toString():String {
         return "<\{$class.name}>"
     }
 

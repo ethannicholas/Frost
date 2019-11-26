@@ -6,7 +6,7 @@ class X<T, U> {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         return "X(\{o})"
     }
 }

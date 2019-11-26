@@ -182,7 +182,7 @@ class Markdown {
         unescapeSpecialChars(text)
 
         text.append("\n")
-        return text.asString
+        return text.toString
     }
 
     method encodeBackslashEscapes(text:MutableString) {
@@ -200,7 +200,7 @@ class Markdown {
     method encodeEscapes(text:MutableString, chars:ListView<Char8>, slashes:String) {
         for ch in chars {
             def regex := RegularExpression("(?m)" + slashes + ch)
-            text.replace(regex, charProtector.encode(ch.asString), false)
+            text.replace(regex, charProtector.encode(ch.toString), false)
         }
     }
 
@@ -375,7 +375,7 @@ class Markdown {
         if markup.byteLength = 0 {
             paragraphs := Array<String>()
         } else {
-            paragraphs := Array<String>(markup.asString.split(/\n{2,}/))
+            paragraphs := Array<String>(markup.toString.split(/\n{2,}/))
         }
         for i in 0 .. paragraphs.count {
             def paragraph := paragraphs[i]
@@ -399,7 +399,7 @@ class Markdown {
             def address := groups[1]
             def ed := MutableString(address)
             self.unescapeSpecialChars(ed)
-            def addr := self.encodeEmail(ed.asString)
+            def addr := self.encodeEmail(ed.toString)
             def url := self.encodeEmail("mailto:\{ed}")
             return "<a href=\"\{url}\">\{addr}</a>"
         })
@@ -437,7 +437,7 @@ class Markdown {
                 result.append(ch)
             }
         }
-        return result.asString
+        return result.toString
     }
 
     method doBlockQuotes(markup:MutableString) {
@@ -473,7 +473,7 @@ class Markdown {
                 width += 1
             }
             while width % TAB_WIDTH != 0
-            return replacement.asString
+            return replacement.toString
         })
     }
 
@@ -504,7 +504,7 @@ class Markdown {
             markdown.detabify(ed)
             ed.replace(/\A\n+/, "")
             ed.replace(/\s+\z/, "")
-            def text := ed.asString
+            def text := ed.toString
             def out:String
             def firstLine := firstLine(text)
             if isLanguageIdentifier(firstLine) {
@@ -640,7 +640,7 @@ class Markdown {
 
     method syntaxHighlight(ed:MutableString) {
         errorReporter.clear()
-        def text := ed.asString.trimmed
+        def text := ed.toString.trimmed
         parser.start(source, -1, text)
         def file := parser.file()
         if file !== null & errorReporter.errorCount = 0 {
@@ -923,7 +923,7 @@ class Markdown {
      * with the escape values by accident.
      *-
     method escapeSpecialCharsWithinTagAttributes(text:MutableString) {
-        def tokens := tokenizeHTML(text.asString)
+        def tokens := tokenizeHTML(text.toString)
         text.clear()
 
         for token in tokens {
@@ -1045,7 +1045,7 @@ class Markdown {
                 "[ \\t]*" +
                 "\\)",
                 RegularExpression.DOTALL)
-        def raw := markup.asString
+        def raw := markup.toString
         def matcher := inlineLink.matcher(raw)
         markup.clear()
         var index := raw.start
@@ -1209,7 +1209,7 @@ class Markdown {
             def input := p.standardInput()
             def finalCode := MutableString(code)
             outdent(finalCode)
-            input.print(finalCode.asString.trimmed)
+            input.print(finalCode.toString.trimmed)
             input.close()
             def dest := testPath.resolve("docs/\{name}.frost")
             Thread.unsafeStart(method() {

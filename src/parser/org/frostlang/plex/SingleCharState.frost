@@ -14,7 +14,7 @@ class SingleCharState : State {
     }
 
     @override
-    function get_asString():String {
+    function get_toString():String {
         def result := MutableString()
         result.append("Char('")
         if c = "\n" {

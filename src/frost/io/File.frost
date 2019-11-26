@@ -348,7 +348,7 @@ class File : Immutable, HashKey<File> {
     Returns the path to which this file refers.
     ================================================================================================
     @override
-    function get_asString():String {
+    function get_toString():String {
         return path
     }
 }

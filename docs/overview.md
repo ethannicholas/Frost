@@ -443,7 +443,7 @@ be extracted using `match`:
     -- testcase OverviewChoiceMatch
     match expr {
         when NUMBER(value) {
-            return value.asString
+            return value.toString
         }
         when ADD(left, right) {
             return "\{left} + \{right}"
@@ -694,7 +694,7 @@ Operators are overloaded by defining a function with the operator's name, as in 
         }
 
         @override
-        function get_asString():String {
+        function get_toString():String {
             return "(\{realPart} + \{imaginaryPart}i)"
         }
     }
