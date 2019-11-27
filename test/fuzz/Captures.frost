@@ -1,0 +1,21 @@
+def field := 1
+
+function closureTest(param1:Int):(Int)=>((Int)=>(Int)) {
+    def outerLocal := 2
+    return function(param2:Int):(Int)=>(Int) {
+        def innerLocal := 3
+        return function(param3:Int):Int {
+            def one := self.field
+            def two := outerLocal
+            def three := innerLocal
+            def four := param1
+            def five := param2
+            def six := param3
+            return one + two + three + four + five + six
+        }
+    }
+}
+
+method main() {
+    Console.printLine(closureTest(4)(5)(6))
+}

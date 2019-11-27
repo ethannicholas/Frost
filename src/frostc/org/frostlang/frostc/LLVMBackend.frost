@@ -1264,6 +1264,7 @@ class LLVMBackend : Backend {
             physicalOut.print(signatures.finish())
             physicalOut.print(methods.finish())
             physicalOut.print(metadata.finish())
+            physicalOut.close()
         }
         fail(error) {
             Console.printError(error)

@@ -1,0 +1,16 @@
+function test<T>(f:(T)=>(T)):(T)=>(T) {
+    return f
+}
+
+function test2(s:String):Int {
+    return s.length
+}
+
+function test2(i:Int):Int {
+    return i.abs
+}
+
+method main() {
+    def t := test(test2)(-5)
+    Console.printLine(t)
+}

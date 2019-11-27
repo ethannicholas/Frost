@@ -1,0 +1,25 @@
+class PostconditionOverride1 {
+    var x:Int
+
+    @post(self.x >= 0)
+    method test(x:Int) {
+        self.x := x
+        Console.printLine(x)
+    }
+}
+
+class PostconditionOverride2 : PostconditionOverride1 {
+    @override
+    @postAnd(self.x <= 10)
+    method test(x:Int) {
+        self.x := x
+        Console.printLine(x)
+    }
+
+    @class
+    method main() {
+        PostconditionOverride2().test(1)
+        PostconditionOverride2().test(5)
+        PostconditionOverride2().test(11)
+    }
+}

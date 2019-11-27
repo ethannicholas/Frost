@@ -1,0 +1,30 @@
+class Base {
+}
+
+interface Foo {
+    @default
+    method foo() {
+        Console.printLine("Foo.foo")
+    } 
+}
+
+interface Bar : Foo {
+    @default
+    method bar() {
+        Console.printLine("Bar.bar")
+    }
+}
+
+class Sub : Base, Bar {
+}
+
+class InterfaceInheritedImplementation {
+    @class
+    method main() {
+        def f:Foo := Sub()
+        f.foo()
+        def b:Bar := Sub()
+        b.foo()
+        b.bar()
+    }
+}

@@ -1,0 +1,4 @@
+method main() {
+    def squares := Int[1 ... 10].map(x => x * x)
+    Console.printLine("\{squares.join(' + ')} = \{squares.fold(Int.+)}")
+}

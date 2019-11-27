@@ -1,0 +1,7 @@
+method main() {
+    def first := ["Bob",   "Pete", "Sarah",   "Kathy"],
+         last := ["Kelly", "Roth", "Jenkins", "Roth"]
+    def tuples := last.combine(first)
+    Console.printLine(tuples.sort((left, right) => left[1] > right[1])
+                            .sort((left, right) => left[0] > right[0]))
+}

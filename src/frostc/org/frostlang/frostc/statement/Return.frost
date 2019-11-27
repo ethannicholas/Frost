@@ -46,7 +46,7 @@ class Return {
                         f.fieldKind != FieldDecl.Kind.PROPERTY & compiler.isRefCounted(f.type) {
                     def load := FieldLValue(compiler, position,
                             compiler.compileExpression(ASTNode.IDENTIFIER(basePos,
-                                    Compiler.FORCE_SELF_NAME), TypeContext.UNSPECIFIED),
+                                    Compiler.FORCE_SELF_NAME), TypeContext.NON_VOID),
                             f).compileLoad()
                     if load == null {
                         return

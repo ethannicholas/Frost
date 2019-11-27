@@ -816,7 +816,7 @@ class Parser {
         match name.kind {
             when Token.Kind.IDENTIFIER, Token.Kind.ADD, Token.Kind.ADDU, Token.Kind.SUB,
                     Token.Kind.SUBU, Token.Kind.MUL, Token.Kind.MULU, Token.Kind.DIV,
-                    Token.Kind.INTDIV, Token.Kind.INTDIVU, Token.Kind.POW, Token.Kind.EQ,
+                    Token.Kind.INTDIV, Token.Kind.INTDIVU, -*Token.Kind.POW, *-Token.Kind.EQ,
                     Token.Kind.NEQ, Token.Kind.LT, Token.Kind.GTEQ, Token.Kind.LTEQ,
                     Token.Kind.REM, Token.Kind.AND, Token.Kind.BITWISEAND, Token.Kind.OR,
                     Token.Kind.BITWISEOR, Token.Kind.XOR, Token.Kind.BITWISEXOR, Token.Kind.NOT,
@@ -922,7 +922,7 @@ class Parser {
                         FixedArray<ASTNode>.from(subtypes), returnType)
             }
             otherwise {
-                if subtypes.count < 1 {
+                if subtypes.count <= 1 {
                     error(start, "invalid type")
                     return null
                 }
@@ -1247,8 +1247,9 @@ class Parser {
         }
     }
 
+-*
     ================================================================================================
-    exponentExression = postfixExpression (POW postfixExpression)*
+    exponentExpression = postfixExpression (POW postfixExpression)*
     ================================================================================================
     method exponentExpression():ASTNode? {
         var result := postfixExpression()
@@ -1268,7 +1269,7 @@ class Parser {
         }
         return result
     }
-
+*-
     ================================================================================================
     prefixExpression = (SUB | NOT | BITWISENOT)? exponentExpression
     ================================================================================================
@@ -1276,7 +1277,7 @@ class Parser {
         def op := next()
         match op.kind {
             when Token.Kind.SUB, Token.Kind.NOT, Token.Kind.BITWISENOT {
-                def base := exponentExpression()
+                def base := -*exponentExpression()*- postfixExpression()
                 if base == null {
                     return null
                 }
@@ -1291,7 +1292,7 @@ class Parser {
             }
             otherwise {
                 pushback(op)
-                return exponentExpression()
+                return -*exponentExpression()*- postfixExpression()
             }
         }
     }
@@ -1908,7 +1909,7 @@ class Parser {
             when Token.Kind.ASSIGNMENT, Token.Kind.ADDEQ, Token.Kind.ADDUEQ, Token.Kind.SUBEQ,
                     Token.Kind.SUBUEQ, Token.Kind.MULEQ, Token.Kind.MULUEQ,
                     Token.Kind.DIVEQ, Token.Kind.REMEQ, Token.Kind.INTDIVEQ,  Token.Kind.INTDIVUEQ,
-                    Token.Kind.POWEQ, Token.Kind.OREQ, Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ,
+                    -*Token.Kind.POWEQ, *-Token.Kind.OREQ, Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ,
                     Token.Kind.BITWISEANDEQ, Token.Kind.XOREQ, Token.Kind.BITWISEXOREQ,
                     Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTLEFTUEQ, Token.Kind.SHIFTRIGHTEQ {
                 def op := next()

@@ -1,0 +1,9 @@
+method main() {
+    method print(s:String) {
+        Console.printLine(s)
+    }
+    function sqr(x:Int):Int {
+        return x * x
+    }
+    print("Using inner methods to square 8: \{sqr(8)}")
+}

@@ -3323,7 +3323,16 @@ class Compiler : ErrorReporter {
                 return coercionCost(REGULAR_EXPRESSION_TYPE, target)
             }
             when ASTNode.SELF {
-                return coercionCost(currentClass[0].typeWithParameters(), target)
+                var s := symbolTable[CAPTURED_SELF_NAME]
+                if s == null {
+                    s := symbolTable[SELF_NAME]
+                }
+                if s == null {
+                    return null
+                }
+                def t := symbolType(null, s)
+                assert t.count = 1
+                return coercionCost(t[0], target)
             }
             when ASTNode.STRING(_, text) {
                 if target.isChar & text.length = 1 {
@@ -3925,7 +3934,11 @@ class Compiler : ErrorReporter {
                 TypeContext.UNSPECIFIED), effectiveType)
     }
 
-    function explainCoerceFailure(m:MethodRef, target:Type):String {
+    function explainCoerceFailure(m:MethodRef, rawTarget:Type):String {
+        def target := rawTarget.nonnullable()
+        if !target.isMethod {
+            return "cannot be an instance of \{rawTarget}"
+        }
         if m.parameterCount != target.parameterCount {
             return "wrong parameter count"
         }
@@ -4992,6 +5005,7 @@ class Compiler : ErrorReporter {
     resolving this expression using `compileExpression` will result in an actual `ImmutableMethod`
     object constructor.
     ================================================================================================
+    @pre(type != TypeContext.UNSPECIFIED)
     @post(typeMatch(@return, type) & (@return !== null | errorCount > 0 | !reportErrors))
     method compileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
         def position := MethodPosition(expr.position(), currentMethodIndex)
@@ -5185,7 +5199,7 @@ class Compiler : ErrorReporter {
     }
 
     method compileExpression(expr:ASTNode):IR.Value? {
-        return compileExpression(expr, TypeContext.UNSPECIFIED)
+        return compileExpression(expr, TypeContext.NON_VOID)
     }
 
     ================================================================================================
@@ -6579,15 +6593,12 @@ class Compiler : ErrorReporter {
             def a := args.next()
             match a {
                 when "--fuzz" {
-                    try {
-                        def path := File("/tmp/fuzz.frost")
-                        Console.inputStream().sendTo(path.openOutputStream())
-                        sources.add(path)
-                    }
-                    fail(error) {
-                        Console.printErrorLine(error)
-                        System.exit(1)
-                    }
+                    -- Fuzzing instructions (adjust ICU and output paths as necessary for your system):
+                    -- cd Frost/build
+                    -- afl-clang ../bootstrap/bootstrap.c ../bootstrap/frostlib.c Config.c -I/opt/local/include -L/opt/local/lib -licuuc -licui18n -o fuzzer
+                    -- afl-fuzz -i ../test/fuzz -o /tmp/fuzz -- ./fuzzer --fuzz @@ -o /tmp/dummy.output -f ll
+                    def path := File(args.next("a filename"))
+                    sources.add(path)
                 }
                 when "-o" {
                     if outFile !== null {

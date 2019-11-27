@@ -102,6 +102,12 @@ class Closure {
                         break
                     }
                 }
+                when Capture.FIELD(f) {
+                    if !compiler.isImmutable(f.type) {
+                        supers.clear()
+                        break
+                    }
+                }
                 otherwise {
                     unreachable, c.toString
                 }
@@ -470,7 +476,7 @@ class Closure {
                 }
             }
         }
-        def returnType:Type
+        def returnType:Type?
         if rawReturnType !== null {
             returnType := compiler.resolve(compiler.scanner.convertType(rawReturnType))
             if returnType == null {

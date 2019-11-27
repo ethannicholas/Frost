@@ -1,0 +1,19 @@
+class Super {
+    function foo():Int {
+        return 123
+    }
+}
+
+class Sub : Super {
+    @override
+    function foo():Int {
+        return super.foo() * 2
+    }
+}
+
+class SuperCalls {
+    @class
+    method main() {
+        Console.printLine(Sub().foo())
+    }
+}

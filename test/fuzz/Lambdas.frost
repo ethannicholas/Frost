@@ -1,0 +1,12 @@
+method main() {
+    def square1 := x:Int => x * x
+    def square2:(Int)=>(Int) := x => x * x
+    def square3:(Int)=>(Int)? := x => x * x
+
+    Console.printLine(square1(5))
+    Console.printLine(square2(5))
+    Console.printLine(square3(5))
+
+    def sentence := "I am going to multiply by 2 all 3 numbers in this sentence of 16 words"
+    Console.printLine(sentence.replace(/\d+/, number => number.asInt64! * 2))
+}
