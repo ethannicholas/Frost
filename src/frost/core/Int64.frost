@@ -78,10 +78,22 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
         return value + other.value
     }
 
+    ===Adds another number to this number without checking for overflow.===
+    @priority(20)
+    function +&(other:Int64):Int64 {
+        return value +& other.value
+    }
+
     ===Subtracts another number from this number.===
     @priority(20)
     function -(other:Int64):Int64 {
         return value - other.value
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(20)
+    function -&(other:Int64):Int64 {
+        return value -& other.value
     }
 
     ===Returns the negation (additive inverse) of this number===
@@ -95,10 +107,22 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
         return value * other.value
     }
 
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(20)
+    function *&(other:Int64):Int64 {
+        return value *& other.value
+    }
+
     ===Divides this number by another number, returning the whole number portion.===
     @priority(20)
     function //(other:Int64):Int64 {
         return value // other.value
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(20)
+    function //&(other:Int64):Int64 {
+        return value //& other.value
     }
 
     ===Returns the remainder of dividing this number by another number.===
@@ -212,6 +236,12 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
     @priority(20)
     function <<(other:Int64):Int64 {
         return value << other.value
+    }
+
+    ===Returns this number shifted left by the specified number of bits, without checking for overflow.===
+    @priority(20)
+    function <<&(other:Int64):Int64 {
+        return value <<& other.value
     }
 
     ===Returns this number arithmetic shifted right by the specified number of bits.===
@@ -584,8 +614,8 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
 If this number is not in the range of a 32 bit signed number, a safety violation occurs.
 ===
     property asInt:Int
-    @pre(value >= Int.MIN.toInt64.value & value <= Int.MAX.toInt64.value)
     function get_asInt():Int {
+    assert value >= Int.MIN.toInt64.value & value <= Int.MAX.toInt64.value, "Int64(\{self}) cannot be safely converted to Int"
         return Int(value->builtin_int)
     }
 
@@ -601,8 +631,8 @@ This function never fails, even if the number is not in the range of a 32 bit si
 If this number is not in the range of an 8 bit signed number, a safety violation occurs.
 ===
     property asInt8:Int8
-    @pre(value >= Int8.MIN.toInt64.value & value <= Int8.MAX.toInt64.value)
     function get_asInt8():Int8 {
+    assert value >= Int8.MIN.toInt64.value & value <= Int8.MAX.toInt64.value, "Int64(\{self}) cannot be safely converted to Int8"
         return Int8(value->builtin_int8)
     }
 
@@ -618,8 +648,8 @@ This function never fails, even if the number is not in the range of an 8 bit si
 If this number is not in the range of a 16 bit signed number, a safety violation occurs.
 ===
     property asInt16:Int16
-    @pre(value >= Int16.MIN.toInt64.value & value <= Int16.MAX.toInt64.value)
     function get_asInt16():Int16 {
+    assert value >= Int16.MIN.toInt64.value & value <= Int16.MAX.toInt64.value, "Int64(\{self}) cannot be safely converted to Int16"
         return Int16(value->builtin_int16)
     }
 
@@ -635,8 +665,8 @@ This function never fails, even if the number is not in the range of a 16 bit si
 If this number is not in the range of a 32 bit signed number, a safety violation occurs.
 ===
     property asInt32:Int32
-    @pre(value >= Int32.MIN.toInt64.value & value <= Int32.MAX.toInt64.value)
     function get_asInt32():Int32 {
+    assert value >= Int32.MIN.toInt64.value & value <= Int32.MAX.toInt64.value, "Int64(\{self}) cannot be safely converted to Int32"
         return Int32(value->builtin_int32)
     }
 
@@ -652,8 +682,8 @@ This function never fails, even if the number is not in the range of a 32 bit si
 If this number is not in the range of a 32 bit unsigned number, a safety violation occurs.
 ===
     property asUInt:UInt
-    @pre(value >= UInt.MIN.toInt64.value & value <= UInt.MAX.toInt64.value)
     function get_asUInt():UInt {
+    assert value >= UInt.MIN.toInt64.value & value <= UInt.MAX.toInt64.value, "Int64(\{self}) cannot be safely converted to UInt"
         return UInt(value->builtin_uint)
     }
 
@@ -669,8 +699,8 @@ This function never fails, even if the number is not in the range of a 32 bit un
 If this number is not in the range of an 8 bit unsigned number, a safety violation occurs.
 ===
     property asUInt8:UInt8
-    @pre(value >= UInt8.MIN.toInt64.value & value <= UInt8.MAX.toInt64.value)
     function get_asUInt8():UInt8 {
+    assert value >= UInt8.MIN.toInt64.value & value <= UInt8.MAX.toInt64.value, "Int64(\{self}) cannot be safely converted to UInt8"
         return UInt8(value->builtin_uint8)
     }
 
@@ -686,8 +716,8 @@ This function never fails, even if the number is not in the range of an 8 bit un
 If this number is not in the range of a 16 bit unsigned number, a safety violation occurs.
 ===
     property asUInt16:UInt16
-    @pre(value >= UInt16.MIN.toInt64.value & value <= UInt16.MAX.toInt64.value)
     function get_asUInt16():UInt16 {
+    assert value >= UInt16.MIN.toInt64.value & value <= UInt16.MAX.toInt64.value, "Int64(\{self}) cannot be safely converted to UInt16"
         return UInt16(value->builtin_uint16)
     }
 
@@ -703,8 +733,8 @@ This function never fails, even if the number is not in the range of a 16 bit un
 If this number is not in the range of a 32 bit unsigned number, a safety violation occurs.
 ===
     property asUInt32:UInt32
-    @pre(value >= UInt32.MIN.toInt64.value & value <= UInt32.MAX.toInt64.value)
     function get_asUInt32():UInt32 {
+    assert value >= UInt32.MIN.toInt64.value & value <= UInt32.MAX.toInt64.value, "Int64(\{self}) cannot be safely converted to UInt32"
         return UInt32(value->builtin_uint32)
     }
 
@@ -720,8 +750,8 @@ This function never fails, even if the number is not in the range of a 32 bit un
 If this number is not in the range of a 64 bit unsigned number, a safety violation occurs.
 ===
     property asUInt64:UInt64
-    @pre(value >= UInt64.MIN.toInt64.value)
     function get_asUInt64():UInt64 {
+    assert value >= UInt64.MIN.toInt64.value, "Int64(\{self}) cannot be safely converted to UInt64"
         return UInt64(value->builtin_uint64)
     }
 

@@ -41,7 +41,7 @@ class Operators {
         Console.printLine(x)
         x -= y
         Console.printLine(x)
-        x *= y
+        x *&= y
         Console.printLine(x)
         x //= y
         Console.printLine(x)
@@ -91,7 +91,7 @@ class Operators {
         Console.printLine(x)
         x -= y
         Console.printLine(x)
-        x *= y
+        x *&= y
         Console.printLine(x)
         x //= y
         Console.printLine(x)
@@ -141,7 +141,7 @@ class Operators {
         Console.printLine(x)
         x -= y
         Console.printLine(x)
-        x *= y
+        x *&= y
         Console.printLine(x)
         x //= y
         Console.printLine(x)
@@ -191,7 +191,7 @@ class Operators {
         Console.printLine(x)
         x -= y
         Console.printLine(x)
-        x *= y
+        x *&= y
         Console.printLine(x)
         x //= y
         Console.printLine(x)
@@ -241,7 +241,7 @@ class Operators {
         Console.printLine(x)
         x -= y
         Console.printLine(x)
-        x *= y
+        x *&= y
         Console.printLine(x)
         x //= y
         Console.printLine(x)
@@ -291,7 +291,7 @@ class Operators {
         Console.printLine(x)
         x -= y
         Console.printLine(x)
-        x *= y
+        x *&= y
         Console.printLine(x)
         x //= y
         Console.printLine(x)
@@ -341,7 +341,7 @@ class Operators {
         Console.printLine(x)
         x -= y
         Console.printLine(x)
-        x *= y
+        x *&= y
         Console.printLine(x)
         x //= y
         Console.printLine(x)
@@ -391,7 +391,7 @@ class Operators {
         Console.printLine(x)
         x -= y
         Console.printLine(x)
-        x *= y
+        x *&= y
         Console.printLine(x)
         x //= y
         Console.printLine(x)

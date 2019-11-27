@@ -60,10 +60,22 @@ class UInt64 : Value, HashKey<UInt64>, Comparable<UInt64>, Formattable, ListView
         return value + other.value
     }
 
+    ===Adds another number to this number without checking for overflow.===
+    @priority(20)
+    function +&(other:UInt64):UInt64 {
+        return value +& other.value
+    }
+
     ===Subtracts another number from this number.===
     @priority(20)
     function -(other:UInt64):UInt64 {
         return value - other.value
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(20)
+    function -&(other:UInt64):UInt64 {
+        return value -& other.value
     }
 
     ===Returns the negation (additive inverse) of this number===
@@ -77,10 +89,22 @@ class UInt64 : Value, HashKey<UInt64>, Comparable<UInt64>, Formattable, ListView
         return value * other.value
     }
 
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(20)
+    function *&(other:UInt64):UInt64 {
+        return value *& other.value
+    }
+
     ===Divides this number by another number, returning the whole number portion.===
     @priority(20)
     function //(other:UInt64):UInt64 {
         return value // other.value
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(20)
+    function //&(other:UInt64):UInt64 {
+        return value //& other.value
     }
 
     ===Returns the remainder of dividing this number by another number.===
@@ -194,6 +218,12 @@ class UInt64 : Value, HashKey<UInt64>, Comparable<UInt64>, Formattable, ListView
     @priority(20)
     function <<(other:UInt64):UInt64 {
         return value << other.value
+    }
+
+    ===Returns this number shifted left by the specified number of bits, without checking for overflow.===
+    @priority(20)
+    function <<&(other:UInt64):UInt64 {
+        return value <<& other.value
     }
 
     ===Returns this number logical shifted right by the specified number of bits.===
@@ -548,8 +578,8 @@ class UInt64 : Value, HashKey<UInt64>, Comparable<UInt64>, Formattable, ListView
 If this number is not in the range of a 32 bit signed number, a safety violation occurs.
 ===
     property asInt:Int
-    @pre(value <= Int.MAX.toUInt64.value)
     function get_asInt():Int {
+    assert value <= Int.MAX.toUInt64.value, "UInt64(\{self}) cannot be safely converted to Int"
         return Int(value->builtin_int)
     }
 
@@ -565,8 +595,8 @@ This function never fails, even if the number is not in the range of a 32 bit si
 If this number is not in the range of an 8 bit signed number, a safety violation occurs.
 ===
     property asInt8:Int8
-    @pre(value <= Int8.MAX.toUInt64.value)
     function get_asInt8():Int8 {
+    assert value <= Int8.MAX.toUInt64.value, "UInt64(\{self}) cannot be safely converted to Int8"
         return Int8(value->builtin_int8)
     }
 
@@ -582,8 +612,8 @@ This function never fails, even if the number is not in the range of an 8 bit si
 If this number is not in the range of a 16 bit signed number, a safety violation occurs.
 ===
     property asInt16:Int16
-    @pre(value <= Int16.MAX.toUInt64.value)
     function get_asInt16():Int16 {
+    assert value <= Int16.MAX.toUInt64.value, "UInt64(\{self}) cannot be safely converted to Int16"
         return Int16(value->builtin_int16)
     }
 
@@ -599,8 +629,8 @@ This function never fails, even if the number is not in the range of a 16 bit si
 If this number is not in the range of a 32 bit signed number, a safety violation occurs.
 ===
     property asInt32:Int32
-    @pre(value <= Int32.MAX.toUInt64.value)
     function get_asInt32():Int32 {
+    assert value <= Int32.MAX.toUInt64.value, "UInt64(\{self}) cannot be safely converted to Int32"
         return Int32(value->builtin_int32)
     }
 
@@ -616,8 +646,8 @@ This function never fails, even if the number is not in the range of a 32 bit si
 If this number is not in the range of a 64 bit signed number, a safety violation occurs.
 ===
     property asInt64:Int64
-    @pre(value <= Int64.MAX.toUInt64.value)
     function get_asInt64():Int64 {
+    assert value <= Int64.MAX.toUInt64.value, "UInt64(\{self}) cannot be safely converted to Int64"
         return Int64(value->builtin_int64)
     }
 
@@ -633,8 +663,8 @@ This function never fails, even if the number is not in the range of a 64 bit si
 If this number is not in the range of a 32 bit unsigned number, a safety violation occurs.
 ===
     property asUInt:UInt
-    @pre(value <= UInt.MAX.toUInt64.value)
     function get_asUInt():UInt {
+    assert value <= UInt.MAX.toUInt64.value, "UInt64(\{self}) cannot be safely converted to UInt"
         return UInt(value->builtin_uint)
     }
 
@@ -650,8 +680,8 @@ This function never fails, even if the number is not in the range of a 32 bit un
 If this number is not in the range of an 8 bit unsigned number, a safety violation occurs.
 ===
     property asUInt8:UInt8
-    @pre(value <= UInt8.MAX.toUInt64.value)
     function get_asUInt8():UInt8 {
+    assert value <= UInt8.MAX.toUInt64.value, "UInt64(\{self}) cannot be safely converted to UInt8"
         return UInt8(value->builtin_uint8)
     }
 
@@ -667,8 +697,8 @@ This function never fails, even if the number is not in the range of an 8 bit un
 If this number is not in the range of a 16 bit unsigned number, a safety violation occurs.
 ===
     property asUInt16:UInt16
-    @pre(value <= UInt16.MAX.toUInt64.value)
     function get_asUInt16():UInt16 {
+    assert value <= UInt16.MAX.toUInt64.value, "UInt64(\{self}) cannot be safely converted to UInt16"
         return UInt16(value->builtin_uint16)
     }
 
@@ -684,8 +714,8 @@ This function never fails, even if the number is not in the range of a 16 bit un
 If this number is not in the range of a 32 bit unsigned number, a safety violation occurs.
 ===
     property asUInt32:UInt32
-    @pre(value <= UInt32.MAX.toUInt64.value)
     function get_asUInt32():UInt32 {
+    assert value <= UInt32.MAX.toUInt64.value, "UInt64(\{self}) cannot be safely converted to UInt32"
         return UInt32(value->builtin_uint32)
     }
 

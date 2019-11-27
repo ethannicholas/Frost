@@ -89,6 +89,65 @@ class UInt8 : Value, HashKey<UInt8>, Comparable<UInt8>, Formattable, ListView<Bi
         return value->builtin_uint + other.value
     }
 
+    ===Adds another number to this number without checking for overflow.===
+    @priority(1)
+    function +&(other:Int8):Int32 {
+        return value->builtin_int32 +& other.value->builtin_int32
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(3)
+    function +&(other:Int16):Int32 {
+        return value->builtin_int32 +& other.value->builtin_int32
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(5)
+    function +&(other:Int32):Int64 {
+        return value->builtin_int64 +& other.value->builtin_int64
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(9)
+    function +&(other:Int):Int64 {
+        return value->builtin_int64 +& other.value->builtin_int64
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(20)
+    function +&(other:UInt8):UInt32 {
+        return value->builtin_uint32 +& other.value->builtin_uint32
+    }
+    ===Adds another number to this number without checking for overflow.===
+    @priority(-1)
+    function +&(other:UInt8):UInt8 {
+        return value +& other.value
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(2)
+    function +&(other:UInt16):UInt32 {
+        return value->builtin_uint32 +& other.value->builtin_uint32
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(4)
+    function +&(other:UInt32):UInt32 {
+        return value->builtin_uint32 +& other.value
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(6)
+    function +&(other:UInt64):UInt64 {
+        return value->builtin_uint64 +& other.value
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(8)
+    function +&(other:UInt):UInt {
+        return value->builtin_uint +& other.value
+    }
+
     ===Subtracts another number from this number.===
     @priority(1)
     function -(other:Int8):Int32 {
@@ -146,6 +205,65 @@ class UInt8 : Value, HashKey<UInt8>, Comparable<UInt8>, Formattable, ListView<Bi
     @priority(8)
     function -(other:UInt):UInt {
         return value->builtin_uint - other.value
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(1)
+    function -&(other:Int8):Int32 {
+        return value->builtin_int32 -& other.value->builtin_int32
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(3)
+    function -&(other:Int16):Int32 {
+        return value->builtin_int32 -& other.value->builtin_int32
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(5)
+    function -&(other:Int32):Int64 {
+        return value->builtin_int64 -& other.value->builtin_int64
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(9)
+    function -&(other:Int):Int64 {
+        return value->builtin_int64 -& other.value->builtin_int64
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(20)
+    function -&(other:UInt8):UInt32 {
+        return value->builtin_uint32 -& other.value->builtin_uint32
+    }
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(-1)
+    function -&(other:UInt8):UInt8 {
+        return value -& other.value
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(2)
+    function -&(other:UInt16):UInt32 {
+        return value->builtin_uint32 -& other.value->builtin_uint32
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(4)
+    function -&(other:UInt32):UInt32 {
+        return value->builtin_uint32 -& other.value
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(6)
+    function -&(other:UInt64):UInt64 {
+        return value->builtin_uint64 -& other.value
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(8)
+    function -&(other:UInt):UInt {
+        return value->builtin_uint -& other.value
     }
 
     ===Returns the negation (additive inverse) of this number===
@@ -212,6 +330,65 @@ class UInt8 : Value, HashKey<UInt8>, Comparable<UInt8>, Formattable, ListView<Bi
         return value->builtin_uint * other.value
     }
 
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(1)
+    function *&(other:Int8):Int32 {
+        return value->builtin_int32 *& other.value->builtin_int32
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(3)
+    function *&(other:Int16):Int32 {
+        return value->builtin_int32 *& other.value->builtin_int32
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(5)
+    function *&(other:Int32):Int64 {
+        return value->builtin_int64 *& other.value->builtin_int64
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(9)
+    function *&(other:Int):Int64 {
+        return value->builtin_int64 *& other.value->builtin_int64
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(20)
+    function *&(other:UInt8):UInt32 {
+        return value->builtin_uint32 *& other.value->builtin_uint32
+    }
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(-1)
+    function *&(other:UInt8):UInt8 {
+        return value *& other.value
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(2)
+    function *&(other:UInt16):UInt32 {
+        return value->builtin_uint32 *& other.value->builtin_uint32
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(4)
+    function *&(other:UInt32):UInt32 {
+        return value->builtin_uint32 *& other.value
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(6)
+    function *&(other:UInt64):UInt64 {
+        return value->builtin_uint64 *& other.value
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(8)
+    function *&(other:UInt):UInt {
+        return value->builtin_uint *& other.value
+    }
+
     ===Divides this number by another number, returning the whole number portion.===
     @priority(1)
     function //(other:Int8):Int32 {
@@ -269,6 +446,65 @@ class UInt8 : Value, HashKey<UInt8>, Comparable<UInt8>, Formattable, ListView<Bi
     @priority(8)
     function //(other:UInt):UInt {
         return value->builtin_uint // other.value
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(1)
+    function //&(other:Int8):Int32 {
+        return value->builtin_int32 //& other.value->builtin_int32
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(3)
+    function //&(other:Int16):Int32 {
+        return value->builtin_int32 //& other.value->builtin_int32
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(5)
+    function //&(other:Int32):Int64 {
+        return value->builtin_int64 //& other.value->builtin_int64
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(9)
+    function //&(other:Int):Int64 {
+        return value->builtin_int64 //& other.value->builtin_int64
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(20)
+    function //&(other:UInt8):UInt32 {
+        return value->builtin_uint32 //& other.value->builtin_uint32
+    }
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(-1)
+    function //&(other:UInt8):UInt8 {
+        return value //& other.value
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(2)
+    function //&(other:UInt16):UInt32 {
+        return value->builtin_uint32 //& other.value->builtin_uint32
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(4)
+    function //&(other:UInt32):UInt32 {
+        return value->builtin_uint32 //& other.value
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(6)
+    function //&(other:UInt64):UInt64 {
+        return value->builtin_uint64 //& other.value
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(8)
+    function //&(other:UInt):UInt {
+        return value->builtin_uint //& other.value
     }
 
     ===Returns the remainder of dividing this number by another number.===
@@ -599,6 +835,17 @@ class UInt8 : Value, HashKey<UInt8>, Comparable<UInt8>, Formattable, ListView<Bi
     @priority(-1)
     function <<(other:UInt8):UInt8 {
         return value << other.value
+    }
+
+    ===Returns this number shifted left by the specified number of bits, without checking for overflow.===
+    @priority(20)
+    function <<&(other:UInt8):UInt32 {
+        return value->builtin_uint32 <<& other.value->builtin_uint32
+    }
+    ===Returns this number shifted left by the specified number of bits, without checking for overflow.===
+    @priority(-1)
+    function <<&(other:UInt8):UInt8 {
+        return value <<& other.value
     }
 
     ===Returns this number logical shifted right by the specified number of bits.===
@@ -1178,8 +1425,8 @@ class UInt8 : Value, HashKey<UInt8>, Comparable<UInt8>, Formattable, ListView<Bi
 If this number is not in the range of an 8 bit signed number, a safety violation occurs.
 ===
     property asInt8:Int8
-    @pre(value <= Int8.MAX.toUInt8.value)
     function get_asInt8():Int8 {
+    assert value <= Int8.MAX.toUInt8.value, "UInt8(\{self}) cannot be safely converted to Int8"
         return Int8(value->builtin_int8)
     }
 

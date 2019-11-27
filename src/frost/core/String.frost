@@ -1556,7 +1556,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         var h := 0xcbf29ce484222325
         for i in 0 .. _length {
             h ~~= data[i].asUInt8
-            h *= 0x100000001b3
+            h *&= 0x100000001b3
         }
         return h
     }

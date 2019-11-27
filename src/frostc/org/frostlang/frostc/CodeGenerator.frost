@@ -704,8 +704,13 @@ class CodeGenerator {
         match op {
             when Binary.Operator.ADD {
                 match typeClass {
-                    when TypeClass.SIGNED, TypeClass.UNSIGNED {
-                        out.add(Code.Statement.ADDI(position, result, left, right))
+                    when TypeClass.SIGNED {
+                        out.add(Code.Statement.ADDI(position, result, left, right,
+                                Code.Wrap.CHECK_SIGNED))
+                    }
+                    when TypeClass.UNSIGNED {
+                        out.add(Code.Statement.ADDI(position, result, left, right,
+                                Code.Wrap.CHECK_UNSIGNED))
                     }
                     when TypeClass.FLOAT {
                         out.add(Code.Statement.ADDF(position, result, left, right))
@@ -715,10 +720,18 @@ class CodeGenerator {
                     }
                 }
             }
+            when Binary.Operator.ADDU {
+                out.add(Code.Statement.ADDI(position, result, left, right, Code.Wrap.UNCHECKED))
+            }
             when Binary.Operator.SUB {
                 match typeClass {
-                    when TypeClass.SIGNED, TypeClass.UNSIGNED {
-                        out.add(Code.Statement.SUBI(position, result, left, right))
+                    when TypeClass.SIGNED {
+                        out.add(Code.Statement.SUBI(position, result, left, right,
+                                Code.Wrap.CHECK_SIGNED))
+                    }
+                    when TypeClass.UNSIGNED {
+                        out.add(Code.Statement.SUBI(position, result, left, right,
+                                Code.Wrap.CHECK_UNSIGNED))
                     }
                     when TypeClass.FLOAT {
                         out.add(Code.Statement.SUBF(position, result, left, right))
@@ -728,10 +741,18 @@ class CodeGenerator {
                     }
                 }
             }
+            when Binary.Operator.SUBU {
+                out.add(Code.Statement.SUBI(position, result, left, right, Code.Wrap.UNCHECKED))
+            }
             when Binary.Operator.MUL {
                 match typeClass {
-                    when TypeClass.SIGNED, TypeClass.UNSIGNED {
-                        out.add(Code.Statement.MULI(position, result, left, right))
+                    when TypeClass.SIGNED {
+                        out.add(Code.Statement.MULI(position, result, left, right,
+                                Code.Wrap.CHECK_SIGNED))
+                    }
+                    when TypeClass.UNSIGNED {
+                        out.add(Code.Statement.MULI(position, result, left, right,
+                                Code.Wrap.CHECK_UNSIGNED))
                     }
                     when TypeClass.FLOAT {
                         out.add(Code.Statement.MULF(position, result, left, right))
@@ -741,6 +762,9 @@ class CodeGenerator {
                     }
                 }
             }
+            when Binary.Operator.MULU {
+                out.add(Code.Statement.MULI(position, result, left, right, Code.Wrap.UNCHECKED))
+            }
             when Binary.Operator.DIV {
                 assert typeClass = TypeClass.FLOAT
                 out.add(Code.Statement.DIVF(position, result, left, right))
@@ -748,7 +772,22 @@ class CodeGenerator {
             when Binary.Operator.INTDIV {
                 match typeClass {
                     when TypeClass.SIGNED {
-                        out.add(Code.Statement.DIVS(position, result, left, right))
+                        out.add(Code.Statement.DIVS(position, result, left, right,
+                                Code.Wrap.CHECK_SIGNED))
+                    }
+                    when TypeClass.UNSIGNED {
+                        out.add(Code.Statement.DIVU(position, result, left, right))
+                    }
+                    otherwise {
+                        unreachable
+                    }
+                }
+            }
+            when Binary.Operator.INTDIVU {
+                match typeClass {
+                    when TypeClass.SIGNED {
+                        out.add(Code.Statement.DIVS(position, result, left, right,
+                                Code.Wrap.UNCHECKED))
                     }
                     when TypeClass.UNSIGNED {
                         out.add(Code.Statement.DIVU(position, result, left, right))
@@ -908,8 +947,23 @@ class CodeGenerator {
                 out.add(Code.Statement.XORI(position, result, left, right))
             }
             when Binary.Operator.SHIFTLEFT {
+                match typeClass {
+                    when TypeClass.SIGNED {
+                        out.add(Code.Statement.SHL(position, result, left, right,
+                                Code.Wrap.CHECK_SIGNED))
+                    }
+                    when TypeClass.UNSIGNED {
+                        out.add(Code.Statement.SHL(position, result, left, right,
+                                Code.Wrap.CHECK_UNSIGNED))
+                    }
+                    otherwise {
+                        unreachable
+                    }
+                }
+            }
+            when Binary.Operator.SHIFTLEFTU {
                 assert typeClass = TypeClass.SIGNED | typeClass = TypeClass.UNSIGNED
-                out.add(Code.Statement.SHL(position, result, left, right))
+                out.add(Code.Statement.SHL(position, result, left, right, Code.Wrap.UNCHECKED))
             }
             when Binary.Operator.SHIFTRIGHT {
                 match typeClass {
@@ -978,7 +1032,7 @@ class CodeGenerator {
             def structPtr := nextStatement()
             def offset := Code.Value.FIELD_OFFSET(wrapper, VALUE_INDEX)
             out.add(Code.Statement.ADDI(position, structPtr, Code.Value.STATEMENT(id,
-                    Code.PrimitiveType.INT), offset))
+                    Code.PrimitiveType.INT), offset, Code.Wrap.UNCHECKED))
             out.add(Code.Statement.STORE(position, value,
                     Code.Value.STATEMENT(structPtr, Code.PrimitiveType.INT)))
         }
@@ -1041,7 +1095,7 @@ class CodeGenerator {
             def structPtr := nextStatement()
             def wrapper := wrapperStruct(target)
             def offset := Code.Value.FIELD_OFFSET(wrapper, VALUE_INDEX)
-            out.add(Code.Statement.ADDI(position, structPtr, value, offset))
+            out.add(Code.Statement.ADDI(position, structPtr, value, offset, Code.Wrap.UNCHECKED))
             out.add(Code.Statement.LOAD(position, id, Code.Value.STATEMENT(structPtr,
                     Code.PrimitiveType.INT), primitiveType(target)))
         }
@@ -1141,10 +1195,14 @@ class CodeGenerator {
                 name.append("$")
                 match m.name {
                     when "+"    { name.append("$ADD") }
+                    when "+&"   { name.append("$ADDU") }
                     when "-"    { name.append("$SUB") }
+                    when "-&"   { name.append("$SUBU") }
                     when "*"    { name.append("$MUL") }
+                    when "*&"   { name.append("$MULU") }
                     when "/"    { name.append("$DIV") }
                     when "//"   { name.append("$INTDIV") }
+                    when "//&"  { name.append("$INTDIVU") }
                     when "%"    { name.append("$REM") }
                     when "^"    { name.append("$POW") }
                     when "[]"   { name.append("$IDX") }
@@ -1164,6 +1222,7 @@ class CodeGenerator {
                     when "!"    { name.append("$NOT") }
                     when "!!"   { name.append("$BNOT") }
                     when "<<"   { name.append("$SHL") }
+                    when "<<&"  { name.append("$SHLU") }
                     when ">>"   { name.append("$SHR") }
                     otherwise   { name.append(escapeName(m.name)) }
                 }
@@ -1300,7 +1359,8 @@ class CodeGenerator {
             }
             when IR.Statement.GET_CHOICE_FIELD_POINTER(position, value, case, field) {
                 def offset := Code.Value.CHOICE_FIELD_OFFSET(case, field)
-                out.add(Code.Statement.ADDI(position, mapId(id), convertValue(value), offset))
+                out.add(Code.Statement.ADDI(position, mapId(id), convertValue(value), offset,
+                        Code.Wrap.UNCHECKED))
             }
             when IR.Statement.CONDITIONAL_BRANCH(position, value, ifTrue, ifFalse) {
                 out.add(Code.Statement.CONDITIONAL_BRANCH(position, convertValue(value),
@@ -1373,7 +1433,8 @@ class CodeGenerator {
                 if index != 0 {
                     def converted := convertValue(value)
                     def offset := Code.Value.FIELD_OFFSET(struct(field.owner), index)
-                    out.add(Code.Statement.ADDI(position, mapId(id), converted, offset))
+                    out.add(Code.Statement.ADDI(position, mapId(id), converted, offset,
+                            Code.Wrap.UNCHECKED))
                 }
                 else {
                     addRef(id, convertValue(value))
@@ -1387,7 +1448,8 @@ class CodeGenerator {
                 def vtableSlot := nextStatement()
                 out.add(Code.Statement.ADDI(position, vtableSlot,
                         Code.Value.STATEMENT(cl, Code.PrimitiveType.INT),
-                        Code.Value.VTABLE_OFFSET(cc, index)))
+                        Code.Value.VTABLE_OFFSET(cc, index),
+                        Code.Wrap.UNCHECKED))
                 out.add(Code.Statement.LOAD(position, mapId(id), 
                         Code.Value.STATEMENT(vtableSlot, Code.PrimitiveType.INT),
                         Code.PrimitiveType.INT))
@@ -1413,7 +1475,8 @@ class CodeGenerator {
                 def itableSlot := nextStatement()
                 out.add(Code.Statement.ADDI(position, itableSlot,
                         Code.Value.STATEMENT(initialCl, Code.PrimitiveType.INT),
-                        Code.Value.FIELD_OFFSET(ccType, ITABLE_INDEX)))
+                        Code.Value.FIELD_OFFSET(ccType, ITABLE_INDEX),
+                        Code.Wrap.UNCHECKED))
                 def initialItable := nextStatement()
                 out.add(Code.Statement.LOAD(position, initialItable,
                         Code.Value.STATEMENT(itableSlot, Code.PrimitiveType.INT),
@@ -1438,7 +1501,8 @@ class CodeGenerator {
                 createBlock(loopBody)
                 def nextPtr := nextStatement()
                 out.add(Code.Statement.ADDI(position, nextPtr, Code.Value.STATEMENT(itableLoad,
-                        Code.PrimitiveType.INT), Code.Value.SIZE_OF(Code.PrimitiveType.INT)))
+                        Code.PrimitiveType.INT), Code.Value.SIZE_OF(Code.PrimitiveType.INT),
+                        Code.Wrap.UNCHECKED))
                 def next := nextStatement()
                 out.add(Code.Statement.LOAD(position, next, Code.Value.STATEMENT(nextPtr,
                         Code.PrimitiveType.INT), Code.PrimitiveType.INT))
@@ -1448,7 +1512,8 @@ class CodeGenerator {
                 createBlock(loopEnd)
                 def finalPtr := nextStatement()
                 out.add(Code.Statement.ADDI(position, finalPtr, Code.Value.STATEMENT(itableLoad,
-                        Code.PrimitiveType.INT), Code.Value.ITABLE_OFFSET(index)))
+                        Code.PrimitiveType.INT), Code.Value.ITABLE_OFFSET(index),
+                        Code.Wrap.UNCHECKED))
                 out.add(Code.Statement.LOAD(position, mapId(id), Code.Value.STATEMENT(finalPtr,
                         Code.PrimitiveType.INT), Code.PrimitiveType.INT))
             }
@@ -1479,10 +1544,11 @@ class CodeGenerator {
             when IR.Statement.POINTER_GET_INDEX(position, ptr, idx, type) {
                 def offset := nextStatement()
                 out.add(Code.Statement.MULI(position, offset, convertValue(idx),
-                        Code.Value.SIZE_OF(primitiveType(type))))
+                        Code.Value.SIZE_OF(primitiveType(type)), Code.Wrap.UNCHECKED))
                 def add := nextStatement()
                 out.add(Code.Statement.ADDI(position, add, convertValue(ptr),
-                        Code.Value.STATEMENT(offset, Code.PrimitiveType.INT)))
+                        Code.Value.STATEMENT(offset, Code.PrimitiveType.INT),
+                        Code.Wrap.UNCHECKED))
                 out.add(Code.Statement.LOAD(position, mapId(id),
                         Code.Value.STATEMENT(add, Code.PrimitiveType.INT),
                         primitiveType(type)))
@@ -1493,10 +1559,11 @@ class CodeGenerator {
             when IR.Statement.POINTER_SET_INDEX(position, value, ptr, idx, type) {
                 def offset := nextStatement()
                 out.add(Code.Statement.MULI(position, offset, convertValue(idx),
-                        Code.Value.SIZE_OF(primitiveType(type))))
+                        Code.Value.SIZE_OF(primitiveType(type)), Code.Wrap.UNCHECKED))
                 def add := nextStatement()
                 out.add(Code.Statement.ADDI(position, add, convertValue(ptr),
-                        Code.Value.STATEMENT(offset, Code.PrimitiveType.INT)))
+                        Code.Value.STATEMENT(offset, Code.PrimitiveType.INT),
+                        Code.Wrap.UNCHECKED))
                 out.add(Code.Statement.STORE(position, convertValue(value),
                         Code.Value.STATEMENT(add, Code.PrimitiveType.INT)))
             }

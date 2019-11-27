@@ -45,6 +45,8 @@ class LLVMBackend : Backend {
 
     var varCount := 0
 
+    var blockCount := 0
+
     def externalGlobals := IdentitySet<Code.Global>()
 
     def debugTypes := IdentityMap<Type, String>()
@@ -61,6 +63,13 @@ class LLVMBackend : Backend {
 
     def debugPositions := HashMap<MethodPosition, String>()
 
+    def stringLiterals := HashMap<String, String>()
+
+    property boundsChecking:Bit
+    function get_boundsChecking():Bit {
+        return settings.safetyLevel >= 3
+    }
+
     init(triple:String, out:OutputStream) {
         self.physicalOut := out
 
@@ -68,6 +77,7 @@ class LLVMBackend : Backend {
             out.printLine("target datalayout = \"e-m:o-i64:64-f80:128-n8:16:32:64-S128\"")
             out.printLine("target triple = \"\{triple}\"")
             out.printLine("declare \{INT_TYPE} @frostObjectAlloc(\{INT_TYPE}, \{INT_TYPE})")
+            out.printLine("declare void @frostOverflow(i8*, i32)")
         }
         fail(error) {
             Console.printLine(error)
@@ -89,6 +99,11 @@ class LLVMBackend : Backend {
     method nextVar():String {
         varCount += 1
         return "%tmp\{varCount}"
+    }
+
+    method nextBlock():String {
+        blockCount += 1
+        return "internalBlock\{blockCount}"
     }
 
     method nextMetadata():String {
@@ -746,34 +761,101 @@ class LLVMBackend : Backend {
         }
     }
 
+    method writeOverflowIntrinsic(op:String, type:Code.PrimitiveType):String {
+        def name := "llvm.\{op}.with.overflow.\{llvmType(type)}"
+        writeSignature(Code.Signature(null,
+                Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from([type,
+                    Code.PrimitiveType.BIT])),
+                name, FixedArray<Code.PrimitiveType>.from([type, type]), true))
+        return "@\{name}"
+    }
+
+    function nowrap(wrap:Code.Wrap):String {
+        return (wrap = Code.Wrap.CHECK_SIGNED).choose("nsw", "nuw")
+    }
+
+    method getStringLiteral(s:String):String {
+        var result := stringLiterals[s]
+        if result == null {
+            varCount += 1
+            result := "@s" + varCount
+            def error := globals.printLine("\{result} = private constant [\{s.byteLength} x i8] " +
+                    getReference(Code.Value.CHARS(s)))
+            assert error == null
+            stringLiterals[s] := result
+        }
+        return result
+    }
+
+    method writeCheckedOp(op:String, position:MethodPosition, result:Code.Statement.ID,
+            left:Code.Value, right:Code.Value, wrap:Code.Wrap, out:OutputStream) {
+        try {
+            if wrap = Code.Wrap.UNCHECKED {
+                out.printLine("\{name(result)} = \{op} \{getTypedReference(left)}, " +
+                        "\{getReference(right)}\{debugInfo(position)}")
+            }
+            else {
+                if boundsChecking {
+                    def op := (wrap = Code.Wrap.CHECK_SIGNED).choose("s\{op}", "u\{op}")
+                    def intrinsic := writeOverflowIntrinsic(op, left.type)
+                    def tmp := nextVar()
+                    def type := llvmType(left.type)
+                    out.printLine("\{tmp} = call { \{type}, i1 } \{intrinsic}(" +
+                            "\{getTypedReference(left)}, " +
+                            "\{getTypedReference(right)})\{debugInfo(position)}")
+                    def overflow := nextVar()
+                    out.printLine("\{overflow} = extractvalue { \{type}, i1 } " +
+                            "\{tmp}, 1")
+                    def success := nextBlock()
+                    def failure := nextBlock()
+                    out.printLine("br i1 \{overflow}, label %\{failure}, label %\{success}")
+                    out.printLine("\{failure}:")
+                    def filename := compiler.files[position.file].name + Char8(0)
+                    def chars := getStringLiteral(filename)
+                    out.printLine("call void @frostOverflow(i8* bitcast([\{filename.byteLength} " +
+                            "x i8]* \{chars} to i8*), i32 \{position.line})")
+                    out.printLine("unreachable")
+                    out.printLine("\{success}:")
+                    out.printLine("\{name(result)} = extractvalue { \{type}, i1 } " +
+                            "\{tmp}, 0")
+                }
+                else {
+                    out.printLine("\{name(result)} = \{op} \{nowrap(wrap)} " +
+                            "\{getTypedReference(left)}, \{getReference(right)}" +
+                            debugInfo(position))
+                }
+            }
+        }
+        fail(error) {
+            unreachable, error.toString
+        }
+    }
+
     method writeStatement(s:Code.Statement) {
         try {
             match s {
-                when Code.Statement.ADDI(position, result, left, right) {
-                    out.printLine("\{name(result)} = add \{getTypedReference(left)}, " +
-                            getReference(right) + debugInfo(position))
+                when Code.Statement.ADDI(position, result, left, right, wrap) {
+                    writeCheckedOp("add", position, result, left, right, wrap, out)
                 }
                 when Code.Statement.ADDF(position, result, left, right) {
                     out.printLine("\{name(result)} = fadd \{getTypedReference(left)}, " +
                             getReference(right) + debugInfo(position))
                 }
-                when Code.Statement.SUBI(position, result, left, right) {
-                    out.printLine("\{name(result)} = sub \{getTypedReference(left)}, " +
-                            getReference(right) + debugInfo(position))
+                when Code.Statement.SUBI(position, result, left, right, wrap) {
+                    writeCheckedOp("sub", position, result, left, right, wrap, out)
                 }
                 when Code.Statement.SUBF(position, result, left, right) {
                     out.printLine("\{name(result)} = fsub \{getTypedReference(left)}, " +
                             getReference(right) + debugInfo(position))
                 }
-                when Code.Statement.MULI(position, result, left, right) {
-                    out.printLine("\{name(result)} = mul \{getTypedReference(left)}, " +
-                            getReference(right) + debugInfo(position))
+                when Code.Statement.MULI(position, result, left, right, wrap) {
+                    writeCheckedOp("mul", position, result, left, right, wrap, out)
                 }
                 when Code.Statement.MULF(position, result, left, right) {
                     out.printLine("\{name(result)} = fmul \{getTypedReference(left)}, " +
                             getReference(right) + debugInfo(position))
                 }
-                when Code.Statement.DIVS(position, result, left, right) {
+                when Code.Statement.DIVS(position, result, left, right, checked) {
                     out.printLine("\{name(result)} = sdiv \{getTypedReference(left)}, " +
                             getReference(right) + debugInfo(position))
                 }
@@ -825,7 +907,7 @@ class LLVMBackend : Backend {
                     out.printLine("\{name(result)} = lshr \{getTypedReference(left)}, " +
                             getReference(right) + debugInfo(position))
                 }
-                when Code.Statement.SHL(position, result, left, right) {
+                when Code.Statement.SHL(position, result, left, right, wrap) {
                     out.printLine("\{name(result)} = shl \{getTypedReference(left)}, " +
                             getReference(right) + debugInfo(position))
                 }

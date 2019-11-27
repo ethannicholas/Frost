@@ -278,6 +278,11 @@ void _frostAssert(int i, const char* file, int line) {
 #define frostAssert(i)
 #endif
 
+void frostOverflow(const char* file, int32_t line) {
+    fprintf(stderr, "%s:%d: arithmetic overflow\n", file, line);
+    abort();
+}
+
 void* frostAlloc(size_t size) {
     __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     void* result = calloc(size, 1);

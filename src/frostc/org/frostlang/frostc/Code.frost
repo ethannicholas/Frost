@@ -5,6 +5,12 @@ Low-level code representation. IR ("intermediate representation") code is transf
 the last step before handing it to the Backend.
 ====================================================================================================
 class Code {
+    choice Wrap {
+        CHECK_SIGNED
+        CHECK_UNSIGNED
+        UNCHECKED
+    }
+
     choice PrimitiveType {
         INT
         INT8
@@ -157,7 +163,7 @@ class Code {
         ============================================================================================
         Adds two ints of the same type.
         ============================================================================================
-        ADDI(MethodPosition, ID, Value, Value)
+        ADDI(MethodPosition, ID, Value, Value, Wrap)
 
         ============================================================================================
         Adds two floats of the same type.
@@ -167,7 +173,7 @@ class Code {
         ============================================================================================
         Subtracts two ints of the same type.
         ============================================================================================
-        SUBI(MethodPosition, ID, Value, Value)
+        SUBI(MethodPosition, ID, Value, Value, Wrap)
 
         ============================================================================================
         Subtracts two floats of the same type.
@@ -177,7 +183,7 @@ class Code {
         ============================================================================================
         Multiplies two ints of the same type.
         ============================================================================================
-        MULI(MethodPosition, ID, Value, Value)
+        MULI(MethodPosition, ID, Value, Value, Wrap)
 
         ============================================================================================
         Multiplies two floats of the same type.
@@ -187,7 +193,7 @@ class Code {
         ============================================================================================
         Divides two signed ints of the same type.
         ============================================================================================
-        DIVS(MethodPosition, ID, Value, Value)
+        DIVS(MethodPosition, ID, Value, Value, Wrap)
 
         ============================================================================================
         Divides two unsigned ints of the same type.
@@ -242,7 +248,7 @@ class Code {
         ============================================================================================
         Shift an int left by the (same type) number of bits.
         ============================================================================================
-        SHL(MethodPosition, ID, Value, Value)
+        SHL(MethodPosition, ID, Value, Value, Wrap)
 
         ============================================================================================
         Arithmetic shift an int right by the (same type) number of bits.
@@ -477,25 +483,25 @@ class Code {
         property position:MethodPosition
         function get_position():MethodPosition {
             match self {
-                when ADDI(position, _, _, _) {
+                when ADDI(position, _, _, _, _) {
                     return position
                 }
                 when ADDF(position, _, _, _) {
                     return position
                 }
-                when SUBI(position, _, _, _) {
+                when SUBI(position, _, _, _, _) {
                     return position
                 }
                 when SUBF(position, _, _, _) {
                     return position
                 }
-                when MULI(position, _, _, _) {
+                when MULI(position, _, _, _, _) {
                     return position
                 }
                 when MULF(position, _, _, _) {
                     return position
                 }
-                when DIVS(position, _, _, _) {
+                when DIVS(position, _, _, _, _) {
                     return position
                 }
                 when DIVU(position, _, _, _) {
@@ -528,7 +534,7 @@ class Code {
                 when XORB(position, _, _, _) {
                     return position
                 }
-                when SHL(position, _, _, _) {
+                when SHL(position, _, _, _, _) {
                     return position
                 }
                 when SHRS(position, _, _, _) {

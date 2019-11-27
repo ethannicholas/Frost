@@ -160,7 +160,7 @@ class WriteNumbers {
             when Type.INT16  { return "-32768" }
             when Type.INT32  { return "-2147483648" }
             when Type.INT64  { return "-9223372036854775808" }
-            when Type.INT    { return "1 << ($int_size - 1)" }
+            when Type.INT    { return "-1 << ($int_size - 1)" }
             when Type.UINT8  { return "0" }
             when Type.UINT16 { return "0" }
             when Type.UINT32 { return "0" }
@@ -177,7 +177,7 @@ class WriteNumbers {
             when Type.INT16  { return "32767" }
             when Type.INT32  { return "2147483647" }
             when Type.INT64  { return "9223372036854775807" }
-            when Type.INT    { return "1 << ($int_size - 1) - 1" }
+            when Type.INT    { return "1 << ($int_size - 1) -& 1" }
             when Type.UINT8  { return "255" }
             when Type.UINT16 { return "65535" }
             when Type.UINT32 { return "4294967295" }
@@ -761,25 +761,30 @@ class WriteNumbers {
             out.printLine("===")
             def name := safe.choose("as", "to")
             out.printLine("    property \{name}\{object(target)}:\{object(target)}")
+            var assertion:String? := null
             if safe & size(type) >= size(target) {
                 if isReal(type) | isReal(target) {
                     out.printLine("    @post(@return.to\{object(type)} = self)")
                 } 
                 else {
-                    out.print("    @pre(")
+                    assertion := "    assert "
                     var separator := ""
                     if signed(type) {
-                        out.print("value >= \{object(target)}.MIN.to\{object(type)}.value")
+                        assertion += "value >= \{object(target)}.MIN.to\{object(type)}.value"
                         separator := " & "
                     }
                     if !signed(type) | signed(target) | size(type) != size(target) {
-                        out.print(separator)
-                        out.print("value <= \{object(target)}.MAX.to\{object(type)}.value")
+                        assertion += separator
+                        assertion += "value <= \{object(target)}.MAX.to\{object(type)}.value"
                     }
-                    out.printLine(")")
+                    assertion += ', "\{object(type)}(\\{self}) cannot be safely converted to ' +
+                            object(target) + '"'
                 }
             }
             out.printLine("    function get_\{name}\{object(target)}():\{object(target)} {")
+            if assertion !== null {
+                out.printLine(assertion)
+            }
             out.printLine("        return \{object(target)}(value->\{builtin(target)})")
             out.printLine("    }")
         }
@@ -1008,12 +1013,17 @@ class WriteNumbers {
         }
         writeInits(type, out)
         writeOperator("+", "Adds another number to this number.", type, true, out)
+        writeOperator("+&", "Adds another number to this number without checking for overflow.", type, true, out)
         writeOperator("-", "Subtracts another number from this number.", type, true, out)
+        writeOperator("-&", "Subtracts another number from this number without checking for overflow.", type, true, out)
         writePrefixOperator("-", "Returns the negation (additive inverse) of this number", type,
                 out)
         writeOperator("*", "Multiplies this number by another number.", type, true, out)
+        writeOperator("*&", "Multiplies this number by another number without checking for overflow.", type, true, out)
         writeOperator("//", "Divides this number by another number, returning the whole number " +
                 "portion.", type, true, out)
+        writeOperator("//&", "Divides this number by another number, returning the whole number " +
+                "portion, without checking for overflow.", type, true, out)
         writeOperator("%", "Returns the remainder of dividing this number by another number.", type,
                 true, out)
         writeDivide(type, out)
@@ -1025,6 +1035,9 @@ class WriteNumbers {
         writeOperator("~~", "Returns the bitwise XOR of this number with another number.", type,
                 false, out)
         writeOperator("<<", "Returns this number shifted left by the specified number of bits.",
+                type, type, false, out)
+        writeOperator("<<&", "Returns this number shifted left by the specified number of bits, " +
+                "without checking for overflow.",
                 type, type, false, out)
         writeOperator(">>", "Returns this number \{signed(type):arithmetic|logical} shifted " +
                 "right by the specified number of bits.", type, type, false, out)

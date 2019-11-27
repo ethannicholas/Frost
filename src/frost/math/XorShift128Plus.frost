@@ -41,6 +41,6 @@ class XorShift128Plus : Random {
         state1 := y
         x ~~= x << 23
         state2 := x ~~ y ~~ (x >> 17) ~~ (y >> 26)
-        return state2 + y
+        return state2 +& y
     }
 }

@@ -16,10 +16,14 @@ uses org.frostlang.frostc.parser.Token
 class Binary {
     choice Operator {
         ADD
+        ADDU
         SUB
+        SUBU
         MUL
+        MULU
         DIV
         INTDIV
+        INTDIVU
         REM
         EQ
         NEQ
@@ -34,6 +38,7 @@ class Binary {
         XOR
         BITWISEXOR
         SHIFTLEFT
+        SHIFTLEFTU
         SHIFTRIGHT
         INDEX
         IDENTITY
@@ -42,10 +47,14 @@ class Binary {
         IMPLICIT_CAST
         ASSIGNMENT
         ADDEQ
+        ADDUEQ
         SUBEQ
+        SUBUEQ
         MULEQ
+        MULUEQ
         DIVEQ
         INTDIVEQ
+        INTDIVUEQ
         REMEQ
         OREQ
         BITWISEOREQ
@@ -54,16 +63,21 @@ class Binary {
         XOREQ
         BITWISEXOREQ
         SHIFTLEFTEQ
+        SHIFTLEFTUEQ
         SHIFTRIGHTEQ
 
         @class
         function fromToken(op:Token):Operator {
             match op.kind {
                 when Token.Kind.ADD          { return ADD }
+                when Token.Kind.ADDU         { return ADDU }
                 when Token.Kind.SUB          { return SUB }
+                when Token.Kind.SUBU         { return SUBU }
                 when Token.Kind.MUL          { return MUL }
+                when Token.Kind.MULU         { return MULU }
                 when Token.Kind.DIV          { return DIV }
                 when Token.Kind.INTDIV       { return INTDIV }
+                when Token.Kind.INTDIVU      { return INTDIVU }
                 when Token.Kind.REM          { return REM }
                 when Token.Kind.EQ           { return EQ }
                 when Token.Kind.NEQ          { return NEQ }
@@ -78,6 +92,7 @@ class Binary {
                 when Token.Kind.XOR          { return XOR }
                 when Token.Kind.BITWISEXOR   { return BITWISEXOR }
                 when Token.Kind.SHIFTLEFT    { return SHIFTLEFT }
+                when Token.Kind.SHIFTLEFTU   { return SHIFTLEFTU }
                 when Token.Kind.SHIFTRIGHT   { return SHIFTRIGHT }
                 when Token.Kind.LBRACKET     { return INDEX }
                 when Token.Kind.ASSIGNMENT   { return ASSIGNMENT }
@@ -85,10 +100,14 @@ class Binary {
                 when Token.Kind.NIDENTITY    { return NIDENTITY }
                 when Token.Kind.CAST         { return CAST }
                 when Token.Kind.ADDEQ        { return ADDEQ }
+                when Token.Kind.ADDUEQ       { return ADDUEQ }
                 when Token.Kind.SUBEQ        { return SUBEQ }
+                when Token.Kind.SUBUEQ       { return SUBUEQ }
                 when Token.Kind.MULEQ        { return MULEQ }
+                when Token.Kind.MULUEQ       { return MULUEQ }
                 when Token.Kind.DIVEQ        { return DIVEQ }
                 when Token.Kind.INTDIVEQ     { return INTDIVEQ }
+                when Token.Kind.INTDIVUEQ    { return INTDIVUEQ }
                 when Token.Kind.REMEQ        { return REMEQ }
                 when Token.Kind.OREQ         { return OREQ }
                 when Token.Kind.BITWISEOREQ  { return BITWISEOREQ }
@@ -97,6 +116,7 @@ class Binary {
                 when Token.Kind.XOREQ        { return XOREQ }
                 when Token.Kind.BITWISEXOREQ { return BITWISEXOREQ }
                 when Token.Kind.SHIFTLEFTEQ  { return SHIFTLEFTEQ }
+                when Token.Kind.SHIFTLEFTUEQ { return SHIFTLEFTUEQ }
                 when Token.Kind.SHIFTRIGHTEQ { return SHIFTRIGHTEQ }
                 otherwise                    { unreachable, "not a binary operator: \{op.kind}" }
             }
@@ -105,9 +125,9 @@ class Binary {
         property isAssignment:Bit
         function get_isAssignment():Bit {
             match self {
-                when ASSIGNMENT, ADDEQ, SUBEQ, MULEQ, DIVEQ, INTDIVEQ, REMEQ, OREQ,
-                        BITWISEOREQ, ANDEQ, BITWISEANDEQ, XOREQ, BITWISEXOREQ, SHIFTLEFTEQ,
-                        SHIFTRIGHTEQ {
+                when ASSIGNMENT, ADDEQ, ADDUEQ, SUBEQ, SUBUEQ, MULEQ, MULUEQ, DIVEQ, INTDIVEQ,
+                        INTDIVUEQ, REMEQ, OREQ, BITWISEOREQ, ANDEQ, BITWISEANDEQ, XOREQ,
+                        BITWISEXOREQ, SHIFTLEFTEQ, SHIFTLEFTUEQ, SHIFTRIGHTEQ {
                     return true
                 }
                 otherwise {
@@ -119,10 +139,14 @@ class Binary {
         function removeAssignment():Operator {
             match self {
                 when ADDEQ        { return ADD }
+                when ADDUEQ       { return ADDU }
                 when SUBEQ        { return SUB }
+                when SUBUEQ       { return SUBU }
                 when MULEQ        { return MUL }
+                when MULUEQ       { return MULU }
                 when DIVEQ        { return DIV }
                 when INTDIVEQ     { return INTDIV }
+                when INTDIVUEQ    { return INTDIVU }
                 when REMEQ        { return REM }
                 when OREQ         { return OR }
                 when BITWISEOREQ  { return BITWISEOR }
@@ -131,6 +155,7 @@ class Binary {
                 when XOREQ        { return XOR }
                 when BITWISEXOREQ { return BITWISEXOR }
                 when SHIFTLEFTEQ  { return SHIFTLEFT }
+                when SHIFTLEFTUEQ { return SHIFTLEFTU }
                 when SHIFTRIGHTEQ { return SHIFTRIGHT }
                 otherwise         { unreachable, "not a compound assignment operator: \{self}" }
             }
@@ -140,10 +165,14 @@ class Binary {
         function get_toString():String {
             match self {
                 when ADD           { return "+" }
+                when ADDU          { return "+&" }
                 when SUB           { return "-" }
+                when SUBU          { return "-&" }
                 when MUL           { return "*" }
+                when MULU          { return "*&" }
                 when DIV           { return "/" }
                 when INTDIV        { return "//" }
+                when INTDIVU       { return "//&" }
                 when REM           { return "%" }
                 when EQ            { return "=" }
                 when NEQ           { return "!=" }
@@ -158,6 +187,7 @@ class Binary {
                 when XOR           { return "~" }
                 when BITWISEXOR    { return "~~" }
                 when SHIFTLEFT     { return "<<" }
+                when SHIFTLEFTU    { return "<<&" }
                 when SHIFTRIGHT    { return ">>" }
                 when INDEX         { return "[]" }
                 when IDENTITY      { return "==" }
@@ -166,10 +196,14 @@ class Binary {
                 when IMPLICIT_CAST { return "-(implicit)>" }
                 when ASSIGNMENT    { return ":=" }
                 when ADDEQ         { return "+=" }
+                when ADDUEQ        { return "+&=" }
                 when SUBEQ         { return "-=" }
+                when SUBUEQ        { return "-&=" }
                 when MULEQ         { return "*=" }
+                when MULUEQ        { return "*&=" }
                 when DIVEQ         { return "/=" }
                 when INTDIVEQ      { return "//=" }
+                when INTDIVUEQ     { return "//&=" }
                 when REMEQ         { return "%=" }
                 when OREQ          { return "|=" }
                 when BITWISEOREQ   { return "||=" }
@@ -178,9 +212,10 @@ class Binary {
                 when XOREQ         { return "~=" }
                 when BITWISEXOREQ  { return "~~=" }
                 when SHIFTLEFTEQ   { return "<<=" }
+                when SHIFTLEFTUEQ  { return "<<&=" }
                 when SHIFTRIGHTEQ  { return ">>=" }
+                otherwise          { unreachable }
             }
-            unreachable
         }
     }
 
@@ -336,7 +371,15 @@ class Binary {
                 def v := (l + r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
+            when Operator.ADDU {
+                def v := (l + r).toUInt64
+                return ASTNode.INT(left.position(), v)
+            }
             when Operator.SUB {
+                def v := (l - r).toUInt64
+                return ASTNode.INT(left.position(), v)
+            }
+            when Operator.SUBU {
                 def v := (l - r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
@@ -344,7 +387,19 @@ class Binary {
                 def v := (l * r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
+            when Operator.MULU {
+                def v := (l * r).toUInt64
+                return ASTNode.INT(left.position(), v)
+            }
             when Operator.INTDIV {
+                if r = 0 {
+                    compiler.error(right.position(), "division by 0")
+                    return null
+                }
+                def v := (l // r).toUInt64
+                return ASTNode.INT(left.position(), v)
+            }
+            when Operator.INTDIVU {
                 if r = 0 {
                     compiler.error(right.position(), "division by 0")
                     return null
@@ -391,6 +446,10 @@ class Binary {
                 return ASTNode.INT(left.position(), v)
             }
             when Operator.SHIFTLEFT {
+                def v := (l << r).toUInt64
+                return ASTNode.INT(left.position(), v)
+            }
+            when Operator.SHIFTLEFTU {
                 def v := (l << r).toUInt64
                 return ASTNode.INT(left.position(), v)
             }
@@ -538,9 +597,10 @@ class Binary {
                 -- types, it's not a big deal
                 if type.isBuiltinNumber {
                     match op {
-                        when Operator.ADD, Operator.SUB, Operator.MUL, Operator.DIV,
-                                Operator.INTDIV, Operator.REM, Operator.BITWISEOR,
-                                Operator.BITWISEAND, Operator.BITWISEXOR, Operator.SHIFTLEFT,
+                        when Operator.ADD, Operator.ADDU, Operator.SUB, Operator.SUBU, Operator.MUL,
+                                Operator.MULU, Operator.DIV, Operator.INTDIV, Operator.INTDIVU,
+                                Operator.REM, Operator.BITWISEOR, Operator.BITWISEAND,
+                                Operator.BITWISEXOR, Operator.SHIFTLEFT, Operator.SHIFTLEFTU,
                                 Operator.SHIFTRIGHT {
                             return [type]
                         }

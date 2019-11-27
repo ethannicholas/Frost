@@ -432,25 +432,25 @@ class CBackend : Backend {
     method writeStatement(s:Code.Statement) {
         try {
             match s {
-                when Code.Statement.ADDI(position, result, left, right) {
+                when Code.Statement.ADDI(position, result, left, right, wrap) {
                     define(left.type, result, "\{getReference(left)} + \{getReference(right)}")
                 }
                 when Code.Statement.ADDF(position, result, left, right) {
                     define(left.type, result, "\{getReference(left)} + \{getReference(right)}")
                 }
-                when Code.Statement.SUBI(position, result, left, right) {
+                when Code.Statement.SUBI(position, result, left, right, wrap) {
                     define(left.type, result, "\{getReference(left)} - \{getReference(right)}")
                 }
                 when Code.Statement.SUBF(position, result, left, right) {
                     define(left.type, result, "\{getReference(left)} - \{getReference(right)}")
                 }
-                when Code.Statement.MULI(position, result, left, right) {
+                when Code.Statement.MULI(position, result, left, right, wrap) {
                     define(left.type, result, "\{getReference(left)} * \{getReference(right)}")
                 }
                 when Code.Statement.MULF(position, result, left, right) {
                     define(left.type, result, "\{getReference(left)} * \{getReference(right)}")
                 }
-                when Code.Statement.DIVS(position, result, left, right) {
+                when Code.Statement.DIVS(position, result, left, right, wrap) {
                     define(left.type, result, "\{getReference(left)} / \{getReference(right)}")
                 }
                 when Code.Statement.DIVU(position, result, left, right) {
@@ -492,7 +492,7 @@ class CBackend : Backend {
                     define(left.type, result, getUnsignedReference(left) + " >> " +
                             getUnsignedReference(right))
                 }
-                when Code.Statement.SHL(position, result, left, right) {
+                when Code.Statement.SHL(position, result, left, right, wrap) {
                     define(left.type, result, "\{getReference(left)} << \{getReference(right)}")
                 }
                 when Code.Statement.EQI(position, result, left, right) {

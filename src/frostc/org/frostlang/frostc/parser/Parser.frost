@@ -806,19 +806,21 @@ class Parser {
     }
 
     ================================================================================================
-    methodName = IDENTIFIER | ADD | SUB | MUL | DIV | INTDIV | POW | EQ | GT | LT | GTEQ | LTEQ |
-            REM | AND | BITWISEAND | OR | BITWISEOR | XOR | BITWISEXOR | NOT | BITWISENOT |
-            SHIFTLEFT | SHIFTRIGHT | (LBRACKET RBRACKET ASSIGNMENT?)
+    methodName = IDENTIFIER | ADD | ADDU | SUB | SUBU | MUL | MULU | DIV | INTDIV | INTDIVU | REM |
+            POW | EQ | GT | LT | GTEQ | LTEQ | AND | BITWISEAND | OR | BITWISEOR | XOR |
+            BITWISEXOR | NOT | BITWISENOT | SHIFTLEFT | SHIFTLEFTU | SHIFTRIGHT |
+            (LBRACKET RBRACKET ASSIGNMENT?)
     ================================================================================================
     method methodName():String? {
         def name := next()
         match name.kind {
-            when Token.Kind.IDENTIFIER, Token.Kind.ADD, Token.Kind.SUB, Token.Kind.MUL,
-                    Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.POW, Token.Kind.EQ,
+            when Token.Kind.IDENTIFIER, Token.Kind.ADD, Token.Kind.ADDU, Token.Kind.SUB,
+                    Token.Kind.SUBU, Token.Kind.MUL, Token.Kind.MULU, Token.Kind.DIV,
+                    Token.Kind.INTDIV, Token.Kind.INTDIVU, Token.Kind.POW, Token.Kind.EQ,
                     Token.Kind.NEQ, Token.Kind.LT, Token.Kind.GTEQ, Token.Kind.LTEQ,
                     Token.Kind.REM, Token.Kind.AND, Token.Kind.BITWISEAND, Token.Kind.OR,
                     Token.Kind.BITWISEOR, Token.Kind.XOR, Token.Kind.BITWISEXOR, Token.Kind.NOT,
-                    Token.Kind.BITWISENOT, Token.Kind.SHIFTLEFT {
+                    Token.Kind.BITWISENOT, Token.Kind.SHIFTLEFT, Token.Kind.SHIFTLEFTU {
                 return text(name)
             }
             when Token.Kind.GT {
@@ -1295,8 +1297,8 @@ class Parser {
     }
 
     ================================================================================================
-    multiplicativeExpression = prefixExpression ((MUL | DIV | INTDIV | REM | SHIFTLEFT |
-            SHIFTRIGHT | BITWISEXOR) prefixExpression)*
+    multiplicativeExpression = prefixExpression ((MUL | MULU | DIV | INTDIV | INTDIVU | REM |
+            SHIFTLEFT | SHIFTLEFTU | SHIFTRIGHT | BITWISEXOR) prefixExpression)*
     Note that SHIFTRIGHT is handled specially, as the lexer only produces GT and we synthesize the
     SHIFTRIGHT token here.
     ================================================================================================
@@ -1308,8 +1310,9 @@ class Parser {
         loop {
             def op := next()
             match op.kind {
-                when Token.Kind.MUL, Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.REM,
-                        Token.Kind.SHIFTLEFT {
+                when Token.Kind.MUL, Token.Kind.MULU, Token.Kind.DIV, Token.Kind.INTDIV,
+                        Token.Kind.INTDIVU, Token.Kind.REM, Token.Kind.SHIFTLEFT,
+                        Token.Kind.SHIFTLEFTU {
                     def next := prefixExpression()
                     if next == null {
                         return null
@@ -1372,7 +1375,7 @@ class Parser {
 
     ================================================================================================
     additiveExpression = bitwiseExpression
-            ((ADD | SUB | BITWISEOR) bitwiseExpression)*
+            ((ADD | ADDU | SUB | SUBU | BITWISEOR) bitwiseExpression)*
     ================================================================================================
     method additiveExpression():ASTNode? {
         var result := bitwiseExpression()
@@ -1382,7 +1385,8 @@ class Parser {
         loop {
             def op := next()
             match op.kind {
-                when Token.Kind.ADD, Token.Kind.SUB, Token.Kind.BITWISEXOR {
+                when Token.Kind.ADD, Token.Kind.ADDU, Token.Kind.SUB, Token.Kind.SUBU,
+                        Token.Kind.BITWISEXOR {
                     def next := bitwiseExpression()
                     if next == null {
                         return null
@@ -1464,8 +1468,8 @@ class Parser {
     }
 
     ================================================================================================
-    comparisonExpression = rangeExpression ((EQ | IDENTITY | NEQ |
-             NIDENTITY | LT | GT | LTEQ | GTEQ | IN) rangeExpression)*
+    comparisonExpression = rangeExpression ((EQ | IDENTITY | NEQ | NIDENTITY | LT | GT | LTEQ |
+            GTEQ | IN) rangeExpression)*
     ================================================================================================
     method comparisonExpression():ASTNode? {
         var result := rangeExpression()
@@ -1901,11 +1905,12 @@ class Parser {
             return null
         }
         match peek().kind {
-            when Token.Kind.ASSIGNMENT, Token.Kind.ADDEQ, Token.Kind.SUBEQ, Token.Kind.MULEQ,
-                    Token.Kind.DIVEQ, Token.Kind.REMEQ, Token.Kind.INTDIVEQ, Token.Kind.POWEQ,
-                    Token.Kind.OREQ, Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ,
+            when Token.Kind.ASSIGNMENT, Token.Kind.ADDEQ, Token.Kind.ADDUEQ, Token.Kind.SUBEQ,
+                    Token.Kind.SUBUEQ, Token.Kind.MULEQ, Token.Kind.MULUEQ,
+                    Token.Kind.DIVEQ, Token.Kind.REMEQ, Token.Kind.INTDIVEQ,  Token.Kind.INTDIVUEQ,
+                    Token.Kind.POWEQ, Token.Kind.OREQ, Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ,
                     Token.Kind.BITWISEANDEQ, Token.Kind.XOREQ, Token.Kind.BITWISEXOREQ,
-                    Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTRIGHTEQ {
+                    Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTLEFTUEQ, Token.Kind.SHIFTRIGHTEQ {
                 def op := next()
                 def rvalue := expression()
                 if rvalue == null {

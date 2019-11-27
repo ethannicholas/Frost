@@ -78,6 +78,13 @@ Operators
 * `//` (integer divide),
 * `%` (remainder)
 
+### Unchecked Math (does not detect overflow): ###
+* `+&` (unchecked add)
+* `-&` (unchecked subtract)
+* `*&` (unchecked multiply)
+* `//&` (unchecked integer divide)
+* `<<&` (unchecked left shift)
+
 ### Comparison: ###
 * `=` (equal)
 * `!=` (not equal)

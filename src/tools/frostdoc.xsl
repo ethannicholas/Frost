@@ -427,9 +427,19 @@
                     <xsl:with-param name="operator">add operator</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
+            <xsl:when test=". = '+&amp;'">
+                <xsl:call-template name="hint">
+                    <xsl:with-param name="operator">unchecked add operator</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
             <xsl:when test=". = '-'">
                 <xsl:call-template name="hint">
                     <xsl:with-param name="operator">subtract operator</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test=". = '-&amp;'">
+                <xsl:call-template name="hint">
+                    <xsl:with-param name="operator">unchecked subtract operator</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test=". = '*'">
@@ -437,14 +447,39 @@
                     <xsl:with-param name="operator">multiply operator</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
+            <xsl:when test=". = '*&amp;'">
+                <xsl:call-template name="hint">
+                    <xsl:with-param name="operator">unchecked multiply operator</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
             <xsl:when test=". = '/'">
                 <xsl:call-template name="hint">
                     <xsl:with-param name="operator">divide operator</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
-            <xsl:when test=". = '^'">
+            <xsl:when test=". = '//'">
                 <xsl:call-template name="hint">
-                    <xsl:with-param name="operator">exponent operator</xsl:with-param>
+                    <xsl:with-param name="operator">integer divide operator</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test=". = '//&amp;'">
+                <xsl:call-template name="hint">
+                    <xsl:with-param name="operator">unchecked integer divide operator</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test=". = '&lt;&lt;'">
+                <xsl:call-template name="hint">
+                    <xsl:with-param name="operator">left shift operator</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test=". = '&lt;&lt;&amp;'">
+                <xsl:call-template name="hint">
+                    <xsl:with-param name="operator">unchecked left shift operator</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test=". = '&gt;&gt;'">
+                <xsl:call-template name="hint">
+                    <xsl:with-param name="operator">right shift operator</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test=". = '='">

@@ -47,7 +47,7 @@ class WriteOperators {
             out.printLine("Console.printLine(x)")
             out.printLine("x -= y")
             out.printLine("Console.printLine(x)")
-            out.printLine("x *= y")
+            out.printLine("x *&= y")
             out.printLine("Console.printLine(x)")
             out.printLine("x //= y")
             out.printLine("Console.printLine(x)")

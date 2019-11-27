@@ -40,29 +40,29 @@ class MD5 {
     @private
     function ff(a:Int32, b:Int32, c:Int32, d:Int32, x:Int32, s:Int32, 
             ac:Int32):Int32 {
-        def t := a + ((b && c) || (!!b && d)) + x + ac
-        return leftRotate(t, s) + b
+        def t := a +& ((b && c) || (!!b && d)) +& x +& ac
+        return leftRotate(t, s) +& b
     }
 
     @private
     function gg(a:Int32, b:Int32, c:Int32, d:Int32, x:Int32, s:Int32, 
             ac:Int32):Int32 {
-        def t := a + ((b && d) || (c && !!d)) + x + ac
-        return leftRotate(t, s) + b
+        def t := a +& ((b && d) || (c && !!d)) +& x +& ac
+        return leftRotate(t, s) +& b
     }
 
     @private
     function hh(a:Int32, b:Int32, c:Int32, d:Int32, x:Int32, s:Int32, 
             ac:Int32):Int32 {
-        def t := a + (b ~~ c ~~ d) + x + ac
-        return leftRotate(t, s) + b
+        def t := a +& (b ~~ c ~~ d) +& x +& ac
+        return leftRotate(t, s) +& b
     }
 
     @private
     function ii(a:Int32, b:Int32, c:Int32, d:Int32, x:Int32, s:Int32, 
             ac:Int32):Int32 {
-        def t := a + (c ~~ (b || !!d)) + x + ac
-        return leftRotate(t, s) + b
+        def t := a +& (c ~~ (b || !!d)) +& x +& ac
+        return leftRotate(t, s) +& b
     }
 
     @private
@@ -144,10 +144,10 @@ class MD5 {
         c := ii(c, d, a, b, word( 2),  15, 0x2ad7d2bb.toInt32)
         b := ii(b, c, d, a, word( 9),  21, 0xeb86d391.toInt32)
 
-        a0 += a
-        b0 += b
-        c0 += c
-        d0 += d         
+        a0 +&= a
+        b0 +&= b
+        c0 +&= c
+        d0 +&= d         
     }
 
     method update(message:Pointer<UInt8>, length:Int) {

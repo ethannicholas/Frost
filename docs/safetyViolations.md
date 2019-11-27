@@ -8,10 +8,11 @@ error message. Safety violations include:
 * Assertion failures
 * Contract (precondition or postcondition) violations
 * Invalid typecasts
+* Integer overflow using the normal arithmetic operators
 * Integer divide by zero
 * Reaching an [`unreachable`](statements.md#unreachable) statement
 * Following a [weak reference](weakReferences.md) to an object which is no longer in memory
 
 By default, the compiler inserts runtime checks to detect all of these situations and abort the
 program when they occur. Disabling safety checks using a [command line flag](frostc.md) may
-improve performance, but converts all safety violations into undefined behavior.
+therefore mprove performance, but converts all safety violations into undefined behavior.

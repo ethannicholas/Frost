@@ -14,9 +14,11 @@ Assignment
 An *l-value* is a value which can be assigned to. L-values include variables, fields, and index
 operator expressions such as `array[0]`. The `assignmentOperator` specifies the kind of assignment
 to be performed, either simple assignment (`:=`) or one of the compound assignment operators (`+=`,
-`-=`, `*=`, `/=`, `//=`, `%=`, `^=`, `<<=`, `>>=`, `>>>=`, `&=`, `|=`, `~=`, `&&=`, `||=`, or
-`~~=`). Simple assignment makes `<l-value>` equal to `<r-value>`, whereas the compound assignment
-operators make `<l-value>` equal to `<l-value> <operator> <r-value>`.
+`+&=`, `-=`, `-&=`, `*=`, `*&=`, `/=`, `//=`, `//&=`, `%=`, `<<=`, `<<&=`, `>>=`, `>>>=`, `&=`,
+`|=`, `~=`, `&&=`, `||=`, or`~~=`). Simple assignment makes `<l-value>` equal to `<r-value>`,
+whereas the compound assignment operators make `<l-value>` equal to
+`<l-value> <operator> <r-value>`. Unlike in C and related languages, assignment is not an expression
+and the assignment operators do not produce a value.
 
 When the right side of the assignment is a [tuple](tuples.md), you may assign to multiple values at
 once by 'destructuring' it in a multiple assignment. For instance, if we have a function that

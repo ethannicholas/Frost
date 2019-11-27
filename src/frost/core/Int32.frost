@@ -84,6 +84,36 @@ class Int32 : Value, HashKey<Int32>, Comparable<Int32>, Formattable, ListView<Bi
         return value->builtin_int64 + other.value->builtin_int64
     }
 
+    ===Adds another number to this number without checking for overflow.===
+    @priority(20)
+    function +&(other:Int32):Int32 {
+        return value +& other.value
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(12)
+    function +&(other:Int64):Int64 {
+        return value->builtin_int64 +& other.value
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(14)
+    function +&(other:Int):Int {
+        return value->builtin_int +& other.value
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(9)
+    function +&(other:UInt32):Int64 {
+        return value->builtin_int64 +& other.value->builtin_int64
+    }
+
+    ===Adds another number to this number without checking for overflow.===
+    @priority(13)
+    function +&(other:UInt):Int64 {
+        return value->builtin_int64 +& other.value->builtin_int64
+    }
+
     ===Subtracts another number from this number.===
     @priority(20)
     function -(other:Int32):Int32 {
@@ -112,6 +142,36 @@ class Int32 : Value, HashKey<Int32>, Comparable<Int32>, Formattable, ListView<Bi
     @priority(13)
     function -(other:UInt):Int64 {
         return value->builtin_int64 - other.value->builtin_int64
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(20)
+    function -&(other:Int32):Int32 {
+        return value -& other.value
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(12)
+    function -&(other:Int64):Int64 {
+        return value->builtin_int64 -& other.value
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(14)
+    function -&(other:Int):Int {
+        return value->builtin_int -& other.value
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(9)
+    function -&(other:UInt32):Int64 {
+        return value->builtin_int64 -& other.value->builtin_int64
+    }
+
+    ===Subtracts another number from this number without checking for overflow.===
+    @priority(13)
+    function -&(other:UInt):Int64 {
+        return value->builtin_int64 -& other.value->builtin_int64
     }
 
     ===Returns the negation (additive inverse) of this number===
@@ -149,6 +209,36 @@ class Int32 : Value, HashKey<Int32>, Comparable<Int32>, Formattable, ListView<Bi
         return value->builtin_int64 * other.value->builtin_int64
     }
 
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(20)
+    function *&(other:Int32):Int32 {
+        return value *& other.value
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(12)
+    function *&(other:Int64):Int64 {
+        return value->builtin_int64 *& other.value
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(14)
+    function *&(other:Int):Int {
+        return value->builtin_int *& other.value
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(9)
+    function *&(other:UInt32):Int64 {
+        return value->builtin_int64 *& other.value->builtin_int64
+    }
+
+    ===Multiplies this number by another number without checking for overflow.===
+    @priority(13)
+    function *&(other:UInt):Int64 {
+        return value->builtin_int64 *& other.value->builtin_int64
+    }
+
     ===Divides this number by another number, returning the whole number portion.===
     @priority(20)
     function //(other:Int32):Int32 {
@@ -177,6 +267,36 @@ class Int32 : Value, HashKey<Int32>, Comparable<Int32>, Formattable, ListView<Bi
     @priority(13)
     function //(other:UInt):Int64 {
         return value->builtin_int64 // other.value->builtin_int64
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(20)
+    function //&(other:Int32):Int32 {
+        return value //& other.value
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(12)
+    function //&(other:Int64):Int64 {
+        return value->builtin_int64 //& other.value
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(14)
+    function //&(other:Int):Int {
+        return value->builtin_int //& other.value
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(9)
+    function //&(other:UInt32):Int64 {
+        return value->builtin_int64 //& other.value->builtin_int64
+    }
+
+    ===Divides this number by another number, returning the whole number portion, without checking for overflow.===
+    @priority(13)
+    function //&(other:UInt):Int64 {
+        return value->builtin_int64 //& other.value->builtin_int64
     }
 
     ===Returns the remainder of dividing this number by another number.===
@@ -386,6 +506,12 @@ class Int32 : Value, HashKey<Int32>, Comparable<Int32>, Formattable, ListView<Bi
     @priority(20)
     function <<(other:Int32):Int32 {
         return value << other.value
+    }
+
+    ===Returns this number shifted left by the specified number of bits, without checking for overflow.===
+    @priority(20)
+    function <<&(other:Int32):Int32 {
+        return value <<& other.value
     }
 
     ===Returns this number arithmetic shifted right by the specified number of bits.===
@@ -964,8 +1090,8 @@ class Int32 : Value, HashKey<Int32>, Comparable<Int32>, Formattable, ListView<Bi
 If this number is not in the range of a 32 bit signed number, a safety violation occurs.
 ===
     property asInt:Int
-    @pre(value >= Int.MIN.toInt32.value & value <= Int.MAX.toInt32.value)
     function get_asInt():Int {
+    assert value >= Int.MIN.toInt32.value & value <= Int.MAX.toInt32.value, "Int32(\{self}) cannot be safely converted to Int"
         return Int(value->builtin_int)
     }
 
@@ -981,8 +1107,8 @@ This function never fails, even if the number is not in the range of a 32 bit si
 If this number is not in the range of an 8 bit signed number, a safety violation occurs.
 ===
     property asInt8:Int8
-    @pre(value >= Int8.MIN.toInt32.value & value <= Int8.MAX.toInt32.value)
     function get_asInt8():Int8 {
+    assert value >= Int8.MIN.toInt32.value & value <= Int8.MAX.toInt32.value, "Int32(\{self}) cannot be safely converted to Int8"
         return Int8(value->builtin_int8)
     }
 
@@ -998,8 +1124,8 @@ This function never fails, even if the number is not in the range of an 8 bit si
 If this number is not in the range of a 16 bit signed number, a safety violation occurs.
 ===
     property asInt16:Int16
-    @pre(value >= Int16.MIN.toInt32.value & value <= Int16.MAX.toInt32.value)
     function get_asInt16():Int16 {
+    assert value >= Int16.MIN.toInt32.value & value <= Int16.MAX.toInt32.value, "Int32(\{self}) cannot be safely converted to Int16"
         return Int16(value->builtin_int16)
     }
 
@@ -1029,8 +1155,8 @@ This function never fails, even if the number is not in the range of a 16 bit si
 If this number is not in the range of a 32 bit unsigned number, a safety violation occurs.
 ===
     property asUInt:UInt
-    @pre(value >= UInt.MIN.toInt32.value)
     function get_asUInt():UInt {
+    assert value >= UInt.MIN.toInt32.value, "Int32(\{self}) cannot be safely converted to UInt"
         return UInt(value->builtin_uint)
     }
 
@@ -1046,8 +1172,8 @@ This function never fails, even if the number is not in the range of a 32 bit un
 If this number is not in the range of an 8 bit unsigned number, a safety violation occurs.
 ===
     property asUInt8:UInt8
-    @pre(value >= UInt8.MIN.toInt32.value & value <= UInt8.MAX.toInt32.value)
     function get_asUInt8():UInt8 {
+    assert value >= UInt8.MIN.toInt32.value & value <= UInt8.MAX.toInt32.value, "Int32(\{self}) cannot be safely converted to UInt8"
         return UInt8(value->builtin_uint8)
     }
 
@@ -1063,8 +1189,8 @@ This function never fails, even if the number is not in the range of an 8 bit un
 If this number is not in the range of a 16 bit unsigned number, a safety violation occurs.
 ===
     property asUInt16:UInt16
-    @pre(value >= UInt16.MIN.toInt32.value & value <= UInt16.MAX.toInt32.value)
     function get_asUInt16():UInt16 {
+    assert value >= UInt16.MIN.toInt32.value & value <= UInt16.MAX.toInt32.value, "Int32(\{self}) cannot be safely converted to UInt16"
         return UInt16(value->builtin_uint16)
     }
 
@@ -1080,8 +1206,8 @@ This function never fails, even if the number is not in the range of a 16 bit un
 If this number is not in the range of a 32 bit unsigned number, a safety violation occurs.
 ===
     property asUInt32:UInt32
-    @pre(value >= UInt32.MIN.toInt32.value)
     function get_asUInt32():UInt32 {
+    assert value >= UInt32.MIN.toInt32.value, "Int32(\{self}) cannot be safely converted to UInt32"
         return UInt32(value->builtin_uint32)
     }
 

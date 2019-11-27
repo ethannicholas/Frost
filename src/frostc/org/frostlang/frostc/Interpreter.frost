@@ -712,28 +712,28 @@ class Interpreter : Backend {
         outer: loop {
             def stmt := block.statements[statement]
             match stmt {
-                when Code.Statement.ADDI(_, result, left, right) {
+                when Code.Statement.ADDI(_, result, left, right, wrap) {
                     context.statements[result] := context.value(left) + context.value(right)
                 }
                 when Code.Statement.ADDF(_, result, left, right) {
                     context.statements[result] := Frost.floatToIntBits(context.floatValue(left) +
                             context.floatValue(right))
                 }
-                when Code.Statement.SUBI(_, result, left, right) {
+                when Code.Statement.SUBI(_, result, left, right, wrap) {
                     context.statements[result] := context.value(left) - context.value(right)
                 }
                 when Code.Statement.SUBF(_, result, left, right) {
                     context.statements[result] := Frost.floatToIntBits(context.floatValue(left) -
                             context.floatValue(right))
                 }
-                when Code.Statement.MULI(_, result, left, right) {
+                when Code.Statement.MULI(_, result, left, right, wrap) {
                     context.statements[result] := context.value(left) * context.value(right)
                 }
                 when Code.Statement.MULF(_, result, left, right) {
                     context.statements[result] := Frost.floatToIntBits(context.floatValue(left) *
                             context.floatValue(right))
                 }
-                when Code.Statement.DIVS(_, result, left, right) {
+                when Code.Statement.DIVS(_, result, left, right, wrap) {
                     context.statements[result] := context.value(left) // context.value(right)
                 }
                 when Code.Statement.DIVU(_, result, left, right) {
@@ -779,7 +779,7 @@ class Interpreter : Backend {
                     context.statements[result] := (context.valueU(left) >>
                             context.valueU(right)).asInt64
                 }
-                when Code.Statement.SHL(_, result, left, right) {
+                when Code.Statement.SHL(_, result, left, right, wrap) {
                     context.statements[result] := context.value(left) << context.value(right)
                 }
                 when Code.Statement.EQI(_, result, left, right) {

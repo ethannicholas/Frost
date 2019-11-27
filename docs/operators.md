@@ -33,6 +33,23 @@ error to add an `Int64` and a `UInt64`, because there is no signed type big enou
 Note that Frost's division operator always produces a `Real` result, even if you are dividing two
 integers. To perform an integer division you must use the integer divide (`//`) operator.
 
+It is a [safety violation](safetyViolations.md) for any of these operations to result in integer
+overflow. Use the unchecked operators below to perform math which can overflow.
+
+<a name="uncheckedMath"></a>
+Unchecked Arithmetic
+--------------------
+
+* '+&' (unchecked add) `Int.MAX +& 1` is `Int.MIN`
+* '-&' (unchecked subtract) `Int.MIN -& 1` is `Int.MAX`
+* '*&' (unchecked multiply) `Int.MAX *& 2` is `-2`
+* '//&' (unchecked integer divide) `Int.MIN //& -1` is `Int.MIN`
+* '<<&' (unchecked left shift) `Int32.MAX <<& 1` is `-2`
+
+The unchecked arithmetic operators function exactly like the normal arithmetic operators, except
+that they do not detect integer overflow. The resulting answer is the true answer modulo 2^n, where
+*n* is the bit width of the operation.
+
 <a name="range"></a>
 Range
 -----
