@@ -1198,7 +1198,7 @@ class Int8 : Value, HashKey<Int8>, Comparable<Int8>, Formattable, ListView<Bit> 
         return self
     }
 
-    ===Returns the square root of this number.===
+    ===The square root of this number.===
     property sqrt:Real32
     function get_sqrt():Real32 {
         return toReal32.sqrt
@@ -1384,20 +1384,22 @@ class Int8 : Value, HashKey<Int8>, Comparable<Int8>, Formattable, ListView<Bit> 
         return self && (1 << index) != 0
     }
 
-    ===Returns the number of bits in this integer, which is always 8.===
+    ===
+    Returns the number of bits in this integer, which is always 8.
+    ===
     @override
     function get_count():Int {
         return 8
     }
 
-    ===Returns the number of `1` bits in this number's binary representation.===
+    ===The number of `1` bits in this number's binary representation.===
     property bitCount:Int8
     @external
     function get_bitCount():Int8
 
     @override
     function get_iterator():Iterator<Bit> {
-        return org.frostlang.frost.IntBitIterator(self.toUInt64, 1 << 7)
+        return org.frostlang.frost.IntBitIterator(self.toUInt64, 1 << (8->builtin_uint64 - 1))
     }
 
     @override
@@ -1425,157 +1427,154 @@ class Int8 : Value, HashKey<Int8>, Comparable<Int8>, Formattable, ListView<Bit> 
         }
     }
 
-    ===Returns this number sign extended to a 32 bit signed number.
+    ===This number converted to an Int.
 ===
     property asInt:Int
     function get_asInt():Int {
         return Int(value->builtin_int)
     }
 
-    ===Returns this number sign extended to a 32 bit signed number.
+    ===This number converted to an Int.
 ===
     property toInt:Int
     function get_toInt():Int {
         return Int(value->builtin_int)
     }
 
-    ===Returns this number sign extended to a 16 bit signed number.
+    ===This number sign extended to a 16 bit signed number.
 ===
     property asInt16:Int16
     function get_asInt16():Int16 {
         return Int16(value->builtin_int16)
     }
 
-    ===Returns this number sign extended to a 16 bit signed number.
+    ===This number sign extended to a 16 bit signed number.
 ===
     property toInt16:Int16
     function get_toInt16():Int16 {
         return Int16(value->builtin_int16)
     }
 
-    ===Returns this number sign extended to a 32 bit signed number.
+    ===This number sign extended to a 32 bit signed number.
 ===
     property asInt32:Int32
     function get_asInt32():Int32 {
         return Int32(value->builtin_int32)
     }
 
-    ===Returns this number sign extended to a 32 bit signed number.
+    ===This number sign extended to a 32 bit signed number.
 ===
     property toInt32:Int32
     function get_toInt32():Int32 {
         return Int32(value->builtin_int32)
     }
 
-    ===Returns this number sign extended to a 64 bit signed number.
+    ===This number sign extended to a 64 bit signed number.
 ===
     property asInt64:Int64
     function get_asInt64():Int64 {
         return Int64(value->builtin_int64)
     }
 
-    ===Returns this number sign extended to a 64 bit signed number.
+    ===This number sign extended to a 64 bit signed number.
 ===
     property toInt64:Int64
     function get_toInt64():Int64 {
         return Int64(value->builtin_int64)
     }
 
-    ===Returns this number sign extended to a 32 bit unsigned number.
+    ===This number converted to a UInt.
 ===
     property asUInt:UInt
     function get_asUInt():UInt {
         return UInt(value->builtin_uint)
     }
 
-    ===Returns this number sign extended to a 32 bit unsigned number.
+    ===This number converted to a UInt.
 ===
     property toUInt:UInt
     function get_toUInt():UInt {
         return UInt(value->builtin_uint)
     }
 
-    ===Returns this number reinterpreted to an 8 bit unsigned number.
-If this number is not in the range of an 8 bit unsigned number, a safety violation occurs.
+    ===This number reinterpreted as an 8 bit unsigned number.
 ===
     property asUInt8:UInt8
     function get_asUInt8():UInt8 {
-    assert value >= UInt8.MIN.toInt8.value, "Int8(\{self}) cannot be safely converted to UInt8"
         return UInt8(value->builtin_uint8)
     }
 
-    ===Returns this number reinterpreted to an 8 bit unsigned number.
-This function never fails, even if the number is not in the range of an 8 bit unsigned number.
+    ===This number reinterpreted as an 8 bit unsigned number.
 ===
     property toUInt8:UInt8
     function get_toUInt8():UInt8 {
         return UInt8(value->builtin_uint8)
     }
 
-    ===Returns this number sign extended to a 16 bit unsigned number.
+    ===This number sign extended to a 16 bit unsigned number.
 ===
     property asUInt16:UInt16
     function get_asUInt16():UInt16 {
         return UInt16(value->builtin_uint16)
     }
 
-    ===Returns this number sign extended to a 16 bit unsigned number.
+    ===This number sign extended to a 16 bit unsigned number.
 ===
     property toUInt16:UInt16
     function get_toUInt16():UInt16 {
         return UInt16(value->builtin_uint16)
     }
 
-    ===Returns this number sign extended to a 32 bit unsigned number.
+    ===This number sign extended to a 32 bit unsigned number.
 ===
     property asUInt32:UInt32
     function get_asUInt32():UInt32 {
         return UInt32(value->builtin_uint32)
     }
 
-    ===Returns this number sign extended to a 32 bit unsigned number.
+    ===This number sign extended to a 32 bit unsigned number.
 ===
     property toUInt32:UInt32
     function get_toUInt32():UInt32 {
         return UInt32(value->builtin_uint32)
     }
 
-    ===Returns this number sign extended to a 64 bit unsigned number.
+    ===This number sign extended to a 64 bit unsigned number.
 ===
     property asUInt64:UInt64
     function get_asUInt64():UInt64 {
         return UInt64(value->builtin_uint64)
     }
 
-    ===Returns this number sign extended to a 64 bit unsigned number.
+    ===This number sign extended to a 64 bit unsigned number.
 ===
     property toUInt64:UInt64
     function get_toUInt64():UInt64 {
         return UInt64(value->builtin_uint64)
     }
 
-    ===Returns this number sign extended to a 32 bit floating point number.
+    ===This number converted to a 32 bit floating point number.
 ===
     property asReal32:Real32
     function get_asReal32():Real32 {
         return Real32(value->builtin_float32)
     }
 
-    ===Returns this number sign extended to a 32 bit floating point number.
+    ===This number converted to a 32 bit floating point number.
 ===
     property toReal32:Real32
     function get_toReal32():Real32 {
         return Real32(value->builtin_float32)
     }
 
-    ===Returns this number sign extended to a 64 bit floating point number.
+    ===This number converted to a 64 bit floating point number.
 ===
     property asReal64:Real64
     function get_asReal64():Real64 {
         return Real64(value->builtin_float64)
     }
 
-    ===Returns this number sign extended to a 64 bit floating point number.
+    ===This number converted to a 64 bit floating point number.
 ===
     property toReal64:Real64
     function get_toReal64():Real64 {

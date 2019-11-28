@@ -81,10 +81,27 @@ class WriteNumbers {
     }
 
     @class
+    function size32(type:Type):Int {
+        def result := size(type)
+        return (result !== null).choose(result, 32)
+    }
+
+    @class
+    function runtimeSize(type:Type):String {
+        def result := size(type)
+        if result !== null {
+            return result.toString
+        }
+        else {
+            return "$int_size"
+        }
+    }
+
+    @class
     function fixedSize(type:Type):Type {
         match type {
-            when Type.INT { return Type.INT64 }
-            when Type.UINT { return Type.UINT64 }
+            when Type.INT { return Type.INT32 }
+            when Type.UINT { return Type.UINT32 }
             otherwise { return type }
         }
     }
@@ -118,13 +135,13 @@ class WriteNumbers {
     }
 
     @class
-    function size(type:Type):Int {
+    function size(type:Type):Int? {
         match type {
             when Type.INT8,  Type.UINT8               { return 8 }
             when Type.INT16, Type.UINT16              { return 16 }
             when Type.INT32, Type.UINT32, Type.REAL32 { return 32 }
             when Type.INT64, Type.UINT64, Type.REAL64 { return 64 }
-            when Type.INT,   Type.UINT                { return 32 }   
+            when Type.INT,   Type.UINT                { return null }   
         }
         unreachable
     }
@@ -190,19 +207,13 @@ class WriteNumbers {
     @class
     function binaryType(leftType:Type, rightType:Type, signMatters:Bit, promote32:Bit):Type {
         if isReal(leftType) | isReal(rightType) {
-            if size(leftType) = 64 | size(rightType) = 64 {
+            if size32(leftType) = 64 | size32(rightType) = 64 {
                 return Type.REAL64
             }
             return Type.REAL32
         }
-        var leftSize := size(leftType)
-        if leftSize = -1 {
-            leftSize := 64
-        }
-        var rightSize := size(rightType)
-        if rightSize = -1 {
-            rightSize := 64
-        }
+        def leftSize := size32(leftType)
+        def rightSize := size32(rightType)
         if signed(leftType) = signed(rightType) | !signMatters {
             def leftPromoted:Type
             def rightPromoted:Type
@@ -217,7 +228,7 @@ class WriteNumbers {
             if leftPromoted = rightPromoted {
                 return leftPromoted
             }
-            if size(leftPromoted) > size(rightPromoted) {
+            if size32(leftPromoted) > size32(rightPromoted) {
                 return leftPromoted
             }
             return rightPromoted
@@ -245,13 +256,14 @@ class WriteNumbers {
     method writeInit(type:Type, other:Type, out:OutputStream) {
         try {
             out.printLine()
+            out.printLine("    @private")
             out.printLine("    @implicit")
             var priority := 0
             if signed(type) = signed(other) {
                 priority -= 3
             }
-            var current := size(other)
-            def end := size(type)
+            var current := size32(other)
+            def end := size32(type)
             while current < end {
                 priority -= 1
                 current *= 2
@@ -284,22 +296,22 @@ class WriteNumbers {
             }
             return
         }
-        if size(type) > size(Type.INT8) & signed(type) {
+        if (size32(type) > size(Type.INT8)) & signed(type) {
             writeInit(type, Type.INT8, out)
         }
-        if size(type) > size(Type.INT16) & signed(type) {
+        if (size32(type) > size(Type.INT16)) & signed(type) {
             writeInit(type, Type.INT16, out)
         }
-        if size(type) > size(Type.INT32) & signed(type) {
+        if (size32(type) > size(Type.INT32)) & signed(type) {
             writeInit(type, Type.INT32, out)
         }
-        if size(type) > size(Type.UINT8) {
+        if (size32(type) > size(Type.UINT8)) {
             writeInit(type, Type.UINT8, out)
         }
-        if size(type) > size(Type.UINT16) {
+        if (size32(type) > size(Type.UINT16)) {
             writeInit(type, Type.UINT16, out)
         }
-        if size(type) > size(Type.UINT32) {
+        if (size32(type) > size(Type.UINT32)) {
             writeInit(type, Type.UINT32, out)
         }
         if type = Type.INT64 {
@@ -342,7 +354,7 @@ class WriteNumbers {
     method writeOperator(op:String, doc:String, leftType:Type, rightType:Type, signMatters:Bit,
             out:OutputStream) {
         try {
-            if size(leftType) > size(rightType) {
+            if size32(leftType) > size32(rightType) {
                 -- we rely on implicit conversion
                 return
             }
@@ -397,7 +409,7 @@ class WriteNumbers {
     method writeDivide(leftType:Type, rightType:Type, out:OutputStream) {
         try {
             def resultType:Type
-            if size(leftType).max(size(rightType)) = 64 {
+            if size32(leftType).max(size32(rightType)) = 64 {
                 resultType := Type.REAL64
             }
             else {
@@ -623,7 +635,7 @@ class WriteNumbers {
             out.printLine("    @override")
             out.printLine("    function get_iterator():Iterator<Bit> {")
             out.printLine("        return org.frostlang.frost.IntBitIterator(self" +
-                    "\{toInt(type, Type.UINT64)}, 1 << \{size(type) - 1})")
+                    "\{toInt(type, Type.UINT64)}, 1 << (\{runtimeSize(type)}->builtin_uint64 - 1))")
             out.printLine("    }")
         }
         fail(error) {
@@ -635,11 +647,15 @@ class WriteNumbers {
     method writeCount(type:Type, out:OutputStream) {
         try {
             out.printLine()
-            out.printLine("    ===Returns the number of bits in this integer, which is always " +
-                    "\{size(type)}.===")
+            out.printLine("    ===")
+            out.print("    Returns the number of bits in this integer")
+            if size(type) !== null {
+                out.print(", which is always \{size(type)}")
+            }
+            out.printLine(".\n    ===")
             out.printLine("    @override")
             out.printLine("    function get_count():Int {")
-            out.printLine("        return \{size(type)}")
+            out.printLine("        return \{runtimeSize(type)}")
             out.printLine("    }")
         }
         fail(error) {
@@ -713,42 +729,87 @@ class WriteNumbers {
     }
 
     @class
+    function maybeGreater(a:Type, b:Type):Bit {
+        def size1 := size(a)
+        def size2 := size(b)
+        if size1 !== null & size2 !== null {
+            return size1 > size2
+        }
+        if size1 == null & size2 == null {
+            return false
+        }
+        if size1 == null {
+            return size2 < 64
+        }
+        return size1 >= 32
+    }
+
+    @class
+    function maybeGreaterOrEqual(a:Type, b:Type):Bit {
+        def size1 := size(a)
+        def size2 := size(b)
+        if size1 !== null & size2 !== null {
+            return size1 >= size2
+        }
+        if size1 == null & size2 == null {
+            return true
+        }
+        if size1 == null {
+            return true
+        }
+        return size1 >= 32
+    }
+
+    @class
+    function equalSize(a:Type, b:Type):Bit {
+        def size1 := size(a)
+        def size2 := size(b)
+        if size1 !== null & size2 !== null {
+            return size1 = size2
+        }
+        return size1 == null & size2 == null
+    }
+
+    @class
     method writeConvert(type:Type, target:Type, safe:Bit, out:OutputStream) {
         try {
             out.printLine()
             def converted:String
-            if isReal(type) | isReal(target) {
-                converted := "converted"
+            if isReal(type) | isReal(target) | size(type) == null | size(target) == null {
+                converted := "converted to"
             }
-            if size(type) > size(target) {
-                converted := "truncated"
+            else if size(type) > size(target) {
+                converted := "truncated to"
             }
             else if size(type) < size(target) & signed(type) {
-                converted := "sign extended"
+                converted := "sign extended to"
             }
             else if size(type) < size(target) & !signed(type) {
-                converted := "zero extended"
+                converted := "zero extended to"
             }
             else {
-                converted := "reinterpreted"
+                converted := "reinterpreted as"
             }
             def description:String
             if isReal(target) {
                 description := "a \{size(target)} bit floating point number"
             }
+            else if size(target) == null {
+                description := (target = Type.INT).choose("an Int", "a UInt")
+            }
             else {
                 description := "a\{size(target) = 8:n|} \{size(target)} bit " +
                         "\{signed(target):signed|unsigned} number"
             }
-            out.printLine("    ===Returns this number \{converted} to \{description}.")
+            out.printLine("    ===This number \{converted} \{description}.")
             if (isReal(type) & !isReal(target)) | (isReal(target) & !isReal(type) &
-                    size(type) >= size(target)) {
+                    maybeGreater(type, target)) {
                 if safe {
                     out.printLine("If this number cannot be exactly represented as \{description}" +
                             ", a safety violation occurs.")
                 }
             }
-            else if size(type) >= size(target) {
+            else if maybeGreater(type, target) {
                 if safe {
                     out.printLine("If this number is not in the range of \{description}, a " +
                             "safety violation occurs.")
@@ -762,7 +823,7 @@ class WriteNumbers {
             def name := safe.choose("as", "to")
             out.printLine("    property \{name}\{object(target)}:\{object(target)}")
             var assertion:String? := null
-            if safe & size(type) >= size(target) {
+            if safe & maybeGreater(type, target) {
                 if isReal(type) | isReal(target) {
                     out.printLine("    @post(@return.to\{object(type)} = self)")
                 } 
@@ -773,7 +834,7 @@ class WriteNumbers {
                         assertion += "value >= \{object(target)}.MIN.to\{object(type)}.value"
                         separator := " & "
                     }
-                    if !signed(type) | signed(target) | size(type) != size(target) {
+                    if !signed(type) | signed(target) | !equalSize(type, target) {
                         assertion += separator
                         assertion += "value <= \{object(target)}.MAX.to\{object(type)}.value"
                     }
@@ -840,12 +901,16 @@ class WriteNumbers {
         try {
             out.printLine()
             def mask:String
-            match size(type) {
-                when -1 { mask := "0xFFFFFFFFFFFFFFFF" }
-                when  8 { mask := "0xFF" }
-                when 16 { mask := "0xFFFF" }
-                when 32 { mask := "0xFFFFFFFF" }
-                when 64 { mask := "0xFFFFFFFFFFFFFFFF" }
+            if size(type) == null {
+                mask := "0xFFFFFFFFFFFFFFFF"
+            }
+            else {
+                match size(type) {
+                    when  8 { mask := "0xFF" }
+                    when 16 { mask := "0xFFFF" }
+                    when 32 { mask := "0xFFFFFFFF" }
+                    when 64 { mask := "0xFFFFFFFFFFFFFFFF" }
+                }
             }
             out.printLine("    === Returns a formatted representation of this number. Supported " +
                     "format strings are `\"\"`, `\"d\"`, or `\"D\"` for decimal, `\"b\"` or `\"B\"` " +
@@ -980,19 +1045,33 @@ class WriteNumbers {
             out.printLine("uses frost.unsafe.Pointer")
             out.printLine()
             out.printLine("===")
-            out.printLine("A\{size(type) = 8:n|} \{size(type)}-bit " +
-                    "\{signed(type):signed|unsigned} integer.")
+            if size(type) !== null {
+                out.printLine("A\{size(type) = 8:n|} \{size(type)}-bit " +
+                        "\{signed(type):signed|unsigned} integer.")
+            }
+            else {
+                out.printLine("\{signed(type):A signed|an unsigned} 32 or 64 bit integer, as " +
+                        "appropriate for the target architecture.")
+            }
             out.printLine("===")
             out.printLine("@final")
             out.printLine("class \{object(type)} : Value, HashKey<\{object(type)}>, " +
                     "Comparable<\{object(type)}>, Formattable, ListView<Bit> {")
             out.printLine("    ===")
-            out.printLine("    The smallest value this type can hold (\{insertCommas(min(type))}).")
+            out.print("    The smallest value this type can hold")
+            if size(type) !== null {
+                out.print(" (\{insertCommas(min(type))})")
+            }
+            out.printLine(".")
             out.printLine("    ===")
             out.printLine("    constant MIN:\{object(type)} := \{min(type)}")
             out.printLine()
             out.printLine("    ===")
-            out.printLine("    The largest value this type can hold (\{insertCommas(max(type))}).")
+            out.print("    The largest value this type can hold")
+            if size(type) !== null {
+                out.print(" (\{insertCommas(max(type))})")
+            }
+            out.printLine(".")
             out.printLine("    ===")
             out.printLine("    constant MAX:\{object(type)} := \{max(type)}")
             out.printLine()
@@ -1056,13 +1135,13 @@ class WriteNumbers {
         if signed(type) {
             writeAbs(type, out)
         }
-        writeRealProperty(type, "sqrt", "Returns the square root of this number.", out)
+        writeRealProperty(type, "sqrt", "The square root of this number.", out)
         writeMin(type, out)
         writeMax(type, out)
         writeIndex(type, out)
         writeCount(type, out)
-        writeExternalProperty(type, "bitCount", "Returns the number of `1` bits in this number's " +
-                "binary representation.", out)
+        writeExternalProperty(type, "bitCount", "The number of `1` bits in this number's binary " +
+                "representation.", out)
         writeIterator(type, out)
         writeHash(type, out)
         writeParse(type, out)
@@ -1109,7 +1188,7 @@ class WriteNumbers {
                 cast1 := ""
             }
             def cast2:String
-            if (size(type) > 32 | !signed(type)) & type != Type.INT {
+            if (size(type) == null | size(type) > 32 | !signed(type)) & type != Type.INT {
                 cast2 := ".asInt"
             }
             else {
@@ -1216,14 +1295,14 @@ class WriteNumbers {
             writeAbs(type, out)
             writeMin(type, out)
             writeMax(type, out)
-            writeExternalProperty(type, "floor", "Returns this number rounded down (that is, in " +
-                    "the direction of negative infinity) to the nearest integer.", out)
-            writeExternalProperty(type, "ceiling", "Returns this number rounded up (that is, in " +
-                    "the direction of positive infinity) to the nearest integer.", out)
-            writeExternalProperty(type, "sqrt", "Returns the square root of this number.", out)
-            writeExternalProperty(type, "sin", "Returns the trigonometric sine of this number.", out)
-            writeExternalProperty(type, "cos", "Returns the trigonometric cosine of this number.", out)
-            writeExternalProperty(type, "tan", "Returns the trigonometric tangent of this number.", out)
+            writeExternalProperty(type, "floor", "This number rounded down (that is, in the " +
+                    "direction of negative infinity) to the nearest integer.", out)
+            writeExternalProperty(type, "ceiling", "This number rounded up (that is, in the " +
+                    "direction of positive infinity) to the nearest integer.", out)
+            writeExternalProperty(type, "sqrt", "The square root of this number.", out)
+            writeExternalProperty(type, "sin", "The trigonometric sine of this number.", out)
+            writeExternalProperty(type, "cos", "The trigonometric cosine of this number.", out)
+            writeExternalProperty(type, "tan", "The trigonometric tangent of this number.", out)
             writeHash(type, out)
             writeConvert(type, out)
             writeFormat(type, out)
