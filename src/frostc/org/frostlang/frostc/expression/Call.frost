@@ -448,7 +448,7 @@ class Call {
     function getSubtype(type:Type, indices:ListView<Int>):Type? {
         var result := type
         for i in indices {
-            if !result.hasSubtypes {
+            if !result.hasSubtypes | i >= result.subtypes.count {
                 return null
             }
             result := result.subtypes[i]
@@ -1473,7 +1473,7 @@ class Call {
                         if !dynamic {
                             m := findStaticImpl(compiler, cl2, m)
                             finalTarget := compiler.cast(position, target,
-                                    m.value.owner.typeWithParameters())
+                                    m.value.owner.typeWithParameters(), true)
                             finalArgs[0] := finalTarget
                             actualType := compiler.declaredTypeWithSelf(m.value, selfType, false)
                         }

@@ -616,6 +616,42 @@ class Binary {
     }
 
     @class
+    method compileCast(compiler:Compiler, position:MethodPosition, value:ASTNode, rawTarget:Type,
+            explicit:Bit):IR.Value? {
+        def index := rawTarget.name.lastIndexOf(".")
+        -- FIXME unify the two implementations of this logic in this file
+        if rawTarget.typeKind = Type.Kind.CLASS & index !== null {
+            -- we have a dotted name which might not be entirely a type - for example we might have
+            -- 'o->String.length'. This is obviously meant to be a cast to String followed by a
+            -- call to get_length(), but syntactically it could just as easily be a cast to a class
+            -- named String.length. We need to disambiguate these cases here.
+            def old := compiler.reportErrors
+            compiler.reportErrors := false
+            def type := compiler.resolve(rawTarget)
+            compiler.reportErrors := old
+            if type == null {
+                def base := compileCast(compiler, position, value,
+                        Type(rawTarget.name[..index], Type.Kind.CLASS, position.asPosition),
+                        explicit)
+                if base == null {
+                    return null
+                }
+                return Dot.compile(compiler, position, base,
+                        rawTarget.name[rawTarget.name.next(index)..])
+            }
+        }
+        def target := compiler.resolve(rawTarget)
+        if target == null {
+            return null
+        }
+        if compiler.coercionCost(value, target) !== null {
+            return compiler.compileExpression(value, TypeContext.TYPE(target, true))
+        }
+        return compiler.cast(position, compiler.compileExpression(value, TypeContext.NON_VOID),
+                target, explicit)
+    }    
+
+    @class
     method compile(compiler:Compiler, position:MethodPosition, left:ASTNode, op:Operator,
             right:ASTNode, type:TypeContext):IR.Value? {
         def folded := fold(compiler, left, op, right)
@@ -625,12 +661,12 @@ class Binary {
         match op {
             when Operator.CAST {
                 def target := compiler.scanner.convertType(right)
-                return compiler.coerce(position, compiler.compileCast(position, left, target, true),
-                        type)
+                return compiler.coerce(position, compileCast(compiler, position, left, target,
+                        true), type)
             }
             when Operator.IMPLICIT_CAST {
                 def target := compiler.scanner.convertType(right)
-                return compiler.coerce(position, compiler.compileCast(position, left, target,
+                return compiler.coerce(position, compileCast(compiler, position, left, target,
                         false), type)
             }
             when Operator.IDENTITY, Operator.NIDENTITY {

@@ -1,0 +1,11 @@
+method fold(name:String, start:Int, end:Int, f:(Int, Int)=>(Int)) {
+    Console.printLine("The \{name} of all numbers from \{start} to \{end} is " +
+            Int[start ... end].fold(f))
+}
+
+method main() {
+    fold("sum", 1, 100, Int./)
+    fold("product", 1, 10, Int.*)
+    fold("maximum", 1, 100, Int.max)
+    fold("minimum", 1, 100, Int.min)
+}

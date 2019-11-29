@@ -1,0 +1,2 @@
+Fuzz1.frost:2:55: error: value of type '(frost.core.Object)=>(frost.core.String)' cannot possibly be an instance of 'frost.core.Formattable'
+1 error

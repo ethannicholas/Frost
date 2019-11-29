@@ -1,0 +1,32 @@
+method scan(lines:CollectionView<String>, compare:(String, Int, Int)=>(Bit)) {
+    def target := HashMap<String, Int>([("children", 3), ("cats", 7), 
+            ("samoyeds", 2), ("pomeranians", 3), ("akitas", 0), ("vizslas", 0),
+            ("goldfish", 5), ("trees", 3), ("cars", 2), ("perfumes", 1)])
+    outer: for line in lines {
+        def parsed := line.parse(/.*?(\d+).*?(\w+).*?(\d+).*?(\w+).*?(\d+).*?(\w+).*?(\d+)/)
+        for i in 1 ... 5 by 2 {
+            if !compare(parsed[i], target[parsed[i]], parsed[i + 1].asInt) {
+                continue outer            
+            }
+        }
+        Console.printLine(parsed[0])
+    }
+}
+
+method main() {
+    def lines := Console.inputStream().lines().all()
+    scan(lines, (name, detected, actual) => detected = actual)
+    scan(lines, function(name:String, detected:Int, actual:Int):Bit {
+        match name {
+            when "cats", "trees" {
+                return detected < actual
+            }
+            when "pomeranians", "goldfish" {
+                return detected > actual
+            }
+            otherwise {
+                return detected = actual
+            }
+        }   
+    })
+}

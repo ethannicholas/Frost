@@ -1,0 +1,8 @@
+method main() {
+    var i := 0
+    do {
+        Console.printLine(i)
+        i += 1
+    }
+    while i.< 10
+}

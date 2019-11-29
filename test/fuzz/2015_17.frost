@@ -1,0 +1,23 @@
+method main() {
+    def sizes := Array<Int>()
+    for line in Console.inputStream().lines() {
+        sizes.add(line.asInt)
+    }
+    var counts := Array<Int>()
+    for bits in 0 .. 1 << sizes.count {
+        var total := 0
+        var setCount := 0
+        for i in 0 .. bits.count {
+            if bits[i] {
+                total += sizes[i]
+                setCount += 1
+            }
+        }
+        if total = 150 {
+            counts.add(setCount)
+        }
+    }
+    Console.printLine(counts.count)
+    def min := counts.fold(Int.min)
+    Console.printLine(counts.filter(c => c = min).count)
+}

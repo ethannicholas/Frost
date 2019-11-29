@@ -1,0 +1,25 @@
+method process(code:String, visited:HashSet<(Int, Int)>) {
+    var x := 0
+    var y := 0
+    for c in code.utf8 {
+        visited.add((x, y))
+        match c {
+            when "^" { y -= 1 }
+            when "<" { x -= 1 }
+            when ">" { x += 1 }
+            when "v" { y += 1 }
+        }
+    }
+    visited.add((x, y))
+}
+
+method main() {
+    def code := Console.inputStream().readFully()
+    def visited := HashSet<(Int, Int)>()
+    process(code, visited)
+    Console.printLine(visited.count)
+    visited.clear()
+    process(String(code.utf8[0.. by 2]), visited)
+    process(String(code.utf8[1.. by 2]), visited)
+    Console.printLine(visited.count)
+}

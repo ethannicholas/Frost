@@ -1,0 +1,30 @@
+method main() {
+    def lights := Array<Array<(Bit, Int)>>()
+    for i in 0 .. 1000 {
+        lights.add(Array<(Bit, Int)>(1000, (false, 0)))
+    }
+    def regex := /(turn (?:on|off)|toggle) (\d+),(\d+) through (\d+),(\d+)/
+    for line in Console.inputStream().lines() {
+        def parsed := line.parse(regex)
+        assert parsed !== null
+        def f:((Bit, Int))=>((Bit, Int))
+        match parsed[0] {
+            when "turn on"  { f := s => (true, s[1] + 1) }
+            when "turn off" { f := s => (false, (s[1] - 1).max(0)) }
+            when "toggle"   { f := s => (!s[0], s[1] + 2) }
+        }
+        for x in parsed[1].asInt ... parsed[3].asInt {
+            for y in parsed[2].asInt ... parsed[4].asInt {
+                lights[x][y] := f(lights[x][y])
+            }
+        }
+    }
+    var count := 0
+    var total := 0
+    for row in lights {
+        count += row.filter(s => s[0]).count
+        total += row.fold((s1, s2) => (true, s1[1] + s2[1]))[1]
+    }
+    Console.printLine(count)
+    Console.printLine(total)
+}

@@ -1,0 +1,12 @@
+Fuzz3.frost:7:28: error: reference to method '/' cannot be used as type '(frost.core.Int, frost.core.Int)=>(frost.core.Int)'. None of the following methods match this type:
+    function frost.core.Int./(other:frost.core.Real64):frost.core.Real64:393:5 (return type 'frost.core.Real64' cannot be converted to 'frost.core.Int')
+    function frost.core.Int./(other:frost.core.Real32):frost.core.Real32:387:5 (return type 'frost.core.Real32' cannot be converted to 'frost.core.Int')
+    function frost.core.Int./(other:frost.core.UInt64):frost.core.Real64:381:5 (parameter 2 cannot be converted from 'frost.core.Int' to 'frost.core.UInt64')
+    function frost.core.Int./(other:frost.core.UInt32):frost.core.Real32:375:5 (parameter 2 cannot be converted from 'frost.core.Int' to 'frost.core.UInt32')
+    function frost.core.Int./(other:frost.core.UInt16):frost.core.Real32:369:5 (parameter 2 cannot be converted from 'frost.core.Int' to 'frost.core.UInt16')
+    function frost.core.Int./(other:frost.core.UInt8):frost.core.Real32:363:5 (parameter 2 cannot be converted from 'frost.core.Int' to 'frost.core.UInt8')
+    function frost.core.Int./(other:frost.core.Int64):frost.core.Real64:357:5 (return type 'frost.core.Real64' cannot be converted to 'frost.core.Int')
+    function frost.core.Int./(other:frost.core.Int32):frost.core.Real32:351:5 (parameter 2 cannot be converted from 'frost.core.Int' to 'frost.core.Int32')
+    function frost.core.Int./(other:frost.core.Int16):frost.core.Real32:345:5 (parameter 2 cannot be converted from 'frost.core.Int' to 'frost.core.Int16')
+    function frost.core.Int./(other:frost.core.Int8):frost.core.Real32:339:5 (parameter 2 cannot be converted from 'frost.core.Int' to 'frost.core.Int8')
+1 error

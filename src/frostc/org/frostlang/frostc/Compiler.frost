@@ -2574,7 +2574,7 @@ class Compiler : ErrorReporter {
                 result.add(s->Variable.type)
             }
             otherwise {
-                unreachable
+                return null
             }
         }
         return result    
@@ -3935,6 +3935,9 @@ class Compiler : ErrorReporter {
     }
 
     function explainCoerceFailure(m:MethodRef, rawTarget:Type):String {
+        if m.value.resolved = Resolution.RESOLVED_WITH_ERRORS {
+            return "method type cannot be resolved due to prior errors"
+        }
         def target := rawTarget.nonnullable()
         if !target.isMethod {
             return "cannot be an instance of \{rawTarget}"
@@ -3943,6 +3946,7 @@ class Compiler : ErrorReporter {
             return "wrong parameter count"
         }
         for i in 0 .. m.parameterCount {
+            assert m.parameterType(i).resolved
             if coercionCost(target.parameterType(i), m.parameterType(i)) == null {
                 return "parameter \{i + 1} cannot be converted from '\{target.parameterType(i)}' " +
                         "to '\{m.parameterType(i)}'"
@@ -4123,7 +4127,14 @@ class Compiler : ErrorReporter {
                 def msg := MutableString("reference to method '\{methods[0].name}' cannot be " +
                         "used as type '\{target}'. None of the following methods match this type:")
                 for m in methods {
-                    def ref := MethodRef(self, targetObj.type(), m)
+                    def targetType:Type
+                    if targetObj !== null {
+                        targetType := targetObj.type()
+                    }
+                    else {
+                        targetType := m.owner.typeWithParameters()
+                    }
+                    def ref := MethodRef(self, targetType, m)
                     msg.append("\n    \{m.declaration}:\{m.position} (" +
                             explainCoerceFailure(ref, target) + ")")
                 }
@@ -4254,6 +4265,7 @@ class Compiler : ErrorReporter {
         if explicit & !canCast(value.type(), target) {
             error(position, "value of type '\{value.type()}' cannot possibly be an instance of " +
                     "'\{target}'")
+            return null
         }
         if canRewriteType(value, target) {
             return rewriteType(value, target)
@@ -4650,39 +4662,6 @@ class Compiler : ErrorReporter {
             }
         }
         return null
-    }
-
-    method compileCast(position:MethodPosition, value:ASTNode, rawTarget:Type,
-            explicit:Bit):IR.Value? {
-        def index := rawTarget.name.lastIndexOf(".")
-        if rawTarget.typeKind = Type.Kind.CLASS & index !== null {
-            -- we have a dotted name which might not be entirely a type - for example we might have
-            -- 'o->String.length'. This is obviously meant to be a cast to String followed by a
-            -- call to get_length(), but syntactically it could just as easily be a cast to a class
-            -- named String.length. We need to disambiguate these cases here.
-            def old := reportErrors
-            reportErrors := false
-            def type := resolve(rawTarget)
-            reportErrors := old
-            if type == null {
-                def base := compileCast(position, value,
-                        Type(rawTarget.name[..index], Type.Kind.CLASS, position.asPosition),
-                        explicit)
-                if base == null {
-                    return null
-                }
-                return Dot.compile(self, position, base,
-                        rawTarget.name[rawTarget.name.next(index)..])
-            }
-        }
-        def target := resolve(rawTarget)
-        if target == null {
-            return null
-        }
-        if coercionCost(value, target) !== null {
-            return compileExpression(value, TypeContext.TYPE(target, true))
-        }
-        return cast(position, compileExpression(value, TypeContext.NON_VOID), target, explicit)
     }
 
     function isNull(v:IR.Value):Bit {

@@ -1,0 +1,10 @@
+method main() {
+    var total1 := 0
+    var total2 := 0
+    for l in Console.inputStream().lines() {
+        total1 += l.length - l.find(/\\(\\|"|x..)|[^"]/).count()
+        total2 += l.replace("\\", "aa").replace("\"", "aa").length + 2 - l.length
+    }
+    Console.printLine(total1)
+    Console.printLine(total2)
+}

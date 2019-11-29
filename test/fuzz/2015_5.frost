@@ -1,0 +1,19 @@
+function nice1(s:String):Bit {
+    if s.find(/[aeiou]/).count() < 3 {
+        return false
+    }
+    if !s.contains(/(\w)\1/) {
+        return false
+    }
+    return !s.contains(/ab|cd|pq|xy/)
+}
+
+function nice2(s:String):Bit {
+    return s.contains(/(\w)(\w)\w*\1\2/) & s.contains(/(\w)\w\1/)
+}
+
+method main() {
+    def lines := Console.inputStream().readFully().split("\n")
+    Console.printLine(lines.filter(s => self.nice1(s)).count)
+    Console.printLine(lines.filter(s => self.nice2(s)).count)
+}

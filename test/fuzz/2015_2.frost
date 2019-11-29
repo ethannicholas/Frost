@@ -1,0 +1,10 @@
+method main() {
+    def sizeStrings := Console.inputStream().lines().map(
+            line => line.parse(/(\d+)x(\d+)x(\d+)/))
+    def sizes := sizeStrings.map(size => size.map(i => i.asInt!).sort(Int.>)).all()
+    def areas := sizes.map(size => 2 * (size[0] * size[1] + size[1] * size[2] +
+            size[2] * size[0]) + size[0] * size[1])
+    Console.printLine(areas.fold(Int.+))
+    def lengths := sizes.map(size => 2 * (size[0] + size[1]) + size.fold(Int.*))
+    Console.printLine(lengths.fold(Int.+))
+}

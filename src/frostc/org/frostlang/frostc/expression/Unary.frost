@@ -86,11 +86,13 @@ class Unary {
                 }
             }
             when Operator.NONNULL {
-                def pref := preferredType(compiler, position, op, operand)
-                if pref == null {
-                    return null
+                def result := compiler.coercionCost(operand, target)
+                if result !== null {
+                    if target.typeKind = Type.Kind.NULLABLE {
+                        return (result[0], result[1] - Compiler.NULLABLE_TO_NONNULLABLE_CAST_COST)
+                    }
+                    return (result[0], result[1] + Compiler.NONNULLABLE_TO_NULLABLE_CAST_COST)
                 }
-                return compiler.coercionCost(pref, target)
             }
         }
         def preferred := compiler.preferredType(operand)

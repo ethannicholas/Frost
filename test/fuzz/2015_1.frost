@@ -1,0 +1,16 @@
+method main() {
+    def input := Console.inputStream().readFully()
+    Console.printLine(input.find("(").count() - input.find(")").count())
+    var floor := 0
+    var index := 0
+    for (i, c) in input.utf8.enumeration {
+        match c {
+            when "(" { floor += 1 }
+            when ")" { floor -= 1 }
+        }
+        if floor = -1 {
+            Console.printLine(i + 1)
+            break
+        }
+    }
+}
