@@ -72,7 +72,6 @@ class MergeSort {
         }
     }
 
-
     @class  
     method sort<T>(a:List<T>, greater:(T, T)=>(Bit)) {
         -- sort individual subarrays of size RUN

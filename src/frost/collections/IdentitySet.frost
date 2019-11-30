@@ -1,13 +1,27 @@
 package frost.collections
 
+====================================================================================================
+A `Set` which compares its entries using identity (`==`) instead of equality (`=`). Unlike
+`HashSet`, which requires its entries to implement the `Key` interface, any type of object may be
+used in an `IdentitiySet`. However, it is important that the type not be a subclass of `Value`, as
+values do not have well-defined identities and `IdentitySet` will therefore not function properly
+with value types.
+====================================================================================================
 @final
 class IdentitySet<T> : Collection<T> {
     @private
     def contents := IdentityMap<T, T>()
 
+    ================================================================================================
+    Creates a new empty `IdentitySet`.
+    ================================================================================================
     init() {
     }
 
+    ================================================================================================
+    Creates a new set containing all of the elements from another collection, with duplicate entries
+    filtered out.
+    ================================================================================================
     init(c:CollectionView<T>) {
         addAll(c)
     }
@@ -24,6 +38,9 @@ class IdentitySet<T> : Collection<T> {
         }
     }
 
+    ================================================================================================
+    Removes an entry from the set, if present.
+    ================================================================================================
     method remove(value:T) {
         contents.remove(value)
     }
@@ -43,6 +60,9 @@ class IdentitySet<T> : Collection<T> {
         return contents.keys
     }
 
+    ================================================================================================
+    Returns `true` if the value is present in the set.
+    ================================================================================================
     function contains(value:T):Bit {
         return contents.contains(value)
     }

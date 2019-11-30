@@ -1,13 +1,29 @@
 package frost.collections
 
+====================================================================================================
+An implementation of the set abstract data type. Sets are collections which cannot contain duplicate
+entries; adding an element which already exists to a set does not do anything.
+====================================================================================================
 @final
 class HashSet<T:HashKey<T>> : Collection<T> {
     @private
     def contents := HashMap<T, T>()
 
+    ================================================================================================
+    Creates a new empty set.
+    ================================================================================================
     init() {
     }
 
+    ================================================================================================
+    Creates a new set containing all of the elements from another collection. Duplicate entries are
+    filtered out, so
+
+        -- testcase HashSetInit
+        HashSet<Int>(list).count
+
+    is an easy way to determine how many unique entries `list` contains.
+    ================================================================================================
     init(c:CollectionView<T>) {
         addAll(c)
     }
@@ -24,6 +40,9 @@ class HashSet<T:HashKey<T>> : Collection<T> {
         }
     }
 
+    ================================================================================================
+    Removes an entry from the set, if present.
+    ================================================================================================
     method remove(value:T) {
         contents.remove(value)
     }
@@ -43,6 +62,9 @@ class HashSet<T:HashKey<T>> : Collection<T> {
         return contents.keys
     }
 
+    ================================================================================================
+    Returns `true` if the value is present in the set.
+    ================================================================================================
     function contains(value:T):Bit {
         return contents.contains(value)
     }

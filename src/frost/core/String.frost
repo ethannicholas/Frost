@@ -649,17 +649,23 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             return Char32(result)
         }
         if c.asUInt8 < 0b11100000 {
-            assert idx + 1 < _length
+            if idx + 1 >= _length {
+                return Char32(0)
+            }
             result := (result && 0b11111) << 6 + data[idx + 1].asInt32 && 0b111111
             return Char32(result)
         }
         if c.asUInt8 < 0b11110000 {
-            assert idx + 2 < _length
+            if idx + 2 >= _length {
+                return Char32(0)
+            }
             result := (result && 0b1111) << 12 + (data[idx + 1].asInt32 && 0b111111) << 6 +
                     data[idx + 2].asInt32 && 0b111111
             return Char32(result)
         }
-        assert idx + 3 < _length
+        if idx + 3 >= _length {
+            return Char32(0)
+        }
         result := (result && 0b111) << 18 + (data[idx + 1].asInt32 && 0b111111) << 12 +
                 (data[idx + 2].asInt32 && 0b111111) << 6 +
                 data[idx + 3].asInt32 && 0b111111

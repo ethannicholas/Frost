@@ -73,12 +73,21 @@ class Array<T> : List<T> {
         data.destroy()
     }
 
+    ================================================================================================
+    Returns an entry from this array.
+    ================================================================================================
     @override
     @priority(2)
     function [](index:Int):T {
         return data[index]
     }
 
+    ================================================================================================
+    Returns a new array containing a slice of this array. The new array is an independent shallow
+    copy: they contain the same elements, so modifying to the elements will be visible in both
+    arrays, but modifications to the arrays themselves (adding / removing / replacing elements) will
+    not.
+    ================================================================================================
     @priority(2)
     function [](r:Range<Int>):Array<T> {
         var max := r.max
@@ -93,6 +102,12 @@ class Array<T> : List<T> {
         return Array<T>(result, count)
     }
 
+    ================================================================================================
+    Returns a new array containing a slice of this array. The new array is an independent shallow
+    copy: they contain the same elements, so modifying to the elements will be visible in both
+    arrays, but modifications to the arrays themselves (adding / removing / replacing elements) will
+    not.
+    ================================================================================================
     @priority(1)
     function [](r:Range<Int?>):Array<T> {
         def start:Int
@@ -116,6 +131,9 @@ class Array<T> : List<T> {
         return self[Range<Int>(start, end, r.inclusive)]
     }
 
+    ================================================================================================
+    Replaces an element in this array with a new element.
+    ================================================================================================
     @override
     method []:=(index:Int, value:T) {
         data[index] := value

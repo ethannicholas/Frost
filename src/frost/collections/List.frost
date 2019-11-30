@@ -6,6 +6,18 @@ A read/write random-access list of elements.
 @see Array
 ====================================================================================================
 interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
+    ================================================================================================
+    Replaces a range of elements in this list with elements from another list.
+
+    For example,
+
+        -- testcase ListRangeAssignment(Simple)
+        def list:List<Object> := [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        list[0 .. 5] := ["Red", "Green", "Blue"]
+        Console.printLine(list)
+
+    This displays `[Red, Green, Blue, 6, 7, 8, 9, 10]`.
+    ================================================================================================
     @default
     @pre(range.min <= range.max)
     method []:=(range:Range<Int>, list:ListView<T>) {
@@ -24,6 +36,18 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
         }
     }
 
+    ================================================================================================
+    Replaces a range of elements in this list with elements from another list.
+
+    For example,
+
+        -- testcase ListNullableRangeAssignment(Simple)
+        def list:List<Object> := [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        list[3..] := ["Red", "Green", "Blue"]
+        Console.printLine(list)
+
+    This displays `[1, 2, 3, Red, Green, Blue]`.
+    ================================================================================================
     @default
     method []:=(range:Range<Int?>, list:ListView<T>) {
         var min := range.min

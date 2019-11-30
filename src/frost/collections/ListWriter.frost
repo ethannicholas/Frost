@@ -19,7 +19,8 @@ interface ListWriter<T> : CollectionWriter<T> {
 
     ================================================================================================
     Inserts a new element at `index`, moving all elements from `index` to the end of the list out of
-    the way to make room for it.
+    the way to make room for it. Inserting with an `index` equal to `count` is equivalent to calling
+    [add].
 
     @param index the location at which to insert
     @param value the new value

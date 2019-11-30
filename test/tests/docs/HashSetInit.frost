@@ -1,0 +1,4 @@
+method main() {
+    def list := [1, 2, 3, 2, 1, 4, 1]
+    Console.printLine(HashSet<Int>(list).count)
+}

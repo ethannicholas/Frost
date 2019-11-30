@@ -16,6 +16,9 @@ interface CollectionView<T> : Iterable<T> {
 
     function get_count():Int
 
+    ================================================================================================
+    Returns the first element in the collection in iteration order.
+    ================================================================================================
     property first:T
 
     @default
@@ -104,6 +107,9 @@ interface CollectionView<T> : Iterable<T> {
         return result
     }
 
+    ================================================================================================
+    As [fold((T, T)=>(T))], but for methods instead of functions.
+    ================================================================================================
     @pre(count > 0)
     @default
     method fold(f:(T, T)=&>(T)):T {
@@ -136,6 +142,9 @@ interface CollectionView<T> : Iterable<T> {
         return result
     }
 
+    ================================================================================================
+    As [fold((T, T)=>(T), T)], but for methods instead of functions.
+    ================================================================================================
     @default
     method fold(f:(T, T)=&>(T), start:T):T {
         var result := start
@@ -161,6 +170,15 @@ interface CollectionView<T> : Iterable<T> {
         }
     }
 
+    ================================================================================================
+    Returns an array containing the result of calling `f` on every element in this collection. For
+    example,
+
+        -- testcase CollectionViewMap(Simple)
+        Console.printLine(Int[1 ... 5].map(2.*))
+
+    applies the function `2.*` to the integers from 1 to 5. This displays `[2, 4, 6, 8, 10]`.
+    ================================================================================================
     @default
     @priority(1)
     function map<U>(f:(T)=>(U)):Array<U> {
@@ -171,6 +189,9 @@ interface CollectionView<T> : Iterable<T> {
         return result
     }
 
+    ================================================================================================
+    As [map((T)=>(U))], but for methods instead of functions.
+    ================================================================================================
     @default
     method map<U>(f:(T)=&>(U)):Array<U> {
         def result := Array<U>(count)

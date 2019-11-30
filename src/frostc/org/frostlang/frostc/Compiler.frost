@@ -13,6 +13,7 @@ uses org.frostlang.frostc.expression.Dot
 uses org.frostlang.frostc.expression.Identifier
 uses org.frostlang.frostc.expression.IntLiteral
 uses org.frostlang.frostc.expression.Or
+uses org.frostlang.frostc.expression.RangeExpression
 uses org.frostlang.frostc.expression.Tuple
 uses org.frostlang.frostc.expression.Unary
 uses org.frostlang.frostc.lvalue.ChoiceFieldLValue
@@ -2658,102 +2659,6 @@ class Compiler : ErrorReporter {
         return result
     }
 
-    method rangePreferredType(start:ASTNode?, end:ASTNode?, step:ASTNode?):Type? {
-        if step !== null {
-            def pref := preferredType(step)
-            if pref == null {
-                return null
-            }
-            if pref.isReal {
-                if start !== null & end !== null {
-                    return Type.SteppedRangeOf(self, pref, pref)
-                }
-                return Type.SteppedRangeOf(self, pref.nullable(), pref)
-            }
-        }
-        var endpointType:Type? := null
-        if start !== null {
-            def endpointType:Type
-            def pref1:Type?
-            match start {
-                when ASTNode.STRING {
-                    -- must be a char literal
-                    if end !== null {
-                        -- not sure if it's 8, 16, or 32 bits - try to match the type of the
-                        -- other endpoint
-                        def pref2 := preferredType(end)
-                        if pref2 !== null & pref2.isChar {
-                            pref1 := pref2
-                        }
-                        else {
-                            pref1 := CHAR32_TYPE
-                        }
-                    }
-                    else {
-                        pref1 := CHAR32_TYPE
-                    }
-                }
-                otherwise {
-                    pref1 := preferredType(start)
-                }
-            }
-            if pref1 == null {
-                return null
-            }
-            if end !== null {
-                def pref2:Type?
-                match end {
-                    when ASTNode.STRING {
-                        if pref1.isChar {
-                            -- not sure if it's 8, 16, or 32 bits - try to match the type of the
-                            -- other endpoint
-                            pref2 := pref1
-                        }
-                        else {
-                            pref2 := CHAR32_TYPE
-                        }
-                    }
-                    otherwise {
-                        pref2 := preferredType(end)
-                    }
-                }
-                if pref2 == null {
-                    return null
-                }
-                endpointType := pref1.union(self, pref2)
-            }
-            else {
-                endpointType := pref1.nullable()
-            }
-            if step !== null {
-                return Type.SteppedRangeOf(self, endpointType)
-            }
-            return Type.RangeOf(self, endpointType)
-        }
-        else if end !== null {
-            def pref:Type?
-            match end {
-                when ASTNode.STRING {
-                    pref := CHAR32_TYPE
-                }
-                otherwise {
-                    pref := preferredType(end)
-                }
-            }
-            if pref == null {
-                return null
-            }
-            if step !== null {
-                return Type.SteppedRangeOf(self, pref)
-            }
-            return Type.RangeOf(self, pref)
-        }
-        if step !== null {
-            return Type.SteppedRangeOf(self, INT_TYPE.nullable())
-        }
-        return Type.RangeOf(self, INT_TYPE.nullable())
-    }
-
     ================================================================================================
     Returns the size in bits of the smallest Char type that can this codepoint.
     ================================================================================================
@@ -2959,7 +2864,7 @@ class Compiler : ErrorReporter {
                 return Unary.possibleTypes(self, position, op, operand)
             }
             when ASTNode.RANGE(_, start, _, end, step) {
-                def result := rangePreferredType(start, end, step)
+                def result := RangeExpression.preferredType(self, start, end, step)
                 if result == null {
                     return null
                 }
@@ -3096,64 +3001,6 @@ class Compiler : ErrorReporter {
         return null
     }
 
-    method rangeCoercionCost(start:ASTNode?, end:ASTNode?, step:ASTNode?,
-            target:Type):(Type, Int)? {
-        if target.typeKind = Type.Kind.NULLABLE {
-            def result := rangeCoercionCost(start, end, step, target.nonnullable())
-            if result == null {
-                return null
-            }
-            return (result[0], result[1] + 1)
-        }
-        if target.typeKind = Type.Kind.GENERIC {
-            if target.subtypes[0].name = RANGE_NAME & target.subtypes.count = 2 |
-                    target.subtypes[0].name = STEPPED_RANGE_NAME & target.subtypes.count = 3 {
-                var cost := 0
-                if start !== null {
-                    def startCost := coercionCost(start, target.subtypes[1])
-                    if startCost == null {
-                        return null
-                    }
-                    cost += startCost[1]
-                }
-                else if target.subtypes[1].typeKind != Type.Kind.NULLABLE {
-                    return null
-                }
-                if end !== null {
-                    def endCost := coercionCost(end, target.subtypes[1])
-                    if endCost == null {
-                        return null
-                    }
-                    cost += endCost[1]
-                }
-                else if target.subtypes[1].typeKind != Type.Kind.NULLABLE {
-                    return null
-                }
-                if target.subtypes[0].name = RANGE_NAME {
-                    if step !== null {
-                        return null
-                    }
-                }
-                else {
-                    if step == null {
-                        return null
-                    }
-                    def stepCost := coercionCost(step, target.subtypes[2])
-                    if stepCost == null {
-                        return null
-                    }
-                    cost += stepCost[1]
-                }
-                return (target, cost)
-            }
-        }
-        def type := preferredType(ASTNode.RANGE(Position(), start, true, end, step))
-        if type == null {
-            return null
-        }
-        return coercionCost(type, target)
-    }
-
     method arrayCoercionCost(position:Position, elements:FixedArray<ASTNode>,
             target:Type):(Type, Int)? {
         def t := getListType(target)
@@ -3250,7 +3097,11 @@ class Compiler : ErrorReporter {
                     assert initMethod.annotations.isImplicit
                     -- FIXME figure out where this 2 came from and whether it's the right value,
                     -- make it a constant if it's necessary
-                    return (target, 2->Int - initMethod.priority)
+                    var cost := 2->Int
+                    if target.typeKind = Type.Kind.NULLABLE {
+                        cost += NONNULLABLE_TO_NULLABLE_CAST_COST
+                    }
+                    return (target, cost - initMethod.priority)
                 }
                 def preferred := preferredType(expr)
                 assert preferred !== null
@@ -3306,7 +3157,7 @@ class Compiler : ErrorReporter {
                 return null
             }
             when ASTNode.RANGE(_, start, _, end, step) {
-                return rangeCoercionCost(start, end, step, target)
+                return RangeExpression.coercionCost(self, start, end, step, target)
             }
             when ASTNode.REAL {
                 if (target.typeKind = Type.Kind.BUILTIN_FLOAT) {
@@ -4084,6 +3935,9 @@ class Compiler : ErrorReporter {
                     finalTarget := rawTarget
                 }
                 def result := createMethodObject(position, finalTarget, m)
+                if result == null {
+                    return null
+                }
                 if coercionCost(result.type(), target) == null {
                     error(position, "expected '\{target}', but found '\{result.type()}'")
                     return null

@@ -1,0 +1,166 @@
+package org.frostlang.frostc.expression
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+
+class RangeExpression {
+    @class
+    method preferredType(compiler:Compiler, start:ASTNode?, end:ASTNode?,
+            step:ASTNode?):Type? {
+        if step !== null {
+            def pref := compiler.preferredType(step)
+            if pref == null {
+                return null
+            }
+            if pref.isReal {
+                if start !== null & end !== null {
+                    return Type.SteppedRangeOf(compiler, pref, pref)
+                }
+                return Type.SteppedRangeOf(compiler, pref.nullable(), pref)
+            }
+        }
+        var endpointType:Type? := null
+        if start !== null {
+            def endpointType:Type
+            def pref1:Type?
+            match start {
+                when ASTNode.STRING {
+                    -- must be a char literal
+                    if end !== null {
+                        -- not sure if it's 8, 16, or 32 bits - try to match the type of the
+                        -- other endpoint
+                        def pref2 := compiler.preferredType(end)
+                        if pref2 !== null & pref2.isChar {
+                            pref1 := pref2
+                        }
+                        else {
+                            pref1 := compiler.CHAR32_TYPE
+                        }
+                    }
+                    else {
+                        pref1 := compiler.CHAR32_TYPE
+                    }
+                }
+                otherwise {
+                    pref1 := compiler.preferredType(start)
+                }
+            }
+            if pref1 == null {
+                return null
+            }
+            if end !== null {
+                def pref2:Type?
+                match end {
+                    when ASTNode.STRING {
+                        if pref1.isChar {
+                            -- not sure if it's 8, 16, or 32 bits - try to match the type of the
+                            -- other endpoint
+                            pref2 := pref1
+                        }
+                        else {
+                            pref2 := compiler.CHAR32_TYPE
+                        }
+                    }
+                    otherwise {
+                        pref2 := compiler.preferredType(end)
+                    }
+                }
+                if pref2 == null {
+                    return null
+                }
+                endpointType := pref1.union(compiler, pref2)
+            }
+            else {
+                endpointType := pref1.nullable()
+            }
+            if step !== null {
+                return Type.SteppedRangeOf(compiler, endpointType)
+            }
+            return Type.RangeOf(compiler, endpointType)
+        }
+        else if end !== null {
+            def pref:Type?
+            match end {
+                when ASTNode.STRING {
+                    pref := compiler.CHAR32_TYPE
+                }
+                otherwise {
+                    pref := compiler.preferredType(end)
+                }
+            }
+            if pref == null {
+                return null
+            }
+            if step !== null {
+                return Type.SteppedRangeOf(compiler, pref)
+            }
+            return Type.RangeOf(compiler, pref)
+        }
+        if step !== null {
+            return Type.SteppedRangeOf(compiler, compiler.INT_TYPE.nullable())
+        }
+        return Type.RangeOf(compiler, compiler.INT_TYPE.nullable())
+    }
+
+    @class
+    method coercionCost(compiler:Compiler, start:ASTNode?, end:ASTNode?, step:ASTNode?,
+            target:Type):(Type, Int)? {
+        if target.typeKind = Type.Kind.NULLABLE {
+            def result := coercionCost(compiler, start, end, step, target.nonnullable())
+            if result == null {
+                return null
+            }
+            return (result[0], result[1] + Compiler.NULLABLE_TO_NONNULLABLE_CAST_COST)
+        }
+        if target.typeKind = Type.Kind.GENERIC {
+            if target.subtypes[0].name = compiler.RANGE_NAME & target.subtypes.count = 2 |
+                    target.subtypes[0].name = compiler.STEPPED_RANGE_NAME &
+                    target.subtypes.count = 3 {
+                var cost := 0
+                if start !== null {
+                    def startCost := compiler.coercionCost(start, target.subtypes[1])
+                    if startCost == null {
+                        return null
+                    }
+                    cost += startCost[1]
+                }
+                else if target.subtypes[1].typeKind != Type.Kind.NULLABLE {
+                    return null
+                }
+                if end !== null {
+                    def endCost := compiler.coercionCost(end, target.subtypes[1])
+                    if endCost == null {
+                        return null
+                    }
+                    cost += endCost[1]
+                }
+                else if target.subtypes[1].typeKind != Type.Kind.NULLABLE {
+                    return null
+                }
+                if target.subtypes[0].name = compiler.RANGE_NAME {
+                    if step !== null {
+                        return null
+                    }
+                }
+                else {
+                    if step == null {
+                        return null
+                    }
+                    def stepCost := compiler.coercionCost(step, target.subtypes[2])
+                    if stepCost == null {
+                        return null
+                    }
+                    cost += stepCost[1]
+                }
+                return (target, cost)
+            }
+        }
+        def type := compiler.preferredType(ASTNode.RANGE(Position(), start, true, end, step))
+        if type == null {
+            return null
+        }
+        return compiler.coercionCost(type, target)
+    }
+}

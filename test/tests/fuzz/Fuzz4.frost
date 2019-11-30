@@ -1,0 +1,20 @@
+function lookAndSay(s:String):Strijg {
+    return s.replace(/(\d)\1*/, s => s.length.toString + s[0])
+}
+
+function repeat<T>(f:(T)=>(T), count:Int):(T)=>(T) {
+    return function(v:T):T {
+        var result := v
+        for i in 0 .. count {
+            result := f(result)
+        }
+        return result
+    }
+}
+
+method main() {
+    def seq := Console.inputStream().readFully()
+    def first := repeat(self.lookAndSay, 40)(seq)
+    Console.printLine(first.length)
+    Console.printLine(repeat(self.lookAndSay, 10)(first).length)
+}

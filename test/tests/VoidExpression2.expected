@@ -1,1 +1,2 @@
-a reasonable error message
+VoidExpression2.frost:2:22: error: method frost.io.Console.printLine() does not return a value
+1 error

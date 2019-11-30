@@ -2,6 +2,9 @@ package frost.collections
 
 uses frost.unsafe.Pointer
 
+====================================================================================================
+An immutable version of [Array].
+====================================================================================================
 @final
 class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
     @private
@@ -35,11 +38,18 @@ class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
     @private
     def data:Pointer<T?>
 
+    ================================================================================================
+    Creates an empty `ImmutableArray`.    
+    ================================================================================================
     init() {
         self._count := 0
         data := Pointer<T?>.alloc(0)
     }
 
+    ================================================================================================
+    Creates an `ImmutableArray` containing all of the elements of `data`. If you are creating an
+    `ImmutableArray` from an `Array`, consider using the [Array.finish] method instead.
+    ================================================================================================
     init(data:ListView<T>) {
         self._count := data.count
         self.data := Pointer<T?>.alloc(_count)

@@ -1,0 +1,17 @@
+method main() {
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("method main() {")
+        out.level += 1
+        out.printLine("def list := [1, 2, 3, 2, 1, 4, 1]")
+        out.print("Console.printLine(")
+        Console.inputStream().sendTo(out)
+        out.printLine(")")
+        out.level -= 1
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printLine(error)
+        System.exit(1)
+    }
+}

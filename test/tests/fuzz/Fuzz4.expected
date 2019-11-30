@@ -1,0 +1,4 @@
+Fuzz4.frost:1:31: error: unknown type 'Strijg'
+Fuzz4.frost:18:23: error: unknown identifier
+Fuzz4.frost:19:22: error: no match for call to 'printLine'
+3 errors
