@@ -556,7 +556,8 @@ class Call {
                     for (i, n) in parameterNames.enumeration {
                         match n {
                             when ASTNode.IDENTIFIER(position, name) {
-                                def t := compiler.literalType(rawType.parameterType(i))
+                                def t := compiler.literalType(rawType.parameterType(i).remap(
+                                        compiler, currentMapping))
                                 parameters.add(ASTNode.PARAMETER(position,
                                         name, ASTNode.IR_WRAPPER(position, t)))
                             }
@@ -916,7 +917,7 @@ class Call {
                 }
                 -- no match
                 def argTypes := Array<Type>()
-                for a in args {
+                for (i, a) in args.enumeration {
                     def preferred := compiler.preferredType(a)
                     if preferred == null {
                         -- force it to produce an error
@@ -924,7 +925,8 @@ class Call {
                         compiler.compileExpression(a)
                         if compiler.errorCount = oldErrorCount {
                             -- could not determine type
-                            compiler.error(position, "no match for call to '\{methods[0].name}'")
+                            compiler.error(position, "no match for call to '\{methods[0].name}'; " +
+                                    "unable to determine the type of argument \{i + 1}")
                         }
                         return null
                     }
@@ -1160,7 +1162,6 @@ class Call {
     @class
     method inlineCall(compiler:Compiler, position:MethodPosition, m:MethodDecl,
             args:FixedArray<IR.Value>):IR.Value? {
-        Console.printLine("begin inline \{m.declaration}")
         if compiler.settings.debug {
             compiler.ir.add(IR.Statement.COMMENT(position,
                     "begin inline call to \{m.declaration} from \{position.toString(compiler)}"))
@@ -1243,7 +1244,6 @@ class Call {
         }
         def load := compiler.ir.add(IR.Statement.LOAD(position,
                 IR.Value.LOCAL(inlineReturnSlot, m.returnType)))
-        Console.printLine("end inline \{m.declaration}")
         return IR.Value.REF(load, m.returnType)
     }
 
