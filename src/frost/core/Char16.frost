@@ -49,6 +49,25 @@ class Char16 : Value, HashKey<Char16>, Comparable<Char16> {
         return value >= other.value
     }
 
+    property isWhitespace:Bit
+    function get_isWhitespace():Bit {
+        -- FIXME respect all Unicode whitespace
+        match self {
+            when "\n", "\r", "\t", " " {
+                return true
+            }
+            otherwise {
+                return false
+            }
+        }
+    }
+
+    property isDigit:Bit
+    function get_isDigit():Bit {
+        -- FIXME respect all Unicode digits
+        return self >= "0" & self <= "9"
+    }
+
     ================================================================================================
     Returns a string consisting of `count` copies of this character.
     ================================================================================================

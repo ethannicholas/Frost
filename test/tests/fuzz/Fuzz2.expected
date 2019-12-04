@@ -1,12 +1,12 @@
 Fuzz2.frost:7:12: error: reference to method '<' cannot be used as type 'frost.core.Bit'. None of the following methods match this type:
-    function frost.core.Int.<(other:frost.core.UInt):frost.core.Bit:689:5 (cannot be an instance of frost.core.Bit)
-    function frost.core.Int.<(other:frost.core.UInt32):frost.core.Bit:683:5 (cannot be an instance of frost.core.Bit)
-    function frost.core.Int.<(other:frost.core.UInt16):frost.core.Bit:677:5 (cannot be an instance of frost.core.Bit)
-    function frost.core.Int.<(other:frost.core.UInt8):frost.core.Bit:671:5 (cannot be an instance of frost.core.Bit)
-    function frost.core.Int.<(other:frost.core.Int):frost.core.Bit:665:5 (cannot be an instance of frost.core.Bit)
-    function frost.core.Int.<(other:frost.core.Int64):frost.core.Bit:658:5 (cannot be an instance of frost.core.Bit)
-    function frost.core.Int.<(other:frost.core.Int32):frost.core.Bit:652:5 (cannot be an instance of frost.core.Bit)
-    function frost.core.Int.<(other:frost.core.Int16):frost.core.Bit:646:5 (cannot be an instance of frost.core.Bit)
     function frost.core.Int.<(other:frost.core.Int8):frost.core.Bit:640:5 (cannot be an instance of frost.core.Bit)
+    function frost.core.Int.<(other:frost.core.Int16):frost.core.Bit:646:5 (cannot be an instance of frost.core.Bit)
+    function frost.core.Int.<(other:frost.core.Int32):frost.core.Bit:652:5 (cannot be an instance of frost.core.Bit)
+    function frost.core.Int.<(other:frost.core.Int64):frost.core.Bit:658:5 (cannot be an instance of frost.core.Bit)
+    function frost.core.Int.<(other:frost.core.Int):frost.core.Bit:665:5 (cannot be an instance of frost.core.Bit)
+    function frost.core.Int.<(other:frost.core.UInt8):frost.core.Bit:671:5 (cannot be an instance of frost.core.Bit)
+    function frost.core.Int.<(other:frost.core.UInt16):frost.core.Bit:677:5 (cannot be an instance of frost.core.Bit)
+    function frost.core.Int.<(other:frost.core.UInt32):frost.core.Bit:683:5 (cannot be an instance of frost.core.Bit)
+    function frost.core.Int.<(other:frost.core.UInt):frost.core.Bit:689:5 (cannot be an instance of frost.core.Bit)
 Fuzz2.frost:7:15: error: not a statement
 2 errors

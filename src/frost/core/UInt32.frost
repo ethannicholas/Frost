@@ -1061,16 +1061,13 @@ class UInt32 : Value, HashKey<UInt32>, Comparable<UInt32>, Formattable, ListView
     }
 
     ===This number converted to an Int.
-If this number is not in the range of an Int, a safety violation occurs.
 ===
     property asInt:Int
     function get_asInt():Int {
-    assert value <= Int.MAX.toUInt32.value, "UInt32(\{self}) cannot be safely converted to Int"
         return Int(value->builtin_int)
     }
 
     ===This number converted to an Int.
-This function never fails, even if the number is not in the range of an Int.
 ===
     property toInt:Int
     function get_toInt():Int {
@@ -1140,16 +1137,13 @@ This function never fails, even if the number is not in the range of a 16 bit si
     }
 
     ===This number converted to a UInt.
-If this number is not in the range of a UInt, a safety violation occurs.
 ===
     property asUInt:UInt
     function get_asUInt():UInt {
-    assert value <= UInt.MAX.toUInt32.value, "UInt32(\{self}) cannot be safely converted to UInt"
         return UInt(value->builtin_uint)
     }
 
     ===This number converted to a UInt.
-This function never fails, even if the number is not in the range of a UInt.
 ===
     property toUInt:UInt
     function get_toUInt():UInt {

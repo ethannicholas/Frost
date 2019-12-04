@@ -33,6 +33,9 @@ class Stack<T> : Iterable<T> {
     @private
     def contents := Array<T>()
 
+    ================================================================================================
+    The number of elements on the stack.
+    ================================================================================================
     property count:Int
 
     ================================================================================================
@@ -53,6 +56,9 @@ class Stack<T> : Iterable<T> {
         return result
     }
 
+    ================================================================================================
+    Inserts a new element at the specified depth. A depth of `0` is equivalent to [push].
+    ================================================================================================
     method insert(depth:Int, value:T) {
         contents.insert(contents.count - 1 - depth, value)
     }

@@ -14,14 +14,14 @@ class KeyTuple4<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>> 
     }
 
     @pre(i >= 0 & i < 4)
-    function [](i:Int):Object? {
+    function []<T>(i:Int):T {
         match i {
-            when 0 { return f0 }
-            when 1 { return f1 }
-            when 2 { return f2 }
-            when 3 { return f3 }
+            when 0 { return f0->T }
+            when 1 { return f1->T }
+            when 2 { return f2->T }
+            when 3 { return f3->T }
         }
-        return null
+        unreachable
     }
 
     @override

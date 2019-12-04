@@ -1,0 +1,65 @@
+def wires := HashMap<(Int, Int), (Int?, Int?)>()
+
+method process(s:String, wire:Int, phase:Int) {
+    var x := 0
+    var y := 0
+    var closest := Int.MAX
+    var count := 0
+    for d in s.split(",") {
+        def length := d[1..].asInt!
+        var xd := 0
+        var yd := 0
+        match d[0] {
+            when "U" {
+                yd := -1
+            }
+            when "D" {
+                yd := 1
+            }
+            when "L" {
+                xd := -1
+            }
+            when "R" {
+                xd := 1
+            }
+        }
+        for i in 0 .. length {
+            count += 1
+            x += xd
+            y += yd
+            def otherCount:Int?
+            if wires[(x, y)] !== null & wires[(x, y)][1 - wire] !== null {
+                otherCount := wires[(x, y)][1 - wire]
+                if phase = 1 {
+                    closest := closest.min(x.abs + y.abs)
+                }
+                else {
+                    closest := closest.min(otherCount + count)
+                }
+            }
+            else {
+                otherCount := null
+            }
+            if wire = 0 {
+                wires[(x, y)] := (count, otherCount)
+            }
+            else {
+                wires[(x, y)] := (otherCount, count)
+            }
+        }
+    }
+    if wire = 1 {
+        Console.printLine(closest)
+    }
+}
+
+method main() {
+    def input := Console.inputStream().lines()
+    def line1 := input.next()
+    def line2 := input.next()
+    process(line1, 0, 1)
+    process(line2, 1, 1)
+    wires.clear()
+    process(line1, 0, 2)
+    process(line2, 1, 2)
+}

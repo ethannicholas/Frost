@@ -16,6 +16,7 @@ uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.SymbolTable
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
 uses org.frostlang.frostc.parser.Token
@@ -116,7 +117,7 @@ class Closure {
         def result := ClassDecl(compiler.currentClass[0].source, p, HashMap<String, String>(), null,
                 Annotations(Annotations.Flag.SYNTHETIC), ClassDecl.Kind.CLASS,
                 "\{compiler.currentClass[0].name}._Closure\{compiler.closureCount}", supers,
-                Array<ClassDecl.GenericParameter>(), compiler.root)
+                Array<ClassDecl.GenericParameter>(), SymbolTable(compiler))
         result.external := false
 
         -- create init method
@@ -230,7 +231,7 @@ class Closure {
                 }
             }
         }
-        def returnType:Type?
+        def returnType:Type? := null
         match type {
             when TypeContext.TYPE(t, _) {
                 if t.nonnullable().isMethod {
@@ -327,7 +328,7 @@ class Closure {
                 def sorted := Array<Type>(attempts)
                 sorted.sort((t1, t2) => t1.name > t2.name)
                 def msg := MutableString("lambda error")
-                def old := compiler.errorQueue
+                def old := compiler.errorCount
                 for t in sorted {
                     msg.append("\n    when interpreted as '\{t}':")
                     compiler.errorQueue := MessageQueue<Message>()
@@ -347,7 +348,7 @@ class Closure {
                         }
                     }
                 }
-                compiler.errorQueue := old
+                compiler._errorCount := old
                 compiler.error(position, msg.finish())
                 return null
             }
@@ -402,7 +403,7 @@ class Closure {
             }
         }
         def result := typedLambdaCoercionCost(compiler, typedParameters, body, target)
-        if result !== null {
+        if result == null {
             var list := compiler.lambdaTypes[body]
             if list == null {
                 list := HashSet<Type>()

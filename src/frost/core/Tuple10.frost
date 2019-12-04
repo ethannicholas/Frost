@@ -26,20 +26,20 @@ class Tuple10<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> {
     }
 
     @pre(i >= 0 & i < 10)
-    function [](i:Int):Object? {
+    function []<T>(i:Int):T {
         match i {
-            when 0 { return f0 }
-            when 1 { return f1 }
-            when 2 { return f2 }
-            when 3 { return f3 }
-            when 4 { return f4 }
-            when 5 { return f5 }
-            when 6 { return f6 }
-            when 7 { return f7 }
-            when 8 { return f8 }
-            when 9 { return f9 }
+            when 0 { return f0->T }
+            when 1 { return f1->T }
+            when 2 { return f2->T }
+            when 3 { return f3->T }
+            when 4 { return f4->T }
+            when 5 { return f5->T }
+            when 6 { return f6->T }
+            when 7 { return f7->T }
+            when 8 { return f8->T }
+            when 9 { return f9->T }
         }
-        return null
+        unreachable
     }
 
     @override

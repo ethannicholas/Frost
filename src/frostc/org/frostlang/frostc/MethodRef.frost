@@ -34,7 +34,7 @@ class MethodRef {
     init(compiler:Compiler, target:Type, value:MethodDecl, genericArguments:ListView<Type>?) {
         assert value.resolved != Compiler.Resolution.UNRESOLVED,
                 "unresolved method \{value.signature}"
-        requiresTypeInference := genericArguments == null & value.genericParameters !== null 
+        requiresTypeInference := genericArguments == null & value.genericParameters !== null
         self.value := value
         self.target := target
         def found := compiler.findType(target, value.owner)
@@ -119,6 +119,6 @@ class MethodRef {
 
     @override
     function get_toString():String {
-        return "MethodRef(\{value.declaration}, \{effectiveType})"
+        return "MethodRef(\{value.declaration} on \{target}:\{effectiveType})"
     }
 }

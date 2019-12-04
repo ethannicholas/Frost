@@ -20,17 +20,17 @@ class EquatableTuple7<T0:Equatable<T0>, T1:Equatable<T1>, T2:Equatable<T2>, T3:E
     }
 
     @pre(i >= 0 & i < 7)
-    function [](i:Int):Object? {
+    function []<T>(i:Int):T {
         match i {
-            when 0 { return f0 }
-            when 1 { return f1 }
-            when 2 { return f2 }
-            when 3 { return f3 }
-            when 4 { return f4 }
-            when 5 { return f5 }
-            when 6 { return f6 }
+            when 0 { return f0->T }
+            when 1 { return f1->T }
+            when 2 { return f2->T }
+            when 3 { return f3->T }
+            when 4 { return f4->T }
+            when 5 { return f5->T }
+            when 6 { return f6->T }
         }
-        return null
+        unreachable
     }
 
     @override

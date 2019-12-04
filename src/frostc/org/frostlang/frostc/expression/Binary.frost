@@ -693,7 +693,7 @@ class Binary {
                                         Dot.compile(compiler, position, compiledLeft, "f\{v}"),
                                             compiledLeft.type().nonnullable().subtypes[v.asInt]),
                                             type)
-                           }
+                            }
                         }
                     }
                     if m.annotations.isClass {

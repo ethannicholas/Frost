@@ -634,7 +634,7 @@ class Compiler : ErrorReporter {
         def builtinName := "<builtin>"
         def builtin := ClassDecl(File(builtinName), Position(), HashMap<String, String>(), null,
                 Annotations(0), ClassDecl.Kind.CLASS,
-                Type(builtinName, Type.Kind.CLASS, Position(), true), [], [], root)
+                Type(builtinName, Type.Kind.CLASS, Position(), true), [], [], SymbolTable(self))
         classes[builtinName] := builtin
         def intSize := FieldDecl(builtin, Position(), null, Annotations(Annotations.Flag.CLASS),
                 FieldDecl.Kind.CONSTANT, INT_SIZE_NAME, BUILTIN_INT_TYPE, ASTNode.INT(Position(),
@@ -887,6 +887,9 @@ class Compiler : ErrorReporter {
                     return result
                 }
                 def s := symbolTable[type.name]
+                if s == null {
+                    s := root[type.name]
+                }
                 if s !== null {
                     match s.kind {
                         when Symbol.Kind.ALIAS {
@@ -1733,8 +1736,7 @@ class Compiler : ErrorReporter {
                 supertypes.add(remapType(type, intf))
             }
             result := ClassDecl(cl.source, cl.position, cl.aliases, cl.doccomment, annotations,
-                    cl.classKind, type, supertypes, [],
-                    cl.symbolTable.parents[0])
+                    cl.classKind, type, supertypes, [], SymbolTable(self))
             for i in 0 .. cl.parameters.count {
                 result.symbolTable.add(Alias(cl.parameters[i].name, type.subtypes[i + 1]))
             }
@@ -2137,7 +2139,7 @@ class Compiler : ErrorReporter {
         if possible == null {
             return null
         }
-        if possible.count = 1 {
+        if HashSet<Type>(possible).count = 1 {
             return possible.iterator.next()
         }
         def best := Array<Type>()
@@ -2586,7 +2588,7 @@ class Compiler : ErrorReporter {
     }
 
     method identifierType(name:String, genericArguments:FixedArray<ASTNode>?):Array<Type>? {
-        def s := symbolTable[name]
+        var s := symbolTable[name]
         if s !== null {
             return symbolType(null, s, genericArguments)
         }
@@ -2595,6 +2597,10 @@ class Compiler : ErrorReporter {
             def result := Array<Type>()
             result.add(Type.ClassLiteral(self, cl.type))
             return result
+        }
+        s := root[name]
+        if s !== null {
+            return symbolType(null, s, genericArguments)
         }
         return null
     }
@@ -3669,6 +3675,7 @@ class Compiler : ErrorReporter {
                 if cc.fields.count > 0 {
                     error(position, "choice '\{s}' requires \{cc.fields.count} " +
                             "argument\{cc.fields.count = 1:|s}, but found 0")
+                    if true { System.crash() }
                     return null
                 }
                 resolve(cc)
@@ -3980,7 +3987,7 @@ class Compiler : ErrorReporter {
                 }
                 def msg := MutableString("reference to method '\{methods[0].name}' cannot be " +
                         "used as type '\{target}'. None of the following methods match this type:")
-                for m in methods {
+                for m in methods.sort((a, b) => a.position > b.position) {
                     def targetType:Type
                     if targetObj !== null {
                         targetType := targetObj.type()
@@ -4114,6 +4121,8 @@ class Compiler : ErrorReporter {
             if valueType.name != "frost.core.Method" &
                     valueType.name != "frost.core.MutableMethod" {
                 error(position, "non-method objects may not be cast to methods")
+                Console.printLine("casting \{value} to \{target}")
+                unreachable
             }
         }
         if explicit & !canCast(value.type(), target) {
@@ -5793,6 +5802,7 @@ class Compiler : ErrorReporter {
         return null
     }
 
+    @pre(currentClass[0] == m.owner)
     method compile(m:MethodDecl, enclosingContext:SymbolTable?) {
         if !resolve(m) {
             return

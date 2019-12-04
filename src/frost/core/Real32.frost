@@ -495,7 +495,6 @@ class Real32 : Value, HashKey<Real32>, Comparable<Real32>, Formattable {
 If this number cannot be exactly represented as an Int, a safety violation occurs.
 ===
     property asInt:Int
-    @post(@return.toReal32 = self)
     function get_asInt():Int {
         return Int(value->builtin_int)
     }
@@ -573,7 +572,6 @@ If this number cannot be exactly represented as a 64 bit signed number, a safety
 If this number cannot be exactly represented as a UInt, a safety violation occurs.
 ===
     property asUInt:UInt
-    @post(@return.toReal32 = self)
     function get_asUInt():UInt {
         return UInt(value->builtin_uint)
     }

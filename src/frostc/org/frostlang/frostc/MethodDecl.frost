@@ -215,7 +215,7 @@ class MethodDecl : Symbol {
     @override
     function get_toString():String {
         if body !== null {
-            return "\{annotations}\{signature} \{body}"
+            return "\{annotations}\{declaration} \{body}"
         }
         return signature
     }

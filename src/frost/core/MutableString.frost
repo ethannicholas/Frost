@@ -15,27 +15,26 @@ class MutableString {
     Represents the position of a Unicode codepoint within a `MutableString`.
     ================================================================================================
     class Index : Value, HashKey<Index>, Comparable<Index> {
-        @private
-        def value:Int
+        def byteOffset:Int
 
         @private
-        init(value:Int) {
-            self.value := value
+        init(byteOffset:Int) {
+            self.byteOffset := byteOffset
         }
 
         @override
         function =(other:Index):Bit {
-            return value = other.value
+            return byteOffset = other.byteOffset
         }
 
         @override
         function >(other:Index):Bit {
-            return value > other.value
+            return byteOffset > other.byteOffset
         }
 
         @override
         function get_hash():Int {
-            return value
+            return byteOffset
         }
     }
 
@@ -193,18 +192,18 @@ class MutableString {
     ACCENT), this may return an index in the middle of such a compound character.
     ================================================================================================
     function next(i:Index):Index {
-        assert i.value < _length
-        def c := data[i.value].asInt && 0xFF
+        assert i.byteOffset < _length
+        def c := data[i.byteOffset].asInt && 0xFF
         if c >= 0b11110000 {
-            return Index(i.value + 4)
+            return Index(i.byteOffset + 4)
         }
         if c >= 0b11100000 {
-            return Index(i.value + 3)
+            return Index(i.byteOffset + 3)
         }
         if c >= 0b11000000 {
-            return Index(i.value + 2)
+            return Index(i.byteOffset + 2)
         }
-        return Index(i.value + 1)
+        return Index(i.byteOffset + 1)
     }
 
     ================================================================================================
@@ -214,8 +213,8 @@ class MutableString {
     ACUTE ACCENT), this may return an index in the middle of such a compound character.
     ================================================================================================
     function previous(i:Index):Index {
-        assert i.value > 0
-        var newValue := i.value - 1
+        assert i.byteOffset > 0
+        var newValue := i.byteOffset - 1
         while data[newValue].asInt && 0xFF >= 0b10000000 &
                 data[newValue].asInt && 0xFF < 0b11000000 {
             newValue -= 1
@@ -267,7 +266,7 @@ class MutableString {
         if _length < s._length {
             return null
         }
-        outer: for i in start.value ... _length - s._length {
+        outer: for i in start.byteOffset ... _length - s._length {
             for j in 0 .. s._length {
                 if data[i + j] != s.data[j] {
                     continue outer
@@ -344,7 +343,7 @@ class MutableString {
         if _length < s._length {
             return null
         }
-        def startPos := start.value.min(_length - s._length)
+        def startPos := start.byteOffset.min(_length - s._length)
         outer: for i in startPos ... 0 by -1 {
             for j in 0 .. s._length {
                 if data[i + j] != s.data[j] {
@@ -381,7 +380,7 @@ class MutableString {
     -- FIXME @self
     method trim() {
         var i := start
-        while i != end & self[i].isWhitespace() {
+        while i != end & self[i].isWhitespace {
             i := next(i)
         }
         self[start .. i] := ""
@@ -389,7 +388,7 @@ class MutableString {
             return
         }
         i := previous(end)
-        while i != start & self[i].isWhitespace() {
+        while i != start & self[i].isWhitespace {
             i := previous(i)
         }
         self[next(i)..] := ""
@@ -486,7 +485,7 @@ class MutableString {
     Returns the Unicode codepoint at the given offset within the string.
     ================================================================================================
     function [](index:Index):Char32 {
-        def idx := index.value
+        def idx := index.byteOffset
         def c := data[idx]
         var result := c.asInt32
         if c.asInt && 0xFF < 0b11000000 {
@@ -519,6 +518,70 @@ class MutableString {
         return self[offset(start, index)]
     }
 
+    function [](r:Range<Index>):String {
+        -- FIXME do this without a copy
+        return toString[Range<String.Index>(String.Index(r.min.byteOffset),
+                String.Index(r.max.byteOffset), r.inclusive)]
+    }
+
+    function [](r:Range<Index?>):String {
+        -- FIXME do this without a copy
+        def min:String.Index?
+        if r.min !== null {
+            min := String.Index(r.min.byteOffset)
+        }
+        else {
+            min := null
+        }
+        def max:String.Index?
+        if r.max !== null {
+            max := String.Index(r.max.byteOffset)
+        }
+        else {
+            max := null
+        }
+        return toString[Range<String.Index>(min, max, r.inclusive)]
+    }
+
+    function [](r:Range<Int>):String {
+        -- FIXME do this without a copy
+        return toString[r]
+    }
+
+    function [](r:Range<Int?>):String {
+        -- FIXME do this without a copy
+        return toString[r]
+    }
+
+    function [](r:SteppedRange<Index?, Int>):String {
+        -- FIXME do this without a copy
+        def start:String.Index?
+        if r.start !== null {
+            start := String.Index(r.start.byteOffset)
+        }
+        else {
+            start := null
+        }
+        def end:String.Index?
+        if r.end !== null {
+            end := String.Index(r.end.byteOffset)
+        }
+        else {
+            end := null
+        }
+        return toString[SteppedRange<String.Index?, Int>(start, end, r.step, r.inclusive)]
+    }
+
+    function [](r:SteppedRange<Int?, Int>):String {
+        -- FIXME do this without a copy
+        return toString[r]
+    }
+
+    -- FIXME @self
+    method []:=(index:Int, c:Char32) {
+        self[index ... index] := c.toString
+    }
+
     -- FIXME @self
     method []:=(index:Index, c:Char32) {
         self[index ... index] := c.toString
@@ -526,14 +589,14 @@ class MutableString {
 
     -- FIXME @self
     @pre(r.max >= r.min &
-         ((r.inclusive & r.min.value < _length & r.max.value < _length) |
-         (!r.inclusive & r.min.value <= _length & r.max.value <= _length)))
+         ((r.inclusive & r.min.byteOffset < _length & r.max.byteOffset < _length) |
+         (!r.inclusive & r.min.byteOffset <= _length & r.max.byteOffset <= _length)))
     method []:=(r:Range<Index>, s:String) {
-        var max := r.max.value
+        var max := r.max.byteOffset
         if r.inclusive {
             max += 1
         }
-        def rangeLength := max - r.min.value
+        def rangeLength := max - r.min.byteOffset
         def newLength := _length - rangeLength + s._length
         ensureCapacity(newLength)
         def offset := s._length - rangeLength
@@ -548,7 +611,7 @@ class MutableString {
             }
         }
         for i in 0 .. s._length {
-            data[r.min.value + i] := s.data[i]
+            data[r.min.byteOffset + i] := s.data[i]
         }
         _length := newLength
     }
@@ -609,8 +672,8 @@ class MutableString {
             if next == null {
                 break
             }
-            self[next .. Index(next.value + search.byteLength)] := replacement
-            index := Index(next.value + replacement.byteLength.max(1))
+            self[next .. Index(next.byteOffset + search.byteLength)] := replacement
+            index := Index(next.byteOffset + replacement.byteLength.max(1))
         }
     }
 

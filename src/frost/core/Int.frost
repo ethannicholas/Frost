@@ -1270,7 +1270,7 @@ If this number cannot be exactly represented as a 32 bit floating point number, 
     ===Returns this number converted to a decimal string.===
     @override
     function get_toString():String {
-        constant max := 11
+        constant max := 20
         def chars := Pointer<Char8>.alloc(max)
         var index := max - 1
         var value := self

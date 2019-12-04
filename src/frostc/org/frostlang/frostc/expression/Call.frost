@@ -14,6 +14,7 @@ uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.MethodRef
 uses org.frostlang.frostc.Pair
+uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
@@ -614,6 +615,10 @@ class Call {
         if m.value.parameters.count != args.count {
             return null
         }
+        if m.value.name = "[]" & compiler.isTuple(m.value.owner) {
+            return MethodRef(compiler, m.target, m.value,
+                    [Tuple.indexType(compiler, m.target, args[0])])
+        }
         def remaps := HashMap<String, Type>()
         for p in m.value.genericParameters {
             remaps[m.value.owner.name + "." + m.value.name + "." + p.name] := p.bound
@@ -771,6 +776,9 @@ class Call {
             result := IR.Value.LOCAL(resultSlot, t.returnType)
         }
         else {
+            if type != TypeContext.UNSPECIFIED {
+                compiler.error(position, "method does not return a value")
+            }
             result := null
         }
         def methodType:Type
@@ -986,6 +994,12 @@ class Call {
                         return null
                     }
                 }
+                if cl.annotations.isAbstract {
+                    compiler.error(position, "'\{cl.name}' is abstract and may not be directly " +
+                            "constructed")
+                    --return null
+                    System.crash()
+                }
                 if !compiler.resolve(cl) {
                     return null
                 }
@@ -1146,6 +1160,7 @@ class Call {
     @class
     method inlineCall(compiler:Compiler, position:MethodPosition, m:MethodDecl,
             args:FixedArray<IR.Value>):IR.Value? {
+        Console.printLine("begin inline \{m.declaration}")
         if compiler.settings.debug {
             compiler.ir.add(IR.Statement.COMMENT(position,
                     "begin inline call to \{m.declaration} from \{position.toString(compiler)}"))
@@ -1228,6 +1243,7 @@ class Call {
         }
         def load := compiler.ir.add(IR.Statement.LOAD(position,
                 IR.Value.LOCAL(inlineReturnSlot, m.returnType)))
+        Console.printLine("end inline \{m.declaration}")
         return IR.Value.REF(load, m.returnType)
     }
 

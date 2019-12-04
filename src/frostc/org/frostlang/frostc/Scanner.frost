@@ -746,7 +746,7 @@ class Scanner {
             }
         }
         def result := ClassDecl(source, position, aliases, doccomment, annotations, kind, fullName,
-                supertypes, parameters, compiler.root)
+                supertypes, parameters, SymbolTable(compiler))
         compiler.currentClass.push(result)
         for m in members {
             match m {
@@ -855,8 +855,7 @@ class Scanner {
                 fullName := "anonymous.BareCode"
             }
             bareCodeClass := ClassDecl(source, position, aliases, null, Annotations(),
-                    ClassDecl.Kind.CLASS, fullName, Array<Type>(), -- FIXME literal
-                    Array<ClassDecl.GenericParameter>(), compiler.root) -- FIXME literal
+                    ClassDecl.Kind.CLASS, fullName, [], [], SymbolTable(compiler))
             classes.add(bareCodeClass)
             def defaultInit := MethodDecl(bareCodeClass, position, compiler.methods.count,
                     null, Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",

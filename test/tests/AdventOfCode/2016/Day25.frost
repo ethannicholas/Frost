@@ -1,0 +1,140 @@
+-*
+
+--- Day 25: Clock Signal ---
+
+You open the door and find yourself on the roof. The city sprawls away from you for miles and miles.
+
+There's not much time now - it's already Christmas, but you're nowhere near the North Pole, much too
+far to deliver these stars to the sleigh in time.
+
+However, maybe the huge antenna up here can offer a solution. After all, the sleigh doesn't need the
+stars, exactly; it needs the timing data they provide, and you happen to have a massive signal
+generator right here.
+
+You connect the stars you have to your prototype computer, connect that to the antenna, and begin
+the transmission.
+
+Nothing happens.
+
+You call the service number printed on the side of the antenna and quickly explain the situation.
+"I'm not sure what kind of equipment you have connected over there," he says, "but you need a clock
+signal." You try to explain that this is a signal for a clock.
+
+"No, no, a clock signal - timing information so the antenna computer knows how to read the data
+you're sending it. An endless, alternating pattern of 0, 1, 0, 1, 0, 1, 0, 1, 0, 1...." He trails
+off.
+
+You ask if the antenna can handle a clock signal at the frequency you would need to use for the data
+from the stars. "There's no way it can! The only antenna we've installed capable of that is on top
+of a top-secret Easter Bunny installation, and you're definitely not-" You hang up the phone.
+
+You've extracted the antenna's clock signal generation assembunny code (your puzzle input); it looks
+mostly compatible with code you worked on just recently.
+
+This antenna code, being a signal generator, uses one extra instruction:
+
+out x transmits x (either an integer or the value of a register) as the next value for the clock
+signal.
+
+The code takes a value (via register a) that describes the signal to generate, but you're not sure
+how it's used. You'll have to find the input to produce the right signal through experimentation.
+
+What is the lowest positive integer that can be used to initialize register 'a' and cause the code
+to output a clock signal of 0, 1, 0, 1... repeating forever?
+
+*-
+
+
+choice Value {
+    IMMEDIATE(Int)
+    REGISTER(Int)
+}
+
+choice Instruction {
+    CPY(Value, Value)
+    INC(Value)
+    DEC(Value)
+    JNZ(Value, Value)
+    JMP(Value)
+    TGL(Value)
+    OUT(Value)
+}
+
+method run(code:Array<Instruction>, registers:Array<Int>):Bit {
+    function get(v:Value):Int {
+        match v {
+            when Value.IMMEDIATE(x) { return x }
+            when Value.REGISTER(x) { return registers[x] }
+        }
+    }
+    method set(dst:Value, v:Int) {
+        match dst {
+            when Value.IMMEDIATE(x) { return }
+            when Value.REGISTER(x) { registers[x] := v }
+        }
+    }
+    var outCount := 0
+    var ip := 0
+    while ip < code.count {
+        match code[ip] {
+            when Instruction.CPY(x, y) { set(y, get(x)) }
+            when Instruction.INC(x)    { set(x, get(x) + 1) }
+            when Instruction.DEC(x)    { set(x, get(x) - 1) }
+            when Instruction.JNZ(x, y) { if get(x) != 0 { ip += get(y) - 1 } }
+            when Instruction.JMP(x)    { ip += get(x) - 1 }
+            when Instruction.TGL(x) {
+                def target := ip + get(x)
+                if target >= 0 & target < code.count {
+                    match code[target] {
+                        when Instruction.CPY(x, y)   { code[target] := Instruction.JNZ(x, y) }
+                        when Instruction.INC(x)      { code[target] := Instruction.DEC(x) }
+                        when Instruction.DEC(x)      { code[target] := Instruction.INC(x) }
+                        when Instruction.JNZ(x, y)   { code[target] := Instruction.CPY(x, y) }
+                        when Instruction.JMP(x)      { code[target] := Instruction.INC(x) }
+                        when Instruction.TGL(x)      { code[target] := Instruction.INC(x) }
+                    }
+                }
+            }
+            when Instruction.OUT(x) {
+                if get(x) != outCount % 2 {
+                    return false
+                }
+                outCount += 1
+                if outCount = 100 {
+                    return true
+                }
+            }
+        }
+        ip += 1
+    }
+    return false
+}
+
+method main() {
+    function value(s:String):Value {
+        match s {
+            when "a" { return Value.REGISTER(0) }
+            when "b" { return Value.REGISTER(1) }
+            when "c" { return Value.REGISTER(2) }
+            when "d" { return Value.REGISTER(3) }
+            otherwise { return Value.IMMEDIATE(s.asInt!) }
+        }
+    }
+    def code := Array<Instruction>()
+    for line in Console.inputStream().lines() {
+        def components := line.split(" ")
+        match components[0] {
+            when "cpy" { code.add(Instruction.CPY(value(components[1]), value(components[2]))) }
+            when "inc" { code.add(Instruction.INC(value(components[1]))) }
+            when "dec" { code.add(Instruction.DEC(value(components[1]))) }
+            when "tgl" { code.add(Instruction.TGL(value(components[1]))) }
+            when "jnz" { code.add(Instruction.JNZ(value(components[1]), value(components[2]))) }
+            when "out" { code.add(Instruction.OUT(value(components[1]))) }
+        }
+    }
+    var i := 0
+    while !run(Array<Instruction>(code), [i, 0, 0, 0]) {
+        i += 1
+    }
+    Console.printLine(i)
+}

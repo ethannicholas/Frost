@@ -56,27 +56,26 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     Represents the position of a Unicode codepoint within a `String`.
     ================================================================================================
     class Index : Value, HashKey<Index>, Comparable<Index> {
-        @private
-        def value:Int
+        def byteOffset:Int
 
         @private
-        init(value:Int) {
-            self.value := value
+        init(byteOffset:Int) {
+            self.byteOffset := byteOffset
         }
 
         @override
         function =(other:Index):Bit {
-            return value = other.value
+            return byteOffset = other.byteOffset
         }
 
         @override
         function >(other:Index):Bit {
-            return value > other.value
+            return byteOffset > other.byteOffset
         }
 
         @override
         function get_hash():Int {
-            return value
+            return byteOffset
         }
     }
 
@@ -238,7 +237,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 start := haystack.next(start)
             }
             else {
-                start := String.Index(nextMatch.value + needle.byteLength)
+                start := String.Index(nextMatch.byteOffset + needle.byteLength)
             }
             nextMatch := haystack.indexOf(needle, start)
             return result
@@ -526,12 +525,12 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             return self
         }
         var start := 0
-        while start < _length & data[start].isWhitespace() {
+        while start < _length & data[start].isWhitespace {
             start += 1
         }
 
         var end := _length - 1
-        while end >= start & data[end].isWhitespace() {
+        while end >= start & data[end].isWhitespace {
             end -= 1
         }
 
@@ -642,7 +641,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     Returns the Unicode codepoint at the given offset within the string.
     ================================================================================================
     function [](index:Index):Char32 {
-        def idx := index.value
+        def idx := index.byteOffset
         def c := data[idx]
         var result := c.asInt32
         if c.asUInt8 < 0b11000000 {
@@ -691,11 +690,11 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     forcing the parent string to remain in memory is acceptable.
     ================================================================================================
     function substring(r:Range<Index>):String {
-        var length := r.max.value - r.min.value
+        var length := r.max.byteOffset - r.min.byteOffset
         if r.inclusive {
             length += 1
         }
-        return String(data + r.min.value, length, self)
+        return String(data + r.min.byteOffset, length, self)
     }
 
     ================================================================================================
@@ -736,9 +735,9 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     substring will be empty.
     ================================================================================================
     function [](r:Range<Index>):String {
-        def current := r.min.value
+        def current := r.min.byteOffset
         def result := MutableString()
-        var max := r.max.value
+        var max := r.max.byteOffset
         if r.inclusive {
             max += 1
         }
@@ -813,24 +812,24 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
 
         def current:Int
         if r.start !== null {
-            current := r.start.value
+            current := r.start.byteOffset
         }
         else if step > 0 {
-            current := start.value
+            current := start.byteOffset
         }
         else {
-            current := previous(end).value
+            current := previous(end).byteOffset
         }
 
         def end:Int
         if r.end !== null {
-            end := r.end.value
+            end := r.end.byteOffset
         }
         else if step > 0 {
-            end := self.end.value
+            end := self.end.byteOffset
         }
         else {
-            end := self.start.value
+            end := self.start.byteOffset
         }
 
         def result := MutableString()
@@ -855,7 +854,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                     if current >= end {
                         return result.toString
                     }
-                    current := next(Index(current)).value
+                    current := next(Index(current)).byteOffset
                 }
             }
         }
@@ -885,7 +884,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                     if current <= end {
                         return result.toString
                     }
-                    current := previous(Index(current)).value
+                    current := previous(Index(current)).byteOffset
                 }
             }
         }
@@ -906,6 +905,16 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             }
         }
         return result.finish()
+    }
+
+    ================================================================================================
+    Returns a substring of a string. This version of the `[]` operator is slower than the one that
+    accepts a `Range<Index>` parameter, as it must scan the (internally UTF-8) string from the
+    beginning to find the right offsets.
+    ================================================================================================
+    function [](r:Range<Int>):String {
+        return self[Range<Index>(offset(self.start, r.min), offset(self.start, r.max),
+                r.inclusive)]
     }
 
     ================================================================================================
@@ -996,7 +1005,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         if _length < s._length {
             return null
         }
-        outer: for i in start.value ... _length - s._length {
+        outer: for i in start.byteOffset ... _length - s._length {
             for j in 0 .. s._length {
                 if data[i + j] != s.data[j] {
                     continue outer
@@ -1030,7 +1039,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         if _length < s._length {
             return null
         }
-        def startPos := start.value.min(_length - s._length)
+        def startPos := start.byteOffset.min(_length - s._length)
         outer: for i in startPos ... 0 by -1 {
             for j in 0 .. s._length {
                 if data[i + j] != s.data[j] {
@@ -1107,7 +1116,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             }
             result.append(self[index .. nextIndex->Index])
             result.append(replacement)
-            index := Index(nextIndex.value + search._length)
+            index := Index(nextIndex.byteOffset + search._length)
         }
         return result.finish()
     }
@@ -1250,18 +1259,18 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     ACCENT), this may return an index in the middle of such a compound character.
     ================================================================================================
     function next(i:Index):Index {
-        assert i.value < _length
-        def c := data[i.value].asUInt8
+        assert i.byteOffset < _length
+        def c := data[i.byteOffset].asUInt8
         if c >= 0b11110000 {
-            return Index(i.value + 4)
+            return Index(i.byteOffset + 4)
         }
         if c >= 0b11100000 {
-            return Index(i.value + 3)
+            return Index(i.byteOffset + 3)
         }
         if c >= 0b11000000 {
-            return Index(i.value + 2)
+            return Index(i.byteOffset + 2)
         }
-        return Index(i.value + 1)
+        return Index(i.byteOffset + 1)
     }
 
     ================================================================================================
@@ -1271,8 +1280,8 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     ACUTE ACCENT), this may return an index in the middle of such a compound character.
     ================================================================================================
     function previous(i:Index):Index {
-        assert i.value > 0
-        var newValue := i.value - 1
+        assert i.byteOffset > 0
+        var newValue := i.byteOffset - 1
         while data[newValue].asInt && 0xFF >= 0b10000000 &
                 data[newValue].asInt && 0xFF < 0b11000000 {
             newValue -= 1
@@ -1434,7 +1443,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 break
             }
             result.add(self[index .. nextIndex->Index])
-            index := Index(nextIndex.value + delimiter._length)
+            index := Index(nextIndex.byteOffset + delimiter._length)
         }
         return result
     }
@@ -1462,7 +1471,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             }
             def start := matcher.start
             result.add(self[index .. start])
-            index := Index(start.value.max(matcher.end.value))
+            index := Index(start.byteOffset.max(matcher.end.byteOffset))
         }
         return result
     }

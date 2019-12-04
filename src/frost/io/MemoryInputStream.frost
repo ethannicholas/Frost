@@ -25,8 +25,7 @@ class MemoryInputStream : InputStream {
     @param source the string to read from
     ================================================================================================
     init(source:String) {
---        self.data := source.data->Pointer<UInt8>
-assert false
+        self.data := source.data->Pointer<UInt8>
         self.length := source.byteLength
         self.string := source
         super.init()

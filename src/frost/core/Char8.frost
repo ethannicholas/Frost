@@ -51,7 +51,9 @@ class Char8 : Value, HashKey<Char8>, Comparable<Char8> {
         return value >= other.value
     }
 
-    function isWhitespace():Bit {
+    property isWhitespace:Bit
+    function get_isWhitespace():Bit {
+        -- FIXME respect all Unicode whitespace
         match self {
             when "\n", "\r", "\t", " " {
                 return true
@@ -60,6 +62,12 @@ class Char8 : Value, HashKey<Char8>, Comparable<Char8> {
                 return false
             }
         }
+    }
+
+    property isDigit:Bit
+    function get_isDigit():Bit {
+        -- FIXME respect all Unicode digits
+        return self >= "0" & self <= "9"
     }
 
     ================================================================================================

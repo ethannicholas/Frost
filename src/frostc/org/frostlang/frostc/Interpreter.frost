@@ -562,7 +562,7 @@ class Interpreter : Backend {
                         def offset := type.elementOffset(weakSelf.get().settings,
                                 Interpreter.OBJECT_FIELD_COUNT).asUInt
                         def m := Pointer<Matcher>(context.value(args[0]).asUInt + offset).get()
-                        return m.start.value.asInt64
+                        return m.start.byteOffset.asInt64
                     }
                 }
                 when "frost$core$Matcher$get_end$R$frost$core$String$Index" {
@@ -572,7 +572,7 @@ class Interpreter : Backend {
                         def offset := type.elementOffset(weakSelf.get().settings,
                                 Interpreter.OBJECT_FIELD_COUNT).asUInt
                         def m := Pointer<Matcher>(context.value(args[0]).asUInt + offset).get()
-                        return m.end.value.asInt64
+                        return m.end.byteOffset.asInt64
                     }
                 }
                 when "frost$core$Matcher$destroy" {

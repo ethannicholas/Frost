@@ -48,13 +48,13 @@ method writeTuple(count:Int, kind:Kind, path:File) {
         out.printLine("    }")
         out.printLine()
         out.printLine("    @pre(i >= 0 & i < \{count})")
-        out.printLine("    function [](i:Int):Object? {")
+        out.printLine("    function []<T>(i:Int):T {")
         out.printLine("        match i {")
         for i in Int(0) .. count {
-            out.printLine("            when \{i} { return f\{i} }")
+            out.printLine("            when \{i} { return f\{i}->T }")
         }
         out.printLine("        }")
-        out.printLine("        return null")
+        out.printLine("        unreachable")
         out.printLine("    }")
         out.printLine()
         match kind {

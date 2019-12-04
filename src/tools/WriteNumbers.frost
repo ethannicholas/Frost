@@ -87,6 +87,15 @@ class WriteNumbers {
     }
 
     @class
+    function type64(type:Type):Type {
+        match type {
+            when Type.INT { return Type.INT64 }
+            when Type.UINT { return Type.UINT64 }
+            otherwise { return type }
+        }
+    }
+
+    @class
     function runtimeSize(type:Type):String {
         def result := size(type)
         if result !== null {
@@ -94,15 +103,6 @@ class WriteNumbers {
         }
         else {
             return "$int_size"
-        }
-    }
-
-    @class
-    function fixedSize(type:Type):Type {
-        match type {
-            when Type.INT { return Type.INT32 }
-            when Type.UINT { return Type.UINT32 }
-            otherwise { return type }
         }
     }
 
@@ -690,7 +690,7 @@ class WriteNumbers {
             out.printLine("    ===Returns this number converted to a decimal string.===")
             out.printLine("    @override")
             out.printLine("    function get_toString():String {")
-            var max := max(fixedSize(type)).toString.length
+            var max := max(type64(type)).toString.length
             if signed(type) {
                 max += 1 -- for minus sign
             }
@@ -741,7 +741,7 @@ class WriteNumbers {
         if size1 == null {
             return size2 < 64
         }
-        return size1 >= 32
+        return size1 > 32
     }
 
     @class

@@ -1176,6 +1176,8 @@ class CodeGenerator {
                 when "="  { result.append("$EQ") }
                 when "&"  { result.append("$AM") }
                 when "*"  { result.append("$ST") }
+                when "["  { result.append("$LB") }
+                when "]"  { result.append("$RB") }
                 otherwise { result.append(c) }
             }
             current := s.next(current)

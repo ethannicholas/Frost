@@ -24,19 +24,19 @@ class KeyTuple9<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>, 
     }
 
     @pre(i >= 0 & i < 9)
-    function [](i:Int):Object? {
+    function []<T>(i:Int):T {
         match i {
-            when 0 { return f0 }
-            when 1 { return f1 }
-            when 2 { return f2 }
-            when 3 { return f3 }
-            when 4 { return f4 }
-            when 5 { return f5 }
-            when 6 { return f6 }
-            when 7 { return f7 }
-            when 8 { return f8 }
+            when 0 { return f0->T }
+            when 1 { return f1->T }
+            when 2 { return f2->T }
+            when 3 { return f3->T }
+            when 4 { return f4->T }
+            when 5 { return f5->T }
+            when 6 { return f6->T }
+            when 7 { return f7->T }
+            when 8 { return f8->T }
         }
-        return null
+        unreachable
     }
 
     @override

@@ -15,13 +15,16 @@ class Identifier {
             assert s !== null, "no 'self' in symboltable"
             return compiler.symbolRef(position, null, s)
         }
-        def s := compiler.symbolTable[name]
+        var s := compiler.symbolTable[name]
         if s == null {
             def cl := compiler.tryResolveClass(name)
             if cl !== null {
                 compiler.checkGenericArguments(position.asPosition, cl, cl.type)
                 return compiler.literalType(cl.type)
             }
+        }
+        if s == null {
+            s := compiler.root[name]
         }
         if s !== null {
             return compiler.symbolRef(position, null, s)
