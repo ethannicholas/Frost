@@ -75,6 +75,6 @@ method main() {
             transposed[i].append(line[i])
         }
     }
-    Console.printLine(transposed.map(s => counts(s.toString)[0][0]).join(""))
-    Console.printLine(transposed.map(s => counts(s.toString).last[0]).join(""))
+    Console.printLine(transposed.map(s => self.counts(s.toString)[0][0]).join(""))
+    Console.printLine(transposed.map(s => self.counts(s.toString).last[0]).join(""))
 }

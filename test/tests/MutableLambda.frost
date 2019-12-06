@@ -1,0 +1,7 @@
+method main() {
+    def a := [1]
+    def b := x:Int => a[0] + x
+    Console.printLine(b(10))
+    a[0] := 0
+    Console.printLine(b(10))
+}

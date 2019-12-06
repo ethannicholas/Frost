@@ -141,6 +141,7 @@ class Array<T> : List<T> {
 
     @override
     method insert(index:Int, value:T) {
+        -- FIXME performance, this is horrendously slow
         ensureCapacity(count + 1)
         for i in count .. index by -1 {
             data[i] := data[i - 1->Int]
@@ -185,6 +186,7 @@ class Array<T> : List<T> {
 
     @override
     method removeIndex(index:Int):T {
+        -- FIXME performance, this is horrendously slow
         def result := self[index]
         for i in index .. _count - 1 {
             self[i] := self[i + 1]

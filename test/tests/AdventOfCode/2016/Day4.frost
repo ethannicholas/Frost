@@ -61,7 +61,8 @@ function shift(s:String, count:Int):String {
 method main() {
     def input := Console.inputStream().lines().all()
     def parsed := input.map(line => line.parse(/([\w-]+)-(\d+)\[(\w+)\]/)!)
-    def real := parsed.filter(p => counts(p[0])[0 .. 5].map(pair => pair[0]).join("") = p[2])
+    def real := parsed.filter(p => self.counts(p[0])[0 .. 5].map(pair => pair[0]).join("") = p[2])
     Console.printLine(real.map(p => p[1].asInt!).fold(Int.+))
-    Console.printLine(real.filter(p => shift(p[0], p[1].asInt!) = "northpole object storage")[0][1])
+    Console.printLine(real.filter(p => self.shift(p[0], p[1].asInt!) =
+            "northpole object storage")[0][1])
 }

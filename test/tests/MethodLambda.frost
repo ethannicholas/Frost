@@ -1,0 +1,10 @@
+method test():Int {
+    return 12
+}
+
+method main() {
+    def a := x:Int => self.test() + x
+    def b:(Int)=>(Int) := x:Int => self.test() + x
+    Console.printLine(a(1))
+    Console.printLine(b(2))
+}
