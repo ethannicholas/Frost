@@ -1,0 +1,102 @@
+-*
+
+--- Day 19: A Series of Tubes ---
+
+Somehow, a network packet got lost and ended up here. It's trying to follow a routing diagram (your
+puzzle input), but it's confused about where to go.
+
+Its starting point is just off the top of the diagram. Lines (drawn with |, -, and +) show the path
+it needs to take, starting by going down onto the only line connected to the top of the diagram. It
+needs to follow this path until it reaches the end (located somewhere within the diagram) and stop
+there.
+
+Sometimes, the lines cross over each other; in these cases, it needs to continue going the same
+direction, and only turn left or right when there's no other option. In addition, someone has left
+letters on the line; these also don't change its direction, but it can use them to keep track of
+where it's been. For example:
+
+     |          
+     |  +--+    
+     A  |  C    
+ F---|----E|--+ 
+     |  |  |  D 
+     +B-+  +--+ 
+
+Given this diagram, the packet needs to take the following path:
+
+Starting at the only line touching the top of the diagram, it must go down, pass through A, and
+continue onward to the first +.
+Travel right, up, and right, passing through B in the process.
+Continue down (collecting C), right, and up (collecting D).
+Finally, go all the way left through E and stopping at F.
+Following the path to the end, the letters it sees on its path are ABCDEF.
+
+The little packet looks up at you, hoping you can help it find the way. What letters will it see (in
+the order it would see them) if it follows the path? (The routing diagram is very wide; make sure
+you view it without line wrapping.)
+
+*-
+
+choice Direction {
+    UP
+    DOWN
+    LEFT
+    RIGHT
+
+    property offsets:(Int, Int)
+    function get_offsets():(Int, Int) {
+        match self {
+            when UP { return (-1, 0) }
+            when DOWN { return (1, 0) }
+            when LEFT { return (0, -1) }
+            when RIGHT { return (0, 1) }
+            otherwise { unreachable }
+        }
+    }
+}
+
+method main() {
+    def lines := Console.inputStream().lines().all()
+    def map := lines.map(String.get_utf8)
+    function get(row:Int, column:Int):Char8 {
+        if row < 0 | row >= map.count {
+            return " "
+        }
+        def line := map[row]
+        if column < 0 | column > line.count {
+            return " "
+        }
+        return line[column]
+    }
+    var position := (0, lines[0].indexOf("|").byteOffset)
+    var direction := Direction.DOWN
+    def result := MutableString()
+    var count := 0
+    loop {
+        def c := get(position[0], position[1])
+        match c {
+            when " " {
+                break
+            }
+            when "+" {
+                for d in [Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT] {
+                    if d.offsets[0] = -direction.offsets[0] & d.offsets[1] = -direction.offsets[1] {
+                        continue
+                    }
+                    if get(position[0] + d.offsets[0], position[1] + d.offsets[1]) != " " {
+                        direction := d
+                        break
+                    }
+                }
+            }
+            when "-", "|" {}
+            otherwise {
+                result.append(c)
+            }
+        }
+        position := (position[0] + direction.offsets[0], position[1] + direction.offsets[1])
+        count += 1
+    }
+    Console.printLine(result)
+    Console.printLine(count)
+}

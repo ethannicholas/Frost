@@ -71,19 +71,19 @@ class KeyTuple13<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>,
     @override
     function get_hash():Int {
         var result := 0
-        result ~~= f0.hash
-        result ~~= f1.hash
-        result ~~= f2.hash
-        result ~~= f3.hash
-        result ~~= f4.hash
-        result ~~= f5.hash
-        result ~~= f6.hash
-        result ~~= f7.hash
-        result ~~= f8.hash
-        result ~~= f9.hash
-        result ~~= f10.hash
-        result ~~= f11.hash
-        result ~~= f12.hash
+        result ~~= f0.hash *& 1
+        result ~~= f1.hash *& 73
+        result ~~= f2.hash *& 179
+        result ~~= f3.hash *& 283
+        result ~~= f4.hash *& 419
+        result ~~= f5.hash *& 547
+        result ~~= f6.hash *& 661
+        result ~~= f7.hash *& 811
+        result ~~= f8.hash *& 947
+        result ~~= f9.hash *& 1087
+        result ~~= f10.hash *& 1229
+        result ~~= f11.hash *& 1381
+        result ~~= f12.hash *& 1523
         return result
     }
     @override

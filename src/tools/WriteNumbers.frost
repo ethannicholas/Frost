@@ -83,7 +83,12 @@ class WriteNumbers {
     @class
     function size32(type:Type):Int {
         def result := size(type)
-        return (result !== null).choose(result, 32)
+        if result !== null {
+            return result
+        }
+        else {
+            return 32
+        }
     }
 
     @class

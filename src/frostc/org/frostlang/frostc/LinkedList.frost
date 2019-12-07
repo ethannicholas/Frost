@@ -133,6 +133,12 @@ class LinkedList<T> : Collection<T> {
     }
 
     @override
+    method mapInPlace(f:(T)=>(T)) {
+        unreachable
+    }
+
+
+    @override
     function get_toString():String {
         def result := MutableString()
         result.append("[")

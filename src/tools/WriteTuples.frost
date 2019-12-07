@@ -73,7 +73,8 @@ method writeTuple(count:Int, kind:Kind, path:File) {
             out.printLine("    function get_hash():Int {")
             out.printLine("        var result := 0")
             for i in Int(0) .. count {
-                out.printLine("        result ~~= f\{i}.hash")
+                out.printLine("        result ~~= f\{i}.hash *& \{[1, 73, 179, 283, 419, 547, 661,
+                        811, 947, 1087, 1229, 1381, 1523, 1663, 1823, 1993][i]}")
             }
             out.printLine("        return result")
             out.printLine("    }")

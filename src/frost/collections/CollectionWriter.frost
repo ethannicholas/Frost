@@ -54,4 +54,6 @@ interface CollectionWriter<T> {
     will display `[1, 3, 5]`, as the filter function returns true only for elements with odd values.
     ================================================================================================
     method filterInPlace(test:(T)=>(Bit))
+
+    method mapInPlace(f:(T)=>(T))
 }

@@ -627,20 +627,6 @@ class Call {
         var updated := false
         do {
             updated := false
-            for i in 0 .. m.value.parameters.count {
-                def paramType := m.parameterType(i)
-                def result := determineImplications(compiler, m.value, args[i], paramType, remaps)
-                match result {
-                    when ImplicationsResult.UPDATED {
-                        updated := true
-                    }
-                    when ImplicationsResult.NOT_UPDATED {
-                    }
-                    when ImplicationsResult.FAILED {
-                        return null
-                    }
-                }
-            }
             match type {
                 when TypeContext.TYPE(t, _) {
                     def result := determineImplications(compiler, m.value, t, m.returnType, remaps)
@@ -653,6 +639,20 @@ class Call {
                         when ImplicationsResult.FAILED {
                             return null
                         }
+                    }
+                }
+            }
+            for i in 0 .. m.value.parameters.count {
+                def paramType := m.parameterType(i)
+                def result := determineImplications(compiler, m.value, args[i], paramType, remaps)
+                match result {
+                    when ImplicationsResult.UPDATED {
+                        updated := true
+                    }
+                    when ImplicationsResult.NOT_UPDATED {
+                    }
+                    when ImplicationsResult.FAILED {
+                        return null
                     }
                 }
             }

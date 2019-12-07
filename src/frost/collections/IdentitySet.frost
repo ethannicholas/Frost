@@ -73,6 +73,13 @@ class IdentitySet<T> : Collection<T> {
     }
 
     @override
+    method mapInPlace(f:(T)=>(T)) {
+        for (k, v) in contents.entries {
+            contents[k] := f(v)     
+        }
+    }
+
+    @override
     function get_toString():String {
         def result := MutableString("[")
         var separator := ""

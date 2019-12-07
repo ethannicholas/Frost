@@ -60,6 +60,17 @@ class Array<T> : List<T> {
         }
     }
 
+    ================================================================================================
+    Creates a new `Array` containing `count` values produced by `generator`. `generator` is called
+    `count` times, starting with the parameter `0` and ending with `count - 1`.
+    ================================================================================================
+    init(count:Int, generator:(Int)=&>(T)) {
+        init(capacity)
+        for i in 0 .. count {
+            add(generator(i))
+        }
+    }
+
     @private
     init(data:Pointer<T>, count:Int) {
         self.data := data->Pointer<T>

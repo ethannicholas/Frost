@@ -73,6 +73,14 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
         }
     }
 
+    @override
+    @default
+    method mapInPlace(f:(T)=>(T)) {
+        for i in 0 .. count {
+            self[i] := f(self[i])
+        }
+    }
+
     ================================================================================================
     As [sort], but performs the sort in-place rather than returning a new list.
     ================================================================================================

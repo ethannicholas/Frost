@@ -325,8 +325,15 @@ class Match {
             otherBlock := end
         }
         ir.setCurrentBlock(startBlock)
-        ir.add(IR.Statement.SWITCH(position, (choiceTag !== null).choose(choiceTag, value),
-                FixedArray<(UInt64, IR.Block.ID)>.from(cases), otherBlock))
+        def test:IR.Value
+        if choiceTag !== null {
+            test := choiceTag
+        }
+        else {
+            test := value
+        }
+        ir.add(IR.Statement.SWITCH(position, test, FixedArray<(UInt64, IR.Block.ID)>.from(cases),
+                otherBlock))
         ir.setCurrentBlock(end)        
     }
 

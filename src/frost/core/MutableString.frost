@@ -38,6 +38,82 @@ class MutableString {
         }
     }
 
+    @private
+    class UTF8List : List<Char8> {
+        def str:MutableString
+
+        init(str:MutableString) {
+            self.str := str
+        }
+
+        @override
+        function [](index:Int):Char8 {
+            return str.data[index]
+        }
+
+        @override
+        method []:=(index:Int, value:Char8) {
+            str.data[index] := value
+        }
+
+        @override
+        method add(c:Char8) {
+            str.append(c)
+        }
+
+        @override
+        method insert(index:Int, c:Char8) {
+            -- FIXME performance
+            str[index .. index] := c.toString
+        }
+
+        @override
+        method removeIndex(index:Int):Char8 {
+            -- FIXME performance
+            def result := str.data[index]
+            str[index ... index] := ""
+            return result
+        }
+
+        @override
+        function get_count():Int {
+            return str._length
+        }
+
+        @override
+        function get_iterator():Iterator<Char8> {
+            return UTF8Iterator(str)
+        }
+
+        @override
+        method clear() {
+            str.clear()
+        }
+    }
+
+    @private
+    class UTF8Iterator : Iterator<Char8> {
+        var index := 0
+
+        def str:MutableString
+
+        init(str:MutableString) {
+            self.str := str
+        }
+
+        @override
+        function get_done():Bit {
+            return index >= str._length
+        }
+
+        @override
+        method next():Char8 {
+            index += 1
+            return str.data[index - 1]
+        }
+    }
+
+
     property length:Int
 
     property byteLength:Int
@@ -689,6 +765,11 @@ class MutableString {
             maxLength *= 2
         }
         data := data.realloc(oldMax, maxLength)
+    }
+
+    property utf8:UTF8List
+    function get_utf8():UTF8List {
+        return UTF8List(self)
     }
 
     -- FIXME @self
