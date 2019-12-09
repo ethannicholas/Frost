@@ -114,7 +114,8 @@ class Closure {
                 }
             }
         }
-        def result := ClassDecl(compiler.currentClass[0].source, p, HashMap<String, String>(), null,
+        def result := ClassDecl(compiler.currentClass[0].source, p,
+                compiler.currentClass[0].aliases, null,
                 Annotations(Annotations.Flag.SYNTHETIC), ClassDecl.Kind.CLASS,
                 "\{compiler.currentClass[0].name}._Closure\{compiler.closureCount}", supers,
                 Array<ClassDecl.GenericParameter>(), SymbolTable(compiler.symbolTable))

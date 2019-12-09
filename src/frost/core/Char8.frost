@@ -21,6 +21,15 @@ class Char8 : Value, HashKey<Char8>, Comparable<Char8> {
         self.value := value
     }
 
+    function -(other:Char8):UInt8 {
+        return value - other.value
+    }
+
+    @priority(1)
+    function -(other:Char8):Int {
+        return (value - other.value).asInt
+    }
+
     @override
     function =(other:Char8):Bit {
         return value = other.value

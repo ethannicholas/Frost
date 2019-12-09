@@ -5200,6 +5200,9 @@ class Compiler : ErrorReporter {
                 def compiledTuple:IR.Value?
                 if rawValue !== null {
                     compiledTuple := compileExpression(rawValue, TypeContext.NON_VOID)
+                    if compiledTuple == null {
+                        return null
+                    }
                     finalType := compiledTuple.type()
                 }
                 else if valueType !== null {
@@ -5220,7 +5223,7 @@ class Compiler : ErrorReporter {
                             def position := MethodPosition(basePos, currentMethodIndex)
                             def field := ASTNode.IR_WRAPPER(basePos, cast(position, 
                                     Dot.compile(self, position, compiledTuple, "f\{i}"),
-                                    compiledTuple.type().subtypes[i]))
+                                    compiledTuple.type().nonnullable().subtypes[i]))
                             assert field !== null
                             target := compileTarget(targets[i], kind, field, null)
                         }

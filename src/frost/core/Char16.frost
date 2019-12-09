@@ -19,6 +19,15 @@ class Char16 : Value, HashKey<Char16>, Comparable<Char16> {
         self.value := value
     }
 
+    function -(other:Char16):UInt16 {
+        return value - other.value
+    }
+
+    @priority(1)
+    function -(other:Char16):Int {
+        return (value - other.value).asInt
+    }
+
     @override
     function =(other:Char16):Bit {
         return value = other.value

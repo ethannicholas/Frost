@@ -1,6 +1,6 @@
 package frost.core
 @package
-class KeyTuple5<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>, T4:HashKey<T4>> : HashKey<KeyTuple5<T0, T1, T2, T3, T4>> {
+class KeyTuple5<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>, T4:HashKey<T4>> : HashKey<(T0, T1, T2, T3, T4)> {
     def f0:T0
     def f1:T1
     def f2:T2
@@ -28,7 +28,7 @@ class KeyTuple5<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>, 
     }
 
     @override
-    function =(other:KeyTuple5<T0, T1, T2, T3, T4>):Bit {
+    function =(other:(T0, T1, T2, T3, T4)):Bit {
         if f0 != other.f0 { return false }
         if f1 != other.f1 { return false }
         if f2 != other.f2 { return false }

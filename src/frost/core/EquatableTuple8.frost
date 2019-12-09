@@ -1,6 +1,6 @@
 package frost.core
 @package
-class EquatableTuple8<T0:Equatable<T0>, T1:Equatable<T1>, T2:Equatable<T2>, T3:Equatable<T3>, T4:Equatable<T4>, T5:Equatable<T5>, T6:Equatable<T6>, T7:Equatable<T7>> : Equatable<EquatableTuple8<T0, T1, T2, T3, T4, T5, T6, T7>> {
+class EquatableTuple8<T0:Equatable<T0>, T1:Equatable<T1>, T2:Equatable<T2>, T3:Equatable<T3>, T4:Equatable<T4>, T5:Equatable<T5>, T6:Equatable<T6>, T7:Equatable<T7>> : Equatable<(T0, T1, T2, T3, T4, T5, T6, T7)> {
     def f0:T0
     def f1:T1
     def f2:T2
@@ -37,7 +37,7 @@ class EquatableTuple8<T0:Equatable<T0>, T1:Equatable<T1>, T2:Equatable<T2>, T3:E
     }
 
     @override
-    function =(other:EquatableTuple8<T0, T1, T2, T3, T4, T5, T6, T7>):Bit {
+    function =(other:(T0, T1, T2, T3, T4, T5, T6, T7)):Bit {
         if f0 != other.f0 { return false }
         if f1 != other.f1 { return false }
         if f2 != other.f2 { return false }

@@ -22,6 +22,15 @@ class Char32 : Value, HashKey<Char32>, Comparable<Char32> {
         self.value := value
     }
 
+    function -(other:Char32):Int32 {
+        return value - other.value
+    }
+
+    @priority(1)
+    function -(other:Char32):Int {
+        return (value - other.value).asInt
+    }
+
     @override
     function =(other:Char32):Bit {
         return value = other.value

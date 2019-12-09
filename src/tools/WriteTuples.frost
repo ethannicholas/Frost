@@ -27,13 +27,13 @@ method writeTuple(count:Int, kind:Kind, path:File) {
             }
         }
         out.print(">")
-        def types := "<" + Int[0 .. count].map(i => "T\{i}").join(", ") + ">"
+        def types := Int[0 .. count].map(i => "T\{i}").join(", ")
         match kind {
             when Kind.EQUATABLE {
-                out.print(" : Equatable<\{name}\{types}>")
+                out.print(" : Equatable<(\{types})>")
             }
             when Kind.KEY {
-                out.print(" : HashKey<\{name}\{types}>")
+                out.print(" : HashKey<(\{types})>")
             }
         }
         out.printLine(" {")
@@ -60,7 +60,7 @@ method writeTuple(count:Int, kind:Kind, path:File) {
         match kind {
             when Kind.EQUATABLE, Kind.KEY {
                 out.printLine("    @override")
-                out.printLine("    function =(other:\{name}\{types}):Bit {")
+                out.printLine("    function =(other:(\{types})):Bit {")
                 for i in Int(0) .. count {
                     out.printLine("        if f\{i} != other.f\{i} { return false }")
                 }

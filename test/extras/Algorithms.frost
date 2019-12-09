@@ -57,4 +57,22 @@ class Algorithms {
         }
         return null
     }
+
+    @class
+    function count<T:Equatable<T>>(a:ListView<T>):Array<(Int, T)> {
+        def result := Array<(Int, T)>()
+        var count := 1
+        var start := 0
+        while start < a.count {        
+            var i := start + 1
+            while i < a.count & a[i] = a[start] {
+                i += 1
+                count += 1
+            }
+            result.add((count, a[start]))
+            start := i
+            count := 1
+        }
+        return result
+    }
 }

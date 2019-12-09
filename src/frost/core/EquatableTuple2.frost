@@ -1,6 +1,6 @@
 package frost.core
 @package
-class EquatableTuple2<T0:Equatable<T0>, T1:Equatable<T1>> : Equatable<EquatableTuple2<T0, T1>> {
+class EquatableTuple2<T0:Equatable<T0>, T1:Equatable<T1>> : Equatable<(T0, T1)> {
     def f0:T0
     def f1:T1
 
@@ -19,7 +19,7 @@ class EquatableTuple2<T0:Equatable<T0>, T1:Equatable<T1>> : Equatable<EquatableT
     }
 
     @override
-    function =(other:EquatableTuple2<T0, T1>):Bit {
+    function =(other:(T0, T1)):Bit {
         if f0 != other.f0 { return false }
         if f1 != other.f1 { return false }
         return true
