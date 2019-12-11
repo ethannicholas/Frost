@@ -286,7 +286,7 @@ class Day11 {
     method main() {
     -*
         def floors := Array<Array<Thing>>()
-        def lines := File("../test/tests/AdventOfCode/2016/Day11.in").lines().get()
+        def lines := Console.inputStream().lines().get()
         for i in 0 .. 4 {
             def line := lines.next()
             def floor := Array<Thing>()

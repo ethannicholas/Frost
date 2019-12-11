@@ -299,12 +299,14 @@ class HashMap<K:HashKey<K>, V> : Map<K, V> {
             while e !== null & !test(e.key, e.value) {
                 e := e.next
                 contents[i] := e
+                _count -= 1
             }
             if e !== null {
                 var next := e.next
                 while next !== null {
                     if !test(next.key, next.value) {
-                        e.next := next
+                        e.next := next.next
+                        _count -= 1
                     }
                     next := next.next
                 }
