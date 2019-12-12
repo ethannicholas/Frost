@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class Annotations {
     class Flag {
         constant PRIVATE          := 1 << 1
@@ -10,7 +9,7 @@ class Annotations {
         constant OVERRIDE         := 1 << 5
         constant EXTERNAL         := 1 << 6
         constant IMPLICIT         := 1 << 7
-        constant FINAL            := 1 << 8
+        constant EXTENDABLE       := 1 << 8
         constant ABSTRACT         := 1 << 9
         constant INLINE           := 1 << 10
         constant SPECIALIZE       := 1 << 11
@@ -63,7 +62,7 @@ class Annotations {
 
     property isImplicit:Bit
 
-    property isFinal:Bit
+    property isExtendable:Bit
 
     property isAbstract:Bit
 
@@ -137,8 +136,8 @@ class Annotations {
         return flags && Flag.IMPLICIT != 0
     }
 
-    function get_isFinal():Bit {
-        return flags && Flag.FINAL != 0
+    function get_isExtendable():Bit {
+        return flags && Flag.EXTENDABLE != 0
     }
 
     function get_isAbstract():Bit {
@@ -209,8 +208,8 @@ class Annotations {
         if isImplicit {
             result.append("@implicit\n")
         }
-        if isFinal {
-            result.append("@final\n")
+        if isExtendable {
+            result.append("@extendable\n")
         }
         if isAbstract {
             result.append("@abstract\n")

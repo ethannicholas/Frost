@@ -1,6 +1,5 @@
 package org.frostlang.frost
 
-@final
 class IntBitIterator : Iterator<Bit> {
     @private
     def value:UInt64

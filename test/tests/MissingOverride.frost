@@ -1,9 +1,11 @@
+@extendable
 class Super1 {
     function foo():String {
         return "super1"
     }
 }
 
+@extendable
 class Super2 : Super1 {
     method foo():Int {
         return 2

@@ -1,3 +1,4 @@
-BadOverride.frost:9:5: error: method anonymous.Sub1.foo():frost.core.Int is marked @override, but no matching method exists among its ancestors
-BadOverride.frost:16:5: error: method anonymous.Sub2.foo():frost.core.String overrides function anonymous.Super.foo():frost.core.String, but methods cannot override functions
-2 errors
+BadOverride.frost:15:5: error: method anonymous.Sub1.foo():frost.core.Int is marked @override, but no matching method exists among its ancestors
+BadOverride.frost:22:5: error: method anonymous.Sub2.foo():frost.core.String overrides function anonymous.Super.foo():frost.core.String, but methods cannot override functions
+BadOverride.frost:29:5: error: function anonymous.Sub3.bar():frost.core.String cannot override non-@extendable function anonymous.Super.bar():frost.core.String
+3 errors

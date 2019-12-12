@@ -6,7 +6,6 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.ErrorReporter
 uses org.frostlang.frostc.Position
 
-@final
 class RegexParser {
     def lexer := RegexLexer()
 

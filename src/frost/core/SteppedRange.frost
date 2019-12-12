@@ -18,7 +18,6 @@ objects; the loop above could be more succinctly (and readably) written:
         Console.printLine(i)
     }
 ====================================================================================================
-@final
 @specialize
 class SteppedRange<EndPoint:Value?, Step:Value> : Value {
     ================================================================================================

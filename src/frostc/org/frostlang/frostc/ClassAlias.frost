@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class ClassAlias : Symbol {
     def fullName:String
 

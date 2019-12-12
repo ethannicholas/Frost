@@ -5,7 +5,6 @@ uses frost.unsafe.Pointer
 ====================================================================================================
 An immutable version of [Array].
 ====================================================================================================
-@final
 class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
     @private
     class ImmutableArrayIterator<T:Immutable> : Iterator<T> {

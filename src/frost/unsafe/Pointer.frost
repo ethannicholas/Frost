@@ -13,7 +13,6 @@ This means it is safe to cast e.g. `Pointer<Object>` to `Pointer<String>`, or vi
 the fact that `String` and `Object` are different sizes (so long as the underlying objects being
 pointed to are in fact `String`s, of course).
 ====================================================================================================
-@final
 class Pointer<T> : Value {
     -*
         This is a special class which requires extra support from the compiler. Most notably, there

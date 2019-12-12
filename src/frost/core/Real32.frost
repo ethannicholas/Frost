@@ -7,7 +7,6 @@ package frost.core
 ===
 A 32-bit floating point number.
 ===
-@final
 class Real32 : Value, HashKey<Real32>, Comparable<Real32>, Formattable {
     @private
     def value:builtin_float32

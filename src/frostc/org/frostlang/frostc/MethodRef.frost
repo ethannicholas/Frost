@@ -5,7 +5,6 @@ A reference to a method in a particular context type. For instance, the method `
 method `File.!=` are actually the same method (inherited from `Equatable`), but have different types
 because one of them comes from `Equatable<String>` and the other `Equatable<File>`.
 ====================================================================================================
-@final
 class MethodRef {
     def target:Type
 

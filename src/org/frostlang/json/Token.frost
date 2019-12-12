@@ -5,7 +5,6 @@ package org.frostlang.json
 
 uses org.frostlang.json.Position
 
-@final
 class Token : Value {
     choice Kind {
         EOF

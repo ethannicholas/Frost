@@ -2,6 +2,7 @@ interface Formattable {
     function format(fmt:String):String
 }
 
+@extendable
 class Bar {
 }
 

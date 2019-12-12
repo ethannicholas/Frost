@@ -2,6 +2,7 @@ package org.frostlang.frostc
 
 uses org.frostlang.frostc.expression.Binary
 
+@extendable
 class CodeGenerator {
     constant NO_REFCNT := -999
 
@@ -138,7 +139,7 @@ class CodeGenerator {
         else {
             result := false
         }
-        assert !result | (!m.annotations.isOverride & (m.annotations.isFinal |
+        assert !result | (!m.annotations.isOverride & (!m.annotations.isExtendable |
                 m.annotations.isClass)), "invalid struct indirection on \{m.signature}"
         return result
     }

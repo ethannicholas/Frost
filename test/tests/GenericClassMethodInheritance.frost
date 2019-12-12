@@ -16,7 +16,6 @@ class GenericClassMethodInheritance : Super<Int> {
     }
 
     @override
-    @final
     function compute():Int {
         return x * 12
     }

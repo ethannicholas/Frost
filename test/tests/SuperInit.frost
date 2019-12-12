@@ -1,3 +1,4 @@
+@extendable
 class Super {
     init() {
         x := 123

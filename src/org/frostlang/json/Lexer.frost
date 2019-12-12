@@ -7,7 +7,6 @@ uses frost.unsafe.Pointer
 uses org.frostlang.plex.runtime.DFA
 uses org.frostlang.json.Position
 
-@final
 class Lexer {
     def dfa:DFA
 

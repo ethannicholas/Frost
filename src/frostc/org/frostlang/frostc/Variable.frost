@@ -3,7 +3,6 @@ package org.frostlang.frostc
 ====================================================================================================
 Represents a var, def, constant, or property.
 ====================================================================================================
-@final
 class Variable : Symbol {
     choice Kind {
         VAR

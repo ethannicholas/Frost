@@ -21,6 +21,7 @@ class Object {
     ================================================================================================
     property toString:String
 
+    @extendable
     function get_toString():String {
         return "<\{$class.name}>"
     }
@@ -29,6 +30,7 @@ class Object {
     Called just before the object is destroyed. The default implementation does nothing.
     ================================================================================================
     @protected
+    @extendable
     method cleanup() {
     }
 }

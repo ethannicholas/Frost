@@ -1,3 +1,4 @@
+@extendable
 class Super {
     def field := 5
 }

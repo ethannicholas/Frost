@@ -1,6 +1,8 @@
+@extendable
 class PostconditionBadPost1 {
     var x := 0
 
+    @extendable
     @postAnd(x > 0)
     method test(x:Int) {
         self.x := x

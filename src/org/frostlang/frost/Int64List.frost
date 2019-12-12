@@ -4,7 +4,6 @@
 
 package org.frostlang.frost
 
-@final
 class Int64List : ListView<Int64> {
     @private
     def range:SteppedRange<Int64, Int64>

@@ -2,7 +2,6 @@ package org.frostlang.frostc
 
 uses org.frostlang.frostc.parser.Token
 
-@final
 class Scanner {
     @private
     constant INLINE_THRESHOLD := 10
@@ -150,11 +149,12 @@ class Scanner {
                         when "@implicit" {
                             flags := add(p, flags, Annotations.Flag.IMPLICIT)
                         }
-                        when "@final" {
-                            flags := add(p, flags, Annotations.Flag.FINAL)
+                        when "@extendable" {
+                            flags := add(p, flags, Annotations.Flag.EXTENDABLE)
                         }
                         when "@abstract" {
                             flags := add(p, flags, Annotations.Flag.ABSTRACT)
+                            flags := add(p, flags, Annotations.Flag.EXTENDABLE)
                         }
                         when "@inline" {
                             flags := add(p, flags, Annotations.Flag.INLINE)
@@ -525,7 +525,7 @@ class Scanner {
 
     function shouldInline(annotations:Annotations, statements:ListView<ASTNode>):Bit {
         if compiler.settings.optimizationLevel > 0 & !annotations.isInline &
-                annotations.isFinal {
+                !annotations.isExtendable {
             var c := 0
             for s in statements {
                 c += complexity(s)
@@ -558,9 +558,6 @@ class Scanner {
             }
         }
         def annotations := convertAnnotations(rawAnnotations)
-        if kind != MethodDecl.Kind.INIT & owner.annotations.isFinal | annotations.isPrivate {
-            annotations.flags ||= Annotations.Flag.FINAL
-        }
         def generics:Array<MethodDecl.GenericParameter>?
         if rawGenerics !== null {
             generics := Array<MethodDecl.GenericParameter>()
@@ -612,13 +609,22 @@ class Scanner {
         if statements !== null & shouldInline(annotations, statements) {
             annotations.flags ||= Annotations.Flag.INLINE
         }
-        if statements == null & owner.classKind = ClassDecl.Kind.INTERFACE &
-                !owner.annotations.isStub {
+        if owner.classKind = ClassDecl.Kind.INTERFACE & !owner.annotations.isStub {
             if annotations.flags && Annotations.Flag.ABSTRACT != 0 {
                 error(position,  "interface methods are abstract by default and may not have an " +
                         "explicit '@abstract' annotation")
             }
-            annotations.flags ||= Annotations.Flag.ABSTRACT
+            if annotations.flags && Annotations.Flag.EXTENDABLE != 0 {
+                error(position,  "interface methods are extendable by default and may not have an" +
+                        " explicit '@abstract' annotation")
+            }
+            if statements == null {
+                annotations.flags ||= Annotations.Flag.ABSTRACT
+            }
+            annotations.flags ||= Annotations.Flag.EXTENDABLE
+        }
+        else if !owner.annotations.isExtendable & annotations.isExtendable {
+            error(position,  "methods in non-@extendable classes may not be @extendable")
         }
         def result := MethodDecl(owner, position, compiler.methods.count, doccomment, annotations,
                 kind, name, generics, parameters, returnType, statements)
@@ -715,6 +721,22 @@ class Scanner {
             }
         }
         def annotations := convertAnnotations(rawAnnotations)
+        if kind = ClassDecl.Kind.INTERFACE {
+            if annotations.flags && Annotations.Flag.ABSTRACT != 0 {
+                error(position,  "interfaces are abstract by default and may not have an " +
+                        "explicit '@abstract' annotation")
+            }
+            if annotations.flags && Annotations.Flag.EXTENDABLE != 0 {
+                error(position,  "interfaces are extendable by default and may not have an " +
+                        "explicit '@extendable' annotation")
+            }
+            annotations.flags ||= Annotations.Flag.EXTENDABLE
+        }
+        if kind = ClassDecl.Kind.CHOICE {
+            if annotations.isExtendable {
+                error(position, "choices may not be annotated with '@extendable'")
+            }
+        }
         def parameters := Array<ClassDecl.GenericParameter>()
         if generics !== null {
             for p in generics {
@@ -807,8 +829,12 @@ class Scanner {
             result.symbolTable.add(defaultInit)
         }
         if !foundCleanup & (kind = ClassDecl.Kind.CLASS | kind = ClassDecl.Kind.CHOICE) {
+            var annotations := Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC
+            if result.annotations.isExtendable {
+                annotations ||= Annotations.Flag.EXTENDABLE
+            }
             def defaultCleanup := MethodDecl(result, position, compiler.methods.count,
-                    null, Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
+                    null, Annotations(annotations),
                     MethodDecl.Kind.METHOD, "cleanup", null, [], compiler.VOID_TYPE,
                     FixedArray<ASTNode>())
             compiler.methods.add(defaultCleanup)

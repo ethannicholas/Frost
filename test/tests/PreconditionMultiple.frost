@@ -1,4 +1,6 @@
+@extendable
 class PreconditionMultiple1 {
+    @extendable
     @pre(x > 0)
     @pre(x % 2 = 1)
     method test(x:Int) {

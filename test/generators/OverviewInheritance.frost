@@ -5,6 +5,7 @@ method main() {
         out.printLine("    function format(fmt:String):String")
         out.printLine("}")
         out.printLine()
+        out.printLine("@extendable")
         out.printLine("class Bar {")
         out.printLine("}")
         out.printLine()

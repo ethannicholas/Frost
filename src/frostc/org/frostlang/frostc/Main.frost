@@ -5,7 +5,6 @@ uses org.frostlang.frostc.parser.Lexer
 uses org.frostlang.frostc.parser.Parser
 uses org.frostlang.frostc.parser.TokenKind
 
-@final
 class Main {    
     @class
     method main(args:ListView<String>) {

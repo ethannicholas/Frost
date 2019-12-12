@@ -13,7 +13,6 @@ It is possible to continue writing directly to the underlying stream despite hav
 `IndentedOutputStream` on top of it; naturally, such writes will not be processed by the
 `IndentedOutputStream` and thus may interact badly with it.
 ====================================================================================================
-@final
 class IndentedOutputStream : OutputStream {
     ================================================================================================
     The current indentation level, in units of `indentSize`. Each line written to the underlying

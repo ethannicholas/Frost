@@ -159,8 +159,8 @@ class FrostDoc {
             if a.isOverride {
                 out.write("annotation", "@override")
             }
-            if a.isFinal {
-                out.write("annotation", "@final")
+            if a.isExtendable {
+                out.write("annotation", "@extendable")
             }
             if a.isDefault {
                 out.write("annotation", "@default")

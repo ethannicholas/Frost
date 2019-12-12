@@ -21,7 +21,6 @@ If the object (including any other mutable objects it directly or indirectly poi
 'handed off' and no longer accessed by the sending thread, no danger exists. If the sending thread
 continues to access a shared object, [Lock] must be used to synchronize access.
 ====================================================================================================
-@final
 class Thread : Immutable {
     @private
     def nativeHandle:Int
@@ -98,9 +97,9 @@ class Thread : Immutable {
     ================================================================================================
     Pauses execution of the current thread for a length of time.
     
-    @param millis the number of milliseconds to sleep
+    @param the number of seconds (or fraction thereof) to sleep
     ================================================================================================
     @class 
     @external
-    method sleep(millis:Int)
+    method sleep(seconds:Real64)
 }

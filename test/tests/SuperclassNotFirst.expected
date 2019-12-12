@@ -1,2 +1,2 @@
-SuperclassNotFirst.frost:7:39: error: superclass 'anonymous.Super' of class 'anonymous.SuperclassNotFirst' must be listed before any superinterfaces
+SuperclassNotFirst.frost:8:39: error: superclass 'anonymous.Super' of class 'anonymous.SuperclassNotFirst' must be listed before any superinterfaces
 1 error

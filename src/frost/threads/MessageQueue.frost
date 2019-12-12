@@ -6,7 +6,6 @@ or pull messages out of it. Multiple threads may simultaneously wait for a messa
 message queue, in which case one of the waiting threads will be selected to receive the message in a
 system-dependent fashion, while the other threads will continue to wait.
 ====================================================================================================
-@final
 @unsafeImmutable
 class MessageQueue<T:Immutable> : Immutable {
     @private

@@ -1,3 +1,4 @@
+@extendable
 class Base {
     method foo() {
         Console.printLine("Base.foo")

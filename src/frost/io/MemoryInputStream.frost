@@ -5,7 +5,6 @@ uses frost.unsafe.Pointer
 ====================================================================================================
 An `InputStream` which reads from a `String`.
 ====================================================================================================
-@final
 class MemoryInputStream : InputStream {
     @private
     def data:Pointer<UInt8>

@@ -10,7 +10,6 @@ to likewise be discarded and thus closed.
 You should not read directly from the underlying stream after creating a `LineNumberInputStream` on
 top of it, as doing so will naturally throw off the `LineNumberInputStream`'s calculations.
 ====================================================================================================
-@final
 class LineNumberInputStream : InputStream {
     @private
     def source:InputStream

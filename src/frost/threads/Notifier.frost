@@ -6,7 +6,6 @@ necessary from within safe Frost code; normally you would use [MessageQueue] to 
 threads. `Notifier` generally only comes into play when [Lock]s are necessary due to unsafe
 threading.
 ====================================================================================================
-@final
 class Notifier : Immutable {
     @private
     def nativeNotifier:Int64

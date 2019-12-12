@@ -46,7 +46,6 @@ class PLex {
             token.printLine()
             token.printLine("uses \{positionName}")
             token.printLine()
-            token.printLine("@final")
             def index := tokenName.next(lastIndexOf(tokenName, "."))
             token.printLine("class \{tokenName[index..]} : Value {")
             token.level += 1
@@ -144,7 +143,6 @@ class PLex {
             out.printLine("uses org.frostlang.plex.runtime.DFA")
             out.printLine("uses \{positionName}")
             out.printLine()
-            out.printLine("@final")
             out.printLine("class \{lexerName[lexerName.next(lastIndexOf(lexerName, "."))..]} {")
             out.level += 1
             out.printLine("def dfa:DFA")

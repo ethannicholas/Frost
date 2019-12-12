@@ -1,5 +1,6 @@
 package org.frostlang.frostc
 
+@extendable
 class Symbol {
     choice Kind {
         ALIAS
@@ -26,6 +27,7 @@ class Symbol {
         self.name := name
     }
 
+    @extendable
     function get_heritable():Bit {
         return true
     }

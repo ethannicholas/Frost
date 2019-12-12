@@ -1,2 +1,2 @@
-PreconditionBadPre.frost:9:12: error: cannot use '@pre' in a method which overrides another method; did you mean '@preOr'?
+PreconditionBadPre.frost:11:12: error: cannot use '@pre' in a method which overrides another method; did you mean '@preOr'?
 1 error

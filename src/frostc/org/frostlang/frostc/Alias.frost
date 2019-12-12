@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class Alias : Symbol {
     def type:Type
 

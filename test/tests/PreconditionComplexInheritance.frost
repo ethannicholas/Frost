@@ -1,4 +1,6 @@
+@extendable
 class PreconditionComplexInheritance1 {
+    @extendable
     @pre(x > 0)
     method test(x:Int) {
         Console.printLine("Got X1: \{x}")

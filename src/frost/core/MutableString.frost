@@ -9,7 +9,6 @@ uses frost.unsafe.Pointer
 -- See MutableString.finish().                                              --
 ------------------------------------------------------------------------------
 
-@final
 class MutableString {
     ================================================================================================
     Represents the position of a Unicode codepoint within a `MutableString`.

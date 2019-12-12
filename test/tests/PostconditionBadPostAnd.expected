@@ -1,2 +1,2 @@
-PostconditionBadPostAnd.frost:4:16: error: cannot use '@postAnd' in a method which does not override another method; did you mean '@post'?
+PostconditionBadPostAnd.frost:6:16: error: cannot use '@postAnd' in a method which does not override another method; did you mean '@post'?
 1 error

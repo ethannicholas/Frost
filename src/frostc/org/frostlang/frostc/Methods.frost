@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class Methods : Symbol {
     def methods:FixedArray<MethodDecl>
 

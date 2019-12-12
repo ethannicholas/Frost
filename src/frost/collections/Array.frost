@@ -10,7 +10,6 @@ it may require the backing store to be increased in size which in turn may requi
 Particularly for bigger arrays, it is best to avoid this expensive size increase by pre-allocating
 the array with the expected number of elements it will contain using [init(Int)].
 ====================================================================================================
-@final
 class Array<T> : List<T> {
     @private
     constant DEFAULT_CAPACITY := 16

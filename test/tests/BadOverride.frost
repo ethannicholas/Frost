@@ -1,6 +1,12 @@
+@extendable
 class Super {
+    @extendable
     function foo():String {
         return "Hello"
+    }
+
+    function bar():String {
+        return "Goodbye"
     }
 }
 
@@ -14,6 +20,13 @@ class Sub1 : Super {
 class Sub2 : Super {
     @override
     method foo():String {
+        return "Hello"
+    }
+}
+
+class Sub3 : Super {
+    @override
+    function bar():String {
         return "Hello"
     }
 }

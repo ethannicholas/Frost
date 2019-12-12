@@ -13,8 +13,10 @@ interface Generic2<U> : Generic1<U> {
     function convertValue(v:U):U
 }
 
+@extendable
 class Test2 : Generic2<Int> {
     @override
+    @extendable
     function getValue():Int {
         return 42
     }

@@ -4,7 +4,6 @@
 
 package org.frostlang.frost
 
-@final
 class Int8List : ListView<Int8> {
     @private
     def range:SteppedRange<Int8, Int8>

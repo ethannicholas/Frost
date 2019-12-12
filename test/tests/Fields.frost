@@ -1,3 +1,4 @@
+@extendable
 class Point2D {
     init(x:Int64, y:Int64) {
         self.x := x

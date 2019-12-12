@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class MethodPosition : Value, HashKey<MethodPosition> {
     -- index into the Compiler.file array
     def file:Int

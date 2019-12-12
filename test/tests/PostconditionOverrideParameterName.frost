@@ -1,6 +1,8 @@
+@extendable
 class PostconditionOverrideParameterName1 {
     var x:Int
 
+    @extendable
     @post(x >= min & x <= max)
     method setup(min:Int, max:Int) {
         x := (min + max) // 2

@@ -4,7 +4,6 @@ uses org.frostlang.frostc.Compiler.Expression
 uses org.frostlang.frostc.expression.Binary
 uses org.frostlang.frostc.parser.Token
 
-@final
 class CBackend : Backend {
     constant NO_REFCNT := -999
 

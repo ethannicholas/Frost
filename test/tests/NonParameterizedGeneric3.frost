@@ -1,2 +1,6 @@
-class NonParameterizedGeneric3 : Array {
+@extendable
+class Base<T> {
+}
+
+class NonParameterizedGeneric3 : Base {
 }

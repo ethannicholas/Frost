@@ -1477,7 +1477,7 @@ class Call {
                 if cl1 == null {
                     return null
                 }
-                dynamic := !cl1.annotations.isFinal
+                dynamic := cl1.annotations.isExtendable
                 if dynamic {
                     def type2 := unwrapCast(compiler, target)
                     if type1 != type2 {
@@ -1485,7 +1485,7 @@ class Call {
                         if cl2 == null {
                             return null
                         }
-                        dynamic := !cl2.annotations.isFinal
+                        dynamic := cl2.annotations.isExtendable
                         if !dynamic {
                             m := findStaticImpl(compiler, cl2, m)
                             finalTarget := compiler.cast(position, target,

@@ -35,7 +35,7 @@ class Consumer : Immutable {
         Thread.start(method() {
             loop {
                 def msg := self.sourceQueue.getMessage()
-                Thread.sleep(1000)
+                Thread.sleep(1)
                 self.destQueue.post(msg * msg)
             }
         }, false)

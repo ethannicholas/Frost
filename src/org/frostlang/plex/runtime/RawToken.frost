@@ -1,6 +1,5 @@
 package org.frostlang.plex.runtime
 
-@final
 class RawToken : Value {
     def kind:Int
     def start:String.Index

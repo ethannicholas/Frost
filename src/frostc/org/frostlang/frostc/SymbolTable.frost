@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class SymbolTable {
     def symbols := HashMap<String, Symbol>()
 

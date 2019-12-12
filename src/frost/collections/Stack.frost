@@ -5,7 +5,6 @@ An implementation of the stack abstract data type. A stack is a collection of el
 operates in "LIFO" (last in, first out) order; that is, the element most recently added to the stack
 is the first one retrieved.
 ====================================================================================================
-@final
 class Stack<T> : Iterable<T> {
     @private
     class StackIterator<T> : Iterator<T> {

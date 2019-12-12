@@ -8,7 +8,6 @@ only, with `min` always being included in the `Range`.
 The exclusive range (`..`) and inclusive range (`...`) operators in Frost provide a shorthand syntax
 for creating `Range` and [SteppedRange] objects.
 ====================================================================================================
-@final
 @specialize
 class Range<T:Value?> : Value {
     ================================================================================================

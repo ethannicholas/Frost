@@ -17,7 +17,6 @@ does *not* result in a mutable method reference. Even though the method itself c
 class, the reference does not capture anything and so does not itself carry any mutable state.
 ====================================================================================================
 @package
-@final
 class MutableMethod {
     @private
     def pointer:builtin_uint

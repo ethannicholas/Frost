@@ -9,7 +9,6 @@ not in and of itself cause any interaction with the filesystem.
 separator. Relative paths (that is, those that do not begin with `"/"`) are interpreted relative to
 [System.workingDirectory()], which never changes while a program is running.
 ====================================================================================================
-@final
 class File : Immutable, HashKey<File> {
     ================================================================================================
     The path represented by this `File`.

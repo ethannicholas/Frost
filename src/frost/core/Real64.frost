@@ -7,7 +7,6 @@ package frost.core
 ===
 A 64-bit floating point number.
 ===
-@final
 class Real64 : Value, HashKey<Real64>, Comparable<Real64>, Formattable {
     @private
     def value:builtin_float64

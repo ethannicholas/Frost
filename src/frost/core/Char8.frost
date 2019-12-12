@@ -12,7 +12,6 @@ codepoints 0 to 255) may be used wherever a `Char8` is expected. That is, it is 
 
     def c:Char8 := "A"
 ====================================================================================================
-@final
 class Char8 : Value, HashKey<Char8>, Comparable<Char8> {
     @private
     def value:UInt8

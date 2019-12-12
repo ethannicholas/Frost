@@ -1,2 +1,2 @@
-InterfaceSubclassingClass.frost:4:18: error: interface 'anonymous.Intf' cannot extend class 'anonymous.NotIntf'
+InterfaceSubclassingClass.frost:5:18: error: interface 'anonymous.Intf' cannot extend class 'anonymous.NotIntf'
 1 error

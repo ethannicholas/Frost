@@ -12,7 +12,6 @@ uses org.frostlang.frostc.expression.Binary
 uses org.frostlang.frostc.expression.Unary
 uses org.frostlang.regex.RegexParser
 
-@final
 class Parser {
     class AutoSyntaxHighlight {
         def parser:Parser

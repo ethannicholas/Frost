@@ -1,6 +1,5 @@
 package frost.core
 
-@final
 class RegularExpression : Immutable {
     constant MULTILINE := 1
     constant CASE_INSENSITIVE := 2

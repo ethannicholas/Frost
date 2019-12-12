@@ -9,7 +9,6 @@ uses frost.unsafe.Pointer
 ===
 an unsigned 32 or 64 bit integer, as appropriate for the target architecture.
 ===
-@final
 class UInt : Value, HashKey<UInt>, Comparable<UInt>, Formattable, ListView<Bit> {
     ===
     The smallest value this type can hold.

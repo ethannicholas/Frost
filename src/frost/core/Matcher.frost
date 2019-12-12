@@ -4,7 +4,6 @@ package frost.core
 Represents the process of scanning a string for matches to a regular expression. `Matcher` objects
 are created by [RegularExpression] to scan particular strings, and return matches one at a time.
 ====================================================================================================
-@final
 class Matcher {
     @private
     constant REPLACEMENT_GROUPS := /\$(0|[1-9]\d*)/

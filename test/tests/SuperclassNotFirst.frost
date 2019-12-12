@@ -1,6 +1,7 @@
 interface Interface {
 }
 
+@extendable
 class Super {
 }
 

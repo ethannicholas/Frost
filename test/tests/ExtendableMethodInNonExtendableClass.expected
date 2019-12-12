@@ -1,0 +1,2 @@
+ExtendableMethodInNonExtendableClass.frost:3:5: error: methods in non-@extendable classes may not be @extendable
+1 error

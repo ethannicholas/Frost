@@ -10,7 +10,6 @@ shared between threads, it does not take any measures to ensure thread safety wh
 objects that are known at compile time to be mutable. Even read-only multithreaded access to mutable
 objects can cause undefined behavior in the absence of very careful locking.
 ====================================================================================================
-@final
 @unsafeImmutable
 class UnsafeMessageQueue<T> : Immutable {
     @private

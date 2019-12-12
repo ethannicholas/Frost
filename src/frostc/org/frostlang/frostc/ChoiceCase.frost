@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class ChoiceCase : Symbol {
     @weak
     def owner:ClassDecl

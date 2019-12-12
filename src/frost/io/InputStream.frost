@@ -52,6 +52,7 @@ class InputStream {
     Reads two bytes from this stream, interpreting them as a `UInt16` value. The interpretation of
     the bytes is determined by the [byteOrder] field.
     ================================================================================================
+    @extendable
     method read():UInt16? {
         def result:Int16 := read()
         if result !== null {
@@ -64,6 +65,7 @@ class InputStream {
     Reads four bytes from this stream, interpreting them as a `UInt32` value. The interpretation of
     the bytes is determined by the [byteOrder] field.
     ================================================================================================
+    @extendable
     method read():UInt32? {
         def result:Int32 := read()
         if result !== null {
@@ -76,6 +78,7 @@ class InputStream {
     Reads eight bytes from this stream, interpreting them as a `UInt64` value. The interpretation of
     the bytes is determined by the [byteOrder] field.
     ================================================================================================
+    @extendable
     method read():UInt64? {
         def result:Int64 := read()
         if result !== null {
@@ -175,6 +178,7 @@ class InputStream {
     stream has been reached or if an error occurs.
     ================================================================================================
     @post(@return >= 0)
+    @extendable
     method read(buffer:Pointer<UInt8>, max:Int):Int {
         var i := 0
         while i < max {
@@ -191,7 +195,6 @@ class InputStream {
     ================================================================================================
     As [read(Pointer<UInt8>, Int)], but treats the read bytes as signed.
     ================================================================================================
-    @final
     method read(buffer:Pointer<Int8>, max:Int):Int {
         return read(buffer->Pointer<UInt8>, max)
     }
@@ -199,7 +202,6 @@ class InputStream {
     ================================================================================================
     As [read(Pointer<UInt8>, Int)], but treats the read bytes as `Char8`s.
     ================================================================================================
-    @final
     method read(buffer:Pointer<Char8>, max:Int):Int {
         return read(buffer->Pointer<UInt8>, max)
     }
@@ -307,6 +309,7 @@ class InputStream {
         return LineIterator(self)
     }
 
+    @extendable
     method close():Error? {
         return null
     }

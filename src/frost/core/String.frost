@@ -50,7 +50,6 @@ As `String` is immutable, assembling a string via repeated concatenation is a ve
 that creates many temporary objects. Instead create a [MutableString], repeatedly call `append` on
 it, and then finally turn it into an immutable `String` using [finish](MutableString.finish).
 ====================================================================================================
-@final
 class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     Represents the position of a Unicode codepoint within a `String`.

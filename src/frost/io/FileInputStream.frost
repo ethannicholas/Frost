@@ -3,7 +3,6 @@ package frost.io
 uses frost.unsafe.Pointer
 
 @package
-@final
 class FileInputStream : InputStream {
     @private
     def handle:Int64

@@ -14,6 +14,7 @@ find_package(ICU COMPONENTS uc i18n REQUIRED)
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost"
     "package org.frostlang.frostc\n"
+    "@final\n"
     "class Config {\n"
     "@class function frostSourceDir():String { return \"${CMAKE_SOURCE_DIR}/src\" }\n"
     "@class function frostLibDir():String { return \"${CMAKE_CURRENT_BINARY_DIR}\" }\n"

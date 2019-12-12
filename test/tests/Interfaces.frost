@@ -25,6 +25,7 @@ class Test1 : Intf1, Intf2 {
     }
 }
 
+@extendable
 class Test2 : Intf1 {
     @override
     function number():Int {
@@ -37,6 +38,7 @@ class Test2 : Intf1 {
     }
 }
 
+@extendable
 class Test3 : Test2 {
 }
 
@@ -47,6 +49,7 @@ class Test4 : Test3, Intf2 {
     }
 }
 
+@extendable
 class Test5 {
     function string():String {
         return "string3!"

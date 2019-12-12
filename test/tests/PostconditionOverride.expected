@@ -1,4 +1,4 @@
 1
 5
 11
-assertion failure (PostconditionOverride.frost:14): postcondition failure for method anonymous.PostconditionOverride2.test(x:frost.core.Int)
+assertion failure (PostconditionOverride.frost:16): postcondition failure for method anonymous.PostconditionOverride2.test(x:frost.core.Int)

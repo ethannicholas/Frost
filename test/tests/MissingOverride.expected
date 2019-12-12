@@ -1,5 +1,5 @@
-MissingOverride.frost:18:5: error: function anonymous.Sub1.foo():frost.core.String overrides function anonymous.Super1.foo():frost.core.String, but is not marked @override
-MissingOverride.frost:24:5: error: function anonymous.Sub2.foo():frost.core.String overrides function anonymous.Super1.foo():frost.core.String, but is not marked @override
-MissingOverride.frost:30:5: error: function anonymous.Sub3.foo():frost.core.Int overrides function anonymous.Intf.foo():frost.core.Int, but is not marked @override
-MissingOverride.frost:42:5: error: function anonymous.Sub5.foo():frost.core.Int overrides method anonymous.Super2.foo():frost.core.Int, but is not marked @override
+MissingOverride.frost:20:5: error: function anonymous.Sub1.foo():frost.core.String overrides function anonymous.Super1.foo():frost.core.String, but is not marked @override
+MissingOverride.frost:26:5: error: function anonymous.Sub2.foo():frost.core.String overrides function anonymous.Super1.foo():frost.core.String, but is not marked @override
+MissingOverride.frost:32:5: error: function anonymous.Sub3.foo():frost.core.Int overrides function anonymous.Intf.foo():frost.core.Int, but is not marked @override
+MissingOverride.frost:44:5: error: function anonymous.Sub5.foo():frost.core.Int overrides method anonymous.Super2.foo():frost.core.Int, but is not marked @override
 4 errors

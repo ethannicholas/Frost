@@ -1,8 +1,8 @@
 package frost.core
 
 ====================================================================================================
-Represents objects which may be passed by value instead of by reference. Value objects must be
-declared `@final`, may not be compared using the `==` / `!==` operators, and as `Value` is a
+Represents objects which may be passed by value instead of by reference. Value objects may not be
+declared `@extendable`, may not be compared using the `==` / `!==` operators, and as `Value` is a
 subclass of [Immutable], are naturally immutable as well. "Tricking" Frost into using the `==` /
 `!==` operators on `Value`s, such as in:
 
@@ -30,17 +30,13 @@ Converting a `Value` to an ordinary class type (e.g. `def o:Object := 5`) requir
 but does carry a performance penalty due to the memory allocation and reference counting it entails.
 
 Converting a `Value` to its corresponding nullable type (e.g. `def i:Int? := 5`) is much cheaper
-than wrapping it. `Int?`, or any nullable `Value`, is internally represented using only a single
-extra [Bit] to distinguish `null` from non-`null` values. Nullable `Value`s are still stack
-allocated and passed by value with no reference counting.
+than wrapping it. A nullable `Value` is internally represented using only a single extra [Bit] to
+distinguish `null` from non-`null` values. Nullable `Value`s are still stack allocated and passed by
+value with no reference counting.
 
 Again, the compiler handles all of these details automatically. It is only explained here so that
 the performance implications are clear.
 ====================================================================================================
 @abstract
 class Value : Immutable {
-    @override
-    @final
-    method cleanup() {
-    }
 }

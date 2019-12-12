@@ -1,6 +1,5 @@
 package org.frostlang.json
 
-@final
 class Position : Value {
     def line:Int
 

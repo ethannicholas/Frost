@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class Position : Value, HashKey<Position>, Comparable<Position> {
     -- index into the Compiler.file array
     def file:Int

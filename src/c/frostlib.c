@@ -1301,8 +1301,8 @@ void frost$threads$Thread$waitFor(Thread* thread) {
     pthread_join((pthread_t) thread->nativeHandle, NULL);
 }
 
-void frost$threads$Thread$sleep$frost$core$Int(frost_int millis) {
-    usleep(millis * 1000);
+void frost$threads$Thread$sleep$frost$core$Real64(double seconds) {
+    usleep((useconds_t) (seconds * 1000000));
 }
 
 // Lock
@@ -1353,6 +1353,7 @@ void frost$threads$Notifier$destroy(Notifier* notifier) {
 
 void frost$io$Console$print$frost$core$String(String* s) {
     fwrite(s->data, 1, s->size, stdout);
+    fflush(stdout);
 }
 
 void frost$io$Console$printError$frost$core$String(String* s) {

@@ -1,4 +1,6 @@
+@extendable
 class PostconditionMultiple1 {
+    @extendable
     @post(@return > 0)
     @post(@return % 2 = 1)
     method test():Int {

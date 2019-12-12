@@ -4,7 +4,6 @@
 
 package org.frostlang.frost
 
-@final
 class UIntList : ListView<UInt> {
     @private
     def range:SteppedRange<UInt, UInt>

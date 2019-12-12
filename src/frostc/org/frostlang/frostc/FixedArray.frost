@@ -2,7 +2,6 @@ package org.frostlang.frostc
 
 uses frost.unsafe.Pointer
 
-@final
 class FixedArray<T> : ListView<T> {
     @private
     class FixedArrayIterator<T> : Iterator<T> {

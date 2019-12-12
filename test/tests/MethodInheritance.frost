@@ -1,8 +1,11 @@
+@extendable
 class Super {
+    @extendable
     function foo():Int64 {
         return 1
     }
 
+    @extendable
     function foo(x:Int64):Int64 {
         return x * 2
     }
@@ -15,8 +18,10 @@ class S1 : Super {
     }
 }
 
+@extendable
 class S2 : Super {
     @override
+    @extendable
     function foo(x:Int64):Int64 {
         return x * 3
     }

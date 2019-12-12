@@ -1,4 +1,6 @@
+@extendable
 class PreconditionOverrideParameterName1 {
+    @extendable
     @pre(x >= 0 & x < y.length)
     method test(x:Int, y:String) {
         Console.printLine("char \{x}: \{y[x]}")

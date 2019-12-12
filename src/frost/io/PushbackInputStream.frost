@@ -12,7 +12,6 @@ if the `PushbackInputStream` holds the only remaining reference to the underlyin
 discarding the `PushbackInputStream` will cause the underlying stream to likewise be discarded and
 thus closed.
 ====================================================================================================
-@final
 class PushbackInputStream : InputStream {
     @private
     def source:InputStream

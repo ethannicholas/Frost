@@ -5,7 +5,6 @@ A lock (mutex) which allows multiple threads to coordinate access to a shared re
 typically unnecessary in Frost, as only immutable data can be shared between threads without
 resorting to unsafe code.
 ====================================================================================================
-@final
 class Lock : Immutable {
     @private
     def nativeLock:Int64

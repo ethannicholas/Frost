@@ -7,7 +7,6 @@ used in an `IdentitiySet`. However, it is important that the type not be a subcl
 values do not have well-defined identities and `IdentitySet` will therefore not function properly
 with value types.
 ====================================================================================================
-@final
 class IdentitySet<T> : Collection<T> {
     @private
     def contents := IdentityMap<T, T>()

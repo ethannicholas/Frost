@@ -1,3 +1,3 @@
 Got X2: 1
 Got X2: -12
-assertion failure (PreconditionOverride.frost:11): precondition failure for method anonymous.PreconditionOverride2.test(x:frost.core.Int)
+assertion failure (PreconditionOverride.frost:13): precondition failure for method anonymous.PreconditionOverride2.test(x:frost.core.Int)

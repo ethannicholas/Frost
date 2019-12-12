@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class ClassDecl {
     choice Kind {
         CLASS

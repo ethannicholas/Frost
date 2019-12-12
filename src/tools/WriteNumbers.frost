@@ -1059,7 +1059,6 @@ class WriteNumbers {
                         "appropriate for the target architecture.")
             }
             out.printLine("===")
-            out.printLine("@final")
             out.printLine("class \{object(type)} : Value, HashKey<\{object(type)}>, " +
                     "Comparable<\{object(type)}>, Formattable, ListView<Bit> {")
             out.printLine("    ===")
@@ -1170,7 +1169,6 @@ class WriteNumbers {
             out.printLine()
             out.printLine("package org.frostlang.frost")
             out.printLine()
-            out.printLine("@final")
             out.printLine("class \{cl}List : ListView<\{cl}> {")
             out.printLine("    @private")
             out.printLine("    def range:SteppedRange<\{cl}, \{cl}>")
@@ -1267,7 +1265,6 @@ class WriteNumbers {
             out.printLine("===")
             out.printLine("A \{size(type)}-bit floating point number.")
             out.printLine("===")
-            out.printLine("@final")
             out.printLine("class \{object(type)} : Value, HashKey<\{object(type)}>, " +
                     "Comparable<\{object(type)}>, Formattable {")
             out.printLine("    @private")

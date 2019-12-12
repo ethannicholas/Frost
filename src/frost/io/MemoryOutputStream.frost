@@ -5,7 +5,6 @@ uses frost.unsafe.Pointer
 ====================================================================================================
 An `OutputStream` which stores the data written to it in a memory buffer.
 ====================================================================================================
-@final
 class MemoryOutputStream : OutputStream {
     @private
     constant DEFAULT_CAPACITY := 1024

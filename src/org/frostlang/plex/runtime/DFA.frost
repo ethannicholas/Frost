@@ -2,7 +2,6 @@ package org.frostlang.plex.runtime
 
 uses frost.unsafe.Pointer
 
-@final
 class DFA {
     constant START_CHAR:UInt8 := 0
     constant END_CHAR:UInt8 := 255

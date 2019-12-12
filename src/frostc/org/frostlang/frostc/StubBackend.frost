@@ -1,6 +1,5 @@
 package org.frostlang.frostc
 
-@final
 class StubBackend : Backend {
     @weak
     var compiler:Compiler?

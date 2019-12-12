@@ -1,4 +1,4 @@
 5
 10
 25
-assertion failure (PostconditionOverrideParameterName.frost:16): postcondition failure for method anonymous.PostconditionOverrideParameterName2.setup(minimum:frost.core.Int, maximum:frost.core.Int)
+assertion failure (PostconditionOverrideParameterName.frost:18): postcondition failure for method anonymous.PostconditionOverrideParameterName2.setup(minimum:frost.core.Int, maximum:frost.core.Int)

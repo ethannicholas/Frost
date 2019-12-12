@@ -1,4 +1,6 @@
+@extendable
 class Super {
+    @extendable
     function foo():Int {
         return 123
     }

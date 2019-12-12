@@ -1,6 +1,5 @@
 package frost.core
 
-@final
 class Bit : Value, HashKey<Bit>, Formattable {
     @private
     def value:builtin_bit

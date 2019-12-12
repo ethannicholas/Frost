@@ -6,7 +6,6 @@ uses frost.unsafe.Pointer
 Contains utility methods used in the internal implementation of certain language features.
 ====================================================================================================
 @package
-@final
 class Frost {
     -- Object.flags bit which indicates that the object has had weak references to it created
     constant WEAK_REFERENCE_FLAG:UInt8 := 1

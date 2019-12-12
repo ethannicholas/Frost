@@ -2,7 +2,6 @@ package org.frostlang.frostc
 
 uses frost.unsafe.Pointer
 
-@final
 class Interpreter : Backend {
     class Context {
         @weak
