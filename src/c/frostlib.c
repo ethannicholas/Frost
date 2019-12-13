@@ -700,15 +700,15 @@ double frost$core$Real64$get_tan$R$frost$core$Real64(double x) {
 
 #define NO_REFCNT -999
 
-frost_uint frost$core$Frost$alloc$builtin_int$R$builtin_uint(frost_int size) {
+frost_uint frost$core$Frost$alloc$frost$core$Int$R$frost$core$UInt(frost_int size) {
     return (frost_int) frostAlloc(size);
 }
 
-void frost$core$Frost$destroy$builtin_uint(frost_uint ptr) {
+void frost$core$Frost$destroy$frost$core$UInt(frost_uint ptr) {
     frostFree((void*) ptr);
 }
 
-frost_uint frost$core$Frost$realloc$builtin_uint$builtin_int$builtin_int$R$builtin_uint(
+frost_uint frost$core$Frost$realloc$frost$core$UInt$frost$core$Int$frost$core$Int$R$frost$core$UInt(
         frost_uint ptr, frost_int oldSize, frost_int newSize) {
     void* result = realloc((void*) ptr, newSize);
     frostAssert(result != NULL || newSize == 0);
@@ -1265,7 +1265,7 @@ void frostThreadEntry(frost_int threadInfoPtr) {
     }
 }
 
-void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(frost_int threadPtr,
+void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$frost$core$Bit(frost_int threadPtr,
         frost_int runPtr, bool preventsExit) {
     Thread* thread = (Thread*) threadPtr;
     Method* run = (Method*) runPtr;
@@ -1291,9 +1291,9 @@ void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(frost_int thread
     thread->nativeHandle = (void*) threadId;
 }
 
-void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(frost_int thread, frost_int run,
-        bool preventsExit) {
-    frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(thread, run, preventsExit);
+void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$frost$core$Bit(frost_int thread,
+        frost_int run, bool preventsExit) {
+    frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$frost$core$Bit(thread, run, preventsExit);
 }
 
 void frost$threads$Thread$waitFor(Thread* thread) {

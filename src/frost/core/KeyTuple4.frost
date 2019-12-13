@@ -1,5 +1,5 @@
 package frost.core
-@package
+===@hidden===
 class KeyTuple4<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>> : HashKey<(T0, T1, T2, T3)> {
     def f0:T0
     def f1:T1

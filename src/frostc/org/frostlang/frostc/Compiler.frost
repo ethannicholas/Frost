@@ -515,19 +515,14 @@ class Compiler : ErrorReporter {
     @private
     def scans := HashMap<File, Array<ClassDecl>>()
 
-    @private
     def classes := HashMap<String, ClassDecl>()
 
-    @private
     def currentClass := Stack<ClassDecl>()
 
-    @private
     def currentMethod := Stack<MethodDecl>()
 
-    @private
     var ir := IR()
 
-    @private
     var symbolTable:SymbolTable
 
     @private
@@ -538,10 +533,8 @@ class Compiler : ErrorReporter {
     @private
     def backend:Backend?
 
-    @private
     var errorQueue:MessageQueue<Message>
 
-    @private
     var enclosingContexts := Stack<EnclosingContext>()
 
     @private
@@ -550,22 +543,17 @@ class Compiler : ErrorReporter {
     @private
     var _warningCount := 0
 
-    @private
     var closureCount := 0
 
-    @private
     var tempCount := 0
 
     @private
     var existenceCache := HashMap<File, Bit>()
 
-    @private
     var reportErrors := true
 
-    @private
     def pendingClasses := Array<ClassDecl>()
 
-    @private
     var inAtPre := false
 
     @private
@@ -573,32 +561,25 @@ class Compiler : ErrorReporter {
 
     -- local variable in which to store the return value, for postcondition purposes, or null to
     -- just do a straight return
-    @private
     var returnVar:Variable?
 
     -- current block to which @pre(...) expressions should be added. This is not necessarily the
     -- method entry, because expressions can cause new blocks to be added.
-    @private
     var atPreBlock:IR.Block.ID? := null
 
     -- block to which we should jump to begin evaluating postconditions. The postcondition block
     -- will handle returning from the method.
-    @private
     var postconditionEntryBlock:IR.Block.ID? := null
 
     -- block to which postconditions are being compiled. This is not necessarily the postcondition
     -- entry block, because expressions can cause new blocks to be added.
-    @private
     var postconditionCurrentBlock:IR.Block.ID? := null
 
     -- MethodDecl is the method *containing* the closure, not the closure itself
-    @private
     def captures := Stack<(MethodDecl, Map<String, Capture>)>()
 
-    @private
     var writeCode := true
 
-    @private
     var inFieldCleanup := false
 
     @private
@@ -607,7 +588,6 @@ class Compiler : ErrorReporter {
     @private
     def typeCoercionCosts := HashMap<TypeCoercionKey, (Type, Int?)>()
 
-    @private
     def binaryTypes := HashMap<BinaryKey, Array<Type>?>()
 
     -- Sometimes we need to resolve an untyped lambda against several different types, such as when
@@ -616,7 +596,6 @@ class Compiler : ErrorReporter {
     -- lambda we're dealing with. But if it fails for *all* of them, it could be that the lambda
     -- simply contains an error. So we keep track of all of the types we attempted to resolve a
     -- given lambda as for error reporting purposes.
-    @private
     def lambdaTypes := IdentityMap<ASTNode, HashSet<Type>>()
 
     init(errorQueue:MessageQueue<Message>, backend:Backend?, settings:Settings) {
@@ -2096,6 +2075,47 @@ class Compiler : ErrorReporter {
             otherwise {
                 return raw
             }
+        }
+    }
+
+    ================================================================================================
+    Checks access to a class member from the current context. As all access to a class is to a
+    member of the class (i.e., Foo() is actually an access to Foo.init()), there is no specific
+    method to check access to the class itself; this method first checks class access, then checks
+    member access.
+    ================================================================================================
+    method checkAccess(position:MethodPosition, getName:()=>(String), targetClass:ClassDecl,
+            a:Annotations) {
+        if currentMethod[0].annotations.isUnsafeAccess {
+            return
+        }
+        def current := currentClass[0]
+        method checkAnnotations(a:Annotations, getName:()=>(String)):Bit {
+            if a.isPrivate {
+                if position.file != targetClass.position.file {
+                    self.error(position, "@private \{getName()} is not accessible here")
+                    return false
+                }
+            }
+            else if a.isProtected {
+                if self.coercionCost(current.type, targetClass.type) == null {
+                    self.error(position, "@protected \{getName()} is not accessible here")
+                    return false
+                }
+            }
+            else if a.isPackage {
+                def packageName := targetClass.name[targetClass.name.start ...
+                        targetClass.name.lastIndexOf(".")!]
+                if !current.name.startsWith(packageName) {
+                    self.error(position, "@package \{getName()} is not accessible here")
+                    return false
+                }
+            }
+            return true
+        }
+        if checkAnnotations(targetClass.annotations,
+                function():String { return targetClass.name }) {
+            checkAnnotations(a, getName)
         }
     }
 
@@ -3656,6 +3676,9 @@ class Compiler : ErrorReporter {
             when Symbol.Kind.FIELD {
                 def f := s->FieldDecl
                 if resolve(f) {
+                    checkAccess(position, function():String {
+                        return "field '\{f.owner.name}.\{f.name}"
+                    }, f.owner, f.annotations)
                     if target !== null {
                         match target {
                             when IR.Value.TYPE {

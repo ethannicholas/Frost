@@ -20,23 +20,23 @@ class UInt32 : Value, HashKey<UInt32>, Comparable<UInt32>, Formattable, ListView
     ===
     constant MAX:UInt32 := 4294967295
 
-    @private
+    @package
     def value:builtin_uint32
 
-    @private
+    ===@hidden===
     @implicit
     init(value:builtin_uint32) {
         self.value := value
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-5)
     init(value:UInt8) {
         self.value := value.value->builtin_uint32
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-4)
     init(value:UInt16) {

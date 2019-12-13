@@ -20,10 +20,10 @@ class UInt8 : Value, HashKey<UInt8>, Comparable<UInt8>, Formattable, ListView<Bi
     ===
     constant MAX:UInt8 := 255
 
-    @private
+    @package
     def value:builtin_uint8
 
-    @private
+    ===@hidden===
     @implicit
     init(value:builtin_uint8) {
         self.value := value

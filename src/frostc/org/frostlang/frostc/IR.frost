@@ -474,13 +474,10 @@ class IR {
 
     def statements := HashMap<IR.Statement.ID, IR.Statement>()
 
-    @private
     var currentStatementId := -1
 
-    @private
     var currentBlockID := -1
 
-    @private
     def currentBlock:Block
 
     property currentBlockFinished:Bit

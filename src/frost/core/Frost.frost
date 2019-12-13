@@ -4,8 +4,9 @@ uses frost.unsafe.Pointer
 
 ====================================================================================================
 Contains utility methods used in the internal implementation of certain language features.
+
+@hidden
 ====================================================================================================
-@package
 class Frost {
     -- Object.flags bit which indicates that the object has had weak references to it created
     constant WEAK_REFERENCE_FLAG:UInt8 := 1
@@ -92,15 +93,15 @@ class Frost {
 
     @class
     @external
-    method alloc(size:builtin_int):builtin_uint
+    method alloc(size:Int):UInt
 
     @class
     @external
-    method destroy(ptr:builtin_uint)
+    method destroy(ptr:UInt)
 
     @class
     @external
-    method realloc(ptr:builtin_uint, oldSize:builtin_int, newSize:builtin_int):builtin_uint
+    method realloc(ptr:UInt, oldSize:Int, newSize:Int):UInt
 
     @class
     @external

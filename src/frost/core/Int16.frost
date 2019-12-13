@@ -20,23 +20,23 @@ class Int16 : Value, HashKey<Int16>, Comparable<Int16>, Formattable, ListView<Bi
     ===
     constant MAX:Int16 := 32767
 
-    @private
+    @package
     def value:builtin_int16
 
-    @private
+    ===@hidden===
     @implicit
     init(value:builtin_int16) {
         self.value := value
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-4)
     init(value:Int8) {
         self.value := value.value->builtin_int16
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-1)
     init(value:UInt8) {

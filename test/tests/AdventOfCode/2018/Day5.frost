@@ -62,14 +62,14 @@ and fully reacting the result?
 *-
 
 function type(c:Char8):Char8 {
-    if c.value >= 97 {
-        return Char8(c.value - 32)
+    if c.asUInt8 >= 97 {
+        return Char8(c.asUInt8 - 32)
     }
     return c
 }
 
 function polarity(c:Char8):Bit {
-    return c.value >= 97
+    return c.asUInt8 >= 97
 }
 
 function react(s:String):String {
@@ -112,7 +112,7 @@ method main() {
     var min := s.length
     Console.printLine(min)
     for c in "A" ... "Z" {
-        def s2 := s.replace(c.toString, "").replace(Char32(c.value + 32).toString, "")
+        def s2 := s.replace(c.toString, "").replace(Char32(c.asUInt8 + 32).toString, "")
         min := min.min(react(s2).length)
     }
     Console.printLine(min)

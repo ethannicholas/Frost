@@ -86,7 +86,7 @@ class Closure {
     method createClosureClass(compiler:Compiler, m:MethodDecl,
             captures:CollectionView<Capture>):ClassDecl {
         def p := m.position
-        m.annotations := Annotations(0)
+        m.annotations := Annotations(m.annotations.flags && Annotations.Flag.UNSAFE_ACCESS)
         compiler.closureCount += 1
         def supers := [compiler.IMMUTABLE_TYPE]
         for c in captures {
@@ -248,7 +248,7 @@ class Closure {
             compiler.writeCode := false
             def currentCaptures:(MethodDecl, Map<String, Capture>) := (compiler.currentMethod[0],
                     HashMap<String, Capture>())
-            def annotations := Annotations(Annotations.Flag.CLASS)
+            def annotations := Annotations(Annotations.Flag.CLASS || Annotations.Flag.UNSAFE_ACCESS)
             def methodDecl := MethodDecl(compiler.currentClass[0],
                     Position(), Int.MAX, null, annotations, MethodDecl.Kind.METHOD, "<dummy>", null,
                     [], compiler.VOID_TYPE, FixedArray<ASTNode>.from([]))
@@ -574,9 +574,12 @@ class Closure {
         def currentCaptures:(MethodDecl, Map<String, Capture>) := (compiler.currentMethod[0],
                 HashMap<String, Capture>())
         compiler.captures.push(currentCaptures)
-        def annotations := Annotations(Annotations.Flag.CLASS)
+        var annotations := Annotations.Flag.CLASS
+        if compiler.currentMethod[0].annotations.isUnsafeAccess {
+            annotations ||= Annotations.Flag.UNSAFE_ACCESS
+        }
         def methodDecl := MethodDecl(compiler.currentClass[0],
-                position.asPosition, compiler.methods.count, null, annotations, kind,
+                position.asPosition, compiler.methods.count, null, Annotations(annotations), kind,
                 name, null, parameters, returnType, body)
         compiler.methods.add(methodDecl)
         -- need to scan through the method to determine captures, but we don't actually want to

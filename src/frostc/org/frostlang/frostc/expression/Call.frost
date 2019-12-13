@@ -1315,6 +1315,8 @@ class Call {
         var target := rawTarget
         -- FIXME var param
         var m := rawM
+        compiler.checkAccess(position, function():String { return rawM.value.declaration },
+                rawM.value.owner, rawM.value.annotations)
         if m.value.methodKind = MethodDecl.Kind.INIT {
             var validTarget := false
             var selfOrSuper := false

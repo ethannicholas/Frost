@@ -26,9 +26,10 @@ class DFA {
         init("", stateCount, transitions, accepts)
     }
 
+    @unsafeAccess
     init(source:String, stateCount:Int, transitions:Pointer<Pointer<Int>>,
             accepts:Pointer<Int>) {
-        self.source := Pointer<Char8>(source.data.value)
+        self.source := source.data
         self.offset := 0
         self.sourceEnd := source.byteLength
         self.stateCount := stateCount

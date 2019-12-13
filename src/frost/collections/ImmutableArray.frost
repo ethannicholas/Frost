@@ -71,6 +71,7 @@ class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
     behavior).
     ================================================================================================
     @class
+    @unsafeAccess
     method from(a:Array<T>):ImmutableArray<T> {
         -- FIXME this transformation is only safe at -S0
         a.data := a.data.realloc(a.capacity, a._count)

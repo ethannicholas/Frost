@@ -218,6 +218,7 @@ interface ListView<T> : CollectionView<T> {
     @pre(r.min >= 0 & (r.inclusive & r.min < count | !r.inclusive & r.min <= count) &
             r.max >= 0 & (r.inclusive & r.max < count | !r.inclusive & r.max <= count))
     @priority(1) -- FIXME shouldn't be needed
+    @unsafeAccess
     function [](r:Range<Int>):ListView<T> {
         var max := r.max
         if r.inclusive {

@@ -15,8 +15,9 @@ object `text`. On the other hand,
 
 does *not* result in a mutable method reference. Even though the method itself comes from a mutable
 class, the reference does not capture anything and so does not itself carry any mutable state.
+
+@hidden
 ====================================================================================================
-@package
 class MutableMethod {
     @private
     def pointer:builtin_uint
@@ -24,7 +25,7 @@ class MutableMethod {
     @private
     def target:Object?
 
-    @private
+    ===@hidden===
     init(pointer:builtin_uint, target:Object?) {
         self.pointer := pointer
         self.target := target

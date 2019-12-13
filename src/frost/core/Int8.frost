@@ -20,10 +20,10 @@ class Int8 : Value, HashKey<Int8>, Comparable<Int8>, Formattable, ListView<Bit> 
     ===
     constant MAX:Int8 := 127
 
-    @private
+    @package
     def value:builtin_int8
 
-    @private
+    ===@hidden===
     @implicit
     init(value:builtin_int8) {
         self.value := value

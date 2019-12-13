@@ -1,0 +1,6 @@
+BadAccess.frost:8:23: error: @private field 'frost.core.Object.refCount is not accessible here
+BadAccess.frost:9:31: error: @private frost.core.String.UTF8List is not accessible here
+BadAccess.frost:10:24: error: @private frost.core.String.init(data:frost.unsafe.Pointer<frost.core.Char8>, length:frost.core.Int, owner:frost.core.String) is not accessible here
+BadAccess.frost:11:21: error: @protected method anonymous.Protected.test() is not accessible here
+BadAccess.frost:12:32: error: @package frost.collections.MergeSort is not accessible here
+5 errors

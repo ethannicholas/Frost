@@ -20,16 +20,16 @@ class UInt16 : Value, HashKey<UInt16>, Comparable<UInt16>, Formattable, ListView
     ===
     constant MAX:UInt16 := 65535
 
-    @private
+    @package
     def value:builtin_uint16
 
-    @private
+    ===@hidden===
     @implicit
     init(value:builtin_uint16) {
         self.value := value
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-4)
     init(value:UInt8) {

@@ -61,6 +61,7 @@ class FixedArray<T> : ListView<T> {
     behavior).
     ================================================================================================
     @class
+    @unsafeAccess
     method from(a:Array<T>):FixedArray<T> {
         -- FIXME this transformation is only safe at -S0
         a.data := a.data.realloc(a.capacity, a._count)

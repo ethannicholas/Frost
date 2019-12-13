@@ -20,58 +20,58 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
     ===
     constant MAX:Int64 := 9223372036854775807
 
-    @private
+    @package
     def value:builtin_int64
 
-    @private
+    ===@hidden===
     @implicit
     init(value:builtin_int64) {
         self.value := value
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-6)
     init(value:Int8) {
         self.value := value.value->builtin_int64
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-5)
     init(value:Int16) {
         self.value := value.value->builtin_int64
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-4)
     init(value:Int32) {
         self.value := value.value->builtin_int64
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-3)
     init(value:UInt8) {
         self.value := value.value->builtin_int64
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-2)
     init(value:UInt16) {
         self.value := value.value->builtin_int64
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-1)
     init(value:UInt32) {
         self.value := value.value->builtin_int64
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-4)
     init(value:Int) {

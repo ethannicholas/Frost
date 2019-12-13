@@ -1,5 +1,5 @@
 package frost.core
-@package
+===@hidden===
 class Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> {
     def f0:T0
     def f1:T1

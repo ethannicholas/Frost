@@ -1,0 +1,13 @@
+class Protected {
+    @protected
+    method test() {
+    }
+}
+
+method main() {
+    def one := "Hello".refCount
+    def two := String.UTF8List("Hello")
+    def three := String(frost.unsafe.Pointer<Char8>.alloc(5), 5, "Hello")
+    Protected().test()
+    frost.collections.MergeSort()
+}

@@ -348,6 +348,7 @@ class Interpreter : Backend {
     simply updating the class pointer, and might do that in the future, but right this second we're
     playing things safe and keeping interpreter objects and Frost objects segregated.
     ================================================================================================
+    @unsafeAccess
     method interpreterStringFrom(str:String?):Int64 {
         if str == null {
             return 0
@@ -389,6 +390,7 @@ class Interpreter : Backend {
         return String(copy, length)
     }
 
+    @unsafeAccess
     method getBuiltin(s:Code.Signature):(Context, FixedArray<Code.Value>)=&>(Int64) {
         var builtin := builtins[s.name]
         if builtin == null {
@@ -408,7 +410,7 @@ class Interpreter : Backend {
                 }
                 when "frost$core$Frost$alloc$builtin_int$R$builtin_uint" {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        return UInt(Frost.alloc(context.value(args[0]).asInt.value)).asInt64
+                        return Frost.alloc(context.value(args[0]).asInt).asInt64
                     }
                 }
                 when "frost$core$Frost$destroy$builtin_uint" {
@@ -419,9 +421,9 @@ class Interpreter : Backend {
                 }
                 when "frost$core$Frost$realloc$builtin_uint$builtin_int$builtin_int$R$builtin_uint" {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
-                        return UInt(Frost.realloc(context.value(args[0]).asUInt.value,
-                                context.value(args[1]).asInt.value,
-                                context.value(args[2]).asInt.value)).asInt64
+                        return Frost.realloc(context.value(args[0]).asUInt,
+                                context.value(args[1]).asInt,
+                                context.value(args[2]).asInt).asInt64
                     }
                 }
                 when "frost$core$Frost$debugPrint$builtin_int64" {

@@ -20,38 +20,38 @@ class Int : Value, HashKey<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===
     constant MAX:Int := 1 << ($int_size - 1) -& 1
 
-    @private
+    @package
     def value:builtin_int
 
-    @private
+    ===@hidden===
     @implicit
     @priority(1)
     init(value:builtin_int) {
         self.value := value
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-5)
     init(value:Int8) {
         self.value := value.value->builtin_int
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-4)
     init(value:Int16) {
         self.value := value.value->builtin_int
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-2)
     init(value:UInt8) {
         self.value := value.value->builtin_int
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-1)
     init(value:UInt16) {

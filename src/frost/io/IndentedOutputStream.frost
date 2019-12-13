@@ -91,7 +91,7 @@ class IndentedOutputStream : OutputStream {
     method indentIfNeeded():Error? {
         if atLineStart {
             atLineStart := false
-            if indent._length != indentSize * level {
+            if indent.byteLength != indentSize * level {
                 indent := " " * (indentSize * level)
             }
             return print(indent)

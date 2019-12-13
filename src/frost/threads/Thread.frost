@@ -31,7 +31,7 @@ class Thread : Immutable {
 
     @private
     @external
-    method run(m:()=&>(), preventsExit:builtin_bit)
+    method run(m:()=&>(), preventsExit:Bit)
 
     ================================================================================================
     Creates and starts a new thread which executes the specified method. For example, to create a
@@ -56,7 +56,7 @@ class Thread : Immutable {
     @class
     method start(run:()=&>*(), preventsExit:Bit):Thread {
         var result := Thread()
-        result.run(run, preventsExit.value)
+        result.run(run, preventsExit)
         return result
     }
 
@@ -70,7 +70,7 @@ class Thread : Immutable {
     @class
     method unsafeStart(run:()=&>(), preventsExit:Bit):Thread {
         var result := Thread()
-        result.run(run, preventsExit.value)
+        result.run(run, preventsExit)
         return result
     }
 

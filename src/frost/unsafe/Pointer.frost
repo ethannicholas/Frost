@@ -25,14 +25,10 @@ class Pointer<T> : Value {
     @private
     def value:builtin_uint
 
-    @private
-    init(value:builtin_uint) {
-        self.value := value
-    }
-
     ================================================================================================
     Creates a pointer with a specific integer value.
     ================================================================================================
+    @unsafeAccess
     init(value:UInt) {
         self.value := value.value
     }
@@ -45,7 +41,7 @@ class Pointer<T> : Value {
     @class
     @pointerSize
     method alloc(count:Int):Pointer<T> {
-        return Pointer<T>(Frost.alloc(count.value * pointerSize))
+        return Pointer<T>(Frost.alloc(count * pointerSize))
     }
 
     ================================================================================================
@@ -89,8 +85,7 @@ class Pointer<T> : Value {
     ================================================================================================
     @pointerSize
     method realloc(oldCount:Int, newCount:Int):Pointer<T> {
-        return Pointer<T>(Frost.realloc(value, oldCount.value * pointerSize,
-                newCount.value * pointerSize))
+        return Pointer<T>(Frost.realloc(value, oldCount * pointerSize, newCount * pointerSize))
     }
 
     ================================================================================================
@@ -101,9 +96,7 @@ class Pointer<T> : Value {
     ================================================================================================
     @pointerSize
     function +(count:Int):Pointer<T> {
-        def m1:builtin_int := count.value
-        def m2:builtin_int := pointerSize
-        return Pointer<T>(value + Int(m1 * m2).asUInt.value)
+        return Pointer<T>(UInt(value) + (count * pointerSize).asUInt)
     }
 
     ================================================================================================
@@ -114,9 +107,7 @@ class Pointer<T> : Value {
     ================================================================================================
     @pointerSize
     function -(count:Int):Pointer<T> {
-        def m1:builtin_int := count.value
-        def m2:builtin_int := pointerSize
-        return Pointer<T>(value - Int(m1 * m2).asUInt.value)
+        return Pointer<T>(UInt(value) - (count * pointerSize).asUInt)
     }
 
     ================================================================================================

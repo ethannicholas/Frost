@@ -57,7 +57,6 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     class Index : Value, HashKey<Index>, Comparable<Index> {
         def byteOffset:Int
 
-        @private
         init(byteOffset:Int) {
             self.byteOffset := byteOffset
         }
@@ -367,6 +366,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         owner := null
     }
 
+    @unsafeAccess
     init(chars:ListView<Char32>) {
         def result := MutableString()
         for c in chars {

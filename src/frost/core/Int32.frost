@@ -20,37 +20,37 @@ class Int32 : Value, HashKey<Int32>, Comparable<Int32>, Formattable, ListView<Bi
     ===
     constant MAX:Int32 := 2147483647
 
-    @private
+    @package
     def value:builtin_int32
 
-    @private
+    ===@hidden===
     @implicit
     init(value:builtin_int32) {
         self.value := value
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-5)
     init(value:Int8) {
         self.value := value.value->builtin_int32
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-4)
     init(value:Int16) {
         self.value := value.value->builtin_int32
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-2)
     init(value:UInt8) {
         self.value := value.value->builtin_int32
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-1)
     init(value:UInt16) {

@@ -127,7 +127,7 @@ class Console {
         loop {
             def c:Char8? := read()
             if c == null {
-                if result._length = 0 {
+                if result.byteLength = 0 {
                     return null
                 }
                 break

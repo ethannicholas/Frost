@@ -20,23 +20,23 @@ class UInt : Value, HashKey<UInt>, Comparable<UInt>, Formattable, ListView<Bit> 
     ===
     constant MAX:UInt := (-1).asUInt
 
-    @private
+    @package
     def value:builtin_uint
 
-    @private
+    ===@hidden===
     @implicit
     init(value:builtin_uint) {
         self.value := value
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-5)
     init(value:UInt8) {
         self.value := value.value->builtin_uint
     }
 
-    @private
+    ===@hidden===
     @implicit
     @priority(-4)
     init(value:UInt16) {

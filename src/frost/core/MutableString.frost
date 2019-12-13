@@ -16,7 +16,6 @@ class MutableString {
     class Index : Value, HashKey<Index>, Comparable<Index> {
         def byteOffset:Int
 
-        @private
         init(byteOffset:Int) {
             self.byteOffset := byteOffset
         }
@@ -141,11 +140,13 @@ class MutableString {
         init(DEFAULT_SIZE)
     }
 
+    @unsafeAccess
     init(s:String) {
         _length := s._length
         maxLength := _length + DEFAULT_SIZE
         data := Pointer<Char8>.alloc(maxLength)
         for i in 0 .. s._length {
+            -- FIXME performance need memcpy
             data[i] := s.data[i]
         }
     }
@@ -171,7 +172,7 @@ class MutableString {
 
     -- FIXME @self
     method append(c:Char32) {
-        def value := c.value
+        def value := c.asInt32
         if value < 0x80 {
             ensureCapacity(_length + 1)
             data[_length] := c.toChar8
@@ -201,6 +202,7 @@ class MutableString {
     }
 
     -- FIXME @self
+    @unsafeAccess
     method append(s:String) {
         ensureCapacity(_length + s._length)
         for i in 0 .. s._length {
@@ -337,6 +339,7 @@ class MutableString {
     @param start the index to begin searching from
     @returns the index of the match, or `null` if not found
     ================================================================================================
+    @unsafeAccess
     function indexOf(s:String, start:Index):Index? {
         if _length < s._length {
             return null
@@ -371,6 +374,7 @@ class MutableString {
         return indexOf(s) !== null
     }
 
+    @unsafeAccess
     function startsWith(other:String):Bit {
         if _length < other._length {
             return false
@@ -383,6 +387,7 @@ class MutableString {
         return true
     }
 
+    @unsafeAccess
     function endsWith(other:String):Bit {
         if _length < other._length {
             return false
@@ -414,6 +419,7 @@ class MutableString {
     @param start the index to begin searching from
     @returns the index of the match, or `null` if not found
     ================================================================================================
+    @unsafeAccess
     function lastIndexOf(s:String, start:Index):Index? {
         if _length < s._length {
             return null
@@ -666,6 +672,7 @@ class MutableString {
     @pre(r.max >= r.min &
          ((r.inclusive & r.min.byteOffset < _length & r.max.byteOffset < _length) |
          (!r.inclusive & r.min.byteOffset <= _length & r.max.byteOffset <= _length)))
+    @unsafeAccess
     method []:=(r:Range<Index>, s:String) {
         var max := r.max.byteOffset
         if r.inclusive {
@@ -766,8 +773,8 @@ class MutableString {
         data := data.realloc(oldMax, maxLength)
     }
 
-    property utf8:UTF8List
-    function get_utf8():UTF8List {
+    property utf8:List<Char8>
+    function get_utf8():List<Char8> {
         return UTF8List(self)
     }
 
@@ -798,6 +805,7 @@ class MutableString {
     safety checks are disabled, undefined behavior).
     ================================================================================================
     -- FIXME @self
+    @unsafeAccess
     method finish():String {
         -- FIXME this transformation is only safe at -S0
         data := data.realloc(maxLength, _length)

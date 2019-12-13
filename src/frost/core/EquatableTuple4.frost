@@ -1,5 +1,5 @@
 package frost.core
-@package
+===@hidden===
 class EquatableTuple4<T0:Equatable<T0>, T1:Equatable<T1>, T2:Equatable<T2>, T3:Equatable<T3>> : Equatable<(T0, T1, T2, T3)> {
     def f0:T0
     def f1:T1

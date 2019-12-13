@@ -261,7 +261,7 @@ class WriteNumbers {
     method writeInit(type:Type, other:Type, out:OutputStream) {
         try {
             out.printLine()
-            out.printLine("    @private")
+            out.printLine("    ===@hidden===")
             out.printLine("    @implicit")
             var priority := 0
             if signed(type) = signed(other) {
@@ -1079,10 +1079,10 @@ class WriteNumbers {
             out.printLine("    ===")
             out.printLine("    constant MAX:\{object(type)} := \{max(type)}")
             out.printLine()
-            out.printLine("    @private")
+            out.printLine("    @package")
             out.printLine("    def value:\{builtin(type)}")
             out.printLine()
-            out.printLine("    @private")
+            out.printLine("    ===@hidden===")
             out.printLine("    @implicit")
             if type = Type.INT {
                 out.printLine("    @priority(1)")
@@ -1267,10 +1267,10 @@ class WriteNumbers {
             out.printLine("===")
             out.printLine("class \{object(type)} : Value, HashKey<\{object(type)}>, " +
                     "Comparable<\{object(type)}>, Formattable {")
-            out.printLine("    @private")
+            out.printLine("    @package")
             out.printLine("    def value:\{builtin(type)}")
             out.printLine()
-            out.printLine("    @private")
+            out.printLine("    ===@hidden===")
             out.printLine("    @implicit")
             out.printLine("    init(value:\{builtin(type)}) {")
             out.printLine("        self.value := value")

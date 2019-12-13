@@ -16,12 +16,13 @@ class Annotations {
         constant WEAK             := 1 << 12
         constant SYNTHETIC        := 1 << 13
         constant UNSAFE_IMMUTABLE := 1 << 14
-        constant DEFAULT          := 1 << 15
+        constant UNSAFE_ACCESS    := 1 << 15
+        constant DEFAULT          := 1 << 16
         -- tags a field in a closure class which is used to represent a captured value
-        constant CAPTURE          := 1 << 16
-        constant STUB             := 1 << 17
-        constant NO_RETURN        := 1 << 18
-        constant POINTER_SIZE     := 1 << 19
+        constant CAPTURE          := 1 << 17
+        constant STUB             := 1 << 18
+        constant NO_RETURN        := 1 << 19
+        constant POINTER_SIZE     := 1 << 20
     }
 
     choice Expression {
@@ -75,6 +76,8 @@ class Annotations {
     property isSynthetic:Bit
 
     property isUnsafeImmutable:Bit
+
+    property isUnsafeAccess:Bit
 
     property isDefault:Bit
 
@@ -164,6 +167,10 @@ class Annotations {
         return flags && Flag.UNSAFE_IMMUTABLE != 0
     }
 
+    function get_isUnsafeAccess():Bit {
+        return flags && Flag.UNSAFE_ACCESS != 0
+    }
+
     function get_isDefault():Bit {
         return flags && Flag.DEFAULT != 0
     }
@@ -208,11 +215,11 @@ class Annotations {
         if isImplicit {
             result.append("@implicit\n")
         }
-        if isExtendable {
-            result.append("@extendable\n")
-        }
         if isAbstract {
             result.append("@abstract\n")
+        }
+        else if isExtendable {
+            result.append("@extendable\n")
         }
         if isInline {
             result.append("@inline\n")
@@ -228,6 +235,9 @@ class Annotations {
         }
         if isUnsafeImmutable {
             result.append("@unsafeImmutable\n")
+        }
+        if isUnsafeAccess {
+            result.append("@unsafeAccess\n")
         }
         if isDefault {
             result.append("@default\n")

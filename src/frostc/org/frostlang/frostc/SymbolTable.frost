@@ -3,14 +3,12 @@ package org.frostlang.frostc
 class SymbolTable {
     def symbols := HashMap<String, Symbol>()
 
-    @private
     @weak
     def compiler:Compiler
 
     @private
     def merged := HashMap<String, Symbol>()
 
-    @private
     def parents := Array<SymbolTable>()
 
     init(compiler:Compiler) {

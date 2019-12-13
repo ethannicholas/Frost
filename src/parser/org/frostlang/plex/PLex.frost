@@ -8,21 +8,6 @@ A simple lexical analyzer generator for Frost, used to build frostc's lexer.
 class PLex {
     def tokens := HashMap<String, Regex>()
 
-    @class
-    function lastIndexOf(this:String, s:String):String.Index? {
-        def startPos := this._length - s._length
-        outer: for i in startPos ... 0 by -1 {
-            for j in 0 .. s._length {
-                if this.data[i + j] != s.data[j] {
-                    continue outer
-                }
-            }
-            return String.Index(i)
-        }
-        assert !this.contains(s), "returning null for \{this:frost}.lastIndex(\{s:frost})"
-        return null
-    }
-
     method printWarning(out:OutputStream):Error? {
         try {
             out.printLine("-*********************************************************************-")
@@ -42,11 +27,11 @@ class PLex {
             def token := IndentedOutputStream(tokenPath.openOutputStream())
             def nfa := NFA()
             printWarning(token)
-            token.printLine("package \{tokenName[..lastIndexOf(tokenName, ".")]}")
+            token.printLine("package \{tokenName[..tokenName.lastIndexOf(".")]}")
             token.printLine()
             token.printLine("uses \{positionName}")
             token.printLine()
-            def index := tokenName.next(lastIndexOf(tokenName, "."))
+            def index := tokenName.next(tokenName.lastIndexOf("."))
             token.printLine("class \{tokenName[index..]} : Value {")
             token.level += 1
             token.printLine("choice Kind {")
@@ -137,13 +122,13 @@ class PLex {
             dfa:DFA, out:IndentedOutputStream):Error? {
         try {
             printWarning(out)
-            out.printLine("package \{lexerName[..lastIndexOf(lexerName, ".")]}")
+            out.printLine("package \{lexerName[..lexerName.lastIndexOf(".")]}")
             out.printLine()
             out.printLine("uses frost.unsafe.Pointer")
             out.printLine("uses org.frostlang.plex.runtime.DFA")
             out.printLine("uses \{positionName}")
             out.printLine()
-            out.printLine("class \{lexerName[lexerName.next(lastIndexOf(lexerName, "."))..]} {")
+            out.printLine("class \{lexerName[lexerName.next(lexerName.lastIndexOf("."))..]} {")
             out.level += 1
             out.printLine("def dfa:DFA")
             out.printLine()

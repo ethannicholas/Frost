@@ -19,10 +19,8 @@ class SyntaxHighlighter {
         LABEL
     }
 
-    @private
     def stack := Stack<Kind>()
 
-    @private
     def tokens := Array<(Token, Kind)>()
 
     method reset() {

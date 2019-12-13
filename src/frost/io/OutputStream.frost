@@ -243,7 +243,7 @@ class OutputStream {
     @param value the value to write
     ================================================================================================
     method write(value:Char8):Error? {
-        return write(value.value)
+        return write(value.asUInt8)
     }
 
     ================================================================================================
@@ -251,6 +251,7 @@ class OutputStream {
 
     @param s the string to write
     ================================================================================================
+    @unsafeAccess
     method print(s:String):Error? {
         return write(s.data, s._length)
     }

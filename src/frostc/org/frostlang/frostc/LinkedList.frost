@@ -1,7 +1,6 @@
 package org.frostlang.frostc
 
 class LinkedList<T> : Collection<T> {
-    @private
     class Node<T> {
         def value:T
         def next:Node<T>?
@@ -38,10 +37,8 @@ class LinkedList<T> : Collection<T> {
     @private
     var _count := 0
 
-    @private
     var head:Node<T>?
 
-    @private
     var tail:Node<T>?
 
     @override

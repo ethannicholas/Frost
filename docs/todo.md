@@ -3,15 +3,9 @@ Immediate
 
 Detect and error on parameter reassignment
 fix command line parsing
-permissions
 verify build & run from directories containing spaces
 all tests working (incl. C)
 Compiler performance
-Automatically turn code snippets in documentation into testcases
-    Comment at the beginning to identity testcase name
-    Testcase name matches up to a frost file which receives the code snippet as input, produces
-    finished testcase program
-    Have normal .in / .expected files to go along with it (should introduce .args or something too)
 
 Eventually
 ==========

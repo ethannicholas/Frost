@@ -212,6 +212,7 @@ class MD5 {
     }
 
     @class
+    @unsafeAccess
     function md5(message:String):String {
         def result := MD5()
         result.update(message.data->Pointer<UInt8>, message._length)

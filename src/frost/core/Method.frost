@@ -1,6 +1,6 @@
 package frost.core
 
-@package
+===@hidden===
 class Method : Immutable {
     ================================================================================================
     Pointer to the actual method code. This pointer can be called directly at the C level.
@@ -29,7 +29,7 @@ class Method : Immutable {
     @private
     def target:Immutable?
 
-    @private
+    ===@hidden===
     init(pointer:builtin_uint, target:Immutable?) {
         self.pointer := pointer
         self.target := target

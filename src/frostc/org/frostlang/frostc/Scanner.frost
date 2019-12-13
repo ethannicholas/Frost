@@ -108,7 +108,7 @@ class Scanner {
 
     method add(position:Position, flags:Int, flag:Int):Int {
         if flags && flag != 0 {
-            error(position, "duplicate annotation")
+            error(position, "duplicate annotation \{flag}")
         }
         return flags || flag
     }
@@ -167,6 +167,9 @@ class Scanner {
                         }
                         when "@unsafeImmutable" {
                             flags := add(p, flags, Annotations.Flag.UNSAFE_IMMUTABLE)
+                        }
+                        when "@unsafeAccess" {
+                            flags := add(p, flags, Annotations.Flag.UNSAFE_ACCESS)
                         }
                         when "@default" {
                             flags := add(p, flags, Annotations.Flag.DEFAULT)
@@ -721,7 +724,7 @@ class Scanner {
             }
         }
         def annotations := convertAnnotations(rawAnnotations)
-        if kind = ClassDecl.Kind.INTERFACE {
+        if kind = ClassDecl.Kind.INTERFACE & !annotations.isStub {
             if annotations.flags && Annotations.Flag.ABSTRACT != 0 {
                 error(position,  "interfaces are abstract by default and may not have an " +
                         "explicit '@abstract' annotation")

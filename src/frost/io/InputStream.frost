@@ -154,10 +154,10 @@ class InputStream {
             return null
         }
         if byteOrder = ByteOrder.LITTLE_ENDIAN {
-            return Int64(b.value->builtin_int64) << 32 + a
+            return b.asInt64 << 32 + a
         }
         else {
-            return Int64(a.value->builtin_int64) << 32 + b
+            return b.asInt64 << 32 + b
         }
     }
 
@@ -256,6 +256,7 @@ class InputStream {
     `"\r\n"` is accepted as a valid line ending. The line ending is not part of the returned string.
     Returns `null` if an error occurs while reading.
     ================================================================================================
+    @unsafeAccess
     method readLine():String? {
         def result := MutableString()
         loop {
