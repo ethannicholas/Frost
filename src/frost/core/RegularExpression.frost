@@ -16,7 +16,7 @@ class RegularExpression : Immutable {
         compile(regex, flags)
     }
 
-    @external
+    @external(frostRegularExpressionMatcher)
     function matcher(text:String):Matcher
 
     @override
@@ -25,10 +25,10 @@ class RegularExpression : Immutable {
     }
     
     @private
-    @external
+    @external(frostRegularExpressionCompile)
     method compile(regex:String, flags:Int)
 
     @private
-    @external
+    @external(frostRegularExpressionDestroy)
     method destroy()
 }

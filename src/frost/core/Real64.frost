@@ -446,32 +446,32 @@ class Real64 : Value, HashKey<Real64>, Comparable<Real64>, Formattable {
 
     ===This number rounded down (that is, in the direction of negative infinity) to the nearest integer.===
     property floor:Real64
-    @external
+    @external(frostReal64_get_floor)
     function get_floor():Real64
 
     ===This number rounded up (that is, in the direction of positive infinity) to the nearest integer.===
     property ceiling:Real64
-    @external
+    @external(frostReal64_get_ceiling)
     function get_ceiling():Real64
 
     ===The square root of this number.===
     property sqrt:Real64
-    @external
+    @external(frostReal64_get_sqrt)
     function get_sqrt():Real64
 
     ===The trigonometric sine of this number.===
     property sin:Real64
-    @external
+    @external(frostReal64_get_sin)
     function get_sin():Real64
 
     ===The trigonometric cosine of this number.===
     property cos:Real64
-    @external
+    @external(frostReal64_get_cos)
     function get_cos():Real64
 
     ===The trigonometric tangent of this number.===
     property tan:Real64
-    @external
+    @external(frostReal64_get_tan)
     function get_tan():Real64
 
     @override
@@ -669,7 +669,7 @@ This function never fails, even if the number is not in the range of a 32 bit fl
     }
 
     @override
-    @external
+    @external(frostReal64ToString)
     function get_toString():String
 
     === Returns a formatted representation of this number. Supported format strings are `""`, `"d"`, or `"D"` for decimal, `"b"` or `"B"` for binary, `"o"` or `"O"` for octal, `"x"` for lowercase hexadecimal, and `"X"` for uppercase hexadecimal. ===

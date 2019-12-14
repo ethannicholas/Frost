@@ -14,7 +14,7 @@ interface Random {
     ================================================================================================
     @class
     function default():Random {
-        return XorShift128Plus(Frost.currentTime())
+        return XorShift128Plus(Timer().elapsed().asInt64)
     }
 
     ============================================================================

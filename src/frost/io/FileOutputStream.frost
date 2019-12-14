@@ -23,18 +23,18 @@ class FileOutputStream : OutputStream {
     }
 
     @override
-    @external
+    @external(frostFileOutputStreamClose)
     method close():Error?
 
     @override
-    @external
+    @external(frostFileOutputStreamWriteByte)
     method write(value:UInt8):Error?
 
     @override
-    @external
+    @external(frostFileOutputStreamWriteArray)
     method write(ptr:Pointer<UInt8>, size:Int):Error?
 
     @override
-    @external
+    @external(frostFileOutputStreamFlush)
     method flush():Error?
 }

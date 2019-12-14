@@ -513,11 +513,7 @@ class FrostDoc {
             }
             out.write("name", escape(name))
             writeDoc(m)
-            def annotations := m.annotations
-            if m.owner.annotations.isFinal {
-                annotations.flags &&= !!Annotations.Flag.FINAL
-            }
-            write(annotations)
+            write(m.annotations)
             out.open("params")
             for p in m.parameters {
                 out.open("param")

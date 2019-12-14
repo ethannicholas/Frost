@@ -12,28 +12,28 @@ class Console {
     Returns the standard input stream.
     ================================================================================================
     @class
-    @external
+    @external(frostConsoleInputStream)
     function inputStream():InputStream
 
     ================================================================================================
     Returns the standard output stream.
     ================================================================================================
     @class
-    @external
+    @external(frostConsoleOutputStream)
     function outputStream():OutputStream
 
     ================================================================================================
     Returns the standard error stream.
     ================================================================================================
     @class
-    @external
+    @external(frostConsoleErrorStream)
     function errorStream():OutputStream
 
     ================================================================================================
     Prints a string to the standard output stream.
     ================================================================================================
     @class
-    @external
+    @external(frostConsolePrint)
     method print(s:String)
 
     ================================================================================================
@@ -73,7 +73,7 @@ class Console {
     Prints a string to the standard error stream.
     ================================================================================================
     @class
-    @external
+    @external(frostConsolePrintError)
     method printError(s:String)
 
     ================================================================================================
@@ -114,7 +114,7 @@ class Console {
     been reached.
     ================================================================================================
     @class
-    @external
+    @external(frostConsoleRead)
     method read():Char8?
 
     ================================================================================================

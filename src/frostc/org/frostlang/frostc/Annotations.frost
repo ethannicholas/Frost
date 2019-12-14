@@ -7,22 +7,21 @@ class Annotations {
         constant PACKAGE          := 1 << 3
         constant CLASS            := 1 << 4
         constant OVERRIDE         := 1 << 5
-        constant EXTERNAL         := 1 << 6
-        constant IMPLICIT         := 1 << 7
-        constant EXTENDABLE       := 1 << 8
-        constant ABSTRACT         := 1 << 9
-        constant INLINE           := 1 << 10
-        constant SPECIALIZE       := 1 << 11
-        constant WEAK             := 1 << 12
-        constant SYNTHETIC        := 1 << 13
-        constant UNSAFE_IMMUTABLE := 1 << 14
-        constant UNSAFE_ACCESS    := 1 << 15
-        constant DEFAULT          := 1 << 16
+        constant IMPLICIT         := 1 << 6
+        constant EXTENDABLE       := 1 << 7
+        constant ABSTRACT         := 1 << 8
+        constant INLINE           := 1 << 9
+        constant SPECIALIZE       := 1 << 10
+        constant WEAK             := 1 << 11
+        constant SYNTHETIC        := 1 << 12
+        constant UNSAFE_IMMUTABLE := 1 << 13
+        constant UNSAFE_ACCESS    := 1 << 14
+        constant DEFAULT          := 1 << 15
         -- tags a field in a closure class which is used to represent a captured value
-        constant CAPTURE          := 1 << 17
-        constant STUB             := 1 << 18
-        constant NO_RETURN        := 1 << 19
-        constant POINTER_SIZE     := 1 << 20
+        constant CAPTURE          := 1 << 16
+        constant STUB             := 1 << 17
+        constant NO_RETURN        := 1 << 18
+        constant POINTER_SIZE     := 1 << 19
     }
 
     choice Expression {
@@ -48,6 +47,8 @@ class Annotations {
     def flags:Int
 
     def expressions:Array<Expression>?
+
+    def externalName:String?
 
     property isPrivate:Bit
 
@@ -94,11 +95,12 @@ class Annotations {
     }
 
     init(flags:Int) {
-        init(flags, null)
+        init(flags, null, null)
     }
 
-    init(flags:Int, expressions:ListView<Expression>?) {
+    init(flags:Int, externalName:String?, expressions:ListView<Expression>?) {
         self.flags := flags
+        self.externalName := externalName
         if expressions !== null {
             self.expressions := Array<Expression>(expressions!)
         }
@@ -108,7 +110,7 @@ class Annotations {
     }
 
     function +(flags:Int):Annotations {
-        return Annotations(self.flags + flags, expressions)
+        return Annotations(self.flags + flags, externalName, expressions)
     }
 
     function get_isPrivate():Bit {
@@ -132,7 +134,7 @@ class Annotations {
     }
 
     function get_isExternal():Bit {
-        return flags && Flag.EXTERNAL != 0
+        return externalName !== null
     }
 
     function get_isImplicit():Bit {
@@ -209,8 +211,13 @@ class Annotations {
         if isOverride {
             result.append("@override\n")
         }
-        if isExternal {
-            result.append("@external\n")
+        if externalName !== null {
+            if externalName != "" {
+                result.append("@external(\{externalName})\n")
+            }
+            else {
+                result.append("@external\n")
+            }
         }
         if isImplicit {
             result.append("@implicit\n")

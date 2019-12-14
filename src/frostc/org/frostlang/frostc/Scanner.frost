@@ -108,13 +108,14 @@ class Scanner {
 
     method add(position:Position, flags:Int, flag:Int):Int {
         if flags && flag != 0 {
-            error(position, "duplicate annotation \{flag}")
+            error(position, "duplicate annotation")
         }
         return flags || flag
     }
 
     method convertAnnotations(a:FixedArray<ASTNode>):Annotations {
         var flags := 0
+        var externalName:String? := null
         var expressions:Array<Annotations.Expression>? := null
         method checkExpression(scanner:Scanner, position:Position, text:String, expr:ASTNode?):Bit {
             if expr !== null {
@@ -122,6 +123,18 @@ class Scanner {
             }
             scanner.error(position, "annotation '\{text}' requires an expression")
             return false
+        }
+        method checkIdentifier(scanner:Scanner, position:Position, text:String,
+                expr:ASTNode?):String? {
+            if expr !== null {
+                match expr {
+                    when ASTNode.IDENTIFIER(_, name) {
+                        return name
+                    }
+                }
+            }
+            scanner.compiler.error(position, "annotation '\{text}' requires an identifier")
+            return ""
         }
         for c in a {
             match c {
@@ -144,7 +157,8 @@ class Scanner {
                             flags := add(p, flags, Annotations.Flag.OVERRIDE)
                         }
                         when "@external" {
-                            flags := add(p, flags, Annotations.Flag.EXTERNAL)
+                            externalName := checkIdentifier(self, p, text, expr)
+                            expr := null
                         }
                         when "@implicit" {
                             flags := add(p, flags, Annotations.Flag.IMPLICIT)
@@ -241,7 +255,7 @@ class Scanner {
                 }
             }
         }
-        return Annotations(flags, expressions)
+        return Annotations(flags, externalName, expressions)
     }
 
     method scanFields(owner:ClassDecl, position:Position, rawDoccomment:ASTNode?,

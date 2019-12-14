@@ -1393,7 +1393,7 @@ class Int8 : Value, HashKey<Int8>, Comparable<Int8>, Formattable, ListView<Bit> 
 
     ===The number of `1` bits in this number's binary representation.===
     property bitCount:Int8
-    @external
+    @external(frostInt8_get_bitCount)
     function get_bitCount():Int8
 
     @override

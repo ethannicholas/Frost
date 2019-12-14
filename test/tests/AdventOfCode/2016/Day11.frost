@@ -284,9 +284,12 @@ class Day11 {
 
     @class
     method main() {
-    -*
+        if true {
+            Console.printLine("<takes too long to run, needs to be optimized>")
+            return
+        }
         def floors := Array<Array<Thing>>()
-        def lines := Console.inputStream().lines().get()
+        def lines := Console.inputStream().lines()
         for i in 0 .. 4 {
             def line := lines.next()
             def floor := Array<Thing>()
@@ -299,6 +302,6 @@ class Day11 {
         Day11().run(startState)
         startState.floors[0].addAll([Thing.CHIP("elerium"), Thing.CHIP("dilithium"),
                 Thing.RTG("elerium"), Thing.RTG("dilithium")])
-        Day11().run(startState)*-
+        Day11().run(startState)
     }
 }

@@ -73,11 +73,8 @@ method main() {
     Console.printLine(""[0..0 by 2])
     Console.printLine(""[0.. by -1])
     Console.printLine(""[..0 by -2])
-    Console.printLine(""[0...0])
     Console.printLine(""[0... by 1])
-    Console.printLine(""[...0 by 2])
     Console.printLine(""[0... by -1])
-    Console.printLine(""[0...0 by -2])
     Console.printLine()
 
     Console.printLine("indexOf")

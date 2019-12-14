@@ -14,5 +14,6 @@ class Test {
     def x:MutableString
 
     @class
+    @private(expression)
     var y:String
 }

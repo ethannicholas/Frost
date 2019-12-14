@@ -1,7 +1,6 @@
 Immediate
 =========
 
-Detect and error on parameter reassignment
 fix command line parsing
 verify build & run from directories containing spaces
 all tests working (incl. C)

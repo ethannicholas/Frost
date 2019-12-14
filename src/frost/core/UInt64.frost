@@ -555,7 +555,7 @@ class UInt64 : Value, HashKey<UInt64>, Comparable<UInt64>, Formattable, ListView
 
     ===The number of `1` bits in this number's binary representation.===
     property bitCount:UInt64
-    @external
+    @external(frostUInt64_get_bitCount)
     function get_bitCount():UInt64
 
     @override

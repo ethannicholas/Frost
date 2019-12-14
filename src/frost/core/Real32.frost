@@ -457,32 +457,32 @@ class Real32 : Value, HashKey<Real32>, Comparable<Real32>, Formattable {
 
     ===This number rounded down (that is, in the direction of negative infinity) to the nearest integer.===
     property floor:Real32
-    @external
+    @external(frostReal32_get_floor)
     function get_floor():Real32
 
     ===This number rounded up (that is, in the direction of positive infinity) to the nearest integer.===
     property ceiling:Real32
-    @external
+    @external(frostReal32_get_ceiling)
     function get_ceiling():Real32
 
     ===The square root of this number.===
     property sqrt:Real32
-    @external
+    @external(frostReal32_get_sqrt)
     function get_sqrt():Real32
 
     ===The trigonometric sine of this number.===
     property sin:Real32
-    @external
+    @external(frostReal32_get_sin)
     function get_sin():Real32
 
     ===The trigonometric cosine of this number.===
     property cos:Real32
-    @external
+    @external(frostReal32_get_cos)
     function get_cos():Real32
 
     ===The trigonometric tangent of this number.===
     property tan:Real32
-    @external
+    @external(frostReal32_get_tan)
     function get_tan():Real32
 
     @override
@@ -673,7 +673,7 @@ If this number cannot be exactly represented as a 64 bit unsigned number, a safe
     }
 
     @override
-    @external
+    @external(frostReal32ToString)
     function get_toString():String
 
     === Returns a formatted representation of this number. Supported format strings are `""`, `"d"`, or `"D"` for decimal, `"b"` or `"B"` for binary, `"o"` or `"O"` for octal, `"x"` for lowercase hexadecimal, and `"X"` for uppercase hexadecimal. ===

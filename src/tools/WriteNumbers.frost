@@ -688,7 +688,7 @@ class WriteNumbers {
             out.printLine()
             if isReal(type) {
                 out.printLine("    @override")
-                out.printLine("    @external")
+                out.printLine("    @external(frost\{object(type)}ToString)")
                 out.printLine("    function get_toString():String")
                 return
             }
@@ -1000,7 +1000,7 @@ class WriteNumbers {
             out.printLine()
             out.printLine("    ===\{doc}===")
             out.printLine("    property \{name}:\{object(returnType)}")
-            out.printLine("    @external")
+            out.printLine("    @external(frost\{object(returnType)}_get_\{name})")
             out.printLine("    function get_\{name}():\{object(returnType)}")
         }
         fail(error) {

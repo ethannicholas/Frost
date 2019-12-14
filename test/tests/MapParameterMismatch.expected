@@ -1,1 +1,2 @@
-a good error message
+MapParameterMismatch.frost:5:60: error: expected '((frost.core.Int, frost.core.String))=&>(frost.collections.Iterator.map.U)', but found lambda with wrong number of parameters
+1 error

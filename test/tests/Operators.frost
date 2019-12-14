@@ -103,7 +103,7 @@ class Operators {
     @class
     method int32() {
         def x:Int32 := 88124
-        def y:Int32 := 65318
+        def y:Int32 := 653
         Console.printLine("int32 Arithmetic")
         Console.printLine(x + y)
         Console.printLine(x - y)

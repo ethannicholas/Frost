@@ -23,7 +23,7 @@ class FileInputStream : InputStream {
     }
 
     @override
-    @external
+    @external(frostFileInputStreamClose)
     method close():Error?
 
     @override
@@ -32,7 +32,7 @@ class FileInputStream : InputStream {
     }
 
     @private
-    @external
+    @external(frostFileInputStreamReadByte)
     method readImpl():UInt8?
 
     @override
@@ -41,6 +41,6 @@ class FileInputStream : InputStream {
     }
 
     @private
-    @external
+    @external(frostFileInputStreamReadArray)
     method readImpl(buffer:Pointer<UInt8>, max:Int):Int
 }

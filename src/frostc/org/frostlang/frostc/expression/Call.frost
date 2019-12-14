@@ -1303,6 +1303,19 @@ class Call {
         return null
     }
 
+    @class
+    method reportInferenceError(compiler:Compiler, position:MethodPosition, m:MethodRef,
+            args:ListView<ASTNode>) {
+        for (i, a) in args.enumeration {
+            if compiler.compileExpression(a,
+                    Compiler.TypeContext.TYPE(m.parameterType(i), false)) == null {
+                return
+            }
+        }
+        compiler.error(position, "type inference failed for call to \{m.value.declaration}, try " +
+                "specifying the method type explicitly")
+    }
+
     -- FIXME dear god this method this method has grown out of control and needs to be broken up
     @class
     @post((rawM.returnType = compiler.VOID_TYPE & @return == null) | @return !== null |
@@ -1379,6 +1392,7 @@ class Call {
         }
         def inferred := performTypeInference(compiler, m, args, type)
         if inferred == null {
+            reportInferenceError(compiler, position, m, args)
             return null
         }
         m := inferred

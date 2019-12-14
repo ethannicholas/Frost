@@ -585,7 +585,7 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
 
     ===The number of `1` bits in this number's binary representation.===
     property bitCount:Int64
-    @external
+    @external(frostInt64_get_bitCount)
     function get_bitCount():Int64
 
     @override

@@ -81,14 +81,14 @@ Now, what is the quantum entanglement of the first group of packages in the idea
 
 *-
 
-method find(weights:Array<Int>, target:Int) {
-    def bestCount := Int.MAX
-    def bestQE := Int.MAX
+method find(weights:Array<Int64>, target:Int64) {
+    def bestCount := Int64.MAX
+    def bestQE := Int64.MAX
     outer: for i in 1 .. 1 << weights.count {
         if i.bitCount > bestCount {
             continue
         }
-        var weight := 0
+        var weight:Int64 := 0
         for j in 0 .. weights.count {
             if i[j] {
                 weight += weights[j]
@@ -98,10 +98,13 @@ method find(weights:Array<Int>, target:Int) {
             }
         }
         if weight = target {
-            def qe := 1
+            def qe:Int64 := 1
             for j in 0 .. weights.count {
                 if i[j] {
                     qe *= weights[j]
+                    if qe > 1 << 50 {
+                        break
+                    }
                 }
             }
             if i.bitCount < bestCount {
@@ -117,8 +120,8 @@ method find(weights:Array<Int>, target:Int) {
 }
 
 method main() {
-    def weights := Console.inputStream().lines().map(line => line.asInt!).all()
-    def total := weights.fold(Int.+)
+    def weights := Console.inputStream().lines().map(line => line.asInt64!).all()
+    def total := weights.fold(Int64.+)
     find(weights, total // 3)
     find(weights, total // 4)
 }

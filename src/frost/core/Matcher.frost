@@ -57,7 +57,7 @@ class Matcher {
     additional unmatched text before or after the match, `matches()` does not.
     ================================================================================================
     -- @self FIXME
-    @external
+    @external(frostMatcherMatches)
     method matches():Bit
 
     ================================================================================================
@@ -193,19 +193,19 @@ class Matcher {
     }
 
     @private
-    @external
+    @external(frostMatcherNativeFind)
     method nativeFind(start:String.Index):Bit
 
-    @external
     @pre(matched)
+    @external(frostMatcherStart)
     function get_start():String.Index
 
-    @external
     @pre(matched)
+    @external(frostMatcherEnd)
     function get_end():String.Index
 
-    @external
     @pre(matched)
+    @external(frostMatcherGroupCount)
     function get_groupCount():Int
 
     ================================================================================================
@@ -227,8 +227,8 @@ class Matcher {
         8
         20
     ================================================================================================
-    @external
     @pre(matched)
+    @external(frostMatcherGroup)
     function group(index:Int):String?
 
     @override
@@ -237,6 +237,6 @@ class Matcher {
     }
 
     @private
-    @external
+    @external(frostMatcherDestroy)
     method destroy()
 }

@@ -1187,6 +1187,9 @@ class CodeGenerator {
     }
 
     method getName(m:MethodDecl):String {
+        if m.annotations.externalName !== null & m.annotations.externalName != "" {
+            return m.annotations.externalName
+        }
         var result := nameCache[m]
         if result == null {
             if m.name = "main" {

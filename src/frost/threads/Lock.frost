@@ -26,7 +26,7 @@ class Lock : Immutable {
 
     @see unlock()
     ================================================================================================
-    @external
+    @external(frostLockLock)
     method lock()
 
     ================================================================================================
@@ -35,7 +35,7 @@ class Lock : Immutable {
 
     @see lock()
     ================================================================================================
-    @external
+    @external(frostLockUnlock)
     method unlock()
     
     @override
@@ -44,10 +44,10 @@ class Lock : Immutable {
     }
 
     @private
-    @external
+    @external(frostLockCreate)
     method create()
 
     @private
-    @external
+    @external(frostLockDestroy)
     method destroy()
 }

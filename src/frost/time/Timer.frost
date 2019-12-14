@@ -21,11 +21,11 @@ class Timer {
     }
 
     @private
-    @external
+    @external(frostTimerSetup)
     method setup()
 
     @private
-    @external
+    @external(frostTimerDestroy)
     method destroy()
 
     ================================================================================================
@@ -37,7 +37,8 @@ class Timer {
     }
 
     @private
-    @external
+    @class
+    @external(frostTimerNow)
     method now():builtin_float64
 
     ================================================================================================

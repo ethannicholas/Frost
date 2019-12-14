@@ -688,6 +688,8 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     `string.substring(range)` is therefore much more efficient than `string[range]`, provided that
     forcing the parent string to remain in memory is acceptable.
     ================================================================================================
+    @pre(r.min.byteOffset >= 0 & r.min.byteOffset <= byteLength &
+            r.max.byteOffset >= 0 & r.max.byteOffset < byteLength + r.inclusive.choose(0, 1))
     function substring(r:Range<Index>):String {
         var length := r.max.byteOffset - r.min.byteOffset
         if r.inclusive {
@@ -708,6 +710,9 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     As with other `Range` methods, a null `min` starts at the beginning of the string, and a null
     `max` ends at the end of the string.
     ================================================================================================
+    @pre((r.min == null | (r.min.byteOffset >= 0 & r.min.byteOffset <= byteLength)) &
+            (r.max == null | (r.max.byteOffset >= 0 & r.max.byteOffset < byteLength +
+            r.inclusive.choose(0, 1))))
     function substring(r:Range<Index?>):String {
         def min:Index
         if r.min !== null {
@@ -733,6 +738,8 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     Returns a substring of a string. If `Range.min` is greater than `Range.max`, the resulting
     substring will be empty.
     ================================================================================================
+    @pre(r.min.byteOffset >= 0 & r.min.byteOffset <= byteLength &
+            r.max.byteOffset >= 0 & r.max.byteOffset < byteLength + r.inclusive.choose(0, 1))
     function [](r:Range<Index>):String {
         def current := r.min.byteOffset
         def result := MutableString()
@@ -767,6 +774,9 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     empty.
     ================================================================================================
     @priority(1)
+    @pre((r.min == null | (r.min.byteOffset >= 0 & r.min.byteOffset <= byteLength)) &
+            (r.max == null | (r.max.byteOffset >= 0 & r.max.byteOffset < byteLength +
+            r.inclusive.choose(0, 1))))
     function [](r:Range<Index?>):String {
         if _length = 0 {
             return ""
@@ -803,6 +813,9 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     Unicode characters which consist of more than one Unicode codepoint.
     ================================================================================================
     @priority(1)
+    @pre((r.start == null | (r.start.byteOffset >= 0 & r.start.byteOffset <= byteLength)) &
+            (r.end == null | (r.end.byteOffset >= 0 & r.end.byteOffset < byteLength +
+            r.inclusive.choose(0, 1))))
     function [](r:SteppedRange<Index?, Int>):String {
         if _length = 0 {
             return ""

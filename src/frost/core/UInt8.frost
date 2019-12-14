@@ -1384,7 +1384,7 @@ class UInt8 : Value, HashKey<UInt8>, Comparable<UInt8>, Formattable, ListView<Bi
 
     ===The number of `1` bits in this number's binary representation.===
     property bitCount:UInt8
-    @external
+    @external(frostUInt8_get_bitCount)
     function get_bitCount():UInt8
 
     @override

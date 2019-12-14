@@ -1059,7 +1059,7 @@ class Int : Value, HashKey<Int>, Comparable<Int>, Formattable, ListView<Bit> {
 
     ===The number of `1` bits in this number's binary representation.===
     property bitCount:Int
-    @external
+    @external(frostInt_get_bitCount)
     function get_bitCount():Int
 
     @override

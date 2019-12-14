@@ -5,6 +5,7 @@ uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Pair
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.expression.Binary
@@ -333,25 +334,25 @@ class Analyzer {
             when IR.Statement.BINARY(_, left, op, right, type) {
                 return binaryValue(left, op, right, state, type)
             }
-            when IR.Statement.CAST(position, value, type, explicit) {
+            when IR.Statement.CAST(p, value, type, explicit) {
                 if !explicit & reportErrors & !type.isNullable &
-                        getValue(value, state).type.isNullable {
---                    compiler.warn(position, "value of type '\{value.type()}' may be null")
+                        getValue(p, value, state).type.isNullable {
+--                    compiler.warn(p, "value of type '\{value.type()}' may be null")
                 }
                 if explicit {
                     return DataFlowValue(type, definitionFrom(stmt))
                 }
                 else {
-                    return getValue(value, state)
+                    return getValue(p, value, state)
                 }
             }
             when IR.Statement.CONSTRUCT(_, cl) {
                 return DataFlowValue(cl.type, definitionFrom(stmt))
             }
-            when IR.Statement.CREATE_STRUCT(_, cl, args) {
+            when IR.Statement.CREATE_STRUCT(p, cl, args) {
                 if cl.type = compiler.BIT_TYPE {
                     return DataFlowValue(cl.type, definitionFrom(stmt),
-                            getValue(args[0], state).nonNullImplications)
+                            getValue(p, args[0], state).nonNullImplications)
                 }
                 return DataFlowValue(cl.type, definitionFrom(stmt))
             }
@@ -364,10 +365,10 @@ class Analyzer {
                     return DataFlowValue(type.returnType, definitionFrom(stmt))
                 }
             }
-            when IR.Statement.EXTRACT_FIELD(_, base, f) {
+            when IR.Statement.EXTRACT_FIELD(p, base, f) {
                 if f.owner.type = compiler.BIT_TYPE {
                     return DataFlowValue(f.type, definitionFrom(stmt),
-                            getValue(base, state).nonNullImplications)
+                            getValue(p, base, state).nonNullImplications)
                 }
                 return DataFlowValue(f.type, definitionFrom(stmt))
             }
@@ -378,19 +379,18 @@ class Analyzer {
             when IR.Statement.GET_FIELD_POINTER(_, base, f) {
                 return DataFlowValue(f.type, definitionFrom(stmt))
             }
-            when IR.Statement.LOAD(position, v) {
-                def value := getValue(v, state)
+            when IR.Statement.LOAD(p, v) {
+                def value := getValue(p, v, state)
                 if reportErrors & value.type = compiler.INVALID_TYPE {
-                    compiler.warn(position.asPosition,
-                            "value \{stmt}:\{v} has not been initialized")
+                    compiler.warn(p.asPosition, "value \{stmt}:\{v} has not been initialized")
                 }
                 return value
             }
-            when IR.Statement.NEGATE(_, v) {
-                return DataFlowValue(getValue(v, state).type, definitionFrom(stmt))
+            when IR.Statement.NEGATE(p, v) {
+                return DataFlowValue(getValue(p, v, state).type, definitionFrom(stmt))
             }
-            when IR.Statement.NOT(_, v) {
-                def base := getValue(v, state)
+            when IR.Statement.NOT(p, v) {
+                def base := getValue(p, v, state)
                 if base.nonNullImplications !== null {
                     return DataFlowValue(base.type, definitionFrom(stmt),
                             base.nonNullImplications.map(p => (p[0], !p[1])))
@@ -403,9 +403,9 @@ class Analyzer {
             when IR.Statement.POINTER_GET_INDEX(_, p, _, t) {
                 return DataFlowValue(t, definitionFrom(stmt))
             }
-            when IR.Statement.STATIC_CALL(_, m, args) {
+            when IR.Statement.STATIC_CALL(p, m, args) {
                 if m.returnType = compiler.BIT_TYPE {
-                    return DataFlowValue(m.returnType, definitionFrom(stmt), getValue(args[0],
+                    return DataFlowValue(m.returnType, definitionFrom(stmt), getValue(p, args[0],
                             state).nonNullImplications)
                 }
                 else {
@@ -418,7 +418,7 @@ class Analyzer {
         }
     }
 
-    function getValue(v:IR.Value, s:State):DataFlowValue {
+    function getValue(p:MethodPosition, v:IR.Value, s:State):DataFlowValue {
         match v {
             when IR.Value.BIT(_, type) {
                 return DataFlowValue(type, Definition.UNSPECIFIED)
@@ -446,6 +446,12 @@ class Analyzer {
             }
             when IR.Value.STRING(_, type) {
                 return DataFlowValue(type, Definition.UNSPECIFIED)
+            }
+            when IR.Value.TYPE(t, literalType) {
+                if reportErrors {
+                    compiler.error(p, "type '\{t.name}' cannot be used as an expression by itself")
+                }
+                return DataFlowValue(literalType, Definition.UNSPECIFIED)
             }
             otherwise {
                 unreachable, "unsupported value '\{v}'"
@@ -490,8 +496,8 @@ class Analyzer {
     ================================================================================================
     method updateStateForExitIndex(b:IR.Block, exit:Int, state:State) {
         match b.statements.last {
-            when IR.Statement.CONDITIONAL_BRANCH(_, flag, _, _) {
-                def value := getValue(flag, state)
+            when IR.Statement.CONDITIONAL_BRANCH(p, flag, _, _) {
+                def value := getValue(p, flag, state)
                 if value.nonNullImplications !== null {
                     for impl in value.nonNullImplications {
                         if impl[1] = (exit = 0) {
@@ -570,10 +576,10 @@ class Analyzer {
         while !iter1.done {
             def id := iter1.next()
             match iter2.next() {
-                when IR.Statement.STORE(_, v, target) {
+                when IR.Statement.STORE(p, v, target) {
                     match target {
                         when IR.Value.LOCAL(slot, _) {
-                            result.locals[slot] := DataFlowValue(getValue(v, result).type,
+                            result.locals[slot] := DataFlowValue(getValue(p, v, result).type,
                                     Definition.LOCAL(slot))
                         }
                         when IR.Value.REF(s, _) {

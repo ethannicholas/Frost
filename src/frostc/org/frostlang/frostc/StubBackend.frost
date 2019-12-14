@@ -81,6 +81,7 @@ class StubBackend : Backend {
             return
         }
         try {
+            out.print(f.annotations)
             match f.fieldKind {
                 when FieldDecl.Kind.VAR      { out.print("var ") }
                 when FieldDecl.Kind.DEF      { out.print("def ") }

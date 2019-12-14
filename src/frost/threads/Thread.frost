@@ -30,7 +30,7 @@ class Thread : Immutable {
     }
 
     @private
-    @external
+    @external(frostThreadRun)
     method run(m:()=&>(), preventsExit:Bit)
 
     ================================================================================================
@@ -77,7 +77,7 @@ class Thread : Immutable {
     ================================================================================================
     Waits for this thread to exit.
     ================================================================================================
-    @external
+    @external(frostThreadWaitFor)
     method waitFor()
 
     ================================================================================================
@@ -100,6 +100,6 @@ class Thread : Immutable {
     @param the number of seconds (or fraction thereof) to sleep
     ================================================================================================
     @class 
-    @external
+    @external(frostThreadSleep)
     method sleep(seconds:Real64)
 }

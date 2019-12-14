@@ -1,0 +1,2 @@
+TypeValue.frost:2:9: error: type 'frost.core.Int' cannot be used as an expression by itself
+1 error

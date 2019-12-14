@@ -1,11 +1,13 @@
+BadAnnotations4.frost:7:5: error: annotation '@external' requires an identifier
+BadAnnotations4.frost:17:5: error: '@private' annotation does not accept parameters
 BadAnnotations4.frost:14:9: error: fields may not be annotated with '@override'
-BadAnnotations4.frost:14:9: error: fields may not be annotated with '@external'
 BadAnnotations4.frost:14:9: error: fields may not be annotated with '@implicit'
 BadAnnotations4.frost:14:9: error: fields may not be annotated with '@abstract'
 BadAnnotations4.frost:14:9: error: fields may not be annotated with '@inline'
 BadAnnotations4.frost:14:9: error: fields may not be annotated with '@specialize'
 BadAnnotations4.frost:14:9: error: fields may not be annotated with '@unsafeImmutable'
+BadAnnotations4.frost:14:9: error: classes may not be annotated with '@external'
 BadAnnotations4.frost:14:9: error: only immutable fields may be annotated with '@class'
 BadAnnotations4.frost:14:9: error: conflicting access modifier annotations
-BadAnnotations4.frost:17:9: error: 'var' fields may not be annotated with '@class'
-10 errors
+BadAnnotations4.frost:18:9: error: 'var' fields may not be annotated with '@class'
+12 errors

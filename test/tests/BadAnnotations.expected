@@ -1,14 +1,15 @@
 BadAnnotations.frost:1:1: error: unrecognized annotation '@foo'
 BadAnnotations.frost:6:1: error: duplicate annotation
+BadAnnotations.frost:10:1: error: annotation '@external' requires an identifier
 BadAnnotations.frost:15:1: error: classes may not be annotated with '@protected'
 BadAnnotations.frost:15:1: error: classes may not be annotated with '@class'
 BadAnnotations.frost:15:1: error: classes may not be annotated with '@override'
-BadAnnotations.frost:15:1: error: classes may not be annotated with '@external'
 BadAnnotations.frost:15:1: error: classes may not be annotated with '@implicit'
 BadAnnotations.frost:15:1: error: classes may not be annotated with '@weak'
+BadAnnotations.frost:15:1: error: classes may not be annotated with '@external'
 BadAnnotations.frost:15:1: error: classes may not be annotated with '@pre'
 BadAnnotations.frost:15:1: error: classes may not be annotated with '@preOr'
 BadAnnotations.frost:15:1: error: classes may not be annotated with '@post'
 BadAnnotations.frost:15:1: error: classes may not be annotated with '@postAnd'
 BadAnnotations.frost:15:1: error: conflicting access modifier annotations
-13 errors
+14 errors

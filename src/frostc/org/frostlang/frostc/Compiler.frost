@@ -4150,8 +4150,7 @@ class Compiler : ErrorReporter {
             if valueType.name != "frost.core.Method" &
                     valueType.name != "frost.core.MutableMethod" {
                 error(position, "non-method objects may not be cast to methods")
-                Console.printLine("casting \{value} to \{target}")
-                unreachable
+                return null
             }
         }
         if explicit & !canCast(value.type(), target) {
@@ -5955,9 +5954,11 @@ class Compiler : ErrorReporter {
             if writeCode & errorCount = 0 {
                 def analyzer := Analyzer(self, m, ir)
                 analyzer.analyze()
-                optimize(ir, analyzer)
-                backend.writeMethod(m, cg.getSignature(m), cg.convert(m, ir),
-                        m.owner.isSpecialization())
+                if errorCount = 0 {
+                    optimize(ir, analyzer)
+                    backend.writeMethod(m, cg.getSignature(m), cg.convert(m, ir),
+                            m.owner.isSpecialization())
+                }
             }
             ir := oldIR
         }
@@ -6012,12 +6013,14 @@ class Compiler : ErrorReporter {
         disallow(Annotations.Flag.PROTECTED, "@protected")
         disallow(Annotations.Flag.CLASS,     "@class")
         disallow(Annotations.Flag.OVERRIDE,  "@override")
-        disallow(Annotations.Flag.EXTERNAL,  "@external")
         disallow(Annotations.Flag.IMPLICIT,  "@implicit")
         disallow(Annotations.Flag.INLINE,    "@inline")
         disallow(Annotations.Flag.WEAK,      "@weak")
         disallow(Annotations.Flag.DEFAULT,   "@default")
         disallow(Annotations.Flag.NO_RETURN, "@noReturn")
+        if cl.annotations.externalName !== null {
+            error(cl.position, "classes may not be annotated with '@external'")
+        }
         if cl.annotations.expressions !== null {
             for expr in cl.annotations.expressions {
                 match expr {
@@ -6046,7 +6049,6 @@ class Compiler : ErrorReporter {
             }
         }
         disallow(Annotations.Flag.OVERRIDE,         "@override")
-        disallow(Annotations.Flag.EXTERNAL,         "@external")
         disallow(Annotations.Flag.IMPLICIT,         "@implicit")
         disallow(Annotations.Flag.ABSTRACT,         "@abstract")
         disallow(Annotations.Flag.INLINE,           "@inline")
@@ -6054,6 +6056,9 @@ class Compiler : ErrorReporter {
         disallow(Annotations.Flag.UNSAFE_IMMUTABLE, "@unsafeImmutable")
         disallow(Annotations.Flag.DEFAULT,          "@default")
         disallow(Annotations.Flag.NO_RETURN, "@noReturn")
+        if f.annotations.externalName !== null {
+            error(f.position, "classes may not be annotated with '@external'")
+        }
         if f.annotations.expressions !== null {
             for expr in f.annotations.expressions {
                 match expr {

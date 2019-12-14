@@ -1263,7 +1263,7 @@ class Int16 : Value, HashKey<Int16>, Comparable<Int16>, Formattable, ListView<Bi
 
     ===The number of `1` bits in this number's binary representation.===
     property bitCount:Int16
-    @external
+    @external(frostInt16_get_bitCount)
     function get_bitCount():Int16
 
     @override

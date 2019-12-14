@@ -74,7 +74,7 @@ class WriteOperators {
             indented.level += 1
             writeFrostInt("int8", "Int8", 9, 12, indented)
             writeFrostInt("int16", "Int16", 126, 519, indented)
-            writeFrostInt("int32", "Int32", 88124, 65318, indented)
+            writeFrostInt("int32", "Int32", 88124, 653, indented)
             writeFrostInt("int64", "Int64", 4000311441, 1991297512, indented)
             writeFrostInt("uint8", "UInt8", 16, 15, indented)
             writeFrostInt("uint16", "UInt16", 598, 87, indented)
@@ -184,7 +184,7 @@ class WriteOperators {
             indented.printLine("#include <stdio.h>")
             writeCInt("int8", "int8_t", "%d", null, 9, 12, indented)
             writeCInt("int16", "int16_t", "%d", null, 126, 519, indented)
-            writeCInt("int32", "int32_t", "%d", null, 88124, 65318, indented)
+            writeCInt("int32", "int32_t", "%d", null, 88124, 653, indented)
             writeCInt("int64", "int64_t", "%\" PRId64 \"", null, 4000311441, 1991297512,
                     indented)
             writeCInt("uint8", "uint8_t", "%u", "0xFFu", 16, 15, indented)

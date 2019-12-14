@@ -22,20 +22,20 @@ class Notifier : Immutable {
     Blocks the current thread until another thread calls the [notify()] or [notifyAll()] method on
     this notifier.
     ================================================================================================
-    @external
+    @external(frostNotifierWait)
     method wait()
 
     ================================================================================================
     If any other threads are waiting on this `Notifier`, chooses one of them (in a system-dependent
     fashion) and wakes it up.
     ================================================================================================
-    @external
+    @external(frostNotifierNotify)
     method notify()
     
     ================================================================================================
     If any other threads are waiting on this `Notifier`, wakes up all of them.
     ================================================================================================
-    @external
+    @external(frostNotifierNotifyAll)
     method notifyAll()
 
     @override
@@ -44,10 +44,10 @@ class Notifier : Immutable {
     }
     
     @private
-    @external
+    @external(frostNotifierCreate)
     method create()
     
     @private
-    @external
+    @external(frostNotifierDestroy)
     method destroy()
 }

@@ -88,7 +88,7 @@ class File : Immutable, HashKey<File> {
 
     @returns the file's absolute path
     ================================================================================================
-    @external
+    @external(frostFileAbsolute)
     method absolute():Maybe<File>
 
     @private
@@ -190,7 +190,7 @@ class File : Immutable, HashKey<File> {
 
     @returns `true` if this file exists
     ================================================================================================
-    @external
+    @external(frostFileExists)
     method exists():Bit
 
     ================================================================================================
@@ -200,21 +200,21 @@ class File : Immutable, HashKey<File> {
 
     @returns `true` if this is a directory
     ================================================================================================
-    @external
+    @external(frostFileIsDirectory)
     method isDirectory():Bit
 
     ================================================================================================
     Returns a list of files contained by this directory, or an `Error` if the path could not be
     listed.
     ================================================================================================
-    @external
+    @external(frostFileList)
     method list():Maybe<ListView<File>>
 
     ================================================================================================
     Creates a directory at this path. It is not an error to attempt to create a directory which
     already exists.
     ================================================================================================
-    @external
+    @external(frostFileCreateDirectory)
     method createDirectory():Error?
 
     ================================================================================================
@@ -240,7 +240,7 @@ class File : Immutable, HashKey<File> {
 
     @returns an `InputStream`
     ================================================================================================
-    @external
+    @external(frostFileOpenInputStream)
     method openInputStream():Maybe<InputStream>
 
     ================================================================================================
@@ -249,7 +249,7 @@ class File : Immutable, HashKey<File> {
 
     @returns an `OutputStream`
     ================================================================================================
-    @external
+    @external(frostFileOpenOutputStream)
     method openOutputStream():Maybe<OutputStream>
 
     ================================================================================================
@@ -258,7 +258,7 @@ class File : Immutable, HashKey<File> {
 
     @returns an `OutputStream`
     ================================================================================================
-    @external
+    @external(frostFileOpenForAppend)
     method openForAppend():Maybe<OutputStream>
 
     ================================================================================================
@@ -315,14 +315,14 @@ class File : Immutable, HashKey<File> {
     destination paths must be on the same filesystem for this operation to succeed. Returns an
     [Error] if the file could not be renamed.
     ================================================================================================
-    @external
+    @external(frostFileRename)
     method rename(path:File):Error?
 
     ================================================================================================
     Attempts to delete the file. If the file is a directory, it must be empty or the operation will
     fail. Returns an [Error] if the file could not be deleted.
     ================================================================================================
-    @external
+    @external(frostFileDelete)
     method delete():Error?
 
     ================================================================================================

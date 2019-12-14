@@ -1058,7 +1058,7 @@ class Int32 : Value, HashKey<Int32>, Comparable<Int32>, Formattable, ListView<Bi
 
     ===The number of `1` bits in this number's binary representation.===
     property bitCount:Int32
-    @external
+    @external(frostInt32_get_bitCount)
     function get_bitCount():Int32
 
     @override

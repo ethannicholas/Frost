@@ -56,55 +56,55 @@ class Frost {
     *-
 
     @class
-    @external
+    @external(frostRefThreadUnsafe)
     method refThreadUnsafe(o:Object?)
 
     @class
-    @external
+    @external(frostRefThreadSafe)
     method refThreadSafe(o:Object?)
 
     @class
-    @external
+    @external(frostRefThreadSafeNonConstant)
     method refThreadSafeNonConstant(o:Object?)
 
     @class
-    @external
+    @external(frostUnrefThreadUnsafe)
     method unrefThreadUnsafe(o:Object?)
 
     @class
-    @external
+    @external(frostUnrefThreadSafe)
     method unrefThreadSafe(o:Object?)
 
     @class
-    @external
+    @external(frostUnrefThreadSafeNonConstant)
     method unrefThreadSafeNonConstant(o:Object?)
 
     @class
-    @external
+    @external(frostUnrefThreadUnsafeNoCleanup)
     method unrefThreadUnsafeNoCleanup(o:Object?)
 
     @class
-    @external
+    @external(frostUnrefThreadSafeNoCleanup)
     method unrefThreadSafeNoCleanup(o:Object?)
 
     @class
-    @external
+    @external(frostUnrefThreadNonConstantNoCleanup)
     method unrefThreadSafeNonConstantNoCleanup(o:Object?)
 
     @class
-    @external
+    @external(frostPtrAlloc)
     method alloc(size:Int):UInt
 
     @class
-    @external
+    @external(frostPtrDestroy)
     method destroy(ptr:UInt)
 
     @class
-    @external
+    @external(frostPtrRealloc)
     method realloc(ptr:UInt, oldSize:Int, newSize:Int):UInt
 
     @class
-    @external
+    @external(frostFrostAddWeakReference)
     method addWeakReference<T>(w:Weak<T>)
 
     @class
@@ -135,19 +135,19 @@ class Frost {
     }
 
     @class
-    @external
+    @external(frostFrostToReal64)
     function toReal64(s:String):Real64
 
     @class
-    @external
+    @external(frostFrostFloatToIntBits)
     function floatToIntBits(r:Real64):Int64
 
     @class
-    @external
+    @external(frostFrostIntBitsToFloat)
     function intBitsToFloat(i:Int64):Real64
 
     @class
-    @external
+    @external(frostFrostAddressOf)
     function addressOf(o:Object):Int
 
     @class
@@ -205,18 +205,6 @@ class Frost {
         }
         return result
     }
-
-    @external
-    @class
-    function sqrt(v:builtin_float32):builtin_float32
-
-    @external
-    @class
-    function sqrt(v:builtin_float64):builtin_float64
-
-    @class 
-    @external 
-    method currentTime():builtin_int64
 
     ================================================================================================
     Used to implement alignment specifiers during string interpolation. The alignment specifier must
@@ -348,14 +336,6 @@ class Frost {
     }
 
     @class
-    @external
+    @external(frostDebugPrintInt)
     method debugPrint(i:builtin_int64)
-
-    @class
-    @external
-    method debugPrint(o:Object)
-
-    @class
-    @external
-    method disableRefErrorReporting()
 }

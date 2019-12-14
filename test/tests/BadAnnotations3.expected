@@ -1,3 +1,5 @@
+BadAnnotations3.frost:6:1: error: annotation '@external' requires an identifier
+BadAnnotations3.frost:10:1: error: methods in non-@extendable classes may not be @extendable
 BadAnnotations3.frost:10:1: error: methods may not be annotated with '@specialize'
 BadAnnotations3.frost:10:1: error: methods may not be annotated with '@weak'
 BadAnnotations3.frost:10:1: error: methods may not be annotated with '@unsafeImmutable'
@@ -5,4 +7,4 @@ BadAnnotations3.frost:10:1: error: methods annotated with '@external' may not ha
 BadAnnotations3.frost:10:1: error: methods annotated with '@abstract' may not have a body
 BadAnnotations3.frost:10:1: error: conflicting access modifier annotations
 BadAnnotations3.frost:13:1: error: expected non-abstract method 'foo' to have a body
-7 errors
+9 errors
