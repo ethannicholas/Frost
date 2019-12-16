@@ -309,6 +309,9 @@ class OutputStream {
         return null
     }
 
+    ================================================================================================
+    Closes this `OutputStream`. The default implementation does nothing.
+    ================================================================================================
     @extendable
     method close():Error? {
         return null

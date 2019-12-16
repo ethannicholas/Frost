@@ -1,5 +1,6 @@
 package frost.core
 
+===@hidden===
 class Class : Immutable {
     def name:String
 

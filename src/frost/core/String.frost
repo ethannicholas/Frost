@@ -170,7 +170,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 index += 1
                 return Char32(result)
             }
-            if c.asInt && 0xFF < 0b11000000 {
+            if c.asInt && 0xFF < 0b11100000 {
                 if index + 1 < str._length {
                     result := (result && 0b11111) << 6 + str.data[index + 1].asInt32 &&
                             0b111111
@@ -181,7 +181,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 index += 2
                 return Char32(result)
             }
-            if c.asInt && 0xFF < 0b11100000 {
+            if c.asInt && 0xFF < 0b11110000 {
                 if index + 2 < str._length {
                     result := (result && 0b1111) << 12 + (str.data[index + 1].asInt32 &&
                             0b111111) << 6 + str.data[index + 2].asInt32 && 0b111111
@@ -330,20 +330,44 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     @private
     def owner:String?
 
+    ================================================================================================
+    A view of the UTF8 bytes this string contains.
+    ================================================================================================
     property utf8:ListView<Char8>
 
+    ================================================================================================
+    A view of the UTF16 words this string contains.
+    ================================================================================================
     property utf16:Iterator<Char16>
 
+    ================================================================================================
+    The number of Unicode codepoints this string contains. As the string is internally stored in the
+    variable-width UTF8 format, determining the length of the string takes an amount of time
+    proportional to the number of characters it contains.
+    ================================================================================================
     property length:Int
 
+    ================================================================================================
+    The number of UTF8 bytes this string contains.
+    ================================================================================================
     property byteLength:Int
 
+    ================================================================================================
+    An `Index` representing the beginning of the string.
+    ================================================================================================
     property start:Index
 
+    ================================================================================================
+    An `Index` representing the end of the string.
+    ================================================================================================
     property end:Index
 
+    ================================================================================================
+    A copy of this string with leading and trailing whitespace characters removed.
+    ================================================================================================
     property trimmed:String
 
+    ===@hidden===
     init(data:Pointer<Char8>, length:Int) {
         self.data := data
         _length := length
@@ -357,6 +381,9 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         self.owner := owner
     }
 
+    ================================================================================================
+    Creates a new string containing the given characters.
+    ================================================================================================
     init(chars:ListView<Char8>) {
         _length := chars.count
         data := Pointer<Char8>.alloc(_length)
@@ -366,6 +393,9 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         owner := null
     }
 
+    ================================================================================================
+    Creates a new string containing the given characters.
+    ================================================================================================
     @unsafeAccess
     init(chars:ListView<Char32>) {
         def result := MutableString()
@@ -490,6 +520,9 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         return _length
     }
 
+    ================================================================================================
+    Returns `true` if this string begins with `other`.
+    ================================================================================================
     function startsWith(other:String):Bit {
         if _length < other._length {
             return false
@@ -502,6 +535,9 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         return true
     }
 
+    ================================================================================================
+    Returns `true` if this string ends with `other`.
+    ================================================================================================
     function endsWith(other:String):Bit {
         if _length < other._length {
             return false
@@ -514,11 +550,6 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         return true
     }
 
-    ================================================================================================
-    Returns a copy of this string with leading and trailing whitespace characters removed.
-
-    @returns a trimmed version of this string
-    ================================================================================================
     function get_trimmed():String {
         if _length = 0 {
             return self
@@ -1501,6 +1532,13 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         return split(delimiter, Int.MAX)
     }
 
+    ================================================================================================
+    Converts this string to a signed number. The string must be a sequence of decimal digits,
+    optionally preceded by a minus sign (`-`), whose numeric representation can fit into an `Int64`.
+    Returns `null` if the conversion fails.
+
+    @returns this string converted to a number, or `null`
+    ================================================================================================
     property asInt:Int?
     function get_asInt():Int? {
         def result := asInt64

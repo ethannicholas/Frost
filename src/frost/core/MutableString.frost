@@ -9,6 +9,9 @@ uses frost.unsafe.Pointer
 -- See MutableString.finish().                                              --
 ------------------------------------------------------------------------------
 
+====================================================================================================
+A mutable variant of `String`.
+====================================================================================================
 class MutableString {
     ================================================================================================
     Represents the position of a Unicode codepoint within a `MutableString`.
@@ -111,13 +114,34 @@ class MutableString {
         }
     }
 
+    ================================================================================================
+    A view of the UTF8 bytes this string contains.
+    ================================================================================================
+    property utf8:List<Char8>
+    function get_utf8():List<Char8> {
+        return UTF8List(self)
+    }
 
+    ================================================================================================
+    The number of Unicode codepoints this string contains. As the string is internally stored in the
+    variable-width UTF8 format, determining the length of the string takes an amount of time
+    proportional to the number of characters it contains.
+    ================================================================================================
     property length:Int
 
+    ================================================================================================
+    The number of UTF8 bytes this string contains.
+    ================================================================================================
     property byteLength:Int
 
+    ================================================================================================
+    An `Index` representing the beginning of the string.
+    ================================================================================================
     property start:Index
 
+    ================================================================================================
+    An `Index` representing the end of the string.
+    ================================================================================================
     property end:Index
 
     @private
@@ -136,10 +160,16 @@ class MutableString {
     @private
     var dummy:String?
 
+    ================================================================================================
+    Creates an empty `MutableString`.
+    ================================================================================================
     init() {
         init(DEFAULT_SIZE)
     }
 
+    ================================================================================================
+    Creates a `MutableString` initially containing the same characters as the specified `String`.
+    ================================================================================================
     @unsafeAccess
     init(s:String) {
         _length := s._length
@@ -151,6 +181,11 @@ class MutableString {
         }
     }
 
+    ================================================================================================
+    Creates an empty `MutableString` with the specified initial capacity. The `MutableString` will
+    contain zero characters, but allocate enough storage to hold `capacity` characters, and thus not
+    need to perform any reallocation until reaching that size.
+    ================================================================================================
     init(capacity:Int) {
         _length := 0
         maxLength := capacity
@@ -163,6 +198,9 @@ class MutableString {
         data.destroy()
     }
 
+    ================================================================================================
+    Appends the specified character to the end of this string.
+    ================================================================================================
     -- FIXME @self
     method append(c:Char8) {
         ensureCapacity(_length + 1)
@@ -170,6 +208,9 @@ class MutableString {
         _length += 1
     }
 
+    ================================================================================================
+    Appends the specified character to the end of this string.
+    ================================================================================================
     -- FIXME @self
     method append(c:Char32) {
         def value := c.asInt32
@@ -201,6 +242,9 @@ class MutableString {
         }
     }
 
+    ================================================================================================
+    Appends the specified string to the end of this string.
+    ================================================================================================
     -- FIXME @self
     @unsafeAccess
     method append(s:String) {
@@ -211,6 +255,9 @@ class MutableString {
         _length += s._length
     }
 
+    ================================================================================================
+    Appends the specified characters to the end of this string.
+    ================================================================================================
     -- FIXME @self
     method append(chars:Pointer<Char8>, count:Int) {
         ensureCapacity(_length + count)
@@ -374,6 +421,9 @@ class MutableString {
         return indexOf(s) !== null
     }
 
+    ================================================================================================
+    Returns `true` if this string begins with `other`.
+    ================================================================================================
     @unsafeAccess
     function startsWith(other:String):Bit {
         if _length < other._length {
@@ -387,6 +437,9 @@ class MutableString {
         return true
     }
 
+    ================================================================================================
+    Returns `true` if this string ends with `other`.
+    ================================================================================================
     @unsafeAccess
     function endsWith(other:String):Bit {
         if _length < other._length {
@@ -458,6 +511,9 @@ class MutableString {
         return needle.matcher(toString).find()
     }
 
+    ================================================================================================
+    Removes whitespace from the beginning and end of this string.
+    ================================================================================================
     -- FIXME @self
     method trim() {
         var i := start
@@ -771,11 +827,6 @@ class MutableString {
             maxLength *= 2
         }
         data := data.realloc(oldMax, maxLength)
-    }
-
-    property utf8:List<Char8>
-    function get_utf8():List<Char8> {
-        return UTF8List(self)
     }
 
     -- FIXME @self

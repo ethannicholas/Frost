@@ -170,7 +170,7 @@ class CodeGenerator {
                     null, Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
             writeGlobalValue(string, Code.Value.STRUCT(FixedArray<Code.Value>.from([
                 cc,
-                Code.Value.INT(NO_REFCNT.asUInt64, Code.PrimitiveType.INT32),
+                Code.Value.INT(NO_REFCNT.toUInt64, Code.PrimitiveType.INT32),
                 Code.Value.INT(0, Code.PrimitiveType.INT8),
                 Code.Value.GLOBAL_POINTER(charsIndex),
                 Code.Value.INT(s.byteLength.asUInt64, Code.PrimitiveType.INT),
@@ -272,7 +272,7 @@ class CodeGenerator {
             if allClassConstants | !cl.external {
                 def fields := Array<Code.Value>()
                 fields.add(getClassConstant(compiler.getClass("frost.core.Class")!))
-                fields.add(Code.Value.INT(NO_REFCNT.asUInt64, Code.PrimitiveType.INT32))
+                fields.add(Code.Value.INT(NO_REFCNT.toUInt64, Code.PrimitiveType.INT32))
                 fields.add(Code.Value.INT(0, Code.PrimitiveType.INT8))
                 fields.add(getStringReference(cl.name))
                 def superPtr:String

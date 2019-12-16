@@ -1067,7 +1067,7 @@ class Compiler : ErrorReporter {
         def whens := Array<ASTNode>()
         for i in 0 .. cl.choiceCases.count {
             def cc := cl.choiceCases[i]
-            var statement := ASTNode.INT(p, cl.name.hash.asUInt64 *& (i + 1).asUInt64)
+            var statement := ASTNode.INT(p, cl.name.hash.toUInt64 *& (i + 1).toUInt64)
             def params := Array<ASTNode>()
             for i in 0 .. cc.fields.count {
                 def name := "field\{i}"

@@ -1,5 +1,10 @@
 package frost.core
 
+====================================================================================================
+Represents a regular expression that can be used for matching and parsing strings.
+`RegularExpression` objects can be created explicitly from strings, but are more typically created
+using the shorthand syntax: `/regex/`.
+====================================================================================================
 class RegularExpression : Immutable {
     constant MULTILINE := 1
     constant CASE_INSENSITIVE := 2
@@ -8,14 +13,23 @@ class RegularExpression : Immutable {
     @private
     def nativeHandle:builtin_int
 
+    ================================================================================================
+    Creates a new `RegularExpression`.
+    ================================================================================================
     init(regex:String) {
         init(regex, 0)
     }
 
+    ================================================================================================
+    Creates a new `RegularExpression` with the given flags.
+    ================================================================================================
     init(regex:String, flags:Int) {
         compile(regex, flags)
     }
 
+    ================================================================================================
+    Returns a `Matcher` which searches the given string.
+    ================================================================================================
     @external(frostRegularExpressionMatcher)
     function matcher(text:String):Matcher
 

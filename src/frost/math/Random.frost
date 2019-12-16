@@ -84,7 +84,7 @@ interface Random {
     @default
     @post(@return >= 0 & @return < 1)
     method real64():Real64 {
-        return (int64().asUInt64 >> 11) / (1 << 53)
+        return (int64().toUInt64 >> 11) / (1 << 53)
     }
 
 }

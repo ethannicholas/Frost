@@ -37,10 +37,16 @@ class Bit : Value, HashKey<Bit>, Formattable {
         return 0
     }
 
+    ================================================================================================
+    Returns the logical inverse of this `Bit`, so `!true` is `false` and `!false` is `true`.
+    ================================================================================================
     function !():Bit {
         return Bit(!value)
     }
 
+    ================================================================================================
+    Returns the logical OR of two `Bit`s.
+    ================================================================================================
     -- note that the '|' and '&' functions do not have any way to provide for short circuiting, so
     -- these operators require special support in the compiler. These implementations are therefore
     -- only actually called in unusual circumstances, such as via dynamic method references.
@@ -48,15 +54,23 @@ class Bit : Value, HashKey<Bit>, Formattable {
         return value | other.value
     }
 
+    ================================================================================================
+    Returns the logical AND of two `Bit`s.
+    ================================================================================================
     function &(other:Bit):Bit {
         return value & other.value
     }
 
+    ================================================================================================
+    Returns the logical XOR of two `Bit`s.
+    ================================================================================================
     function ~(other:Bit):Bit {
         return Bit(value ~ other.value)
     }
 
-    -- FIXME make lazy
+    ================================================================================================
+    Returns `ifTrue` or `ifFalse` based on the value of this `Bit`.
+    ================================================================================================
     function choose<T>(ifTrue:T, ifFalse:T):T {
         if self {
             return ifTrue

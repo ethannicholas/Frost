@@ -712,7 +712,7 @@ frost_uint frostPtrRealloc(frost_uint ptr, frost_int oldSize, frost_int newSize)
     return (frost_int) result;
 }
 
-void frostDebugPrintInt(int64_t x) {
+void frostDebugPrint(int64_t x) {
     printf("Debug: %" PRId64 "\n", x);
 }
 

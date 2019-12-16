@@ -310,6 +310,9 @@ class InputStream {
         return LineIterator(self)
     }
 
+    ================================================================================================
+    Closes this `InputStream`. The default implementation does nothing.
+    ================================================================================================
     @extendable
     method close():Error? {
         return null

@@ -40,6 +40,9 @@ class SteppedRange<EndPoint:Value?, Step:Value> : Value {
     ================================================================================================
     def inclusive:Bit
 
+    ================================================================================================
+    Creates a new `SteppedRange`.
+    ================================================================================================    
     init(start:EndPoint, end:EndPoint, step:Step, inclusive:Bit) {
         self.start := start
         self.end := end

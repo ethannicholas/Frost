@@ -110,7 +110,11 @@ class Annotations {
     }
 
     function +(flags:Int):Annotations {
-        return Annotations(self.flags + flags, externalName, expressions)
+        return Annotations(self.flags || flags, externalName, expressions)
+    }
+
+    function -(flags:Int):Annotations {
+        return Annotations(self.flags && !!flags, externalName, expressions)
     }
 
     function get_isPrivate():Bit {

@@ -187,6 +187,7 @@
         <xsl:apply-templates select="ancestors"/>
         <xsl:apply-templates select="interfaces"/>
         <div class="classDescription">
+        <xsl:apply-templates select="annotations"/>
         <xsl:apply-templates select="doc/description"/>
         </div>
         <xsl:apply-templates select="seeAlsos"/>
@@ -467,6 +468,11 @@
                     <xsl:with-param name="operator">unchecked integer divide operator</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
+            <xsl:when test=". = '%'">
+                <xsl:call-template name="hint">
+                    <xsl:with-param name="operator">remainder operator</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
             <xsl:when test=". = '&lt;&lt;'">
                 <xsl:call-template name="hint">
                     <xsl:with-param name="operator">left shift operator</xsl:with-param>
@@ -485,6 +491,11 @@
             <xsl:when test=". = '='">
                 <xsl:call-template name="hint">
                     <xsl:with-param name="operator">equals operator</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test=". = '!='">
+                <xsl:call-template name="hint">
+                    <xsl:with-param name="operator">not equal operator</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test=". = '&gt;'">

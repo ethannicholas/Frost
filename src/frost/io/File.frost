@@ -39,6 +39,10 @@ class File : Immutable, HashKey<File> {
     ================================================================================================
     property simpleName:String
 
+    ================================================================================================
+    Creates a new `File` with the specified path. This merely creates a new object representing the
+    path does not access the file system in any way.
+    ================================================================================================
     init(path:String) {
         self.path := path
     }

@@ -28,7 +28,7 @@ method process(input:File, frostdoc:FrostDoc):Error? {
 }
 
 method recursiveDelete(root:File, currentPath:File):Error? {
--*    try {
+    try {
         if currentPath.isDirectory() {
             for f in currentPath.list() {
                 recursiveDelete(root, f)
@@ -45,8 +45,7 @@ method recursiveDelete(root:File, currentPath:File):Error? {
     }
     fail(error) {
         return error
-    }*-
-    return null
+    }
 }
 
 method xsltproc(input:File, xsl:File, output:File):Error? {

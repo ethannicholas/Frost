@@ -17,14 +17,24 @@ class Char32 : Value, HashKey<Char32>, Comparable<Char32> {
     @private
     def value:Int32
 
+    ================================================================================================
+    Creates a `Char32` with the specified codepoint.
+    ================================================================================================
+    @pre(value >= 0 & value < 1114112)
     init(value:Int32) {
         self.value := value
     }
 
+    ================================================================================================
+    Returns the difference between the codepoints of two `Char32`s.
+    ================================================================================================
     function -(other:Char32):Int32 {
         return value - other.value
     }
 
+    ================================================================================================
+    Returns the difference between the codepoints of two `Char32`s.
+    ================================================================================================
     @priority(1)
     function -(other:Char32):Int {
         return (value - other.value).asInt
@@ -60,6 +70,9 @@ class Char32 : Value, HashKey<Char32>, Comparable<Char32> {
         return value >= other.value
     }
 
+    ================================================================================================
+    `true` if this character is whitespace.
+    ================================================================================================
     property isWhitespace:Bit
     function get_isWhitespace():Bit {
         -- FIXME respect all Unicode whitespace
@@ -73,6 +86,9 @@ class Char32 : Value, HashKey<Char32>, Comparable<Char32> {
         }
     }
 
+    ================================================================================================
+    `true` if this character is a numeric digit.
+    ================================================================================================
     property isDigit:Bit
     function get_isDigit():Bit {
         -- FIXME respect all Unicode digits
@@ -103,121 +119,205 @@ class Char32 : Value, HashKey<Char32>, Comparable<Char32> {
         return asInt
     }
 
+    ================================================================================================
+    This character converted to a `Char8`. If this number is not in the range of a `Char8`, a safety
+    violation occurs.
+    ================================================================================================
     property asChar8:Char8
     function get_asChar8():Char8 {
         return Char8(asUInt8)
     }
 
+    ================================================================================================
+    This character converted to a `Char16`. If this number is not in the range of a `Char16`, a
+    safety violation occurs.
+    ================================================================================================
     property asChar16:Char16
     function get_asChar16():Char16 {
         return Char16(asUInt16)
     }
 
+    ================================================================================================
+    This character's codepoint converted to an 8 bit signed number. If this number is not in the
+    range of an 8 bit signed number, a safety violation occurs.
+    ================================================================================================
     property asInt8:Int8
     function get_asInt8():Int8 {
         return value.asInt8
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 16 bit signed number. If this number is not in the
+    range of a 16 bit signed number, a safety violation occurs.
+    ================================================================================================
     property asInt16:Int16
     function get_asInt16():Int16 {
         return value.asInt16
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 32 bit signed number.
+    ================================================================================================
     property asInt32:Int32
     function get_asInt32():Int32 {
         return value
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 64 bit signed number.
+    ================================================================================================
     property asInt64:Int64
     function get_asInt64():Int64 {
         return value.asInt64
     }
 
+    ================================================================================================
+    This character's codepoint converted to an `Int`.
+    ================================================================================================
     property asInt:Int
     function get_asInt():Int {
         return value.asInt
     }
 
+    ================================================================================================
+    This character's codepoint converted to an 8 bit unsigned number. If this number is not in the
+    range of an 8 bit unsigned number, a safety violation occurs.
+    ================================================================================================
     property asUInt8:UInt8
     function get_asUInt8():UInt8 {
         return value.asUInt8
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 16 bit unsigned number. If this number is not in the
+    range of a 16 bit unsigned number, a safety violation occurs.
+    ================================================================================================
     property asUInt16:UInt16
     function get_asUInt16():UInt16 {
         return value.asUInt16
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 32 bit unsigned number.
+    ================================================================================================
     property asUInt32:UInt32
     function get_asUInt32():UInt32 {
         return value.asUInt32
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 64 bit unsigned number.
+    ================================================================================================
     property asUInt64:UInt64
     function get_asUInt64():UInt64 {
         return value.asUInt64
     }
 
+    ================================================================================================
+    This character's codepoint converted to a `UInt`.
+    ================================================================================================
     property asUInt:UInt
     function get_asUInt():UInt {
         return value.asUInt
     }
 
+    ================================================================================================
+    This character converted to a `Char8`. If this number is not in the range of a `Char8`, it
+    silently overflows.
+    ================================================================================================
     property toChar8:Char8
     function get_toChar8():Char8 {
         return Char8(toUInt8)
     }
 
+    ================================================================================================
+    This character converted to a `Char16`. If this number is not in the range of a `Char16`, it
+    silently overflows.
+    ================================================================================================
     property toChar16:Char16
     function get_toChar16():Char16 {
         return Char16(toUInt16)
     }
 
+    ================================================================================================
+    This character's codepoint converted to an 8 bit signed number. If this number is not in the
+    range of an 8 bit signed number, it silently overflows.
+    ================================================================================================
     property toInt8:Int8
     function get_toInt8():Int8 {
         return value.toInt8
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 16 bit signed number. If this number is not in the
+    range of a 16 bit signed number, it silently overflows.
+    ================================================================================================
     property toInt16:Int16
     function get_toInt16():Int16 {
         return value.toInt16
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 32 bit signed number.
+    ================================================================================================
     property toInt32:Int32
     function get_toInt32():Int32 {
         return value
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 64 bit signed number.
+    ================================================================================================
     property toInt64:Int64
     function get_toInt64():Int64 {
         return value.toInt64
     }
 
+    ================================================================================================
+    This character's codepoint converted to an `Int`.
+    ================================================================================================
     property toInt:Int
     function get_toInt():Int {
         return value.toInt
     }
 
+    ================================================================================================
+    This character's codepoint converted to an 8 bit unsigned number. If this number is not in the
+    range of an 8 bit unsigned number, it silently overflows.
+    ================================================================================================
     property toUInt8:UInt8
     function get_toUInt8():UInt8 {
         return value.toUInt8
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 16 bit unsigned number. If this number is not in the
+    range of a 16 bit unsigned number, it silently overflows.
+    ================================================================================================
     property toUInt16:UInt16
     function get_toUInt16():UInt16 {
         return value.toUInt16
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 32 bit unsigned number.
+    ================================================================================================
     property toUInt32:UInt32
     function get_toUInt32():UInt32 {
         return value.toUInt32
     }
 
+    ================================================================================================
+    This character's codepoint converted to a 64 bit unsigned number.
+    ================================================================================================
     property toUInt64:UInt64
     function get_toUInt64():UInt64 {
         return value.toUInt64
     }
 
+    ================================================================================================
+    This character's codepoint converted to a `UInt`.
+    ================================================================================================
     property toUInt:UInt
     function get_toUInt():UInt {
         return value.toUInt

@@ -1296,161 +1296,195 @@ class Int16 : Value, HashKey<Int16>, Comparable<Int16>, Formattable, ListView<Bi
         }
     }
 
-    ===This number converted to an Int.
-===
+    ===
+    This number converted to an Int.
+    ===
     property asInt:Int
     function get_asInt():Int {
         return Int(value->builtin_int)
     }
 
-    ===This number converted to an Int.
-===
+    ===
+    This number converted to an Int.
+    ===
     property toInt:Int
     function get_toInt():Int {
         return Int(value->builtin_int)
     }
 
-    ===This number truncated to an 8 bit signed number.
-If this number is not in the range of an 8 bit signed number, a safety violation occurs.
-===
+    ===
+    This number truncated to an 8 bit signed number.
+    If this number is not in the range of an 8 bit signed number, a safety violation occurs.
+    ===
     property asInt8:Int8
     function get_asInt8():Int8 {
-    assert value >= Int8.MIN.toInt16.value & value <= Int8.MAX.toInt16.value, "Int16(\{self}) cannot be safely converted to Int8"
+    assert self >= Int8.MIN.toInt16 & self <= Int8.MAX.toInt16, "Int16(\{self}) cannot be safely converted to Int8"
         return Int8(value->builtin_int8)
     }
 
-    ===This number truncated to an 8 bit signed number.
-This function never fails, even if the number is not in the range of an 8 bit signed number.
-===
+    ===
+    This number truncated to an 8 bit signed number.
+    This function never fails, even if the number is not in the range of an 8 bit signed number.
+    ===
     property toInt8:Int8
     function get_toInt8():Int8 {
         return Int8(value->builtin_int8)
     }
 
-    ===This number sign extended to a 32 bit signed number.
-===
+    ===
+    This number sign extended to a 32 bit signed number.
+    ===
     property asInt32:Int32
     function get_asInt32():Int32 {
         return Int32(value->builtin_int32)
     }
 
-    ===This number sign extended to a 32 bit signed number.
-===
+    ===
+    This number sign extended to a 32 bit signed number.
+    ===
     property toInt32:Int32
     function get_toInt32():Int32 {
         return Int32(value->builtin_int32)
     }
 
-    ===This number sign extended to a 64 bit signed number.
-===
+    ===
+    This number sign extended to a 64 bit signed number.
+    ===
     property asInt64:Int64
     function get_asInt64():Int64 {
         return Int64(value->builtin_int64)
     }
 
-    ===This number sign extended to a 64 bit signed number.
-===
+    ===
+    This number sign extended to a 64 bit signed number.
+    ===
     property toInt64:Int64
     function get_toInt64():Int64 {
         return Int64(value->builtin_int64)
     }
 
-    ===This number converted to a UInt.
-===
+    ===
+    This number converted to a UInt.
+    If this number is not in the range of a UInt, a safety violation occurs.
+    ===
     property asUInt:UInt
     function get_asUInt():UInt {
+    assert self >= UInt.MIN.toInt16, "Int16(\{self}) cannot be safely converted to UInt"
         return UInt(value->builtin_uint)
     }
 
-    ===This number converted to a UInt.
-===
+    ===
+    This number converted to a UInt.
+    This function never fails, even if the number is not in the range of a UInt.
+    ===
     property toUInt:UInt
     function get_toUInt():UInt {
         return UInt(value->builtin_uint)
     }
 
-    ===This number truncated to an 8 bit unsigned number.
-If this number is not in the range of an 8 bit unsigned number, a safety violation occurs.
-===
+    ===
+    This number truncated to an 8 bit unsigned number.
+    If this number is not in the range of an 8 bit unsigned number, a safety violation occurs.
+    ===
     property asUInt8:UInt8
     function get_asUInt8():UInt8 {
-    assert value >= UInt8.MIN.toInt16.value & value <= UInt8.MAX.toInt16.value, "Int16(\{self}) cannot be safely converted to UInt8"
+    assert self >= UInt8.MIN.toInt16 & self <= UInt8.MAX.toInt16, "Int16(\{self}) cannot be safely converted to UInt8"
         return UInt8(value->builtin_uint8)
     }
 
-    ===This number truncated to an 8 bit unsigned number.
-This function never fails, even if the number is not in the range of an 8 bit unsigned number.
-===
+    ===
+    This number truncated to an 8 bit unsigned number.
+    This function never fails, even if the number is not in the range of an 8 bit unsigned number.
+    ===
     property toUInt8:UInt8
     function get_toUInt8():UInt8 {
         return UInt8(value->builtin_uint8)
     }
 
-    ===This number reinterpreted as a 16 bit unsigned number.
-===
+    ===
+    This number reinterpreted as a 16 bit unsigned number.
+    If this number is not in the range of a 16 bit unsigned number, a safety violation occurs.
+    ===
     property asUInt16:UInt16
     function get_asUInt16():UInt16 {
+    assert self >= UInt16.MIN.toInt16, "Int16(\{self}) cannot be safely converted to UInt16"
         return UInt16(value->builtin_uint16)
     }
 
-    ===This number reinterpreted as a 16 bit unsigned number.
-===
+    ===
+    This number reinterpreted as a 16 bit unsigned number.
+    This function never fails, even if the number is not in the range of a 16 bit unsigned number.
+    ===
     property toUInt16:UInt16
     function get_toUInt16():UInt16 {
         return UInt16(value->builtin_uint16)
     }
 
-    ===This number sign extended to a 32 bit unsigned number.
-===
+    ===
+    This number sign extended to a 32 bit unsigned number.
+    If this number is not in the range of a 32 bit unsigned number, a safety violation occurs.
+    ===
     property asUInt32:UInt32
     function get_asUInt32():UInt32 {
+    assert self >= UInt32.MIN.toInt16, "Int16(\{self}) cannot be safely converted to UInt32"
         return UInt32(value->builtin_uint32)
     }
 
-    ===This number sign extended to a 32 bit unsigned number.
-===
+    ===
+    This number sign extended to a 32 bit unsigned number.
+    This function never fails, even if the number is not in the range of a 32 bit unsigned number.
+    ===
     property toUInt32:UInt32
     function get_toUInt32():UInt32 {
         return UInt32(value->builtin_uint32)
     }
 
-    ===This number sign extended to a 64 bit unsigned number.
-===
+    ===
+    This number sign extended to a 64 bit unsigned number.
+    If this number is not in the range of a 64 bit unsigned number, a safety violation occurs.
+    ===
     property asUInt64:UInt64
     function get_asUInt64():UInt64 {
+    assert self >= UInt64.MIN.toInt16, "Int16(\{self}) cannot be safely converted to UInt64"
         return UInt64(value->builtin_uint64)
     }
 
-    ===This number sign extended to a 64 bit unsigned number.
-===
+    ===
+    This number sign extended to a 64 bit unsigned number.
+    This function never fails, even if the number is not in the range of a 64 bit unsigned number.
+    ===
     property toUInt64:UInt64
     function get_toUInt64():UInt64 {
         return UInt64(value->builtin_uint64)
     }
 
-    ===This number converted to a 32 bit floating point number.
-===
+    ===
+    This number converted to a 32 bit floating point number.
+    ===
     property asReal32:Real32
     function get_asReal32():Real32 {
         return Real32(value->builtin_float32)
     }
 
-    ===This number converted to a 32 bit floating point number.
-===
+    ===
+    This number converted to a 32 bit floating point number.
+    ===
     property toReal32:Real32
     function get_toReal32():Real32 {
         return Real32(value->builtin_float32)
     }
 
-    ===This number converted to a 64 bit floating point number.
-===
+    ===
+    This number converted to a 64 bit floating point number.
+    ===
     property asReal64:Real64
     function get_asReal64():Real64 {
         return Real64(value->builtin_float64)
     }
 
-    ===This number converted to a 64 bit floating point number.
-===
+    ===
+    This number converted to a 64 bit floating point number.
+    ===
     property toReal64:Real64
     function get_toReal64():Real64 {
         return Real64(value->builtin_float64)

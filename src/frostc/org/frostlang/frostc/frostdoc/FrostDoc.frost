@@ -314,11 +314,13 @@ class FrostDoc {
     }
 
     function visible(cl:ClassDecl):Bit {
-        return !cl.annotations.isPrivate & !cl.annotations.isPackage
+        return !cl.annotations.isPrivate & !cl.annotations.isPackage &
+                (cl.doccomment == null | !cl.doccomment.contains("@hidden"))
     }
 
     function visible(f:FieldDecl):Bit {
-        return !f.annotations.isPrivate & !f.annotations.isSynthetic
+        return !f.annotations.isPrivate & !f.annotations.isSynthetic &
+                (f.doccomment == null | !f.doccomment.contains("@hidden"))
     }
 
     function visible(m:MethodDecl):Bit {
@@ -328,7 +330,8 @@ class FrostDoc {
         if m.name.startsWith("get_") | m.name.startsWith("set_") {
             return false
         }
-        return !m.annotations.isPrivate & !m.annotations.isSynthetic
+        return !m.annotations.isPrivate & !m.annotations.isSynthetic &
+                (m.doccomment == null | !m.doccomment.contains("@hidden"))
     }
 
     method writeDoc(f:FieldDecl):Error? {
@@ -513,7 +516,7 @@ class FrostDoc {
             }
             out.write("name", escape(name))
             writeDoc(m)
-            write(m.annotations)
+            writeAnnotations(m.owner, m.annotations)
             out.open("params")
             for p in m.parameters {
                 out.open("param")
@@ -562,6 +565,15 @@ class FrostDoc {
         }
         fail(error) {
             return error
+        }
+    }
+
+    method writeAnnotations(cl:ClassDecl, a:Annotations):Error? {
+        if cl.classKind = ClassDecl.Kind.INTERFACE {
+            return write(a - Annotations.Flag.EXTENDABLE)
+        }
+        else {
+            return write(a)
         }
     }
 
@@ -828,6 +840,7 @@ class FrostDoc {
             out.write("source", "../" * (cl.name.find(".").count() + 1) + "source/" +
                     base.name.replace(".", "/") + ".html")
             writeDoc(cl)
+            writeAnnotations(cl, cl.annotations)
             writeAncestors(cl)
             if cl.rawInterfaces.count > 0 {
                 out.open("interfaces")

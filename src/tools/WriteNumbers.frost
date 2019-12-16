@@ -92,6 +92,17 @@ class WriteNumbers {
     }
 
     @class
+    function size64(type:Type):Int {
+        def result := size(type)
+        if result !== null {
+            return result
+        }
+        else {
+            return 64
+        }
+    }
+
+    @class
     function type64(type:Type):Type {
         match type {
             when Type.INT { return Type.INT64 }
@@ -733,36 +744,48 @@ class WriteNumbers {
         }
     }
 
+    ================================================================================================
+    Returns `true` if `a.MAX` fits into `b` when ints are `size` bits long.
+    ================================================================================================
     @class
-    function maybeGreater(a:Type, b:Type):Bit {
-        def size1 := size(a)
-        def size2 := size(b)
-        if size1 !== null & size2 !== null {
-            return size1 > size2
+    function maxFits(a:Type, b:Type, size:Int):Bit {
+        if a = b | isReal(b) {
+            return true
         }
-        if size1 == null & size2 == null {
-            return false
-        }
-        if size1 == null {
-            return size2 < 64
-        }
-        return size1 > 32
+        def size1 := (size = 64).choose(size64(a), size32(a))
+        def size2 := (size = 64).choose(size64(b), size32(b))
+        return size1 < size2 | ((size1 = size2) & (signed(a) | signed(a) = signed(b)))
     }
 
     @class
-    function maybeGreaterOrEqual(a:Type, b:Type):Bit {
-        def size1 := size(a)
-        def size2 := size(b)
-        if size1 !== null & size2 !== null {
-            return size1 >= size2
-        }
-        if size1 == null & size2 == null {
+    function maxFits(a:Type, b:Type):Bit {
+        return maxFits(a, b, 32) & maxFits(a, b, 64)
+    }
+
+    ================================================================================================
+    Returns `true` if `a.MIN` fits into `b` when ints are `size` bits long.
+    ================================================================================================
+    @class
+    function minFits(a:Type, b:Type, size:Int):Bit {
+        if a = b | isReal(b) | !signed(a) {
             return true
         }
-        if size1 == null {
-            return true
+        if !signed(b) {
+            return false
         }
-        return size1 >= 32
+        def size1 := (size = 64).choose(size64(a), size32(a))
+        def size2 := (size = 64).choose(size64(b), size32(b))
+        return size1 <= size2
+    }
+
+    @class
+    function minFits(a:Type, b:Type):Bit {
+        return minFits(a, b, 32) & minFits(a, b, 64)
+    }
+
+    @class
+    function fits(a:Type, b:Type):Bit {
+        return maxFits(a, b) & minFits(a, b)
     }
 
     @class
@@ -806,42 +829,47 @@ class WriteNumbers {
                 description := "a\{size(target) = 8:n|} \{size(target)} bit " +
                         "\{signed(target):signed|unsigned} number"
             }
-            out.printLine("    ===This number \{converted} \{description}.")
+            out.printLine("    ===\n    This number \{converted} \{description}.")
             if (isReal(type) & !isReal(target)) | (isReal(target) & !isReal(type) &
-                    maybeGreater(type, target)) {
+                    !fits(type, target)) {
                 if safe {
                     out.printLine("If this number cannot be exactly represented as \{description}" +
                             ", a safety violation occurs.")
                 }
             }
-            else if maybeGreater(type, target) {
+            else if !fits(type, target) {
                 if safe {
-                    out.printLine("If this number is not in the range of \{description}, a " +
+                    out.printLine("    If this number is not in the range of \{description}, a " +
                             "safety violation occurs.")
                 }
                 else {
-                    out.printLine("This function never fails, even if the number is not in the " +
-                            "range of \{description}.")
+                    out.printLine("    This function never fails, even if the number is not in " +
+                            "the range of \{description}.")
                 }
             }
-            out.printLine("===")
+            out.printLine("    ===")
             def name := safe.choose("as", "to")
             out.printLine("    property \{name}\{object(target)}:\{object(target)}")
             var assertion:String? := null
-            if safe & maybeGreater(type, target) {
+            if safe & !fits(type, target) {
                 if isReal(type) | isReal(target) {
                     out.printLine("    @post(@return.to\{object(type)} = self)")
                 } 
                 else {
                     assertion := "    assert "
                     var separator := ""
-                    if signed(type) {
-                        assertion += "value >= \{object(target)}.MIN.to\{object(type)}.value"
+                    if !minFits(type, target) {
+                        assertion += "self >= \{object(target)}.MIN.to\{object(type)}"
                         separator := " & "
                     }
-                    if !signed(type) | signed(target) | !equalSize(type, target) {
+                    if !maxFits(type, target) {
                         assertion += separator
-                        assertion += "value <= \{object(target)}.MAX.to\{object(type)}.value"
+                        if maxFits(target, type) {
+                            assertion += "self <= \{object(target)}.MAX.to\{object(type)}"
+                        }
+                        else {
+                            assertion += "self.toUInt64 <= \{object(target)}.MAX.toUInt64"
+                        }
                     }
                     assertion += ', "\{object(type)}(\\{self}) cannot be safely converted to ' +
                             object(target) + '"'

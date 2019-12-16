@@ -739,6 +739,9 @@ class Code {
                 when CHARS(s) {
                     return PrimitiveType.ARRAY(s.byteLength, PrimitiveType.INT8)
                 }
+                when CHOICE_FIELD_OFFSET {
+                    return PrimitiveType.INT
+                }
                 when FIELD_OFFSET {
                     return PrimitiveType.INT
                 }

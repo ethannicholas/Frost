@@ -336,6 +336,6 @@ class Frost {
     }
 
     @class
-    @external(frostDebugPrintInt)
+    @external(frostDebugPrint)
     method debugPrint(i:builtin_int64)
 }

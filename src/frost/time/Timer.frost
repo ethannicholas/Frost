@@ -1,8 +1,8 @@
 package frost.time
 
 ====================================================================================================
-A high-resolution timer which measures time either from the epoch (midnight on January 1st, 1970) or
-between two events.
+A high-resolution timer which measures time either from the epoch (midnight UTC on January 1st,
+1970) or between two events.
 ====================================================================================================
 class Timer {
     @private
@@ -11,6 +11,9 @@ class Timer {
     @private
     def basis:Real64 := 0
 
+    ================================================================================================
+    Creates a `Timer` which initially measures time relative to the epoch.
+    ================================================================================================
     init() {
         setup()
     }
@@ -37,7 +40,6 @@ class Timer {
     }
 
     @private
-    @class
     @external(frostTimerNow)
     method now():builtin_float64
 
