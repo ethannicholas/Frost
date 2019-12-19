@@ -168,8 +168,8 @@ class Call {
         def ir := compiler.ir
         def pointerType:Type?
         assert m.target.isPointer
-        if m.target.hasSubtypes {
-            pointerType := compiler.resolve(m.target.subtypes[1])
+        if m.target.nonnullable().hasSubtypes {
+            pointerType := compiler.resolve(m.target.nonnullable().subtypes[1])
         }
         else {
             pointerType := compiler.ANY_TYPE

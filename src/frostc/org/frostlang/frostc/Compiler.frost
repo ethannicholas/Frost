@@ -4376,7 +4376,7 @@ class Compiler : ErrorReporter {
             return INT64_TYPE
         }
         else {
-            unreachable
+            return INT64_TYPE
         }
     }
 

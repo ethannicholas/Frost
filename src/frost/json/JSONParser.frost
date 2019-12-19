@@ -7,8 +7,9 @@ uses org.frostlang.json.Token
 Simple JSON parser. Note that this parser is incomplete - in particular it does not handle string
 escape sequences correctly.
 
-FIXME error handling
+@hidden
 ====================================================================================================
+-- FIXME error handling
 class JSONParser {
     @private
     var source := "<error>"

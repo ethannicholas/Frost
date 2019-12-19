@@ -111,13 +111,13 @@ class Interpreter : Backend {
             }
         }
 
-        method value(v:Code.Value):Int64 {
+        method value(v:Code.Value, t:Code.PrimitiveType):Int64 {
             def result := value64(v)
 
-            match v.type {
+            match t {
                 when Code.PrimitiveType.INT, Code.PrimitiveType.INT8, Code.PrimitiveType.INT16,
                         Code.PrimitiveType.INT32, Code.PrimitiveType.INT64 {
-                    match v.type.size(interpreter.settings) {
+                    match t.size(interpreter.settings) {
                         when 1 { return (result << 56) >> 56  }
                         when 2 { return (result << 48) >> 48 }
                         when 4 { return (result << 32) >> 32 }
@@ -127,6 +127,10 @@ class Interpreter : Backend {
                 }
                 otherwise { return result }
             }
+        }
+
+        method value(v:Code.Value):Int64 {
+            return value(v, v.type)
         }
 
         method valueU(v:Code.Value):UInt64 {
@@ -159,9 +163,9 @@ class Interpreter : Backend {
 
     constant OBJECT_FIELD_COUNT := 3
 
-    def physicalOut:OutputStream
+    def physicalOut:OutputStream?
 
-    def out:OutputStream
+    def out:OutputStream?
 
     @weak
     def compiler:Compiler?
@@ -170,11 +174,11 @@ class Interpreter : Backend {
 
     def settings:Compiler.Settings?
 
-    def stackSize := 1 << 20
+    constant STACK_SIZE := 1 << 20
 
     constant MEMORY_SIZE := 1 << 20
 
-    def stackBase := Pointer<Int8>.alloc(stackSize)
+    def stackBase := Pointer<Int8>.alloc(STACK_SIZE)
 
     def stack := stackBase
 
@@ -196,6 +200,8 @@ class Interpreter : Backend {
     def contexts := Stack<Context>()
 
     def builtins := HashMap<String, (Context, FixedArray<Code.Value>)=&>(Int64)>()
+
+    var weakReferenceMap:UInt := 0
 
     init() {
         methods.add(Code.Signature(null, null, "<null method pointer>",
@@ -250,7 +256,22 @@ class Interpreter : Backend {
     method dynamicCall(id:Code.Statement.ID?, returnType:Code.PrimitiveType?, m:Code.Value,
             args:FixedArray<Code.Value>) {
         def signature := methods[contexts[0].value(m).asInt]
-        def result := call(signature, args)
+        def result:Int64
+        if signature.returnType !== null {
+            match signature.returnType {
+                when Code.PrimitiveType.ARRAY, Code.PrimitiveType.STRUCT {
+                    def stackId := Code.Statement.ID(-id.value)
+                    def resultLoc := stackAlloc(stackId, signature.returnType)
+                    result := call(signature, args, resultLoc)
+                }
+                otherwise {
+                    result := call(signature, args, null)
+                }
+            }
+        }
+        else {
+            result := call(signature, args, null)
+        }
         if id !== null {
             contexts[0].statements[id] := result
         }
@@ -367,7 +388,8 @@ class Interpreter : Backend {
                 FixedArray<Code.Value>.from([Code.Value.INT(result.toUInt64,
                     Code.PrimitiveType.INT), Code.Value.INT(copy.asUInt.toUInt64,
                     Code.PrimitiveType.INT), Code.Value.INT(str.byteLength.asUInt64,
-                    Code.PrimitiveType.INT)]))
+                    Code.PrimitiveType.INT)]),
+             null)
         return result
     }
 
@@ -449,8 +471,7 @@ class Interpreter : Backend {
                         return -1
                     }
                 }
-                when "frostConsoleOutputStream",
-                        "frost$io$Console$errorStream$R$frost$io$OutputStream" {
+                when "frostConsoleOutputStream", "frostConsoleErrorStream" {
                     def cl := compiler.getClass("frost.io.FileOutputStream")!
                     def cc := cg.getClassConstant(cl)
                     def type := cg.struct(cl)
@@ -459,9 +480,24 @@ class Interpreter : Backend {
                         assert cl.methods[0].name = "init"
                         weakSelf.get().call(weakSelf.get().cg.getSignature(cl.methods[0]),
                                 FixedArray<Code.Value>.from([Code.Value.INT(result.toUInt64,
-                                    Code.PrimitiveType.INT)]))
+                                    Code.PrimitiveType.INT)]), null)
                         -- Note that we don't bother to initialize the stream's native handle. See
                         -- the comment in FileOutputStream.write below.
+                        return result
+                    }
+                }
+                when "frostConsoleInputStream" {
+                    def cl := compiler.getClass("frost.io.FileInputStream")!
+                    def cc := cg.getClassConstant(cl)
+                    def type := cg.struct(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def result := weakSelf.get().heapAlloc(type, cc)
+                        assert cl.methods[0].name = "init"
+                        weakSelf.get().call(weakSelf.get().cg.getSignature(cl.methods[0]),
+                                FixedArray<Code.Value>.from([Code.Value.INT(result.toUInt64,
+                                    Code.PrimitiveType.INT)]), null)
+                        -- Note that we don't bother to initialize the stream's native handle. See
+                        -- the comment in FileInputStream.read below.
                         return result
                     }
                 }
@@ -475,6 +511,27 @@ class Interpreter : Backend {
                         def error := out.write(Pointer<Int8>(p), context.value(args[2]).asInt)
                         assert error == null
                         return 0
+                    }
+                }
+                when "frostFileInputStreamReadByte" {
+                    -- There's currently no way to get a FileInputStream in interpreted code other
+                    -- than Console.inputStream, so we just assume that we should be reading from
+                    -- stdin
+                    def input := Console.inputStream()
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def target := Pointer<UInt8?>(context.value(args[0]).toUInt)
+                        target.set(input.read())
+                        return -1
+                    }
+                }
+                when "frostFileInputStreamReadArray" {
+                    -- There's currently no way to get a FileInputStream in interpreted code other
+                    -- than Console.inputStream, so we just assume that we should be reading from
+                    -- stdin
+                    def input := Console.inputStream()
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        def p := context.value(args[1]).toUInt
+                        return input.read(Pointer<Int8>(p), context.value(args[2]).asInt)
                     }
                 }
                 when "frostReal64ToString" {
@@ -507,6 +564,7 @@ class Interpreter : Backend {
                                 Interpreter.OBJECT_FIELD_COUNT).asUInt
                         def r := Pointer<RegularExpression>(context.value(args[0]).toUInt +
                                 offset).get()
+                        weakSelf.get().ref(Pointer<Int8>(context.value(args[1]).toUInt))
                         def m := r.matcher(weakSelf.get().frostStringFrom(context.value(args[1])))
                         Pointer<Matcher>(result.toUInt + offset).set(m)
                         Pointer<Int>(result.toUInt + offset +
@@ -597,9 +655,34 @@ class Interpreter : Backend {
                         return -1
                     }
                 }
-                when "frostAddressOf" {
+                when "frostFrostAddressOf" {
                     builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
                         return context.value(args[0]).asInt
+                    }
+                }
+                when "frostFrostAddWeakReference" {
+                    def cl := compiler.getClass("frost.core.Frost")
+                    def symbols := compiler.getSymbolTable(cl)
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        if weakSelf.get().weakReferenceMap = 0 {
+                            def m := symbols["createWeakReferenceMap"]
+                            assert m !== null & m.kind = Symbol.Kind.METHOD
+                            weakSelf.get().weakReferenceMap := weakSelf.get().call(
+                                    weakSelf.get().cg.getSignature(m->MethodDecl),
+                                    FixedArray<Code.Value>(), null).toUInt
+                        }
+                        def m := symbols["_addWeakReference"]
+                        assert m !== null & m.kind = Symbol.Kind.METHOD
+                        weakSelf.get().call(weakSelf.get().cg.getSignature(m->MethodDecl),
+                                FixedArray<Code.Value>.from([args[0],
+                                    Code.Value.INT(weakSelf.get().weakReferenceMap.toUInt64,
+                                        Code.PrimitiveType.INT)]), null)
+                        return -1
+                    }
+                }
+                when "frostSystemCrash" {
+                    builtin := method(context:Context, args:FixedArray<Code.Value>):Int64 {
+                        System.crash()
                     }
                 }
                 otherwise {
@@ -628,7 +711,7 @@ class Interpreter : Backend {
     }
 
     method load(target:Code.Statement.ID, value:Code.Value, type:Code.PrimitiveType) {
-        def ptr := Pointer<Int8>(contexts[0].value(value).toUInt)
+        def ptr := Pointer<Int8>(contexts[0].value(value, Code.PrimitiveType.INT).toUInt)
         load(target, ptr, type)
     }
 
@@ -648,7 +731,10 @@ class Interpreter : Backend {
             }
             when Code.PrimitiveType.INT {
                 match settings.intSize {
-                    when 4 { contexts[0].statements[target] := ptr->Pointer<UInt32>.get().toUInt64.toInt64 }
+                    when 4 {
+                        contexts[0].statements[target] :=
+                                ptr->Pointer<UInt32>.get().toUInt64.toInt64
+                    }
                     when 8 { contexts[0].statements[target] := ptr->Pointer<Int64>.get() }
                     otherwise { unreachable }
                 }
@@ -696,7 +782,24 @@ class Interpreter : Backend {
         return raw.asUInt.toInt64
     }
 
-    method call(s:Code.Signature, args:FixedArray<Code.Value>):Int64 {
+    method stackAlloc(result:Code.Statement.ID, type:Code.PrimitiveType):Pointer<Int8> {
+        var loc := contexts[0].statements[result]
+        if loc == null {
+            stack := alignUp(stack, type.alignment(settings))
+            assert stack.asUInt - stackBase.asUInt < STACK_SIZE.asUInt, "stack overflow"
+            loc := stack.asUInt.toInt64
+            stack += type.size(settings)
+            contexts[0].statements[result] := loc
+        }
+        def sp := Pointer<Int8>(loc.toUInt)
+        -- FIXME need memset
+        for i in 0 .. type.size(settings) {
+            sp[i] := 0
+        }
+        return sp
+    }
+
+    method call(s:Code.Signature, args:FixedArray<Code.Value>, returnLoc:Pointer<Int8>?):Int64 {
         def code := getInterpreterCode(s)
         if code == null {
             def builtin := getBuiltin(s)
@@ -907,10 +1010,19 @@ class Interpreter : Backend {
                 }
                 when Code.Statement.RETURN(position, value) {
                     contexts.pop()
+                    stack := stackStart
                     if value !== null {
                         def result := context.value(value)
-                        -- can't clear stack because return value might be sitting on it
-                        --stack := stackStart
+                        match s.returnType {
+                            when Code.PrimitiveType.STRUCT, Code.PrimitiveType.ARRAY {
+                                -- FIXME need memcpy
+                                def src := Pointer<Int8>(result.toUInt)
+                                for i in 0 .. s.returnType.size(settings) {
+                                    returnLoc![i] := src[i]
+                                }
+                                return returnLoc.asUInt.toInt64
+                            }
+                        }
                         return result
                     }
                     else {
@@ -919,19 +1031,22 @@ class Interpreter : Backend {
                     }
                 }
                 when Code.Statement.STACK_ALLOC(_, result, type) {
-                    stack := alignUp(stack, type.alignment(settings))
-                    contexts[0].statements[result] := stack.asUInt.toInt64
-                    -- FIXME need memset
-                    for i in 0 .. type.size(settings) {
-                        stack[i] := 0
-                    }
-                    stack += type.size(settings)
+                    stackAlloc(result, type)
                 }
                 when Code.Statement.STATIC_CALL(_, result, m, args) {
-                    context.statements[result] := call(m, args)
+                    match m.returnType {
+                        when Code.PrimitiveType.ARRAY, Code.PrimitiveType.STRUCT {
+                            def stackId := Code.Statement.ID(-result.value)
+                            def sp := stackAlloc(stackId, m.returnType)
+                            context.statements[result] := call(m, args, sp)
+                        }
+                        otherwise {
+                            context.statements[result] := call(m, args, null)
+                        }
+                    }
                 }
                 when Code.Statement.STATIC_CALL_VOID(_, m, args) {
-                    call(m, args)
+                    call(m, args, null)
                 }
                 when Code.Statement.STORE(_, value, dest) {
                     write(value, Pointer<Int8>(context.value64(dest).toUInt))
@@ -1062,7 +1177,7 @@ class Interpreter : Backend {
             }
             when Code.Value.CHARS(s) {
                 for c in s.utf8 {
-                    result.set(c.asInt8)
+                    result.set(c.toInt8)
                     result += 1
                 }
             }
@@ -1174,6 +1289,12 @@ class Interpreter : Backend {
 
     method run() {
         call(Code.Signature(null, null, "frostMain", FixedArray<Code.PrimitiveType>.from([]),
-                false), FixedArray<Code.Value>.from([]))
+                false), FixedArray<Code.Value>.from([]), null)
+        if weakReferenceMap != 0 {
+            contexts.push(Context(self))
+            unref(Pointer<Int8>(weakReferenceMap))
+            contexts.pop()
+            weakReferenceMap := 0
+        }
     }
 }
