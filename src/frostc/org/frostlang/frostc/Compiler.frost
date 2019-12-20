@@ -2339,6 +2339,9 @@ class Compiler : ErrorReporter {
                         srcFunction := true
                         srcMutable := false
                     }
+                    otherwise {
+                        unreachable
+                    }
                 }
                 def targetFunction:Bit
                 def targetMutable:Bit
@@ -2358,6 +2361,9 @@ class Compiler : ErrorReporter {
                     when Type.Kind.IMMUTABLE_FUNCTION {
                         targetFunction := true
                         targetMutable := false
+                    }
+                    otherwise {
+                        unreachable
                     }
                 }
                 if targetFunction & !srcFunction {
@@ -6259,7 +6265,7 @@ class Compiler : ErrorReporter {
 
     class Arguments {
         @private
-        def args:ListView<String>
+        def args:Array<String>
 
         @private
         def index := 0
@@ -6267,7 +6273,7 @@ class Compiler : ErrorReporter {
         property done:Bit
 
         init(args:ListView<String>) {
-            self.args := args
+            self.args := Array<String>(args)
         }
 
         function get_done():Bit {
@@ -6276,6 +6282,12 @@ class Compiler : ErrorReporter {
 
         method next():String {
             assert !done
+            if args[index].startsWith("-") & !args[index].startsWith("--") &
+                    args[index].length > 2 {
+                def result := args[index][0 ... 1]
+                args[index] := args[index][2..]
+                return result
+            }
             index += 1
             return args[index - 1]
         }
@@ -6301,6 +6313,7 @@ class Compiler : ErrorReporter {
             args.add("-g")
         }
         args.add("-O\{settings.optimizationLevel}")
+        args.add("-Wno-override-module")
         args.add("-o")
         args.add(dest.path)
         def p:System.Process
@@ -6469,6 +6482,7 @@ class Compiler : ErrorReporter {
         var preserveTemporaries := true
         var debug := false
         var isBootstrap := false
+        var useStubs := true
         while !args.done {
             def a := args.next()
             match a {
@@ -6559,6 +6573,9 @@ class Compiler : ErrorReporter {
                 when "--bootstrap" {
                     isBootstrap := true
                 }
+                when "--no-stubs" {
+                    useStubs := false
+                }
                 otherwise {
                     if a.endsWith(".frost") {
                         def f := File(a)
@@ -6571,7 +6588,7 @@ class Compiler : ErrorReporter {
                 }
             }
         }
-        if format == null | format != Format.STUB {
+        if useStubs {
             imports.add(File(Config.frostLibDir()).resolve("stubs"))
         }
         def frostHome := File(Config.frostSourceDir())

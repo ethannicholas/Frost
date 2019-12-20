@@ -19,7 +19,8 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost"
     "@class function frostLibDir():String { return \"${CMAKE_CURRENT_BINARY_DIR}\" }\n"
     "@class function llvmTriple():String { return \"${LLVM_HOST_TARGET}\" }\n"
     "@class function icuLibraries():String { return \"${ICU_LIBRARIES}\" }\n"
-    "}")
+    "}"
+)
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/config.c"
     "#include <string.h>\n"
@@ -32,7 +33,7 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/config.c"
     "intptr_t org$frostlang$frostc$Config$icuLibraries$R$frost$core$String() { return configString(\"${ICU_LIBRARIES}\"); }\n"
 )
 
-set(BOOTSTRAP_ARGS "-O" ${OPTIMIZATION} "-S" ${SAFETY} "-g")
+set(BOOTSTRAP_ARGS "-O${OPTIMIZATION}" "-S${SAFETY}" "-g")
 include_directories(
     ${ICU_INCLUDE_DIRS}
 )
@@ -52,9 +53,10 @@ set_target_properties(bootstrap PROPERTIES LINKER_LANGUAGE CXX)
 function(compile_frost_sources out_var)
     set(result)
     foreach(input ${ARGN})
-        get_filename_component(outputDir ${input} DIRECTORY)
+        file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
+        get_filename_component(outputDir ${relative} DIRECTORY)
         get_filename_component(outputName ${input} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/${outputDir}/${outputName}.o")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/out/${outputDir}/${outputName}.o")
         add_custom_command(
             OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -f o -o ${output}
@@ -458,6 +460,11 @@ add_custom_command(
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+add_custom_target(make_lexer
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Lexer.frost
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Token.frost
+)
+
 add_custom_command(
     OUTPUT src/parser/org/frostlang/json/Lexer.frost
            src/parser/org/frostlang/json/Token.frost
@@ -469,6 +476,11 @@ add_custom_command(
             org.frostlang.json.Position
     DEPENDS plex src/parser/JSON.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_target(make_json_lexer
+    DEPENDS src/parser/org/frostlang/json/Lexer.frost
+            src/parser/org/frostlang/json/Token.frost
 )
 
 add_custom_command(
@@ -484,12 +496,18 @@ add_custom_command(
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+add_custom_target(make_regex_lexer
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexLexer.frost
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexToken.frost
+)
+
 function(compile_frostc_sources out_var)
     set(result)
     foreach(input ${ARGN})
-        get_filename_component(outputDir ${input} DIRECTORY)
+        file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
+        get_filename_component(outputDir ${relative} DIRECTORY)
         get_filename_component(output ${input} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/${outputDir}/${output}.o")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/out/${outputDir}/${output}.o")
         add_custom_command(
             OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS}
@@ -498,7 +516,9 @@ function(compile_frostc_sources out_var)
                     -I ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc
                     -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
-                    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Token.frost
+                    make_lexer
+                    make_json_lexer
+                    make_regex_lexer
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
         list(APPEND result ${output})
@@ -593,9 +613,14 @@ compile_frostc_sources(frostc_objects
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost
 )
 
+add_custom_target(make_frostc_objects
+    DEPENDS ${frostc_objects}
+)
+
 add_executable(frostc
     ${frostc_objects}
 )
+add_dependencies(frostc make_frostc_objects)
 target_link_libraries(frostc frost ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
 set_target_properties(frostc PROPERTIES LINKER_LANGUAGE CXX)
 
@@ -608,7 +633,7 @@ function(create_stubs out_var)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/stubs/${outputPath}/${outputName}.stub")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -f stub ${input} -o ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -fstub --no-stubs ${input} -o${output}
             DEPENDS ${input} frostc
         )
         list(APPEND result ${output})
@@ -628,8 +653,8 @@ add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/bootstrap.c
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc ${core_source} ${frostc_source}
             ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost
-            -I ${CMAKE_CURRENT_BINARY_DIR} -S ${SAFETY} -O ${OPTIMIZATION}
-            -f c -m 32 --bootstrap -o ${CMAKE_CURRENT_BINARY_DIR}/bootstrap.c
+            -I${CMAKE_CURRENT_BINARY_DIR} -S${SAFETY} -O${OPTIMIZATION}
+            -fc --no-stubs -m32 --bootstrap -o ${CMAKE_CURRENT_BINARY_DIR}/bootstrap.c
     DEPENDS ${core_source} ${frostc_source}
             ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -648,9 +673,9 @@ add_custom_command(
 )
 
 add_custom_target(frostrun
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY}
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O${OPTIMIZATION} -S${SAFETY}
             ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/FrostRun.frost
-            -o ${CMAKE_CURRENT_BINARY_DIR}/frostrun
+            -o${CMAKE_CURRENT_BINARY_DIR}/frostrun
     DEPENDS frostc src/tools/FrostRun.frost
 )
 
@@ -666,9 +691,9 @@ set_target_properties(test_extras PROPERTIES LINKER_LANGUAGE CXX)
 
 add_custom_command(
     OUTPUT TestRunner
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY}
-            -I ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.frost
-            -o ${CMAKE_CURRENT_BINARY_DIR}/TestRunner
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O${OPTIMIZATION} -S${SAFETY}
+            -I${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.frost
+            -o${CMAKE_CURRENT_BINARY_DIR}/TestRunner
     DEPENDS frostc test_extras test/TestRunner.frost
 )
 
@@ -691,6 +716,7 @@ compile_frostc_sources(frostmd_objects
 add_executable(frostmd
     ${frostmd_objects}
 )
+add_dependencies(frostmd make_frostc_objects stubs)
 target_link_libraries(frostmd frost ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
 set_target_properties(frostmd PROPERTIES LINKER_LANGUAGE CXX)
 
@@ -776,6 +802,7 @@ compile_frostc_sources(frostdoc_objects
 add_executable(frostdoc
     ${frostdoc_objects}
 )
+add_dependencies(frostdoc make_frostc_objects stubs)
 target_link_libraries(frostdoc frost ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
 set_target_properties(frostdoc PROPERTIES LINKER_LANGUAGE CXX)
 

@@ -787,7 +787,6 @@ class FrostDoc {
             }
             self.currentClass := cl
             def dest := getPath(cl, ".xml")
-            Console.printLine(dest)
             dest.parent.createDirectories()
             out := XMLWriter(dest.openOutputStream())
             out.open("class")

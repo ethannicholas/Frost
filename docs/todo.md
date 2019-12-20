@@ -1,8 +1,6 @@
 Immediate
 =========
 
-fix command line parsing
-verify build & run from directories containing spaces
 all tests working (incl. C)
 Compiler performance
 
@@ -15,14 +13,12 @@ figure out rules for init / cleanup, make sure I'm following them consistently, 
     can that don't rely on dataflow
 var parameters
 Dataflow, null safety, function safety
-Proper native code headers
 Property error reporting
 automatically calculate dependency information during build
 
 Bugs
 ====
 
-Do we add an owner to String.Index and check against it?
 need to handle pre/postconditions inherited from multiple sources (remember that multiple interfaces
     can define the same method with different contracts)
 Need to figure out & enforce init and cleanup rules
