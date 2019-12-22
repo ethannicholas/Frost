@@ -357,7 +357,7 @@ class Parser {
             return null
         }
         var result:ASTNode? := null
-        def chunk := MutableString()
+        var chunk := MutableString()
         loop {
             def token := rawNext()
             if token.kind = start.kind {
@@ -400,8 +400,8 @@ class Parser {
                             if expr == null {
                                 return null
                             }
-                            def align:String? := null
-                            def format:String? := null
+                            var align:String? := null
+                            var format:String? := null
                             if checkNext(Token.Kind.COMMA) !== null {
                                 align := alignmentString(start)
                             }
@@ -2128,7 +2128,7 @@ class Parser {
     ================================================================================================
     method innerMethod():ASTNode? {
         def kind:MethodDecl.Kind
-        def start := checkNext(Token.Kind.FUNCTION)
+        var start := checkNext(Token.Kind.FUNCTION)
         if start == null {
             start := expect(Token.Kind.METHOD, "'method' or 'function'")
             if start == null {
@@ -2298,7 +2298,7 @@ class Parser {
         if start == null {
             return null
         }
-        def next := expect(Token.Kind.IDENTIFIER, "an identifier")
+        var next := expect(Token.Kind.IDENTIFIER, "an identifier")
         if next == null {
             return null
         }
@@ -2393,7 +2393,7 @@ class Parser {
     method annotation():ASTNode? {
         def a := expect(Token.Kind.ANNOTATION, "an annotation")
         def exprText:String?
-        def expr:ASTNode? := null
+        var expr:ASTNode? := null
         def exprStart := checkNext(Token.Kind.LPAREN)
         if exprStart !== null {
             expr := expression()
@@ -2471,7 +2471,7 @@ class Parser {
         }
         def result := Array<ASTNode>()
         if checkNext(Token.Kind.RPAREN) == null {
-            def param := parameter()
+            var param := parameter()
             if param == null {
                 return null
             }
@@ -2496,7 +2496,7 @@ class Parser {
     ================================================================================================
     method methodDeclaration(doccomment:ASTNode?, annotations:FixedArray<ASTNode>):ASTNode? {
         def kind:MethodDecl.Kind
-        def start := checkNext(Token.Kind.FUNCTION)
+        var start := checkNext(Token.Kind.FUNCTION)
         if start == null {
             start := expect(Token.Kind.METHOD, "'method' or 'function'")
             if start == null {
@@ -2553,7 +2553,7 @@ class Parser {
     ================================================================================================
     method anonymousMethod():ASTNode? {
         def kind:MethodDecl.Kind
-        def start := checkNext(Token.Kind.FUNCTION)
+        var start := checkNext(Token.Kind.FUNCTION)
         if start == null {
             start := expect(Token.Kind.METHOD, "'method' or 'function'")
             if start == null {

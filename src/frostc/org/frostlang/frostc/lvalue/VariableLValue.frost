@@ -28,13 +28,13 @@ class VariableLValue : LValue {
 
     @override
     function type():Type {
-        return compiler.ir.locals[slot]
+        return compiler.ir.locals[slot][2]
     }
 
     @override
     method compileLoad():IR.Value? {
         def result := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.LOCAL(slot, type())))
-        return IR.Value.REF(result, compiler.ir.locals[slot])
+        return IR.Value.REF(result, compiler.ir.locals[slot][2])
     }
 
     @override
@@ -43,6 +43,6 @@ class VariableLValue : LValue {
             compiler.compileRef(value)
             compiler.compileUnref(compileLoad())
         }
-        compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.LOCAL(slot, type())))
+        compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.LOCAL(slot, type()), true))
     }
 }

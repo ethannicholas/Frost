@@ -78,7 +78,7 @@ method find(hashCount:Int) {
     var index := 0
     var found := Array<Int>()
     def salt := "ahsbgdzn"
-    def stopAt := Int.MAX
+    var stopAt := Int.MAX
     while index < stopAt {
         var hash := salt + index
         for i in 0 .. hashCount {

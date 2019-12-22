@@ -117,7 +117,7 @@ method main() {
         rules[Int.parse(line[0 .. 5].replace(".", "0").replace("#", "1"), 2)] := true
     }
 
-    def flowers := HashSet<Int>()
+    var flowers := HashSet<Int>()
     for (i, c) in initial.utf8.enumeration {
         if c = "#" {
             flowers.add(i)

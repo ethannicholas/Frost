@@ -46,7 +46,7 @@ method main() {
     def steps := [[0, -1], [1, 0], [0, 1], [-1, 0]]
     var pos := [0, 0]
     def _visited := HashSet<String>()
-    def twice:Int? := null
+    var twice:Int? := null
     method visited(pos:Array<Int>):Bit {
         if _visited.contains(pos.toString) {
             return true

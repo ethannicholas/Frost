@@ -772,7 +772,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     @pre(r.min.byteOffset >= 0 & r.min.byteOffset <= byteLength &
             r.max.byteOffset >= 0 & r.max.byteOffset < byteLength + r.inclusive.choose(0, 1))
     function [](r:Range<Index>):String {
-        def current := r.min.byteOffset
+        var current := r.min.byteOffset
         def result := MutableString()
         var max := r.max.byteOffset
         if r.inclusive {
@@ -853,7 +853,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         }
         def step := r.step
 
-        def current:Int
+        var current:Int
         if r.start !== null {
             current := r.start.byteOffset
         }

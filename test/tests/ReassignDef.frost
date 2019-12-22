@@ -1,0 +1,10 @@
+method main() {
+    def a := 0
+    a := 1
+
+    def b:Int
+    if a = 1 {
+        b := 2
+    }
+    b := 3
+}

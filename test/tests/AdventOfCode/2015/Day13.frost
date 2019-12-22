@@ -75,7 +75,7 @@ function happiness(pairs:Map<(String, String), Int>, a:String, b:String):Int {
 }
 
 method solve(people:Array<String>, pairs:Map<(String, String), Int>) {
-    def best := 0
+    var best := 0
     for p in people.permutations {
         var h := 0
         h += happiness(pairs, p[0], p[p.count - 1])

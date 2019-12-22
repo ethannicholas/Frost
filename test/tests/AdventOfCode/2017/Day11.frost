@@ -39,9 +39,9 @@ How many steps away is the furthest he ever got from his starting position?
 method main() {
     def steps := Console.inputStream().readFully().split(",")
 
-    def x := 0
-    def y := 0
-    def z := 0
+    var x := 0
+    var y := 0
+    var z := 0
 
     var dist := 0
     var max := 0

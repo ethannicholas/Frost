@@ -214,7 +214,7 @@ class LinkResolver {
                     }
                 }
             }
-            def returnType:Type? := null
+            var returnType:Type? := null
             if parsed[2] != "" {
                 def src := File(parsed[2])
                 compiler.parser.start(src, compiler.files.count, parsed[2])

@@ -60,9 +60,6 @@ class Match {
             def ptr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, value, cc, i))
             def load := ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, cc.fields[i])))
             def text := compiler.getText(args[i])
-            if text !== null & text = "_" {
-                continue
-            }
             def target:Target?
             {
                 def unrefs := AutoUnrefs(compiler)
@@ -301,7 +298,7 @@ class Match {
                 }
             }
         }
-        def otherBlock:IR.Block.ID := end
+        var otherBlock:IR.Block.ID := end
         if other !== null {
             {
                 def scope := AutoScope(compiler)
@@ -350,7 +347,7 @@ class Match {
         if cl == null {
             return
         }
-        def choiceClass:ClassDecl? := null
+        var choiceClass:ClassDecl? := null
         def choiceTag:IR.Value?
         if cl.classKind = ClassDecl.Kind.CHOICE {
             choiceTag := Dot.compile(compiler, position, compiledValue, ClassDecl.TAG_NAME)

@@ -37,7 +37,7 @@ Under this new system policy, how many passphrases are valid?
 *-
 
 method main() {
-    def input := Console.inputStream().lines().map(line => line.split(/\s+/)).all()
+    var input := Console.inputStream().lines().map(line => line.split(/\s+/)).all()
     Console.printLine(input.filter(a => a.count = HashSet<String>(a).count).count)
     input := input.map(a => a.map(s => s.utf8.sort(Char8.>).join("")))
     Console.printLine(input.filter(a => a.count = HashSet<String>(a).count).count)

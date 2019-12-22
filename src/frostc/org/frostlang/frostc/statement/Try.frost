@@ -28,10 +28,11 @@ class Try {
                     errorVar.owner := compiler.currentMethod[0]
                     if compiler.isRefCounted(errorVar.type) {
                         ir.add(IR.Statement.STORE(position, IR.Value.NULL(errorVar.type.nullable()),
-                                IR.Value.LOCAL(ir.locals.count, errorVar.type)))
+                                IR.Value.LOCAL(ir.locals.count, errorVar.type), false))
                         compiler.enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(errorVar))
                     }
-                    ir.locals.add(errorVar.type)
+                    ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count))
+                    ir.locals.add((errorVar.name, errorVar.varKind, errorVar.type))
                 }
                 otherwise {
                     unreachable

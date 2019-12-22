@@ -59,7 +59,7 @@ method run(program:Array<String>) {
     method set(x:String, y:Int) {
         registers[x[0].asInt - 97] := y
     }
-    def mulCount := 0
+    var mulCount := 0
     while ip >= 0 & ip < program.count {
         def parsed := program[ip].split(" ")
         match parsed[0] {

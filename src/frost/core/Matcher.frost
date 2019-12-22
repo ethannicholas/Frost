@@ -158,7 +158,7 @@ class Matcher {
             var lastEnd:String.Index := searchText.start
             while ref.find() {
                 def rawGroup := ref.group(1).asInt!
-                def groupIdx := rawGroup
+                var groupIdx := rawGroup
                 var newEnd := ref.end
                 while groupIdx >= groupCount { -- no such group, pull digits off
                     groupIdx //= 10

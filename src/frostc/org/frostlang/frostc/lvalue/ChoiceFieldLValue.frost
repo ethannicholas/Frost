@@ -44,6 +44,6 @@ class ChoiceFieldLValue : LValue {
         def ptr := compiler.ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, target,
                 choiceCase, index))
         compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.REF(ptr,
-                choiceCase.fields[index])))
+                choiceCase.fields[index]), true))
     }
 }

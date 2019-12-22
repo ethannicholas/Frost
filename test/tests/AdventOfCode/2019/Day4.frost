@@ -41,12 +41,12 @@ How many different passwords within the range given in your puzzle input meet al
 method main() {
     def start := 273025
     def end := 767253
-    def found1 := 0
-    def found2 := 0
+    var found1 := 0
+    var found2 := 0
     outer: for i in start ... end {
         def s := i.toString
-        def phase1 := false
-        def phase2 := false
+        var phase1 := false
+        var phase2 := false
         for j in 1 .. 6 {
             if s[j] < s[j - 1] {
                 continue outer

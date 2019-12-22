@@ -54,8 +54,8 @@ What is the decompressed length of the file using this improved format?
 *-
 
 function length(s:String):(Int, Int) {
-    def length1 := 0
-    def length2 := 0
+    var length1 := 0
+    var length2 := 0
     def matcher := /\((\d+)x(\d+)\)/.matcher(s)
     var index := s.start
     while index != s.end & matcher.find(index) {

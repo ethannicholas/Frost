@@ -65,7 +65,7 @@ function solid(x:Int, y:Int):Bit {
 
 function countVisitedSpaces<T:HashKey<T>>(start:T, neighbors:(T)=>(Array<T>), count:Int):Int {
     def visited := HashSet<T>()
-    def current := HashSet<T>()
+    var current := HashSet<T>()
     current.add(start)
     for i in 0 .. count {
         def last := current

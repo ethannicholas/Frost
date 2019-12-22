@@ -773,7 +773,8 @@ class Call {
         def result:IR.Value?
         def resultSlot := ir.locals.count
         if t.returnType != compiler.VOID_TYPE {
-            ir.locals.add(t.returnType)
+            ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count))
+            ir.locals.add(("<internal>", Variable.Kind.DEF, t.returnType))
             result := IR.Value.LOCAL(resultSlot, t.returnType)
         }
         else {
@@ -825,7 +826,7 @@ class Call {
                 FixedArray<IR.Value>(finalArgs)))
         if result !== null {
             ir.add(IR.Statement.STORE(position, IR.Value.REF(noTargetResult, t.returnType),
-                    result))
+                    result, true))
         }
         ir.add(IR.Statement.BRANCH(position, mergeBlock))
         ir.setCurrentBlock(haveTargetBlock)
@@ -845,7 +846,7 @@ class Call {
                 FixedArray<IR.Value>(finalArgs)))
         if result !== null {
             ir.add(IR.Statement.STORE(position, IR.Value.REF(haveTargetResult, t.returnType),
-                    result))
+                    result, true))
         }
         ir.add(IR.Statement.BRANCH(position, mergeBlock))
         ir.setCurrentBlock(mergeBlock)
@@ -1050,7 +1051,8 @@ class Call {
                 when Variable.Storage.LOCAL(slot) {
                     compiler.compileRef(v)
                     def nonnull := compiler.cast(position, v, errorType)
-                    ir.add(IR.Statement.STORE(position, nonnull, IR.Value.LOCAL(slot, errorType)))
+                    ir.add(IR.Statement.STORE(position, nonnull, IR.Value.LOCAL(slot, errorType),
+                            true))
                 }
                 otherwise {
                     unreachable
@@ -1083,7 +1085,8 @@ class Call {
             compiler.compileRef(errorRef)
             match tryScope[1].storage {
                 when Variable.Storage.LOCAL(slot) {
-                    ir.add(IR.Statement.STORE(position, errorRef, IR.Value.LOCAL(slot, errorType)))
+                    ir.add(IR.Statement.STORE(position, errorRef, IR.Value.LOCAL(slot, errorType),
+                            true))
                 }
                 otherwise {
                     unreachable
@@ -1168,12 +1171,13 @@ class Call {
         }
         def scope:Compiler.EnclosingContext
         def inlineReturn:Compiler.InlineReturn
-        def inlineReturnSlot:Int := -1
+        def inlineReturnSlot:Int
         def mergeBlock := compiler.ir.newBlock("inline merge")
         {
             def context:AutoContext
             if m.returnType = compiler.VOID_TYPE | countReturns(m.body) <= 1 {
                 inlineReturn := Compiler.InlineReturn(null)
+                inlineReturnSlot := -1
                 context := AutoContext(compiler, EnclosingContext.INLINE_CONTEXT(args,
                         compiler.ir.locals.count, inlineReturn, mergeBlock))
             }
@@ -1191,14 +1195,16 @@ class Call {
                 if compiler.isRefCounted(returnVar.type) {
                     def setNull := IR.Statement.STORE(position,
                             IR.Value.NULL(returnVar.type.nullable()),
-                            IR.Value.LOCAL(inlineReturnSlot, returnVar.type))
+                            IR.Value.LOCAL(inlineReturnSlot, returnVar.type),
+                            false)
                     def id := IR.Statement.ID(compiler.ir.currentStatementId)
                     compiler.ir.blocks[0].statements.insertHead(setNull)
                     compiler.ir.blocks[0].ids.insertHead(id)
                     compiler.ir.statements[id] := setNull
                     compiler.ir.currentStatementId += 1
                 }
-                compiler.ir.locals.add(returnVar.type)
+                compiler.ir.add(IR.Statement.ENTER_SCOPE(compiler.ir.locals.count))
+                compiler.ir.locals.add((returnVar.name, returnVar.varKind, returnVar.type))
             }
             compiler.currentClass.push(m.owner)
             -- FIXME move all of this stuff into a MethodContext(?) class for easier save / restore
@@ -1419,7 +1425,7 @@ class Call {
         }
         -- actualType always has a "self", even for a @class method. This will probably be tightened
         -- up in the future, but it simplifies the logic a bit here.
-        def actualType:Type
+        var actualType:Type
         var selfType := m.value.owner.type
         if selfType.isPointer & !m.value.annotations.isClass {
             if target !== null {

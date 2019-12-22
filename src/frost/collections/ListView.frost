@@ -303,7 +303,7 @@ interface ListView<T> : CollectionView<T> {
     function [](r:SteppedRange<Int?, Int>):ListView<T> {
         def step := r.step
 
-        def current:Int
+        var current:Int
         if r.start !== null {
             current := r.start
         }

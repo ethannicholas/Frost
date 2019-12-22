@@ -34,7 +34,7 @@ class Algorithms {
                     continue
                 }
                 def tentative_gScore := gScore[current]! + travelCost(current, neighbor)
-                def neighborScore := gScore[neighbor]
+                var neighborScore := gScore[neighbor]
                 if neighborScore == null {
                     neighborScore := Int.MAX
                 }

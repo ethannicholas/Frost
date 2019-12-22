@@ -466,7 +466,7 @@ class Markdown {
     method detabify(text:MutableString) {
         text.replace(/(.*?)\t/, function(groups:ListView<String?>):String {
             def lineSoFar := groups[1]
-            def width := lineSoFar.length
+            var width := lineSoFar.length
             def replacement := MutableString(lineSoFar)
             do {
                 replacement.append(" ")
@@ -492,7 +492,7 @@ class Markdown {
         }
 
         function replacement(groups:ListView<String?>):String {
-            def codeBlock := groups[1]
+            var codeBlock := groups[1]
             def testCase := codeBlock.parse(/[\s\S]*--\s+testcase\s+(\w+)(?:\((\w+)\))?[\s\S]*/)
             if testCase !== null {
                 codeBlock := codeBlock.replace(/--\s+testcase\s+(\w+)(?:\((\w+)\))?/, "")
@@ -505,7 +505,7 @@ class Markdown {
             ed.replace(/\A\n+/, "")
             ed.replace(/\s+\z/, "")
             def text := ed.toString
-            def out:String
+            var out:String
             def firstLine := firstLine(text)
             if isLanguageIdentifier(firstLine) {
               out := languageBlock(firstLine, text)
@@ -786,7 +786,7 @@ class Markdown {
         listLevel += 1
 
         -- Trim trailing blank lines:
-        def list := rawList.replace(/\n{2,}\z/, "\n")
+        var list := rawList.replace(/\n{2,}\z/, "\n")
 
         def p := RegularExpression("(\\n)?" +
                 "^([ \\t]*)([-+*]|\\d+[.])[ ]+" +
@@ -959,7 +959,7 @@ class Markdown {
             def replacementText:String
             def wholeMatch := groups[1]
             def altText := groups[2]
-            def id := groups[3] -- FIXME .toLowerCase()
+            var id := groups[3] -- FIXME .toLowerCase()
             if id = "" {
                 id := altText -- FIXME .toLowerCase()
             }
@@ -970,7 +970,7 @@ class Markdown {
                 var url := defn.url
                 url := url.replace(/\\*/, self.charProtector.encode("*"))
                 url := url.replace(/_/, self.charProtector.encode("_"))
-                def title := defn.title
+                var title := defn.title
                 var titleTag := ""
                 if title !== null & title != "" {
                     title := title.replace(/\\*/, self.charProtector.encode("*"))
@@ -1020,7 +1020,7 @@ class Markdown {
                 -- protect emphasis (* and _) within urls
                 url := url.replace("\\*", self.charProtector.encode("*"))
                 url := url.replace("_", self.charProtector.encode("_"))
-                def title := defn.title
+                var title := defn.title
                 var titleTag := ""
                 if title !== null & title != "" {
                     -- protect emphasis (* and _) within urls

@@ -308,7 +308,7 @@ class Binary {
             type:TypeContext):(Array<MethodRef>, Int)? {
         def leftTypes := compiler.possibleTypes(left)
         if leftTypes !== null {
-            def best:(Array<MethodRef>, Int)? := null
+            var best:(Array<MethodRef>, Int)? := null
             for t in leftTypes {
                 def compilerCost := compiler.coercionCost(left, t)
                 assert compilerCost !== null,

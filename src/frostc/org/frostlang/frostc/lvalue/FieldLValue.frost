@@ -166,7 +166,7 @@ class FieldLValue : LValue {
             }
             def ptr := IR.Value.REF(compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position,
                     target, field)), rawType)
-            compiler.ir.add(IR.Statement.STORE(position, cast, ptr))
+            compiler.ir.add(IR.Statement.STORE(position, cast, ptr, true))
         }
     }
 

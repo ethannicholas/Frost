@@ -2,7 +2,7 @@
 class Operators {
     @class
     method int8() {
-        def x:Int8 := 9
+        var x:Int8 := 9
         def y:Int8 := 12
         Console.printLine("int8 Arithmetic")
         Console.printLine(x + y)
@@ -52,7 +52,7 @@ class Operators {
     }
     @class
     method int16() {
-        def x:Int16 := 126
+        var x:Int16 := 126
         def y:Int16 := 519
         Console.printLine("int16 Arithmetic")
         Console.printLine(x + y)
@@ -102,7 +102,7 @@ class Operators {
     }
     @class
     method int32() {
-        def x:Int32 := 88124
+        var x:Int32 := 88124
         def y:Int32 := 653
         Console.printLine("int32 Arithmetic")
         Console.printLine(x + y)
@@ -152,7 +152,7 @@ class Operators {
     }
     @class
     method int64() {
-        def x:Int64 := 4000311441
+        var x:Int64 := 4000311441
         def y:Int64 := 1991297512
         Console.printLine("int64 Arithmetic")
         Console.printLine(x + y)
@@ -202,7 +202,7 @@ class Operators {
     }
     @class
     method uint8() {
-        def x:UInt8 := 16
+        var x:UInt8 := 16
         def y:UInt8 := 15
         Console.printLine("uint8 Arithmetic")
         Console.printLine(x + y)
@@ -252,7 +252,7 @@ class Operators {
     }
     @class
     method uint16() {
-        def x:UInt16 := 598
+        var x:UInt16 := 598
         def y:UInt16 := 87
         Console.printLine("uint16 Arithmetic")
         Console.printLine(x + y)
@@ -302,7 +302,7 @@ class Operators {
     }
     @class
     method uint32() {
-        def x:UInt32 := 124870
+        var x:UInt32 := 124870
         def y:UInt32 := 6713
         Console.printLine("uint32 Arithmetic")
         Console.printLine(x + y)
@@ -352,7 +352,7 @@ class Operators {
     }
     @class
     method uint64() {
-        def x:UInt64 := 420032777
+        var x:UInt64 := 420032777
         def y:UInt64 := 81272990
         Console.printLine("uint64 Arithmetic")
         Console.printLine(x + y)

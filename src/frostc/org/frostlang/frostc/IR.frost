@@ -65,6 +65,11 @@ class IR {
         END
 
         ============================================================================================
+        Represents entering the scope of a local variable.
+        ============================================================================================
+        ENTER_SCOPE(Int -* slot *-)
+
+        ============================================================================================
         Given a value, returns the value of a field within the value.
         ============================================================================================
         EXTRACT_FIELD(MethodPosition, Value, FieldDecl)
@@ -134,7 +139,7 @@ class IR {
         ============================================================================================
         Writes a value to the target of the given pointer.
         ============================================================================================
-        STORE(MethodPosition, Value -* value *-, Value -* dest pointer *-)
+        STORE(MethodPosition, Value -* value *-, Value -* dest pointer *-, Bit -* explicit *-)
 
         ============================================================================================
         Compares the value against the various test numbers, jumping to the block of the matching
@@ -197,6 +202,9 @@ class IR {
                 when END {
                     return MethodPosition()
                 }
+                when ENTER_SCOPE {
+                    return MethodPosition()
+                }
                 when EXTRACT_FIELD(position, _, _) {
                     return position
                 }
@@ -239,7 +247,7 @@ class IR {
                 when STATIC_CALL(position, _, _) {
                     return position
                 }
-                when STORE(position, _, _) {
+                when STORE(position, _, _, _) {
                     return position
                 }
                 when UNREACHABLE(position) {
@@ -278,6 +286,9 @@ class IR {
                 }
                 when END {
                     return "end"
+                }
+                when ENTER_SCOPE(slot) {
+                    return "enter_scope \{slot}"
                 }
                 when EXTRACT_FIELD(position, value, field) {
                     return "extract_field \{value}, \{field.owner.name}.\{field.name}"
@@ -324,8 +335,8 @@ class IR {
                 when STATIC_CALL(position, m, args) {
                     return "static_call \{m.declaration}(\{args.join(", ")})"
                 }
-                when STORE(position, value, ptr) {
-                    return "store \{value}, \{ptr}"
+                when STORE(position, value, ptr, explicit) {
+                    return "store(\{explicit}) \{value}, \{ptr}"
                 }
                 when SWITCH(position, value, cases, other) {
                     return "switch \{value}, \{cases}, \{other}"
@@ -468,7 +479,7 @@ class IR {
         }
     }
 
-    def locals := Array<Type>()
+    def locals := Array<(String, Variable.Kind, Type)>()
 
     def blocks := Array<Block>()
 

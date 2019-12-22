@@ -35,8 +35,8 @@ class XorShift128Plus : Random {
 
     @override
     method int64():Int64 {
-        def x := state1
-        var y := state2
+        var x := state1
+        def y := state2
         state1 := y
         x ~~= x << 23
         state2 := x ~~ y ~~ (x >> 17) ~~ (y >> 26)

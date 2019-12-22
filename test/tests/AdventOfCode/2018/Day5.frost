@@ -77,7 +77,7 @@ function react(s:String):String {
     loop {
         def tmp := MutableString()
         def utf8 := result.utf8
-        def pending:Char8? := null
+        var pending:Char8? := null
         var i := 0
         while i < utf8.count - 1 {
             def a := utf8[i]

@@ -1,0 +1,3 @@
+ReassignDef.frost:3:5: error: cannot assign to already-assigned def 'a'
+ReassignDef.frost:9:5: error: cannot assign to already-assigned def 'b'
+2 errors

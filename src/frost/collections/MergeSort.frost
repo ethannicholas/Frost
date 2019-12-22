@@ -40,7 +40,7 @@ class MergeSort {
             right.add(a[i])
         }
 
-        def i := 0,
+        var i := 0,
             j := 0, 
             k := start
   

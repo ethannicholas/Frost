@@ -8,7 +8,7 @@ class WriteOperators {
             out.printLine("@class")
             out.printLine("method \{name}() {")
             out.level += 1
-            out.printLine("def x:\{type} := \{x}")
+            out.printLine("var x:\{type} := \{x}")
             out.printLine("def y:\{type} := \{y}")
             out.printLine("Console.printLine(\"\{name} Arithmetic\")")
             out.printLine("Console.printLine(x + y)")

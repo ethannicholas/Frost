@@ -7,6 +7,7 @@ uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
+uses org.frostlang.frostc.Variable
 
 class And {
     @class
@@ -15,7 +16,8 @@ class And {
         def ir := compiler.ir
         -- FIXME should add phis so we can avoid using a local
         def result := IR.Value.LOCAL(ir.locals.count, compiler.BIT_TYPE)
-        ir.locals.add(compiler.BIT_TYPE)
+        ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count))
+        ir.locals.add(("<internal>", Variable.Kind.DEF, compiler.BIT_TYPE))
         def compiledLeft:IR.Value?
         compiledLeft := compiler.compileExpression(left, TypeContext.TYPE(compiler.BIT_TYPE, false))
         if compiledLeft == null {
@@ -36,10 +38,10 @@ class And {
                 return null
             }
         }
-        ir.add(IR.Statement.STORE(position, compiledRight, result))
+        ir.add(IR.Statement.STORE(position, compiledRight, result, true))
         ir.add(IR.Statement.BRANCH(position, merge))
         ir.setCurrentBlock(ifFalse)
-        ir.add(IR.Statement.STORE(position, compiledLeft, result))
+        ir.add(IR.Statement.STORE(position, compiledLeft, result, true))
         ir.add(IR.Statement.BRANCH(position, merge))
         ir.setCurrentBlock(merge)
         def load := ir.add(IR.Statement.LOAD(position, result))

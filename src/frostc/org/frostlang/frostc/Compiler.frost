@@ -139,6 +139,7 @@ class Compiler : ErrorReporter {
     }
 
     choice Target {
+        IGNORED
         VARIABLE(Variable, IR.Value?)
         TUPLE(FixedArray<Target>)
     }
@@ -864,7 +865,7 @@ class Compiler : ErrorReporter {
                     }
                     return result
                 }
-                def s := symbolTable[type.name]
+                var s := symbolTable[type.name]
                 if s == null {
                     s := root[type.name]
                 }
@@ -1421,7 +1422,7 @@ class Compiler : ErrorReporter {
                 -- we need to mark that we are in an instance context so 'self' works. Since the
                 -- class is guaranteed to have at least one init method, we just pretend we're in
                 -- one of those.
-                def firstInit:MethodDecl? := null
+                var firstInit:MethodDecl? := null
                 for m in f.owner.methods {
                     if m.methodKind = MethodDecl.Kind.INIT {
                         firstInit := m
@@ -1707,7 +1708,7 @@ class Compiler : ErrorReporter {
         if type.typeKind = Type.Kind.CLASS {
             return cl
         }
-        def result:ClassDecl? := classes[type.name]
+        var result:ClassDecl? := classes[type.name]
         if result == null {
             currentClass.push(cl)
             --def parameters := cl.parameters.combine<Type, ClassDecl.GenericParameter>(type,
@@ -2169,7 +2170,7 @@ class Compiler : ErrorReporter {
             return possible.iterator.next()
         }
         def best := Array<Type>()
-        def bestCost := Int.MAX
+        var bestCost := Int.MAX
         var foundInt := false
         for t in possible {
             def cost := coercionCost(expr, t)
@@ -2487,7 +2488,7 @@ class Compiler : ErrorReporter {
     }
 
     method coercionCost(types:CollectionView<Type>, target:Type):(Type, Int)? {
-        def best := (VOID_TYPE, Int.MAX)
+        var best := (VOID_TYPE, Int.MAX)
         for t in types {
             def cost := coercionCost(t, target)
             if cost !== null & cost[1] < best[1] {
@@ -2782,7 +2783,7 @@ class Compiler : ErrorReporter {
                     result.add(Type.ClassLiteral(self, type))
                     return result
                 }
-                def result:Array<Type>? := null
+                var result:Array<Type>? := null
                 def baseTypes := possibleTypes(base)
                 if baseTypes == null {
                     return null
@@ -2803,7 +2804,7 @@ class Compiler : ErrorReporter {
                 if t !== null {
                     return [Type.ClassLiteral(self, t)]
                 }
-                def result:Array<Type>? := null
+                var result:Array<Type>? := null
                 def baseTypes := possibleTypes(base)
                 if baseTypes == null {
                     return null
@@ -4673,7 +4674,7 @@ class Compiler : ErrorReporter {
                 }
             }
         }
-        def compiledStart:IR.Value?
+        var compiledStart:IR.Value?
         if start !== null {
             compiledStart := compileExpression(start, endpointContext)
             if compiledStart == null {
@@ -4683,7 +4684,7 @@ class Compiler : ErrorReporter {
         else {
             compiledStart := null
         }
-        def compiledEnd:IR.Value?
+        var compiledEnd:IR.Value?
         if end !== null {
             compiledEnd := compileExpression(end, endpointContext)
             if compiledEnd == null {
@@ -5190,6 +5191,9 @@ class Compiler : ErrorReporter {
             rawValue:ASTNode?, valueType:Type?):Target? {
         match t {
             when ASTNode.IDENTIFIER(basePos, name) {
+                if name = "_" {
+                    return Target.IGNORED
+                }
                 -- no type, infer from value
                 def position := MethodPosition(basePos, currentMethodIndex)
                 def value:IR.Value?
@@ -5223,15 +5227,16 @@ class Compiler : ErrorReporter {
                 v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
                     ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
-                            IR.Value.LOCAL(ir.locals.count, v.type)))
+                            IR.Value.LOCAL(ir.locals.count, v.type), false))
                 }
-                ir.locals.add(v.type)
+                ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count))
+                ir.locals.add((v.name, v.varKind, v.type))
                 symbolTable.add(v)
                 return Target.VARIABLE(v, value)
             }
             when ASTNode.TUPLE(_, targets) {
-                def finalType:Type? := null
-                def compiledTuple:IR.Value?
+                var finalType:Type? := null
+                var compiledTuple:IR.Value?
                 if rawValue !== null {
                     compiledTuple := compileExpression(rawValue, TypeContext.NON_VOID)
                     if compiledTuple == null {
@@ -5246,8 +5251,8 @@ class Compiler : ErrorReporter {
                     def result := Array<Target>()
                     def valueTypes := finalType.nonnullable().subtypes
                     if valueTypes.count != targets.count {
-                        error(t.position(), "cannot assign \{targets.count}-element tuple to " +
-                                "\{valueTypes.count}-element target")
+                        error(t.position(), "cannot assign \{valueTypes.count}-element tuple to " +
+                                "\{targets.count}-element target")
                         return null
                     }
                     for i in 0 .. targets.count {
@@ -5293,11 +5298,12 @@ class Compiler : ErrorReporter {
                 def v := Variable(basePos, kind, name, type,
                         Variable.Storage.LOCAL(ir.locals.count))
                 v.owner := currentMethod[0]
+                ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count))
                 if isRefCounted(v.type) {
                     ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
-                            IR.Value.LOCAL(ir.locals.count, v.type)))
+                            IR.Value.LOCAL(ir.locals.count, v.type), false))
                 }
-                ir.locals.add(v.type)
+                ir.locals.add((v.name, v.varKind, v.type))
                 symbolTable.add(v)
                 return Target.VARIABLE(v, value)
             }
@@ -5318,8 +5324,10 @@ class Compiler : ErrorReporter {
             when Target.TUPLE(targets) {
                 targets.apply(self.createScopes)
             }
+            when Target.IGNORED {
+            }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -5335,8 +5343,10 @@ class Compiler : ErrorReporter {
             when Target.TUPLE(targets) {
                 targets.apply(self.initializeTarget)
             }
+            when Target.IGNORED {
+            }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -5359,8 +5369,10 @@ class Compiler : ErrorReporter {
                             "\{targets.count} elements")
                 }
             }
+            when Target.IGNORED {
+            }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -5393,7 +5405,7 @@ class Compiler : ErrorReporter {
                     when Variable.Storage.LOCAL(slot) {
                         ir.add(IR.Statement.STORE(MethodPosition(v.position, currentMethodIndex),
                                 IR.Value.NULL(v.type.nullable()),
-                                IR.Value.LOCAL(slot, v.type.nullable())))
+                                IR.Value.LOCAL(slot, v.type.nullable()), false))
                     }
                     otherwise {
                         unreachable
@@ -5674,7 +5686,8 @@ class Compiler : ErrorReporter {
         if returnVar == null & compiling.returnType != VOID_TYPE  {
             returnVar := Variable(compiling.position, Variable.Kind.DEF, "$return",
                     compiling.returnType, Variable.Storage.LOCAL(ir.locals.count))
-            ir.locals.add(returnVar.type)
+            ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count))
+            ir.locals.add((returnVar.name, returnVar.varKind, returnVar.type))
         }
         ir.setCurrentBlock(postconditionCurrentBlock)
         def value := compileExpressionInContext(expr,
@@ -5748,7 +5761,7 @@ class Compiler : ErrorReporter {
         }
         if havePost {
             def position := MethodPosition(m.position, m.index)
-            def returnValue:IR.Value? := null
+            var returnValue:IR.Value? := null
             if returnVar !== null {
                 def returnSlot:Int
                 match returnVar.storage {
@@ -5900,7 +5913,8 @@ class Compiler : ErrorReporter {
                     def selfVar := Variable(m.position, Variable.Kind.DEF, SELF_NAME,
                             m.owner.typeWithParameters(), Variable.Storage.LOCAL(ir.locals.count))
                     selfVar.owner := m
-                    ir.locals.add(selfVar.type)
+                    ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count))
+                    ir.locals.add((selfVar.name, selfVar.varKind, selfVar.type))
                     symbolTable.add(selfVar)
                 }
                 if m.methodKind = MethodDecl.Kind.INIT {
@@ -6633,7 +6647,7 @@ class Compiler : ErrorReporter {
                 intSize, debug, isBootstrap)
         def success:Bit
         {
-            def backend:Backend? := null
+            var backend:Backend? := null
             try {
                 match format {
                     when Format.LLVM {

@@ -152,7 +152,7 @@ class Day22 {
     def bossHP:Int
     def bossDamage:Int
 
-    def best := Int.MAX
+    var best := Int.MAX
     var hardMode:Bit
 
     class State {

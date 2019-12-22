@@ -74,7 +74,7 @@ uses extras.MD5
 
 method main() {
     def passcode := "vwbaicqe"
-    def current := HashSet<String>()
+    var current := HashSet<String>()
     current.add("")
     var found := false
     var max := 0

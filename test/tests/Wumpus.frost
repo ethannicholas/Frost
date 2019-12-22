@@ -238,7 +238,7 @@ class Wumpus {
         var arrowRoom := currentRoom
         for i in 0 .. targets.count {
             def targetLabel := targets[i]
-            def target := getRoom(targetLabel)
+            var target := getRoom(targetLabel)
             if arrowRoom.label = target.label {
                 Console.printLine("The arrow falls to the floor.")
                 break

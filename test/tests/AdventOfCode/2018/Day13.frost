@@ -255,7 +255,7 @@ choice Direction {
 method main() {
     def lines := Console.inputStream().lines().all()
     def map := lines.map(String.get_utf8)
-    def carts := Array<(Int, Int, Direction, Int, Bit)>()
+    var carts := Array<(Int, Int, Direction, Int, Bit)>()
     for (y, row) in map.enumeration {
         for (x, c) in row.enumeration {
             match c {

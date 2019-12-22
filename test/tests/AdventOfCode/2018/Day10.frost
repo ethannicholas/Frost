@@ -173,7 +173,7 @@ seconds would they have needed to wait for that message to appear?
 *-
 
 method main() {
-    def particles := Console.inputStream().lines().map(
+    var particles := Console.inputStream().lines().map(
             line => line.find(/-?\d+/).map(m => m.groups[0].asInt!).all()).all()
     var lastWidth := Int.MAX
     var lastHeight := Int.MAX

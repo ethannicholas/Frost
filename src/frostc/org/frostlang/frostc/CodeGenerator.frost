@@ -1423,6 +1423,8 @@ class CodeGenerator {
                     out.add(Code.Statement.UNREACHABLE(MethodPosition()))
                 }
             }
+            when IR.Statement.ENTER_SCOPE {
+            }
             when IR.Statement.EXTRACT_FIELD(position, value, field) {
                 def cl := compiler.getClass(value.type())
                 if getSingleFieldStructType(cl) !== null {
@@ -1612,7 +1614,7 @@ class CodeGenerator {
                     }
                 }
             }
-            when IR.Statement.STORE(position, value, ptr) {
+            when IR.Statement.STORE(position, value, ptr, _) {
                 out.add(Code.Statement.STORE(position, convertValue(value), convertValue(ptr)))
             }
             when IR.Statement.SWITCH(position, value, cases, other) {
@@ -1652,7 +1654,7 @@ class CodeGenerator {
         createBlock(mapId(block.id))
         if block.id.value = 0 {
             block0 := out
-            for l in ir!.locals {
+            for (_, _, l) in ir!.locals {
                 def id := nextStatement()
                 locals.add(id)
                 def p := MethodPosition()
