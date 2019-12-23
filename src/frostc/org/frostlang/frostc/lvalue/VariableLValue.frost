@@ -38,11 +38,11 @@ class VariableLValue : LValue {
     }
 
     @override
-    method compileStore(value:IR.Value) {
+    method compileStore(value:IR.Value, explicit:Bit) {
         if compiler.isRefCounted(type()) {
             compiler.compileRef(value)
             compiler.compileUnref(compileLoad())
         }
-        compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.LOCAL(slot, type()), true))
+        compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.LOCAL(slot, type()), explicit))
     }
 }

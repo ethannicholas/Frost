@@ -24,7 +24,7 @@ class IndexLValue : LValue {
 
     -- it's important that we don't compile the index twice, so we store it the first time it
     -- gets compiled and re-use that for the other call
-    def index:IR.Value?
+    var index:IR.Value?
 
     init(compiler:Compiler, position:MethodPosition, target:IR.Value, rawIndex:ASTNode) {
         self.compiler := compiler
@@ -65,7 +65,7 @@ class IndexLValue : LValue {
     }
 
     @override
-    method compileStore(value:IR.Value) {
+    method compileStore(value:IR.Value, explicit:Bit) {
         if index == null {
             def cl := compiler.getClass(target.type())
             if cl == null {

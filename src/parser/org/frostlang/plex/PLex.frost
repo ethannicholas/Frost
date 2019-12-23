@@ -130,7 +130,7 @@ class PLex {
             out.printLine()
             out.printLine("class \{lexerName[lexerName.next(lexerName.lastIndexOf("."))..]} {")
             out.level += 1
-            out.printLine("def dfa:DFA")
+            out.printLine("var dfa:DFA")
             out.printLine()
             out.printLine("def transitions := getTransitions()")
             out.printLine()
@@ -138,7 +138,7 @@ class PLex {
             out.printLine()
             var extra := ""
             if positionName = "org.frostlang.frostc.Position" {
-                out.printLine("def file:Int")
+                out.printLine("var file:Int")
                 extra := "file, "
             }
             out.printLine("method start(source:String) {")

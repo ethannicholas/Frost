@@ -8,7 +8,7 @@ uses org.frostlang.plex.runtime.DFA
 uses org.frostlang.json.Position
 
 class Lexer {
-    def dfa:DFA
+    var dfa:DFA
 
     def transitions := getTransitions()
 

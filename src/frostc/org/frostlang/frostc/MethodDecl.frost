@@ -12,7 +12,7 @@ class MethodDecl : Symbol {
     class Parameter {
         def name:String
 
-        def type:Type
+        var type:Type
 
         @weak
         var owner:MethodDecl?
@@ -31,7 +31,7 @@ class MethodDecl : Symbol {
     class GenericParameter : Symbol {
         def owner:String
 
-        def bound:Type
+        var bound:Type
 
         init(position:Position, owner:String, name:String, bound:Type) {
             self.owner := owner
@@ -46,7 +46,7 @@ class MethodDecl : Symbol {
     }
 
     @weak
-    def owner:ClassDecl
+    var owner:ClassDecl
 
     def doccomment:String?
 
@@ -63,7 +63,7 @@ class MethodDecl : Symbol {
 
     var returnType:Type
 
-    def body:FixedArray<ASTNode>?
+    var body:FixedArray<ASTNode>?
 
     var resolved := Compiler.Resolution.UNRESOLVED
 

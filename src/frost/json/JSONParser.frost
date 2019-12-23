@@ -18,7 +18,7 @@ class JSONParser {
     def lexer := Lexer()
 
     @private
-    def pushbackToken:Token? := null
+    var pushbackToken:Token? := null
 
     ================================================================================================
     Parses a JSON string.

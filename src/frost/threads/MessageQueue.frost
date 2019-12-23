@@ -9,10 +9,11 @@ system-dependent fashion, while the other threads will continue to wait.
 @unsafeImmutable
 class MessageQueue<T:Immutable> : Immutable {
     @private
+    @unsafeImmutable
     class Message<T:Immutable> : Immutable {
         def payload:T
 
-        def next:Message<T>?
+        var next:Message<T>?
 
         init(payload:T) {
             self.payload := payload

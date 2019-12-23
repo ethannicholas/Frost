@@ -48,15 +48,15 @@ interface Iterator<T> {
     class RangeIterator<T> : Iterator<T> {
         def base:Iterator<T>
 
-        def current:Int
+        var current:Int
 
         def end:Int?
 
         def step:Int
 
-        def pending:T?
+        var pending:T?
 
-        def _done := false
+        var _done := false
 
         @pre(step > 0)
         init(base:Iterator<T>, start:Int?, end:Int?, inclusive:Bit, step:Int) {

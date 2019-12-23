@@ -8,7 +8,7 @@ class NFA {
 
     var startStates:ImmutableArray<Int>
 
-    def _source := LineNumberInputStream(Console.inputStream())
+    var _source := LineNumberInputStream(Console.inputStream())
     var pushback := PushbackInputStream(_source)
     var line := 1
     var column := 1

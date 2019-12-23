@@ -17,7 +17,7 @@ class FieldDecl : Symbol {
 
     def fieldKind:Kind
 
-    def type:Type
+    var type:Type
 
     def rawValue:ASTNode?
 

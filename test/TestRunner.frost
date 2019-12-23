@@ -20,6 +20,8 @@ class TestRunner : Immutable {
         self.buildDir := buildDir
         self.cCompiler := cCompiler
         self.cLibs := ImmutableArray<String>(cLibs)
+        self.frostc := buildDir.resolve("frostc")
+        self.testDir := frostHome.resolve("test/tests")
     }
 
     method runTest(frostc:File, cLibs:ListView<String>, workingDir:File, test:String) {
@@ -113,8 +115,6 @@ class TestRunner : Immutable {
 
     method run() {
         try {
-            frostc := buildDir.resolve("frostc")
-            testDir := frostHome.resolve("test/tests")
             def files := recursiveList(testDir)
             files.sortInPlace((a, b) => a.name > b.name)
             var success := 0

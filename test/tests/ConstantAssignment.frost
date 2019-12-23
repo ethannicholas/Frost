@@ -1,0 +1,14 @@
+class Test {
+    constant a:Int
+
+    init() {
+        a := 5
+    }
+}
+
+method main() {
+    def t := Test()
+    t.a := 1
+    constant b:Int
+    b := 10
+}

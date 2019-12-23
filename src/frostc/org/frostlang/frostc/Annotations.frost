@@ -44,7 +44,7 @@ class Annotations {
         }
     }
 
-    def flags:Int
+    var flags:Int
 
     def expressions:Array<Expression>?
 

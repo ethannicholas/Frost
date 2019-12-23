@@ -1,0 +1,4 @@
+ConstantAssignment.frost:5:9: error: cannot assign to constant 'a'
+ConstantAssignment.frost:11:6: error: cannot assign to constant 'a'
+ConstantAssignment.frost:13:5: error: cannot assign to constant 'b'
+3 errors

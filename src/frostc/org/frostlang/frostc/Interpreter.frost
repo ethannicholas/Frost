@@ -168,11 +168,11 @@ class Interpreter : Backend {
     def out:OutputStream?
 
     @weak
-    def compiler:Compiler?
+    var compiler:Compiler?
 
-    def cg:CodeGenerator?
+    var cg:CodeGenerator?
 
-    def settings:Compiler.Settings?
+    var settings:Compiler.Settings?
 
     constant STACK_SIZE := 1 << 20
 
@@ -180,7 +180,7 @@ class Interpreter : Backend {
 
     def stackBase := Pointer<Int8>.alloc(STACK_SIZE)
 
-    def stack := stackBase
+    var stack := stackBase
 
     -- the ints are offsets into globalMemory
     def globals := Array<(Code.Value?, Int)>()

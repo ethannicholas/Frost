@@ -7,6 +7,7 @@ uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.expression.Call
@@ -125,7 +126,18 @@ class FieldLValue : LValue {
     }
 
     @override
-    method compileStore(rawValue:IR.Value) {
+    method compileStore(rawValue:IR.Value, explicit:Bit) {
+        if field.fieldKind = FieldDecl.Kind.CONSTANT {
+            compiler.error(position, "cannot assign to constant '\{field.name}'")
+            return
+        }
+        if field.fieldKind = FieldDecl.Kind.DEF &
+            (compiler.currentMethod[0].methodKind != MethodDecl.Kind.INIT |
+                compiler.currentMethod[0].owner !== field.owner) {
+            compiler.error(position, "cannot assign to def '\{field.owner.name}.\{field.name}' " +
+                    "outside of '\{field.owner.name}.init'")
+            return
+        }
         if target == null {
             -- should have already reported an error
             return
@@ -166,7 +178,7 @@ class FieldLValue : LValue {
             }
             def ptr := IR.Value.REF(compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position,
                     target, field)), rawType)
-            compiler.ir.add(IR.Statement.STORE(position, cast, ptr, true))
+            compiler.ir.add(IR.Statement.STORE(position, cast, ptr, explicit))
         }
     }
 

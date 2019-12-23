@@ -37,13 +37,13 @@ class ChoiceFieldLValue : LValue {
     }
 
     @override
-    method compileStore(value:IR.Value) {
+    method compileStore(value:IR.Value, explicit:Bit) {
         if compiler.isRefCounted(type()) {
             compiler.compileRef(value)
         }
         def ptr := compiler.ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, target,
                 choiceCase, index))
         compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.REF(ptr,
-                choiceCase.fields[index]), true))
+                choiceCase.fields[index]), explicit))
     }
 }

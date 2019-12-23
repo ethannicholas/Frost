@@ -26,7 +26,7 @@ interface LValue {
 
     method compileLoad():IR.Value?
 
-    method compileStore(value:IR.Value)
+    method compileStore(value:IR.Value, explicit:Bit)
 
     @class
     method compile(compiler:Compiler, expr:ASTNode):LValue? {
@@ -153,7 +153,12 @@ interface LValue {
                             def v := symbol->Variable
                             match v.storage {
                                 when Variable.Storage.LOCAL {
-                                    return VariableLValue(compiler, position, symbol->Variable)
+                                    if v.varKind = Variable.Kind.CONSTANT {
+                                        compiler.error(position,
+                                                "cannot assign to constant '\{v.name}'")
+                                        return null
+                                    }
+                                    return VariableLValue(compiler, position, v)
                                 }
                                 otherwise {
                                     compiler.error(position, "cannot assign to '\{v.name}'")

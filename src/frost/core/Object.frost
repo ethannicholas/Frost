@@ -6,7 +6,7 @@ The root of the Frost class heirarchy. Every class in Frost ultimately descends 
 @abstract
 class Object {
     @private
-    def $class:Class
+    var $class:Class
 
     @private
     var refCount:Int32

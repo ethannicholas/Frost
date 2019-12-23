@@ -81,10 +81,10 @@ What would the new winning Elf's score be if the number of the last marble were 
 
 class Node {
     @weak
-    def prev:Node
+    var prev:Node
 
     @weak
-    def next:Node
+    var next:Node
 
     def value:Int
 

@@ -16,7 +16,7 @@ class UnsafeMessageQueue<T> : Immutable {
     class Message<T> {
         def payload:T
 
-        def next:Message<T>?
+        var next:Message<T>?
 
         init(payload:T) {
             self.payload := payload

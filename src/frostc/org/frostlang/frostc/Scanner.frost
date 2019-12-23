@@ -11,10 +11,10 @@ class Scanner {
     def compiler:Compiler
 
     @private
-    def bareCodeClass:ClassDecl?
+    var bareCodeClass:ClassDecl?
 
     @private
-    def source:File?
+    var source:File?
 
     init(compiler:Compiler) {
         self.compiler := compiler
@@ -296,7 +296,7 @@ class Scanner {
                 }
                 for decl in decls {
                     match decl {
-                        when ASTNode.DECLARATION(declPosition, target, rawValue) {
+                        when ASTNode.DECLARATION(declPosition, target, value) {
                             def name:String
                             def type:Type
                             match target {
@@ -311,14 +311,6 @@ class Scanner {
                                 otherwise {
                                     unreachable
                                 }
-                            }
-                            def value:ASTNode?
-                            if rawValue == null & annotations.isWeak &
-                                    type.typeKind = Type.Kind.NULLABLE {
-                                value := ASTNode.NULL(declPosition)
-                            }
-                            else {
-                                value := rawValue
                             }
                             def field := FieldDecl(owner, declPosition, doccomment, annotations,
                                     fieldKind, name, type, value)

@@ -489,7 +489,7 @@ class IR {
 
     var currentBlockID := -1
 
-    def currentBlock:Block
+    var currentBlock:Block
 
     property currentBlockFinished:Bit
 

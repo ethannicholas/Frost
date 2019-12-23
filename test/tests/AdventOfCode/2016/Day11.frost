@@ -228,7 +228,7 @@ class State {
 }
 
 class Day11 {
-    def states := Array<State>()
+    var states := Array<State>()
     def visited := HashSet<String>()
 
     method tryMove(from:Int, to:Int, carrying:ListView<Thing>, state:State) {

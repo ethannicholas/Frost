@@ -123,7 +123,7 @@ the object SAN is orbiting? (Between the objects they are orbiting - not between
 class Node {
     def name:String
     @weak
-    def parent:Node?
+    var parent:Node?
     def children := Array<Node>()
 
     init(name:String) {
@@ -148,7 +148,7 @@ class Node {
 method main() {
     def nodes := HashMap<String, Node>()
     nodes["COM"] := Node("COM")
-    def lines := Console.inputStream().lines().all() 
+    def lines := File("../test/tests/AdventOfCode/2019/Day6.in").openInputStream().get().lines().all() 
     while nodes.count != lines.count + 1 {
         for line in lines {
             def parsed := line.split(")")

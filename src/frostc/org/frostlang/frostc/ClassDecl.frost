@@ -21,7 +21,7 @@ class ClassDecl {
     class GenericParameter : Symbol {
         def owner:String
 
-        def bound:Type
+        var bound:Type
 
         init(position:Position, owner:String, name:String, bound:Type) {
             self.owner := owner
@@ -77,7 +77,7 @@ class ClassDecl {
 
     This remains null until the class is resolved.
     ================================================================================================
-    def rawSuper:Type? := null
+    var rawSuper:Type? := null
 
     ================================================================================================
     Comments from rawSuper apply.
@@ -95,7 +95,7 @@ class ClassDecl {
     def choiceCases := Array<ChoiceCase>()
 
     @weak
-    def owner:ClassDecl? := null
+    var owner:ClassDecl? := null
 
     def symbolTable:SymbolTable
 
@@ -109,7 +109,7 @@ class ClassDecl {
 
     def virtualMethods := Array<MethodDecl>()
 
-    def implicitInits:Array<MethodDecl>?
+    var implicitInits:Array<MethodDecl>?
 
     def classResolutionCache := HashMap<String, Resolution>()
 

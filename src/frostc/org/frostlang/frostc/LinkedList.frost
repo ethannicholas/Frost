@@ -2,10 +2,10 @@ package org.frostlang.frostc
 
 class LinkedList<T> : Collection<T> {
     class Node<T> {
-        def value:T
-        def next:Node<T>?
+        var value:T
+        var next:Node<T>?
         @weak
-        def prev:Node<T>?
+        var prev:Node<T>?
 
         init(value:T) {
             self.value := value

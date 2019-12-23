@@ -63,9 +63,9 @@ choice Destination {
 }
 
 class Bot {
-    def high := Destination.OUTPUT(-1)
-    def low := Destination.OUTPUT(-1)
-    def holding := -1
+    var high := Destination.OUTPUT(-1)
+    var low := Destination.OUTPUT(-1)
+    var holding := -1
 }
 
 class Day10 {

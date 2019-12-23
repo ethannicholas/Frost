@@ -11,7 +11,7 @@ class ChoiceCase : Symbol {
     def tag:Int
 
     @weak
-    def initMethod:MethodDecl? := null
+    var initMethod:MethodDecl? := null
 
     var resolved:Compiler.Resolution := Compiler.Resolution.UNRESOLVED
 

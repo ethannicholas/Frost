@@ -97,7 +97,6 @@ class Type : Symbol, HashKey<Type> {
             typeKind != Kind.IMMUTABLE_METHOD & typeKind != Kind.IMMUTABLE_FUNCTION)
     init(name:String, typeKind:Kind, position:Position, resolved:Bit) {
         self.typeKind := typeKind
-        self.position := position
         self.resolved := resolved
         self._subtypes := null
         super.init(Symbol.Kind.TYPE, position, name)
@@ -109,10 +108,9 @@ class Type : Symbol, HashKey<Type> {
     init(name:String, typeKind:Kind, size:Int) {
         assert !name.endsWith("?")
         self.typeKind := typeKind
-        self.position := Position(-1, size, size)
         self.resolved := true
         self._subtypes := null
-        super.init(Symbol.Kind.TYPE, position, name)
+        super.init(Symbol.Kind.TYPE, Position(-1, size, size), name)
     }
 
     init(name:String, typeKind:Kind, position:Position, subtypes:ListView<Type>, resolved:Bit) {
@@ -127,7 +125,6 @@ class Type : Symbol, HashKey<Type> {
         assert (typeKind = Kind.GENERIC) = name.endsWith(">"),
                 "invalid type: name=\{name}, generic=\{typeKind = Kind.GENERIC}"
         self.typeKind := typeKind
-        self.position := position
         self.resolved := resolved
         self.priority := priority
         self._subtypes := FixedArray<Type>(subtypes)

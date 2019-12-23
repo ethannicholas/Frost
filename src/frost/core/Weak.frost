@@ -8,7 +8,7 @@ participate in reference counting. Objects are destroyed when there are no remai
 class Weak<T> {
     -- This is special cased within the compiler
     @private
-    def value:T?
+    var value:T?
 
     @private
     var _valid := true

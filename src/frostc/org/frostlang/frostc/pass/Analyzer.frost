@@ -227,19 +227,23 @@ class Analyzer {
     class State {
         def locals:Array<DataFlowValue>
 
-        def initialization:Array<Initialization>
+        def localInitialization:Array<Initialization>
+
+        def fieldInitialization:HashMap<String, Initialization>
 
         def parameters:Array<Type>
 
         init() {
             locals := Array<DataFlowValue>()
-            initialization := Array<Initialization>()
+            localInitialization := Array<Initialization>()
+            fieldInitialization := HashMap<String, Initialization>()
             parameters := Array<Type>()
         }
 
         init(src:State) {
             locals := Array<DataFlowValue>(src.locals)
-            initialization := Array<Initialization>(src.initialization)
+            localInitialization := Array<Initialization>(src.localInitialization)
+            fieldInitialization := HashMap<String, Initialization>(src.fieldInitialization)
             parameters := Array<Type>(src.parameters)
             function copy(src:Array<frost.collections.IdentitySet<FieldDecl>?>):
                     Array<frost.collections.IdentitySet<FieldDecl>?> {
@@ -262,8 +266,8 @@ class Analyzer {
                     modified := true
                     locals[i] := union
                 }
-                if initialization[i] != s.initialization[i] {
-                    initialization[i] := Initialization.POSSIBLY_INITIALIZED
+                if localInitialization[i] != s.localInitialization[i] {
+                    localInitialization[i] := Initialization.POSSIBLY_INITIALIZED
                 }
             }
             for i in 0 .. parameters.count {
@@ -600,13 +604,13 @@ class Analyzer {
             def id := iter1.next()
             match iter2.next() {
                 when IR.Statement.ENTER_SCOPE(slot) {
-                    result.initialization[slot] := Initialization.DEFINITELY_UNINITIALIZED
+                    result.localInitialization[slot] := Initialization.DEFINITELY_UNINITIALIZED
                 }
                 when IR.Statement.STORE(p, v, target, explicit) {
                     match target {
                         when IR.Value.LOCAL(slot, _) {
                             if explicit & reportErrors & ir.locals[slot][1] = Variable.Kind.DEF {
-                                if result.initialization[slot] !=
+                                if result.localInitialization[slot] !=
                                         Initialization.DEFINITELY_UNINITIALIZED {
                                     compiler.error(p, "cannot assign to already-assigned def " +
                                             "'\{ir.locals[slot][0]}'")
@@ -615,19 +619,21 @@ class Analyzer {
                             result.locals[slot] := DataFlowValue(getValue(p, v, result).type,
                                     Definition.LOCAL(slot))
                             if explicit {
-                                result.initialization[slot] := Initialization.DEFINITELY_INITIALIZED
+                                result.localInitialization[slot] :=
+                                        Initialization.DEFINITELY_INITIALIZED
                             }
                         }
                         when IR.Value.REF(s, _) {
                             match statements[s]! {
                                 when IR.Statement.GET_FIELD_POINTER(_, v, f) {
-                                    match v {
-                                        when IR.Value.LOCAL(slot, _) {
-                                            result.locals[slot] := DataFlowValue(ir.locals[slot][2],
-                                                    Definition.LOCAL(slot))
-                                            result.initialization[slot] :=
-                                                    Initialization.DEFINITELY_INITIALIZED
+                                    if explicit & f.fieldKind = FieldDecl.Kind.DEF &
+                                            f.owner == m.owner { 
+                                        if result.fieldInitialization.contains(f.name) {
+                                            compiler.error(p, "cannot assign to already-assigned " +
+                                                    "def '\{f.name}'")
                                         }
+                                        result.fieldInitialization[f.name] :=
+                                                Initialization.DEFINITELY_INITIALIZED
                                     }
                                 }
                             }
@@ -699,7 +705,7 @@ class Analyzer {
         def startState := State()
         for i in 0 .. ir.locals.count {
             startState.locals.add(invalid)
-            startState.initialization.add(Initialization.DEFINITELY_UNINITIALIZED)
+            startState.localInitialization.add(Initialization.DEFINITELY_UNINITIALIZED)
         }
         if m.isInstance {
             startState.parameters.add(m.owner.type)

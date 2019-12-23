@@ -9,7 +9,7 @@ class Timer {
     def native:Int64
 
     @private
-    def basis:Real64 := 0
+    var basis:Real64 := 0
 
     ================================================================================================
     Creates a `Timer` which initially measures time relative to the epoch.

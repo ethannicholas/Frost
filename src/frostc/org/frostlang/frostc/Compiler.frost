@@ -105,7 +105,7 @@ class Compiler : ErrorReporter {
         -- if non-null, inline call should store result into this variable
         def variable:Variable? -* FIXME use phis and kill this *-
         -- if variable is null, inline call should store result here
-        def value:IR.Value?
+        var value:IR.Value?
 
         init(variable:Variable?) {
             self.variable := variable
@@ -249,7 +249,7 @@ class Compiler : ErrorReporter {
         }
     }
 
-    class Settings : Immutable {
+    class Settings {
         def frostHome:File
 
         def importDirs:ImmutableArray<File>
@@ -258,7 +258,7 @@ class Compiler : ErrorReporter {
 
         def safetyLevel:Int
 
-        def intSize:Int
+        var intSize:Int
 
         def debug:Bit
 
@@ -520,7 +520,7 @@ class Compiler : ErrorReporter {
 
     def currentClass := Stack<ClassDecl>()
 
-    def currentMethod := Stack<MethodDecl>()
+    var currentMethod := Stack<MethodDecl>()
 
     var ir := IR()
 
@@ -553,7 +553,7 @@ class Compiler : ErrorReporter {
 
     var reportErrors := true
 
-    def pendingClasses := Array<ClassDecl>()
+    var pendingClasses := Array<ClassDecl>()
 
     var inAtPre := false
 
@@ -577,7 +577,7 @@ class Compiler : ErrorReporter {
     var postconditionCurrentBlock:IR.Block.ID? := null
 
     -- MethodDecl is the method *containing* the closure, not the closure itself
-    def captures := Stack<(MethodDecl, Map<String, Capture>)>()
+    var captures := Stack<(MethodDecl, Map<String, Capture>)>()
 
     var writeCode := true
 
@@ -589,7 +589,7 @@ class Compiler : ErrorReporter {
     @private
     def typeCoercionCosts := HashMap<TypeCoercionKey, (Type, Int?)>()
 
-    def binaryTypes := HashMap<BinaryKey, Array<Type>?>()
+    var binaryTypes := HashMap<BinaryKey, Array<Type>?>()
 
     -- Sometimes we need to resolve an untyped lambda against several different types, such as when
     -- calling an overloaded method which can take different types of functions. If, say, the lambda
@@ -5337,7 +5337,7 @@ class Compiler : ErrorReporter {
             when Target.VARIABLE(v, value) {
                 if value !== null {
                     VariableLValue(self, MethodPosition(v.position, currentMethodIndex),
-                            v).compileStore(value)
+                            v).compileStore(value, true)
                 }
             }
             when Target.TUPLE(targets) {
@@ -5354,7 +5354,7 @@ class Compiler : ErrorReporter {
     method compileStore(position:MethodPosition, target:Target, value:IR.Value) {
         match target {
             when Target.VARIABLE(v, _) {
-                VariableLValue(self, position, v).compileStore(value)
+                VariableLValue(self, position, v).compileStore(value, true)
             }
             when Target.TUPLE(targets) {
                 def type := value.type().nonnullable()
@@ -5928,6 +5928,13 @@ class Compiler : ErrorReporter {
                                         ASTNode.DOT(p, ASTNode.SELF(p), f.name),
                                         Binary.Operator.ASSIGNMENT, f.rawValue))
                             }
+                            else if f.rawValue == null & f.annotations.isWeak &
+                                    f.type.subtypes[1].typeKind = Type.Kind.NULLABLE {
+                                def p := f.position
+                                LValue.compile(self, ASTNode.DOT(p, ASTNode.SELF(p),
+                                        f.name)).compileStore(IR.Value.NULL(f.type.subtypes[1]),
+                                        false)
+                            }
                         }
                         if !callsSuperInit(m.body) & m.owner.rawSuper !== null &
                                 !hasTrivialInit(getClass(m.owner.rawSuper)) {
@@ -6282,7 +6289,7 @@ class Compiler : ErrorReporter {
         def args:Array<String>
 
         @private
-        def index := 0
+        var index := 0
 
         property done:Bit
 

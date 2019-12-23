@@ -23,14 +23,14 @@ class LLVMBackend : Backend {
 
     def physicalOut:OutputStream
 
-    def out:OutputStream
+    var out:OutputStream
 
     @weak
-    def compiler:Compiler?
+    var compiler:Compiler?
 
-    def cg:CodeGenerator?
+    var cg:CodeGenerator?
 
-    def settings:Compiler.Settings?
+    var settings:Compiler.Settings?
 
     def globals := MemoryOutputStream()
 

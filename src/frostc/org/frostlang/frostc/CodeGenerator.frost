@@ -67,23 +67,23 @@ class CodeGenerator {
 
     def strings := HashMap<String, Code.Value>()
 
-    def currentMethod:MethodDecl?
+    var currentMethod:MethodDecl?
 
-    def ir:IR?
+    var ir:IR?
 
-    def out := Array<Code.Statement>()
+    var out := Array<Code.Statement>()
 
-    def outBlocks := Array<Code.Block>()
+    var outBlocks := Array<Code.Block>()
 
-    def block0 := Array<Code.Statement>()
+    var block0 := Array<Code.Statement>()
 
     def locals := Array<Code.Statement.ID>()
 
-    def statements := HashMap<IR.Statement.ID, Code.Statement.ID>()
+    var statements := HashMap<IR.Statement.ID, Code.Statement.ID>()
 
-    def blocks := HashMap<IR.Block.ID, Code.Block.ID>()
+    var blocks := HashMap<IR.Block.ID, Code.Block.ID>()
 
-    def casts := HashMap<(String, Type), IR.Statement.ID>()
+    var casts := HashMap<(String, Type), IR.Statement.ID>()
 
     var allClassConstants := false
 
@@ -91,7 +91,7 @@ class CodeGenerator {
     -- if any. We use this to handle IR statements which don't actually do anything, like casting
     -- String to Object - we just add a ref for the statement's ID to the value it was going to
     -- operate on.
-    def refs := HashMap<IR.Statement.ID, Code.Value>()
+    var refs := HashMap<IR.Statement.ID, Code.Value>()
 
     -- When we encounter a reference to a statement before the statement itself, we need to keep
     -- track of it in case it gets remapped.

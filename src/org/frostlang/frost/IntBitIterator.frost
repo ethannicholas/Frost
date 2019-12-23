@@ -5,7 +5,7 @@ class IntBitIterator : Iterator<Bit> {
     def value:UInt64
 
     @private
-    def mask:UInt64
+    var mask:UInt64
 
     init(value:UInt64, mask:UInt64) {
         self.value := value
