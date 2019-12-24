@@ -9,7 +9,33 @@ uses frost.unsafe.Pointer
 ===
 A 16-bit unsigned integer.
 ===
-class UInt16 : Value, HashKey<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit> {
+class UInt16 : Value, HashKey<UInt16>, Comparable<UInt16>, Formattable {
+    @private
+    class Bits : ListView<Bit> {
+        def value:UInt16
+        init(value:UInt16) {
+            self.value := value
+        }
+
+        ===Returns a single bit from this number, where index 0 is the least significant bit.===
+        @override
+        function [](index:Int):Bit {
+            return value && (1 << index) != 0
+        }
+
+        ===
+        Returns the number of bits in this integer, which is always 16.
+        ===
+        @override
+        function get_count():Int {
+            return 16
+        }
+
+        @override
+        function get_iterator():Iterator<Bit> {
+            return org.frostlang.frost.IntBitIterator(value.toUInt64, 1 << (16->builtin_uint64 - 1))
+        }
+    }
     ===
     The smallest value this type can hold (0).
     ===
@@ -1050,6 +1076,21 @@ class UInt16 : Value, HashKey<UInt16>, Comparable<UInt16>, Formattable, ListView
     function <=(other:UInt):Bit {
         return value->builtin_uint <= other.value
     }
+    ===Returns a list of all integers in the given range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
+    @class
+    function [](range:Range<UInt16>):ListView<UInt16> {
+        return org.frostlang.frost.UInt16List(SteppedRange<UInt16, UInt16>(range.min, range.max, 1, range.inclusive))
+    }
+    ===Returns a list of all integers in the given stepped range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
+    @class
+    function [](range:SteppedRange<UInt16, UInt16>):ListView<UInt16> {
+        return org.frostlang.frost.UInt16List(range)
+    }
+    ===
+    A view of this number as a collection of bits, with `bits[0]` as the least significant bit.
+    ===
+    property bits:ListView<Bit>
+    function get_bits():ListView<Bit> { return Bits(self) }
 
     ===The square root of this number.===
     property sqrt:Real32
@@ -1220,45 +1261,16 @@ class UInt16 : Value, HashKey<UInt16>, Comparable<UInt16>, Formattable, ListView
         }
         return other.value
     }
-    ===Returns a list of all integers in the given range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
-    @class
-    function [](range:Range<UInt16>):ListView<UInt16> {
-        return org.frostlang.frost.UInt16List(SteppedRange<UInt16, UInt16>(range.min, range.max, 1, range.inclusive))
-    }
-    ===Returns a list of all integers in the given stepped range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
-    @class
-    function [](range:SteppedRange<UInt16, UInt16>):ListView<UInt16> {
-        return org.frostlang.frost.UInt16List(range)
-    }
 
-    ===Returns a single bit from this number, where index 0 is the least significant bit.===
     @override
-    function [](index:Int):Bit {
-        return self && (1 << index) != 0
-    }
-
-    ===
-    Returns the number of bits in this integer, which is always 16.
-    ===
-    @override
-    function get_count():Int {
-        return 16
+    function get_hash():Int {
+        return Int(value->builtin_int)
     }
 
     ===The number of `1` bits in this number's binary representation.===
     property bitCount:UInt16
     @external(frostUInt16_get_bitCount)
     function get_bitCount():UInt16
-
-    @override
-    function get_iterator():Iterator<Bit> {
-        return org.frostlang.frost.IntBitIterator(self.toUInt64, 1 << (16->builtin_uint64 - 1))
-    }
-
-    @override
-    function get_hash():Int {
-        return Int(value->builtin_int)
-    }
 
     ===Parses a string as a number in the specified radix. Returns `null` if the parse fails.===
     @class

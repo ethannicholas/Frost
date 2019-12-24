@@ -90,7 +90,7 @@ method find(weights:Array<Int64>, target:Int64) {
         }
         var weight:Int64 := 0
         for j in 0 .. weights.count {
-            if i[j] {
+            if i.bits[j] {
                 weight += weights[j]
                 if weight > target {
                     continue outer
@@ -100,7 +100,7 @@ method find(weights:Array<Int64>, target:Int64) {
         if weight = target {
             var qe:Int64 := 1
             for j in 0 .. weights.count {
-                if i[j] {
+                if i.bits[j] {
                     qe *= weights[j]
                     if qe > 1 << 50 {
                         break

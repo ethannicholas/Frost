@@ -1,0 +1,171 @@
+package extras
+
+class IntCode {
+    constant TRACE := false
+
+    @class
+    method run(program:Array<Int>, input:()=&>(Int), output:(Int)=&>()):Int {
+        def working := program[..]
+        for i in 0 .. 10000 {
+            working.add(0)
+        }
+        if TRACE {
+            program.enumeration.map(p => "\{p[0]}: \{p[1]}").apply(Console.printLine)
+        }
+        var ip := 0
+        def relativeBase := [0]
+        loop {
+            def opcode := working[ip]
+            def currentIp := ip
+            function parameter(index:Int):Int {
+                var mode := opcode // 10
+                for i in 0 .. index {
+                    mode //= 10
+                }
+                mode := mode % 10
+                def value := working[currentIp + index]
+                match mode {
+                    when 0 {
+                        if value < working.count {
+                            return working[value]
+                        }
+                        return 0
+                    }
+                    when 1 {
+                        return value
+                    }
+                    when 2 {
+                        if relativeBase[0] + value < working.count {
+                            return working[relativeBase[0] + value]               
+                        }
+                        return 0
+                    }
+                    otherwise { unreachable }
+                }
+            }
+            method store(index:Int, value:Int) {
+                var mode := opcode // 10
+                for i in 0 .. index {
+                    mode //= 10
+                }
+                mode := mode % 10
+                match mode {
+                    when 0 {
+                        while working[currentIp + index] >= working.count {
+                            working.add(0)
+                        }
+                        working[working[currentIp + index]] := value
+                    }
+                    when 1 { }
+                    when 2 {
+                        while relativeBase[0] + working[currentIp + index] >= working.count {
+                            working.add(0)
+                        }
+                        working[relativeBase[0] + working[currentIp + index]] := value
+                    }
+                    otherwise { unreachable }
+                }
+            }
+            match opcode % 100 {
+                when 1 {
+                    if TRACE {
+                        Console.print("ADD \{opcode}, \{working[ip + 1]}, \{working[ip + 2]}, " +
+                                "\{working[ip + 3]}; \{working[ip + 3]} := \{parameter(1)} + " +
+                                "\{parameter(2)} (")
+                    }
+                    store(3, parameter(1) + parameter(2))
+                    if TRACE {
+                        Console.printLine("\{parameter(3)})")
+                    }
+                    ip += 4
+                }
+                when 2 {
+                    if TRACE {
+                        Console.print("MUL \{opcode}, \{working[ip + 1]}, \{working[ip + 2]}, " +
+                                "\{working[ip + 3]}; \{working[ip + 3]} := \{parameter(1)} * " +
+                                "\{parameter(2)} (")
+                    }
+                    store(3, parameter(1) * parameter(2))
+                    if TRACE {
+                        Console.printLine("\{parameter(3)})")
+                    }
+                    ip += 4
+                }
+                when 3 {
+                    if TRACE {
+                        Console.print("IN \{opcode}, \{working[ip + 1]} (")
+                    }
+                    store(1, input())
+                    if TRACE {
+                        Console.printLine("\{parameter(1)})")
+                    }
+                    ip += 2
+                }
+                when 4 {
+                    if TRACE {
+                        Console.printLine("OUT \{opcode}, \{working[ip + 1]}")
+                    }
+                    output(parameter(1))
+                    ip += 2
+                }
+                when 5 {
+                    if TRACE {
+                        Console.printLine("JIT \{opcode}, \{working[ip + 1]}, \{working[ip + 2]}; " +
+                                "\{parameter(1)}, \{parameter(2)}")
+                    }
+                    if parameter(1) != 0 {
+                        ip := parameter(2)
+                    }
+                    else {
+                        ip += 3
+                    }
+                }
+                when 6 {
+                    if TRACE {
+                        Console.printLine("JIF \{opcode}, \{working[ip + 1]}, \{working[ip + 2]}; " +
+                                "\{parameter(1)}, \{parameter(2)}")
+                    }
+                    if parameter(1) = 0 {
+                        ip := parameter(2)
+                    }
+                    else {
+                        ip += 3
+                    }
+                }
+                when 7 {
+                    if TRACE {
+                        Console.printLine("LT \{opcode}, \{working[ip + 1]}, \{working[ip + 2]}, " +
+                                "\{working[ip + 3]}; \{working[ip + 3]} := \{parameter(1)} < " +
+                                "\{parameter(2)}")
+                    }
+                    store(3, (parameter(1) < parameter(2)).choose(1, 0))
+                    ip += 4
+                }
+                when 8 {
+                    if TRACE {
+                        Console.printLine("EQ \{opcode}, \{working[ip + 1]}, \{working[ip + 2]}, " +
+                                "\{working[ip + 3]}; \{working[ip + 3]} := \{parameter(1)} = " +
+                                "\{parameter(2)}")
+                    }
+                    store(3, (parameter(1) = parameter(2)).choose(1, 0))
+                    ip += 4
+                }
+                when 9 {
+                    if TRACE {
+                        Console.printLine("RB \{opcode}, \{working[ip + 1]} " +
+                                "(\{relativeBase[0] + parameter(1)})")
+                    }
+                    relativeBase[0] += parameter(1)
+                    ip += 2
+                }
+                when 99 {
+                    break
+                }
+                otherwise {
+                    unreachable
+                }
+            }
+        }
+        return working[0]
+    }
+}

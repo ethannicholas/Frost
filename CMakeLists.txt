@@ -681,6 +681,7 @@ add_custom_target(frostrun
 
 compile_frost_sources(test_extras_objects
     ${CMAKE_CURRENT_SOURCE_DIR}/test/extras/Algorithms.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/extras/IntCode.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/test/extras/MD5.frost
 )
 

@@ -1,6 +1,7 @@
 Immediate
 =========
 
+fix closure error reporting with missing self, capturing vars
 all tests working (incl. C)
 Compiler performance
 

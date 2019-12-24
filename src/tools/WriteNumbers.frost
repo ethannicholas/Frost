@@ -596,12 +596,12 @@ class WriteNumbers {
     method writeIndex(leftType:Type, rightType:Type, out:OutputStream) {
         try {
             out.printLine()
-            out.printLine("    ===Returns a single bit from this number, where index 0 is the " +
+            out.printLine("        ===Returns a single bit from this number, where index 0 is the " +
                     "least significant bit.===")
-            out.printLine("    @override")
-            out.printLine("    function [](index:\{object(rightType)}):Bit {")
-            out.printLine("        return self && (1 << index) != 0")
-            out.printLine("    }")
+            out.printLine("        @override")
+            out.printLine("        function [](index:\{object(rightType)}):Bit {")
+            out.printLine("            return value && (1 << index) != 0")
+            out.printLine("        }")
         }
         fail(error) {
             unreachable, error.toString
@@ -637,7 +637,6 @@ class WriteNumbers {
                     "ListView<\{object(type)}> {")
             out.printLine("        return org.frostlang.frost.\{object(type)}List(range)")
             out.printLine("    }")
-            writeIndex(type, Type.INT, out)
         }
         fail(error) {
             unreachable, error.toString
@@ -648,11 +647,11 @@ class WriteNumbers {
     method writeIterator(type:Type, out:OutputStream) {
         try {
             out.printLine()
-            out.printLine("    @override")
-            out.printLine("    function get_iterator():Iterator<Bit> {")
-            out.printLine("        return org.frostlang.frost.IntBitIterator(self" +
+            out.printLine("        @override")
+            out.printLine("        function get_iterator():Iterator<Bit> {")
+            out.printLine("            return org.frostlang.frost.IntBitIterator(value" +
                     "\{toInt(type, Type.UINT64)}, 1 << (\{runtimeSize(type)}->builtin_uint64 - 1))")
-            out.printLine("    }")
+            out.printLine("        }")
         }
         fail(error) {
             unreachable, error.toString
@@ -663,16 +662,16 @@ class WriteNumbers {
     method writeCount(type:Type, out:OutputStream) {
         try {
             out.printLine()
-            out.printLine("    ===")
-            out.print("    Returns the number of bits in this integer")
+            out.printLine("        ===")
+            out.print("        Returns the number of bits in this integer")
             if size(type) !== null {
                 out.print(", which is always \{size(type)}")
             }
-            out.printLine(".\n    ===")
-            out.printLine("    @override")
-            out.printLine("    function get_count():Int {")
-            out.printLine("        return \{runtimeSize(type)}")
-            out.printLine("    }")
+            out.printLine(".\n        ===")
+            out.printLine("        @override")
+            out.printLine("        function get_count():Int {")
+            out.printLine("            return \{runtimeSize(type)}")
+            out.printLine("        }")
         }
         fail(error) {
             unreachable, error.toString
@@ -1052,6 +1051,21 @@ class WriteNumbers {
     }
 
     @class
+    method writeBits(type:Type, out:OutputStream) {
+        try {
+            out.printLine("    ===")
+            out.printLine("    A view of this number as a collection of bits, with `bits[0]` as " +
+                    "the least significant bit.")
+            out.printLine("    ===")
+            out.printLine("    property bits:ListView<Bit>")
+            out.printLine("    function get_bits():ListView<Bit> { return Bits(self) }")
+        }
+        fail(error) {
+            unreachable, error.toString
+        }
+    }
+
+    @class
     function insertCommas(s:String):String {
         if s.length < 4 {
             return s
@@ -1088,7 +1102,17 @@ class WriteNumbers {
             }
             out.printLine("===")
             out.printLine("class \{object(type)} : Value, HashKey<\{object(type)}>, " +
-                    "Comparable<\{object(type)}>, Formattable, ListView<Bit> {")
+                    "Comparable<\{object(type)}>, Formattable {")
+            out.printLine("    @private")
+            out.printLine("    class Bits : ListView<Bit> {")
+            out.printLine("        def value:\{object(type)}")
+            out.printLine("        init(value:\{object(type)}) {")
+            out.printLine("            self.value := value")
+            out.printLine("        }")
+            writeIndex(type, Type.INT, out)
+            writeCount(type, out)
+            writeIterator(type, out)
+            out.printLine("    }")
             out.printLine("    ===")
             out.print("    The smallest value this type can hold")
             if size(type) !== null {
@@ -1164,18 +1188,17 @@ class WriteNumbers {
                 "the given number.", type, out)
         writeComparisonOperator("<=", "Returns `true` if this number is less than or equal to " +
                 "the given number.", type, out)
+        writeIndex(type, out)
         if signed(type) {
             writeAbs(type, out)
         }
+        writeBits(type, out)
         writeRealProperty(type, "sqrt", "The square root of this number.", out)
         writeMin(type, out)
         writeMax(type, out)
-        writeIndex(type, out)
-        writeCount(type, out)
+        writeHash(type, out)
         writeExternalProperty(type, "bitCount", "The number of `1` bits in this number's binary " +
                 "representation.", out)
-        writeIterator(type, out)
-        writeHash(type, out)
         writeParse(type, out)
         writeConvert(type, out)
         writeFormat(type, out)
@@ -1295,6 +1318,9 @@ class WriteNumbers {
             out.printLine("===")
             out.printLine("class \{object(type)} : Value, HashKey<\{object(type)}>, " +
                     "Comparable<\{object(type)}>, Formattable {")
+            out.printLine("    constant PI := 3.14159265358979323846")
+            out.printLine("    constant E := 2.71828182845904523536")
+            out.printLine()
             out.printLine("    @package")
             out.printLine("    def value:\{builtin(type)}")
             out.printLine()
@@ -1333,6 +1359,17 @@ class WriteNumbers {
             writeExternalProperty(type, "sin", "The trigonometric sine of this number.", out)
             writeExternalProperty(type, "cos", "The trigonometric cosine of this number.", out)
             writeExternalProperty(type, "tan", "The trigonometric tangent of this number.", out)
+            writeExternalProperty(type, "asin", "The trigonometric arcsine of this number.", out)
+            writeExternalProperty(type, "acos", "The trigonometric arccosine of this number.", out)
+            writeExternalProperty(type, "atan", "The trigonometric arctangent of this number.", out)
+            out.printLine("    ===")
+            out.printLine("    Returns the counterclockwise angle in radians between the X axis ")
+            out.printLine("    and the point (x, y).")
+            out.printLine("    ===")
+            out.printLine("    @class")
+            out.printLine("    @external(frost\{object(type)}_atan2)")
+            out.printLine("    function atan2(y:\{object(type)}, x:\{object(type)}):\{object(type)}")
+            out.printLine()
             writeHash(type, out)
             writeConvert(type, out)
             writeFormat(type, out)

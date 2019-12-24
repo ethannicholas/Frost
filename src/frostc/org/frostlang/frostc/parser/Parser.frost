@@ -463,7 +463,7 @@ class Parser {
 
     ================================================================================================
     parenthesizedExpression = LPAREN expression (COMMA expression)* RPAREN |
-            LPAREN IDENTIFIER (COMMA IDENTIFIER)* RPAREN YIELDS expression |
+            LPAREN (IDENTIFIER (COMMA IDENTIFIER)*)? RPAREN YIELDS expression |
             LPAREN IDENTIFIER COLON type (COMMA IDENTIFIER COLON type)* RPAREN YIELDS expression
     ================================================================================================
     method parenthesizedExpression():ASTNode? {
@@ -508,7 +508,7 @@ class Parser {
                     else {
                         needClosingParen := checkNext(Token.Kind.RPAREN) == null
                     }
-                    if expect(Token.Kind.YIELDS, "'=>1'") == null {
+                    if expect(Token.Kind.YIELDS, "'=>'") == null {
                         return null
                     }
                     def body := expression()
@@ -574,6 +574,17 @@ class Parser {
                     pushback(peek2)
                 }
             }
+        }
+        else if peek1.kind = Token.Kind.RPAREN {
+            -- nullary lambda
+            if expect(Token.Kind.YIELDS, "'=>'") == null {
+                return null
+            }
+            def body := expression()
+            if body == null {
+                return null
+            }
+            return ASTNode.TYPED_LAMBDA(start.position, FixedArray<ASTNode>.from([]), body)
         }
         pushback(peek1)
         var expr := expression()

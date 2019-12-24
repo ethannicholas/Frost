@@ -17,22 +17,18 @@ class While {
     method compile(compiler:Compiler, position:MethodPosition, label:String?, test:ASTNode,
             statements:FixedArray<ASTNode>) {
         def ir := compiler.ir
-        def testBlock := ir.newBlock("while test")
-        def bodyBlock := ir.newBlock("while body")
-        def endBlock := ir.newBlock("while end")
+        def bodyBlock := ir.newBlock("loop body")
+        def endBlock := ir.newBlock("loop end")
         {
-            def context := AutoContext(compiler, EnclosingContext.LOOP(label, endBlock, testBlock))
+            def auto := AutoContext(compiler, EnclosingContext.LOOP(label, endBlock, bodyBlock))
             def scope := AutoScope(compiler)
-            ir.add(IR.Statement.BRANCH(position, testBlock))
-            ir.setCurrentBlock(testBlock)
-            compiler.compileConditionalBranch(test, bodyBlock, endBlock)
+            ir.add(IR.Statement.BRANCH(position, bodyBlock))
             ir.setCurrentBlock(bodyBlock)
-            for s in statements {
-                compiler.compileStatement(s)
-            }
+            If.compile(compiler, position, test, statements,
+                    ASTNode.BREAK(position.asPosition, null))
         }
         if !ir.currentBlockFinished {
-            ir.add(IR.Statement.BRANCH(position, testBlock))
+            ir.add(IR.Statement.BRANCH(position, bodyBlock))
         }
         ir.setCurrentBlock(endBlock)
     }

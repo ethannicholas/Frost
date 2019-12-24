@@ -38,11 +38,11 @@ method main() {
         sizes.add(line.asInt)
     }
     var counts := Array<Int>()
-    for bits in 0 .. 1 << sizes.count {
+    for mask in 0 .. 1 << sizes.count {
         var total := 0
         var setCount := 0
-        for i in 0 .. bits.count {
-            if bits[i] {
+        for i in 0 .. mask.bits.count {
+            if mask.bits[i] {
                 total += sizes[i]
                 setCount += 1
             }

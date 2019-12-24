@@ -8,6 +8,9 @@ package frost.core
 A 64-bit floating point number.
 ===
 class Real64 : Value, HashKey<Real64>, Comparable<Real64>, Formattable {
+    constant PI := 3.14159265358979323846
+    constant E := 2.71828182845904523536
+
     @package
     def value:builtin_float64
 
@@ -473,6 +476,29 @@ class Real64 : Value, HashKey<Real64>, Comparable<Real64>, Formattable {
     property tan:Real64
     @external(frostReal64_get_tan)
     function get_tan():Real64
+
+    ===The trigonometric arcsine of this number.===
+    property asin:Real64
+    @external(frostReal64_get_asin)
+    function get_asin():Real64
+
+    ===The trigonometric arccosine of this number.===
+    property acos:Real64
+    @external(frostReal64_get_acos)
+    function get_acos():Real64
+
+    ===The trigonometric arctangent of this number.===
+    property atan:Real64
+    @external(frostReal64_get_atan)
+    function get_atan():Real64
+    ===
+    Returns the counterclockwise angle in radians between the X axis 
+    and the point (x, y).
+    ===
+    @class
+    @external(frostReal64_atan2)
+    function atan2(y:Real64, x:Real64):Real64
+
 
     @override
     function get_hash():Int {

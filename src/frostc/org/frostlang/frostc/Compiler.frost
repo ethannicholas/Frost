@@ -4308,9 +4308,6 @@ class Compiler : ErrorReporter {
 
     @pre(isRefCounted(v.type()))
     method compileUnref(v:IR.Value) {
---        def f := v.toString = "REF($102:frost.collections.Array<frost.collections.Array.T>)"
---        ir.add(IR.Statement.COMMENT( MethodPosition(currentMethod[0].position, currentMethodIndex), "compile unref \{v.toString} \{f}"))
---        assert !f
         match v {
             when IR.Value.NULL {
                 return
@@ -5081,7 +5078,7 @@ class Compiler : ErrorReporter {
 
     ================================================================================================
     Logically equivalent to evaluating test and then compiling `branch test, ifTrue, ifFalse`, but
-    handles AND and OR expressions in fashion which is both simpler and more amenable to analysis.
+    handles AND and OR expressions in a fashion which is both simpler and more amenable to analysis.
     ================================================================================================
     method compileConditionalBranch(test:ASTNode, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
         match test {

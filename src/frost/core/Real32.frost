@@ -8,6 +8,9 @@ package frost.core
 A 32-bit floating point number.
 ===
 class Real32 : Value, HashKey<Real32>, Comparable<Real32>, Formattable {
+    constant PI := 3.14159265358979323846
+    constant E := 2.71828182845904523536
+
     @package
     def value:builtin_float32
 
@@ -484,6 +487,29 @@ class Real32 : Value, HashKey<Real32>, Comparable<Real32>, Formattable {
     property tan:Real32
     @external(frostReal32_get_tan)
     function get_tan():Real32
+
+    ===The trigonometric arcsine of this number.===
+    property asin:Real32
+    @external(frostReal32_get_asin)
+    function get_asin():Real32
+
+    ===The trigonometric arccosine of this number.===
+    property acos:Real32
+    @external(frostReal32_get_acos)
+    function get_acos():Real32
+
+    ===The trigonometric arctangent of this number.===
+    property atan:Real32
+    @external(frostReal32_get_atan)
+    function get_atan():Real32
+    ===
+    Returns the counterclockwise angle in radians between the X axis 
+    and the point (x, y).
+    ===
+    @class
+    @external(frostReal32_atan2)
+    function atan2(y:Real32, x:Real32):Real32
+
 
     @override
     function get_hash():Int {

@@ -104,7 +104,7 @@ method knot(s:String):Array<Bit> {
     }
     def result := Array<Bit>()
     for n in dense {
-        result.addAll(n.asUInt8)
+        result.addAll(n.asUInt8.bits)
     }
     return result
 }

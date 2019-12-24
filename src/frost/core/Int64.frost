@@ -9,7 +9,33 @@ uses frost.unsafe.Pointer
 ===
 A 64-bit signed integer.
 ===
-class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
+class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable {
+    @private
+    class Bits : ListView<Bit> {
+        def value:Int64
+        init(value:Int64) {
+            self.value := value
+        }
+
+        ===Returns a single bit from this number, where index 0 is the least significant bit.===
+        @override
+        function [](index:Int):Bit {
+            return value && (1 << index) != 0
+        }
+
+        ===
+        Returns the number of bits in this integer, which is always 64.
+        ===
+        @override
+        function get_count():Int {
+            return 64
+        }
+
+        @override
+        function get_iterator():Iterator<Bit> {
+            return org.frostlang.frost.IntBitIterator(value.toUInt64, 1 << (64->builtin_uint64 - 1))
+        }
+    }
     ===
     The smallest value this type can hold (-9,223,372,036,854,775,808).
     ===
@@ -441,6 +467,18 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
     function <=(other:Int):Bit {
         return value <= other.value->builtin_int64
     }
+    ===Returns a list of all integers in the given range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
+    @class
+    @pre(range.max.asUInt64 - range.min.asUInt64 < Int64.MAX.asUInt64)
+    function [](range:Range<Int64>):ListView<Int64> {
+        return org.frostlang.frost.Int64List(SteppedRange<Int64, Int64>(range.min, range.max, 1, range.inclusive))
+    }
+    ===Returns a list of all integers in the given stepped range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
+    @class
+    @pre(org.frostlang.frost.Int64List.computeCount(range) > 0)
+    function [](range:SteppedRange<Int64, Int64>):ListView<Int64> {
+        return org.frostlang.frost.Int64List(range)
+    }
 
     ===The absolute value of this number.===
     property abs:Int64
@@ -450,6 +488,11 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
         }
         return self
     }
+    ===
+    A view of this number as a collection of bits, with `bits[0]` as the least significant bit.
+    ===
+    property bits:ListView<Bit>
+    function get_bits():ListView<Bit> { return Bits(self) }
 
     ===The square root of this number.===
     property sqrt:Real64
@@ -556,47 +599,16 @@ class Int64 : Value, HashKey<Int64>, Comparable<Int64>, Formattable, ListView<Bi
 
 
 
-    ===Returns a list of all integers in the given range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
-    @class
-    @pre(range.max.asUInt64 - range.min.asUInt64 < Int64.MAX.asUInt64)
-    function [](range:Range<Int64>):ListView<Int64> {
-        return org.frostlang.frost.Int64List(SteppedRange<Int64, Int64>(range.min, range.max, 1, range.inclusive))
-    }
-    ===Returns a list of all integers in the given stepped range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
-    @class
-    @pre(org.frostlang.frost.Int64List.computeCount(range) > 0)
-    function [](range:SteppedRange<Int64, Int64>):ListView<Int64> {
-        return org.frostlang.frost.Int64List(range)
-    }
 
-    ===Returns a single bit from this number, where index 0 is the least significant bit.===
     @override
-    function [](index:Int):Bit {
-        return self && (1 << index) != 0
-    }
-
-    ===
-    Returns the number of bits in this integer, which is always 64.
-    ===
-    @override
-    function get_count():Int {
-        return 64
+    function get_hash():Int {
+        return Int(value->builtin_int)
     }
 
     ===The number of `1` bits in this number's binary representation.===
     property bitCount:Int64
     @external(frostInt64_get_bitCount)
     function get_bitCount():Int64
-
-    @override
-    function get_iterator():Iterator<Bit> {
-        return org.frostlang.frost.IntBitIterator(self.toUInt64, 1 << (64->builtin_uint64 - 1))
-    }
-
-    @override
-    function get_hash():Int {
-        return Int(value->builtin_int)
-    }
 
     ===Parses a string as a number in the specified radix. Returns `null` if the parse fails.===
     @class

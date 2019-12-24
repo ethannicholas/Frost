@@ -11,7 +11,7 @@ class Notifier : Immutable {
     def nativeNotifier:Int64
 
     @private
-    def lock := Lock()
+    def lock:Lock
     
     init(lock:Lock) {
         self.lock := lock
