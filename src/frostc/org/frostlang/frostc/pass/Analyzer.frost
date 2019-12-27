@@ -355,7 +355,7 @@ class Analyzer {
             when IR.Statement.CAST(p, value, type, explicit) {
                 if !explicit & reportErrors & !type.isNullable &
                         getValue(p, value, state).type.isNullable {
---                    compiler.warn(p, "value of type '\{value.type()}' may be null")
+--                    compiler.warn(p, "value of type '\{value.type}' may be null")
                 }
                 if explicit {
                     return DataFlowValue(type, definitionFrom(stmt))
@@ -375,7 +375,7 @@ class Analyzer {
                 return DataFlowValue(cl.type, definitionFrom(stmt))
             }
             when IR.Statement.DYNAMIC_CALL(_, m, _) {
-                def type := m.type()
+                def type := m.type
                 if type.isPointer {
                     return DataFlowValue(type.subtypes[1].returnType, definitionFrom(stmt))
                 }

@@ -638,7 +638,9 @@ class Compiler : ErrorReporter {
         addAlias("frost.collections.Collection")
         addAlias("frost.collections.CollectionView")
         addAlias("frost.collections.CollectionWriter")
+        addAlias("frost.collections.DefaultHashMap")
         addAlias("frost.collections.HashKey")
+        addAlias("frost.collections.HashMap")
         addAlias("frost.collections.HashSet")
         addAlias("frost.collections.IdentityMap")
         addAlias("frost.collections.IdentitySet")
@@ -648,7 +650,6 @@ class Compiler : ErrorReporter {
         addAlias("frost.collections.List")
         addAlias("frost.collections.ListView")
         addAlias("frost.collections.ListWriter")
-        addAlias("frost.collections.HashMap")
         addAlias("frost.collections.Map")
         addAlias("frost.collections.MapView")
         addAlias("frost.collections.MapWriter")
@@ -1616,7 +1617,7 @@ class Compiler : ErrorReporter {
                     scan(f)
                     result := classes[fullName]
                     if result == null & errorCount = oldErrorCount {
-                        error(Position(files.count, 1, 1),
+                        error(Position(files.count, 1, 1, 1, 1),
                                 "expected file '\{f}' to contain a class named '\{fullName}'")
                         files.add(f)
                     }
@@ -1629,7 +1630,7 @@ class Compiler : ErrorReporter {
                     scan(f)
                     result := classes[fullName]
                     if result == null & errorCount = oldErrorCount {
-                        error(Position(files.count, 1, 1),
+                        error(Position(files.count, 1, 1, 1, 1),
                                 "expected file '\{f}' to contain a class named '\{fullName}'")
                         files.add(f)
                     }
@@ -2886,7 +2887,7 @@ class Compiler : ErrorReporter {
                 return result
             }
             when ASTNode.IR_WRAPPER(_, node) {
-                return [node.type()]
+                return [node.type]
             }
             when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, _) {
                 def result := Closure.methodType(self, position, kind, parameters, returnType,
@@ -3003,7 +3004,7 @@ class Compiler : ErrorReporter {
                 return null
             }
             otherwise {
-                unreachable, "unsupported possibleType: \{value}:\{value.position()}"
+                unreachable, "unsupported possibleType: \{value}:\{value.position}"
             }
         }
         unreachable
@@ -3033,7 +3034,7 @@ class Compiler : ErrorReporter {
         if result !== null {
             return (result[0][0].returnType, result[1])
         }
-        def preferred := preferredType(ASTNode.BINARY(left.position(), left, op, right))
+        def preferred := preferredType(ASTNode.BINARY(left.position, left, op, right))
         if preferred !== null {
             return coercionCost(preferred, type)
         }
@@ -3130,7 +3131,7 @@ class Compiler : ErrorReporter {
                 }
                 if target.isNumber {
                     def cl := getClass(target)
-                    assert cl !== null, "could not load class \{target} at \{currentClass[0].name}:\{expr.position()}"
+                    assert cl !== null, "could not load class \{target} at \{currentClass[0].name}:\{expr.position}"
                     def initMethod := cl.methods[0]
                     assert initMethod.methodKind = MethodDecl.Kind.INIT
                     assert initMethod.annotations.isImplicit
@@ -3147,7 +3148,7 @@ class Compiler : ErrorReporter {
                 return coercionCost(preferred, target)
             }
             when ASTNode.IR_WRAPPER(_, ir) {
-                return coercionCost(ir.type(), target)
+                return coercionCost(ir.type, target)
             }
             when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, _) {
                 def paramTypes := Array<Type>()
@@ -3772,7 +3773,7 @@ class Compiler : ErrorReporter {
         }
         def effectiveType:Type
         def irType:Type
-        if target !== null & !target.type().isClassLiteral {
+        if target !== null & !target.type.isClassLiteral {
             -- we're taking a reference which has a fixed 'self' parameter, as in '1.+'. Easiest way
             -- to do this is compile the closure 'x => 1.+(x)'. (Well, it's not actually a lambda,
             -- because it can be a method and can return void, but you get the point)
@@ -3780,7 +3781,7 @@ class Compiler : ErrorReporter {
             def old := enclosingContexts
             -- keep TRY_SCOPE from affecting effective return type
             enclosingContexts := Stack<EnclosingContext>()
-            effectiveType := MethodRef(self, target.type(), m).effectiveType
+            effectiveType := MethodRef(self, target.type, m).effectiveType
             enclosingContexts := old
             tempCount += 1
             def dummyName := "$dummy\{tempCount}"
@@ -3856,10 +3857,10 @@ class Compiler : ErrorReporter {
         return "<internal error>"
     }
 
-    @pre(value.type().isMethod & target.isMethod)
+    @pre(value.type.isMethod & target.isMethod)
     method methodCast(position:MethodPosition, value:IR.Value, target:Type,
             explicit:Bit):IR.Value? {
-        def src := value.type()
+        def src := value.type
         if src = target {
             return value
         }
@@ -3964,7 +3965,7 @@ class Compiler : ErrorReporter {
         if value == null {
             return null
         }
-        def srcType := value.type()
+        def srcType := value.type
         if srcType = target {
             return value
         }
@@ -3981,8 +3982,8 @@ class Compiler : ErrorReporter {
                 if result == null {
                     return null
                 }
-                if coercionCost(result.type(), target) == null {
-                    error(position, "expected '\{target}', but found '\{result.type()}'")
+                if coercionCost(result.type, target) == null {
+                    error(position, "expected '\{target}', but found '\{result.type}'")
                     return null
                 }
                 return coerce(position, result, target, explicit)
@@ -3995,7 +3996,7 @@ class Compiler : ErrorReporter {
                         def o:Object? := targetObj
                         def targetType:Type
                         if targetObj !== null {
-                            targetType := targetObj.type()
+                            targetType := targetObj.type
                         }
                         else {
                             targetType := m.owner.type
@@ -4026,7 +4027,7 @@ class Compiler : ErrorReporter {
                 for m in methods.sort((a, b) => a.position > b.position) {
                     def targetType:Type
                     if targetObj !== null {
-                        targetType := targetObj.type()
+                        targetType := targetObj.type
                     }
                     else {
                         targetType := m.owner.typeWithParameters()
@@ -4070,14 +4071,14 @@ class Compiler : ErrorReporter {
             assert srcType.isClass
             -- FIXME add explicit check back in when null safety becomes an error instead of a
             -- warning
-            if -*explicit & *- settings.safetyLevel >= 3 & value.type().isNullable &
+            if -*explicit & *- settings.safetyLevel >= 3 & value.type.isNullable &
                     !target.isNullable & target.typeKind != Type.Kind.GENERIC_CLASS_PARAMETER &
                     target.typeKind != Type.Kind.GENERIC_METHOD_PARAMETER {
                 def basePos := position.asPosition
                 Assert.compile(self, position, ASTNode.BINARY(basePos,
                         ASTNode.IR_WRAPPER(basePos, value), Binary.Operator.NIDENTITY,
                         ASTNode.NULL(basePos)), ASTNode.STRING(basePos,
-                                "unexpected null reference casting \{value.type()} to \{target}"))
+                                "unexpected null reference casting \{value.type} to \{target}"))
             }
             if canRewriteType(value, target) {
                 return rewriteType(value, target)
@@ -4102,10 +4103,10 @@ class Compiler : ErrorReporter {
                 return value
             }
             when TypeContext.IMMUTABLE {
-                if isImmutable(value.type()) {
+                if isImmutable(value.type) {
                     return value
                 }
-                error(position, "expected 'frost.core.Immutable', but found '\{value.type()}'")
+                error(position, "expected 'frost.core.Immutable', but found '\{value.type}'")
                 return null
             }
             when TypeContext.TYPE(t, explicit) {
@@ -4122,7 +4123,7 @@ class Compiler : ErrorReporter {
     }
 
     function canRewriteType(v:IR.Value, target:Type):Bit {
-        def srcType := v.type()
+        def srcType := v.type
         if srcType.typeKind = Type.Kind.GENERIC {
             return (target.typeKind = Type.Kind.CLASS & srcType.subtypes[0] = target) |
                     (target.typeKind = Type.Kind.GENERIC &
@@ -4143,11 +4144,11 @@ class Compiler : ErrorReporter {
         if value == null {
             return null
         }
-        def valueType := value.type()
+        def valueType := value.type
         if valueType = target {
             return value
         }
-        if coercionCost(value.type(), target) !== null {
+        if coercionCost(value.type, target) !== null {
             return coerce(position, value, TypeContext.TYPE(target, true))
         }
         if target.isMethod {
@@ -4160,8 +4161,8 @@ class Compiler : ErrorReporter {
                 return null
             }
         }
-        if explicit & !canCast(value.type(), target) {
-            error(position, "value of type '\{value.type()}' cannot possibly be an instance of " +
+        if explicit & !canCast(value.type, target) {
+            error(position, "value of type '\{value.type}' cannot possibly be an instance of " +
                     "'\{target}'")
             return null
         }
@@ -4169,7 +4170,7 @@ class Compiler : ErrorReporter {
             return rewriteType(value, target)
         }
         def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target, true)), target)
-        if !isRefCounted(value.type()) & isRefCounted(target) {
+        if !isRefCounted(value.type) & isRefCounted(target) {
             enclosingContexts.push(EnclosingContext.VALUE_SCOPE(result))
         }
         return result
@@ -4203,7 +4204,7 @@ class Compiler : ErrorReporter {
         if value == null {
             return value
         }
-        if value.type() = target {
+        if value.type = target {
             return value
         }
         def simpleName := target.name[target.name.next(target.name.lastIndexOf("."))..]
@@ -4301,12 +4302,12 @@ class Compiler : ErrorReporter {
         }
         def args := Array<ASTNode>()
         args.add(ASTNode.IR_WRAPPER(currentMethod[0].position, v))
-        def name := "ref" + getRefVariant(v.type())
+        def name := "ref" + getRefVariant(v.type)
         Call.compile(self, MethodPosition(currentMethod[0].position, currentMethodIndex),
                 literalType(FROST_TYPE), name, args, TypeContext.UNSPECIFIED)
     }
 
-    @pre(isRefCounted(v.type()))
+    @pre(isRefCounted(v.type))
     method compileUnref(v:IR.Value) {
         match v {
             when IR.Value.NULL {
@@ -4315,7 +4316,7 @@ class Compiler : ErrorReporter {
         }
         def args := Array<ASTNode>()
         args.add(ASTNode.IR_WRAPPER(currentMethod[0].position, v))
-        def name := "unref" + getUnrefVariant(v.type())
+        def name := "unref" + getUnrefVariant(v.type)
         Call.compile(self, MethodPosition(currentMethod[0].position, currentMethodIndex),
                 literalType(FROST_TYPE), name, args, TypeContext.UNSPECIFIED)
     }
@@ -4579,7 +4580,7 @@ class Compiler : ErrorReporter {
         if compiledRight == null {
             return null
         }
-        if compiledLeft.type().typeKind != Type.Kind.NULLABLE & isNull(compiledRight) {
+        if compiledLeft.type.typeKind != Type.Kind.NULLABLE & isNull(compiledRight) {
             if op = Binary.Operator.IDENTITY {
                 return coerce(position, coerce(position, IR.Value.BIT(false, BUILTIN_BIT_TYPE),
                         TypeContext.TYPE(BIT_TYPE, false)), type)
@@ -4587,7 +4588,7 @@ class Compiler : ErrorReporter {
             return coerce(position, coerce(position, IR.Value.BIT(true, BUILTIN_BIT_TYPE),
                     TypeContext.TYPE(BIT_TYPE, false)), type)
         }
-        if compiledRight.type().typeKind != Type.Kind.NULLABLE & isNull(compiledLeft) {
+        if compiledRight.type.typeKind != Type.Kind.NULLABLE & isNull(compiledLeft) {
             if op = Binary.Operator.IDENTITY {
                 return coerce(position, coerce(position, IR.Value.BIT(false, BUILTIN_BIT_TYPE),
                         TypeContext.TYPE(BIT_TYPE, false)), type)
@@ -4595,14 +4596,14 @@ class Compiler : ErrorReporter {
             return coerce(position, coerce(position, IR.Value.BIT(true, BUILTIN_BIT_TYPE),
                     TypeContext.TYPE(BIT_TYPE, false)), type)
         }
-        if coercionCost(compiledLeft.type(), compiledRight.type()) == null &
-                coercionCost(compiledRight.type(), compiledLeft.type()) == null {
+        if coercionCost(compiledLeft.type, compiledRight.type) == null &
+                coercionCost(compiledRight.type, compiledLeft.type) == null {
             error(position, "'\{op.toString}' cannot compare dissimilar types " +
-                    "'\{compiledLeft.type()}' and '\{compiledRight.type()}'")
+                    "'\{compiledLeft.type}' and '\{compiledRight.type}'")
             return null
         }
-        if isValue(compiledLeft.type()) & !isNull(compiledRight) |
-                isValue(compiledRight.type()) & !isNull(compiledLeft) {
+        if isValue(compiledLeft.type) & !isNull(compiledRight) |
+                isValue(compiledRight.type) & !isNull(compiledLeft) {
             error(position, "'\{op.toString}' cannot operate on value types")
             return null
         }
@@ -4694,18 +4695,18 @@ class Compiler : ErrorReporter {
         if endpointType == null {
             if compiledStart !== null {
                 if compiledEnd !== null {
-                    endpointType := compiledStart.type().union(self, compiledEnd.type())
+                    endpointType := compiledStart.type.union(self, compiledEnd.type)
                     if endpointType.name = "frost.core.Value" {
                         error(position, "range endpoint type mismatch: '\{compiledStart}', " +
                                 "'\{compiledEnd}'")
                     }
                 }
                 else {
-                    endpointType := compiledStart.type().nullable()
+                    endpointType := compiledStart.type.nullable()
                 }
             }
             else if compiledEnd !== null {
-                endpointType := compiledEnd.type().nullable()
+                endpointType := compiledEnd.type.nullable()
             }
             else {
                 endpointType := INT_TYPE.nullable()
@@ -4719,16 +4720,16 @@ class Compiler : ErrorReporter {
             if compiledStart !== null {
                 if compiledEnd !== null {
                     error(position, "range endpoints must be value types, but found " +
-                            "'\{compiledStart.type()}', '\{compiledEnd.type()}'")
+                            "'\{compiledStart.type}', '\{compiledEnd.type}'")
                 }
                 else {
                     error(position, "range endpoints must be value types, but found " +
-                            "'\{compiledStart.type()}'")
+                            "'\{compiledStart.type}'")
                 }
             }
             else {
                 error(position, "range endpoints must be value types, but found " +
-                        "'\{compiledEnd.type()}'")
+                        "'\{compiledEnd.type}'")
             }
             return null
         }
@@ -4766,10 +4767,10 @@ class Compiler : ErrorReporter {
             def args := Array<ASTNode>()
             args.add(ASTNode.IR_WRAPPER(basePos, compiledStart))
             args.add(ASTNode.IR_WRAPPER(basePos, compiledEnd))
-            args.add(ASTNode.IR_WRAPPER(step.position(), compiledStep))
+            args.add(ASTNode.IR_WRAPPER(step.position, compiledStep))
             args.add(ASTNode.BIT(basePos, inclusive))
             return Call.compile(self, position, literalType(Type.SteppedRangeOf(self,
-                    endpointType, compiledStep.type())), args, type)
+                    endpointType, compiledStep.type)), args, type)
         }
         else {
             def args := Array<ASTNode>()
@@ -4842,10 +4843,10 @@ class Compiler : ErrorReporter {
                 return true
             }
             when TypeContext.IMMUTABLE {
-                return isImmutable(value.type())
+                return isImmutable(value.type)
             }
             when TypeContext.TYPE(t, _) {
-                return value.type() = t
+                return value.type = t
             }
             otherwise {
                 unreachable
@@ -4882,7 +4883,7 @@ class Compiler : ErrorReporter {
     @pre(type != TypeContext.UNSPECIFIED)
     @post(typeMatch(@return, type) & (@return !== null | errorCount > 0 | !reportErrors))
     method compileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
-        def position := MethodPosition(expr.position(), currentMethodIndex)
+        def position := MethodPosition(expr.position, currentMethodIndex)
         match expr {
             when ASTNode.ARRAY(_, elements) {
                 return ArrayLiteral.compile(self, position, elements, type)
@@ -5020,7 +5021,7 @@ class Compiler : ErrorReporter {
         if unresolved == null {
             return null
         }
-        def position := MethodPosition(expr.position(), currentMethodIndex)
+        def position := MethodPosition(expr.position, currentMethodIndex)
         match unresolved {
             when IR.Value.METHOD(target, m, _) {
                 return coerce(position, createMethodObject(position, target, m), type)
@@ -5097,7 +5098,7 @@ class Compiler : ErrorReporter {
                 }
             }
         }
-        def position := MethodPosition(test.position(), currentMethodIndex)
+        def position := MethodPosition(test.position, currentMethodIndex)
         def testBit:IR.Value
         {
             def unrefs := AutoUnrefs(self)
@@ -5167,7 +5168,7 @@ class Compiler : ErrorReporter {
         unreachable
     }
 
-    @pre(bit.type() = BIT_TYPE)
+    @pre(bit.type = BIT_TYPE)
     method extractBuiltinBit(position:MethodPosition, bit:IR.Value):IR.Value {
         def result := ir.add(IR.Statement.EXTRACT_FIELD(position, bit,
                 getSymbolTable(getClass(BIT_TYPE))["value"]->FieldDecl))
@@ -5175,10 +5176,10 @@ class Compiler : ErrorReporter {
     }
 
     method extractBuiltinInt(position:MethodPosition, int:IR.Value):IR.Value {
-        def cl := getClass(int.type())
+        def cl := getClass(int.type)
         assert cl !== null
         def field := getSymbolTable(cl)["value"]->FieldDecl?
-        assert field !== null, "no 'value' field in \{int}:\{int.type()}"
+        assert field !== null, "no 'value' field in \{int}:\{int.type}"
         resolve(field)
         def result := ir.add(IR.Statement.EXTRACT_FIELD(position, int, field))
         return IR.Value.REF(result, field.type)
@@ -5202,7 +5203,7 @@ class Compiler : ErrorReporter {
                         if value == null {
                             return null
                         }
-                        preferred := value.type()
+                        preferred := value.type
                     }
                     else {
                         value := compileExpression(rawValue, TypeContext.TYPE(preferred, false))
@@ -5210,7 +5211,7 @@ class Compiler : ErrorReporter {
                     if value == null {
                         return null
                     }
-                    type := value.type()
+                    type := value.type
                 }
                 else if valueType !== null {
                     type := valueType
@@ -5239,7 +5240,7 @@ class Compiler : ErrorReporter {
                     if compiledTuple == null {
                         return null
                     }
-                    finalType := compiledTuple.type()
+                    finalType := compiledTuple.type
                 }
                 else if valueType !== null {
                     finalType := valueType
@@ -5248,18 +5249,18 @@ class Compiler : ErrorReporter {
                     def result := Array<Target>()
                     def valueTypes := finalType.nonnullable().subtypes
                     if valueTypes.count != targets.count {
-                        error(t.position(), "cannot assign \{valueTypes.count}-element tuple to " +
+                        error(t.position, "cannot assign \{valueTypes.count}-element tuple to " +
                                 "\{targets.count}-element target")
                         return null
                     }
                     for i in 0 .. targets.count {
                         def target:Target?
                         if compiledTuple !== null {
-                            def basePos := rawValue.position()
+                            def basePos := rawValue.position
                             def position := MethodPosition(basePos, currentMethodIndex)
                             def field := ASTNode.IR_WRAPPER(basePos, cast(position, 
                                     Dot.compile(self, position, compiledTuple, "f\{i}"),
-                                    compiledTuple.type().nonnullable().subtypes[i]))
+                                    compiledTuple.type.nonnullable().subtypes[i]))
                             assert field !== null
                             target := compileTarget(targets[i], kind, field, null)
                         }
@@ -5273,7 +5274,7 @@ class Compiler : ErrorReporter {
                     }
                     return Target.TUPLE(FixedArray<Target>.from(result))
                 }
-                error(t.position(), "cannot use a tuple target without a tuple value")
+                error(t.position, "cannot use a tuple target without a tuple value")
                 return null
             }
             when ASTNode.TYPED_IDENTIFIER(basePos, name, rawType) {
@@ -5305,7 +5306,7 @@ class Compiler : ErrorReporter {
                 return Target.VARIABLE(v, value)
             }
             otherwise {
-                error(t.position(), "not a valid assignment target")
+                error(t.position, "not a valid assignment target")
                 return null
             }
         }
@@ -5354,7 +5355,7 @@ class Compiler : ErrorReporter {
                 VariableLValue(self, position, v).compileStore(value, true)
             }
             when Target.TUPLE(targets) {
-                def type := value.type().nonnullable()
+                def type := value.type.nonnullable()
                 if type.typeKind = Type.Kind.TUPLE & type.subtypes.count = targets.count {
                     for i in 0 .. targets.count {
                         compileStore(position, targets[i], cast(position, Dot.compile(self,
@@ -5362,7 +5363,7 @@ class Compiler : ErrorReporter {
                     }
                 }
                 else {
-                    error(position, "cannot store '\{value.type()}' into a tuple with " +
+                    error(position, "cannot store '\{value.type}' into a tuple with " +
                             "\{targets.count} elements")
                 }
             }
@@ -5429,7 +5430,7 @@ class Compiler : ErrorReporter {
     @post(symbolTable == @pre(symbolTable))
     method compileStatement(s:ASTNode) {
         if ir.currentBlockFinished {
-            error(s.position(), "unreachable")
+            error(s.position, "unreachable")
             return
         }
         match s {
@@ -5439,7 +5440,7 @@ class Compiler : ErrorReporter {
                 ir.currentBlock.containsExplicitCode := true
             }
         }
-        def position := MethodPosition(s.position(), currentMethodIndex)
+        def position := MethodPosition(s.position, currentMethodIndex)
         if settings.debug {
             if position.file >= 0 {
                 ir.add(IR.Statement.COMMENT(position,
@@ -5624,11 +5625,11 @@ class Compiler : ErrorReporter {
                         when Annotations.Expression.PRE(_, expr) {
                             if current == m {
                                 if m.overridden !== null {
-                                    error(expr.position(), "cannot use '@pre' in a method which " +
+                                    error(expr.position, "cannot use '@pre' in a method which " +
                                             "overrides another method; did you mean '@preOr'?")
                                 }
                                 if havePre {
-                                    error(expr.position(), "found more than one precondition")
+                                    error(expr.position, "found more than one precondition")
                                 }
                             }
                             havePre := true
@@ -5642,12 +5643,12 @@ class Compiler : ErrorReporter {
                         when Annotations.Expression.PRE_OR(_, expr) {
                             if current == m {
                                 if m.overridden == null {
-                                    error(expr.position(), "cannot use '@preOr' in a method " +
+                                    error(expr.position, "cannot use '@preOr' in a method " +
                                             "which does not override another method; did you " +
                                             "mean '@pre'?")
                                 }
                                 if havePre {
-                                    error(expr.position(), "found more than one precondition")
+                                    error(expr.position, "found more than one precondition")
                                 }
                             }
                             havePre := true
@@ -5723,11 +5724,11 @@ class Compiler : ErrorReporter {
                         when Annotations.Expression.POST(_, expr) {
                             if current == m {
                                 if m.overridden !== null {
-                                    error(expr.position(), "cannot use '@post' in a method which " +
+                                    error(expr.position, "cannot use '@post' in a method which " +
                                             "overrides another method; did you mean '@postAnd'?")
                                 }
                                 if havePost {
-                                    error(expr.position(), "found more than one postcondition")
+                                    error(expr.position, "found more than one postcondition")
                                 }
                             }
                             havePost := true
@@ -5737,12 +5738,12 @@ class Compiler : ErrorReporter {
                             assert !ir.currentBlockFinished
                             if current == m {
                                 if m.overridden == null {
-                                    error(expr.position(), "cannot use '@postAnd' in a method " +
+                                    error(expr.position, "cannot use '@postAnd' in a method " +
                                             "which does not override another method; did you " +
                                             "mean '@post'?")
                                 }
                                 if havePost {
-                                    error(expr.position(), "found more than one postcondition")
+                                    error(expr.position, "found more than one postcondition")
                                 }
                             }
                             havePost := true
@@ -5920,7 +5921,7 @@ class Compiler : ErrorReporter {
                         def unrefs := AutoUnrefs(self)
                         for f in m.owner.fields {
                             if f.rawValue !== null & !f.annotations.isClass {
-                                def p := f.rawValue.position()
+                                def p := f.rawValue.position
                                 compileStatement(ASTNode.BINARY(p,
                                         ASTNode.DOT(p, ASTNode.SELF(p), f.name),
                                         Binary.Operator.ASSIGNMENT, f.rawValue))
@@ -6167,7 +6168,7 @@ class Compiler : ErrorReporter {
         }
         fail(err) {
             files.add(file)
-            error(Position(files.count, 1, 1), err.message)
+            error(Position(files.count, 1, 1, 1, 1), err.message)
             return []
         }
     }
@@ -6197,7 +6198,7 @@ class Compiler : ErrorReporter {
             compile(file.absolute(), file.readFully())
         }
         fail(err) {
-            error(Position(files.count, 1, 1), err.message)
+            error(Position(files.count, 1, 1, 1, 1), err.message)
         }
     }
 

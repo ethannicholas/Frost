@@ -30,7 +30,7 @@ interface LValue {
 
     @class
     method compile(compiler:Compiler, expr:ASTNode):LValue? {
-        def position := MethodPosition(expr.position(), compiler.currentMethodIndex)
+        def position := MethodPosition(expr.position, compiler.currentMethodIndex)
         match expr {
             when ASTNode.BINARY(_, left, op, right) {
                 if op = Binary.Operator.INDEX {
@@ -84,7 +84,7 @@ interface LValue {
                     when ASTNode.SELF {
                         if compiler.isValue(compiler.currentClass[0]) {
                             if compiler.currentMethod[0].methodKind != MethodDecl.Kind.INIT {
-                                compiler.error(expr.position(),
+                                compiler.error(expr.position,
                                         "cannot modify value fields outside of an init method")
                                 return null
                             }
@@ -119,7 +119,7 @@ interface LValue {
                         }
                     }
                 }
-                def cl := compiler.getClass(compiledBase.type())
+                def cl := compiler.getClass(compiledBase.type)
                 if cl == null {
                     return null
                 }
@@ -136,12 +136,12 @@ interface LValue {
                             return null
                         }
                         otherwise {
-                            compiler.error(expr.position(), "cannot assign to this expression")
+                            compiler.error(expr.position, "cannot assign to this expression")
                             return null
                         }
                     }
                 }
-                compiler.error(expr.position(), "class '\{cl.name}' does not have a member named " +
+                compiler.error(expr.position, "class '\{cl.name}' does not have a member named " +
                         "'\{name}'")
                 return null
             }
@@ -184,7 +184,7 @@ interface LValue {
                 return null
             }
         }
-        compiler.error(expr.position(), "cannot assign to this expression")
+        compiler.error(expr.position, "cannot assign to this expression")
         return null
     }
 }

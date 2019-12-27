@@ -122,9 +122,9 @@ class Unary {
                 if target == null {
                     return null
                 }
-                if target.type().isBuiltinNumber {
+                if target.type.isBuiltinNumber {
                     def result := ir.add(IR.Statement.NEGATE(position, target))
-                    return compiler.coerce(position, IR.Value.REF(result, target.type()), type)
+                    return compiler.coerce(position, IR.Value.REF(result, target.type), type)
                 }
                 return Call.compile(compiler, position, target, "-", [], type)
             }
@@ -133,7 +133,7 @@ class Unary {
                 if target == null {
                     return null
                 }
-                if target.type() = compiler.BUILTIN_BIT_TYPE {
+                if target.type = compiler.BUILTIN_BIT_TYPE {
                     def result := ir.add(IR.Statement.NOT(position, target))
                     return compiler.coerce(position, IR.Value.REF(result,
                             compiler.BUILTIN_BIT_TYPE), type)
@@ -145,9 +145,9 @@ class Unary {
                 if target == null {
                     return null
                 }
-                if target.type().isBuiltinNumber {
+                if target.type.isBuiltinNumber {
                     def result := ir.add(IR.Statement.NOT(position, target))
-                    return compiler.coerce(position, IR.Value.REF(result, target.type()), type)
+                    return compiler.coerce(position, IR.Value.REF(result, target.type), type)
                 }
                 return Call.compile(compiler, position, target, "!!", [], type)
             }
@@ -156,20 +156,20 @@ class Unary {
                 if value == null {
                     return null
                 }
-                def raw := value.type()
+                def raw := value.type
                 if raw.isNullable |
                         (raw.typeKind = Type.Kind.GENERIC_CLASS_PARAMETER &
                             raw.genericClassParameter!.bound.isNullable) |
                         (raw.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER &
                             raw.genericMethodParameter!.bound.isNullable) |
                         compiler.currentClass[0].isSpecialization() {
-                    def nonnull := compiler.cast(position, value, value.type().nonnullable())
+                    def nonnull := compiler.cast(position, value, value.type.nonnullable())
                     if nonnull == null {
                         return null
                     }
                     return compiler.coerce(position, nonnull, type)
                 }
-                compiler.error(position, "value of type '\{value.type()}' is already non-null")
+                compiler.error(position, "value of type '\{value.type}' is already non-null")
                 return compiler.coerce(position, value, type)
             }
         }

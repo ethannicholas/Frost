@@ -39,7 +39,7 @@ class RemoveRefUnrefPairs {
             while node !== null {
                 match node.value {
                     when IR.Statement.CAST(_, v, t, _) {
-                        if analysis.compiler.cg.primitiveType(v.type()).toString =
+                        if analysis.compiler.cg.primitiveType(v.type).toString =
                                 analysis.compiler.cg.primitiveType(t).toString {
                             casts["$" + id.value.value] := keyFor(v)
                         }
@@ -127,8 +127,8 @@ class RemoveRefUnrefPairs {
                         }
                     }
                     when IR.Statement.DYNAMIC_CALL(_, m, _) {
-                        if m.type().typeKind = Type.Kind.METHOD |
-                                m.type().typeKind = Type.Kind.IMMUTABLE_METHOD {
+                        if m.type.typeKind = Type.Kind.METHOD |
+                                m.type.typeKind = Type.Kind.IMMUTABLE_METHOD {
                             refs.clear()
                         }
                     }

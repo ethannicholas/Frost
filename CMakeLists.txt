@@ -74,6 +74,7 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Collection.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/CollectionView.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/CollectionWriter.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/DefaultHashMap.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashKey.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashMap.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashSet.frost

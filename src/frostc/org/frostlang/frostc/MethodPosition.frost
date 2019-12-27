@@ -12,11 +12,17 @@ class MethodPosition : Value, HashKey<MethodPosition> {
 
     def column:Int
 
+    def endLine:Int
+
+    def endColumn:Int
+
     init() {
         self.file := -1
         self.methodIndex := -1
         self.line := -1
         self.column := -1
+        self.endLine := -1
+        self.endColumn := -1
     }
 
     init(base:Position, methodIndex:Int) {
@@ -24,6 +30,8 @@ class MethodPosition : Value, HashKey<MethodPosition> {
         self.methodIndex := methodIndex
         self.line := base.line
         self.column := base.column
+        self.endLine := base.endLine
+        self.endColumn := base.endColumn
     }
 
     @override
@@ -39,7 +47,7 @@ class MethodPosition : Value, HashKey<MethodPosition> {
 
     property asPosition:Position
     function get_asPosition():Position {
-        return Position(file, line, column)
+        return Position(file, line, column, endLine, endColumn)
     }
 
     @override

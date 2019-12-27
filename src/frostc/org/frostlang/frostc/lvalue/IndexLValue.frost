@@ -47,7 +47,7 @@ class IndexLValue : LValue {
     @override
     method compileLoad():IR.Value? {
         if index == null {
-            def m := Binary.findOverloadedOperator(compiler, target.type(), Binary.Operator.INDEX,
+            def m := Binary.findOverloadedOperator(compiler, target.type, Binary.Operator.INDEX,
                     rawIndex, TypeContext.NON_VOID)
             if m !== null {
                 assert m[0].count = 1 -- FIXME handle ambiguous matches
@@ -67,14 +67,14 @@ class IndexLValue : LValue {
     @override
     method compileStore(value:IR.Value, explicit:Bit) {
         if index == null {
-            def cl := compiler.getClass(target.type())
+            def cl := compiler.getClass(target.type)
             if cl == null {
                 return
             }
             def assignment := compiler.getSymbolTable(cl)["[]:="]
             if assignment == null {
-                compiler.error(position, "no match for '[]:=' on '\{target.type()}', " +
-                        "'\{value.type()}'")
+                compiler.error(position, "no match for '[]:=' on '\{target.type}', " +
+                        "'\{value.type}'")
                 return
             }
             def methods:ListView<MethodDecl>

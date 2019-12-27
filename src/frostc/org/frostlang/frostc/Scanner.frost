@@ -49,7 +49,7 @@ class Scanner {
                 for arg in args {
                     finalArgs.add(convertType(arg))
                 }
-                return Type.generic(Type(base, Type.Kind.CLASS, type.position()), finalArgs)
+                return Type.generic(Type(base, Type.Kind.CLASS, type.position), finalArgs)
             }
             when ASTNode.IR_WRAPPER(_, type) {
                 match type {
@@ -89,7 +89,7 @@ class Scanner {
                 else {
                     returnType := compiler.VOID_TYPE
                 }
-                return Type.methodType(compiler, type.position(), typeKind,
+                return Type.methodType(compiler, type.position, typeKind,
                         FixedArray<Type>.from(parameters), returnType, 0)
             }
             when ASTNode.TUPLE_TYPE(position, args) {
@@ -587,7 +587,7 @@ class Scanner {
                         unreachable
                     }
                 }
-                generics.add(MethodDecl.GenericParameter(p.position(), fullName, parameterName,
+                generics.add(MethodDecl.GenericParameter(p.position, fullName, parameterName,
                         bound))
             }
         }
@@ -764,7 +764,7 @@ class Scanner {
                         unreachable
                     }
                 }
-                parameters.add(ClassDecl.GenericParameter(p.position(), fullName, name, bound))
+                parameters.add(ClassDecl.GenericParameter(p.position, fullName, name, bound))
             }
         }
         def supertypes := Array<Type>()
@@ -1020,7 +1020,7 @@ class Scanner {
                             }
                         }
                         otherwise {
-                            unreachable, "unsupported: \{e}(\{e.tag}):\{e.position()}"
+                            unreachable, "unsupported: \{e}(\{e.tag}):\{e.position}"
                         }
                     }
                 }

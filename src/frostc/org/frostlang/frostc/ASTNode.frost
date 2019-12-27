@@ -90,7 +90,8 @@ choice ASTNode {
                             FixedArray<ASTNode> -* statements *-)
     WHILE                  (Position, String?, ASTNode, FixedArray<ASTNode>)
 
-    function position():Position {
+    property position:Position
+    function get_position():Position {
         match self {
             when ANNOTATION(position, _, _, _) {
                 return position

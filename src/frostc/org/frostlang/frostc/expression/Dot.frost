@@ -44,13 +44,13 @@ class Dot {
     @class
     method compile(compiler:Compiler, position:MethodPosition, target:IR.Value,
             name:String):IR.Value? {
-        def cl := compiler.getClass(target.type())
+        def cl := compiler.getClass(target.type)
         if cl == null {
             return null
         }
         def symbol := compiler.getSymbolTable(cl)[name]
         if symbol == null | symbol.kind = Symbol.Kind.ALIAS {
-            var type := target.type().nonnullable()
+            var type := target.type.nonnullable()
             if type.isClassLiteral {
                 type := type.subtypes[1]
             }

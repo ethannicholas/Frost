@@ -1,4 +1,4 @@
-AmbiguousMatch.frost:12:10: error: call to 'm' is ambiguous. The following methods are equally good matches:
+AmbiguousMatch.frost:12:9: error: call to 'm' is ambiguous. The following methods are equally good matches:
     method anonymous.AmbiguousMatch.m(o:frost.core.Object, s:frost.core.String) (AmbiguousMatch.frost:3:5)
     method anonymous.AmbiguousMatch.m(s:frost.core.String, o:frost.core.Object) (AmbiguousMatch.frost:7:5)
 1 error

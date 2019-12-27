@@ -28,9 +28,9 @@ class Assignment {
                 if right == null {
                     return
                 }
-                def rightType := right.type().nonnullable()
+                def rightType := right.type.nonnullable()
                 if !rightType.isTuple {
-                    compiler.error(rawRight.position(),
+                    compiler.error(rawRight.position,
                             "expected a tuple in destructuring assignment")
                     return
                 }
@@ -53,7 +53,7 @@ class Assignment {
                             Compiler.TypeContext.UNSPECIFIED)
                     if extract !== null {
                         compile(compiler, position, lvalues[i], op,
-                                ASTNode.IR_WRAPPER(rawRight.position(), extract))
+                                ASTNode.IR_WRAPPER(rawRight.position, extract))
                     }
                 }
                 return

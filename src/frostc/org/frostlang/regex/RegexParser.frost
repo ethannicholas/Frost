@@ -216,7 +216,7 @@ class RegexParser {
     ================================================================================================
     method regex():ASTNode? {
         pushbackBuffer.clear()
-        def position := Position(pathIndex, lexer.dfa.line, lexer.dfa.column)
+        def position := Position(pathIndex, lexer.dfa.line, lexer.dfa.column, -1, -1)
         def start := lexer.dfa.offset
         if !expression() {
             return null

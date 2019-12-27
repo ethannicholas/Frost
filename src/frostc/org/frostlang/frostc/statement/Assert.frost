@@ -21,7 +21,7 @@ class Assert {
             def args := Array<ASTNode>()
             args.add(ASTNode.STRING(position.asPosition, compiler.currentClass[0].source.name))
             args.add(ASTNode.INT(position.asPosition, position.line.asUInt64))
-            def frost := compiler.getClass(compiler.FROST_TYPE)
+            def frost := compiler.getClass(compiler.FROST_TYPE)!
             def m:MethodDecl
             if msg !== null {
                 m := compiler.getSymbolTable(frost)["assertionFailure"]->Methods.methods[0]

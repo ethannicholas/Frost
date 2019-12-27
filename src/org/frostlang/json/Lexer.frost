@@ -427,6 +427,6 @@ class Lexer {
 
     method next():org.frostlang.json.Token {
         def raw := dfa.next()
-        return org.frostlang.json.Token(org.frostlang.json.Token.Kind(raw.kind), raw.start, raw.end, Position(raw.line, raw.column))
+        return org.frostlang.json.Token(org.frostlang.json.Token.Kind(raw.kind), raw.start, raw.end, Position(raw.line, raw.column, dfa.line, dfa.column))
     }
 }

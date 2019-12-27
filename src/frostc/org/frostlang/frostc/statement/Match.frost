@@ -31,7 +31,7 @@ class Match {
             return false
         }
         if choiceClass == null {
-            compiler.error(position, "cannot match choice case '\{cc}' against '\{value.type()}'")
+            compiler.error(position, "cannot match choice case '\{cc}' against '\{value.type}'")
             return false
         }
         if cc.owner !== choiceClass {
@@ -82,7 +82,7 @@ class Match {
             choiceClass:ClassDecl?, choiceTag:IR.Value?, whens:FixedArray<ASTNode>,
             other:FixedArray<ASTNode>?) {
         function getPosition(node:ASTNode):MethodPosition {
-            return MethodPosition(node.position(), compiler.currentMethodIndex)
+            return MethodPosition(node.position, compiler.currentMethodIndex)
         }
         def ir := compiler.ir
         def end := ir.newBlock("match end")
@@ -115,7 +115,7 @@ class Match {
                                             def testBit:IR.Value
                                             {
                                                 def unrefs := AutoUnrefs(compiler)
-                                                def eqArgs := [ASTNode.INT(base.position(),
+                                                def eqArgs := [ASTNode.INT(base.position,
                                                         cc[1].tag.asUInt64)]
                                                 def test := Call.compile(compiler,
                                                         getPosition(base), choiceTag, "=", eqArgs,
@@ -141,12 +141,11 @@ class Match {
                                 def cc := compiler.getChoiceCase(t)
                                 if cc !== null {
                                     if choiceTag == null {
-                                        compiler.error(position, "'\{value.type()}' is not an " +
+                                        compiler.error(position, "'\{value.type}' is not an " +
                                                 "instance of '\{cc[1].owner.name}'")
                                         return
                                     }
-                                    def args := [ASTNode.INT(t.position(),
-                                            cc[1].tag.asUInt64)]
+                                    def args := [ASTNode.INT(t.position, cc[1].tag.asUInt64)]
                                     test := Call.compile(compiler, getPosition(t), choiceTag, "=",
                                             args, TypeContext.TYPE(compiler.BIT_TYPE, false))
                                     if test == null {
@@ -201,7 +200,7 @@ class Match {
             choiceClass:ClassDecl?, choiceTag:IR.Value?, whens:FixedArray<ASTNode>,
             other:FixedArray<ASTNode>?) {
         function getPosition(node:ASTNode):MethodPosition {
-            return MethodPosition(node.position(), compiler.currentMethodIndex)
+            return MethodPosition(node.position, compiler.currentMethodIndex)
         }
         def ir := compiler.ir
         def startBlock := ir.currentBlock.id
@@ -246,7 +245,7 @@ class Match {
                                 def cc := compiler.getChoiceCase(t)
                                 if cc !== null {
                                     if choiceTag == null {
-                                        compiler.error(position, "'\{value.type()}' is not an " +
+                                        compiler.error(position, "'\{value.type}' is not an " +
                                                 "instance of '\{cc[1].owner.name}'")
                                         return
                                     }
@@ -342,8 +341,8 @@ class Match {
             return
         }
         compiledValue := compiler.coerce(position, compiledValue,
-                compiledValue.type().nonnullable())
-        def cl := compiler.getClass(compiledValue.type())
+                compiledValue.type.nonnullable())
+        def cl := compiler.getClass(compiledValue.type)
         if cl == null {
             return
         }
@@ -354,13 +353,13 @@ class Match {
             choiceClass := cl
         }
         else if compiler.getSymbolTable(cl)["="] == null {
-            compiler.error(value.position(), "'match' value does not define the '=' operator")
+            compiler.error(value.position, "'match' value does not define the '=' operator")
             return
         }
         else {
             choiceTag := null
         }
-        if choiceClass !== null | compiledValue.type().isInt {
+        if choiceClass !== null | compiledValue.type.isInt {
             compileSwitch(compiler, position, compiledValue, choiceClass, choiceTag, whens, other)   
         }
         else {

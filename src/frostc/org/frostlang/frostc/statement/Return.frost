@@ -67,7 +67,7 @@ class Return {
             if compiled == null {
                 return
             }
-            if refResult & compiler.isRefCounted(compiled.type()) {
+            if refResult & compiler.isRefCounted(compiled.type) {
                 compiler.compileRef(compiled)
             }
             compiler.leaveAllScopes()
@@ -92,7 +92,7 @@ class Return {
                     }
                 }
                 ir.add(IR.Statement.STORE(position, compiled, IR.Value.LOCAL(returnSlot,
-                        compiled.type()), true))
+                        compiled.type), true))
                 ir.add(IR.Statement.BRANCH(position, compiler.postconditionEntryBlock))
             }
             else {
@@ -112,7 +112,7 @@ class Return {
                                     }
                                 }
                                 ir.add(IR.Statement.STORE(position, compiled,
-                                        IR.Value.LOCAL(returnSlot, compiled.type()), true))
+                                        IR.Value.LOCAL(returnSlot, compiled.type), true))
                             }
                             else {
                                 inlineReturn.value := compiled

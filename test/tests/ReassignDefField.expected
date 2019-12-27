@@ -1,3 +1,3 @@
 ReassignDefField.frost:6:9: error: cannot assign to already-assigned def 'a'
-ReassignDefField.frost:12:6: error: cannot assign to def 'anonymous.Test.a' outside of 'anonymous.Test.init'
+ReassignDefField.frost:12:5: error: cannot assign to def 'anonymous.Test.a' outside of 'anonymous.Test.init'
 2 errors

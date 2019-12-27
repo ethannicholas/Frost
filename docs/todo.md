@@ -2,6 +2,7 @@ Immediate
 =========
 
 fix closure error reporting with missing self, capturing vars
+fix recursive named closure (crashing while accessing LOCAL; try making 2019/Day14's ore() a closure)
 all tests working (incl. C)
 Compiler performance
 

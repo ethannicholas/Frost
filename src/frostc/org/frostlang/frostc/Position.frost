@@ -8,17 +8,25 @@ class Position : Value, HashKey<Position>, Comparable<Position> {
 
     def column:Int
 
+    def endLine:Int
+
+    def endColumn:Int
+
     init() {
         self.file := -1
         self.line := 1
         self.column := 1
+        self.endLine := 1
+        self.endColumn := 1
     }
 
-    init(file:Int, line:Int, column:Int) {
+    init(file:Int, line:Int, column:Int, endLine:Int, endColumn:Int) {
         assert line != 0 & column != 0
         self.file := file
         self.line := line
         self.column := column
+        self.endLine := endLine
+        self.endColumn := endColumn
     }
 
     @override
@@ -35,6 +43,10 @@ class Position : Value, HashKey<Position>, Comparable<Position> {
             return false
         }
         return column > other.column
+    }
+
+    function +(other:Position):Position {
+        return Position(file, line, column, other.endLine, other.endColumn)
     }
 
     @override

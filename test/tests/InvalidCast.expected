@@ -1,2 +1,2 @@
-InvalidCast.frost:5:20: error: value of type 'frost.core.Int64' cannot possibly be an instance of 'frost.core.Int8'
+InvalidCast.frost:5:19: error: value of type 'frost.core.Int64' cannot possibly be an instance of 'frost.core.Int8'
 1 error

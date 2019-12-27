@@ -1,4 +1,4 @@
-VoidExpression.frost:8:21: error: method anonymous.BareCode.foo() does not return a value
-VoidExpression.frost:12:12: error: method anonymous.BareCode.foo() does not return a value
-VoidExpression.frost:17:13: error: method anonymous.BareCode.bar(i:frost.core.Int) does not return a value
+VoidExpression.frost:8:18: error: method anonymous.BareCode.foo() does not return a value
+VoidExpression.frost:12:9: error: method anonymous.BareCode.foo() does not return a value
+VoidExpression.frost:17:10: error: method anonymous.BareCode.bar(i:frost.core.Int) does not return a value
 3 errors

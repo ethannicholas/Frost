@@ -151,7 +151,7 @@ class PLex {
             out.level += 1
             out.printLine("def raw := dfa.next()")
             out.printLine("return \{tokenName}(\{tokenName}.Kind(raw.kind), raw.start, raw.end, " +
-                    "Position(\{extra}raw.line, raw.column))")
+                    "Position(\{extra}raw.line, raw.column, dfa.line, dfa.column))")
             out.level -= 1
             out.printLine("}")
             out.level -= 1

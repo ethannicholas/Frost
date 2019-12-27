@@ -98,7 +98,7 @@ class For {
     @class
     method convertIndex(compiler:Compiler, position:MethodPosition, index:IR.Value,
             rawIndexType:Type):IR.Value {
-        if index.type() = rawIndexType {
+        if index.type = rawIndexType {
             return index
         }
         def rawIndexClass := compiler.getClass(rawIndexType)
@@ -113,9 +113,9 @@ class For {
     method compileSimpleRangeFor(compiler:Compiler, position:MethodPosition, label:String?,
             index:Variable, range:IR.Value, statements:ListView<ASTNode>) {
         def ir := compiler.ir
-        assert range.type().typeKind = Type.Kind.GENERIC
-        assert range.type().subtypes.count = 2
-        assert range.type().subtypes[0].name = Compiler.RANGE_NAME
+        assert range.type.typeKind = Type.Kind.GENERIC
+        assert range.type.subtypes.count = 2
+        assert range.type.subtypes[0].name = Compiler.RANGE_NAME
         def indexSlot:Int
         match index.storage {
             when Variable.Storage.LOCAL(slot) {
@@ -128,7 +128,7 @@ class For {
         def rawIndexType := index.type
         def indexType := getIndexType(compiler, rawIndexType)
 
-        def rangeClass := compiler.getClass(range.type())
+        def rangeClass := compiler.getClass(range.type)
         if rangeClass == null {
             return
         }
@@ -137,7 +137,7 @@ class For {
         -- extract start value from range
         def start := compiler.convert(compiler.coerce(position, IR.Value.REF(ir.add(
                 IR.Statement.EXTRACT_FIELD(position, range, rangeFields[0])),
-                range.type().subtypes[1]), rawIndexType), indexType)
+                range.type.subtypes[1]), rawIndexType), indexType)
         if start == null {
             return
         }
@@ -149,7 +149,7 @@ class For {
         -- extract end value from range
         def end := compiler.convert(compiler.coerce(position, IR.Value.REF(ir.add(
                 IR.Statement.EXTRACT_FIELD(position, range, rangeFields[1])),
-                range.type().subtypes[1]), rawIndexType), indexType)
+                range.type.subtypes[1]), rawIndexType), indexType)
         if end == null {
             return
         }
@@ -164,7 +164,7 @@ class For {
             return
         }
         def stepComparison:IR.Value?
-        if step.type() = compiler.INT64_TYPE {
+        if step.type = compiler.INT64_TYPE {
             stepComparison := compiler.convert(step, compiler.UINT64_TYPE)
             if stepComparison == null {
                 return
@@ -277,9 +277,9 @@ class For {
         -- optimize it to something sensible if it turns out the values are known at compile time.
         -- This works remarkably well, because LLVM is awesome.
         def ir := compiler.ir
-        assert range.type().typeKind = Type.Kind.GENERIC
-        assert range.type().subtypes.count = 3
-        assert range.type().subtypes[0].name = Compiler.STEPPED_RANGE_NAME
+        assert range.type.typeKind = Type.Kind.GENERIC
+        assert range.type.subtypes.count = 3
+        assert range.type.subtypes[0].name = Compiler.STEPPED_RANGE_NAME
         def indexSlot:Int
         match index.storage {
             when Variable.Storage.LOCAL(slot) {
@@ -292,8 +292,8 @@ class For {
         def rawIndexType := index.type
         def indexType := getIndexType(compiler, rawIndexType)
         assert indexType.typeKind != Type.Kind.NULLABLE
-        def stepType := range.type().subtypes[2]
-        def rangeClass := compiler.getClass(range.type())
+        def stepType := range.type.subtypes[2]
+        def rangeClass := compiler.getClass(range.type)
         if rangeClass == null {
             return
         }
@@ -302,7 +302,7 @@ class For {
         -- extract start value from range
         def start := compiler.convert(compiler.coerce(position, IR.Value.REF(ir.add(
                 IR.Statement.EXTRACT_FIELD(position, range, rangeFields[0])),
-                range.type().subtypes[1]), rawIndexType), indexType)
+                range.type.subtypes[1]), rawIndexType), indexType)
         if start == null {
             return
         }
@@ -314,7 +314,7 @@ class For {
         -- extract end value from range
         def end := compiler.convert(compiler.coerce(position, IR.Value.REF(ir.add(
                 IR.Statement.EXTRACT_FIELD(position, range, rangeFields[1])),
-                range.type().subtypes[1]), rawIndexType), indexType)
+                range.type.subtypes[1]), rawIndexType), indexType)
         if end == null {
             return
         }
@@ -323,20 +323,20 @@ class For {
         def step := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(position, range,
                 rangeFields[2])), stepType)
         def stepComparison:IR.Value?
-        if step.type() = compiler.INT64_TYPE {
+        if step.type = compiler.INT64_TYPE {
             stepComparison := compiler.convert(step, compiler.UINT64_TYPE)
             assert stepComparison !== null
         }
         else {
             stepComparison := step
         }
-        def convertedNegStep := compiler.convert(step, signed(compiler, step.type()))
+        def convertedNegStep := compiler.convert(step, signed(compiler, step.type))
         assert convertedNegStep !== null
         def negStep := compiler.convert(Call.compile(compiler, position, convertedNegStep, "-", [],
                 TypeContext.NON_VOID), stepType)
         assert negStep !== null
         def negStepComparison:IR.Value?
-        if step.type() = compiler.INT64_TYPE {
+        if step.type = compiler.INT64_TYPE {
             negStepComparison := compiler.convert(negStep, compiler.UINT64_TYPE)
             assert negStepComparison !== null
         }
@@ -507,27 +507,27 @@ class For {
     method compileRangeFor(compiler:Compiler, position:MethodPosition, label:String?,
             astTarget:ASTNode, list:IR.Value, statements:ListView<ASTNode>) {
         def ir := compiler.ir
-        def listType := list.type()
+        def listType := list.type
         assert listType.isRange | listType.isSteppedRange
         if listType.subtypes[1].isNullable {
             compiler.error(position, "'for' loop cannot operate on nullable range '\{listType}'; " +
                     "loop ranges must specify both start and end")
         }
-        if !checkSteppedRangeTypes(compiler, position, list.type()) {
+        if !checkSteppedRangeTypes(compiler, position, list.type) {
             return
         }
         def elementType:Type
         if listType.typeKind = Type.Kind.NULLABLE {
-            assert list.type().subtypes[0].typeKind = Type.Kind.GENERIC
-            elementType := list.type().subtypes[0].subtypes[1]
+            assert list.type.subtypes[0].typeKind = Type.Kind.GENERIC
+            elementType := list.type.subtypes[0].subtypes[1]
         }
         else {
             assert listType.typeKind = Type.Kind.GENERIC
-            elementType := list.type().subtypes[1]
+            elementType := list.type.subtypes[1]
         }
         if !elementType.isNumeric {
             compiler.error(position, "for loop expected a numeric range, but found " +
-                    "'\{list.type()}'")
+                    "'\{list.type}'")
             return
         }
         def scope := AutoScope(compiler)
@@ -618,8 +618,8 @@ class For {
         def bodyBlock := ir.newBlock("bodyBlock")
         def endBlock := ir.newBlock("endBlock")
         def context := AutoContext(compiler, EnclosingContext.LOOP(label, endBlock, testBlock))
-        assert iterator.type().typeKind = Type.Kind.GENERIC &
-                iterator.type().subtypes[0] = compiler.ITERATOR_TYPE
+        assert iterator.type.typeKind = Type.Kind.GENERIC &
+                iterator.type.subtypes[0] = compiler.ITERATOR_TYPE
         ir.add(IR.Statement.BRANCH(position, testBlock))
         ir.setCurrentBlock(testBlock)
         def compiledTest := Call.compile(compiler, position, iterator, "get_done", Array<ASTNode>(),
@@ -636,7 +636,7 @@ class For {
             {
                 def unrefs := AutoUnrefs(compiler)
                 compiledTarget := compiler.compileTarget(target, Variable.Kind.DEF, null,
-                        iterator.type().subtypes[1])
+                        iterator.type.subtypes[1])
                 if compiledTarget == null {
                     return
                 }
@@ -701,7 +701,7 @@ class For {
         if list == null {
             return
         }
-        def listType := list.type()
+        def listType := list.type
         if listType.isRange | listType.isSteppedRange {
             -- it's a range, but not an unresolved one
             compileRangeFor(compiler, position, label, rawTarget, list, statements)
@@ -710,7 +710,7 @@ class For {
             compileArrayFor(compiler, position, label, rawTarget, list, statements)
         }
         else {
-            def listPosition := MethodPosition(rawList.position(), position.methodIndex)
+            def listPosition := MethodPosition(rawList.position, position.methodIndex)
             for intf in compiler.allInterfaces(listType) {
                 if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = compiler.ITERATOR_TYPE {
                     def iterator := compiler.coerce(listPosition, list, intf)
@@ -733,7 +733,7 @@ class For {
                     return
                 }
             }
-            compiler.error(rawList.position(), "expected a range, Iterable, or Iterator, but " +
+            compiler.error(rawList.position, "expected a range, Iterable, or Iterator, but " +
                     "found '\{listType}'")
         }
     }

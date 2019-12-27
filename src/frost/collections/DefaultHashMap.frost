@@ -1,0 +1,77 @@
+package frost.collections
+
+====================================================================================================
+As `HashMap`, but additionally has a default value which is returned for keys which are not present
+in the map.
+====================================================================================================
+class DefaultHashMap<K:HashKey<K>, V> : Map<K, V> {
+    @private
+    def map:HashMap<K, V>
+
+    @private
+    def default:V
+
+    init(default:V) {
+        map := HashMap<K, V>()
+        self.default := default
+    }
+
+    init(entries:CollectionView<(K, V)>, default:V) {
+        map := HashMap<K, V>(entries)
+        self.default := default
+    }
+
+    @override
+    function [](key:K):V? {
+        return self[key]
+    }
+
+    @priority(2)
+    function [](key:K):V {
+        def result := map[key]
+        if result !== null {
+            return result
+        }
+        return default
+    }
+
+    @override
+    function contains(key:K):Bit {
+        return map.contains(key)
+    }
+
+    @override
+    method []:=(key:K, value:V) {
+        map[key] := value
+    }
+
+    @override
+    method remove(key:K) {
+        map.remove(key)
+    }
+
+    @override
+    method clear() {
+        map.clear()
+    }
+
+    @override
+    function get_entries():Iterator<(K, V)> {
+        return map.entries
+    }
+
+    @override
+    function get_count():Int {
+        return map.count
+    }
+
+    @override
+    method filterInPlace(test:(K, V)=>(Bit)) {
+        map.filterInPlace(test)
+    }
+
+    @override
+    function get_toString():String {
+        return map.toString
+    }
+}

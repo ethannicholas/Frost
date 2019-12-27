@@ -685,7 +685,7 @@ class Code {
 
         def id:ID
 
-        def statements := Array<Statement>()
+        def statements:Array<Statement>
 
         init(id:ID, statements:Array<Statement>) {
             self.id := id

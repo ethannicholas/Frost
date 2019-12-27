@@ -1,2 +1,2 @@
-InstanceMethodOnClass2.frost:7:40: error: method anonymous.InstanceMethodOnClass2.instance() expects 1 argument, but found 0
+InstanceMethodOnClass2.frost:7:9: error: method anonymous.InstanceMethodOnClass2.instance() expects 1 argument, but found 0
 1 error

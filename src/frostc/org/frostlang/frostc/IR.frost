@@ -427,7 +427,8 @@ class IR {
         SUPER(Type)
         TYPE(Type -* literal *-, Type -* Class<literal> *-)
 
-        function type():Type {
+        property type:Type
+        function get_type():Type {
             match self {
                 when BIT(_, type) {
                     return type

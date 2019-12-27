@@ -17,7 +17,7 @@ class ChoiceFieldLValue : LValue {
 
     def index:Int
 
-    @pre(target.type() = choiceCase.owner.type)
+    @pre(target.type = choiceCase.owner.type)
     init(compiler:Compiler, position:MethodPosition, target:IR.Value, choiceCase:ChoiceCase,
             index:Int) {
         self.compiler := compiler

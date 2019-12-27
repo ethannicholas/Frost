@@ -17,7 +17,7 @@ class FieldLValue : LValue {
 
     def position:MethodPosition
 
-    def target:IR.Value?
+    var target:IR.Value?
 
     def field:FieldDecl
 
@@ -30,7 +30,7 @@ class FieldLValue : LValue {
         self.position := position
         assert field.resolved = Resolution.RESOLVED
         self.field := field
-        if target !== null & !target.type().isClassLiteral {
+        if target !== null & !target.type.isClassLiteral {
             self.target := target
         }
         else if !field.annotations.isClass {
@@ -51,9 +51,9 @@ class FieldLValue : LValue {
             base := rawType
         }
         if self.target !== null {
-            def found := compiler.findType(self.target.type(), field.owner)
+            def found := compiler.findType(self.target.type, field.owner)
             assert found !== null,
-                    "could not find class \{field.owner.name} in \{self.target.type()} for \{field}"
+                    "could not find class \{field.owner.name} in \{self.target.type} for \{field}"
             effectiveType := compiler.remapType(found, base)
         }
         else {
@@ -61,8 +61,8 @@ class FieldLValue : LValue {
         }
         if self.target !== null {
             def targetType:Type
-            if self.target.type().isPointer {
-                targetType := compiler.findType(self.target.type(), field.owner)
+            if self.target.type.isPointer {
+                targetType := compiler.findType(self.target.type, field.owner)
             }
             else {
                 targetType := field.owner.type
@@ -119,7 +119,7 @@ class FieldLValue : LValue {
                 return null
             }
         }
-        if effectiveType != result.type() {
+        if effectiveType != result.type {
             result := compiler.cast(position, result, effectiveType)
         }
         return result

@@ -1,4 +1,4 @@
-OverviewReturnOverload.frost:17:26: error: call to 'empty' is ambiguous. The following methods are equally good matches:
+OverviewReturnOverload.frost:17:21: error: call to 'empty' is ambiguous. The following methods are equally good matches:
     function anonymous.BareCode.empty():frost.core.Int (OverviewReturnOverload.frost:1:1)
     function anonymous.BareCode.empty():frost.core.String (OverviewReturnOverload.frost:5:1)
     function anonymous.BareCode.empty():frost.core.Bit (OverviewReturnOverload.frost:9:1)

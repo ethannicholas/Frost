@@ -110,7 +110,7 @@ class Type : Symbol, HashKey<Type> {
         self.typeKind := typeKind
         self.resolved := true
         self._subtypes := null
-        super.init(Symbol.Kind.TYPE, Position(-1, size, size), name)
+        super.init(Symbol.Kind.TYPE, Position(-1, size, size, size, size), name)
     }
 
     init(name:String, typeKind:Kind, position:Position, subtypes:ListView<Type>, resolved:Bit) {

@@ -1,2 +1,2 @@
-MutableMethod2.frost:18:50: error: expected '(frost.core.String)=&>*()', but found '(frost.core.String)=&>()'
+MutableMethod2.frost:18:34: error: expected '(frost.core.String)=&>*()', but found '(frost.core.String)=&>()'
 1 error

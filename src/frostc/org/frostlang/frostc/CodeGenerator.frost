@@ -1118,7 +1118,7 @@ class CodeGenerator {
     }
 
     method convertCast(position:MethodPosition, id:IR.Statement.ID, value:IR.Value, target:Type) {
-        def src := value.type()
+        def src := value.type
         if target.isBuiltinNumber {
             assert src.isBuiltinNumber
             if src.typeKind = Type.Kind.BUILTIN_INT {
@@ -1139,19 +1139,19 @@ class CodeGenerator {
             def srcValue := compiler.isValue(src)
             def targetValue := compiler.isValue(target)
             if srcValue & !targetValue {
-                wrapValue(position, mapId(id), value.type(), convertValue(value), target)
+                wrapValue(position, mapId(id), value.type, convertValue(value), target)
                 return
             }
             else if !srcValue & targetValue {
-                unwrapValue(position, mapId(id), value.type(), convertValue(value), target)
+                unwrapValue(position, mapId(id), value.type, convertValue(value), target)
                 return
             }
             else if srcValue & target.typeKind = Type.Kind.NULLABLE & target.subtypes[0] = src {
-                toNullableValue(position, mapId(id), value.type(), convertValue(value), target)
+                toNullableValue(position, mapId(id), value.type, convertValue(value), target)
                 return
             }
             else if targetValue & src.typeKind = Type.Kind.NULLABLE & src.subtypes[0] = target {
-                toNonNullableValue(position, mapId(id), value.type(), convertValue(value), target)
+                toNonNullableValue(position, mapId(id), value.type, convertValue(value), target)
                 return
             }
         }
@@ -1352,7 +1352,7 @@ class CodeGenerator {
         match s {
             when IR.Statement.BINARY(position, left, op, right, type) {
                 convertBinary(position, mapId(id), left, op, right,
-                        TypeClass.from(left.type()))
+                        TypeClass.from(left.type))
             }
             when IR.Statement.BRANCH(position, target) {
                 out.add(Code.Statement.BRANCH(position, mapId(target)))
@@ -1399,11 +1399,11 @@ class CodeGenerator {
                     finalArgs.add(convertValue(a))
                 }
                 def returnType:Type
-                if rawM.type().isPointer {
-                    returnType := rawM.type().subtypes[1].returnType
+                if rawM.type.isPointer {
+                    returnType := rawM.type.subtypes[1].returnType
                 }
                 else {
-                    returnType := rawM.type().returnType
+                    returnType := rawM.type.returnType
                 }
                 if returnType != compiler.VOID_TYPE {
                     out.add(Code.Statement.DYNAMIC_CALL(position, mapId(id),
@@ -1426,7 +1426,7 @@ class CodeGenerator {
             when IR.Statement.ENTER_SCOPE {
             }
             when IR.Statement.EXTRACT_FIELD(position, value, field) {
-                def cl := compiler.getClass(value.type())
+                def cl := compiler.getClass(value.type)
                 if getSingleFieldStructType(cl) !== null {
                     addRef(id, convertValue(value))
                 }
@@ -1449,7 +1449,7 @@ class CodeGenerator {
                 }
             }
             when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
-                def cc := getClassConstant(compiler.getClass(value.type())!)
+                def cc := getClassConstant(compiler.getClass(value.type)!)
                 def cl := nextStatement()
                 out.add(Code.Statement.LOAD(position, cl, convertValue(value),
                         Code.PrimitiveType.INT))
@@ -1463,7 +1463,7 @@ class CodeGenerator {
                         Code.PrimitiveType.INT))
             }
             when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
-                def cc := getClassConstant(compiler.getClass(value.type())!)
+                def cc := getClassConstant(compiler.getClass(value.type)!)
                 def ccType:Code.PrimitiveType
                 match cc {
                     when Code.Value.GLOBAL_POINTER(idx) {
@@ -1527,10 +1527,10 @@ class CodeGenerator {
             }
             when IR.Statement.LOAD(position, value) {
                 out.add(Code.Statement.LOAD(position, mapId(id), convertValue(value),
-                        primitiveType(value.type())))
+                        primitiveType(value.type)))
             }
             when IR.Statement.NEGATE(position, value) {
-                if value.type().typeKind = Type.Kind.BUILTIN_FLOAT {
+                if value.type.typeKind = Type.Kind.BUILTIN_FLOAT {
                     out.add(Code.Statement.NEGF(position, mapId(id), convertValue(value)))
                 }
                 else {
@@ -1538,7 +1538,7 @@ class CodeGenerator {
                 }
             }
             when IR.Statement.NOT(position, value) {
-                if value.type().typeKind = Type.Kind.BUILTIN_BIT {
+                if value.type.typeKind = Type.Kind.BUILTIN_BIT {
                     out.add(Code.Statement.NOTB(position, mapId(id), convertValue(value)))
                 }
                 else {

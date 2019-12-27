@@ -288,10 +288,6 @@ void* frostAlloc(size_t size) {
     return result;
 }
 
-void* frostZAlloc(size_t size) {
-    return frostAlloc(size);
-}
-
 void* frostObjectAlloc(size_t size, Class* cl) {
     Object* result = frostAlloc(size);
     result->cl = cl;
@@ -665,6 +661,22 @@ float frostReal32_get_tan(float x) {
     return tanf(x);
 }
 
+float frostReal32_get_asin(float x) {
+    return asinf(x);
+}
+
+float frostReal32_get_acos(float x) {
+    return acosf(x);
+}
+
+float frostReal32_get_atan(float x) {
+    return atanf(x);
+}
+
+float frostReal32_atan2(float y, float x) {
+    return atan2f(y, x);
+}
+
 // Real64
 
 double frostReal64_get_floor(double x) {
@@ -689,6 +701,22 @@ double frostReal64_get_cos(double x) {
 
 double frostReal64_get_tan(double x) {
     return tan(x);
+}
+
+double frostReal64_get_asin(double x) {
+    return sin(x);
+}
+
+double frostReal64_get_acos(double x) {
+    return cos(x);
+}
+
+double frostReal64_get_atan(double x) {
+    return tan(x);
+}
+
+double frostReal64_atan2(double y, double x) {
+    return atan2(y, x);
 }
 
 // Frost

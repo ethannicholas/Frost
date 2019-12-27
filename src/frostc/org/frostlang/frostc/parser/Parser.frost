@@ -230,7 +230,7 @@ class Parser {
         if string == null {
             return chunk
         }
-        return ASTNode.BINARY(string.position(), string, Binary.Operator.ADD, chunk)
+        return ASTNode.BINARY(string.position, string, Binary.Operator.ADD, chunk)
     }
 
     method formatString(start:Token):String? {
@@ -342,10 +342,10 @@ class Parser {
 
     @private
     function convertToString(expr:ASTNode):ASTNode {
-        def dot := ASTNode.DOT(expr.position(), expr, "get_toString")
-        def call := ASTNode.CALL(expr.position(), dot, FixedArray<ASTNode>())
-        def stringType := ASTNode.TYPE(expr.position(), "frost.core.String")
-        return ASTNode.BINARY(expr.position(), call, Binary.Operator.CAST, stringType)
+        def dot := ASTNode.DOT(expr.position, expr, "get_toString")
+        def call := ASTNode.CALL(expr.position, dot, FixedArray<ASTNode>())
+        def stringType := ASTNode.TYPE(expr.position, "frost.core.String")
+        return ASTNode.BINARY(expr.position, call, Binary.Operator.CAST, stringType)
     }
 
     @post(allowLambdas = @pre(allowLambdas))
@@ -410,14 +410,14 @@ class Parser {
                                 if format == null {
                                     return null
                                 }
-                                def formattable := ASTNode.TYPE(expr.position(),
+                                def formattable := ASTNode.TYPE(expr.position,
                                         "frost.core.Formattable")
-                                def cast := ASTNode.BINARY(expr.position(), expr,
+                                def cast := ASTNode.BINARY(expr.position, expr,
                                         Binary.Operator.CAST, formattable)
-                                def dot := ASTNode.DOT(expr.position(), cast, "format")
+                                def dot := ASTNode.DOT(expr.position, cast, "format")
                                 def callArgs := Array<ASTNode>() -- FIXME literal
                                 callArgs.add(ASTNode.STRING(start.position, format))
-                                expr := ASTNode.CALL(expr.position(), dot,
+                                expr := ASTNode.CALL(expr.position, dot,
                                         FixedArray<ASTNode>.from(callArgs))
                             }
                             if expect(Token.Kind.RBRACE, "'}'") == null {
@@ -427,12 +427,12 @@ class Parser {
                                 if format == null {
                                     expr := convertToString(expr)
                                 }
-                                def frostType := ASTNode.TYPE(expr.position(), "frost.core.Frost")
-                                def callTarget := ASTNode.DOT(expr.position(), frostType, "align")
+                                def frostType := ASTNode.TYPE(expr.position, "frost.core.Frost")
+                                def callTarget := ASTNode.DOT(expr.position, frostType, "align")
                                 def callArgs := Array<ASTNode>()
                                 callArgs.add(expr)
                                 callArgs.add(ASTNode.STRING(start.position, align))
-                                expr := ASTNode.CALL(expr.position(), callTarget,
+                                expr := ASTNode.CALL(expr.position, callTarget,
                                         FixedArray<ASTNode>.from(callArgs))
                             }
                             def text := chunk.finish()
@@ -703,7 +703,7 @@ class Parser {
             syntaxHighlighter.rewind()
             -- add back the whole regex
             syntaxHighlighter.add(Token(Token.Kind.REGEX, String.Index(start),
-                    String.Index(lexer.dfa.offset), regex.position()))
+                    String.Index(lexer.dfa.offset), regex.position))
         }
         return regex
     }
@@ -821,7 +821,7 @@ class Parser {
             BITWISEXOR | NOT | BITWISENOT | SHIFTLEFT | SHIFTLEFTU | SHIFTRIGHT |
             (LBRACKET RBRACKET ASSIGNMENT?)
     ================================================================================================
-    method methodName():String? {
+    method methodName():(Position, String)? {
         def name := next()
         match name.kind {
             when Token.Kind.IDENTIFIER, Token.Kind.ADD, Token.Kind.ADDU, Token.Kind.SUB,
@@ -831,26 +831,27 @@ class Parser {
                     Token.Kind.REM, Token.Kind.AND, Token.Kind.BITWISEAND, Token.Kind.OR,
                     Token.Kind.BITWISEOR, Token.Kind.XOR, Token.Kind.BITWISEXOR, Token.Kind.NOT,
                     Token.Kind.BITWISENOT, Token.Kind.SHIFTLEFT, Token.Kind.SHIFTLEFTU {
-                return text(name)
+                return (name.position, text(name))
             }
             when Token.Kind.GT {
                 def token := rawNext()
                 if token.kind = Token.Kind.GT { -- two GT's in a row = SHIFTRIGHT
-                    return ">>"
+                    return (name.position + token.position, ">>")
                 }
                 else {
                     pushback(token)
-                    return ">"
+                    return (name.position, ">")
                 }
             }
             when Token.Kind.LBRACKET {
                 if expect(Token.Kind.RBRACKET, "']'") == null {
                     return null
                 }
-                if checkNext(Token.Kind.ASSIGNMENT) !== null {
-                    return "[]:="
+                def assignment := checkNext(Token.Kind.ASSIGNMENT)
+                if assignment !== null {
+                    return (name.position + assignment.position, "[]:=")
                 }
-                return "[]"
+                return (name.position, "[]")
             }
             otherwise {
                 error(name,
@@ -1012,7 +1013,7 @@ class Parser {
             }
         }
         if checkNext(Token.Kind.QUESTION) !== null {
-            result := ASTNode.NULLABLE_TYPE(result.position(), result)
+            result := ASTNode.NULLABLE_TYPE(result.position, result)
         }
         return result
     }
@@ -1067,13 +1068,10 @@ class Parser {
             return null
         }
         loop {
-
-            def raw := rawNext()
-            pushback(raw)
             def token := next()
             match token.kind {
                 when Token.Kind.LPAREN {
-                    if token.position.line != raw.position.line {
+                    if token.position.line != result.position.endLine {
                         -- the parenthesis didn't show up until a different line, so assume it's not
                         -- a call
                         pushback(token)
@@ -1081,7 +1079,8 @@ class Parser {
                     }
                     commaSeparatedExpressionContext.push(true) -- FIXME use init / cleanup to automate this
                     def args := Array<ASTNode>()
-                    if checkNext(Token.Kind.RPAREN) == null {
+                    var rparen := checkNext(Token.Kind.RPAREN)
+                    if rparen == null {
                         var expr := expression()
                         if expr == null {
                             commaSeparatedExpressionContext.pop()
@@ -1096,17 +1095,18 @@ class Parser {
                             }
                             args.add(expr)
                         }
-                        if expect(Token.Kind.RPAREN, "')'") == null {
+                        rparen := expect(Token.Kind.RPAREN, "')'")
+                        if rparen == null {
                             commaSeparatedExpressionContext.pop()
                             return null
                         }
                     }
                     commaSeparatedExpressionContext.pop()
-                    result := ASTNode.CALL(token.position, result,
+                    result := ASTNode.CALL(result.position + rparen.position, result,
                             FixedArray<ASTNode>.from(args))
                 }
                 when Token.Kind.LBRACKET {
-                    if token.position.line != raw.position.line {
+                    if token.position.line != result.position.endLine {
                         -- the bracket didn't show up until a different line, so assume it's not
                         -- a call
                         pushback(token)
@@ -1116,15 +1116,18 @@ class Parser {
                     if arg == null {
                         return null
                     }
-                    if expect(Token.Kind.RBRACKET, "']'") == null {
+                    def end := expect(Token.Kind.RBRACKET, "']'")
+                    if end == null {
                         return null
                     }
-                    result := ASTNode.BINARY(token.position, result, Binary.Operator.INDEX, arg)
+                    result := ASTNode.BINARY(result.position + end.position, result,
+                            Binary.Operator.INDEX, arg)
                 }
                 when Token.Kind.DOT {
-                    def name:String?
-                    if checkNext(Token.Kind.INIT) !== null {
-                        name := "init"
+                    def name:(Position, String)?
+                    def t := checkNext(Token.Kind.INIT)
+                    if t !== null {
+                        name := (t.position, "init")
                     }
                     else {
                         name := methodName()
@@ -1133,13 +1136,14 @@ class Parser {
                         }
                     }
                     def base := result
-                    result := ASTNode.DOT(token.position, base, name)
+                    result := ASTNode.DOT(result.position + name[0], base, name[1])
                     if peek().kind = Token.Kind.LT {
                         startSpeculative()
                         def types := typeSpecifiers()
                         if types !== null {
                             accept()
-                            result := ASTNode.DOT_GENERICS(token.position, base, name, types)
+                            result := ASTNode.DOT_GENERICS(result.position + types.last.position,
+                                    base, name[1], types)
                         }
                         else {
                             rewind()
@@ -1152,10 +1156,12 @@ class Parser {
                     if target == null {
                         return null
                     }
-                    result := ASTNode.BINARY(token.position, result, Binary.Operator.CAST, target)
+                    result := ASTNode.BINARY(result.position + target.position, result,
+                            Binary.Operator.CAST, target)
                 }
                 when Token.Kind.NOT {
-                    result := ASTNode.UNARY(token.position, Unary.Operator.NONNULL, result)
+                    result := ASTNode.UNARY(result.position + token.position, Unary.Operator.NONNULL,
+                            result)
                 }
                 when Token.Kind.LT {
                     -- this is where we need to be careful. First, we make sure it makes sense to
@@ -1238,7 +1244,7 @@ class Parser {
                         }
                         if shouldAccept {
                             accept()
-                            result := ASTNode.GENERIC_TYPE(result.position(), name,
+                            result := ASTNode.GENERIC_TYPE(result.position + gt.position, name,
                                     FixedArray<ASTNode>.from(types))
                             continue
                         }
@@ -1927,7 +1933,7 @@ class Parser {
                 if rvalue == null {
                     return null
                 }
-                return ASTNode.BINARY(start.position(), start, Binary.Operator.fromToken(op),
+                return ASTNode.BINARY(start.position, start, Binary.Operator.fromToken(op),
                         rvalue)
             }
             when Token.Kind.EQ {
@@ -1937,7 +1943,7 @@ class Parser {
                 if rvalue == null {
                     return null
                 }
-                return ASTNode.BINARY(start.position(), start, Binary.Operator.fromToken(op),
+                return ASTNode.BINARY(start.position, start, Binary.Operator.fromToken(op),
                         rvalue)
             }
             otherwise {
@@ -1971,7 +1977,7 @@ class Parser {
         else {
             value := null
         }
-        return ASTNode.DECLARATION(t.position(), t, value)
+        return ASTNode.DECLARATION(t.position, t, value)
     }
 
     ================================================================================================
@@ -2555,8 +2561,8 @@ class Parser {
         else {
             body := null
         }
-        return ASTNode.METHOD(start.position, doccomment, annotations, kind, name, generics, params,
-                returnType, body)
+        return ASTNode.METHOD(start.position, doccomment, annotations, kind, name[1], generics,
+                params, returnType, body)
     }
 
     ================================================================================================
@@ -2625,7 +2631,7 @@ class Parser {
         if decl == null {
             return null
         }
-        return ASTNode.FIELD(decl.position(), doccomment, annotations, decl)
+        return ASTNode.FIELD(decl.position, doccomment, annotations, decl)
     }
 
     ================================================================================================

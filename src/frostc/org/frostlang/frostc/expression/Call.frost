@@ -148,7 +148,7 @@ class Call {
                 if resultCost == null {
                     return null
                 }
-                methodTypes := compiler.possibleTypes(ASTNode.DOT(m.position(), m, "init"))
+                methodTypes := compiler.possibleTypes(ASTNode.DOT(m.position, m, "init"))
                 if methodTypes == null {
                     return null
                 }
@@ -280,7 +280,7 @@ class Call {
             builtinResultType := compiler.BUILTIN_BIT_TYPE
         }
         else {
-            builtinResultType :=  builtinLeft.type()
+            builtinResultType :=  builtinLeft.type
         }
         builtin := compiler.ir.add(IR.Statement.BINARY(position, builtinLeft, op,
                 compiler.extractBuiltinInt(position, right), builtinResultType))
@@ -693,7 +693,7 @@ class Call {
             }
             var ref:MethodRef?
             if target !== null {
-                var owner := target.type()
+                var owner := target.type
                 if owner.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
                     owner := owner.genericMethodParameter.bound
                 }
@@ -751,7 +751,7 @@ class Call {
     method callMethodObject(compiler:Compiler, position:MethodPosition, m:IR.Value,
             args:ListView<ASTNode>, type:TypeContext):IR.Value? {
         def ir := compiler.ir
-        def t := m.type().nonnullable()
+        def t := m.type.nonnullable()
         if !t.isMethod {
             compiler.error(position, "value of type '\{t}' is not a method")
             return null
@@ -785,7 +785,7 @@ class Call {
         }
         def methodType:Type
         def targetType:Type
-        if compiler.isImmutable(m.type()) {
+        if compiler.isImmutable(m.type) {
             methodType := compiler.METHOD_TYPE
             targetType := compiler.IMMUTABLE_TYPE
         }
@@ -870,7 +870,7 @@ class Call {
             when IR.Value.METHOD(target, m, _) {
                 def targetType:Type
                 if target !== null {
-                    targetType := target.type()
+                    targetType := target.type
                 }
                 else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
                     targetType := m.owner.type
@@ -890,7 +890,7 @@ class Call {
             when IR.Value.GENERIC_METHOD(target, m, types) {
                 def targetType:Type
                 if target !== null {
-                    targetType := target.type()
+                    targetType := target.type
                 }
                 else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
                     targetType := m.owner.type
@@ -1036,7 +1036,7 @@ class Call {
             return v
         }
         def ir := compiler.ir
-        def type := v.type()
+        def type := v.type
         def errorType := compiler.ERROR_TYPE
         def nullableError := errorType.nullable()
         if type = nullableError {
@@ -1261,13 +1261,13 @@ class Call {
                     def s := compiler.ir.statements[id]
                     match s {
                         when IR.Statement.CAST(_, v, _, _) {
-                            return v.type()
+                            return v.type
                         }
                     }
                 }
             }
         }
-        return v.type()
+        return v.type
     }
 
     @class
@@ -1429,7 +1429,7 @@ class Call {
         var selfType := m.value.owner.type
         if selfType.isPointer & !m.value.annotations.isClass {
             if target !== null {
-                selfType := target.type()
+                selfType := target.type
             }
             else {
                 selfType := m.value.owner.typeWithParameters()
@@ -1494,7 +1494,7 @@ class Call {
         var dynamic := false
         if !isSuper & m.value.isVirtual {
             if target !== null {
-                var type1 := target.type()
+                var type1 := target.type
                 def cl1 := compiler.getClass(type1)
                 if cl1 == null {
                     return null
@@ -1523,7 +1523,7 @@ class Call {
             }
         }
         def start:Int -- skip over self if it's implicit
-        if !m.value.annotations.isClass & target !== null & target.type().isClassLiteral {
+        if !m.value.annotations.isClass & target !== null & target.type.isClassLiteral {
             start := 0
         }
         else {
@@ -1535,7 +1535,7 @@ class Call {
             if a == null {
                 return null
             }
-            if a.type() != actualType.parameterType(i + start) {
+            if a.type != actualType.parameterType(i + start) {
                 a := compiler.cast(position, a, actualType.parameterType(i + start))
             }
             if a == null {
@@ -1544,15 +1544,15 @@ class Call {
             finalArgs.add(a)
         }
         if m.value.annotations.isPointerSize {
-            def targetType := target.type()
+            def targetType := target.type
             if target !== null & targetType.isClassLiteral &
                     targetType.subtypes[1].name.startsWith("frost.unsafe.Pointer<") &
-                    target.type().subtypes[1].subtypes[1].typeKind !=
+                    target.type.subtypes[1].subtypes[1].typeKind !=
                             Type.Kind.GENERIC_METHOD_PARAMETER {
-                finalArgs.add(IR.Value.SIZE_OF(target.type().subtypes[1].subtypes[1]))
+                finalArgs.add(IR.Value.SIZE_OF(target.type.subtypes[1].subtypes[1]))
             }
             else if target !== null & targetType.isPointer {
-                finalArgs.add(IR.Value.SIZE_OF(target.type().subtypes[1]))
+                finalArgs.add(IR.Value.SIZE_OF(target.type.subtypes[1]))
             }
             else if compiler.currentMethod[0].annotations.isPointerSize {
                 def pointerSize := Identifier.compile(compiler, position, "pointerSize")
@@ -1631,7 +1631,7 @@ class Call {
     @class
     method compile(compiler:Compiler, position:MethodPosition, target:IR.Value, m:String,
             args:ListView<ASTNode>, type:TypeContext):IR.Value? {
-        def cl := compiler.getClass(target.type())
+        def cl := compiler.getClass(target.type)
         if cl == null {
             return null
         }
@@ -1726,7 +1726,7 @@ class Call {
         }
         def result := compile(compiler, position, compiledM, args, type)
         if isStatement & result !== null {
-            def resultType := result.type()
+            def resultType := result.type
             if (resultType = compiler.ERROR_TYPE.nullable() |
                     (resultType.typeKind = Type.Kind.GENERIC &
                         resultType.subtypes[0].name = "frost.core.Maybe")) {

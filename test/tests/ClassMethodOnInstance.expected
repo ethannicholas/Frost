@@ -1,2 +1,2 @@
-ClassMethodOnInstance.frost:13:35: error: cannot call class method anonymous.ClassMethodOnInstance.m1() on an instance
+ClassMethodOnInstance.frost:13:9: error: cannot call class method anonymous.ClassMethodOnInstance.m1() on an instance
 1 error

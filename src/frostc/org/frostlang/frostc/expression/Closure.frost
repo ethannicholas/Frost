@@ -299,7 +299,7 @@ class Closure {
         else {
             typeKind := isMutable.choose(Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_FUNCTION)            
         }
-        return Type.methodType(compiler, Position(), typeKind, parameterTypes, result.type(), 0)
+        return Type.methodType(compiler, Position(), typeKind, parameterTypes, result.type, 0)
     }
 
     @class

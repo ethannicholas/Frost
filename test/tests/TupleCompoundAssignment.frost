@@ -1,0 +1,6 @@
+method main() {
+    var (x, y) := (1, 10)
+    (x, y) := (y, x)
+    (x, y) += (1, 2)
+    Console.printLine((x, y))
+}

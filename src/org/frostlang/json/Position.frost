@@ -10,7 +10,7 @@ class Position : Value {
         self.column := 1
     }
 
-    init(line:Int, column:Int) {
+    init(line:Int, column:Int, endLine:Int, endColumn:Int) {
         assert line != 0 & column != 0
         self.line := line
         self.column := column

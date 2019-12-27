@@ -1,2 +1,2 @@
-InstanceMethodOnClass.frost:13:11: error: cannot call instance method anonymous.InstanceMethodOnClass.m2() from a @class context
+InstanceMethodOnClass.frost:13:9: error: cannot call instance method anonymous.InstanceMethodOnClass.m2() from a @class context
 1 error

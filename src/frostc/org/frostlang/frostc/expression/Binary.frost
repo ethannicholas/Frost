@@ -312,7 +312,7 @@ class Binary {
             for t in leftTypes {
                 def compilerCost := compiler.coercionCost(left, t)
                 assert compilerCost !== null,
-                        "failed compiler cast \{left}->\{t} at \{left.position()}"
+                        "failed compiler cast \{left}->\{t} at \{left.position}"
                 def ops := findOverloadedOperator(compiler, t, op, right, type)
                 if ops !== null {
                     def cost := ops[1] + compilerCost[1]
@@ -369,96 +369,96 @@ class Binary {
         match op {
             when Operator.ADD {
                 def v := (l + r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.ADDU {
                 def v := (l + r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.SUB {
                 def v := (l - r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.SUBU {
                 def v := (l - r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.MUL {
                 def v := (l * r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.MULU {
                 def v := (l * r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.INTDIV {
                 if r = 0 {
-                    compiler.error(right.position(), "division by 0")
+                    compiler.error(right.position, "division by 0")
                     return null
                 }
                 def v := (l // r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.INTDIVU {
                 if r = 0 {
-                    compiler.error(right.position(), "division by 0")
+                    compiler.error(right.position, "division by 0")
                     return null
                 }
                 def v := (l // r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.REM {
                 if r = 0 {
-                    compiler.error(right.position(), "division by 0")
+                    compiler.error(right.position, "division by 0")
                     return null
                 }
                 def v := (l % r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.EQ {
-                return ASTNode.BIT(left.position(), l = r)
+                return ASTNode.BIT(left.position, l = r)
             }
             when Operator.NEQ {
-                return ASTNode.BIT(left.position(), l != r)
+                return ASTNode.BIT(left.position, l != r)
             }
             when Operator.LT {
-                return ASTNode.BIT(left.position(), l < r)
+                return ASTNode.BIT(left.position, l < r)
             }
             when Operator.GT {
-                return ASTNode.BIT(left.position(), l > r)
+                return ASTNode.BIT(left.position, l > r)
             }
             when Operator.LTEQ {
-                return ASTNode.BIT(left.position(), l <= r)
+                return ASTNode.BIT(left.position, l <= r)
             }
             when Operator.GTEQ {
-                return ASTNode.BIT(left.position(), l >= r)
+                return ASTNode.BIT(left.position, l >= r)
             }
             when Operator.BITWISEAND {
                 def v := (l && r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.BITWISEOR {
                 def v := (l || r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.BITWISEXOR {
                 def v := (l ~~ r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.SHIFTLEFT {
                 def v := (l << r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.SHIFTLEFTU {
                 def v := (l << r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
             when Operator.SHIFTRIGHT {
                 def v := (l >> r).toUInt64
-                return ASTNode.INT(left.position(), v)
+                return ASTNode.INT(left.position, v)
             }
         }
-        compiler.error(left.position(), "'\{op.toString}' cannot operate on 'frost.core.Int64', " +
+        compiler.error(left.position, "'\{op.toString}' cannot operate on 'frost.core.Int64', " +
                 "'frost.core.Int64'")
         return null
     }
@@ -691,7 +691,7 @@ class Binary {
                                 }
                                 return compiler.coerce(position, compiler.cast(position,
                                         Dot.compile(compiler, position, compiledLeft, "f\{v}"),
-                                            compiledLeft.type().nonnullable().subtypes[v.asInt]),
+                                            compiledLeft.type.nonnullable().subtypes[v.asInt]),
                                             type)
                             }
                         }
@@ -726,24 +726,24 @@ class Binary {
                 if compiledLeft == null {
                     return null
                 }
-                if op = Operator.INDEX & compiledLeft.type().nonnullable().isTuple {
+                if op = Operator.INDEX & compiledLeft.type.nonnullable().isTuple {
                     match right {
                         when ASTNode.INT(_, v) {
                             return compiler.coerce(position, compiler.cast(position,
                                     Dot.compile(compiler, position, compiledLeft, "f\{v}"),
-                                        compiledLeft.type().nonnullable().subtypes[v.asInt]), type)
+                                        compiledLeft.type.nonnullable().subtypes[v.asInt]), type)
                         }
                     }
                 }
                 def compiledRight:IR.Value?
-                if compiler.coercionCost(right, compiledLeft.type()) !== null {
+                if compiler.coercionCost(right, compiledLeft.type) !== null {
                     compiledRight := compiler.compileExpression(right,
-                            TypeContext.TYPE(compiledLeft.type(), false))
+                            TypeContext.TYPE(compiledLeft.type, false))
                     if compiledRight == null {
                         return null
                     }
-                    if (compiledLeft.type() = compiler.BUILTIN_BIT_TYPE |
-                            compiledLeft.type().isBuiltinNumber) {
+                    if (compiledLeft.type = compiler.BUILTIN_BIT_TYPE |
+                            compiledLeft.type.isBuiltinNumber) {
                         def resultType := compiler.preferredType(ASTNode.BINARY(position.asPosition,
                                 left, op, right))
                         if resultType !== null {
@@ -760,7 +760,7 @@ class Binary {
                     }
                 }
                 compiler.error(position, "no match for '\{op.toString}' on " +
-                        "'\{compiledLeft.type()}', '\{compiledRight.type()}'" +
+                        "'\{compiledLeft.type}', '\{compiledRight.type}'" +
                         type.description())
                 return null
             }

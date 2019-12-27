@@ -19,7 +19,7 @@ class Tuple {
         match index {
             when ASTNode.INT(_, value) {
                 if value > tuple.subtypes.count.asUInt64 {
-                    compiler.error(index.position(),
+                    compiler.error(index.position,
                             "tuple index '\{index}' is out of bounds for '\{tuple}'")
                 }
                 return tuple.subtypes[value.asInt]
