@@ -17,8 +17,9 @@ class Annotations {
         constant UNSAFE_IMMUTABLE := 1 << 13
         constant UNSAFE_ACCESS    := 1 << 14
         constant DEFAULT          := 1 << 15
-        -- tags a field in a closure class which is used to represent a captured value
-        constant CAPTURE          := 1 << 16
+        -- tags a closure method or class, or a field in a closure class which is used to represent
+        -- a captured value
+        constant CLOSURE          := 1 << 16
         constant STUB             := 1 << 17
         constant NO_RETURN        := 1 << 18
         constant POINTER_SIZE     := 1 << 19
@@ -82,7 +83,7 @@ class Annotations {
 
     property isDefault:Bit
 
-    property isCapture:Bit
+    property isClosure:Bit
 
     property isStub:Bit
 
@@ -181,8 +182,8 @@ class Annotations {
         return flags && Flag.DEFAULT != 0
     }
 
-    function get_isCapture():Bit {
-        return flags && Flag.CAPTURE != 0
+    function get_isClosure():Bit {
+        return flags && Flag.CLOSURE != 0
     }
 
     function get_isStub():Bit {
@@ -253,8 +254,8 @@ class Annotations {
         if isDefault {
             result.append("@default\n")
         }
-        if isCapture {
-            result.append("@capture\n")
+        if isClosure {
+            result.append("@closure\n")
         }
         if isNoReturn {
             result.append("@noReturn\n")

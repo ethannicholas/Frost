@@ -1474,8 +1474,14 @@ class Call {
         }
         else if !m.value.annotations.isClass & !compiler.isValueInit(m.value) {
             if compiler.isClassContext() {
-                compiler.error(position,
-                        "cannot call instance \{m.value.declaration} from a @class context")
+                if compiler.currentMethod[0].annotations.isClosure {
+                    compiler.error(position, "reference to instance \{m.value.declaration} from " +
+                                    "within a closure requires an explicit 'self.'")
+                }
+                else {
+                    compiler.error(position,
+                            "cannot call instance \{m.value.declaration} from a @class context")
+                }
                 return null
             }
             finalTarget := compiler.compileSelf(position, false)

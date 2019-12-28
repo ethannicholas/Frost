@@ -3606,7 +3606,7 @@ class Compiler : ErrorReporter {
         if v.name = SELF_NAME {
             for c in captures {
                 c[1][SELF_NAME] := Capture.SELF
-                if !c[0].annotations.isCapture {
+                if !c[0].annotations.isClosure {
                     return
                 }
             }
@@ -3698,7 +3698,15 @@ class Compiler : ErrorReporter {
                             }
                         }
                     }
-                    if f.annotations.isCapture {
+                    else {
+                        if !f.annotations.isClass & !f.annotations.isClosure &
+                                currentMethod[0].annotations.isClosure {
+                            error(position, "reference to field '\{f.name}' from within a " +
+                                    "closure requires an explicit 'self.'")
+                            return null
+                        }
+                    }
+                    if f.annotations.isClosure {
                         capture(position, f)
                     }
                     return FieldLValue(self, position, target, f).compileLoad()
@@ -6498,7 +6506,7 @@ class Compiler : ErrorReporter {
         var intSize := 8
         var format:Format? := null
         var root:String? := null
-        var preserveTemporaries := true
+        var preserveTemporaries := false
         var debug := false
         var isBootstrap := false
         var useStubs := true

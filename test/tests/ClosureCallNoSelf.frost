@@ -1,0 +1,16 @@
+function hello():String {
+    return "Hello"
+}
+
+method main() {
+    Console.printLine(hello())
+    method a() {
+        Console.printLine(hello())
+        method b() {
+            Console.printLine(hello())
+            method c() {
+                Console.printLine(hello())
+            }
+        }
+    }
+}

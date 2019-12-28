@@ -1,0 +1,14 @@
+def s := "Hello"
+
+method main() {
+    Console.printLine(s)
+    method a() {
+        Console.printLine(s)
+        method b() {
+            Console.printLine(s)
+            method c() {
+                Console.printLine(s)
+            }
+        }
+    }
+}

@@ -1,0 +1,4 @@
+ClosureFieldNoSelf.frost:6:27: error: reference to field 's' from within a closure requires an explicit 'self.'
+ClosureFieldNoSelf.frost:8:31: error: reference to field 's' from within a closure requires an explicit 'self.'
+ClosureFieldNoSelf.frost:10:35: error: reference to field 's' from within a closure requires an explicit 'self.'
+3 errors

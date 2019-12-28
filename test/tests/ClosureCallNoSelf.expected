@@ -1,0 +1,4 @@
+ClosureCallNoSelf.frost:8:27: error: reference to instance function anonymous.BareCode.hello():frost.core.String from within a closure requires an explicit 'self.'
+ClosureCallNoSelf.frost:10:31: error: reference to instance function anonymous.BareCode.hello():frost.core.String from within a closure requires an explicit 'self.'
+ClosureCallNoSelf.frost:12:35: error: reference to instance function anonymous.BareCode.hello():frost.core.String from within a closure requires an explicit 'self.'
+3 errors

@@ -18,4 +18,31 @@ function closureTest(param1:Int):(Int)=>((Int)=>(Int)) {
 
 method main() {
     Console.printLine(closureTest(4)(5)(6))
+
+    def s := "Hello"
+    method a() {
+        method b() {
+            method c() {
+                method d() {
+                    method e() {
+                        method f() {
+                            method g() {
+                                method h() {
+                                    Console.printLine(s.length)
+                                }
+                                h()
+                            }
+                            g()
+                        }
+                        f()
+                    }
+                    e()
+                }
+                d()
+            }
+            c()
+        }
+        b()
+    }
+    a()
 }

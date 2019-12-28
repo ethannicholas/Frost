@@ -174,21 +174,21 @@ class Closure {
             match c {
                 when Capture.VARIABLE(v) {
                     def field := FieldDecl(result, p, null,
-                            Annotations(Annotations.Flag.SYNTHETIC || Annotations.Flag.CAPTURE),
+                            Annotations(Annotations.Flag.SYNTHETIC || Annotations.Flag.CLOSURE),
                             FieldDecl.Kind.DEF, v.name, v.type, null)
                     result.symbolTable.add(field)
                     result.fields.add(field)
                 }
                 when Capture.FIELD(f) {
                     def field := FieldDecl(result, p, null,
-                            Annotations(Annotations.Flag.SYNTHETIC || Annotations.Flag.CAPTURE),
+                            Annotations(Annotations.Flag.SYNTHETIC || Annotations.Flag.CLOSURE),
                             FieldDecl.Kind.DEF, f.name, f.type, null)
                     result.symbolTable.add(field)
                     result.fields.add(field)
                 }
                 when Capture.SELF {
                     def field := FieldDecl(result, p, null,
-                            Annotations(Annotations.Flag.SYNTHETIC || Annotations.Flag.CAPTURE),
+                            Annotations(Annotations.Flag.SYNTHETIC || Annotations.Flag.CLOSURE),
                             FieldDecl.Kind.DEF, Compiler.CAPTURED_SELF_NAME,
                             capturedSelfType(compiler), null)
                     result.symbolTable.add(field)
@@ -248,7 +248,8 @@ class Closure {
             compiler.writeCode := false
             def currentCaptures:(MethodDecl, Map<String, Capture>) := (compiler.currentMethod[0],
                     HashMap<String, Capture>())
-            def annotations := Annotations(Annotations.Flag.CLASS || Annotations.Flag.UNSAFE_ACCESS)
+            def annotations := Annotations(Annotations.Flag.CLASS ||
+                    Annotations.Flag.UNSAFE_ACCESS || Annotations.Flag.CLOSURE)
             def methodDecl := MethodDecl(compiler.currentClass[0],
                     Position(), Int.MAX, null, annotations, MethodDecl.Kind.METHOD, "<dummy>", null,
                     [], compiler.VOID_TYPE, FixedArray<ASTNode>.from([]))
@@ -574,7 +575,7 @@ class Closure {
         def currentCaptures:(MethodDecl, Map<String, Capture>) := (compiler.currentMethod[0],
                 HashMap<String, Capture>())
         compiler.captures.push(currentCaptures)
-        var annotations := Annotations.Flag.CLASS
+        var annotations := Annotations.Flag.CLASS || Annotations.Flag.CLOSURE
         if compiler.currentMethod[0].annotations.isUnsafeAccess {
             annotations ||= Annotations.Flag.UNSAFE_ACCESS
         }
