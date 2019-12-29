@@ -5,7 +5,9 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodPosition
+uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
+uses org.frostlang.frostc.Variable
 
 class Identifier {
     @class
@@ -13,7 +15,15 @@ class Identifier {
         if name = Compiler.FORCE_SELF_NAME {
             def s := compiler.symbolTable[Compiler.SELF_NAME]
             assert s !== null, "no 'self' in symboltable"
-            return compiler.symbolRef(position, null, s)
+            assert s.kind = Symbol.Kind.VARIABLE
+            match s->Variable.storage {
+                when Variable.Storage.PARAMETER(slot) {
+                    return IR.Value.PARAMETER(0, compiler.currentClass[0].type)
+                }
+                otherwise {
+                    unreachable
+                }
+            }
         }
         var s := compiler.symbolTable[name]
         if s == null {

@@ -6603,6 +6603,9 @@ class Compiler : ErrorReporter {
                 when "--no-stubs" {
                     useStubs := false
                 }
+                when "--preserve-temporaries" {
+                    preserveTemporaries := true
+                }
                 otherwise {
                     if a.endsWith(".frost") {
                         def f := File(a)
