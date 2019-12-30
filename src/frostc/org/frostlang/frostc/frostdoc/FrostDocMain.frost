@@ -60,7 +60,7 @@ method xsltproc(input:File, xsl:File, output:File):Error? {
             args.add(xsl.path)
             args.add(input.path)
             def p := System.exec("xsltproc", args)
-            output.parent.createDirectories()
+            output.parent().createDirectories()
             p.standardOutput().sendTo(output.withExtension(".html").openOutputStream())
             p.standardError().sendTo(Console.errorStream())
             assert p.waitFor() = 0

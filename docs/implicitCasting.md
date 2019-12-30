@@ -1,16 +1,16 @@
 Implicit Casting
 ================
 
-In contrast to *explicit* casts performed with the [cast operator (`->`)](operators.md#cast),
+In contrast to *explicit* casts performed with the [cast operator (`->`)](operators.md#Cast),
 *implicit casts* are performed automatically by the compiler.
 
 A type may be implicitly cast to another type in the following cases:
 
 * Using an instance of a class where an instance of one of its superclasses is expected
-* Using a narrower [integer](basicTypes.md#numbers) where a wider integer of the same signedness
+* Using a narrower [integer](basicTypes.md#Numbers) where a wider integer of the same signedness
   is expected
 * Using `Real32` where `Real64` is expected
-* Using an integer where an at-least-as-wide [real number](basicTypes.md#numbers) is expected
+* Using an integer where an at-least-as-wide [real number](basicTypes.md#Numbers) is expected
 * Using an unsigned integer where a wider signed integer is expected
 * Using a [null](null.md) where any nullable type is expected
 * Using a non-nullable type where the equivalent nullable type is expected

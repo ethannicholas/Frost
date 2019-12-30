@@ -6,7 +6,6 @@ integral to programming that they enjoy special treatment within the compiler. A
 are in the [package](packages.md) `frost.core`, so that the fully-qualified name of e.g. the 32-bit
 signed integer type is `frost.core.Int32`.
 
-<a name="numbers"></a>
 Numbers
 -------
 
@@ -35,17 +34,14 @@ Numbers may be represented in programs using any of the following:
 * Hexadecimal with a leading `0x`, e.g. `0x1B6A`
 * Binary with a leading `0b`, e.g. `0b1110001`
 
-<a name="Bit"></a>
 Bit
 ---
 
 `Bit` is Frost's boolean logic type. `Bit` has exactly two possible values, `true` or `false`,
 represented by the literal words `true` and `false` in a program. Bit values are generally produced
-by the [logical operators](operators.md#logic), and are often used in
-[control statements](statements.md#control) such as [`if`](statements.md#if),
-[`while`](statements.md#while), and [`do`](statements.md#do).
+by the [logical operators](operators.md#Logic), and are often used in control statements such as
+[`if`](statements.md#if), [`while`](statements.md#while), and [`do`](statements.md#do).
 
-<a name="Char"></a>
 Char
 ----
 
@@ -56,7 +52,6 @@ provide their characters in any of the three sizes, but String's API is primaril
 Frost does not have a dedicated `Char` literal syntax. Any single-character string literal, such as
 `"Q"` or `"🐼"`, may be used in a context where a `Char` that can hold it is expected.
 
-<a name="String"></a>
 String
 ------
 

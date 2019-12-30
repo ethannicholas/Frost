@@ -1,6 +1,7 @@
 package org.frostlang.frostc.frostdoc
 
 uses org.frostlang.frostc.ClassDecl
+uses org.frostlang.frostc.CodeGenerator
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.MethodDecl
@@ -107,11 +108,8 @@ class LinkResolver {
         return linkTo(f.owner) + "#\{f.name}"
     }
 
-    function linkTo(m:MethodDecl):String? {
-        compiler.resolve(m)
-        def result := MutableString(linkTo(m.owner))
-        result.append("#")
-        result.append(m.name)
+    function anchorTo(m:MethodDecl):String? {
+        def result := MutableString(m.name)
         result.append("(")
         var separator := ""
         for p in m.parameters {
@@ -124,8 +122,14 @@ class LinkResolver {
             result.append(":")
             result.append(m.returnType)
         }
-        result.replace("&", "&amp;")
-        result.replace("<", "&lt;")
+        return CodeGenerator.escapeName(result.finish()).replace("$", "@")
+    }
+
+    function linkTo(m:MethodDecl):String? {
+        compiler.resolve(m)
+        def result := MutableString(linkTo(m.owner))
+        result.append("#")
+        result.append(anchorTo(m))
         return result.finish()
     }
 

@@ -134,6 +134,13 @@ checks are disabled, violating a postcondition leads to undefined behavior.
 Strengthens a postcondition found in an overridden method. A method must fulfill all of the `@post`
 and `@postAnd` conditions in effect on it.
 
+<a name="weak"></a>
+@weak
+-----
+
+Causes a field to only weakly refer to its contents, meaning that this reference does not
+participate in reference counting and will not prevent an object from being destroyed.
+
 <a name="limited"></a>
 @limited
 --------
@@ -179,8 +186,9 @@ their return values at compile time, merge multiple calls together, and so forth
 potentially result in incorrect behavior in the face of functions which do not "follow the rules".
 
 <a name="external"></a>
-@external
+@external(&ltname>)
 ---------
 
-The `@external` annotation marks a method which is implemented by external (non-Frost) code. Like
-abstract methods, external methods do not have a method body.
+The `@external` annotation marks a method which is implemented by external (non-Frost) code. `name`
+is the name of the (C calling convention) external function to link to. Like abstract methods,
+external methods do not have a method body.

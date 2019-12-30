@@ -17,9 +17,8 @@ value.
 Methods defined inside of another method may access any visible [defines](defines.md), constants,
 non-variable method parameters, or fields of the enclosing class.
 
-See [method types](types.md#methodTypes) for how to describe the [type](types.md) of a method.
+See [method types](types.md#Method%20Types) for how to describe the [type](types.md) of a method.
 
-<a name="lambdas"></a>
 Lambdas
 -------
 

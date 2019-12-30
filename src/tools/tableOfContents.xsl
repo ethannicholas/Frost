@@ -22,8 +22,8 @@
                                 <li id="statementsBullet" class="collapse">
                                     <a href="statements.html">Statements</a>
                                     <ul>
-                                        <li><a href="statements.html#assignment">Assignment</a></li>
-                                        <li><a href="statements.html#methodCalls">Method Calls</a></li>
+                                        <li><a href="statements.html#Assignment">Assignment</a></li>
+                                        <li><a href="statements.html#Method%20Calls">Method Calls</a></li>
                                         <li><a href="statements.html#if"><code>if</code></a></li>
                                         <li><a href="statements.html#for"><code>for</code></a></li>
                                         <li><a href="statements.html#while"><code>while</code></a></li>
@@ -67,7 +67,7 @@
                                 <li id="packagesBullet" class="collapse">
                                     <a href="packages.html">Packages</a>
                                     <ul>
-                                        <li><a href="packages.html#uses">Uses</a></li>
+                                        <li><a href="packages.html#Uses">Uses</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="generics.html">Generics</a></li>

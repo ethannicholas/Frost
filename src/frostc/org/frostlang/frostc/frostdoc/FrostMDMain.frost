@@ -35,7 +35,7 @@ method main(args:ListView<String>) {
         def testPath := File(args[2])
         def input := File(args[3])
         def output := File(args[4])
-        output.parent.createDirectories()
+        output.parent().createDirectories()
         def imports := Array<File>() -- FIXME literal
         imports.add(File(Config.frostSourceDir()))
         def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, 8, true, false)

@@ -515,6 +515,7 @@ class FrostDoc {
                 }).join(", ") + ">"
             }
             out.write("name", escape(name))
+            out.write("anchor", linkResolver().anchorTo(m))
             writeDoc(m)
             writeAnnotations(m.owner, m.annotations)
             out.open("params")
@@ -787,7 +788,8 @@ class FrostDoc {
             }
             self.currentClass := cl
             def dest := getPath(cl, ".xml")
-            dest.parent.createDirectories()
+            Console.printLine(dest)
+            dest.parent().createDirectories()
             out := XMLWriter(dest.openOutputStream())
             out.open("class")
             out.write("name", cl.name)

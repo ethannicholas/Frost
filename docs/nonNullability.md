@@ -79,7 +79,7 @@ This analysis will improve over time and we will eventually deal with this situa
 even then, no compiler is as smart as a human. There will always be situations in which it is in
 theory possible to prove that a value cannot be `null`, but the Frost compiler is not actually able
 to do so and will report an error. The easiest way to work around this issue is to use a
-[cast or force non-null operator](operators.md#cast) to cast the value to a non-nullable type at
+[cast or force non-null operator](operators.md#Cast) to cast the value to a non-nullable type at
 the point of access.
 
 Performance Considerations

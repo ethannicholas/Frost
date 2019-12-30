@@ -36,7 +36,6 @@ class XMLWriter {
 
     method write(tag:String, text:String):Error? {
         try {
-            assert !text.contains("&&gt")
             out.printLine("<\{tag}>\{text}</\{tag}>")
             return null
         }

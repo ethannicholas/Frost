@@ -10,7 +10,6 @@ may be [overloaded](operatorOverloading.md), just as they are in the built-in ty
 
 Frost operators come in several categories:
 
-<a name="arithmetic"></a>
 Arithmetic
 ----------
 
@@ -21,7 +20,7 @@ Arithmetic
 * `//` (integer divide): `9 // 2` is `4`
 * `%` (remainder): `9 % 2` is `1`
 
-Frost's arithmetic operators operate on [numbers](basicTypes.md#numbers), and always produce at
+Frost's arithmetic operators operate on [numbers](basicTypes.md#Numbers), and always produce at
 least an `Int32` value, even if the [types](types.md) you are operating on are smaller than that.
 If either of the two operands is `Real`, the result is `Real`. If either of the two operands is 64
 bits long, the result is 64 bits long. Thus `Int8 * Int16 = Int32`, `Int64 * Real32 = Real64`, and 
@@ -36,7 +35,6 @@ integers. To perform an integer division you must use the integer divide (`//`) 
 It is a [safety violation](safetyViolations.md) for any of these operations to result in integer
 overflow. Use the unchecked operators below to perform math which can overflow.
 
-<a name="uncheckedMath"></a>
 Unchecked Arithmetic
 --------------------
 
@@ -50,7 +48,6 @@ The unchecked arithmetic operators function exactly like the normal arithmetic o
 that they do not detect integer overflow. The resulting answer is the true answer modulo 2^n, where
 *n* is the bit width of the operation.
 
-<a name="range"></a>
 Range
 -----
 
@@ -68,14 +65,13 @@ the following ranges are all valid:
 `Range` and `SteppedRange` are used in many of Frost's APIs. They are used to specify subranges of
 [List], substrings of [String], and as a target of [`for` loops](statements.md#for).
 
-<a name="shift"></a>
 Shift
 -----
 
 * `<<` (shift left): `5 << 2` is `20`
 * `>>` (shift right): `-20 >> 2` is `-5`
 
-The *shift left* operator shifts the bits in a [number](basicTypes.md#numbers) to the left,
+The *shift left* operator shifts the bits in a [number](basicTypes.md#Numbers) to the left,
 inserting zero bits on the right. Left shifting by `n` bits is equivalent to multiplying by 2^n
 with no overflow checking.
 
@@ -83,7 +79,6 @@ The *shift right* operator shifts the bits in a number to the right. For unsigne
 are inserted on the left, and for signed types copies of the sign bit are inserted on the left.
 Right shifting by `n` bits is equivalent to dividing by 2^n.
 
-<a name="comparison"></a>
 Comparison
 ----------
 
@@ -103,7 +98,6 @@ The comparison operators are defined by the [Equatable] and [Comparable] interfa
 speaking, if you implement any of these operators you should also implement the `Equatable` or
 `Comparable` interface.
 
-<a name="identity"></a>
 Identity
 --------
 
@@ -128,7 +122,6 @@ of two value objects, for instance:
 the result is undefined. This may display either `true` or `false`, and the output may change with
 compiler settings, environment, or version of Frost.
 
-<a name="logic"></a>
 Logic
 -----
 
@@ -151,7 +144,6 @@ operand evaluates to, and so the right-hand operand is not evaluated.
 This short-circuiting behavior is built into the compiler for `Bit` values; there is no way to
 replicate this behavior on user-defined types.
 
-<a name="bitwise"></a>
 Bitwise
 -------
 
@@ -163,7 +155,6 @@ Bitwise
 The bitwise operators implement the standard boolean logic functions bit-by-bit on two integers.
 Unlike the logical operators, the bitwise operators always evaluate both of their operands.
 
-<a name="cast"></a>
 Cast
 ----
 
@@ -209,7 +200,6 @@ might *also* be nullable. This means that it is actually ok for `field` to be `n
 presence of the force non-null operator. In this example the expression `field!` will never result
 in a safety violation, even when `field` is `null`.
 
-<a name="index"></a>
 Index
 -----
 
@@ -226,4 +216,4 @@ list simply by writing:
 Operator Precedence
 -------------------
 
-See [expressions](expressions.md#precedence) for a description of operator precedence.
+See [expressions](expressions.md#Precedence) for a description of operator precedence.

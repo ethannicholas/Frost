@@ -97,9 +97,7 @@
     </xsl:template>
 
     <xsl:template name="toc">
-        <div id="toc">
-            <xsl:comment>TOCBEGIN</xsl:comment><xsl:comment>TOCEND</xsl:comment>
-        </div>
+        <xsl:comment>TOCBEGIN</xsl:comment><xsl:comment>TOCEND</xsl:comment>
     </xsl:template>
 
     <xsl:template match="source">
@@ -160,7 +158,7 @@
                         <xsl:call-template name="basePath">
                             <xsl:with-param name="className" select="$name"/> 
                         </xsl:call-template>
-                        <xsl:text>scripts/site.js</xsl:text>
+                        <xsl:text>site.js</xsl:text>
                     </xsl:attribute>
                 </script>
             </head>
@@ -584,15 +582,7 @@
             <code>
                 <xsl:apply-templates select="name" mode="hint"/>
                 <b>
-                    <a>
-                        <xsl:attribute name="href">
-                            <xsl:text>#</xsl:text>
-                            <xsl:apply-templates select="name"/>
-                            <xsl:text>(</xsl:text>
-                            <xsl:apply-templates select="params/param" mode="link"/>
-                            <xsl:text>)</xsl:text>
-                            <xsl:apply-templates select="return" mode="link"/>
-                        </xsl:attribute>
+                    <a href="#{anchor}">
                         <xsl:apply-templates select="name"/>
                     </a>
                 </b>
@@ -608,15 +598,7 @@
     </xsl:template>
 
     <xsl:template match="method|init|function">
-        <a>
-            <xsl:attribute name="name">
-                <xsl:apply-templates select="name"/>
-                <xsl:text>(</xsl:text>
-                <xsl:apply-templates select="params/param" mode="link"/>
-                <xsl:text>)</xsl:text>
-                <xsl:apply-templates select="return" mode="link"/>
-            </xsl:attribute>
-        </a>
+        <a name="{anchor}"/>
         <div class="method">
             <div class="methodHeader">
                 <code>

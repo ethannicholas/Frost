@@ -4,8 +4,7 @@ Immutable
 Frost supports first-class immutable types. All immutable types descend from the class
 [frost.core.Immutable]. By subclassing `Immutable`, you impose some restrictions on your class:
 
-* All fields must be [defines](defines.md) or [constants](variablesAndConstants.md#constants) rather
-  than variables
+* All fields must be [defines](defines.md) or [constants](constants.md) rather than variables
 * All fields must themselves be immutable types
 
 These restrictions combine to ensure that it is not possible to modify data in any instance of an

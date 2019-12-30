@@ -12,7 +12,7 @@ The full syntax for a class type is:
 For example, the type `Array<Int64?>?` refers to a nullable array of nullable `Int64`s.
 
 `<class>` is the name of any Frost class, such as `Int32` or `String`. Class names may or may not be
-[fully qualified](packages.md#fullyQualified).
+[fully qualified](packages.md).
 
 The `<parameters>` are an optional comma-separated list of types, surrounded by angle brackets
 (`<type1, type2>`). Parameters are used by [generic types](generics.md).
@@ -37,7 +37,7 @@ write:
     processString(str)
 
 because you would be passing an `Object` to a method expecting a `String`. A
-[typecast](operators.md#cast) instructs the compiler to treat an object as a different
+[typecast](operators.md#Cast) instructs the compiler to treat an object as a different
 compile-time type; in this case you could write:
 
     processString(tr->String)
@@ -45,7 +45,6 @@ compile-time type; in this case you could write:
 in order to make this call. Of course, in this particular case it would have been better to simply
 declare `str` as the right type to begin with!
 
-<a name="methodTypes"></a>
 Method Types
 ------------
 
@@ -79,7 +78,7 @@ Function types such as `(Int)=>(Int)` may be used in contexts where the equivale
 this case `(Int)=&>(Int)`) is expected, but the reverse is not true.
 
 Because [method references](methodReferences.md), [inline methods](inlineMethods.md), and
-[lambdas](inlineMethods.md#lambdas) can capture values, and those values may be mutable, the
+[lambdas](inlineMethods.md#Lambdas) can capture values, and those values may be mutable, the
 resulting method reference can itself be mutable. The types described above permit both mutable
 and [immutable](immutability.md) method references to be assigned to them. To restrict a method
 type to immutable method references only, add an asterisk (`*`) after the arrow. This gives us four

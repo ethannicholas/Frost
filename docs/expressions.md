@@ -14,8 +14,8 @@ A single term, such as:
 * [self](self.md)
 * [super](super.md)
 * A variable reference
-* An [array literal](arrayLiterals.md#simple)
-* A [tuple](tuples.md#simple)
+* An [array literal](arrayLiterals.md)
+* A [tuple](tuples.md)
 * An [inline method](inlineMethods.md)
 * A [method reference](methodReferences.md)
 
@@ -27,7 +27,6 @@ Or a compound expression, such as:
 * `<expression>[<expression>]` (indexing)
 * `<expression>(<expression>, <expression>...) (method call)
 
-<a name="precedence"></a>
 Precedence
 ----------
 

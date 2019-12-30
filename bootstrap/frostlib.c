@@ -1508,20 +1508,17 @@ bool frostFileIsDirectory(frost_int filePtr) {
 
 frost_int frostFileCreateDirectory(frost_int filePtr) {
     File* file = (File*) filePtr;
-    if (!frostFileIsDirectory(filePtr)) {
-        char* path = frostGetCString(file->path);
-        int result = mkdir(path, 0700);
-        // we double-check existence on failure, in case the failure was caused by another thread
-        // having created the directory while we were trying to...
-        if (result && !frostFileIsDirectory(filePtr)) {
-            String* result = frostFileErrorMessage("Could not create directory", path);
-            frostFree(path);
-            return frostError(result);
-        }
+    char* path = frostGetCString(file->path);
+    int result = mkdir(path, 0700);
+    if (result && errno != EISDIR && errno != EEXIST) {
+        String* result = frostFileErrorMessage("Could not create directory", path);
         frostFree(path);
+        return frostError(result);
     }
+    frostFree(path);
     return 0;
 }
+
 
 frost_int frostFileList(frost_int dir) {
     Array* result = frostObjectAlloc(sizeof(Array), &frost$collections$Array$class);

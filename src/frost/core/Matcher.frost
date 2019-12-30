@@ -29,21 +29,21 @@ class Matcher {
 
     ================================================================================================
     Returns the index of the beginning of the last match located by `find()`. It is a [safety
-    violation](/safetyViolations.md) to read this property unless the last call to `matches()` or
+    violation](/safetyViolations.html) to read this property unless the last call to `matches()` or
     `find()` was successful.
     ================================================================================================
     property start:String.Index
 
     ================================================================================================
     Returns the index of the end of the last match located by `find()`. It is a [safety
-    violation](/safetyViolations.md) to read this property unless the last call to `matches()` or
+    violation](/safetyViolations.html) to read this property unless the last call to `matches()` or
     `find()` was successful.
     ================================================================================================
     property end:String.Index
 
     ================================================================================================
     Returns the number of groups contained in the match. This is always at least 1, as group zero
-    represents the entire matched text. It is a [safety violation](/safetyViolations.md) to read
+    represents the entire matched text. It is a [safety violation](/safetyViolations.html) to read
     this property unless the last call to `matches()` or `find()` was successful.
     ================================================================================================
     property groupCount:Int

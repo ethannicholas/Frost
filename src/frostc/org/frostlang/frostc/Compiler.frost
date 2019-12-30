@@ -6402,7 +6402,7 @@ class Compiler : ErrorReporter {
         def icuLibs := Config.icuLibraries().split(";")
         for lib in icuLibs {
             def libFile := File(lib)
-            args.add("-L" + libFile.parent!)
+            args.add("-L" + libFile.parent()!)
             var simpleName := libFile.simpleName
             assert simpleName.startsWith("lib")
             simpleName := simpleName[3..]
@@ -6528,11 +6528,9 @@ class Compiler : ErrorReporter {
                     }
                     outFile := File(args.next("a filename"))
                     try {
-                        outFile.parent!.createDirectories()
+                        outFile.parent().createDirectories()
                     }
                     fail(error) {
-                        Console.printErrorLine(error)
-                        System.exit(1)
                     }
                 }
                 when "-O" {

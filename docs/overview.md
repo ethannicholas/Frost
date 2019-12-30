@@ -471,7 +471,7 @@ a `package` statement at the beginning of a file:
 Uses
 ----
 
-The [`uses`](packages.md#uses) declaration allows you to refer to a class by its simple name:
+The [`uses`](packages.md#Uses) declaration allows you to refer to a class by its simple name:
 
     uses com.example.foo.Example
 
@@ -812,7 +812,7 @@ We could also have referred to `+` as a member of a specific `Int` instance, in 
 
 In addition to function types like `(Int)=>(Int)`, there are method types (`(Int)=&>(Int)`),
 immutable function types (`(Int)=>*(Int)`), and immutable method types (`(Int)=&>*(Int)`). These are
-described on the [Method Types](types.md#methodTypes) page.
+described on the [Method Types](types.md#Method%20Types) page.
 
 [Read more about inline methods.](inlineMethods.md)
 
@@ -862,7 +862,7 @@ inner methods.
 Lambdas
 -------
 
-[Lambdas](inlineMethods.md#lambdas) are a shorthand syntax for creating anonymous functions which
+[Lambdas](inlineMethods.md#Lambdas) are a shorthand syntax for creating anonymous functions which
 return the value of an expression.
 
     x:Int => x.abs -- equivalent to function(x:Int):Int { return x.abs }
@@ -876,7 +876,7 @@ expects a particular function type), you may omit the types:
 
     (x, y) => x + y
 
-[Read more about lambdas.](inlineMethods.md#lambdas)
+[Read more about lambdas.](inlineMethods.md#Lambdas)
 
 Error Handling
 --------------

@@ -42,7 +42,6 @@ from within the method:
 
 This defines a method which returns the value of its argument squared.
 
-<a name="annotations"></a>
 Annotations
 -----------
 
@@ -59,7 +58,6 @@ The following [annotations](annotations.md) are legal on methods:
 * [`@post(...)`](annotations.md#post)
 * [`@postAnd(...)`](annotations.md#post)
 
-<a name="variableParameters"></a>
 Variable Parameters
 -------------------
 
@@ -181,7 +179,7 @@ There are three ways to use a method as a value:
         ...
     })
 
-[Lambdas](inlineMethods.md#lambdas), such as:
+[Lambdas](inlineMethods.md#Lambdas), such as:
    
     list.fold((x, y) => x.union(y))
 )

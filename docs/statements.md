@@ -5,7 +5,6 @@ Frost code is comprised of a sequence of *statements*. Statements are executed o
 order, except where *control flow statements* specifically repeat or skip statements. The following
 statement types are supported:
 
-<a name="assignment"></a>
 Assignment
 ----------
 
@@ -31,11 +30,10 @@ destinations:
 
     def (x, y) := origin()
 
-This gives both `x` and `y` the value `0`. See [destructuring tuples](tuples.md#destructuring) for
+This gives both `x` and `y` the value `0`. See [destructuring tuples](tuples.md#Destructuring) for
 more about multiple assignment.
 
 
-<a name="methodCalls"></a>
 Method Calls
 ------------
 
@@ -56,8 +54,6 @@ superclass' implementation of the method is used. For example,
         return "<Derived:\{super.convert()}>"
     }
 
-<a name="control"></a>
-<a name="if"></a>
 if
 ----
 
@@ -88,7 +84,6 @@ under the `else` (if there is an `else`) are executed. For instance,
         Console.writeLine("x was equal to 5")
     }
 
-<a name="for"></a>
 for
 ----
 
@@ -129,7 +124,6 @@ of variable names to split the tuple into separate variables:
         numbers[name] := value
     }
 
-<a name="while"></a>
 while
 -----
 
@@ -147,7 +141,6 @@ The `while` statement repeatedly executes a block of statements so long as its `
 The optional `<label>` before the loop allows `break` and `continue` statements to refer to it by
 name. It is otherwise ignored.
 
-<a name="do"></a>
 do
 ----
 
@@ -167,7 +160,6 @@ rather than the beginning. The loop body will therefore always execute at least 
 The optional `<label>` before the loop allows `break` and `continue` statements to refer to it by
 name. It is otherwise ignored.
 
-<a name="loop"></a>
 loop
 ----
 
@@ -185,7 +177,6 @@ The `loop` statement runs its body over and over indefinitely. It is an infinite
 The optional `<label>` before the loop allows `break` and `continue` statements to refer to it by
 name. It is otherwise ignored.
 
-<a name="break"></a>
 break
 -----
 
@@ -215,7 +206,6 @@ innermost loop it is contained within, as in:
         }
     }
 
-<a name="continue"></a>
 continue
 --------
 
@@ -227,7 +217,6 @@ The `continue` statement immediately skips ahead to the next iteration of a `for
 `loop`. As with `break`, `continue` normally affects the innermost loop it is contained within, but
 the optional `<label>` allows it to refer to loops other than the innermost one.
 
-<a name="return"></a>
 return
 ------
 
@@ -240,7 +229,6 @@ causes it to return the specified value. Return statements in methods which retu
 always provide a value, and return statements in methods which do not return values may never
 provide a value.
 
-<a name="assert"></a>
 assert
 ------
 
@@ -265,7 +253,6 @@ line of code to be reached", but in Frost `assert false` will not compile. You n
 
 **IMPLEMENTATION NOTE:** "assert false" isn't actually a compiler error yet, but it will be soon.
 
-<a name="unreachable"></a>
 unreachable
 -----------
 
@@ -308,7 +295,6 @@ safety violation which causes the program to terminate. If safety checks are dis
 is free to optimize under the assumption that no `unreachable` code is actually reached, and
 reaching `unreachable` therefore causes undefined behavior.
 
-<a name="match"></a>
 match
 -----
 

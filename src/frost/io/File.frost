@@ -21,10 +21,11 @@ class File : Immutable, HashKey<File> {
     property isAbsolute:Bit
 
     ================================================================================================
-    The directory containing this file, or `null` if this is the root directory. The parent is
-    computed based purely on the path string, without accessing the filesystem.
+    The directory containing this file, or `null` if this file is the root directory or `"."`. The
+    directory is computed based purely on the path string, without accessing the filesystem. Use
+    [parent()] to determine the directory by accessing the filesystem.
     ================================================================================================
-    property parent:File?
+    property directory:File?
 
     ================================================================================================
     The name (not including directory) of this file. For instance, `File("/tmp/data/log.txt").name`
@@ -61,6 +62,9 @@ class File : Immutable, HashKey<File> {
         if path.startsWith("/") {
             return File(path)
         }
+        if path = "." {
+            return self
+        }
         if self.path.endsWith("/") {
             return File(self.path + path)
         }
@@ -86,14 +90,31 @@ class File : Immutable, HashKey<File> {
         return path.startsWith("/")
     }
     
+    -- only guaranteed to work for files which actually exist
+    @private
+    @external(frostFileAbsolute)
+    method systemAbsolutePath():Maybe<File>
+
     ================================================================================================
     Returns a `File` representing the absolute path of this file. This queries the filesystem and
     thus is not guaranteed to succeed.
 
     @returns the file's absolute path
     ================================================================================================
-    @external(frostFileAbsolute)
-    method absolute():Maybe<File>
+    method absolute():Maybe<File> {
+        if exists() {
+            return systemAbsolutePath()
+        }
+        try {
+            if path.contains("/") {
+                return Maybe<File>.SUCCESS(directory.absolute().resolve(name))
+            }
+            return Maybe<File>.SUCCESS(System.workingDirectory().absolute().resolve(path))
+        }
+        fail(error) {
+            return Maybe<File>.ERROR(error)
+        }
+    }
 
     @private
     @class
@@ -104,9 +125,9 @@ class File : Immutable, HashKey<File> {
         if result = "/" {
             return result
         }
-        -- remove trailing '/'
-        while result.endsWith("/") {
-            result := result[..result.length - 1]
+        -- remove trailing '/' or '/.'
+        while result.endsWith("/") | result.endsWith("/.") {
+            result := result[..result.lastIndexOf("/")]
         }
         def absolute := result.startsWith("/")
         if absolute {
@@ -127,10 +148,10 @@ class File : Immutable, HashKey<File> {
         result := components.join("/")
         if absolute {
             result := "/" + result
-        }
-        if absolute & result.contains("/..") {
-            -- uh-oh, we went above root level
-            return null
+            if result.contains("/..") {
+                -- uh-oh, we went above root level
+                return null
+            }
         }
         if result = "" {
             result := "."
@@ -138,12 +159,31 @@ class File : Immutable, HashKey<File> {
         return result
     }
 
-    function get_parent():File? {
+    function get_directory():File? {
+        def n := normalize(path)
+        if n = "/" | n = "." | n = ".." {
+            return null
+        }
+        if !n.contains("/") {
+            return File(".")
+        }
         def result := normalize(resolve("..").path)
         if result == null {
             return null
         }
         return File(result)
+    }
+
+    function parent():File? {
+        try {
+            if path.contains("/") {
+                return directory
+            }
+            return absolute().directory
+        }
+        fail(error) {
+            return null
+        }
     }
 
     function get_name():String {
@@ -185,7 +225,7 @@ class File : Immutable, HashKey<File> {
     ================================================================================================
     function withExtension(ext:String):File {
         -- FIXME remove ! when analysis is finished
-        return parent!.resolve(simpleName + ext)
+        return directory!.resolve(simpleName + ext)
     }
 
     ================================================================================================
@@ -227,8 +267,8 @@ class File : Immutable, HashKey<File> {
     ================================================================================================
     method createDirectories():Error? {
         try {
-            def p := parent
-            if p !== null & !p.exists() {
+            def p := parent()
+            if p !== null {
                 p.createDirectories()
             }
             createDirectory()

@@ -779,6 +779,7 @@ run_markdown(markdown_html
     docs/packages.md
     docs/programs.md
     docs/properties.md
+    docs/safetyViolations.md
     docs/self.md
     docs/statements.md
     docs/stringInterpolation.md
@@ -828,6 +829,8 @@ endfunction()
 
 syntax_highlight(frost_source_html
     ${public_source}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Range.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/SteppedRange.frost
 )
 
 add_custom_target(docs
