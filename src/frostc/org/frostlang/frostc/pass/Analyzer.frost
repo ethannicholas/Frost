@@ -321,7 +321,7 @@ class Analyzer {
             when IR.Statement.CAST(_, value, _, _) {
                 return definitionFrom(value)
             }
-            when IR.Statement.LOAD(_, value) {
+            when IR.Statement.LOAD(_, value, _) {
                 return definitionFrom(value)
             }
             otherwise {
@@ -397,17 +397,22 @@ class Analyzer {
             when IR.Statement.GET_FIELD_POINTER(_, base, f) {
                 return DataFlowValue(f.type, definitionFrom(stmt))
             }
-            when IR.Statement.LOAD(p, v) {
+            when IR.Statement.LOAD(p, v, explicit) {
                 def value := getValue(p, v, state)
-                if reportErrors & value.type = compiler.INVALID_TYPE {
+                if reportErrors {
                     match v {
                         when IR.Value.LOCAL(slot, _) {
-                            compiler.error(p.asPosition, "variable '\{ir.locals[slot][0]}' may " +
-                                    "not have been initialized at this point")
+                            if explicit & state.localInitialization[slot] !=
+                                    Initialization.DEFINITELY_INITIALIZED {
+                                compiler.error(p.asPosition, "variable '\{ir.locals[slot][0]}' " +
+                                        "may not have been initialized at this point")
+                            }
                         }
                         otherwise {
-                            compiler.error(p.asPosition, "value may not have been initialized at " +
-                                    "this point")
+                            if value.type = compiler.INVALID_TYPE {
+                                compiler.error(p.asPosition, "value may not have been " +
+                                    "initialized at this point")
+                            }
                         }
                     }
                 }
@@ -561,7 +566,7 @@ class Analyzer {
                             when IR.Value.REF(id, _) {
                                 def ref := statements[id]!
                                 match ref {
-                                    when IR.Statement.LOAD(_, value) {
+                                    when IR.Statement.LOAD(_, value, _) {
                                         nonNullImplications.add((definitionFrom(value), true))
                                     }
                                 }
@@ -580,7 +585,7 @@ class Analyzer {
                             when IR.Value.REF(id, _) {
                                 def ref := statements[id]!
                                 match ref {
-                                    when IR.Statement.LOAD(_, value) {
+                                    when IR.Statement.LOAD(_, value, _) {
                                         nonNullImplications.add((definitionFrom(value), false))
                                     }
                                 }

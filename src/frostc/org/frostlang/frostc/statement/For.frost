@@ -212,7 +212,7 @@ class For {
         -- perform the test by subtracting index from end and then comparing to step, to avoid
         -- overflows near the maximum value
         def indexLoad := compiler.convert(IR.Value.REF(ir.add(IR.Statement.LOAD(position,
-                IR.Value.LOCAL(indexSlot, rawIndexType))), rawIndexType), indexType)
+                IR.Value.LOCAL(indexSlot, rawIndexType), true)), rawIndexType), indexType)
         assert indexLoad !== null
         -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
         -- the same sign
@@ -421,7 +421,7 @@ class For {
         def loopInc := ir.newBlock("loopInc")
         -- beginning of loop test, load index and determine direction
         def indexLoad := compiler.convert(IR.Value.REF(ir.add(IR.Statement.LOAD(position,
-                IR.Value.LOCAL(indexSlot, rawIndexType))), rawIndexType), indexType)
+                IR.Value.LOCAL(indexSlot, rawIndexType), true)), rawIndexType), indexType)
         assert indexLoad !== null
         def forwardTest := ir.newBlock("forwardTest")
         def backwardTest := ir.newBlock("backwardTest")

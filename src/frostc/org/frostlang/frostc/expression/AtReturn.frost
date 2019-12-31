@@ -31,7 +31,7 @@ class AtReturn {
             }
         }
         def load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.LOCAL(returnSlot,
-                compiler.returnVar.type)))
+                compiler.returnVar.type), true))
         return compiler.coerce(position, IR.Value.REF(load, compiler.returnVar.type), type)
     }
 }

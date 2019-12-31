@@ -802,13 +802,13 @@ class Call {
         def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj,
                 pointerField))
         def methodPtr := ir.add(IR.Statement.LOAD(position, IR.Value.REF(methodPtrPtr,
-                compiler.BUILTIN_INT_TYPE)))
+                compiler.BUILTIN_INT_TYPE), true))
         def targetField := st["target"]->FieldDecl
         if !compiler.resolve(targetField) {
             return null
         }
         def targetPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj, targetField))
-        def target := ir.add(IR.Statement.LOAD(position, IR.Value.REF(targetPtr, targetType)))
+        def target := ir.add(IR.Statement.LOAD(position, IR.Value.REF(targetPtr, targetType), true))
         def targetNonNull := ir.add(IR.Statement.BINARY(position, IR.Value.REF(target, targetType),
                 Binary.Operator.NIDENTITY, IR.Value.NULL(targetType.nullable()),
                 compiler.BUILTIN_BIT_TYPE))
@@ -851,7 +851,7 @@ class Call {
         ir.add(IR.Statement.BRANCH(position, mergeBlock))
         ir.setCurrentBlock(mergeBlock)
         if result !== null {
-            def resultLoad := ir.add(IR.Statement.LOAD(position, result))
+            def resultLoad := ir.add(IR.Statement.LOAD(position, result, true))
             def loadRef := IR.Value.REF(resultLoad, t.returnType)
             if compiler.isRefCounted(t.returnType) {
                 compiler.enclosingContexts.push(EnclosingContext.VALUE_SCOPE(loadRef))
@@ -1080,7 +1080,7 @@ class Call {
             def errorPtr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, v,
                     cl.choiceCases[1], 0))
             def errorValue := ir.add(IR.Statement.LOAD(position, IR.Value.REF(errorPtr,
-                    errorType)))
+                    errorType), true))
             def errorRef := IR.Value.REF(errorValue, errorType)
             compiler.compileRef(errorRef)
             match tryScope[1].storage {
@@ -1098,7 +1098,7 @@ class Call {
             def successPtr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, v,
                     cl.choiceCases[0], 0))
             def successValue := ir.add(IR.Statement.LOAD(position, IR.Value.REF(successPtr,
-                    compiler.ANY_TYPE)))
+                    compiler.ANY_TYPE), true))
             def successCast := compiler.cast(position, IR.Value.REF(successValue,
                     compiler.ANY_TYPE), type.subtypes[1])
             return successCast
@@ -1249,7 +1249,7 @@ class Call {
             return inlineReturn.value
         }
         def load := compiler.ir.add(IR.Statement.LOAD(position,
-                IR.Value.LOCAL(inlineReturnSlot, m.returnType)))
+                IR.Value.LOCAL(inlineReturnSlot, m.returnType), true))
         return IR.Value.REF(load, m.returnType)
     }
 

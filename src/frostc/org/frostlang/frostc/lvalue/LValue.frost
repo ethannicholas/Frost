@@ -24,7 +24,7 @@ this case) - we never create an lvalue and then not use it.
 interface LValue {
     function type():Type
 
-    method compileLoad():IR.Value?
+    method compileLoad(explicit:Bit):IR.Value?
 
     method compileStore(value:IR.Value, explicit:Bit)
 

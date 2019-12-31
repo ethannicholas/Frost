@@ -61,10 +61,12 @@ world, we might say that the Human class extends the Primate class, which in tur
 class, and so forth. At each step, we add new traits which specialize the class further. We could
 express this concept in Frost as follows:
 
+    @extendable
     class Mammal : Synapsid {
         ...
     }
 
+    @extendable
     class Primate : Mammal {
         ...
     }

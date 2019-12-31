@@ -420,7 +420,8 @@ Inheritance
         }
     }
 
-A class may subclass one class and any number of interfaces.
+A class may subclass one class and any number of interfaces. Only classes annotated with the
+`@extendable` annotation may be subclassed.
 
 Choices
 -------

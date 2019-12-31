@@ -2513,7 +2513,7 @@ class Compiler : ErrorReporter {
     function symbolType(target:Type?, s:Symbol,
             genericArguments:FixedArray<ASTNode>?):Array<Type>? {
         def result := Array<Type>()
-        def resolvedArguments:Array<Type>?
+        var resolvedArguments:Array<Type>? := null
         if genericArguments !== null {
             resolvedArguments := Array<Type>()
             for p in genericArguments {
@@ -3632,8 +3632,12 @@ class Compiler : ErrorReporter {
         }
     }
 
-    @post(@return !== null | errorCount > 0 | !reportErrors)
     method symbolRef(position:MethodPosition, target:IR.Value?, s:Symbol):IR.Value? {
+        return symbolRef(position, target, s, true)
+    }
+
+    @post(@return !== null | errorCount > 0 | !reportErrors)
+    method symbolRef(position:MethodPosition, target:IR.Value?, s:Symbol, explicit:Bit):IR.Value? {
         match s.kind {
             when Symbol.Kind.ALIAS {
                 def type := resolve(s->Alias.type)
@@ -3656,7 +3660,7 @@ class Compiler : ErrorReporter {
                 match v.storage {
                     when Variable.Storage.LOCAL(slot) {
                         def result := ir.add(IR.Statement.LOAD(position,
-                                IR.Value.LOCAL(slot, v.type)))
+                                IR.Value.LOCAL(slot, v.type), explicit))
                         return IR.Value.REF(result, v.type)
                     }
                     when Variable.Storage.PARAMETER(index) {
@@ -3709,7 +3713,7 @@ class Compiler : ErrorReporter {
                     if f.annotations.isClosure {
                         capture(position, f)
                     }
-                    return FieldLValue(self, position, target, f).compileLoad()
+                    return FieldLValue(self, position, target, f).compileLoad(true)
                 }
                 return null
             }
@@ -5407,7 +5411,7 @@ class Compiler : ErrorReporter {
         }
         match c {
             when EnclosingContext.VARIABLE_SCOPE(v) {
-                def ref := symbolRef(MethodPosition(v.position, currentMethodIndex), null, v)
+                def ref := symbolRef(MethodPosition(v.position, currentMethodIndex), null, v, false)
                 assert ref !== null
                 compileUnref(ref)
                 match v.storage {
@@ -5779,7 +5783,7 @@ class Compiler : ErrorReporter {
                     }
                 }
                 returnValue := IR.Value.REF(ir.add(IR.Statement.LOAD(position,
-                        IR.Value.LOCAL(returnSlot, returnVar.type))),
+                        IR.Value.LOCAL(returnSlot, returnVar.type), true)),
                         returnVar.type)
             }
             def oldReturnVar := returnVar

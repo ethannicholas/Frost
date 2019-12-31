@@ -1,0 +1,2 @@
+UninitializedVar.frost:6:23: error: variable 'uninitialized' may not have been initialized at this point
+1 error

@@ -87,7 +87,7 @@ class Assignment {
             right := compiler.compileExpression(rawRight, TypeContext.TYPE(left.type(), false))
         }
         else {
-            def load := left.compileLoad()
+            def load := left.compileLoad(true)
             if load == null {
                 return
             }

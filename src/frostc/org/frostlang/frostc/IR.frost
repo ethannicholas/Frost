@@ -90,9 +90,10 @@ class IR {
         GET_INTERFACE_METHOD(MethodPosition, Value, ClassDecl, Int, Type)
 
         ============================================================================================
-        Loads the value of the given pointer.
+        Loads the value of the given pointer. An "explicit" load is one which corresponds to user
+        code and should trigger an error when loading an uninitialized value.
         ============================================================================================
-        LOAD(MethodPosition, Value)
+        LOAD(MethodPosition, Value, Bit -* explicit *-)
 
         ============================================================================================
         Negates a number.
@@ -137,7 +138,8 @@ class IR {
         STATIC_CALL(MethodPosition, MethodDecl, FixedArray<Value> -* args *-)
 
         ============================================================================================
-        Writes a value to the target of the given pointer.
+        Writes a value to the target of the given pointer. An "explicit" store is one which
+        corresponds to user code and should cause a value to be considered initialized.
         ============================================================================================
         STORE(MethodPosition, Value -* value *-, Value -* dest pointer *-, Bit -* explicit *-)
 
@@ -220,7 +222,7 @@ class IR {
                 when GET_VIRTUAL_METHOD(position, _, _, _) {
                     return position
                 }
-                when LOAD(position, _) {
+                when LOAD(position, _, _) {
                     return position
                 }
                 when NEGATE(position, _) {
@@ -305,8 +307,8 @@ class IR {
                 when GET_VIRTUAL_METHOD(position, value, id, type) {
                     return "get_virtual_method \{value}, \{id}, \{type}"
                 }
-                when LOAD(position, ptr) {
-                    return "load \{ptr}"
+                when LOAD(position, ptr, explicit) {
+                    return "load(\{explicit}) \{ptr}"
                 }
                 when NEGATE(position, value) {
                     return "negate \{value}"

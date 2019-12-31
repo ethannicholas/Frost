@@ -83,7 +83,7 @@ class FieldLValue : LValue {
     }
 
     @override
-    method compileLoad():IR.Value? {
+    method compileLoad(explicit:Bit):IR.Value? {
         if field.annotations.isClass & field.fieldKind = FieldDecl.Kind.CONSTANT {
             compiler.currentClass.push(field.owner)
             def old := compiler.symbolTable
@@ -114,7 +114,8 @@ class FieldLValue : LValue {
             else {
                 def ptr := compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position, target,
                         field))
-                load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType)))
+                load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType),
+                        explicit))
             }
             result := IR.Value.REF(load, rawType)
         }
@@ -199,7 +200,7 @@ class FieldLValue : LValue {
         }
         else {
             def ptr := compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position, target, field))
-            load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType)))
+            load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType), false))
         }
         result := IR.Value.REF(load, rawType)
         compiler.compileUnref(result)

@@ -1527,7 +1527,7 @@ class CodeGenerator {
                 out.add(Code.Statement.LOAD(position, mapId(id), Code.Value.STATEMENT(finalPtr,
                         Code.PrimitiveType.INT), Code.PrimitiveType.INT))
             }
-            when IR.Statement.LOAD(position, value) {
+            when IR.Statement.LOAD(position, value, _) {
                 out.add(Code.Statement.LOAD(position, mapId(id), convertValue(value),
                         primitiveType(value.type)))
             }

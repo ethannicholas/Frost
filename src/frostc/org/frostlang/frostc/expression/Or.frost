@@ -44,7 +44,7 @@ class Or {
         ir.add(IR.Statement.STORE(position, compiledRight, result, true))
         ir.add(IR.Statement.BRANCH(position, merge))
         ir.setCurrentBlock(merge)
-        def load := ir.add(IR.Statement.LOAD(position, result))
+        def load := ir.add(IR.Statement.LOAD(position, result, true))
         return IR.Value.REF(load, compiler.BIT_TYPE)
     }
 

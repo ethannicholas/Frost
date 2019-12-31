@@ -32,7 +32,7 @@ class ChoiceFieldLValue : LValue {
     }
 
     @override
-    method compileLoad():IR.Value? {
+    method compileLoad(explicit:Bit):IR.Value? {
         unreachable
     }
 

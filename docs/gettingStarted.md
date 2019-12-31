@@ -45,6 +45,8 @@ that it is functioning correctly:
 
     $ make run_tests
 
+Note that a handful of tests are expected to fail at the moment.
+
 ### Windows
 
 I'm not a Windows developer and have not attempted to compile Frost on Windows. I'm sure it will

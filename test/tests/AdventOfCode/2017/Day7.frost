@@ -147,7 +147,7 @@ method main() {
         pending.add((parsed[0], parsed[1].asInt!, children))
     }
 
-    var root:Node?
+    var root:Node? := null
     while pending.count > 0 {
         for i in pending.count - 1 ... 0 by -1 {
             if pending[i][2].filter(n => !nodes.contains(n)).count = 0 {
@@ -158,6 +158,7 @@ method main() {
             }
         }
     }
+    assert root !== null
     Console.printLine(root.name)
     Console.printLine(findMismatch(root))
 }

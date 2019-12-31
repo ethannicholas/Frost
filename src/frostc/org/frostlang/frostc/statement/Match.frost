@@ -58,7 +58,7 @@ class Match {
             cc:ChoiceCase, args:FixedArray<ASTNode>) {
         for i in 0 .. args.count {
             def ptr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, value, cc, i))
-            def load := ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, cc.fields[i])))
+            def load := ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, cc.fields[i]), true))
             def text := compiler.getText(args[i])
             def target:Target?
             {

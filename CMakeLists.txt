@@ -748,6 +748,7 @@ run_markdown(markdown_html
     docs/classes.md
     docs/comments.md
     docs/constants.md
+    docs/currentStatus.md
     docs/defaultValues.md
     docs/defines.md
     docs/documentationComments.md

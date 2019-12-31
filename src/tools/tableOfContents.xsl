@@ -11,6 +11,7 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="gettingStarted.html">Getting Started</a></li>
+                <li><a href="currentStatus.html">Current Status</a></li>
                 <li id="documentationBullet" class="open">
                     Documentation
                     <ul>

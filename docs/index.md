@@ -51,3 +51,5 @@ You can see more examples by [trying Frost directly in your Web browser!](try.ht
 For a more comprehensive overview of Frost's syntax and features, see the 
 [Syntax Overview](overview.md) or [API documentation](api/index.html). If you'd like to install the
 Frost compiler for yourself, see the [Getting Started](gettingStarted.md) page.
+
+See [Current Status](currentStatus.md) for a rundown of where Frost stands at the moment.

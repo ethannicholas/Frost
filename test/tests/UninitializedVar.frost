@@ -1,0 +1,7 @@
+method main() {
+    def uninitialized:Object?
+    if Random.default().int(10) > 5 {
+        uninitialized := "OK"
+    }
+    Console.printLine(uninitialized)
+}

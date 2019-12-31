@@ -51,7 +51,7 @@ The following [annotations](annotations.md) are legal on methods:
 * [`@protected`](annotations.md#protected)
 * [`@class`](annotations.md#class)
 * [`@abstract`](annotations.md#abstract)
-* [`@final`](annotations.md#final)
+* [`@extendable`](annotations.md#extendable)
 * [`@override`](annotations.md#override)
 * [`@pre(...)`](annotations.md#pre)
 * [`@preOr(...)`](annotations.md#preOr)
@@ -96,7 +96,9 @@ Overriding Methods
 Methods present in a superclass may be overridden by methods with the same signature present in a
 subclass. For instance, given:
 
+    @extendable
     class Super {
+        @extendable
         method performFoo() {
             Console.printLine("superclass method!")
         }
@@ -133,7 +135,9 @@ Calling superclass methods
 When you have overridden a method, you may find yourself needing to call the superclass' version of
 the method. For instance,
 
+    @extendable
     class Text {
+        @extendable
         method paint() {
             ...
         }

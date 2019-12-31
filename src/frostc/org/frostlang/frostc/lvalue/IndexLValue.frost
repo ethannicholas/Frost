@@ -45,7 +45,7 @@ class IndexLValue : LValue {
     }
 
     @override
-    method compileLoad():IR.Value? {
+    method compileLoad(explicit:Bit):IR.Value? {
         if index == null {
             def m := Binary.findOverloadedOperator(compiler, target.type, Binary.Operator.INDEX,
                     rawIndex, TypeContext.NON_VOID)

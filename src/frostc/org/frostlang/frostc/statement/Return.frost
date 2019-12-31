@@ -47,7 +47,7 @@ class Return {
                     def load := FieldLValue(compiler, position,
                             compiler.compileExpression(ASTNode.IDENTIFIER(basePos,
                                     Compiler.FORCE_SELF_NAME), TypeContext.NON_VOID),
-                            f).compileLoad()
+                            f).compileLoad(true)
                     if load == null {
                         return
                     }

@@ -65,13 +65,13 @@ Abstract methods may only appear within abstract classes. If you subclass an abs
 must either override all of its abstract methods (with non-abstract methods) or mark the subclass
 abstract as well.
 
-<a name="final"></a>
-@final
+<a name="extendable"></a>
+@extendable
 -------
 
-A `@final` method cannot be overridden in subclasses.
+An `@extendable` class can be subclassed.
 
-A `@final` class cannot be subclassed.
+An `@extendable` method can be overridden in subclasses.
 
 <a name="override"></a>
 @override
