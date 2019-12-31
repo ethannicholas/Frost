@@ -1,8 +1,3 @@
-This document describes error handling as it will eventually exist, not as it
-currently does.
-
---------------------------------------------------------------------------------
-
 Error Handling
 ==============
 
@@ -22,7 +17,7 @@ There are three main ways for a method to communicate failures back to its calle
 3. The return type `Error?`. When a method does not normally need to return any information, but
    still might fail, `Error?` is the right return type. `File.delete()` is a good example of this
    sort of method. It is a compile-time error for a program to call a method which returns `Error?`
-   and not examine the return value.
+   and ignore the return value.
 
 Because it is common to call many `Error?`-returning methods in sequence (for instance, interacting
 with the filesystem will tend to involve many such calls), manually checking the result of each call
@@ -49,14 +44,3 @@ Frost does not feature exception handling and Frost's `try` therefore has nothin
 exceptions. Frost `Error`s do not cause the stack to unwind, will not propagate to enclosing
 contexts, etc. Frost's `try` block simply forwards any `Errors` happening within it to the `fail`
 block and automatically unwraps any `Maybes`.
-
-The `fail` block can be written in three different ways:
-
-  1. `fail(name) { ... }` - the `Error` is stored in the variable `name`. The type of this
-     variable is based on the types of `Error`s which may actually occur within the `try` block; for
-     instance, if only `IOError` can occur within the `try` block, the error variable will be
-     assumed to be of type `IOError` (rather than just `Error`).
-  2. `fail(name:Type) { ... }` - as above, but provides a specific type annotation for the `Error`.
-  3. `fail { ... }` - omit the error variable altogether. The `fail` code will be run in the event
-     of an error, but the `Error` itself will not be available for inspection.
-

@@ -75,13 +75,13 @@ under the `else` (if there is an `else`) are executed. For instance,
 
     def x := getValue()
     if x > 5 {
-        Console.writeLine("x is greater than 5")
+        Console.printLine("x is greater than 5")
     }
     else if x < 5 {
-        Console.writeLine("x was less than 5")
+        Console.printLine("x was less than 5")
     }
     else {
-        Console.writeLine("x was equal to 5")
+        Console.printLine("x was equal to 5")
     }
 
 for
@@ -100,13 +100,13 @@ of the next element in the collection with each successive pass through the loop
 be an [Iterator], [Iterable], [Range], or [SteppedRange]. As a simple example, the loop:
 
     for i in 1 ... 5 {
-        Console.writeLine(i)
+        Console.printLine(i)
     }
 
 will display the numbers 1 through 5, while:
 
     for greeting in ["Hello", "Bonjour", "Konnichi wa"] {
-        Console.writeLine(greeting)
+        Console.printLine(greeting)
     }
 
 will display greetings in several different languages.
@@ -343,3 +343,17 @@ it contains:
             }
         }
     }
+
+try
+----
+
+    try {
+        ...
+    }
+    fail(<error>) {
+        ...
+    }
+
+Frost's `try` statement takes any errors occurring within the `try` block and forwards them to the
+`fail` block. While this superficially resembles exception handling, it is quite different; see
+[error handling](errorHandling.md) for more information.

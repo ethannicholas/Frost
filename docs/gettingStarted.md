@@ -22,6 +22,8 @@ Make sure that all of these software packages are available on your `PATH`.
 Building Frost
 --------------
 
+### MacOS, Linux
+
 Frost's source repository is located at [https://github.com/ethannicholas/Frost]. Clone this
 repository using Git and `cd` into it:
 
@@ -42,6 +44,15 @@ This will create the `frostc` compiler in the build directory. You can run Frost
 that it is functioning correctly:
 
     $ make run_tests
+
+### Windows
+
+I'm not a Windows developer and have not attempted to compile Frost on Windows. I'm sure it will
+take a bit of work to get working, but the code is quite portable and it shouldn't be *too* hard.
+Feel free to give it a shot and send me a Windows compatibility patch!
+
+In the meantime, you can play around with the Frost interpreter online at
+https://www.frostlang.org/try.html.
 
 "Hello, World!"
 ---------------

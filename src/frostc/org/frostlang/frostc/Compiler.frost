@@ -4163,7 +4163,7 @@ class Compiler : ErrorReporter {
             if valueType.isMethod {
                 return methodCast(position, value, target, true)
             } 
-            if valueType.name != "frost.core.Method" &
+            if explicit & valueType.name != "frost.core.Method" &
                     valueType.name != "frost.core.MutableMethod" {
                 error(position, "non-method objects may not be cast to methods")
                 return null
@@ -5266,8 +5266,11 @@ class Compiler : ErrorReporter {
                         if compiledTuple !== null {
                             def basePos := rawValue.position
                             def position := MethodPosition(basePos, currentMethodIndex)
-                            def field := ASTNode.IR_WRAPPER(basePos, cast(position, 
-                                    Dot.compile(self, position, compiledTuple, "f\{i}"),
+                            def element := Dot.compile(self, position, compiledTuple, "f\{i}")
+                            if element == null {
+                                return null
+                            }
+                            def field := ASTNode.IR_WRAPPER(basePos, cast(position, element,
                                     compiledTuple.type.nonnullable().subtypes[i]))
                             assert field !== null
                             target := compileTarget(targets[i], kind, field, null)

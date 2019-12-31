@@ -21,7 +21,7 @@ methods. Constants in class bodies are scoped to the class, for instance:
     }
 
     method main() {
-        Console.writeLine("The speed of light is \{Physics.C} m/s")
+        Console.printLine("The speed of light is \{Physics.C} m/s")
     }
 
 Constants appearing in methods are treated much like local [variables](variables.md), except that

@@ -49,7 +49,7 @@ All methods in an interface are abstract by default. You may annotate an interfa
 
         @default
         method defaultMethod() {
-            Console.writeLine("this method has an implementation!")
+            Console.printLine("this method has an implementation!")
         }
     }
 
@@ -63,7 +63,7 @@ to interfaces listed later. For example, given the code:
 
         @default
         method defaultMethod() {
-            Console.writeLine("this method has an implementation!")
+            Console.printLine("this method has an implementation!")
         }
     }
 
@@ -72,7 +72,7 @@ to interfaces listed later. For example, given the code:
 
         @default
         method defaultMethod() {
-            Console.writeLine("this method also has an implementation!")
+            Console.printLine("this method also has an implementation!")
         }
     }    
 

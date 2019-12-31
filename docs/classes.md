@@ -26,10 +26,10 @@ Because `Point` does not specify a supertype, it descends from `frost.core.Objec
 
 You would create an instance of `Point` using the expression `Point()`, like this:
 
-    def p := new Point()
+    def p := Point()
     p.x := 5
     p.y := 7
-    Console.writeLine("The point is: \{p.x}, \{p.y}")
+    Console.printLine("The point is: \{p.x}, \{p.y}")
 
 It would be more convenient to be able to create and initialize a `Point` in a
 single step. We can define a special kind of method, an [`init` method](initMethods.md), to
@@ -50,8 +50,8 @@ like:
 We now create instances of `Point` using expressions of the form `Point(5, 7)`, which simplifies our
 earlier example to:
 
-    def p := new Point(5, 7)
-    Console.writeLine("The point is: \{p.x}, \{p.y}")
+    def p := Point(5, 7)
+    Console.printLine("The point is: \{p.x}, \{p.y}")
 
 Inheritance
 -----------

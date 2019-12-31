@@ -35,6 +35,7 @@
                                         <li><a href="statements.html#assert"><code>assert</code></a></li>
                                         <li><a href="statements.html#unreachable"><code>unreachable</code></a></li>
                                         <li><a href="statements.html#match"><code>match</code></a></li>
+                                        <li><a href="statements.html#try"><code>try</code></a></li>
                                     </ul>
                                 </li>
                                 <li id="expressionsBullet" class="collapse">
@@ -55,6 +56,7 @@
                                 <li><a href="annotations.html">Annotations</a></li>
                                 <li><a href="comments.html">Comments</a></li>
                                 <li><a href="documentationComments.html">Documentation Comments</a></li>
+                                <li><a href="errorHandling.html">Error Handling</a></li>
                             </ul>
                         </li>
                         <li id="classesBullet" class="collapse">

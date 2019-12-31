@@ -21,7 +21,7 @@ called *operator overloading*.
         method main() {
             def a := OperatorExample(12)
             def b := OperatorExample(16)
-            Console.writeLine(a + b) -- error!
+            Console.printLine(a + b) -- error!
         }
     }
 

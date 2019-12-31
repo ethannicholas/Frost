@@ -117,7 +117,7 @@ of two value objects, for instance:
 
     def a:Object := 5
     def b:Object := 5
-    Console.writeLine(a == b)
+    Console.printLine(a == b)
 
 the result is undefined. This may display either `true` or `false`, and the output may change with
 compiler settings, environment, or version of Frost.

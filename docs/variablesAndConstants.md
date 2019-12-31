@@ -5,10 +5,10 @@ Variables, defines, constants, and properties all have one thing in common: they
 value with a name. For example, in the code:
 
     var x := 12
-    Console.writeLine(x)
+    Console.printLine(x)
 
 The statement `var x := 12` creates a new name, `x`, associated with the value
-`12`. The subsequent `Console.writeLine(x)` references this value by name,
+`12`. The subsequent `Console.printLine(x)` references this value by name,
 displaying `12`. The difference between the four entities is:
 
 * [Variables](variables.md) (`var x`) can change. Subsequent assignment statements can associate a

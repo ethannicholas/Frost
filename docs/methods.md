@@ -76,7 +76,7 @@ modified:
 
     method countDown(var i:Int) {
         while i > 0 {
-            Console.writeLine(i)
+            Console.printLine(i)
             i -= 1
         }
     }
@@ -119,9 +119,9 @@ prevents you from accidentally overriding superclass methods without realizing i
 Whenever the `performFoo` method is called, the right implementation of the method will be selected
 at runtime based on the class of the object:
 
-    var object := new Super()
+    var object := Super()
     object.performFoo() -- displays "superclass method!"
-    object := new Sub()
+    object := Sub()
     object.performFoo() -- displays "subclass method!"
 
 All parameter types and the return type of an override method must match exactly (including
