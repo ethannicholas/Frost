@@ -1,0 +1,43 @@
+package frost.core
+===@hidden===
+class ImmutableEquatableTuple8<T0:Immutable,Equatable<T0>, T1:Immutable,Equatable<T1>, T2:Immutable,Equatable<T2>, T3:Immutable,Equatable<T3>, T4:Immutable,Equatable<T4>, T5:Immutable,Equatable<T5>, T6:Immutable,Equatable<T6>, T7:Immutable,Equatable<T7>> : Immutable, Equatable<(T0, T1, T2, T3, T4, T5, T6, T7)> {
+    def f0:T0
+    def f1:T1
+    def f2:T2
+    def f3:T3
+    def f4:T4
+    def f5:T5
+    def f6:T6
+    def f7:T7
+
+    init(f0:T0, f1:T1, f2:T2, f3:T3, f4:T4, f5:T5, f6:T6, f7:T7) {
+       self.f0 := f0
+       self.f1 := f1
+       self.f2 := f2
+       self.f3 := f3
+       self.f4 := f4
+       self.f5 := f5
+       self.f6 := f6
+       self.f7 := f7
+    }
+
+    @pre(i >= 0 & i < 8)
+    function []<T>(i:Int):T {
+        match i {
+            when 0 { return f0->T }
+            when 1 { return f1->T }
+            when 2 { return f2->T }
+            when 3 { return f3->T }
+            when 4 { return f4->T }
+            when 5 { return f5->T }
+            when 6 { return f6->T }
+            when 7 { return f7->T }
+        }
+        unreachable
+    }
+
+    @override
+    function get_toString():String {
+        return "(\{f0}, \{f1}, \{f2}, \{f3}, \{f4}, \{f5}, \{f6}, \{f7})"
+    }
+}

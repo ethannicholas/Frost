@@ -1,18 +1,23 @@
-#include <dirent.h>
 #include <errno.h>
 #include <inttypes.h>
 #include <limits.h>
 #include <math.h>
-#include <pthread.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <sys/time.h>
 #include <sys/types.h>
+
+#ifdef _WIN32
+#include "third-party/dirent/dirent.h"
+#else
+#include <dirent.h>
+#include <pthread.h>
+#include <sys/time.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#endif
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -27,7 +32,9 @@
 
 //#define FROST_DEBUG
 
+#ifndef bool
 typedef int8_t bool;
+#endif
 
 typedef intptr_t frost_int;
 
@@ -155,14 +162,22 @@ typedef struct Lock {
     Class* cl;
     int32_t refcnt;
     bool flags;
+#ifdef _WIN32
+    HANDLE mutex;
+#else
     pthread_mutex_t* mutex;
+#endif
 } Lock;
 
 typedef struct Notifier {
     Class* cl;
     int32_t refcnt;
     bool flags;
+#ifdef _WIN32
+    CONDITION_VARIABLE cond;
+#else
     pthread_cond_t* cond;
+#endif
     Lock* lock;
 } Notifier;
 
@@ -443,6 +458,9 @@ frost_int frostSystemExec(frost_int path, frost_int args) {
         const char* msg = strerror(errno);
         return frostMaybeError(frostNewString(msg, strlen(msg)));
     }
+#ifdef _WIN32
+    abort();
+#else
     pid_t pid = fork();
     if (pid < 0) {
         const char* msg = strerror(errno);
@@ -511,6 +529,7 @@ frost_int frostSystemExec(frost_int path, frost_int args) {
 
         return frostMaybeSuccess((Object*) result);
     }
+#endif
 }
 
 frost_int frostProcessStandardInput(frost_int p) {
@@ -1240,8 +1259,9 @@ void frostThreadEntry(frost_int threadInfoPtr) {
         ((void(*)()) threadInfo->run->pointer)();
     }
     frostUnrefThreadSafe((frost_int) threadInfo->run);
+    bool preventsExit = threadInfo->preventsExit;
     frostFree(threadInfo);
-    if (threadInfo->preventsExit) {
+    if (preventsExit) {
         pthread_mutex_lock(&preventsExitThreadsMutex);
         preventsExitThreads--;
         if (preventsExitThreads == 0) {

@@ -1,0 +1,67 @@
+package frost.core
+===@hidden===
+class ImmutableKeyTuple16<T0:Immutable,HashKey<T0>, T1:Immutable,HashKey<T1>, T2:Immutable,HashKey<T2>, T3:Immutable,HashKey<T3>, T4:Immutable,HashKey<T4>, T5:Immutable,HashKey<T5>, T6:Immutable,HashKey<T6>, T7:Immutable,HashKey<T7>, T8:Immutable,HashKey<T8>, T9:Immutable,HashKey<T9>, T10:Immutable,HashKey<T10>, T11:Immutable,HashKey<T11>, T12:Immutable,HashKey<T12>, T13:Immutable,HashKey<T13>, T14:Immutable,HashKey<T14>, T15:Immutable,HashKey<T15>> : Immutable, HashKey<(T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15)> {
+    def f0:T0
+    def f1:T1
+    def f2:T2
+    def f3:T3
+    def f4:T4
+    def f5:T5
+    def f6:T6
+    def f7:T7
+    def f8:T8
+    def f9:T9
+    def f10:T10
+    def f11:T11
+    def f12:T12
+    def f13:T13
+    def f14:T14
+    def f15:T15
+
+    init(f0:T0, f1:T1, f2:T2, f3:T3, f4:T4, f5:T5, f6:T6, f7:T7, f8:T8, f9:T9, f10:T10, f11:T11, f12:T12, f13:T13, f14:T14, f15:T15) {
+       self.f0 := f0
+       self.f1 := f1
+       self.f2 := f2
+       self.f3 := f3
+       self.f4 := f4
+       self.f5 := f5
+       self.f6 := f6
+       self.f7 := f7
+       self.f8 := f8
+       self.f9 := f9
+       self.f10 := f10
+       self.f11 := f11
+       self.f12 := f12
+       self.f13 := f13
+       self.f14 := f14
+       self.f15 := f15
+    }
+
+    @pre(i >= 0 & i < 16)
+    function []<T>(i:Int):T {
+        match i {
+            when 0 { return f0->T }
+            when 1 { return f1->T }
+            when 2 { return f2->T }
+            when 3 { return f3->T }
+            when 4 { return f4->T }
+            when 5 { return f5->T }
+            when 6 { return f6->T }
+            when 7 { return f7->T }
+            when 8 { return f8->T }
+            when 9 { return f9->T }
+            when 10 { return f10->T }
+            when 11 { return f11->T }
+            when 12 { return f12->T }
+            when 13 { return f13->T }
+            when 14 { return f14->T }
+            when 15 { return f15->T }
+        }
+        unreachable
+    }
+
+    @override
+    function get_toString():String {
+        return "(\{f0}, \{f1}, \{f2}, \{f3}, \{f4}, \{f5}, \{f6}, \{f7}, \{f8}, \{f9}, \{f10}, \{f11}, \{f12}, \{f13}, \{f14}, \{f15})"
+    }
+}

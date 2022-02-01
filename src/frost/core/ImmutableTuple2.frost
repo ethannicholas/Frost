@@ -1,0 +1,25 @@
+package frost.core
+===@hidden===
+class ImmutableTuple2<T0:Immutable, T1:Immutable> : Immutable {
+    def f0:T0
+    def f1:T1
+
+    init(f0:T0, f1:T1) {
+       self.f0 := f0
+       self.f1 := f1
+    }
+
+    @pre(i >= 0 & i < 2)
+    function []<T>(i:Int):T {
+        match i {
+            when 0 { return f0->T }
+            when 1 { return f1->T }
+        }
+        unreachable
+    }
+
+    @override
+    function get_toString():String {
+        return "(\{f0}, \{f1})"
+    }
+}

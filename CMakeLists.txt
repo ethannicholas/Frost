@@ -1,16 +1,21 @@
 project(frost)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.13)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
 set(OPTIMIZATION 0)
 set(SAFETY 3)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindICU")
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindLLVM")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 set(SYSTEM_LIBRARIES m Threads::Threads)
 
-find_package(ICU COMPONENTS uc i18n REQUIRED)
+find_package(LLVM REQUIRED CONFIG)
+if(DEFINED ENV{ICU_DIR})
+    set(ICU_LIBRARIES $ENV{ICU_DIR}/lib/libicuuc.dylib $ENV{ICU_DIR}/lib/libicui18n.dylib)
+    set(ICU_INCLUDE_DIRS $ENV{ICU_DIR}/include)
+else()
+    find_package(ICU COMPONENTS uc i18n REQUIRED)
+    message(warning "ICU_DIR environment variable was not set, attempting to find it manually")
+endif()
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost"
     "package org.frostlang.frostc\n"
@@ -35,6 +40,7 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/config.c"
 
 set(BOOTSTRAP_ARGS "-O${OPTIMIZATION}" "-S${SAFETY}" "-g")
 include_directories(
+    ${CMAKE_SOURCE_DIR}
     ${ICU_INCLUDE_DIRS}
 )
 

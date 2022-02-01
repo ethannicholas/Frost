@@ -40,6 +40,9 @@ Assuming `cmake` finds all of the prerequisites, you should now be able to build
 
     $ make -j
 
+(**Note:** if you encounter any errors with locating or linking to ICU, set the ICU_DIR environment
+variable to the directory containing the ICU `include` and `lib` directories and re-run cmake.)
+
 This will create the `frostc` compiler in the build directory. You can run Frost's tests to ensure
 that it is functioning correctly:
 
@@ -49,12 +52,22 @@ Note that a handful of tests are expected to fail at the moment.
 
 ### Windows
 
-I'm not a Windows developer and have not attempted to compile Frost on Windows. I'm sure it will
-take a bit of work to get working, but the code is quite portable and it shouldn't be *too* hard.
-Feel free to give it a shot and send me a Windows compatibility patch!
+Install Visual Studio
+Install cmake
+Download ICU (as of this writing, icu4c-65_1-Win64-MSVC2017.zip) and unzip to a directory of your
+choice
+Start a Visual Studio Developer Command Prompt
 
-In the meantime, you can play around with the Frost interpreter online at
-https://www.frostlang.org/try.html.
+    > git clone https://github.com/ethannicholas/Frost
+    > cd Frost
+    > mkdir build
+    > cd build
+    > set ICU_ROOT_DIR=<path where you unzipped ICU>
+    > set CC=clang-cl
+    > set CXX=clang-cl
+    > set CFLAGS=<-m64 or -m32 depending on whether you are on a 64 bit or 32 bit system>
+    > cmake -G "NMake Makefiles" ..
+    > nmake
 
 "Hello, World!"
 ---------------

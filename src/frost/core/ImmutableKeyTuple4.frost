@@ -1,0 +1,31 @@
+package frost.core
+===@hidden===
+class ImmutableKeyTuple4<T0:Immutable,HashKey<T0>, T1:Immutable,HashKey<T1>, T2:Immutable,HashKey<T2>, T3:Immutable,HashKey<T3>> : Immutable, HashKey<(T0, T1, T2, T3)> {
+    def f0:T0
+    def f1:T1
+    def f2:T2
+    def f3:T3
+
+    init(f0:T0, f1:T1, f2:T2, f3:T3) {
+       self.f0 := f0
+       self.f1 := f1
+       self.f2 := f2
+       self.f3 := f3
+    }
+
+    @pre(i >= 0 & i < 4)
+    function []<T>(i:Int):T {
+        match i {
+            when 0 { return f0->T }
+            when 1 { return f1->T }
+            when 2 { return f2->T }
+            when 3 { return f3->T }
+        }
+        unreachable
+    }
+
+    @override
+    function get_toString():String {
+        return "(\{f0}, \{f1}, \{f2}, \{f3})"
+    }
+}
