@@ -318,9 +318,9 @@ any of them. If none of the values in any `when` match, the optional `otherwise`
 present. If none of the `when` values match and there is no `otherwise` block, execution simply
 continues after the end of the `match`.
 
-Unlike many other languages, Frost's `match` statement does not have "fall-through": when the
-statements associated with a `when` finish, execution continues after the end of the match
-statement.
+Unlike the similar `switch` statement in many other languages, Frost's `match` statement does
+not have "fall-through": when the statements associated with a `when` finish, execution continues
+after the end of the match statement.
 
 When matching a [`choice`](choices.md), the `when` conditions may *destructure* the choice and
 extract the values it contains. For example, given the `choice`:

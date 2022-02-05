@@ -15,6 +15,7 @@ class Annotations {
         constant WEAK             := 1 << 11
         constant SYNTHETIC        := 1 << 12
         constant UNSAFE_IMMUTABLE := 1 << 13
+        -- methods tagged @unsafeAccess can access private and protected members of other classes
         constant UNSAFE_ACCESS    := 1 << 14
         constant DEFAULT          := 1 << 15
         -- tags a closure method or class, or a field in a closure class which is used to represent

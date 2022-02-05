@@ -23,6 +23,8 @@ class PLex {
     method process(inputPath:File, tokenName:String, tokenPath:File, lexerName:String,
             lexerPath:File, positionName:String):Error? {
         try {
+            tokenPath.parent().createDirectories()
+            lexerPath.parent().createDirectories()
             def input := inputPath.openInputStream()
             def token := IndentedOutputStream(tokenPath.openOutputStream())
             def nfa := NFA()

@@ -14,7 +14,7 @@ if(DEFINED ENV{ICU_DIR})
     set(ICU_INCLUDE_DIRS $ENV{ICU_DIR}/include)
 else()
     find_package(ICU COMPONENTS uc i18n REQUIRED)
-    message(warning "ICU_DIR environment variable was not set, attempting to find it manually")
+    message(WARNING "ICU_DIR environment variable was not set, attempting to find it manually")
 endif()
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost"
@@ -62,6 +62,7 @@ function(compile_frost_sources out_var)
         file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
         get_filename_component(outputDir ${relative} DIRECTORY)
         get_filename_component(outputName ${input} NAME_WE)
+        file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/out/${outputDir}")
         set(output "${CMAKE_CURRENT_BINARY_DIR}/out/${outputDir}/${outputName}.o")
         add_custom_command(
             OUTPUT ${output}

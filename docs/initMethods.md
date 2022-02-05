@@ -34,8 +34,8 @@ This will create a new `Point` object and invoke its `init` method with paramete
 Default Init Methods
 --------------------
 
-If a class does define any `init` methods, the compiler automatically provides it with a *default
-init*. The default init looks like:
+If a class does define any `init` methods, the compiler automatically provides it with a
+*default init*. The default init looks like:
 
     init() {
     }
@@ -69,9 +69,9 @@ fields, and before the subclass calls any instance methods.
 
 If you do not explicitly invoke another `init` method, Frost appends an implicit call to the
 no-argument superclass `init` method, exactly as if your `init` method ended with a call to
-`super.init()`. Of course, if there is no no-argument superclass `init`, or if it is not legal to
-call the superclass `init` at this point (because you have already called an instance method), an
-error will be generated.
+`super.init()`. If there is no no-argument superclass `init`, or if it is not legal to call the
+superclass `init` at this point (because you have already called an instance method), an error will
+be generated.
 
 Invoking Other Constructors
 ---------------------------

@@ -40,8 +40,8 @@ Assuming `cmake` finds all of the prerequisites, you should now be able to build
 
     $ make -j
 
-(**Note:** if you encounter any errors with locating or linking to ICU, set the ICU_DIR environment
-variable to the directory containing the ICU `include` and `lib` directories and re-run cmake.)
+(**Note:** if you encounter any errors with locating or linking to LLVM or ICU, set the LLVM_DIR
+or ICU_DIR environment variable to the appropriate installation directory and re-run cmake.)
 
 This will create the `frostc` compiler in the build directory. You can run Frost's tests to ensure
 that it is functioning correctly:

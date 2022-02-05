@@ -334,6 +334,38 @@ class Match {
     }
 
     @class
+    method checkDuplicates(compiler:Compiler, whens:FixedArray<ASTNode>) {
+        def seen := HashSet<String>()
+        method check(s:String, pos:Position) {
+            if seen.contains(s) {
+                compiler.error(pos, "duplicate 'when' value")
+            }
+            else {
+                seen.add(s)
+            }
+        }
+        for w in whens {
+            match w {
+                when ASTNode.WHEN(_, tests, _) {
+                    for t in tests {
+                        match t {
+                            when ASTNode.CALL(_, base, _) {
+                                def cc := compiler.getChoiceCase(base)
+                                if cc !== null {
+                                    check(cc[1].toString, t.position)
+                                }
+                            }
+                            otherwise {
+                                check(t.toString, t.position)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @class
     method compile(compiler:Compiler, position:MethodPosition, value:ASTNode,
             whens:FixedArray<ASTNode>, other:FixedArray<ASTNode>?) {
         var compiledValue := compiler.compileExpression(value, TypeContext.NON_VOID)
@@ -359,6 +391,7 @@ class Match {
         else {
             choiceTag := null
         }
+        checkDuplicates(compiler, whens)
         if choiceClass !== null | compiledValue.type.isInt {
             compileSwitch(compiler, position, compiledValue, choiceClass, choiceTag, whens, other)   
         }

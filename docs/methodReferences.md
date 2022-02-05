@@ -30,10 +30,10 @@ variable with the correct type, etc.
 Instance Method References
 --------------------------
 
-Instance methods are a bit special, because an instance method (of course) needs an instance of the
-object to operate on, but the instance is not part of the method's explicit parameters. For example,
-the function [Int64.max(Int64)] declares a single parameter, but it actually operates on *two*
-numbers - `self` and its declared parameter.
+Instance methods are a bit special, because an instance method needs an instance of the object to]
+operate on, but the instance is not part of the method's explicit parameters. For example, the
+function [Int64.max(Int64)] declares a single parameter, but it actually operates on *two* numbers -
+`self` and its declared parameter.
 
 To reflect this, we can access an instance method in one of two ways. If we grab the `max` method
 from a specific instance of `Int64`, for example `0.max`, this gives us a method with a single

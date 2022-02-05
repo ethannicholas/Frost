@@ -61,13 +61,13 @@ This type represents a function taking two `Real` parameters and returning a `Re
     }
 
 Methods which are not functions (i.e. they potentially have side effects) have a slightly different
-signature:
+type signature:
 
     (Real, Real)=&>(Real)
 
 The ampersand in the middle of the arrow signifies "and other effects", as a method may perform
 unspecified other actions. Methods may also be declared to not return a value, in which case the
-return type is left blank. The signature of the [System.exit(Int)] method, for example, is:
+return type is left blank. The type signature of the [System.exit(Int)] method, for example, is:
 
     (Int)=&>()
 
@@ -99,7 +99,6 @@ The type of a [tuple](tuples.md) is described by a parenthesized list of type
 names:
 
     def tuple:(Object, Int) := ("Tuple", 12)
-)
 
 Tuples must contain at least two types. Tuples containing only immutable types will themselves be
 considered immutable.

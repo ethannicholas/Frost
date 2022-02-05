@@ -6451,14 +6451,21 @@ class Compiler : ErrorReporter {
     }
 
     @class
-    method printUsage(out:OutputStream) {
+    method showUsage() {
+        def out := Console.outputStream()
         try {
             out.printLine("Usage: frostc [options] <sources>")
             out.printLine()
             out.printLine("Source filenames must end in '.frost'.")
             out.printLine()
             out.printLine("Options:")
-            out.printLine("  -o <path>    output path")
+            out.printLine("  -o <path>     output path")
+            out.printLine("  -O <0-3>      optimization level")
+            out.printLine("  -S <0-3>      safety level")
+            out.printLine("  -m <32 or 64> specify 32 or 64 bit build")
+            out.printLine("  -I <path>     import path")
+            out.printLine("  -L <path>     library path")
+            out.printLine("  -l <name>     library name")
         }
         fail(error) {
             unreachable
@@ -6618,6 +6625,7 @@ class Compiler : ErrorReporter {
                     }
                     else {
                         Console.printErrorLine("unrecognized argument '\{a}'")
+                        showUsage()
                         System.exit(1)
                     }
                 }

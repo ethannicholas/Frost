@@ -141,6 +141,10 @@ and `@postAnd` conditions in effect on it.
 Causes a field to only weakly refer to its contents, meaning that this reference does not
 participate in reference counting and will not prevent an object from being destroyed.
 
+Attempting to accessing a weakly referenced object after its destruction normally causes the
+program to crash with an error message. When safety checks are disabled, accessing a destroyed
+object leads to undefined behavior.
+
 <a name="limited"></a>
 @limited
 --------
@@ -186,7 +190,7 @@ their return values at compile time, merge multiple calls together, and so forth
 potentially result in incorrect behavior in the face of functions which do not "follow the rules".
 
 <a name="external"></a>
-@external(&ltname>)
+@external(&lt;name>)
 ---------
 
 The `@external` annotation marks a method which is implemented by external (non-Frost) code. `name`
