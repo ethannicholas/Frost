@@ -1,8 +1,8 @@
 Non-nullability
 ===============
 
-[Types](types.md) are non-nullable by default, meaning that [`null`](null.md) is a not a legal value
-for types by default. The following code therefore will not compile:
+[Types](types.md) are non-nullable by default, meaning that [`null`](null.md) is a not normally a
+legal value for types. The following code therefore will not compile:
 
     def s:String := null -- won't compile, as null is not a String
 

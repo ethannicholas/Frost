@@ -69,19 +69,24 @@ method writeTuple(count:Int, kind:Kind, path:File) {
             }
         }
         if kind = Kind.KEY {
+            def hashes := [1, 73, 179, 283, 419, 547, 661, 811, 947, 1087, 1229, 1381, 1523, 1663, 
+                    1823, 1993]
             out.printLine("    @override")
             out.printLine("    function get_hash():Int {")
             out.printLine("        var result := 0")
             for i in Int(0) .. count {
-                out.printLine("        result ~~= f\{i}.hash *& \{[1, 73, 179, 283, 419, 547, 661,
-                        811, 947, 1087, 1229, 1381, 1523, 1663, 1823, 1993][i]}")
+                out.printLine("        result ~~= f\{i}.hash *& \{hashes[i]}")
             }
             out.printLine("        return result")
             out.printLine("    }")
         }
         out.printLine("    @override")
         out.printLine("    function get_toString():String {")
-        out.printLine("        return \"(\{Int[0 .. count].map(i => "\\{f\{i}}").join(", ")})\"")
+        out.printLine("        function nonnull(o:Object?):Object {")
+        out.printLine("            if o !== null { return o } else { return '<null>' }")
+        out.printLine("        }")
+        out.printLine("        return \"(\{Int[0 .. count].map(
+            i => "\\{nonnull(f\{i})}").join(", ")})\"")
         out.printLine("    }")
         out.printLine("}")
     }

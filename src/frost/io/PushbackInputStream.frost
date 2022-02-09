@@ -7,10 +7,10 @@ and then push the delimiter back into the stream so that it can be handled by ot
 
 The `PushbackInputStream` "sits on top of" another stream, reading from it when it requires new
 data. You should not read directly from the underlying stream while reading from a
-`PushbackInputStream`. Closing the `PushbackInputStream` *does not* close the underlying stream, but
-if the `PushbackInputStream` holds the only remaining reference to the underlying stream, then
-discarding the `PushbackInputStream` will cause the underlying stream to likewise be discarded and
-thus closed.
+`PushbackInputStream`. Closing the `PushbackInputStream` *does not* directly close the underlying
+stream, but if the `PushbackInputStream` holds the only remaining reference to the underlying
+stream, then discarding the `PushbackInputStream` will cause the underlying stream to likewise be
+discarded and thus closed.
 ====================================================================================================
 class PushbackInputStream : InputStream {
     @private

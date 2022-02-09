@@ -77,10 +77,10 @@ bounds. `Equatable` is declared as:
         ...
     }
 
-This may not immediately make sense. In order to declare an `Equatable`, you have to... use an
+This may not immediately make sense. In order to declare an `Equatable`, you have to... reference an
 `Equatable`?
 
-It's easier than it might look:
+It's easier than it might seem:
 
     class Foo : Equatable<Foo> {
         ...

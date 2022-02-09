@@ -23,7 +23,7 @@ altogether. In other words, this is legal:
     value.append("Changed!")
 
 because even though the array the define points to is changing, the define itself is not being
-redefined. On the other hand, this is not legal:
+reassigned. On the other hand, this is not legal:
 
     def value := ["A", "String", "Array"]
     value := ["Changed!"] -- won't compile!

@@ -23,7 +23,7 @@ String interpolation also allows for *field specifiers*:
     Console.printLine("This answer is always at least six digits long: \{7 * 9,0>6}")
 
 This displays `This answer is always at least six digits long: 000063`. The field specifier `0>6`
-means "use the character `"0"` to right-align this value into a string at least 6 characters long".
+means "use the character `'0'` to right-align this value into a string at least 6 characters long".
 You may also use `<` to left-align and `^` to center.
 
 Format strings and field specifiers may be combined:

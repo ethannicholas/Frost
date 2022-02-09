@@ -79,7 +79,7 @@ interface CollectionView<T> : Iterable<T> {
         [1, 2, 3, 4, 5].fold(Int.+)
 
     this would add the first (in iteration order) and second elements of the collection together,
-    and then add the sum of the first to elements to the third, and so forth until all of the
+    and then add the sum of the first two elements to the third, and so forth until all of the
     elements of the collection had been added together. This would result in the sum of all of the
     elements in the collection.
 
@@ -88,7 +88,7 @@ interface CollectionView<T> : Iterable<T> {
 
     If the list has only a single element in the list, the result of `fold` is this single element
     and the function `f` is never called. This variant of `fold` may not be called on an empty list
-    because the result would be undefined
+    because the result would be undefined.
 
     @param f a binary function to combine elements of the collection
     @returns the result of combining the entire collection

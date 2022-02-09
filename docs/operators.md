@@ -120,7 +120,7 @@ of two value objects, for instance:
     Console.printLine(a == b)
 
 the result is undefined. This may display either `true` or `false`, and the output may change with
-compiler settings, environment, or version of Frost.
+compiler settings, environment, context, or version of Frost.
 
 Logic
 -----
@@ -196,9 +196,9 @@ you have a generic type, such as in:
     }
 
 then the expression `field!` casts `field` from `T?` to `T`. But since `T` is a generic type, it
-might *also* be nullable. This means that it is actually ok for `field` to be `null`, despite the
-presence of the force non-null operator. In this example the expression `field!` will never result
-in a safety violation, even when `field` is `null`.
+might *also* be nullable. If that were the case it would mean that it is actually ok for `field` to
+be `null`, despite the presence of the force non-null operator. In this example, if `T` is nullable
+the expression `field!` will never result in a safety violation, even when `field` is `null`.
 
 Index
 -----

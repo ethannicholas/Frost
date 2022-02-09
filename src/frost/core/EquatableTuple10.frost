@@ -58,6 +58,9 @@ class EquatableTuple10<T0:Equatable<T0>, T1:Equatable<T1>, T2:Equatable<T2>, T3:
     }
     @override
     function get_toString():String {
-        return "(\{f0}, \{f1}, \{f2}, \{f3}, \{f4}, \{f5}, \{f6}, \{f7}, \{f8}, \{f9})"
+        function nonnull(o:Object?):Object {
+            if o !== null { return o } else { return '<null>' }
+        }
+        return "(\{nonnull(f0)}, \{nonnull(f1)}, \{nonnull(f2)}, \{nonnull(f3)}, \{nonnull(f4)}, \{nonnull(f5)}, \{nonnull(f6)}, \{nonnull(f7)}, \{nonnull(f8)}, \{nonnull(f9)})"
     }
 }

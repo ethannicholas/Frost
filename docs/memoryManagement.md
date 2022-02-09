@@ -18,9 +18,10 @@ The chief *advantages* of Frost's memory management are:
 * **Timely**: Unlike typical garbage collected languages, Frost cleans up objects the instant the
   last reference is removed. This means that you may rely on `cleanup()` methods being called
   promptly.
-* **Pauseless**: Typical garbage collectors must stop the execution of a program while they scan
-  memory to determine which objects are still in use. Even so-called "pauseless" garbage collectors
-  still have these pauses, they are just less likely to be noticed.
+* **Predictable**: Typical garbage collectors must stop the execution of a program while they scan
+  memory to determine which objects are still in use. This can happen at unpredictable times and
+  cause frame drops or sudden latency spikes. Frost's memory management generally results in
+  smoother, more predictable performance.
 
 The chief *disadvantages* of Frost's memory management are:
 
@@ -31,5 +32,9 @@ The chief *disadvantages* of Frost's memory management are:
   is something you will need to be aware of.
 * **Throughput**: A garbage collector's pauses can be annoying, but garbage collectors do little or
   no work in between these pauses. Reference counting, on the other hand, does a tiny bit of work
-  every time a reference is updated. This is a tradeoff which leads to zero pauses, but slightly
+  every time a reference is updated. This is a tradeoff which leads to predictable behavior, but
   lower overall performance.
+* **Slow destruction of large structures**: Destroying a large data structure consisting of many
+  individual objects can take a while as the destruction cascades through the structure. Destroying
+  node 1 causes node 2's refcount to drop to zero, so we destroy node 2, which causes node 3's
+  refcount to drop to zero, so we destroy node 3...

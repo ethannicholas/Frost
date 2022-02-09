@@ -30,6 +30,9 @@ class EquatableTuple3<T0:Equatable<T0>, T1:Equatable<T1>, T2:Equatable<T2>> : Eq
     }
     @override
     function get_toString():String {
-        return "(\{f0}, \{f1}, \{f2})"
+        function nonnull(o:Object?):Object {
+            if o !== null { return o } else { return '<null>' }
+        }
+        return "(\{nonnull(f0)}, \{nonnull(f1)}, \{nonnull(f2)})"
     }
 }

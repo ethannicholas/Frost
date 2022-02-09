@@ -15,15 +15,15 @@ Performance Considerations
 ==========================
 
 Value objects allow for many optimizations; Frost would be unacceptably slow if `Int` were a regular
-class instead of a value - even calculating `1 + 1` would multiple heap allocations. Fortunately,
-this is not the case, and after optimization math in Frost compiles down to the same basic
-arithmetic instructions that it does in languages like C.
+class instead of a value - even calculating `1 + 1` would involve multiple heap allocations.
+Fortunately, this is not the case, and after optimization, math in Frost compiles down to the same
+basic arithmetic instructions that it does in languages like C.
 
 However, there are still some pitfalls to be aware of. Casting a value type to an `Object` requires
 Frost to convert it to a full-fledged refcounted object with an object header. This "wrapping" is
 handled automatically, as is unwrapping if the object is cast back to an object type, but it can
-have a significant performance impact.
+incur a significant performance impact.
 
-Casting a value type to a nullable value type (meaning e.g. a cast from `Int64` to `Int64?`) is much
+Casting a value type to a nullable value type (such as a cast from `Int64` to `Int64?`) is much
 cheaper than converting it all the way to `Object`. The nullable version of a value type is only a
 single byte longer than the normal non-nullable version and is still stack allocated.

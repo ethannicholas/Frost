@@ -43,6 +43,9 @@ class KeyTuple4<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>> 
     }
     @override
     function get_toString():String {
-        return "(\{f0}, \{f1}, \{f2}, \{f3})"
+        function nonnull(o:Object?):Object {
+            if o !== null { return o } else { return '<null>' }
+        }
+        return "(\{nonnull(f0)}, \{nonnull(f1)}, \{nonnull(f2)}, \{nonnull(f3)})"
     }
 }

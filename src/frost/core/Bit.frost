@@ -81,7 +81,8 @@ class Bit : Value, HashKey<Bit>, Formattable {
     ================================================================================================
     Chooses one of two strings based on the value of this `Bit`. The format string must be of the
     form `trueString|falseString`, and the result will be `trueString` if this `Bit` is true,
-    otherwise `falseString`.
+    otherwise `falseString`. If multiple `'|'` characters occur in the format string, only the first
+    one is significant and the others are part of the `false` string.
     ================================================================================================
     @override
     function format(fmt:String):String {

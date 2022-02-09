@@ -25,7 +25,7 @@ Or a compound expression, such as:
 * `<unaryOperator> <expression>` (unary minus, logical not, bitwise not)
 * `<expression>.<field>` (field access)
 * `<expression>[<expression>]` (indexing)
-* `<expression>(<expression>, <expression>...) (method call)
+* `<expression>(<expression>, <expression>...)` (method call)
 
 Precedence
 ----------

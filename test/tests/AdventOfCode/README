@@ -5,8 +5,8 @@ These programs are generally brief, but not heavily golfed; I have tried to stri
 balance between elegance, readability, and performance. But, since these are meant to be tests that
 stress Frost out and not examples of beautiful, maintainable code, there's a definite tendency to do
 everything in a fancy functional manner even when a simple for loop would be a lot more practical.
-This was my place to blow off steam and write crazy, ridiculous code that doesn't belong in a real
-program.
+This was my safe space to blow off steam and write crazy, ridiculous code that doesn't belong in a
+real program.
 
 I have taken the liberty of including the problem text in each program so that you can understand
 what each program is doing without having to get the problems from the web yourself (which, given

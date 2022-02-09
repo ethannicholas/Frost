@@ -258,6 +258,8 @@ unreachable
 
     unreachable
 
+    unreachable, <message>
+
 The `unreachable` statement tells the compiler that this line of code will never actually be
 reached. For instance, in the code:
 
@@ -291,9 +293,12 @@ be reached. The `widget` variable is therefore definitely assigned, because the 
 by which `widget` would remain unassigned is known to be `unreachable`.
 
 Actually reaching an `unreachable` statement is, of course, bad. By default, this will result in a
-safety violation which causes the program to terminate. If safety checks are disabled, the compiler
-is free to optimize under the assumption that no `unreachable` code is actually reached, and
-reaching `unreachable` therefore causes undefined behavior.
+safety violation which causes the program to terminate. If `<message>` is provided, the message will
+be displayed in the event that the `unreachable` is encountered.
+
+If safety checks are disabled, the compiler is free to optimize under the assumption that no
+`unreachable` code is actually reached, and reaching `unreachable` therefore causes undefined
+behavior.
 
 match
 -----

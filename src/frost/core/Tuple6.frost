@@ -32,6 +32,9 @@ class Tuple6<T0, T1, T2, T3, T4, T5> {
 
     @override
     function get_toString():String {
-        return "(\{f0}, \{f1}, \{f2}, \{f3}, \{f4}, \{f5})"
+        function nonnull(o:Object?):Object {
+            if o !== null { return o } else { return '<null>' }
+        }
+        return "(\{nonnull(f0)}, \{nonnull(f1)}, \{nonnull(f2)}, \{nonnull(f3)}, \{nonnull(f4)}, \{nonnull(f5)})"
     }
 }
