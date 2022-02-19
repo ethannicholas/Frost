@@ -71,3 +71,9 @@ will receive a default implementation.
 Of course, if a choice does not contain any data elements (such as the `Direction` example above),
 it is trivially true that all of its data elements implement `Equatable` and `HashKey`. Thus
 `Direction` will implement both of these interfaces.
+
+postInit
+--------
+
+If a choice declares a `postInit()` method, it will be called after the choice is constructed. This
+gives you an opportunity to perform error checking or other required setup.

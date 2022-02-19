@@ -40,7 +40,7 @@ class Interpreter : Backend {
                 when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
                     return (interpreter.cg.struct(cc.owner).elementOffset(interpreter.settings!,
                                 CodeGenerator.CHOICE_DATA_INDEX) +
-                            Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
+                            Code.PrimitiveType.STRUCT(cc.toString, FixedArray<Code.PrimitiveType>(
                                 cc.fields.map(interpreter.cg.primitiveType))).elementOffset(
                                     interpreter.settings!, index))
                 }
@@ -81,7 +81,7 @@ class Interpreter : Backend {
                     assert statements.contains(id)
                     return statements[id]
                 }
-                when Code.Value.STRUCT(args) {
+                when Code.Value.STRUCT(_, args) {
                     def alignment := args.map(
                             a => a.type.alignment(self.interpreter.settings!)).fold(Int.max)
                     def result := Interpreter.alignUp(interpreter.stack, alignment).asUInt.toInt64
@@ -249,7 +249,7 @@ class Interpreter : Backend {
 
     method createStruct(id:Code.Statement.ID, type:Code.PrimitiveType,
             args:FixedArray<Code.Value>) {
-        contexts[0].statements[id] := contexts[0].value(Code.Value.STRUCT(args))
+        contexts[0].statements[id] := contexts[0].value(Code.Value.STRUCT("<undef>", args))
     }
 
     @pre((id == null) = (returnType == null))
@@ -977,7 +977,7 @@ class Interpreter : Backend {
                     def ptr := Pointer<Int8>((context.value(target) +
                             target.type.elementOffset(settings!, index)).toUInt)
                     match target.type {
-                        when Code.PrimitiveType.STRUCT(fields) {
+                        when Code.PrimitiveType.STRUCT(_, fields) {
                             load(result, ptr, fields[index])
                         }
                         otherwise {
@@ -1164,7 +1164,7 @@ class Interpreter : Backend {
         var result := dest
         match v {
             when Code.Value.ARRAY(_, elements) {
-                result := write(Code.Value.STRUCT(elements), result)
+                result := write(Code.Value.STRUCT("Array", elements), result)
             }
             when Code.Value.BIT(b) {
                 if b {
@@ -1231,9 +1231,9 @@ class Interpreter : Backend {
             when Code.Value.STATEMENT(id, type) {
                 result := write(contexts[0].statements[id], type, result)
             }
-            when Code.Value.STRUCT(args) {
+            when Code.Value.STRUCT(name, args) {
                 result := alignUp(result,
-                        Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
+                        Code.PrimitiveType.STRUCT(name, FixedArray<Code.PrimitiveType>.from(
                                 args.map(a => a.type))).alignment(settings))
                 for a in args {
                     result := write(a, result)

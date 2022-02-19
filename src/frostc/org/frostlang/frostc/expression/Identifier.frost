@@ -32,8 +32,6 @@ class Identifier {
                 compiler.checkGenericArguments(position.asPosition, cl, cl.type)
                 return compiler.literalType(cl.type)
             }
-        }
-        if s == null {
             s := compiler.root[name]
         }
         if s !== null {

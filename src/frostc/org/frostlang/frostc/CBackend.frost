@@ -11,7 +11,7 @@ class CBackend : Backend {
 
     def physicalOut:OutputStream
 
-    var out:OutputStream
+    var out:OutputStream?
 
     @weak
     var compiler:Compiler?
@@ -40,7 +40,7 @@ class CBackend : Backend {
 
     var varCount := 0
 
-    def structs := HashMap<String, String>()
+    def structs := HashMap<String, (String, String)>()
 
     def externalGlobals := IdentitySet<Code.Global>()
 
@@ -117,7 +117,7 @@ class CBackend : Backend {
             when Code.PrimitiveType.ARRAY(count, type) {
                 return "A\{count}x\{tag(type)}B"
             }
-            when Code.PrimitiveType.STRUCT(types) {
+            when Code.PrimitiveType.STRUCT(_, types) {
                 return "C\{types.map(tag).join("")}D"
             }
             otherwise {
@@ -155,13 +155,12 @@ class CBackend : Backend {
             when Code.PrimitiveType.ARRAY(count, type) {
                 return "\{cType(type)}[\{count.max(1)}]"
             }
-            when Code.PrimitiveType.STRUCT(fields) {
-                def key := t.toString
-                var result := structs[key]
+            when Code.PrimitiveType.STRUCT(name, fields) {
+                var result := structs[name]
                 if result == null {
                     try {
-                        result := "struct" + tag(t)
-                        structs[key] := result
+                        result := (CodeGenerator.escapeName(name), fields.toString)
+                        structs[name] := result
                         def decls := Array<String>()
                         for p in fields.enumeration {
                             match p[1] {
@@ -173,17 +172,20 @@ class CBackend : Backend {
                                 }
                             }
                         }
-                        types.printLine("typedef struct \{result} {")
+                        types.printLine("typedef struct \{result[0]} {")
                         for d in decls {
                             types.printLine(d)
                         }
-                        types.printLine("} \{result};")
+                        types.printLine("} \{result[0]};")
                     }
                     fail(error) {
                         unreachable, error.toString
                     }
                 }
-                return result
+                else {
+                    assert result[1] = fields.toString, "expected \{result[0]} to be in map with \{fields}, but was in map with \{result[1]}"
+                }
+                return result[0]
             }
             otherwise {
                 unreachable, "unsupported type \{t}"
@@ -231,8 +233,8 @@ class CBackend : Backend {
                 return result.finish()
             }
             when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
-                def struct := Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
-                            cc.fields.map(cg.primitiveType)))
+                def struct := Code.PrimitiveType.STRUCT(cc.toString,
+                        FixedArray<Code.PrimitiveType>(cc.fields.map(cg.primitiveType)))
                 return "(offsetof(\{cType(cg.struct(cc.owner))}, " +
                         "f\{CodeGenerator.CHOICE_DATA_INDEX}) + " +
                         "offsetof(\{cType(struct)}, f\{index}))"
@@ -281,8 +283,8 @@ class CBackend : Backend {
                 }
                 return name(id)
             }
-            when Code.Value.STRUCT(args) {
-                def t := Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
+            when Code.Value.STRUCT(name, args) {
+                def t := Code.PrimitiveType.STRUCT(name, FixedArray<Code.PrimitiveType>.from(
                         args.map(a:Code.Value => a.type)))
                 return "(\{cType(t)}) { " + args.map(getReference).join(", ") + " }"
             }
@@ -562,7 +564,7 @@ class CBackend : Backend {
                     out.printLine("goto \{target};")
                 }
                 when Code.Statement.COMMENT(_, text) {
-                    out.printLine("// \{text}")
+                    out.printLine("// \{text.replace('\n', '\n//')}")
                 }
                 when Code.Statement.CONVERTS(position, result, value, target) {
                     define(target, result, "(\{cType(target)}) \{getReference(value)}")
@@ -587,7 +589,7 @@ class CBackend : Backend {
                 }
                 when Code.Statement.EXTRACT_FIELD(position, result, target, index) {
                     match target.type {
-                        when Code.PrimitiveType.STRUCT(types) {
+                        when Code.PrimitiveType.STRUCT(_, types) {
                             define(types[index], result, "\{getReference(target)}.f\{index}")
                         }
                         otherwise {

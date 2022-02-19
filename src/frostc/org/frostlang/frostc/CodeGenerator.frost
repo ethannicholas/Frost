@@ -166,9 +166,9 @@ class CodeGenerator {
             ]
             def stringIndex := globals.count
             def string := Code.Global("string\{stringIndex}",
-                    Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(types)),
+                    Code.PrimitiveType.STRUCT("String", FixedArray<Code.PrimitiveType>.from(types)),
                     null, Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
-            writeGlobalValue(string, Code.Value.STRUCT(FixedArray<Code.Value>.from([
+            writeGlobalValue(string, Code.Value.STRUCT("String", FixedArray<Code.Value>.from([
                 cc,
                 Code.Value.INT(NO_REFCNT.toUInt64, Code.PrimitiveType.INT32),
                 Code.Value.INT(0, Code.PrimitiveType.INT8),
@@ -202,7 +202,8 @@ class CodeGenerator {
                         }
                     }))
                 ))
-                def value := Code.Value.STRUCT(FixedArray<Code.Value>.from(fields))
+                def value := Code.Value.STRUCT("\{structName(cl)}.\{intf.name}_ITABLE",
+                        FixedArray<Code.Value>.from(fields))
                 def index := globals.count
                 writeGlobalValue(Code.Global(escapeName(cl.name) + "$" +
                         escapeName(intfType.name) + "$itable", value.type, null,
@@ -263,8 +264,8 @@ class CodeGenerator {
                 flags := 0
             }
             def cc := Code.Global(name,
-                    Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(types)), null,
-                    flags)
+                    Code.PrimitiveType.STRUCT("\{structName(cl)}_CLASS",
+                        FixedArray<Code.PrimitiveType>.from(types)), null, flags)
             def index := globals.count
             result := Code.Value.GLOBAL_POINTER(index)
             writeGlobal(cc)
@@ -289,7 +290,8 @@ class CodeGenerator {
                             Code.Value.METHOD_POINTER(self.getMethodTableEntry(m)),
                             Code.Value.INT(0, Code.PrimitiveType.INT))))
                 ))
-                writeGlobalValue(cc, Code.Value.STRUCT(FixedArray<Code.Value>.from(fields)))
+                writeGlobalValue(cc, Code.Value.STRUCT("\{structName(cl)}_CLASS",
+                        FixedArray<Code.Value>.from(fields)))
             }
         }
         return result
@@ -450,6 +452,17 @@ class CodeGenerator {
         return result
     }
 
+    function structName(s:String):String {
+        if s.startsWith("frost.unsafe.Pointer<") {
+            return "frost.unsafe.Pointer"
+        }
+        return s
+    }
+
+    function structName(cl:ClassDecl):String {
+        return structName(cl.name)
+    }
+
     method struct(cl:ClassDecl):Code.PrimitiveType {
         def types := Array<Code.PrimitiveType>()
         for f in compiler.instanceFields(cl) {
@@ -475,8 +488,9 @@ class CodeGenerator {
                     settings.intSize := 8
                 }
                 for cc in cl.choiceCases {
-                    size := size.max(Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
-                            cc.fields.map(primitiveType))).size(settings))
+                    size := size.max(Code.PrimitiveType.STRUCT(cc.toString,
+                            FixedArray<Code.PrimitiveType>(
+                                cc.fields.map(primitiveType))).size(settings))
                 }
                 settings.intSize := oldSize
                 types.add(Code.PrimitiveType.ARRAY(size, Code.PrimitiveType.INT8))
@@ -485,16 +499,17 @@ class CodeGenerator {
                 types.add(primitiveType(f.type))
             }
         }
-        return Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(types))
+        return Code.PrimitiveType.STRUCT(structName(cl), FixedArray<Code.PrimitiveType>.from(types))
     }
 
     function wrapperStruct(cl:ClassDecl):Code.PrimitiveType {
         def base := struct(compiler.getClass("frost.core.Object")!)
         match base {
-            when Code.PrimitiveType.STRUCT(fields) {
+            when Code.PrimitiveType.STRUCT(name, fields) {
                 def finalFields := Array<Code.PrimitiveType>(fields)
                 finalFields.add(struct(cl))
-                return Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(finalFields))
+                return Code.PrimitiveType.STRUCT(cl.name + "_WRAPPER",
+                        FixedArray<Code.PrimitiveType>.from(finalFields))
             }
             otherwise {
                 unreachable
@@ -503,8 +518,9 @@ class CodeGenerator {
     }
 
     function nullableStruct(cl:ClassDecl):Code.PrimitiveType {
-        return Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
-                [primitiveType(cl.type), Code.PrimitiveType.BIT]))
+        return Code.PrimitiveType.STRUCT(structName(cl)+ "_NULLABLE",
+                FixedArray<Code.PrimitiveType>.from(
+                    [primitiveType(cl.type), Code.PrimitiveType.BIT]))
     }
 
     ================================================================================================
@@ -563,8 +579,8 @@ class CodeGenerator {
                 def base := primitiveType(type.subtypes[0])
                 if compiler.isValue(type.subtypes[0]) {
                     -- nullable value, add an 'isNull' field
-                    return Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from(
-                            [base, Code.PrimitiveType.BIT]))
+                    return Code.PrimitiveType.STRUCT("\{structName(type.subtypes[0].name)}_NULLABLE",
+                            FixedArray<Code.PrimitiveType>.from([base, Code.PrimitiveType.BIT]))
                 }
                 -- nullable object, still just a pointer
                 return base
@@ -596,16 +612,18 @@ class CodeGenerator {
                 return Code.Value.INT(i, primitiveType(type))
             }
             when IR.Value.LOCAL(slot, type) {
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 35"))
                 return Code.Value.STATEMENT(locals[slot], Code.PrimitiveType.INT)
             }
             when IR.Value.NULL(type) {
                 def cl := compiler.getClass(type.subtypes[0])
                 assert cl !== null
                 if compiler.isValue(cl) {
-                    return Code.Value.STRUCT(FixedArray<Code.Value>.from([
-                        Code.Value.UNDEFINED(primitiveType(type.subtypes[0])),
-                        Code.Value.BIT(false)
-                    ]))
+                    return Code.Value.STRUCT(structName(cl) + "_NULLABLE",
+                            FixedArray<Code.Value>.from([
+                                Code.Value.UNDEFINED(primitiveType(type.subtypes[0])),
+                                Code.Value.BIT(false)
+                            ]))
                 }
                 else {
                     return Code.Value.INT(0, Code.PrimitiveType.INT)
@@ -627,6 +645,7 @@ class CodeGenerator {
                 }
                 def s := statements[id]
                 if s !== null {
+                    out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 36: \{type}"))
                     return Code.Value.STATEMENT(s, primitiveType(type))
                 }
                 var list := earlyRefs[id]
@@ -634,6 +653,7 @@ class CodeGenerator {
                     list := Array<Code.ValueRef>()
                     earlyRefs[id] := list
                 }
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 37"))
                 def valueRef := Code.ValueRef(Code.Value.STATEMENT(mapId(id), primitiveType(type)))
                 list.add(valueRef)
                 def result := Code.Value.REF(valueRef)
@@ -667,6 +687,7 @@ class CodeGenerator {
                 when Code.PrimitiveType.STRUCT {
                     def field := nextStatement()
                     out.add(Code.Statement.EXTRACT_FIELD(position, field, value, 1))
+                    out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 38"))
                     out.add(Code.Statement.NOTB(position, id, Code.Value.STATEMENT(field,
                             Code.PrimitiveType.BIT)))
                 }
@@ -1000,6 +1021,7 @@ class CodeGenerator {
                 def nonNullBlock := nextBlock()
                 def nullBlock := nextBlock()
                 def endBlock := nextBlock()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 1"))
                 out.add(Code.Statement.CONDITIONAL_BRANCH(position,
                         Code.Value.STATEMENT(isNonNull, Code.PrimitiveType.BIT), nonNullBlock,
                         nullBlock))
@@ -1007,20 +1029,24 @@ class CodeGenerator {
                 def nonNullable := nextStatement()
                 out.add(Code.Statement.EXTRACT_FIELD(position, nonNullable, value, 0))
                 def wrapped := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 2"))
                 wrapValue(position, wrapped, srcType.subtypes[0],
                         Code.Value.STATEMENT(nonNullable, primitiveType(srcType.subtypes[0])),
                         dstType)
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 3"))
                 out.add(Code.Statement.STORE(position,
                         Code.Value.STATEMENT(wrapped, type),
                         Code.Value.STATEMENT(alloc, Code.PrimitiveType.INT)))
                 out.add(Code.Statement.BRANCH(position, endBlock))
                 createBlock(nullBlock)
                 def nullValue := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 4"))
                 out.add(Code.Statement.STORE(position,
                         Code.Value.INT(0, Code.PrimitiveType.INT),
                         Code.Value.STATEMENT(alloc, Code.PrimitiveType.INT)))
                 out.add(Code.Statement.BRANCH(position, endBlock))
                 createBlock(endBlock)
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 5"))
                 out.add(Code.Statement.LOAD(position,
                         id,
                         Code.Value.STATEMENT(alloc, Code.PrimitiveType.INT),
@@ -1032,8 +1058,10 @@ class CodeGenerator {
             out.add(Code.Statement.HEAP_ALLOC(position, id, wrapper, cc))
             def structPtr := nextStatement()
             def offset := Code.Value.FIELD_OFFSET(wrapper, VALUE_INDEX)
+            out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 6"))
             out.add(Code.Statement.ADDI(position, structPtr, Code.Value.STATEMENT(id,
                     Code.PrimitiveType.INT), offset, Code.Wrap.UNCHECKED))
+            out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 7"))
             out.add(Code.Statement.STORE(position, value,
                     Code.Value.STATEMENT(structPtr, Code.PrimitiveType.INT)))
         }
@@ -1058,6 +1086,7 @@ class CodeGenerator {
                 def nonNullBlock := nextBlock()
                 def nullBlock := nextBlock()
                 def endBlock := nextBlock()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 8"))
                 out.add(Code.Statement.CONDITIONAL_BRANCH(position,
                         Code.Value.STATEMENT(isNonNull, Code.PrimitiveType.BIT), nonNullBlock,
                         nullBlock))
@@ -1065,28 +1094,37 @@ class CodeGenerator {
                 def unwrapped := nextStatement()
                 unwrapValue(position, unwrapped, srcType, value, dstType.subtypes[0])
                 def nonNullValue := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "unwrapValue toNullableValue"))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 9"))
                 toNullableValue(position, nonNullValue, dstType.subtypes[0],
                         Code.Value.STATEMENT(unwrapped, primitiveType(dstType.subtypes[0])), dstType)
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 10"))
                 out.add(Code.Statement.STORE(position,
                         Code.Value.STATEMENT(nonNullValue, type),
                         Code.Value.STATEMENT(alloc, Code.PrimitiveType.INT)))
                 out.add(Code.Statement.BRANCH(position, endBlock))
                 createBlock(nullBlock)
                 def nullValue := nextStatement()
-                out.add(Code.Statement.CREATE_STRUCT(position, nullValue,
-                        Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from([
+                def nullableType := Code.PrimitiveType.STRUCT(target.name + "_NULLABLE",
+                        FixedArray<Code.PrimitiveType>.from([
                             primitiveType(dstType.subtypes[0]),
                             Code.PrimitiveType.BIT
-                        ])),
+                        ]))
+                out.add(Code.Statement.CREATE_STRUCT(position, nullValue,
+                        nullableType,
                         FixedArray<Code.Value>.from([
                             Code.Value.UNDEFINED(primitiveType(dstType.subtypes[0])),
                             Code.Value.BIT(false)
                         ])))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "store2!"))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 11"))
                 out.add(Code.Statement.STORE(position,
-                        Code.Value.STATEMENT(nullValue, type),
+                        Code.Value.STATEMENT(nullValue, nullableType),
                         Code.Value.STATEMENT(alloc, Code.PrimitiveType.INT)))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "finished!"))
                 out.add(Code.Statement.BRANCH(position, endBlock))
                 createBlock(endBlock)
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 12"))
                 out.add(Code.Statement.LOAD(position,
                         id,
                         Code.Value.STATEMENT(alloc, Code.PrimitiveType.INT),
@@ -1097,6 +1135,7 @@ class CodeGenerator {
             def wrapper := wrapperStruct(target)
             def offset := Code.Value.FIELD_OFFSET(wrapper, VALUE_INDEX)
             out.add(Code.Statement.ADDI(position, structPtr, value, offset, Code.Wrap.UNCHECKED))
+            out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 13"))
             out.add(Code.Statement.LOAD(position, id, Code.Value.STATEMENT(structPtr,
                     Code.PrimitiveType.INT), primitiveType(target)))
         }
@@ -1456,10 +1495,12 @@ class CodeGenerator {
                 out.add(Code.Statement.LOAD(position, cl, convertValue(value),
                         Code.PrimitiveType.INT))
                 def vtableSlot := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 14"))
                 out.add(Code.Statement.ADDI(position, vtableSlot,
                         Code.Value.STATEMENT(cl, Code.PrimitiveType.INT),
                         Code.Value.VTABLE_OFFSET(cc, index),
                         Code.Wrap.UNCHECKED))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 15"))
                 out.add(Code.Statement.LOAD(position, mapId(id), 
                         Code.Value.STATEMENT(vtableSlot, Code.PrimitiveType.INT),
                         Code.PrimitiveType.INT))
@@ -1481,16 +1522,20 @@ class CodeGenerator {
                 def itableStatement := nextStatement()
                 block0.insert(0, Code.Statement.STACK_ALLOC(position, itableStatement,
                         Code.PrimitiveType.INT))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 16"))
                 def itable := Code.Value.STATEMENT(itableStatement, Code.PrimitiveType.INT)
                 def itableSlot := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 17"))
                 out.add(Code.Statement.ADDI(position, itableSlot,
                         Code.Value.STATEMENT(initialCl, Code.PrimitiveType.INT),
                         Code.Value.FIELD_OFFSET(ccType, ITABLE_INDEX),
                         Code.Wrap.UNCHECKED))
                 def initialItable := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 18"))
                 out.add(Code.Statement.LOAD(position, initialItable,
                         Code.Value.STATEMENT(itableSlot, Code.PrimitiveType.INT),
                         Code.PrimitiveType.INT))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 19"))
                 out.add(Code.Statement.STORE(position, Code.Value.STATEMENT(initialItable,
                         Code.PrimitiveType.INT), itable))
                 def loopStart := nextBlock()
@@ -1501,29 +1546,37 @@ class CodeGenerator {
                 def itableLoad := nextStatement()
                 out.add(Code.Statement.LOAD(position, itableLoad, itable, Code.PrimitiveType.INT))
                 def clLoad := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 20"))
                 out.add(Code.Statement.LOAD(position, clLoad, Code.Value.STATEMENT(itableLoad,
                         Code.PrimitiveType.INT), Code.PrimitiveType.INT))
                 def test := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 21"))
                 out.add(Code.Statement.EQI(position, test, Code.Value.STATEMENT(clLoad,
                         Code.PrimitiveType.INT), getClassConstant(cl)))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 22"))
                 out.add(Code.Statement.CONDITIONAL_BRANCH(position, Code.Value.STATEMENT(test,
                         Code.PrimitiveType.BIT), loopEnd, loopBody))
                 createBlock(loopBody)
                 def nextPtr := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 23"))
                 out.add(Code.Statement.ADDI(position, nextPtr, Code.Value.STATEMENT(itableLoad,
                         Code.PrimitiveType.INT), Code.Value.SIZE_OF(Code.PrimitiveType.INT),
                         Code.Wrap.UNCHECKED))
                 def next := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 24"))
                 out.add(Code.Statement.LOAD(position, next, Code.Value.STATEMENT(nextPtr,
                         Code.PrimitiveType.INT), Code.PrimitiveType.INT))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 25"))
                 out.add(Code.Statement.STORE(position, Code.Value.STATEMENT(next,
                         Code.PrimitiveType.INT), itable))
                 out.add(Code.Statement.BRANCH(position, loopStart))
                 createBlock(loopEnd)
                 def finalPtr := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 26"))
                 out.add(Code.Statement.ADDI(position, finalPtr, Code.Value.STATEMENT(itableLoad,
                         Code.PrimitiveType.INT), Code.Value.ITABLE_OFFSET(index),
                         Code.Wrap.UNCHECKED))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 27"))
                 out.add(Code.Statement.LOAD(position, mapId(id), Code.Value.STATEMENT(finalPtr,
                         Code.PrimitiveType.INT), Code.PrimitiveType.INT))
             }
@@ -1556,9 +1609,11 @@ class CodeGenerator {
                 out.add(Code.Statement.MULI(position, offset, convertValue(idx),
                         Code.Value.SIZE_OF(primitiveType(type)), Code.Wrap.UNCHECKED))
                 def add := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 28"))
                 out.add(Code.Statement.ADDI(position, add, convertValue(ptr),
                         Code.Value.STATEMENT(offset, Code.PrimitiveType.INT),
                         Code.Wrap.UNCHECKED))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 29"))
                 out.add(Code.Statement.LOAD(position, mapId(id),
                         Code.Value.STATEMENT(add, Code.PrimitiveType.INT),
                         primitiveType(type)))
@@ -1571,9 +1626,11 @@ class CodeGenerator {
                 out.add(Code.Statement.MULI(position, offset, convertValue(idx),
                         Code.Value.SIZE_OF(primitiveType(type)), Code.Wrap.UNCHECKED))
                 def add := nextStatement()
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 30"))
                 out.add(Code.Statement.ADDI(position, add, convertValue(ptr),
                         Code.Value.STATEMENT(offset, Code.PrimitiveType.INT),
                         Code.Wrap.UNCHECKED))
+                out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 31"))
                 out.add(Code.Statement.STORE(position, convertValue(value),
                         Code.Value.STATEMENT(add, Code.PrimitiveType.INT)))
             }
@@ -1591,6 +1648,7 @@ class CodeGenerator {
                     def alloc := nextStatement()
                     def returnType := primitiveType(m.returnType)
                     block0.insert(0, Code.Statement.STACK_ALLOC(position, alloc, returnType))
+                    out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 32"))
                     finalArgs.add(Code.Value.STATEMENT(alloc, Code.PrimitiveType.INT))
                     for a in args {
                         finalArgs.add(convertValue(a))
@@ -1598,6 +1656,7 @@ class CodeGenerator {
                     out.add(Code.Statement.STATIC_CALL_VOID(position, getSignature(m),
                             FixedArray<Code.Value>.from(finalArgs)))
                     def result := mapId(id)
+                    out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 33"))
                     out.add(Code.Statement.LOAD(position, result,
                             Code.Value.STATEMENT(alloc, Code.PrimitiveType.INT), returnType))
                 }
@@ -1662,6 +1721,7 @@ class CodeGenerator {
                 def p := MethodPosition()
                 out.add(Code.Statement.STACK_ALLOC(p, id, primitiveType(l)))
                 if compiler.isRefCounted(l) {
+                    out.add(Code.Statement.COMMENT(MethodPosition(), "Statement 34"))
                     out.add(Code.Statement.STORE(p,
                             Code.Value.INT(0, Code.PrimitiveType.INT),
                             Code.Value.STATEMENT(id, Code.PrimitiveType.INT)))

@@ -3355,7 +3355,11 @@ class Compiler : ErrorReporter {
         if entry.resolved != Resolution.RESOLVED {
             return
         }
+        var hasPostInit := false
         outer: for m in cl.methods {
+            if m.name = "postInit" {
+                hasPostInit := true
+            }
             if m.methodKind != MethodDecl.Kind.INIT |
                     m.parameters.count != entry.fields.count + 1->Int {
                 continue
@@ -3385,6 +3389,10 @@ class Compiler : ErrorReporter {
                         i),
                     Binary.Operator.ASSIGNMENT,
                     ASTNode.IDENTIFIER(cl.position, "f\{i}")))
+        }
+        if hasPostInit {
+            statements.add(ASTNode.CALL(cl.position, ASTNode.IDENTIFIER(cl.position, "postInit"),
+                    FixedArray<ASTNode>()))
         }
         def synthetic := MethodDecl(cl, cl.position, methods.count, null,
                 Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init", null,

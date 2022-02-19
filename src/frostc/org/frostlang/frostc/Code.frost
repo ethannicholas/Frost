@@ -21,7 +21,15 @@ class Code {
         FLOAT64
         BIT
         ARRAY(Int, PrimitiveType)
-        STRUCT(FixedArray<PrimitiveType>)
+        STRUCT(String -* name *-, FixedArray<PrimitiveType>)
+
+        method postInit() {
+            match self {
+                when STRUCT(name, fields) {
+                    assert "(\{name}, \{fields})" != "(org.frostlang.frostc.Code.Statement.ID, [INT, BIT])"
+                }
+            }
+        }
 
         property isInt:Bit
         function get_isInt():Bit {
@@ -54,7 +62,7 @@ class Code {
 
         function elementOffset(settings:Compiler.Settings, idx:Int):Int {
             match self {
-                when STRUCT(types) {
+                when STRUCT(_, types) {
                     assert idx <= types.count
                     var result := 0
                     var totalAlign := 1
@@ -96,7 +104,7 @@ class Code {
                 when INT64, FLOAT64 {
                     return 8
                 }
-                when STRUCT(types) {
+                when STRUCT(_, types) {
                     return elementOffset(settings, types.count)
                 }
                 when ARRAY(count, type) {
@@ -110,7 +118,7 @@ class Code {
 
         function alignment(settings:Compiler.Settings):Int {
             match self {
-                when STRUCT(types) {
+                when STRUCT(_, types) {
                     return types.map(t => t.alignment(settings)).fold(Int.max, 1)
                 }
                 when ARRAY(count, type) {
@@ -727,7 +735,7 @@ class Code {
         REF(ValueRef)
         STATEMENT(Statement.ID, PrimitiveType)
         ARRAY(PrimitiveType, FixedArray<Value>)
-        STRUCT(FixedArray<Value>)
+        STRUCT(String -* name *-, FixedArray<Value>)
         UNDEFINED(PrimitiveType)
 
         property type:PrimitiveType
@@ -775,9 +783,9 @@ class Code {
                 when ARRAY(type, elements) {
                     return PrimitiveType.ARRAY(elements.count, type)
                 }
-                when STRUCT(args) {
-                    return PrimitiveType.STRUCT(FixedArray<PrimitiveType>.from(args.map(
-                            a => a.type)))
+                when STRUCT(name, args) {
+                    return PrimitiveType.STRUCT(name,
+                            FixedArray<PrimitiveType>.from(args.map(a => a.type)))
                 }
                 when UNDEFINED(type) {
                     return type

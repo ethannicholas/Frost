@@ -317,7 +317,7 @@ class LLVMBackend : Backend {
             when Code.PrimitiveType.ARRAY(count, type) {
                 return "[\{count} x \{llvmType(type)}]"
             }
-            when Code.PrimitiveType.STRUCT(types) {
+            when Code.PrimitiveType.STRUCT(_, types) {
                 def result := MutableString("{ ")
                 var separator := ""
                 for t in types {
@@ -376,7 +376,7 @@ class LLVMBackend : Backend {
             when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
                 return (cg.struct(cc.owner).elementOffset(settings!,
                             CodeGenerator.CHOICE_DATA_INDEX) +
-                        Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>(
+                        Code.PrimitiveType.STRUCT(cc.toString, FixedArray<Code.PrimitiveType>(
                             cc.fields.map(cg.primitiveType))).elementOffset(settings!,
                                 index)).toString
             }
@@ -420,7 +420,7 @@ class LLVMBackend : Backend {
             when Code.Value.STATEMENT(id, _) {
                 return name(id)
             }
-            when Code.Value.STRUCT(args) {
+            when Code.Value.STRUCT(_, args) {
                 return "{ " + args.map(getTypedReference).join(", ") + " }"
             }
             when Code.Value.UNDEFINED(_) {
@@ -763,7 +763,7 @@ class LLVMBackend : Backend {
     method writeOverflowIntrinsic(op:String, type:Code.PrimitiveType):String {
         def name := "llvm.\{op}.with.overflow.\{llvmType(type)}"
         writeSignature(Code.Signature(null,
-                Code.PrimitiveType.STRUCT(FixedArray<Code.PrimitiveType>.from([type,
+                Code.PrimitiveType.STRUCT("Overflow", FixedArray<Code.PrimitiveType>.from([type,
                     Code.PrimitiveType.BIT])),
                 name, FixedArray<Code.PrimitiveType>.from([type, type]), true))
         return "@\{name}"
