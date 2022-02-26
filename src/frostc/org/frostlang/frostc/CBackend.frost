@@ -117,13 +117,17 @@ class CBackend : Backend {
             when Code.PrimitiveType.ARRAY(count, type) {
                 return "A\{count}x\{tag(type)}B"
             }
-            when Code.PrimitiveType.STRUCT(_, types) {
-                return "C\{types.map(tag).join("")}D"
+            when Code.PrimitiveType.STRUCT(_, fields) {
+                return "C\{fields.map(f => self.tag(f.type)).join("")}D"
             }
             otherwise {
                 unreachable, "unsupported type \{t}"
             }
         }    
+    }
+
+    function name(field:Code.PrimitiveType.Field):String {
+        return "f_" + CodeGenerator.escapeName(field.name)
     }
 
     method cType(t:Code.PrimitiveType):String {
@@ -155,20 +159,21 @@ class CBackend : Backend {
             when Code.PrimitiveType.ARRAY(count, type) {
                 return "\{cType(type)}[\{count.max(1)}]"
             }
-            when Code.PrimitiveType.STRUCT(name, fields) {
-                var result := structs[name]
+            when Code.PrimitiveType.STRUCT(structName, fields) {
+                var result := structs[structName]
                 if result == null {
                     try {
-                        result := (CodeGenerator.escapeName(name), fields.toString)
-                        structs[name] := result
+                        result := (CodeGenerator.escapeName(structName), fields.toString)
+                        structs[structName] := result
                         def decls := Array<String>()
-                        for p in fields.enumeration {
-                            match p[1] {
+                        for field in fields {
+                            match field.type {
                                 when Code.PrimitiveType.ARRAY(count, type) {
-                                    decls.add("\{self.cType(type)} f\{p[0]}[\{count.max(1)}];")
+                                    decls.add(
+                                            "\{self.cType(type)} \{name(field)}[\{count.max(1)}];")
                                 }
                                 otherwise {
-                                    decls.add("\{self.cType(p[1])} f\{p[0]};")
+                                    decls.add("\{self.cType(field.type)} \{name(field)};")
                                 }
                             }
                         }
@@ -183,7 +188,8 @@ class CBackend : Backend {
                     }
                 }
                 else {
-                    assert result[1] = fields.toString, "expected \{result[0]} to be in map with \{fields}, but was in map with \{result[1]}"
+                    assert result[1] = fields.toString, "expected \{result[0]} to be in map " +
+                            "with:\n'\{fields}'\n, but was in map with:\n'\{result[1]}'"
                 }
                 return result[0]
             }
@@ -234,13 +240,22 @@ class CBackend : Backend {
             }
             when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
                 def struct := Code.PrimitiveType.STRUCT(cc.toString,
-                        FixedArray<Code.PrimitiveType>(cc.fields.map(cg.primitiveType)))
-                return "(offsetof(\{cType(cg.struct(cc.owner))}, " +
-                        "f\{CodeGenerator.CHOICE_DATA_INDEX}) + " +
-                        "offsetof(\{cType(struct)}, f\{index}))"
+                        FixedArray<Code.PrimitiveType.Field>(cc.fields.enumeration.map(
+                            f => Code.PrimitiveType.Field("f\{f[0]}",
+                                self.cg.primitiveType(f[1]))).all()))
+                return "(offsetof(\{cType(cg.struct(cc.owner))}, f_$choiceData) + " +
+                        "offsetof(\{cType(struct)}, f_f\{index}))"
             }
             when Code.Value.FIELD_OFFSET(type, index) {
-                return "offsetof(\{cType(type)}, f\{index})"
+                match type {
+                    when Code.PrimitiveType.STRUCT(_, fields) {
+                        return "offsetof(\{cType(type)}, " +
+                                "f_\{CodeGenerator.escapeName(fields[index].name)})"
+                    }
+                    otherwise {
+                        unreachable
+                    }
+                }
             }
             when Code.Value.GLOBAL_POINTER(index) {
                 return "(intptr_t) &" + cg.globals[index].name
@@ -283,10 +298,8 @@ class CBackend : Backend {
                 }
                 return name(id)
             }
-            when Code.Value.STRUCT(name, args) {
-                def t := Code.PrimitiveType.STRUCT(name, FixedArray<Code.PrimitiveType>.from(
-                        args.map(a:Code.Value => a.type)))
-                return "(\{cType(t)}) { " + args.map(getReference).join(", ") + " }"
+            when Code.Value.STRUCT(type, args) {
+                return "(\{cType(type)}) { " + args.map(getReference).join(", ") + " }"
             }
             when Code.Value.UNDEFINED(t) {
                 match t {
@@ -308,8 +321,7 @@ class CBackend : Backend {
                         unreachable
                     }
                 }
-                return "(offsetof(\{cType(ccType)}, f\{CodeGenerator.VTABLE_INDEX}) + " +
-                        "sizeof(void*) * \{index})"
+                return "(offsetof(\{cType(ccType)}, f_vtable) + sizeof(void*) * \{index})"
             }
             otherwise {
                 unreachable, "unsupported value \{v}"
@@ -589,8 +601,9 @@ class CBackend : Backend {
                 }
                 when Code.Statement.EXTRACT_FIELD(position, result, target, index) {
                     match target.type {
-                        when Code.PrimitiveType.STRUCT(_, types) {
-                            define(types[index], result, "\{getReference(target)}.f\{index}")
+                        when Code.PrimitiveType.STRUCT(_, fields) {
+                            define(fields[index].type, result,
+                                    "\{getReference(target)}.\{name(fields[index])}")
                         }
                         otherwise {
                             unreachable, "extracting a field from \{target}"

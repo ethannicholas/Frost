@@ -934,7 +934,7 @@ class Call {
                     argTypes.add(preferred)
                 }
                 compiler.error(position, "no match for \{methods[0].name}(\{argTypes.join(", ")})" +
-                        "\{type.description()} in \{target.type}")
+                        "\{type.description()}")
                 return null
             }
             when IR.Value.GENERIC_METHODS(target, methods, types) {

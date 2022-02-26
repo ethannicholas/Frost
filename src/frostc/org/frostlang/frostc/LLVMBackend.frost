@@ -317,12 +317,12 @@ class LLVMBackend : Backend {
             when Code.PrimitiveType.ARRAY(count, type) {
                 return "[\{count} x \{llvmType(type)}]"
             }
-            when Code.PrimitiveType.STRUCT(_, types) {
+            when Code.PrimitiveType.STRUCT(name, fields) {
                 def result := MutableString("{ ")
                 var separator := ""
-                for t in types {
+                for f in fields {
                     result.append(separator)
-                    result.append(llvmType(t))
+                    result.append(llvmType(f.type))
                     separator := ", "
                 }
                 result.append(" }")
@@ -376,9 +376,10 @@ class LLVMBackend : Backend {
             when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
                 return (cg.struct(cc.owner).elementOffset(settings!,
                             CodeGenerator.CHOICE_DATA_INDEX) +
-                        Code.PrimitiveType.STRUCT(cc.toString, FixedArray<Code.PrimitiveType>(
-                            cc.fields.map(cg.primitiveType))).elementOffset(settings!,
-                                index)).toString
+                        Code.PrimitiveType.STRUCT(cc.toString, FixedArray<Code.PrimitiveType.Field>(
+                            cc.fields.map(f => Code.PrimitiveType.Field("",
+                                self.cg.primitiveType(f))))).elementOffset(settings!,
+                                    index)).toString
             }
             when Code.Value.FIELD_OFFSET(type, index) {
                 return type.elementOffset(settings!, index).toString
@@ -763,8 +764,9 @@ class LLVMBackend : Backend {
     method writeOverflowIntrinsic(op:String, type:Code.PrimitiveType):String {
         def name := "llvm.\{op}.with.overflow.\{llvmType(type)}"
         writeSignature(Code.Signature(null,
-                Code.PrimitiveType.STRUCT("Overflow", FixedArray<Code.PrimitiveType>.from([type,
-                    Code.PrimitiveType.BIT])),
+                Code.PrimitiveType.STRUCT("Overflow", FixedArray<Code.PrimitiveType.Field>.from(
+                        [Code.PrimitiveType.Field("value", type),
+                         Code.PrimitiveType.Field("overflow", Code.PrimitiveType.BIT)])),
                 name, FixedArray<Code.PrimitiveType>.from([type, type]), true))
         return "@\{name}"
     }

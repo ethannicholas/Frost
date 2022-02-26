@@ -21,13 +21,20 @@ class Code {
         FLOAT64
         BIT
         ARRAY(Int, PrimitiveType)
-        STRUCT(String -* name *-, FixedArray<PrimitiveType>)
+        STRUCT(String -* name *-, FixedArray<Field>)
 
-        method postInit() {
-            match self {
-                when STRUCT(name, fields) {
-                    assert "(\{name}, \{fields})" != "(org.frostlang.frostc.Code.Statement.ID, [INT, BIT])"
-                }
+        class Field {
+            def name:String
+            def type:PrimitiveType
+
+            init(name:String, type:PrimitiveType) {
+                self.name := name
+                self.type := type
+            }
+
+            @override
+            function get_toString():String {
+                return "\{name}:\{type}"
             }
         }
 
@@ -62,22 +69,22 @@ class Code {
 
         function elementOffset(settings:Compiler.Settings, idx:Int):Int {
             match self {
-                when STRUCT(_, types) {
-                    assert idx <= types.count
+                when STRUCT(_, fields) {
+                    assert idx <= fields.count
                     var result := 0
                     var totalAlign := 1
                     for i in 0 .. idx {
-                        def t := types[i]
+                        def t := fields[i].type
                         def align := t.alignment(settings)
                         totalAlign := totalAlign.max(align)
                         result := alignUp(result, align)
                         result += t.size(settings)
                     }
-                    if idx = types.count {
+                    if idx = fields.count {
                         result := alignUp(result, totalAlign)
                     }
                     else {
-                        result := alignUp(result, types[idx].alignment(settings))
+                        result := alignUp(result, fields[idx].type.alignment(settings))
                     }
                     return result
                 }
@@ -118,8 +125,8 @@ class Code {
 
         function alignment(settings:Compiler.Settings):Int {
             match self {
-                when STRUCT(_, types) {
-                    return types.map(t => t.alignment(settings)).fold(Int.max, 1)
+                when STRUCT(_, fields) {
+                    return fields.map(f => f.type.alignment(settings)).fold(Int.max, 1)
                 }
                 when ARRAY(count, type) {
                     return type.alignment(settings)
@@ -735,7 +742,7 @@ class Code {
         REF(ValueRef)
         STATEMENT(Statement.ID, PrimitiveType)
         ARRAY(PrimitiveType, FixedArray<Value>)
-        STRUCT(String -* name *-, FixedArray<Value>)
+        STRUCT(PrimitiveType, FixedArray<Value>)
         UNDEFINED(PrimitiveType)
 
         property type:PrimitiveType
@@ -783,9 +790,8 @@ class Code {
                 when ARRAY(type, elements) {
                     return PrimitiveType.ARRAY(elements.count, type)
                 }
-                when STRUCT(name, args) {
-                    return PrimitiveType.STRUCT(name,
-                            FixedArray<PrimitiveType>.from(args.map(a => a.type)))
+                when STRUCT(type, _) {
+                    return type
                 }
                 when UNDEFINED(type) {
                     return type

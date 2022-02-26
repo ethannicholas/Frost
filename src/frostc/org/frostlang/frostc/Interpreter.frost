@@ -40,9 +40,11 @@ class Interpreter : Backend {
                 when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
                     return (interpreter.cg.struct(cc.owner).elementOffset(interpreter.settings!,
                                 CodeGenerator.CHOICE_DATA_INDEX) +
-                            Code.PrimitiveType.STRUCT(cc.toString, FixedArray<Code.PrimitiveType>(
-                                cc.fields.map(interpreter.cg.primitiveType))).elementOffset(
-                                    interpreter.settings!, index))
+                            Code.PrimitiveType.STRUCT(cc.toString,
+                                FixedArray<Code.PrimitiveType.Field>(
+                                    cc.fields.map(f => Code.PrimitiveType.Field("",
+                                        self.interpreter.cg.primitiveType(f))))).elementOffset(
+                                            interpreter.settings!, index))
                 }
                 when Code.Value.FIELD_OFFSET(t, index) {
                     return t.elementOffset(interpreter.settings!, index).asInt64
@@ -249,7 +251,7 @@ class Interpreter : Backend {
 
     method createStruct(id:Code.Statement.ID, type:Code.PrimitiveType,
             args:FixedArray<Code.Value>) {
-        contexts[0].statements[id] := contexts[0].value(Code.Value.STRUCT("<undef>", args))
+        contexts[0].statements[id] := contexts[0].value(Code.Value.STRUCT(type, args))
     }
 
     @pre((id == null) = (returnType == null))
@@ -978,7 +980,7 @@ class Interpreter : Backend {
                             target.type.elementOffset(settings!, index)).toUInt)
                     match target.type {
                         when Code.PrimitiveType.STRUCT(_, fields) {
-                            load(result, ptr, fields[index])
+                            load(result, ptr, fields[index].type)
                         }
                         otherwise {
                             unreachable
@@ -1163,8 +1165,9 @@ class Interpreter : Backend {
     method write(v:Code.Value, dest:Pointer<Int8>):Pointer<Int8> {
         var result := dest
         match v {
-            when Code.Value.ARRAY(_, elements) {
-                result := write(Code.Value.STRUCT("Array", elements), result)
+            when Code.Value.ARRAY(type, elements) {
+                result := write(Code.Value.STRUCT(
+                        Code.PrimitiveType.ARRAY(elements.count, type), elements), result)
             }
             when Code.Value.BIT(b) {
                 if b {
@@ -1231,10 +1234,8 @@ class Interpreter : Backend {
             when Code.Value.STATEMENT(id, type) {
                 result := write(contexts[0].statements[id], type, result)
             }
-            when Code.Value.STRUCT(name, args) {
-                result := alignUp(result,
-                        Code.PrimitiveType.STRUCT(name, FixedArray<Code.PrimitiveType>.from(
-                                args.map(a => a.type))).alignment(settings))
+            when Code.Value.STRUCT(type, args) {
+                result := alignUp(result, type.alignment(settings))
                 for a in args {
                     result := write(a, result)
                 }
