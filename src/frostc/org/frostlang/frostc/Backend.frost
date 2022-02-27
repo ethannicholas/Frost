@@ -39,6 +39,13 @@ interface Backend {
     ================================================================================================
     method writeGlobalValue(g:Code.Global, value:Code.Value)
 
+    ================================================================================================
+    Writes a method definition. The `MethodDecl` is only defined for methods which were declared
+    via the normal `method` or `function` channels, and will be `null` for synthetic methods.
+
+    linkOnce is `true` if the method is a specialization and therefore might be defined multiple
+    times in different compilation units.
+    ================================================================================================
     method writeMethod(m:MethodDecl?, s:Code.Signature, code:Code, linkOnce:Bit)
 
     ================================================================================================

@@ -2,6 +2,12 @@ package org.frostlang.frostc
 
 uses frost.unsafe.Pointer
 
+====================================================================================================
+A backend which stores all of the code sent to it so that it can be later executed using [run()].
+
+This powers `frostc`'s `run` output format (`-f run`) which interprets the code directly from
+frostc. This in turn is how "Try It" is implemented on frostlang.org.
+====================================================================================================
 class Interpreter : Backend {
     class Context {
         @weak
