@@ -11,6 +11,24 @@ class Code {
         UNCHECKED
     }
 
+    ================================================================================================
+    Represents a named storage slot (field, parameter, etc.) capable of holding a particular type.
+    ================================================================================================
+    class Slot {
+        def name:String
+        def type:PrimitiveType
+
+        init(name:String, type:PrimitiveType) {
+            self.name := name
+            self.type := type
+        }
+
+        @override
+        function get_toString():String {
+            return "\{name}:\{type}"
+        }
+    }
+
     choice PrimitiveType {
         INT
         INT8
@@ -21,22 +39,7 @@ class Code {
         FLOAT64
         BIT
         ARRAY(Int, PrimitiveType)
-        STRUCT(String -* name *-, FixedArray<Field>)
-
-        class Field {
-            def name:String
-            def type:PrimitiveType
-
-            init(name:String, type:PrimitiveType) {
-                self.name := name
-                self.type := type
-            }
-
-            @override
-            function get_toString():String {
-                return "\{name}:\{type}"
-            }
-        }
+        STRUCT(String -* name *-, FixedArray<Slot>)
 
         property isInt:Bit
         function get_isInt():Bit {
@@ -150,14 +153,14 @@ class Code {
 
         def name:String
 
-        def parameters:FixedArray<PrimitiveType>
+        def parameters:FixedArray<Slot>
 
         -- external in the sense of "not in the current compilation unit", not in the sense of the
         -- @external annotation
         def isExternal:Bit
 
         init(methodDecl:MethodDecl?, returnType:PrimitiveType?, name:String,
-                parameters:FixedArray<PrimitiveType>, isExternal:Bit) {
+                parameters:FixedArray<Slot>, isExternal:Bit) {
             self.methodDecl := methodDecl
             self.returnType := returnType
             self.name := name

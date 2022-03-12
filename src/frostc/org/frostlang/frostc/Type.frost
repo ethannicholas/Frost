@@ -608,6 +608,10 @@ class Type : Symbol, HashKey<Type> {
         }
     }
 
+    function matches(other:Type):Bit {
+        return self = other | isPointer & other.isPointer
+    }
+
     @override
     function get_hash():Int {
         return name.hash

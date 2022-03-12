@@ -345,7 +345,7 @@ class LLVMBackend : Backend {
         result.append("(")
         var separator := ""
         for p in s.parameters {
-            result.append("\{separator}\{llvmType(p)}")
+            result.append("\{separator}\{llvmType(p.type)}")
             separator := ", "
         }
         result.append(")")
@@ -376,8 +376,8 @@ class LLVMBackend : Backend {
             when Code.Value.CHOICE_FIELD_OFFSET(cc, index) {
                 return (cg.struct(cc.owner).elementOffset(settings!,
                             CodeGenerator.CHOICE_DATA_INDEX) +
-                        Code.PrimitiveType.STRUCT(cc.toString, FixedArray<Code.PrimitiveType.Field>(
-                            cc.fields.map(f => Code.PrimitiveType.Field("",
+                        Code.PrimitiveType.STRUCT(cc.toString, FixedArray<Code.Slot>(
+                            cc.fields.map(f => Code.Slot("",
                                 self.cg.primitiveType(f))))).elementOffset(settings!,
                                     index)).toString
             }
@@ -507,7 +507,7 @@ class LLVMBackend : Backend {
             signatures.print(" @\{s.name}(")
             var separator := ""
             for p in s.parameters {
-                signatures.print("\{separator}\{llvmType(p)}")
+                signatures.print("\{separator}\{llvmType(p.type)}")
                 separator := ", "
             }
             signatures.printLine(")")
@@ -764,10 +764,12 @@ class LLVMBackend : Backend {
     method writeOverflowIntrinsic(op:String, type:Code.PrimitiveType):String {
         def name := "llvm.\{op}.with.overflow.\{llvmType(type)}"
         writeSignature(Code.Signature(null,
-                Code.PrimitiveType.STRUCT("Overflow", FixedArray<Code.PrimitiveType.Field>.from(
-                        [Code.PrimitiveType.Field("value", type),
-                         Code.PrimitiveType.Field("overflow", Code.PrimitiveType.BIT)])),
-                name, FixedArray<Code.PrimitiveType>.from([type, type]), true))
+                Code.PrimitiveType.STRUCT("Overflow", FixedArray<Code.Slot>.from(
+                        [Code.Slot("value", type),
+                         Code.Slot("overflow", Code.PrimitiveType.BIT)])),
+                name,
+                FixedArray<Code.Slot>.from([Code.Slot("p1", type), Code.Slot("p2", type)]),
+                true))
         return "@\{name}"
     }
 
@@ -1000,7 +1002,8 @@ class LLVMBackend : Backend {
                     out.printLine("\{ptrCast} = inttoptr \{getTypedReference(m)} to i8*")
                     def methodCast := nextVar()
                     def llt := llvmType(Code.Signature(null, returnType, "<dynamic>",
-                            FixedArray<Code.PrimitiveType>.from(args.map(a => a.type)), false))
+                            FixedArray<Code.Slot>.from(args.map(a => Code.Slot("", a.type))),
+                            false))
                     out.printLine("\{methodCast} = bitcast i8* \{ptrCast} to \{llt}*")
                     out.print("\{name(result)} = call \{llvmType(returnType)} \{methodCast}(")
                     var separator := ""
@@ -1015,7 +1018,8 @@ class LLVMBackend : Backend {
                     out.printLine("\{ptrCast} = inttoptr \{getTypedReference(m)} to i8*")
                     def methodCast := nextVar()
                     def llt := llvmType(Code.Signature(null, null, "<dynamic>",
-                            FixedArray<Code.PrimitiveType>.from(args.map(a => a.type)), false))
+                            FixedArray<Code.Slot>.from(args.map(a => Code.Slot("", a.type))),
+                            false))
                     out.printLine("\{methodCast} = bitcast i8* \{ptrCast} to \{llt}*")
                     out.print("call void \{methodCast}(")
                     var separator := ""
@@ -1166,7 +1170,7 @@ class LLVMBackend : Backend {
             out.print(" @\{s.name}(")
             var separator := ""
             for i in 0 .. s.parameters.count {
-                out.print("\{separator}\{llvmType(s.parameters[i])} %param\{i}")
+                out.print("\{separator}\{llvmType(s.parameters[i].type)} %param\{i}")
                 separator := ", "
             }
             out.print(")")

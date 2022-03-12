@@ -14,8 +14,8 @@ class InnerMethod {
     method compile(compiler:Compiler, position:MethodPosition, kind:MethodDecl.Kind, name:String,
             rawParameters:FixedArray<ASTNode>, rawReturnType:ASTNode?,
             body:FixedArray<ASTNode>) {
-        def methodRef := Closure.compile(compiler, position, kind, rawParameters, rawReturnType,
-                body, TypeContext.NON_VOID)
+        def methodRef := Closure.compile(compiler, position, kind, name, rawParameters,
+                rawReturnType, body, TypeContext.NON_VOID)
         if methodRef == null {
             return
         }

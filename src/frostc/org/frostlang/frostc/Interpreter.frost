@@ -47,8 +47,8 @@ class Interpreter : Backend {
                     return (interpreter.cg.struct(cc.owner).elementOffset(interpreter.settings!,
                                 CodeGenerator.CHOICE_DATA_INDEX) +
                             Code.PrimitiveType.STRUCT(cc.toString,
-                                FixedArray<Code.PrimitiveType.Field>(
-                                    cc.fields.map(f => Code.PrimitiveType.Field("",
+                                FixedArray<Code.Slot>(
+                                    cc.fields.map(f => Code.Slot("",
                                         self.interpreter.cg.primitiveType(f))))).elementOffset(
                                             interpreter.settings!, index))
                 }
@@ -213,7 +213,7 @@ class Interpreter : Backend {
 
     init() {
         methods.add(Code.Signature(null, null, "<null method pointer>",
-                FixedArray<Code.PrimitiveType>(), false))
+                FixedArray<Code.Slot>(), false))
     }
 
     @override
@@ -1295,7 +1295,7 @@ class Interpreter : Backend {
     }
 
     method run() {
-        call(Code.Signature(null, null, "frostMain", FixedArray<Code.PrimitiveType>.from([]),
+        call(Code.Signature(null, null, "frostMain", FixedArray<Code.Slot>.from([]),
                 false), FixedArray<Code.Value>.from([]), null)
         if weakReferenceMap != 0 {
             contexts.push(Context(self))

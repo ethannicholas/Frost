@@ -16,6 +16,7 @@ uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.MethodPosition
 uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.SymbolTable
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
@@ -324,7 +325,7 @@ class Closure {
                 }
             }
         }
-        return compile(compiler, position, MethodDecl.Kind.FUNCTION, rawParameters,
+        return compile(compiler, position, MethodDecl.Kind.FUNCTION, null, rawParameters,
                 ASTNode.IR_WRAPPER(position.asPosition, compiler.literalType(returnType)),
                 FixedArray<ASTNode>.from([ASTNode.RETURN(position.asPosition, expr)]), type)
     }
@@ -357,7 +358,7 @@ class Closure {
                     }
                     def basePos := position.asPosition
                     def returnType := t.nonnullable().returnType
-                    return compile(compiler, position, MethodDecl.Kind.FUNCTION,
+                    return compile(compiler, position, MethodDecl.Kind.FUNCTION, null,
                             FixedArray<ASTNode>.from(parameters),
                             ASTNode.IR_WRAPPER(basePos, compiler.literalType(returnType)),
                             FixedArray<ASTNode>.from([ASTNode.RETURN(basePos, expr)]), type)
@@ -538,20 +539,20 @@ class Closure {
     }
 
     @class
-    method compile(compiler:Compiler, position:MethodPosition, kind:MethodDecl.Kind,
+    method compile(compiler:Compiler, position:MethodPosition, kind:MethodDecl.Kind, name:String?,
             rawParameters:FixedArray<ASTNode>, rawReturnType:ASTNode?,
             body:FixedArray<ASTNode>, type:TypeContext):IR.Value? {
         compiler.closureCount += 1
-        def name := "$anonymous\{compiler.closureCount}"
+        def methodName := "$anonymous\{compiler.closureCount}"
         def parameters := Array<MethodDecl.Parameter>()
         for p in rawParameters {
             match p {
-                when ASTNode.PARAMETER(_, name, type) {
+                when ASTNode.PARAMETER(_, parameterName, type) {
                     def resolved := compiler.resolve(compiler.scanner.convertType(type))
                     if resolved == null {
                         return null
                     }
-                    parameters.add(MethodDecl.Parameter(name, resolved))
+                    parameters.add(MethodDecl.Parameter(parameterName, resolved))
                 }
                 otherwise {
                     unreachable
@@ -581,7 +582,7 @@ class Closure {
         }
         def methodDecl := MethodDecl(compiler.currentClass[0],
                 position.asPosition, compiler.methods.count, null, Annotations(annotations), kind,
-                name, null, parameters, returnType, body)
+                methodName, null, parameters, returnType, body)
         compiler.methods.add(methodDecl)
         -- need to scan through the method to determine captures, but we don't actually want to
         -- output it yet - if it has captures, we need to put it into a closure class
@@ -601,6 +602,9 @@ class Closure {
         if currentCaptures[1].count != 0 {
             -- we have captures, need to build an actual closure for it
             def cl := createClosureClass(compiler, methodDecl, currentCaptures[1].values.all())
+            if name !== null {
+                cl.symbolTable.add(methodDecl, name)
+            }
             def args := Array<ASTNode>()
             for capture in currentCaptures[1].values {
                 match capture {

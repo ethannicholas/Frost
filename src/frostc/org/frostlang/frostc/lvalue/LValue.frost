@@ -50,6 +50,8 @@ interface LValue {
                             if inline !== null {
                                 match inline {
                                     when EnclosingContext.INLINE_CONTEXT(_, start, _, _) {
+                                        assert compiler.ir.locals[start][2].matches(
+                                                cc.owner.type)
                                         target := IR.Value.LOCAL(start, cc.owner.type)
                                     }
                                     otherwise {
@@ -58,6 +60,7 @@ interface LValue {
                                 }
                             }
                             else {
+                                assert compiler.ir.locals[0][2].matches(cc.owner.type)
                                 target := IR.Value.LOCAL(0, cc.owner.type)
                             }
                         }
@@ -93,6 +96,8 @@ interface LValue {
                                 match inline {
                                     when Compiler.EnclosingContext.INLINE_CONTEXT(_, selfIndex, _,
                                             _) {
+                                        assert compiler.ir.locals[selfIndex][2].matches(
+                                                compiler.currentClass[0].type)
                                         compiledBase := IR.Value.LOCAL(selfIndex,
                                                 compiler.currentClass[0].type)
                                     }
@@ -102,6 +107,8 @@ interface LValue {
                                 }
                             }
                             else {
+                                assert compiler.ir.locals[0][2].matches(
+                                        compiler.currentClass[0].type)
                                 compiledBase := IR.Value.LOCAL(0, compiler.currentClass[0].type)
                             }
                         }

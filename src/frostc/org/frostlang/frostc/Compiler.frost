@@ -486,7 +486,7 @@ class Compiler : ErrorReporter {
     def INVALID_TYPE := Type("<invalid>", Type.Kind.INVALID, Position(), true)
 
     -- name of the field in which we store captured "self"
-    constant CAPTURED_SELF_NAME := "$self"
+    constant CAPTURED_SELF_NAME := "$capured_self"
 
     -- within closures, 'self' is normally interpreted as the captured $self object. $force_self is
     -- always a reference to the actual 'self' - in a closure, this will be the closure object
@@ -3667,6 +3667,7 @@ class Compiler : ErrorReporter {
                 }
                 match v.storage {
                     when Variable.Storage.LOCAL(slot) {
+                        assert !writeCode | ir.locals[slot][2].matches(v.type)
                         def result := ir.add(IR.Statement.LOAD(position,
                                 IR.Value.LOCAL(slot, v.type), explicit))
                         return IR.Value.REF(result, v.type)
@@ -3826,7 +3827,7 @@ class Compiler : ErrorReporter {
             else {
                 statement := call
             }
-            return Closure.compile(self, position, m.methodKind,
+            return Closure.compile(self, position, m.methodKind, null,
                     FixedArray<ASTNode>.from(parameters),
                     ASTNode.IR_WRAPPER(position.asPosition, literalType(effectiveType.returnType)),
                     FixedArray<ASTNode>.from([statement]), TypeContext.UNSPECIFIED)
@@ -3930,7 +3931,7 @@ class Compiler : ErrorReporter {
         else {
             body := [c]
         }
-        return Closure.compile(self, position, kind, FixedArray<ASTNode>.from(rawParams),
+        return Closure.compile(self, position, kind, null, FixedArray<ASTNode>.from(rawParams),
                 ASTNode.IR_WRAPPER(basePos, literalType(target.returnType)),
                 FixedArray<ASTNode>.from(body), TypeContext.TYPE(target, false))
     }
@@ -4967,7 +4968,8 @@ class Compiler : ErrorReporter {
                 return coerce(position, value, type)
             }
             when ASTNode.METHOD(_, _, _, kind, _, _, parameters, returnType, body) {
-                return Closure.compile(self, position, kind, parameters, returnType, body, type)
+                return Closure.compile(self, position, kind, null, parameters, returnType, body,
+                        type)
             }
             when ASTNode.NULL(_) {
                 return compileNull(position, type)
@@ -5243,18 +5245,19 @@ class Compiler : ErrorReporter {
                 def v := Variable(basePos, kind, name, type,
                         Variable.Storage.LOCAL(ir.locals.count))
                 v.owner := currentMethod[0]
-                if isRefCounted(v.type) {
-                    ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
-                            IR.Value.LOCAL(ir.locals.count, v.type), false))
-                }
-                ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count))
                 ir.locals.add((v.name, v.varKind, v.type))
+                if isRefCounted(v.type) {
+                    assert !writeCode | ir.locals[ir.locals.count - 1][2].matches(v.type)
+                    ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
+                            IR.Value.LOCAL(ir.locals.count - 1, v.type), false))
+                }
+                ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count - 1))
                 symbolTable.add(v)
                 return Target.VARIABLE(v, value)
             }
             when ASTNode.TUPLE(_, targets) {
                 var finalType:Type? := null
-                var compiledTuple:IR.Value?
+                var compiledTuple:IR.Value? := null
                 if rawValue !== null {
                     compiledTuple := compileExpression(rawValue, TypeContext.NON_VOID)
                     if compiledTuple == null {
@@ -5320,11 +5323,12 @@ class Compiler : ErrorReporter {
                         Variable.Storage.LOCAL(ir.locals.count))
                 v.owner := currentMethod[0]
                 ir.add(IR.Statement.ENTER_SCOPE(ir.locals.count))
-                if isRefCounted(v.type) {
-                    ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
-                            IR.Value.LOCAL(ir.locals.count, v.type), false))
-                }
                 ir.locals.add((v.name, v.varKind, v.type))
+                if isRefCounted(v.type) {
+                    assert !writeCode | ir.locals[ir.locals.count - 1][2].matches(v.type)
+                    ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
+                            IR.Value.LOCAL(ir.locals.count - 1, v.type), false))
+                }
                 symbolTable.add(v)
                 return Target.VARIABLE(v, value)
             }
@@ -5424,6 +5428,7 @@ class Compiler : ErrorReporter {
                 compileUnref(ref)
                 match v.storage {
                     when Variable.Storage.LOCAL(slot) {
+                        assert !writeCode | ir.locals[slot][2].matches(v.type)
                         ir.add(IR.Statement.STORE(MethodPosition(v.position, currentMethodIndex),
                                 IR.Value.NULL(v.type.nullable()),
                                 IR.Value.LOCAL(slot, v.type.nullable()), false))

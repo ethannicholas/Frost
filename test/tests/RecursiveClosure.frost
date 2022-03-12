@@ -1,0 +1,35 @@
+package Test
+
+choice Node {
+	BASE(String)
+	SIGNED(Node?)
+}
+
+@noReturn
+method error(msg:String) {
+	Console.printLine(msg)
+	System.exit(1)
+}
+
+method test():Node {
+    function compound(first:Node, second:Node):Node {
+        match first {
+            when Node.SIGNED(base) {
+                if base !== null {
+                    return Node.SIGNED(compound(base, second))
+                }
+                return Node.SIGNED(second)
+            }
+            otherwise {
+            	-- FIXME without this reference to self, we fail to resolve compound up above.
+                self.error("invalid Node: \{first} \{second}")
+            }
+        }
+    }
+
+    return compound(Node.SIGNED(Node.SIGNED(null)), Node.SIGNED(Node.BASE("int")))
+}
+
+method main() {
+	Console.printLine(test())
+}

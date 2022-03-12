@@ -5,6 +5,9 @@ uses org.frostlang.frostc.expression.Binary
 @extendable
 class CodeGenerator {
     constant NO_REFCNT := -999
+    constant SELF := "$self"
+    constant OUT_INDIRECT := "$out_indirect"
+    constant POINTER_SIZE := "$pointer_size"
 
     choice TypeClass {
         SIGNED
@@ -156,17 +159,17 @@ class CodeGenerator {
             writeGlobalValue(chars, Code.Value.CHARS(s))
 
             def fields := [
-                Code.PrimitiveType.Field("$class",   Code.PrimitiveType.INT),
-                Code.PrimitiveType.Field("refCount", Code.PrimitiveType.INT32),
-                Code.PrimitiveType.Field("$flags",   Code.PrimitiveType.INT8),
-                Code.PrimitiveType.Field("data",     Code.PrimitiveType.INT),
-                Code.PrimitiveType.Field("_length",  Code.PrimitiveType.INT),
-                Code.PrimitiveType.Field("dummy",    Code.PrimitiveType.INT),
-                Code.PrimitiveType.Field("owner",    Code.PrimitiveType.INT)
+                Code.Slot("$class",   Code.PrimitiveType.INT),
+                Code.Slot("refCount", Code.PrimitiveType.INT32),
+                Code.Slot("$flags",   Code.PrimitiveType.INT8),
+                Code.Slot("data",     Code.PrimitiveType.INT),
+                Code.Slot("_length",  Code.PrimitiveType.INT),
+                Code.Slot("dummy",    Code.PrimitiveType.INT),
+                Code.Slot("owner",    Code.PrimitiveType.INT)
             ]
             def stringIndex := globals.count
             def stringType := Code.PrimitiveType.STRUCT("frost.core.String",
-                    FixedArray<Code.PrimitiveType.Field>.from(fields))
+                    FixedArray<Code.Slot>.from(fields))
             def string := Code.Global("string\{stringIndex}", stringType, null,
                     Code.Global.UNNAMED_ADDR_FLAG || Code.Global.PRIVATE_FLAG)
             writeGlobalValue(string, Code.Value.STRUCT(stringType, FixedArray<Code.Value>.from([
@@ -204,13 +207,13 @@ class CodeGenerator {
                     }))
                 ))
                 def fields := [
-                    Code.PrimitiveType.Field("interfaceClassConstant", Code.PrimitiveType.INT),
-                    Code.PrimitiveType.Field("previous", Code.PrimitiveType.INT),
-                    Code.PrimitiveType.Field("methods", Code.PrimitiveType.ARRAY(methods.count,
+                    Code.Slot("interfaceClassConstant", Code.PrimitiveType.INT),
+                    Code.Slot("previous", Code.PrimitiveType.INT),
+                    Code.Slot("methods", Code.PrimitiveType.ARRAY(methods.count,
                             Code.PrimitiveType.INT))
                 ]
                 def itableType := Code.PrimitiveType.STRUCT("\{structName(cl)}.\{intf.name}_ITABLE",
-                        FixedArray<Code.PrimitiveType.Field>.from(fields))
+                        FixedArray<Code.Slot>.from(fields))
                 def value := Code.Value.STRUCT(itableType, FixedArray<Code.Value>.from(values))
                 def index := globals.count
                 writeGlobalValue(Code.Global(escapeName(cl.name) + "$" +
@@ -253,13 +256,13 @@ class CodeGenerator {
                 name := escapeName(cl.name) + "$class"
             }
             def fields := [
-                Code.PrimitiveType.Field("class",      Code.PrimitiveType.INT),
-                Code.PrimitiveType.Field("refcount",   Code.PrimitiveType.INT32),
-                Code.PrimitiveType.Field("flags",      Code.PrimitiveType.INT8),
-                Code.PrimitiveType.Field("name",       Code.PrimitiveType.INT),
-                Code.PrimitiveType.Field("superclass", Code.PrimitiveType.INT),
-                Code.PrimitiveType.Field("itable",     Code.PrimitiveType.INT),
-                Code.PrimitiveType.Field("vtable",     Code.PrimitiveType.ARRAY(vtable.count,
+                Code.Slot("class",      Code.PrimitiveType.INT),
+                Code.Slot("refcount",   Code.PrimitiveType.INT32),
+                Code.Slot("flags",      Code.PrimitiveType.INT8),
+                Code.Slot("name",       Code.PrimitiveType.INT),
+                Code.Slot("superclass", Code.PrimitiveType.INT),
+                Code.Slot("itable",     Code.PrimitiveType.INT),
+                Code.Slot("vtable",     Code.PrimitiveType.ARRAY(vtable.count,
                         Code.PrimitiveType.INT))
             ]
             var flags:Int
@@ -274,7 +277,7 @@ class CodeGenerator {
             }
             def cc := Code.Global(name,
                     Code.PrimitiveType.STRUCT("\{structName(cl)}_CLASS",
-                        FixedArray<Code.PrimitiveType.Field>(fields)), null, flags)
+                        FixedArray<Code.Slot>(fields)), null, flags)
             def index := globals.count
             result := Code.Value.GLOBAL_POINTER(index)
             writeGlobal(cc)
@@ -301,7 +304,7 @@ class CodeGenerator {
                 ))
                 def classType := Code.PrimitiveType.STRUCT(
                         "\{structName(cl)}_CLASS",
-                        FixedArray<Code.PrimitiveType.Field>.from(fields))
+                        FixedArray<Code.Slot>.from(fields))
                 writeGlobalValue(cc, Code.Value.STRUCT(classType,
                         FixedArray<Code.Value>.from(values)))
             }
@@ -338,21 +341,21 @@ class CodeGenerator {
             else {
                 effectiveReturnType := primitiveType(effective.returnType)
             }
-            def parameters := Array<Code.PrimitiveType>()
+            def parameters := Array<Code.Slot>()
             def start:Int
             if indirect {
                 start := 1
-                parameters.add(Code.PrimitiveType.INT)
+                parameters.add(Code.Slot(OUT_INDIRECT, Code.PrimitiveType.INT))
                 arguments.add(Code.Value.PARAMETER(0, Code.PrimitiveType.INT))
             }
             else {
                 start := 0
             }
             for i in 0 .. effective.subtypes.count - 1 {
-                parameters.add(primitiveType(effective.subtypes[i]))
+                parameters.add(Code.Slot("p_\{i}", primitiveType(effective.subtypes[i])))
             }
             if raw.annotations.isPointerSize {
-                parameters.add(Code.PrimitiveType.INT)
+                parameters.add(Code.Slot(POINTER_SIZE, Code.PrimitiveType.INT))
             }
             var irId := 0
             def unrefs := Array<Code.Statement>()
@@ -378,7 +381,8 @@ class CodeGenerator {
                         def variant := compiler.getRefVariant(rawType)
                         unrefs.add(Code.Statement.STATIC_CALL_VOID(position, Code.Signature(null,
                                 null, "frost$core$Frost$unref\{variant}$frost$core$Object$Q",
-                                FixedArray<Code.PrimitiveType>.from([Code.PrimitiveType.INT]),
+                                FixedArray<Code.Slot>.from([Code.Slot("o",
+                                    Code.PrimitiveType.INT)]),
                                 true), FixedArray<Code.Value>.from([
                                     convertValue(IR.Value.REF(objectCast, compiler.OBJECT_TYPE))])))
                     }
@@ -415,7 +419,7 @@ class CodeGenerator {
             casts := oldCasts
             out := oldOut
             def shim := (Code.Signature(null, effectiveReturnType, getName(raw) + "$shim",
-                    FixedArray<Code.PrimitiveType>.from(parameters), false), code)
+                    FixedArray<Code.Slot>.from(parameters), false), code)
             methodShims[raw] := shim
             return shim
         }
@@ -476,7 +480,7 @@ class CodeGenerator {
     }
 
     method struct(cl:ClassDecl):Code.PrimitiveType {
-        def fields := Array<Code.PrimitiveType.Field>()
+        def fields := Array<Code.Slot>()
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
             -- we try to avoid having to calculate the size or offset of anything ourselves, so that
@@ -501,31 +505,30 @@ class CodeGenerator {
                 }
                 for cc in cl.choiceCases {
                     def type := Code.PrimitiveType.STRUCT(cc.toString,
-                            FixedArray<Code.PrimitiveType.Field>(
-                                cc.fields.map(f => Code.PrimitiveType.Field("",
-                                    self.primitiveType(f)))))
+                            FixedArray<Code.Slot>(
+                                cc.fields.map(f => Code.Slot("", self.primitiveType(f)))))
                     size := size.max(type.size(settings))
                 }
                 settings.intSize := oldSize
-                fields.add(Code.PrimitiveType.Field("$choiceData",
+                fields.add(Code.Slot("$choiceData",
                         Code.PrimitiveType.ARRAY(size, Code.PrimitiveType.INT8)))
             }
             else {
-                fields.add(Code.PrimitiveType.Field(f.name, primitiveType(f.type)))
+                fields.add(Code.Slot(f.name, primitiveType(f.type)))
             }
         }
         return Code.PrimitiveType.STRUCT(structName(cl),
-                FixedArray<Code.PrimitiveType.Field>.from(fields))
+                FixedArray<Code.Slot>.from(fields))
     }
 
     function wrapperStruct(cl:ClassDecl):Code.PrimitiveType {
         def base := struct(compiler.getClass("frost.core.Object")!)
         match base {
             when Code.PrimitiveType.STRUCT(name, fields) {
-                def finalFields := Array<Code.PrimitiveType.Field>(fields)
-                finalFields.add(Code.PrimitiveType.Field("wrappedObject", struct(cl)))
+                def finalFields := Array<Code.Slot>(fields)
+                finalFields.add(Code.Slot("wrappedObject", struct(cl)))
                 return Code.PrimitiveType.STRUCT(cl.name + "_WRAPPER",
-                        FixedArray<Code.PrimitiveType.Field>.from(finalFields))
+                        FixedArray<Code.Slot>.from(finalFields))
             }
             otherwise {
                 unreachable
@@ -535,9 +538,9 @@ class CodeGenerator {
 
     function nullableStruct(cl:ClassDecl):Code.PrimitiveType {
         return Code.PrimitiveType.STRUCT(structName(cl)+ "_NULLABLE",
-                FixedArray<Code.PrimitiveType.Field>.from([
-                    Code.PrimitiveType.Field("value", primitiveType(cl.type)),
-                    Code.PrimitiveType.Field("isPresent", Code.PrimitiveType.BIT)
+                FixedArray<Code.Slot>.from([
+                    Code.Slot("value", primitiveType(cl.type)),
+                    Code.Slot("isPresent", Code.PrimitiveType.BIT)
                 ]))
     }
 
@@ -598,9 +601,9 @@ class CodeGenerator {
                 if compiler.isValue(type.subtypes[0]) {
                     -- nullable value, add an 'isNull' field
                     return Code.PrimitiveType.STRUCT("\{structName(type.subtypes[0].name)}_NULLABLE",
-                            FixedArray<Code.PrimitiveType.Field>.from([
-                                Code.PrimitiveType.Field("value", base),
-                                Code.PrimitiveType.Field("isPresent", Code.PrimitiveType.BIT)
+                            FixedArray<Code.Slot>.from([
+                                Code.Slot("value", base),
+                                Code.Slot("isPresent", Code.PrimitiveType.BIT)
                             ]))
                 }
                 -- nullable object, still just a pointer
@@ -640,9 +643,9 @@ class CodeGenerator {
                 assert cl !== null
                 if compiler.isValue(cl) {
                     def nullableType := Code.PrimitiveType.STRUCT(cl.name + "_NULLABLE",
-                            FixedArray<Code.PrimitiveType.Field>.from([
-                                Code.PrimitiveType.Field("value", primitiveType(type.subtypes[0])),
-                                Code.PrimitiveType.Field("isPresent", Code.PrimitiveType.BIT)
+                            FixedArray<Code.Slot>.from([
+                                Code.Slot("value", primitiveType(type.subtypes[0])),
+                                Code.Slot("isPresent", Code.PrimitiveType.BIT)
                             ]))
                     return Code.Value.STRUCT(nullableType,
                             FixedArray<Code.Value>.from([
@@ -1117,9 +1120,9 @@ class CodeGenerator {
                 createBlock(nullBlock)
                 def nullValue := nextStatement()
                 def nullableType := Code.PrimitiveType.STRUCT(target.name + "_NULLABLE",
-                        FixedArray<Code.PrimitiveType.Field>.from([
-                            Code.PrimitiveType.Field("value", primitiveType(dstType.subtypes[0])),
-                            Code.PrimitiveType.Field("isPresent", Code.PrimitiveType.BIT)
+                        FixedArray<Code.Slot>.from([
+                            Code.Slot("value", primitiveType(dstType.subtypes[0])),
+                            Code.Slot("isPresent", Code.PrimitiveType.BIT)
                         ]))
                 out.add(Code.Statement.CREATE_STRUCT(position, nullValue,
                         nullableType,
@@ -1298,13 +1301,13 @@ class CodeGenerator {
         if result == null {
             if !compiler.resolve(m) {
                 return Code.Signature(null, null, "<error>",
-                        FixedArray<Code.PrimitiveType>.from([]), true)
+                        FixedArray<Code.Slot>.from([]), true)
             }
-            def parameters := Array<Code.PrimitiveType>()
+            def parameters := Array<Code.Slot>()
             def returnType:Code.PrimitiveType?
             def declared := compiler.declaredTypeWithSelf(m, m.owner.type, false)
             if needsStructIndirection(m) {
-                parameters.add(Code.PrimitiveType.INT)
+                parameters.add(Code.Slot(OUT_INDIRECT, Code.PrimitiveType.INT))
                 returnType := null
             }
             else {
@@ -1316,16 +1319,18 @@ class CodeGenerator {
                 }
             }
             if compiler.hasSelfParam(m) {
-                parameters.addAll(declared.parameterTypes.map(primitiveType))
+                parameters.add(Code.Slot(SELF, primitiveType(declared.parameterTypes[0])))
             }
-            else {
-                parameters.addAll(declared.parameterTypes[1..].map(primitiveType))
+            assert m.parameters.count = declared.parameterTypes.count - 1
+            for i in 0 .. m.parameters.count {
+                parameters.add(Code.Slot(m.parameters[i].name,
+                        primitiveType(declared.parameterTypes[i + 1])))
             }
             if m.annotations.isPointerSize {
-                parameters.add(Code.PrimitiveType.INT)
+                parameters.add(Code.Slot(POINTER_SIZE, Code.PrimitiveType.INT))
             }
             result := Code.Signature(m, returnType, getName(m),
-                    FixedArray<Code.PrimitiveType>.from(parameters),
+                    FixedArray<Code.Slot>.from(parameters),
                     m.owner.external | m.annotations.isExternal)
             declarations[m] := result
         }
@@ -1334,7 +1339,7 @@ class CodeGenerator {
 
     method getMethodTableEntry(m:MethodDecl):Code.Signature {
         if !compiler.resolve(m) {
-            return Code.Signature(null, null, "<error>", FixedArray<Code.PrimitiveType>.from([]),
+            return Code.Signature(null, null, "<error>", FixedArray<Code.Slot>.from([]),
                     true)
         }
         getSignature(m)
@@ -1350,6 +1355,7 @@ class CodeGenerator {
             }
             def declared := compiler.declaredTypeWithSelf(m, selfType, false)
             var inherited := compiler.inheritedTypeWithSelf(m, compiler.OBJECT_TYPE)
+            assert inherited.parameterTypes.count = m.parameters.count + 1
             if declared != inherited {
                 def shim := createMethodShim(m, inherited)[0]
                 resultName := shim.name
@@ -1358,30 +1364,39 @@ class CodeGenerator {
                 resultName := getName(m)
             }
             if needsStructIndirection(m) {
-                def parameters := Array<Code.PrimitiveType>()
-                parameters.add(Code.PrimitiveType.INT)
-                parameters.addAll(inherited.parameterTypes.map(primitiveType))
-                if m.annotations.isPointerSize {
-                    parameters.add(Code.PrimitiveType.INT)
+                def parameters := Array<Code.Slot>()
+                parameters.add(Code.Slot(OUT_INDIRECT, Code.PrimitiveType.INT))
+                parameters.add(Code.Slot(SELF, primitiveType(inherited.parameterTypes[0])))
+                for i in 0 .. m.parameters.count {
+                    parameters.add(Code.Slot(m.parameters[i].name,
+                            primitiveType(inherited.parameterTypes[i + 1])))
                 }
-                return Code.Signature(m, null, resultName, FixedArray<Code.PrimitiveType>.from(
-                        parameters), m.owner.external)
+                if m.annotations.isPointerSize {
+                    parameters.add(Code.Slot(POINTER_SIZE, Code.PrimitiveType.INT))
+                }
+                return Code.Signature(m, null, resultName, FixedArray<Code.Slot>.from(parameters),
+                        m.owner.external)
             }
             def returnType:Code.PrimitiveType?
             if inherited.returnType != compiler.VOID_TYPE {
                 returnType := primitiveType(inherited.returnType)
             }
-            return Code.Signature(m, returnType, resultName,
-                    FixedArray<Code.PrimitiveType>.from(inherited.parameterTypes.map(
-                        primitiveType)), m.owner.external)
+            def parameters := Array<Code.Slot>()
+            parameters.add(Code.Slot(SELF, primitiveType(inherited.parameterTypes[0])))
+            for i in 0 .. m.parameters.count {
+                parameters.add(Code.Slot(m.parameters[i].name,
+                        primitiveType(inherited.parameterTypes[i + 1])))
+            }
+            return Code.Signature(m, returnType, resultName, FixedArray<Code.Slot>.from(parameters),
+                    m.owner.external)
         }
         else {
-            def parameters := Array<Code.PrimitiveType>()
+            def parameters := Array<Code.Slot>()
             if compiler.hasSelfParam(m) {
-                parameters.add(primitiveType(m.owner.type))
+                parameters.add(Code.Slot(SELF, primitiveType(m.owner.type)))
             }
             for p in m.parameters {
-                parameters.add(primitiveType(p.type))
+                parameters.add(Code.Slot(m.name, primitiveType(p.type)))
             }
             def returnType:Code.PrimitiveType?
             if m.returnType != compiler.VOID_TYPE {
@@ -1391,7 +1406,7 @@ class CodeGenerator {
                 returnType := null
             }
             return Code.Signature(m, returnType, getName(m),
-                    FixedArray<Code.PrimitiveType>.from(parameters), m.owner.external)
+                    FixedArray<Code.Slot>.from(parameters), m.owner.external)
         }
     }
 
@@ -1723,6 +1738,7 @@ class CodeGenerator {
 
     @pre(locals.count = 0 & statements.count = 0 & refs.count = 0 & blocks.count = 0)
     method convert(m:MethodDecl, ir:IR):Code {
+        assert self.currentMethod == null
         self.currentMethod := m
         self.ir := ir
         getClassConstant(m.owner)
@@ -1736,6 +1752,7 @@ class CodeGenerator {
         earlyRefs.clear()
         nextStatementID := 0
         nextBlockID := 0
+        self.currentMethod := null
         return result
     }
 }
